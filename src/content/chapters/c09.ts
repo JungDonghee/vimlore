@@ -1,7 +1,7 @@
 import type { Chapter } from '../../core/game/types.ts';
 
 /**
- * CHAPTER 9 — COMMAND LINE
+ * CHAPTER 9 — EX
  *
  * Teaches: ranges (`:1,3d`), `:m` / `:t`, `:sort` (+`u`, `!`),
  * `:normal` over a range, and the boss that recombines all three.
@@ -9,10 +9,10 @@ import type { Chapter } from '../../core/game/types.ts';
  * Design notes:
  *  - The `:` key was granted in chapter 6, so this chapter unlocks nothing.
  *  - Everything here is an *address*: a line number, a pair of numbers, `%`.
- *    The buffers are all 11–13 lines, so walking them by hand is the punishment
- *    and one command is the relief.
- *  - The ex parser in this build wants a space before an argument
- *    (`:1m 5`, `:sort !`), so the ghosts spell it that way.
+ *    Buffers are 11–13 lines of log, table or config, so walking them by hand
+ *    is the punishment and one command is the relief.
+ *  - The fiction is a dead machine opened on the operating table; the buffers
+ *    are the files still warm inside it.
  *  - No buffer contains `~`, so the default hazard never bites.
  */
 export const c09: Chapter = {
@@ -21,8 +21,8 @@ export const c09: Chapter = {
   title: { en: 'EX', ko: '명령줄' },
   subtitle: { en: 'the operating table', ko: '수술대' },
   story: {
-    en: 'A white-tiled theatre, lit like an altar. Under the lamp a ledger lies open, and a machine has been copying it all night — badly. The Matron does not look up. "Address the page," she says. "Do not walk it."',
-    ko: '하얀 타일의 수술실. 제단처럼 불이 켜져 있다. 등불 아래 장부가 펼쳐져 있고, 기계가 밤새 그것을 베껴 왔다. 형편없이. 간호장은 고개도 들지 않는다. "주소로 말하라. 한 걸음씩 걷지 말고."',
+    en: 'The machine is open on the table, its files still warm. A voice from the speaker, flat as a checksum: "Do not walk the file. Address it."',
+    ko: '기계가 수술대 위에 열려 있다. 파일은 아직 따뜻하다. 스피커에서 체크섬처럼 납작한 목소리가 흐른다. "파일을 걷지 마라. 주소를 불러라."',
   },
   sigil: '⌗',
   hue: 130,
@@ -31,272 +31,264 @@ export const c09: Chapter = {
     // ------------------------------------------------------------------ s1
     {
       id: 'c09s1',
-      name: { en: 'The Address', ko: '주소' },
+      name: { en: 'ADDRESS', ko: '주소' },
       brief: {
-        en: 'The night shift left the page in the sink. The first three lines are water and rust; three rows further down are eaten black.\n\nCut the stain away, then the dark. One command each.',
-        ko: '야간 근무가 페이지를 물먹은 채 두고 갔다. 첫 세 줄은 물얼룩과 녹, 조금 더 아래 세 줄은 새까맣게 먹혔다.\n\n얼룩을 잘라내고, 그다음 어둠을. 각각 한 번의 명령으로.',
+        en: 'A boot log, thirteen lines. The first three are noise the disk wrote over; three rows in the middle fail the checksum.\n\nCut both blocks by address. Two commands.',
+        ko: '부팅 로그, 열세 줄. 첫 세 줄은 디스크가 덮어쓴 노이즈, 중간의 세 줄은 체크섬을 통과하지 못했다.\n\n두 블록을 주소로 잘라내라. 명령 두 번.',
       },
-      text: `STAINED@PAGE - NIGHT LEDGER
-----------------------------
-the ink ran here
-ITEM        STATE
-illegible   illegible
-illegible   illegible
-illegible   illegible
-clamp       clean
-thread      black
-drain       clean
-scissors    dull
-tray        steel
-apron       torn`,
-      // `:d` changes `buf.lines` in place without refreshing the buffer's
-      // cached flat text, so an `exact` goal would only ever see the first
-      // cut. A line goal reads the live lines; the trailing '' sentinel
-      // makes sure nothing survives below the last row.
+      text: `0x00@0x00 0x00 0x00 0x00
+0x00 0x00 0x00 0x00 0x00
+0x00 0x00 0x00 0x00 0x00
+ID  NAME    STATE
+??  ??????  ?????
+??  ??????  ?????
+??  ??????  ?????
+01  boot    ok
+02  mount   ok
+03  net     ok
+04  ledger  ok
+05  vault   ok
+06  cursor  ok`,
       goal: {
-        type: 'lines',
-        from: 1,
-        lines: [
-          'ITEM        STATE',
-          'clamp       clean',
-          'thread      black',
-          'drain       clean',
-          'scissors    dull',
-          'tray        steel',
-          'apron       torn',
-          '',
-        ],
+        type: 'exact',
+        text: `ID  NAME    STATE
+01  boot    ok
+02  mount   ok
+03  net     ok
+04  ledger  ok
+05  vault   ok
+06  cursor  ok`,
       },
       par: 12,
       solution: ':1,3d<CR>:2,4d<CR>',
       teaches: [],
       hints: [
         {
-          en: 'A colon opens the command line. A range is written `first,last`: `:1,3d` deletes lines 1 to 3.',
-          ko: '콜론이 명령줄을 연다. 범위는 `처음,끝`으로 쓴다. `:1,3d`는 1~3번 줄을 지운다.',
+          en: 'A colon opens the command line. A range is `first,last`: `:1,3d` deletes lines 1 to 3.',
+          ko: '콜론이 명령줄을 연다. 범위는 `처음,끝`. `:1,3d`는 1~3번 줄을 지운다.',
         },
         {
-          en: 'After the stain is gone the rows slide up. Count again: the eaten ones are now lines 2, 3 and 4.',
-          ko: '얼룩이 사라지면 줄들이 위로 당겨진다. 다시 세라. 먹힌 줄은 이제 2, 3, 4번이다.',
+          en: 'After the noise is gone the rows slide up. Count again: the failed rows are lines 2, 3 and 4.',
+          ko: '노이즈가 사라지면 줄들이 위로 당겨진다. 다시 세라. 실패한 줄은 이제 2, 3, 4번이다.',
         },
       ],
       whisper: {
-        en: 'A range is two addresses and the seam between them.',
-        ko: '범위는 두 개의 주소와 그 사이의 솔기다.',
+        en: 'Two addresses. The machine walks.',
+        ko: '주소 둘. 걷는 건 기계다.',
       },
     },
 
     // ------------------------------------------------------------------ s2
     {
       id: 'c09s2',
-      name: { en: 'The Fold', ko: '접힌 곳' },
+      name: { en: 'THE FOLD', ko: '접힌 곳' },
       brief: {
-        en: 'The sheet folds after CASE 04 — the title must be written again at the fold. And CASE 09 is a hold, not a case; it belongs at the back of the list.\n\nBoth commands file their line after the address you name.',
-        ko: '장부는 CASE 04 뒤에서 접힌다. 접힌 자리에 제목이 다시 적혀야 한다. 그리고 CASE 09는 수술이 아니라 대기다. 목록 맨 뒤로 가야 한다.\n\n두 명령 모두, 지정한 주소 다음에 줄을 넣는다.',
+        en: 'The run queue folds after job 04 — the header must be printed again at the fold. Job 09 is on hold; it belongs at the end of the queue.\n\nBoth commands file their line after the address you name.',
+        ko: '실행 큐는 04번 작업 뒤에서 접힌다. 접힌 자리에 헤더가 다시 인쇄되어야 한다. 09번 작업은 보류다. 큐의 맨 끝으로 가야 한다.\n\n두 명령 모두, 지정한 주소 다음에 줄을 넣는다.',
       },
-      text: `THEATRE@THREE - NIGHT LIST
-CASE 09  port repair     hold
-CASE 01  appendix        ward 2
-CASE 02  biopsy          ward 4
-CASE 03  fracture        ward 1
-CASE 04  drains          ward 5
-CASE 05  suture          ward 6
-CASE 06  xray            ward 7
-CASE 07  stitches        ward 3
-CASE 08  tonsils         ward 2
-shift ends 06:00`,
+      text: `#@RUN QUEUE
+09  reindex      hold
+01  boot         ok
+02  mount        ok
+03  net          ok
+04  ledger       ok
+05  vault        ok
+06  cursor       ok
+07  buffer       ok
+08  flush        ok
+-- end of queue`,
       goal: {
         type: 'exact',
-        text: `THEATRE THREE - NIGHT LIST
-CASE 01  appendix        ward 2
-CASE 02  biopsy          ward 4
-CASE 03  fracture        ward 1
-CASE 04  drains          ward 5
-THEATRE THREE - NIGHT LIST
-CASE 05  suture          ward 6
-CASE 06  xray            ward 7
-CASE 07  stitches        ward 3
-CASE 08  tonsils         ward 2
-CASE 09  port repair     hold
-shift ends 06:00`,
+        text: `# RUN QUEUE
+01  boot         ok
+02  mount        ok
+03  net          ok
+04  ledger       ok
+# RUN QUEUE
+05  vault        ok
+06  cursor       ok
+07  buffer       ok
+08  flush        ok
+09  reindex      hold
+-- end of queue`,
       },
-      par: 13,
-      solution: ':1t 6<CR>:2m 11<CR>',
+      par: 11,
+      solution: ':1t6<CR>:2m11<CR>',
       teaches: [':m', ':t'],
       hints: [
         {
-          en: '`m` moves a line; `t` copies it. Both take an address after them: `:1t 6` copies line 1 to after line 6.',
-          ko: '`m`은 줄을 옮기고 `t`는 복사한다. 둘 다 뒤에 주소를 받는다. `:1t 6`은 1번 줄을 6번 줄 다음으로 복사한다.',
+          en: '`m` moves a line; `t` copies it. Both take an address: `:1t6` copies line 1 to after line 6.',
+          ko: '`m`은 줄을 옮기고 `t`는 복사한다. 둘 다 주소를 받는다. `:1t6`은 1번 줄을 6번 줄 다음으로 복사한다.',
         },
         {
-          en: 'Fold first: copy the title after CASE 04. Then CASE 08 is line 11 — file CASE 09 after it.',
-          ko: '먼저 접어라. 제목을 CASE 04 다음으로 복사한다. 그러면 CASE 08이 11번 줄이 된다. CASE 09를 그 뒤로 옮긴다.',
+          en: 'Fold first: copy the header after job 04. Then job 08 is line 11 — file job 09 after it.',
+          ko: '먼저 접어라. 헤더를 04번 작업 다음으로 복사한다. 그러면 08번 작업이 11번 줄이 된다. 09번 작업을 그 뒤로 옮긴다.',
         },
       ],
       whisper: {
-        en: 'Moving is not cutting. The line is not lost; it is filed.',
-        ko: '옮기는 것은 자르는 게 아니다. 줄은 사라지지 않는다. 제자리를 찾을 뿐이다.',
+        en: 'A copy stays. A move leaves.',
+        ko: '복사는 남고, 이동은 떠난다.',
       },
     },
 
     // ------------------------------------------------------------------ s3
     {
       id: 'c09s3',
-      name: { en: 'The Tray', ko: '쟁반' },
+      name: { en: 'THE TABLE', ko: '표' },
       brief: {
-        en: 'Two hands wrote the tray list, and both were tired. The names are shuffled, and some were written twice.\n\nAlphabetical. Each name once.',
-        ko: '두 손이 쟁반 목록을 적었고, 둘 다 지쳐 있었다. 이름은 뒤섞였고, 몇 개는 두 번 적혔다.\n\n가나다순으로. 이름마다 한 번씩.',
+        en: 'The linker wrote the symbol table twice, and shuffled both passes. Some symbols were registered twice.\n\nAlphabetical. One of each.',
+        ko: '링커가 심볼 표를 두 번 썼고, 두 번 모두 뒤섞였다. 어떤 심볼은 두 번 등록됐다.\n\n알파벳순. 하나씩만.',
       },
-      text: `scalpel@    clean
-gauze       clean
-clamp       rusted
-drain       clean
-forceps     bent
-lamp        dim
-needle      bent
-suture      fine
-thread      black
-gauze       clean
-tray        steel
-mask        clean
-tray        steel`,
+      text: `cursor@ 0x3f
+stack   0x10
+heap    0x22
+clock   0x08
+bus     0x04
+stack   0x10
+cache   0x40
+disk    0x80
+log     0x1c
+trace   0x2b
+pipe    0x2a
+mutex   0x0c
+disk    0x80`,
       goal: {
         type: 'exact',
-        text: `clamp       rusted
-drain       clean
-forceps     bent
-gauze       clean
-lamp        dim
-mask        clean
-needle      bent
-scalpel     clean
-suture      fine
-thread      black
-tray        steel`,
+        text: `bus     0x04
+cache   0x40
+clock   0x08
+cursor  0x3f
+disk    0x80
+heap    0x22
+log     0x1c
+mutex   0x0c
+pipe    0x2a
+stack   0x10
+trace   0x2b`,
       },
       par: 8,
       solution: ':sort u<CR>',
       teaches: [':sort'],
       hints: [
         {
-          en: '`:sort` orders the whole page at once — no range needed.',
-          ko: '`:sort`는 페이지 전체를 한 번에 정렬한다. 범위도 필요 없다.',
+          en: '`:sort` orders the whole table at once — no range needed.',
+          ko: '`:sort`는 표 전체를 한 번에 정렬한다. 범위도 필요 없다.',
         },
         {
           en: 'A flag follows the command. `u` keeps one of each duplicate: `:sort u`.',
           ko: '명령 뒤에 깃발이 붙는다. `u`는 겹친 줄을 하나만 남긴다. `:sort u`.',
         },
         {
-          en: 'The other flag is `!` — `:sort !` reads the whole list backwards, for when the night asks for descending.',
-          ko: '다른 깃발은 `!`. `:sort !`는 목록을 거꾸로 읽는다. 밤이 내림차순을 원할 때 쓴다.',
+          en: 'The other flag is `!` — `:sort!` reads the table backwards, for when the machine wants descending.',
+          ko: '다른 깃발은 `!`. `:sort!`는 표를 거꾸로 읽는다. 기계가 내림차순을 원할 때 쓴다.',
         },
       ],
       whisper: {
-        en: 'Order is a kind of mercy.',
-        ko: '질서도 일종의 자비다.',
+        en: 'Sorted is findable.',
+        ko: '정렬되면 찾을 수 있다.',
       },
     },
 
     // ------------------------------------------------------------------ s4
     {
       id: 'c09s4',
-      name: { en: 'All At Once', ko: '한 번에' },
+      name: { en: 'BATCH', ko: '일괄' },
       brief: {
-        en: "The clerk's machine left a comma at the end of every row. Twelve rows. Your finger already knows how long that takes.\n\nSay it once. Let the page repeat it.",
-        ko: '서기의 기계가 모든 줄 끝에 쉼표를 남겼다. 열두 줄. 손가락이 이미 안다. 얼마나 오래 걸리는지.\n\n한 번만 말하라. 페이지가 따라 하게.',
+        en: 'The machine reads a config line only when it ends in `;`. Twelve lines came back without one.\n\nSay it once. Let the page repeat it.',
+        ko: '기계는 줄 끝에 `;`가 있어야 설정 줄을 읽는다. 열두 줄 모두 세미콜론 없이 돌아왔다.\n\n한 번만 말하라. 페이지가 따라 하게.',
       },
-      text: `CASE@01  appendix        ward 2,
-CASE 02  biopsy          ward 4,
-CASE 03  fracture        ward 1,
-CASE 04  drains          ward 5,
-CASE 05  suture          ward 6,
-CASE 06  xray            ward 7,
-CASE 07  stitches        ward 3,
-CASE 08  tonsils         ward 2,
-CASE 09  port repair     hold,
-CASE 10  gall bladder    ward 9,
-CASE 11  knee            ward 8,
-CASE 12  wrist           ward 6,`,
+      text: `mode@     fast
+threads   8
+queue     64
+retry     3
+timeout   30
+log       warn
+cache     0x40
+sector    7
+cursor    0x3f
+checksum  on
+backup    nightly
+uptime    0`,
       goal: {
         type: 'exact',
-        text: `CASE 01  appendix        ward 2
-CASE 02  biopsy          ward 4
-CASE 03  fracture        ward 1
-CASE 04  drains          ward 5
-CASE 05  suture          ward 6
-CASE 06  xray            ward 7
-CASE 07  stitches        ward 3
-CASE 08  tonsils         ward 2
-CASE 09  port repair     hold
-CASE 10  gall bladder    ward 9
-CASE 11  knee            ward 8
-CASE 12  wrist           ward 6`,
+        text: `mode      fast;
+threads   8;
+queue     64;
+retry     3;
+timeout   30;
+log       warn;
+cache     0x40;
+sector    7;
+cursor    0x3f;
+checksum  on;
+backup    nightly;
+uptime    0;`,
       },
       par: 12,
-      solution: ':%normal $x<CR>',
+      solution: ':%normal A;<CR>',
       teaches: [':normal'],
       hints: [
         {
-          en: '`:%normal` runs normal-mode keys on every line, from the top of the page.',
+          en: '`:%normal` runs normal-mode keys on every line, from the top.',
           ko: '`:%normal`은 노멀 모드의 키를 모든 줄에서, 맨 위부터 실행한다.',
         },
         {
-          en: 'The comma is the last character of each row. `$x` takes the last character: `:%normal $x`.',
-          ko: '쉼표는 각 줄의 마지막 글자다. `$x`가 마지막 글자를 가져간다. `:%normal $x`.',
+          en: 'The `;` belongs at the end of each line. `A` appends there: `:%normal A;`.',
+          ko: '`;`는 각 줄 끝에 와야 한다. `A`가 그 자리에 덧붙인다. `:%normal A;`.',
         },
       ],
       whisper: {
-        en: 'One line is a chore. Twelve is a spell.',
-        ko: '한 줄은 잔일이고, 열두 줄은 주문이다.',
+        en: 'One line is typing. Twelve is a command.',
+        ko: '한 줄은 타이핑, 열두 줄은 명령.',
       },
     },
 
     // ------------------------------------------------------------------ s5
     {
       id: 'c09s5',
-      name: { en: 'Surgery', ko: '수술' },
+      name: { en: 'SURGERY', ko: '수술' },
       brief: {
-        en: 'The top page is gone; only the rows remain. A machine numbered them, shuffled them, and joined each item to its state with the old dash.\n\nNo numbers. Alphabetical. A colon between item and state.',
-        ko: '맨 윗장은 사라지고 줄만 남았다. 기계가 번호를 매기고, 뒤섞고, 항목과 상태를 옛 줄표로 이어 놓았다.\n\n번호는 없다. 가나다순. 항목과 상태 사이에는 콜론.',
+        en: 'The table came back numbered, shuffled, and joined with the old dash. Twelve records.\n\nNo numbers. Alphabetical. One colon between key and value.',
+        ko: '표가 번호가 매겨지고 뒤섞인 채 돌아왔다. 옛 줄표로 이어져 있다. 열두 개의 레코드.\n\n번호는 없다. 알파벳순. 키와 값 사이에는 콜론 하나.',
       },
-      text: `05@scalpel - sharp
-02 gauze - clean
-09 suture - fine
-01 tray - steel
-07 clamp - rusted
-03 lamp - dim
-06 thread - black
-04 forceps - bent
-08 drain - clean
-10 scissors - dull
-11 apron - torn
-12 mask - clean`,
+      text: `05@mutex - locked
+02 cache - 0x40
+09 stack - 0x10
+01 bus - idle
+07 clock - 0x08
+03 log - warn
+06 pipe - open
+04 heap - 0x22
+08 socket - closed
+10 trace - off
+11 sector - 7
+12 cursor - 0x3f`,
       goal: {
         type: 'exact',
-        text: `apron : torn
-clamp : rusted
-drain : clean
-forceps : bent
-gauze : clean
-lamp : dim
-mask : clean
-scalpel : sharp
-scissors : dull
-suture : fine
-thread : black
-tray : steel`,
+        text: `bus : idle
+cache : 0x40
+clock : 0x08
+cursor : 0x3f
+heap : 0x22
+log : warn
+mutex : locked
+pipe : open
+sector : 7
+socket : closed
+stack : 0x10
+trace : off`,
       },
       par: 31,
       solution: ':%normal 3x<CR>:sort<CR>:%s/ - / : /<CR>',
       teaches: [],
       hints: [
         {
-          en: 'Three passes: strip, sort, replace. Begin with the numbers — three characters on every row: `:%normal 3x`.',
+          en: 'Three passes: strip, sort, replace. Begin with the numbers — three characters on every line: `:%normal 3x`.',
           ko: '세 번: 번호를 자르고, 정렬하고, 바꾼다. 번호부터. 모든 줄의 세 글자: `:%normal 3x`.',
         },
         {
-          en: 'The list is shuffled. `:sort` settles it.',
-          ko: '목록이 뒤섞여 있다. `:sort`가 정리한다.',
+          en: 'The table is shuffled. `:sort` settles it.',
+          ko: '표가 뒤섞여 있다. `:sort`가 정리한다.',
         },
         {
           en: 'Last, the dash becomes a colon: `:%s/ - / : /`.',
@@ -304,8 +296,8 @@ tray : steel`,
         },
       ],
       whisper: {
-        en: 'Three passes. Then the page is quiet.',
-        ko: '세 번 지나면, 페이지는 조용해진다.',
+        en: 'Three passes. No fingerprints.',
+        ko: '세 번 지나면 지문은 남지 않는다.',
       },
     },
   ],

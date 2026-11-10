@@ -16,7 +16,7 @@ import type { Chapter } from '../../core/game/types.ts';
  *  - Engine note: no ghost needs <C-i> or ( . `jumpForward` is currently
  *    unreachable (jumpIndex always sits at jumps.length - 1) and `(` only
  *    finds a sentence end when the punctuation is preceded by a space.
- *    Both are taught in the s4/s3 whispers, not in the solutions.
+ *    Both are described in the s3/s4 whispers, never used by a ghost.
  */
 export const c08: Chapter = {
   id: 'c08',
@@ -116,8 +116,8 @@ export const c08: Chapter = {
         ko: '네 개의 로그 블록. 빛 하나는 어떤 문장의 첫 글자에, 먼 빛은 어떤 블록의 첫 자리에 있다.\n\n문장은 걸음이고, 블록은 방이다.',
       },
       whisper: {
-        en: 'Do not count lines. Count blocks.',
-        ko: '줄을 세지 마라. 블록을 세라.',
+        en: 'Sentences are steps: ) forward, ( back. Blocks are rooms: } down, { up.',
+        ko: '문장은 걸음이다. )는 앞으로, (는 뒤로. 블록은 방이다. }는 아래로, {는 위로.',
       },
       text: `@block 0: the wall is solid. no port here.
 no window either. the block is a stub.
@@ -196,7 +196,7 @@ trace 4 is the one you cannot see yet.`,
         ko: '배운 것 전부가 한 길에. 걷는 것은 없다.',
       },
       text: `      $ gate: entry point. you stand five@bytes in.
-        every wall here is a brace, every room a blank line.
+        every wall a brace, every room a blank line.
 
 $  {  node 1: the wall
       {  node 2: the inner room
