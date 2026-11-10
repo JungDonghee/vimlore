@@ -112,20 +112,19 @@ one `drawImage`, four offset blits for bloom, then cursor/particles. If you add
 an effect, measure it on a 2019 phone: the budget is one 60fps frame at
 390×844. Never introduce per-frame allocation in `render()`.
 
-## Known gaps (fix these next, carefully)
+## Known gaps
 
-The engine is faithful for everything the levels use, but three motions are off:
+The three motion bugs listed here in v0.2 (<C-o>/<C-i> jumplist, `(` sentence
+back) are **fixed** and locked down by `tools/cases.ts` — the oracle is now
+107/107 against a real vim, and `c08s4` was re-verified after the change.
+Remaining, in priority order:
 
-1. `<C-i>` never advances — `jumpForward` requires `jumpIndex < jumps.length-1`
-   while every push sets `jumpIndex` to the end.
-2. `<C-o>` skips one entry (off by one, and it needs 2+ jumps to respond).
-3. `(` (sentence back) scans for whitespace *before* the terminator and falls
-   through to offset 0.
-
-`c08s4` is built on the current `<C-o>` behaviour: if you fix the jumplist,
-re-derive that stage and re-run `npm run lint:levels -- 8`. Also unimplemented:
-`:s///c` confirmation, split windows/buffers (levels are single-buffer), and
-`gq` uses the stage's `textwidth` rather than the editor option.
+1. `:s///c` confirmation is not implemented (flags `g`, `i`, `&` are).
+2. No split windows / multiple buffers; every level is a single buffer.
+3. `gq` uses the stage's `textwidth`, not the editor option.
+4. `:normal`, macros and `:g` are not recursive and do not enforce Vim's
+   nesting limits.
+5. No `gn`, `g;`, `gi`, fold commands, or `:put`/`:read`.
 
 ## Shipping
 
