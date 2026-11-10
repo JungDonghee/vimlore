@@ -13,9 +13,11 @@ for (const name of assets) {
   const path = join(dist, 'assets', name);
   const body = readFileSync(path, 'utf8');
   if (extname(name) === '.js') {
-    html = html.replace(new RegExp(`<script[^>]*src="[^"]*${name}"[^>]*></script>`), `<script type="module">${body.replace(/<\/script>/g, '<\\/script>')}</script>`);
+    const tag = `<script type="module">${body.replace(/<\/script>/g, '<\\/script>')}</script>`;
+    html = html.replace(new RegExp(`<script[^>]*src="[^"]*${name}"[^>]*></script>`), () => tag);
   } else if (extname(name) === '.css') {
-    html = html.replace(new RegExp(`<link[^>]*href="[^"]*${name}"[^>]*>`), `<style>${body}</style>`);
+    const tag = `<style>${body}</style>`;
+    html = html.replace(new RegExp(`<link[^>]*href="[^"]*${name}"[^>]*>`), () => tag);
   }
 }
 

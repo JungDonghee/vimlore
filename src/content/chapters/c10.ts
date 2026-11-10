@@ -14,11 +14,9 @@ import type { Chapter } from '../../core/game/types.ts';
  *    classes at once (case, width, a doubled line, an indent, a repeated
  *    misspelling), and par only falls if the fixes happen in the right order:
  *    words before lines, and the dot last.
- *  - `unlocks: ['g']` is the floor's key; every other key in the ghosts (d, c,
- *    ., q, @, J, <) is already granted by c03/c05/c07, so the gate agrees with
- *    the cumulative curriculum and nothing here re-grants an old key.
- *  - `unlocks` note: c05 also grants 'g' (for gv/gJ); the duplicate is
- *    deliberate — this floor must stand on its own if the c05 slot changes.
+ *  - `unlocks: ['g']` is the floor's key. Every other key the ghosts type
+ *    (d c . q @ J <) was already granted by c03/c05/c07, so the gate and the
+ *    cumulative curriculum agree; c05's own 'g' makes this a harmless double.
  *  - The two heavy stages were verified with `--trace`: s4 ends on the dot
  *    after 2@a, s6 ends on a dot that repeats `ciwthreads<Esc>` from the
  *    couplet up into the reflowed paragraph. Do not reorder those ghosts
@@ -33,7 +31,7 @@ export const c10: Chapter = {
     en: 'Ten floors up, the tower has no ceiling — only a loom, and a page that is almost whole. The threads are still warm. Someone has been waiting for a hand that knows where to stand.',
     ko: '열 층을 올라가면 탑에는 천장이 없다. 직조기 하나, 거의 온전한 페이지 하나. 실은 아직 따뜻하다. 어디에 서야 하는지 아는 손을 누군가 기다리고 있었다.',
   },
-  sigil: '⋈',
+  sigil: '▦',
   hue: 130,
   unlocks: ['g'],
   stages: [
@@ -77,8 +75,8 @@ saw the threads and put me back.`,
       id: 'c10s2',
       name: { en: 'Voice', ko: '목소리' },
       brief: {
-        en: 'The page does not know how loud to be. The title whispers; the gift shouts; the mirror line is the exact inverse of itself. Set the voice.',
-        ko: '페이지는 제 목소리의 크기를 모른다. 제목은 속삭이고, 선물은 외치고, 거울 줄은 자기 자신의 정확한 반대다. 목소리를 맞춰라.',
+        en: 'The page has lost its voice. The title whispers; the gift shouts; the mirror line is flipped letter for letter.\n\nSet all three.',
+        ko: '페이지가 목소리를 잃었다. 제목은 속삭이고, 선물은 외치고, 거울 줄은 글자마다 뒤집혀 있다.\n\n셋을 맞춰라.',
       },
       whisper: { en: 'Shout, quiet, or flip — the same key, wearing three hats.', ko: '외치기, 조용히, 뒤집기 — 같은 키가 세 개의 모자를 쓴다.' },
       startChar: '',
