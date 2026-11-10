@@ -4,8 +4,11 @@ import os, re, sys, zipfile
 from html.parser import HTMLParser
 from pathlib import Path
 
-OUT = Path(__file__).resolve().parent.parent / "books-text"
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "books-text"
 OUT.mkdir(exist_ok=True)
+BOOKS = ROOT / "books"          # drop the PDFs/EPUBs here
+BOOKS.mkdir(exist_ok=True)
 
 ATTACH = Path("/home/jung/.dsh/attachments/v1/files")
 FILES = {
@@ -78,8 +81,15 @@ def clean(t):
     t = re.sub(r"\n{3,}", "\n\n", t)
     return t.strip()
 
-for slug, rel in FILES.items():
-    src = ATTACH / rel
+def discover():
+    """Prefer ./books/*.{pdf,epub}; fall back to the original attachment map."""
+    found = sorted([p for p in BOOKS.iterdir() if p.suffix.lower() in (".pdf", ".epub")]) if BOOKS.exists() else []
+    if found:
+        return [(p.stem.lower().replace(" ", "-")[:48], str(p)) for p in found]
+    return list(FILES.items())
+
+for slug, rel in discover():
+    src = Path(rel) if str(rel).startswith("/") else (ATTACH / rel)
     dst = OUT / f"{slug}.txt"
     if dst.exists() and dst.stat().st_size > 1000:
         print(f"skip {slug}")

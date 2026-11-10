@@ -9,3 +9,4 @@ books-text/
 .secrets/
 *.pem
 .env
+books/
