@@ -1,5 +1,8 @@
 # AGENTS.md — read this first
 
+> **진행 중인 작업을 이어받는 중이라면** [`docs/HANDOFF.md`](docs/HANDOFF.md)를 먼저 읽어라.
+> 현재 상태·남은 버그 목록·작업 방법론·함정이 모두 거기 있다. 이 파일은 영속 불변식이다.
+
 VIMLORE is a **Vim teaching game**. The player is a cursor inside a text
 buffer and plays with *real Vim keys*. It must feel like a game, not a course.
 
