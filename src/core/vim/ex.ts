@@ -130,9 +130,17 @@ export function executeEx(vim: Vim, input: string): void {
     return;
   }
 
-  const space = cmd.search(/\s/);
-  const name = space === -1 ? cmd : cmd.slice(0, space);
-  const arg = space === -1 ? '' : cmd.slice(space + 1).trim();
+  // Commands may be glued to their argument in Vim (`:1m5`, `:sort!`, `:2t4`).
+  const CMDS = ['nohlsearch', 'normal', 'sort', 'copy', 'noh', 'norm', 'wq', 'co', 'd', 'm', 't', 'w', 'x', 'q'];
+  let name = '';
+  let arg = '';
+  for (const k of CMDS) {
+    if (cmd === k || cmd.startsWith(k)) {
+      name = k;
+      arg = cmd.slice(k.length).trim();
+      break;
+    }
+  }
 
   switch (name) {
     case 'd':

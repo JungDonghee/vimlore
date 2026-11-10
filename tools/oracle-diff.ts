@@ -74,6 +74,12 @@ try {
 }
 
 const expected: Result[] = JSON.parse(readFileSync(outFile, 'utf8'));
+if (process.argv.includes('--emit')) {
+  const { writeFileSync: wf } = await import('node:fs');
+  wf('tests/vim-expected.json', JSON.stringify(expected, null, 0) + '\n');
+  console.log(`emitted tests/vim-expected.json (${expected.length} cases)`);
+  process.exit(0);
+}
 const verbose = process.argv.includes('--verbose');
 
 function runEngine(c: (typeof CASES)[number]): Result {

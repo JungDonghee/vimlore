@@ -2082,6 +2082,7 @@ export class Vim {
     const before = this.snapshot();
     const removed = this.buf.lines.splice(a, b - a + 1);
     if (this.buf.lines.length === 0) this.buf.setLines(['']);
+    else this.buf.setLines(this.buf.lines);
     this.storeRegister(null, removed.join('\n') + '\n', true, false);
     this.cursor = { line: Math.min(a, this.buf.lineCount - 1), col: 0 };
     this.commit(before, 'delete');
@@ -2137,6 +2138,7 @@ export class Vim {
       const before = this.snapshot();
       for (let i = lines.length - 1; i >= 0; i--) this.buf.lines.splice(lines[i], 1);
       if (this.buf.lines.length === 0) this.buf.setLines(['']);
+      else this.buf.setLines(this.buf.lines);
       this.cursor = { line: Math.min(lines[0], this.buf.lineCount - 1), col: 0 };
       this.commit(before, 'delete');
       this.echo(`${lines.length} line(s) deleted`, 'good');
@@ -2181,6 +2183,8 @@ export class Vim {
     for (let l = Math.max(0, l1); l <= Math.min(this.buf.lineCount - 1, l2); l++) {
       this.cursor = { line: l, col: 0 };
       for (const k of toks) this.feed(k);
+      // Vim's :normal always finishes the line in normal mode.
+      if (this.mode === 'insert' || this.mode === 'replace') this.feed('<Esc>');
     }
     this.replaying = false;
     this.cmdKeys = [];

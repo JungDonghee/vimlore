@@ -1,0 +1,6 @@
+node_modules/
+dist/
+books-text/
+.npm-cache/
+*.log
+.DS_Store
