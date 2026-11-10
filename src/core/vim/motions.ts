@@ -216,25 +216,32 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
   let off = env.buf.idx(env.cursor);
   for (let n = 0; n < count; n++) {
     if (dir === 1) {
+      let moved = false;
       for (let i = off + 1; i < flat.length; i++) {
         if (/[.!?]/.test(flat[i]) && (i + 1 >= flat.length || /[\s"'\])]/.test(flat[i + 1]))) {
           let j = i + 1;
           while (j < flat.length && /\s/.test(flat[j])) j++;
           off = Math.min(j, flat.length - 1);
+          moved = true;
           break;
         }
-        if (i >= flat.length - 2) { off = flat.length - 1; break; }
       }
+      if (!moved) off = Math.max(0, flat.length - 1);
     } else {
+      // Start of the current sentence, else the previous one. A sentence ends
+      // at [.!?] followed by whitespace, so scan for that, then skip the gap.
+      let target = 0;
       for (let i = off - 1; i > 0; i--) {
-        if (/[.!?]/.test(flat[i]) && /\s/.test(flat[i - 1] ?? '')) {
+        if (/[.!?]/.test(flat[i]) && /\s/.test(flat[i + 1] ?? ' ')) {
           let j = i + 1;
           while (j < flat.length && /\s/.test(flat[j])) j++;
-          off = j;
-          break;
+          if (j < off) {
+            target = j;
+            break;
+          }
         }
-        if (i <= 1) { off = 0; break; }
       }
+      off = target;
     }
   }
   return { to: env.buf.pos(off), kind: 'exclusive', jump: true };

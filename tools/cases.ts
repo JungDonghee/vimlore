@@ -116,6 +116,13 @@ export const CASES: VimCase[] = [
   { name: 'dot i', text: 'abc', cursor: [1, 0], keys: 'iX<Esc>l.' },
   { name: 'dot cw', text: 'aa bb cc', cursor: [1, 0], keys: 'cwX<Esc>w.' },
 
+  // --- jumplist / sentences ---
+  { name: 'C-o back after G', text: 'a\nb\nc\nd', cursor: [1, 0], keys: 'G<C-o>' },
+  { name: 'C-o C-i round trip', text: 'a\nb\nc\nd', cursor: [1, 0], keys: 'G<C-o><C-i>' },
+  { name: 'sentence back', text: 'One. Two. Three.', cursor: [1, 17], keys: '(' },
+  { name: 'sentence back mid', text: 'One. Two. Three.', cursor: [1, 12], keys: '(' },
+  { name: 'sentence forward', text: 'One. Two. Three.', cursor: [1, 0], keys: ')' },
+
   // --- visual --------------------------------------------------------------
   { name: 'v d', text: 'abcdef', cursor: [1, 0], keys: 'vlld' },
   { name: 'V d', text: 'a\nb\nc', cursor: [1, 0], keys: 'Vjd' },

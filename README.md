@@ -1,12 +1,23 @@
+<p align="center">
+  <a href="https://jungdonghee.github.io/vimlore/"><img src="docs/play.svg" alt="Play VIMLORE in your browser" height="58"></a>
+</p>
+
+<p align="center">
+  <a href="https://jungdonghee.github.io/vimlore/"><img src="docs/hero.jpg" alt="VIMLORE running inside a green phosphor CRT terminal" width="880"></a>
+</p>
+
+# VIMLORE
+
+**A Vim adventure that runs on a dead terminal.** No install, no account, no
+tracking, no third-party requests — one 200 kB page. A keyboard is required;
+on a phone, turn it sideways.
+
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
 > Three rules decide whether your work is correct: the engine must keep matching
 > real Vim (`tools/oracle-diff.ts`), every level must pass `npm run lint:levels`,
 > and this project never grows a server or commits a secret.
 
-# VIMLORE
-
-**A Vim adventure that runs on a dead terminal.**
 
 You are the cursor of a machine that booted in pieces. The memory is corrupt,
 the code does not compile, and the only thing that moves in here is you. Repair

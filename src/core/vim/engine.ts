@@ -788,11 +788,9 @@ export class Vim {
 
   private jumpBack(): void {
     if (this.jumpIndex > 0) {
-      const here = { ...this.cursor };
       this.jumpIndex--;
       this.cursor = M.moveTo(this.buf, this.jumps[this.jumpIndex]);
-      this.jumps.push(here);
-      this.jumpIndex = this.jumps.length - 1;
+      this.wantColValue = this.cursor.col;
     } else this.bell();
     this.afterUnit();
   }
@@ -801,6 +799,7 @@ export class Vim {
     if (this.jumpIndex < this.jumps.length - 1) {
       this.jumpIndex++;
       this.cursor = M.moveTo(this.buf, this.jumps[this.jumpIndex]);
+      this.wantColValue = this.cursor.col;
     } else this.bell();
     this.afterUnit();
   }
