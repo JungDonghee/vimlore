@@ -1,3 +1,9 @@
+> **If you are an AI agent opening this repository:**
+> run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
+> Three rules decide whether your work is correct: the engine must keep matching
+> real Vim (`tools/oracle-diff.ts`), every level must pass `npm run lint:levels`,
+> and this project never grows a server or commits a secret.
+
 # VIMLORE
 
 **A Vim adventure that runs on a dead terminal.**

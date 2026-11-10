@@ -10,7 +10,8 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "lint:levels": "node --experimental-strip-types tools/level-lint.ts",
-    "oracle": "node --experimental-strip-types tools/oracle-diff.ts"
+    "oracle": "node --experimental-strip-types tools/oracle-diff.ts",
+    "doctor": "node --experimental-strip-types tools/doctor.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
