@@ -52,6 +52,12 @@ export class PlayScreen {
   private overlay: HTMLElement | null = null;
   private dirty = true;
   private lastBlink = -1;
+  private modeEl: HTMLElement | null = null;
+  private posEl: HTMLElement | null = null;
+  private repeatKey: string | null = null;
+  private repeating = false;
+  private repeatDelay = 0;
+  private repeatTimer = 0;
 
   constructor(root: HTMLElement, host: PlayHost) {
     this.host = host;
@@ -70,12 +76,34 @@ export class PlayScreen {
 
   mount(): void {
     const { chapter, stage, lang } = this.host;
-    const hud = h(
+    const slug = (t: string): string =>
+      t
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+    this.modeEl = h('span', { class: 'mode normal' }, '-- NORMAL --');
+    this.posEl = h('span', { class: 'pos' }, '1,1');
+    const tabline = h(
       'div',
-      { class: 'stage-hud' },
-      h('span', { class: 'where' }, `${String(chapter.index).padStart(2, '0')} · ${KO(stage.name, lang)}`),
-      this.hearts,
+      { class: 'tabline' },
+      h('span', { class: 'path' }, `vimlore://${String(chapter.index).padStart(2, '0')}-${slug(chapter.title.en)}/${String(this.host.stageIndex + 1).padStart(2, '0')}-${slug(stage.name.en)}`),
+      h(
+        'span',
+        { class: 'flags' },
+        h('span', { class: 'mod' }, '[+]'),
+        ` ${this.host.stageIndex + 1}/${this.host.stageCount}`,
+        h('button', { class: 'tabclose', title: 'close buffer (F10)', onclick: () => this.host.onExit() }, '×'),
+      ),
+    );
+    const statusline = h(
+      'div',
+      { class: 'statusline' },
+      this.modeEl,
+      this.posEl,
+      h('span', { class: 'spacer' }),
+      h('span', { class: 'meta' }, this.t('par', '기준')),
       this.hudKeys,
+      this.hearts,
     );
     const objective = h(
       'div',
@@ -86,7 +114,10 @@ export class PlayScreen {
       h('button', { class: 'chip', onclick: () => this.restart() }, lang === 'ko' ? 'F2 재시작' : 'F2 RETRY'),
       h('button', { class: 'chip', onclick: () => void this.playGhost() }, lang === 'ko' ? 'F3 고스트' : 'F3 GHOST'),
     );
-    mount(this.root, h('div', { class: 'screen' }, hud, this.board, objective, h('div', { class: 'cmdline' }, this.echo)));
+    mount(
+      this.root,
+      h('div', { class: 'screen play' }, tabline, this.board, statusline, objective, h('div', { class: 'cmdline' }, this.echo)),
+    );
 
     this.ro = new ResizeObserver(() => this.fit());
     this.ro.observe(this.board);
@@ -95,6 +126,10 @@ export class PlayScreen {
     this.fit();
     this.showIntro();
     this.loop(0);
+  }
+
+  private t(en: string, ko: string): string {
+    return this.host.lang === 'ko' ? ko : en;
   }
 
   private fit(): void {
@@ -116,9 +151,81 @@ export class PlayScreen {
     this.hudKeys.className = `keys${over ? ' over' : ''}`;
     this.hudKeys.textContent = '';
     this.hudKeys.append(h('b', {}, String(s.keys)), ` / ${this.host.stage.par}`);
+    this.updateStatus();
+  }
+
+  /** Classic Vim statusline: mode · position, refreshed on every keystroke. */
+  private updateStatus(): void {
+    if (!this.modeEl || !this.posEl) return;
+    const vim = this.session.vim;
+    const m = vim.mode;
+    const label =
+      m === 'insert' ? '-- INSERT --'
+      : m === 'replace' ? '-- REPLACE --'
+      : m === 'visual' ? '-- VISUAL --'
+      : m === 'visual-line' ? '-- V-LINE --'
+      : m === 'visual-block' ? '-- V-BLOCK --'
+      : m === 'cmdline' ? ':'
+      : m === 'search' ? '/'
+      : '-- NORMAL --';
+    const kind = m === 'insert' || m === 'replace' ? 'insert' : m === 'normal' ? 'normal' : 'visual';
+    this.modeEl.textContent = label;
+    this.modeEl.className = `mode ${kind}`;
+    this.posEl.textContent = `${vim.cursor.line + 1},${vim.cursor.col + 1}`;
+  }
+
+  // ------------------------------------------------------------- key repeat
+  //
+  // OS auto-repeat is not reliable across platforms (macOS press-and-hold,
+  // focus quirks, kiosk browsers), so the game runs its own repeat loop and
+  // ignores `e.repeat`. 300 ms delay, then 45 ms per step — Vim-ish.
+
+  private startRepeat(key: string): void {
+    this.stopRepeat();
+    if (!/^.$/u.test(key)) return;
+    this.repeatKey = key;
+    this.repeatDelay = window.setTimeout(() => {
+      this.repeatTimer = window.setInterval(() => {
+        if (this.repeatKey === null || this.state !== 'playing' || this.ghosting) {
+          this.stopRepeat();
+          return;
+        }
+        this.repeating = true;
+        const ok = this.session.feed(this.repeatKey);
+        this.repeating = false;
+        if (!ok) {
+          this.stopRepeat();
+          return;
+        }
+        this.dirty = true;
+        this.updateHud();
+      }, 50);
+    }, 320);
+  }
+
+  /** Called on blur / visibility change: a held key must never stick. */
+  stopRepeatNow(): void {
+    this.stopRepeat();
+  }
+
+  private stopRepeat(): void {
+    this.repeatKey = null;
+    if (this.repeatDelay) window.clearTimeout(this.repeatDelay);
+    if (this.repeatTimer) window.clearInterval(this.repeatTimer);
+    this.repeatDelay = 0;
+    this.repeatTimer = 0;
+  }
+
+  handleKeyUp(e: KeyboardEvent): void {
+    const key = fromKeyboardEvent(e);
+    if (key && key === this.repeatKey) this.stopRepeat();
   }
 
   private updateMatches(): void {
+    if (!this.session.vim.lastSearch) {
+      this.matches = [];
+      return;
+    }
     const ms = this.session.vim.searchMatches();
     if (!ms.length) {
       this.matches = [];
@@ -136,7 +243,7 @@ export class PlayScreen {
     if (this.destroyed) return;
     switch (e.type) {
       case 'key':
-        this.host.sfx.tick(this.session.vim.cursor.line);
+        if (!this.repeating) this.host.sfx.tick(this.session.vim.cursor.line);
         break;
       case 'vim':
         this.onVimEvent(e.event);
@@ -173,6 +280,13 @@ export class PlayScreen {
 
   private onVimEvent(ev: { type: string; [k: string]: unknown }): void {
     this.dirty = true;
+    if (ev.type === 'ex') {
+      const cmd = String(ev.command ?? '').trim().toLowerCase();
+      if (/^(q|q!|wq|wq!|x|x!|qa|qa!)$/.test(cmd)) {
+        this.host.onExit();
+        return;
+      }
+    }
     if (ev.type === 'change') {
       const before = String(ev.before ?? '');
       const after = String(ev.after ?? '');
@@ -212,6 +326,7 @@ export class PlayScreen {
 
   handleKey(e: KeyboardEvent): boolean {
     this.dirty = true;
+    if (e.repeat) return true; // our own repeat loop handles held keys
     if (this.state === 'intro') {
       if (e.key === 'Enter') {
         this.begin();
@@ -253,6 +368,10 @@ export class PlayScreen {
       this.restart();
       return true;
     }
+    if (e.key === 'F10') {
+      this.host.onExit();
+      return true;
+    }
     if (e.key === 'F3') {
       void this.playGhost();
       return true;
@@ -267,9 +386,10 @@ export class PlayScreen {
     }
     this.hintBox?.remove();
     this.hintBox = null;
-    this.session.feed(key);
+    const accepted = this.session.feed(key);
     this.updateHud();
     this.showEcho(key);
+    if (accepted) this.startRepeat(key);
     return true;
   }
 
@@ -285,6 +405,7 @@ export class PlayScreen {
   }
 
   private begin(): void {
+    this.stopRepeat();
     this.state = 'playing';
     this.overlay?.remove();
     this.overlay = null;
@@ -293,6 +414,7 @@ export class PlayScreen {
   }
 
   restart(): void {
+    this.stopRepeat();
     this.session = this.session.restart();
     this.state = 'playing';
     this.overlay?.remove();
@@ -501,6 +623,7 @@ export class PlayScreen {
   }
 
   destroy(): void {
+    this.stopRepeat();
     this.destroyed = true;
     cancelAnimationFrame(this.raf);
     this.ro?.disconnect();

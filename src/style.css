@@ -1036,3 +1036,94 @@ body.crt-off .overlay {
 .sk { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 2px 7px; margin: 0 4px 4px 0; border-radius: 2px; border: 1px solid var(--line-soft); color: #0d2b1a; }
 .sk.open { color: var(--ph-dim); border-color: var(--line); }
 .sk.on { color: #04140a; background: var(--ph); border-color: transparent; box-shadow: 0 0 10px rgb(102 255 158 / 0.35); }
+
+/* ---------------------------------------------------- play: terminal chrome */
+/* The play screen is meant to read as a *Vim window*, not a game board:
+   tabline on top, buffer in the middle, statusline at the bottom. */
+
+.screen.play { padding: 10px 14px 8px; gap: 0; }
+.screen.play .board { margin: 0; }
+
+.tabline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ph-dim);
+  background: linear-gradient(180deg, #0a1f13, #071409);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+  padding: 6px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tabline .path { color: var(--ph-mid); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.tabline .flags { color: var(--ph-dim); letter-spacing: 0.1em; }
+.tabline .mod { color: var(--amber); }
+
+.board {
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgb(0 0 0 / 0.3) 0 1px, transparent 1px 3px);
+  opacity: 0.55;
+}
+
+body.crt-off .board::after { display: none; }
+
+.statusline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(180deg, #0b2114, #061109);
+  color: var(--ph-dim);
+}
+
+.statusline .mode {
+  padding: 2px 9px;
+  border-radius: 2px;
+  font-weight: 600;
+  color: #04140a;
+  background: var(--ph);
+  box-shadow: 0 0 14px rgb(102 255 158 / 0.35);
+}
+.statusline .mode.insert { background: var(--amber); box-shadow: 0 0 14px rgb(255 196 107 / 0.3); }
+.statusline .mode.visual { background: #59d7ff; box-shadow: 0 0 14px rgb(89 215 255 / 0.3); }
+.statusline .pos { color: var(--ph); font-variant-numeric: tabular-nums; letter-spacing: 0.1em; }
+.statusline .meta { opacity: 0.65; }
+.statusline .keys b { color: var(--ph-bright); }
+.statusline .hearts { margin-left: 4px; letter-spacing: 0.2em; font-size: 11px; }
+.statusline .spacer { flex: 1; }
+
+/* the objective line reads like a `:` command */
+.objective .goal::before {
+  content: ":";
+}
+
+.tabclose {
+  margin-left: 10px;
+  padding: 0 4px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ph-dim);
+  border-radius: 2px;
+}
+.tabclose:hover { color: var(--danger); background: rgb(255 107 94 / 0.12); }

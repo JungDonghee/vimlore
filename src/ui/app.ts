@@ -52,6 +52,7 @@ export class App {
   stageIndex = 0;
   play: PlayScreen | null = null;
   mapSel = 0;
+  private mapFloors: HTMLElement[] = [];
   private keyHandler: (e: KeyboardEvent) => void;
 
   constructor(root: HTMLElement) {
@@ -60,6 +61,9 @@ export class App {
     this.mapSel = clamp(this.progress.currentChapter, 0, CHAPTERS.length - 1);
     this.keyHandler = (e) => this.onKey(e);
     window.addEventListener('keydown', this.keyHandler);
+    window.addEventListener('keyup', (e) => this.play?.handleKeyUp(e));
+    window.addEventListener('blur', () => this.play?.stopRepeatNow());
+    document.addEventListener('visibilitychange', () => { if (document.hidden) this.play?.stopRepeatNow(); });
     this.applyCrt();
   }
 
@@ -157,26 +161,17 @@ export class App {
     this.screen = 'map';
     const stars = this.totalStars();
     const rank = rankOf(stars);
-    const floors = CHAPTERS.map((c, i) => {
+    this.mapFloors = CHAPTERS.map((c, i) => {
       const unlocked = chapterUnlocked(this.progress, i);
       const total = c.stages.length * 3;
       const got = c.stages.reduce((n, s) => n + (this.progress.stages[s.id]?.stars ?? 0), 0);
-      const selected = i === this.mapSel;
       const cleared = chapterCleared(this.progress, i);
-      return h(
+      const el = h(
         'div',
         {
-          class: `floor${unlocked ? '' : ' locked'}${selected ? ' sel' : ''}`,
+          class: `floor${unlocked ? '' : ' locked'}`,
           style: { '--fh': String(this.phosphorHue(i)) },
-          onclick: () => {
-            this.mapSel = i;
-            if (!unlocked) {
-              this.sfx.play('locked');
-              this.goMap();
-              return;
-            }
-            this.enterChapter(i);
-          },
+          onclick: () => this.selectFloor(i, true),
         },
         h('div', { class: 'sig' }, unlocked ? c.sigil : '⊘'),
         h(
@@ -184,16 +179,11 @@ export class App {
           {},
           h('div', { class: 'name' }, h('span', { class: 'num' }, `FLOOR ${String(i + 1).padStart(2, '0')}`), this.lang === 'ko' ? c.title.ko : c.title.en),
           h('div', { class: 'sub ko' }, unlocked ? (this.lang === 'ko' ? c.subtitle.ko : c.subtitle.en) : this.t('sealed — clear the floor below', '봉인됨 — 아래층을 먼저')),
-          selected && unlocked ? h('div', { class: 'story ko' }, this.lang === 'ko' ? c.story.ko : c.story.en) : null,
+          unlocked ? h('div', { class: 'story ko', style: { display: 'none' } }, this.lang === 'ko' ? c.story.ko : c.story.en) : null,
         ),
-        h(
-          'div',
-          { class: 'stars' },
-          cleared ? '★' : '☆',
-          ' ',
-          h('span', { class: got > 0 ? '' : 'off' }, `${got}/${total}`),
-        ),
+        h('div', { class: 'stars' }, cleared ? '★' : '☆', ' ', h('span', { class: got > 0 ? '' : 'off' }, `${got}/${total}`)),
       );
+      return el;
     });
 
     mount(
@@ -207,7 +197,7 @@ export class App {
           h('h1', {}, 'VIMLORE'),
           h('div', { class: 'meta' }, `${rank[this.lang]} · ★ ${stars}/${this.totalPossible()} · ${this.progress.totalKeys} ${this.t('keys', '키')}`),
         ),
-        h('div', { class: 'map-wrap' }, h('div', { class: 'map' }, ...floors)),
+        h('div', { class: 'map-wrap' }, h('div', { class: 'map' }, ...this.mapFloors)),
         h(
           'div',
           { class: 'map-foot' },
@@ -223,6 +213,35 @@ export class App {
         ),
       ),
     );
+    this.paintMap();
+  }
+
+  /** Repaint only the selection: no DOM rebuild, no flash, no scroll jump. */
+  private paintMap(): void {
+    this.mapFloors.forEach((el, i) => {
+      const on = i === this.mapSel;
+      el.classList.toggle('sel', on);
+      const story = el.querySelector('.story') as HTMLElement | null;
+      if (story) story.style.display = on ? 'block' : 'none';
+    });
+    const el = this.mapFloors[this.mapSel];
+    if (el) {
+      const r = el.getBoundingClientRect();
+      const top = el.parentElement?.parentElement?.getBoundingClientRect();
+      if (top && (r.top < top.top + 8 || r.bottom > top.bottom - 8)) el.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  private selectFloor(i: number, enter: boolean): void {
+    this.mapSel = clamp(i, 0, CHAPTERS.length - 1);
+    if (this.mapSel >= this.mapFloors.length) return;
+    if (!chapterUnlocked(this.progress, this.mapSel)) {
+      this.sfx.play('locked');
+      this.paintMap();
+      return;
+    }
+    this.paintMap();
+    if (enter) this.enterChapter(this.mapSel);
   }
 
   enterChapter(i: number): void {
@@ -622,12 +641,10 @@ export class App {
     if (this.screen === 'map') {
       if (e.key === 'ArrowUp' || e.key === 'k') {
         e.preventDefault();
-        this.mapSel = clamp(this.mapSel - 1, 0, CHAPTERS.length - 1);
-        this.goMap();
+        this.selectFloor(this.mapSel - 1, false);
       } else if (e.key === 'ArrowDown' || e.key === 'j') {
         e.preventDefault();
-        this.mapSel = clamp(this.mapSel + 1, 0, CHAPTERS.length - 1);
-        this.goMap();
+        this.selectFloor(this.mapSel + 1, false);
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (chapterUnlocked(this.progress, this.mapSel)) this.enterChapter(this.mapSel);

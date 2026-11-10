@@ -149,8 +149,8 @@ moved it. the wall is where it hung.`,
       id: 'c08s4',
       name: { en: 'The Trail', ko: '흔적' },
       brief: {
-        en: 'You begin on a light. It will not count until you come back to it.\n\nJump twice down the log, take the far light, and let the trail carry you home.',
-        ko: '빛 위에서 시작한다. 돌아오기 전까지 그 빛은 세어지지 않는다.\n\n로그 아래로 두 번 뛰고, 멀리 있는 빛을 가져라. 그리고 흔적이 너를 집으로 데려가게 두라.',
+        en: 'You begin on a light. It will not count until you come back to it.\n\nJump twice down the log, take the far light, then walk the trail back one jump at a time.',
+        ko: '빛 위에서 시작한다. 돌아오기 전까지 그 빛은 세어지지 않는다.\n\n로그 아래로 두 번 뛰고, 멀리 있는 빛을 가져간 뒤, 흔적을 한 점프씩 거꾸로 걸어 돌아와라.',
       },
       whisper: {
         en: '<C-o> walks the trail backwards. <C-i> walks it forward again.',
@@ -170,8 +170,8 @@ it has been full since the first boot.
 trace 3: the page goes on.
 trace 4 is the one you cannot see yet.`,
       goal: { type: 'collect', char: '$' },
-      par: 4,
-      solution: '}}j<C-o>',
+      par: 5,
+      solution: '}}j<C-o><C-o>',
       teaches: ['C-o'],
       hints: [
         {

@@ -123,6 +123,15 @@ export const CASES: VimCase[] = [
   { name: 'sentence back mid', text: 'One. Two. Three.', cursor: [1, 12], keys: '(' },
   { name: 'sentence forward', text: 'One. Two. Three.', cursor: [1, 0], keys: ')' },
 
+  // --- numbers ---
+  { name: 'C-a', text: 'x = 41', cursor: [1, 0], keys: '<C-a>' },
+  { name: 'C-a count', text: 'x = 41', cursor: [1, 0], keys: '3<C-a>' },
+  { name: 'C-x', text: 'x = 41', cursor: [1, 0], keys: '<C-x>' },
+  { name: 'C-a carry', text: 'n = 99', cursor: [1, 0], keys: '<C-a>' },
+  { name: 'C-a octal', text: 'id 007', cursor: [1, 3], keys: '<C-a>' },
+  { name: 'C-a hex', text: 'mask 0x1f', cursor: [1, 0], keys: '<C-a>' },
+  { name: 'C-a plain number', text: 'count 41', cursor: [1, 0], keys: '<C-a>' },
+
   // --- visual --------------------------------------------------------------
   { name: 'v d', text: 'abcdef', cursor: [1, 0], keys: 'vlld' },
   { name: 'V d', text: 'a\nb\nc', cursor: [1, 0], keys: 'Vjd' },

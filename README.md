@@ -34,7 +34,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 
 ## Why it is different
 
-- **It is really Vim.** Every keystroke runs through a faithful re-implementation
+- **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
   of Vim (`src/core/vim/`), diff-tested against a real `vim -u NONE` binary:
   102/102 identical buffers and cursors (`tools/oracle-diff.ts`).
 - **Three stars means elegance, not survival.** Every stage has a `par` — the

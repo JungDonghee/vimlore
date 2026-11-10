@@ -68,6 +68,9 @@ export class Renderer {
   fontSize = 14;
   ox = 0;
   oy = 0;
+  textX = 0;
+  digits = 2;
+  gutterCols = 4;
 
   private layerKey = '';
   private particles: Particle[] = [];
@@ -115,20 +118,24 @@ export class Renderer {
     const padY = 14;
     const availW = this.w - padX * 2;
     const availH = this.h - padY * 2;
-    const size = Math.min(availW / (cols * 0.66), availH / (rows * 1.4), 84);
+    this.digits = Math.max(2, String(rows).length);
+    this.gutterCols = this.digits + 2; // number, gap, rule
+    const totalCols = cols + this.gutterCols;
+    const size = Math.min(availW / (totalCols * 0.66), availH / (rows * 1.3), 80);
     this.fontSize = Math.max(8, Math.floor(size));
     this.ctx.font = `${this.fontSize}px ${MONO}`;
     const m = this.ctx.measureText('M').width || this.fontSize * 0.62;
     this.cellW = m;
-    this.cellH = Math.round(this.fontSize * 1.38);
+    this.cellH = Math.round(this.fontSize * 1.3);
     this.cols = cols;
     this.rows = rows;
-    this.ox = Math.round((this.w - cols * this.cellW) / 2);
+    this.ox = Math.round((this.w - totalCols * this.cellW) / 2);
+    this.textX = this.ox + this.gutterCols * this.cellW;
     this.oy = Math.round((this.h - rows * this.cellH) / 2);
   }
 
   private xOf(col: number): number {
-    return this.ox + col * this.cellW;
+    return this.textX + col * this.cellW;
   }
 
   private yOf(line: number): number {
@@ -173,6 +180,25 @@ export class Renderer {
 
     const cx = this.cellW;
     const cy = this.cellH;
+
+    // gutter: line numbers + a thin rule, like a real editor
+    g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
+    g.textAlign = 'right';
+    g.fillStyle = 'rgba(66,168,108,0.42)';
+    for (let li = 0; li < view.lines.length; li++) {
+      g.fillText(String(li + 1), this.ox + (this.digits + 0.55) * cx, this.yOf(li) + cy / 2);
+    }
+    g.textAlign = 'left';
+    g.fillStyle = 'rgba(66,168,108,0.22)';
+    g.fillRect(this.ox + (this.digits + 1.15) * cx, this.oy, 1, view.lines.length * cy);
+
+    // the classic `~` for empty space below the buffer
+    const maxRows = Math.floor((this.h - this.oy - 4) / cy);
+    g.font = `${this.fontSize}px ${MONO}`;
+    g.fillStyle = 'rgba(52,140,90,0.35)';
+    for (let li = view.lines.length; li < Math.min(view.lines.length + 6, maxRows); li++) {
+      g.fillText('~', this.textX, this.yOf(li) + cy / 2);
+    }
 
     for (let li = 0; li < view.lines.length; li++) {
       const line = view.lines[li];
@@ -373,6 +399,18 @@ export class Renderer {
       g.lineWidth = 1.5;
       g.strokeRect(this.xOf(view.ghost.col) - 1, this.yOf(view.ghost.line) + 1, view.ghost.len * this.cellW + 1, this.cellH - 2);
     }
+
+    // cursorline: a faint band + a bright line number, drawn every frame
+    // (the glyph layer is cached, so anything cursor-dependent must live here)
+    const curLine = view.cursor.line;
+    g.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.055)`;
+    g.fillRect(this.ox, this.yOf(curLine) + 1, this.w - this.ox * 2, this.cellH - 2);
+    g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
+    g.textAlign = 'right';
+    g.fillStyle = 'rgba(190,255,214,0.92)';
+    g.fillText(String(curLine + 1), this.ox + (this.digits + 0.55) * this.cellW, this.yOf(curLine) + this.cellH / 2);
+    g.textAlign = 'left';
+    g.font = `${this.fontSize}px ${MONO}`;
 
     // glyphs
     g.drawImage(this.layer, 0, 0, this.w, this.h);

@@ -112,19 +112,14 @@ one `drawImage`, four offset blits for bloom, then cursor/particles. If you add
 an effect, measure it on a 2019 phone: the budget is one 60fps frame at
 390×844. Never introduce per-frame allocation in `render()`.
 
-## Known gaps
+## Coverage and known gaps
 
-The three motion bugs listed here in v0.2 (<C-o>/<C-i> jumplist, `(` sentence
-back) are **fixed** and locked down by `tools/cases.ts` — the oracle is now
-107/107 against a real vim, and `c08s4` was re-verified after the change.
-Remaining, in priority order:
-
-1. `:s///c` confirmation is not implemented (flags `g`, `i`, `&` are).
-2. No split windows / multiple buffers; every level is a single buffer.
-3. `gq` uses the stage's `textwidth`, not the editor option.
-4. `:normal`, macros and `:g` are not recursive and do not enforce Vim's
-   nesting limits.
-5. No `gn`, `g;`, `gi`, fold commands, or `:put`/`:read`.
+The authoritative matrix of what the engine does and does not do is
+[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **114/114**
+against a real vim (jumplist, `(`/`)`, and `<C-a>`/`<C-x>` with octal/hex are
+covered). Missing on purpose: windows/buffers, folds, completion, `:set`,
+`:!`, quickfix/LSP, Vimscript/Lua, `:s///c`, and viewport motions (`zz`,
+`zt`, exact `H/M/L`).
 
 ## Shipping
 
@@ -148,9 +143,10 @@ After a successful push, remind the human to rotate the token.
 
 ## TRIALS (endless / weakness / daily)
 
-`src/core/game/trials.ts` generates chambers from eleven skill generators
+`src/core/game/trials.ts` generates chambers from twelve skill generators
 (delete-word, delete-line, change-inner, change-quotes, capture-case,
-indent-block, fix-typo, dot-repeat, duplicate-line, join-lines, substitute). **Every
+indent-block, fix-typo, dot-repeat, duplicate-line, join-lines, substitute,
+increment). **Every
 candidate is verified by simulation** (`verify()` runs the intended keystrokes
 through a real `Session`) and is rejected unless it wins on its last key — so a
 generated level can never be unbeatable. Preserve that invariant when you add a
@@ -168,3 +164,21 @@ The WEAKNESS mode feeds those ids back into `generateTrial(seed, undefined, weak
 Identity is login-free: `progress.profile{name, since}` plus an export code
 (`encodeSave`/`decodeSave`, base64 JSON) in Settings. There is no server and
 there must not be one — the game is static hosting only.
+
+## Play screen internals (v1.3)
+
+The chamber is rendered as a **Vim window**: `tabline` (buffer path) → canvas
+buffer (line-number gutter, `~` below the end, cursorline) → `statusline`
+(mode · line,col · par · hearts) → objective/command bar.
+
+Two rules keep it correct:
+
+1. The glyph layer is **cached** and only repainted when the buffer, hue or
+   collected coins change (`Renderer.layerKey`). Anything that depends on the
+   cursor — the block, the cursorline band, the bright current line number —
+   must be drawn on the **FX layer** inside `render()`. Drawing it in the
+   cached layer is a bug: it freezes until the next buffer change.
+2. Key auto-repeat is implemented by the game, not the OS (`startRepeat` in
+   `PlayScreen`): 320 ms delay, 50 ms cadence, OS `repeat` events swallowed,
+   stopped on keyup / blur / visibilitychange / win / restart. Repeats are
+   silent and never start for a key the session rejected.

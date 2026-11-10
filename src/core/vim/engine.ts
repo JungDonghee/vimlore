@@ -478,6 +478,12 @@ export class Vim {
       case '.':
         this.repeatChange();
         return;
+      case '<C-a>':
+        this.changeNumber(this.takeCount());
+        return;
+      case '<C-x>':
+        this.changeNumber(-this.takeCount());
+        return;
       case 'v':
         this.startVisual('visual');
         return;
@@ -688,16 +694,18 @@ export class Vim {
     if (jump) this.pushJump(prev);
   }
 
+  private forward: Pos[] = [];
+
   private pushJump(from: Pos): void {
-    this.jumps = this.jumps.slice(0, this.jumpIndex + 1);
     this.jumps.push({ ...from });
-    if (this.jumps.length > 50) this.jumps.shift();
-    this.jumpIndex = this.jumps.length - 1;
+    if (this.jumps.length > 60) this.jumps.shift();
+    this.forward = [];
   }
 
   private jumpTo(p: Pos, push: boolean): void {
+    const from = { ...this.cursor };
     this.moveTo(p, 'char');
-    if (push) this.pushJump({ ...this.cursor });
+    if (push) this.pushJump(from);
   }
 
   private moveBy(delta: Pos): void {
@@ -787,18 +795,20 @@ export class Vim {
   }
 
   private jumpBack(): void {
-    if (this.jumpIndex > 0) {
-      this.jumpIndex--;
-      this.cursor = M.moveTo(this.buf, this.jumps[this.jumpIndex]);
+    const to = this.jumps.pop();
+    if (to) {
+      this.forward.push({ ...this.cursor });
+      this.cursor = M.moveTo(this.buf, to);
       this.wantColValue = this.cursor.col;
     } else this.bell();
     this.afterUnit();
   }
 
   private jumpForward(): void {
-    if (this.jumpIndex < this.jumps.length - 1) {
-      this.jumpIndex++;
-      this.cursor = M.moveTo(this.buf, this.jumps[this.jumpIndex]);
+    const to = this.forward.pop();
+    if (to) {
+      this.jumps.push({ ...this.cursor });
+      this.cursor = M.moveTo(this.buf, to);
       this.wantColValue = this.cursor.col;
     } else this.bell();
     this.afterUnit();
@@ -868,6 +878,33 @@ export class Vim {
   }
 
   // ----------------------------------------------------------------- editing
+
+  /**
+   * Ctrl-a / Ctrl-x. Vim's default `nrformats` is `octal,hex`, so 007 + 1 is
+   * 010 and 0x1f + 1 is 0x20 — matched here and covered by the vim oracle.
+   */
+  private changeNumber(delta: number): void {
+    const line = this.buf.line(this.cursor.line);
+    const m = /(0[xX][0-9a-fA-F]+|0[0-7]+|\d+)/.exec(line.slice(this.cursor.col));
+    if (!m) {
+      this.bell();
+      this.afterUnit();
+      return;
+    }
+    const raw = m[0];
+    const start = this.cursor.col + m.index;
+    const isHex = /^0[xX]/.test(raw);
+    const isOctal = !isHex && raw.length > 1 && raw[0] === '0';
+    const base = isHex ? 16 : isOctal ? 8 : 10;
+    const value = parseInt(isHex ? raw.slice(2) : raw, base) + delta;
+    const next = isHex ? `0x${value.toString(16)}` : isOctal ? `0${value.toString(8)}` : String(value);
+    const before = this.snapshot();
+    this.buf.setLine(this.cursor.line, line.slice(0, start) + next + line.slice(start + raw.length));
+    this.cursor = M.moveTo(this.buf, { line: this.cursor.line, col: start + Math.max(0, next.length - 1) });
+    this.wantColValue = this.cursor.col;
+    this.commit(before, 'change');
+    this.afterUnit();
+  }
 
   private deleteChars(n: number, backward: boolean): void {
     this.takeCount();

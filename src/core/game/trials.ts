@@ -225,6 +225,23 @@ const SKILLS: TrialSkill[] = [
       };
     },
   },
+
+  {
+    id: 'increment',
+    label: 'INCREMENT',
+    tier: 2,
+    keys: ['C-a'],
+    make: (rng) => {
+      const n = int(rng, 2, 9);
+      const base = int(rng, 10, 90);
+      return {
+        text: `timeout=${base}`,
+        goalText: `timeout=${base + n}`,
+        keys: `${n}<C-a>`,
+        blurb: 'Numbers are text you can operate on. Count, then increment.',
+      };
+    },
+  },
 ];
 
 const NEWS = ['new', 'on', 'ok', 'yes', 'set', 'live'];
@@ -237,7 +254,7 @@ function newsFor(rng: () => number, n: number): string[] {
 /** All keys a trial may need are allowed: trials are never gated. */
 function allowAll(keys: string): Set<string> {
   const set = new Set<string>();
-  for (const k of tokenize(keys)) if (k.length === 1) set.add(k);
+  for (const k of tokenize(keys)) set.add(k);
   for (const c of 'hjkl0123456789dcypPwiabAescxru."\'()[]{}<>=%~/ $') set.add(c);
   return set;
 }

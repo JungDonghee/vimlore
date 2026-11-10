@@ -28,7 +28,8 @@ function vimKeys(keys: string): string {
     .replace(/<CR>/g, '\\<CR>')
     .replace(/<BS>/g, '\\<BS>')
     .replace(/<Tab>/g, '\\<Tab>')
-    .replace(/<Space>/g, ' ');
+    .replace(/<Space>/g, ' ')
+    .replace(/<C-([a-z])>/g, '\\<C-$1>');
 }
 
 const dir = mkdtempSync(join(tmpdir(), 'vimlore-oracle-'));
