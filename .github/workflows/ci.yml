@@ -13,3 +13,9 @@ jobs:
       - run: npm test
       - run: npm run lint:levels
       - run: npm run build
+      - name: absolute asset paths must not exist (blank page on subpath hosting)
+        run: |
+          if grep -qE 'src="/assets|href="/assets' dist/index.html; then
+            echo 'ABSOLUTE ASSET PATH: rebuild with base: ./ (see vite.config.ts)'
+            exit 1
+          fi
