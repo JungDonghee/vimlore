@@ -1,0 +1,20 @@
+{
+  "name": "vimlore",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "VIMLORE — a Vim adventure game that teaches real Vim by feel",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build && node tools/inline.mjs",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "lint:levels": "node --experimental-strip-types tools/level-lint.ts",
+    "oracle": "node --experimental-strip-types tools/oracle-diff.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}

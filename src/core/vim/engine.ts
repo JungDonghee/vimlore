@@ -1,0 +1,2230 @@
+import { Buffer } from './buffer.ts';
+import { ESC, CR, BS, TAB, SPACE, CTRL_W, CTRL_U, tokenize } from './keys.ts';
+import * as M from './motions.ts';
+import { textObject } from './objects.ts';
+import { allMatches, compilePattern, pickMatch, type Match } from './search.ts';
+import { executeEx } from './ex.ts';
+import type { BufferSnapshot, Mode, MotionResult, Pos, Register } from './types.ts';
+import { parseSubstituteArgs } from './ex.ts';
+
+const redge = (re: RegExp, line: string): number => (re.test(line) ? 1 : 0);
+void parseSubstituteArgs;
+
+export type VimEvent =
+  | { type: 'change'; before: string; after: string; cursor: Pos; kind: string }
+  | { type: 'yank'; register: string; text: string }
+  | { type: 'mode'; mode: Mode }
+  | { type: 'message'; text: string; level: 'info' | 'error' | 'good' }
+  | { type: 'bell' }
+  | { type: 'search'; pattern: string | null }
+  | { type: 'ex'; command: string }
+  | { type: 'locked'; key: string; message: string };
+
+type Pending =
+  | { kind: 'find'; dir: 1 | -1; till: boolean }
+  | { kind: 'char'; replace: boolean }
+  | { kind: 'mark'; set: boolean; jump: 'exact' | 'line' }
+  | { kind: 'g'; op: boolean }
+  | { kind: 'z' }
+  | { kind: 'macro-record' }
+  | { kind: 'macro-run' }
+  | { kind: 'textobj'; around: boolean }
+  | { kind: 'reg' };
+
+interface Op {
+  key: string;
+  count: number;
+  motionCount: number;
+  reg: string | null;
+}
+
+export interface SelRange {
+  start: Pos;
+  end: Pos;
+  linewise: boolean;
+  block?: { c1: number; c2: number };
+}
+
+export interface VimOptions {
+  text?: string;
+  cursor?: Pos;
+  textwidth?: number;
+  tabstop?: number;
+  shiftwidth?: number;
+  onEvent?: (e: VimEvent) => void;
+}
+
+const WORD_MOTIONS = new Set(['w', 'W', 'b', 'B', 'e', 'E']);
+const LINE_MOTIONS = new Set(['j', 'k', '+', '-', '_', CR, ESC]);
+
+/**
+ * A compact but faithful Vim emulator.
+ *
+ * Design notes for future maintainers:
+ * - Every mutation goes through `pushUndo()` once per command (insert sessions
+ *   snapshot on entry).
+ * - Dot-repeat and macros replay *keys*, exactly like Vim; there is no separate
+ *   representation of a change.
+ * - Motions return a destination + kind; operators convert that to a range.
+ */
+export class Vim {
+  buf: Buffer;
+  cursor: Pos;
+  mode: Mode = 'normal';
+  count = '';
+  op: Op | null = null;
+  pending: Pending | null = null;
+  pendingReg: string | null = null;
+  registers = new Map<string, Register>();
+  marks = new Map<string, Pos>();
+  lastFind: { char: string; dir: 1 | -1; till: boolean } | null = null;
+  lastSearch = '';
+  searchDir: 1 | -1 = 1;
+  undoStack: BufferSnapshot[] = [];
+  redoStack: BufferSnapshot[] = [];
+  visualAnchor: Pos | null = null;
+  insertStart: Pos | null = null;
+  lastInsertPos: Pos | null = null;
+  message = '';
+  messageLevel: 'info' | 'error' | 'good' = 'info';
+  cmdline = '';
+  cmdKind: ':' | '/' | '?' | null = null;
+  cmdBackup: Pos | null = null;
+  history: string[] = [];
+  lastMacro: string | null = null;
+  recording: { reg: string; keys: string[] } | null = null;
+  lastChangeKeys: string[] | null = null;
+  cmdKeys: string[] = [];
+  replaying = false;
+  showSearch = true;
+  textwidth: number;
+  tabstop: number;
+  shiftwidth: number;
+  onEvent?: (e: VimEvent) => void;
+  gate?: (key: string) => string | null;
+  jumps: Pos[] = [];
+  jumpIndex = -1;
+  lastSubstitute: { pat: string; rep: string; flags: string } | null = null;
+  readonly bufferStart: Buffer;
+  /** Set by the game layer when a level needs a specific notion of "word". */
+  version = 0;
+
+  constructor(opts: VimOptions = {}) {
+    this.buf = new Buffer(opts.text ?? '');
+    this.cursor = opts.cursor ?? { line: 0, col: 0 };
+    this.wantColValue = this.cursor.col;
+    this.textwidth = opts.textwidth ?? 72;
+    this.tabstop = opts.tabstop ?? 4;
+    this.shiftwidth = opts.shiftwidth ?? 2;
+    this.onEvent = opts.onEvent;
+    this.bufferStart = this.buf.clone();
+    this.clampCursor();
+  }
+
+  // ---------------------------------------------------------------- plumbing
+
+  private emit(e: VimEvent): void {
+    this.onEvent?.(e);
+  }
+
+  private say(text: string, level: 'info' | 'error' | 'good' = 'info'): void {
+    this.message = text;
+    this.messageLevel = level;
+    this.emit({ type: 'message', text, level });
+  }
+
+  private bell(): void {
+    this.emit({ type: 'bell' });
+  }
+
+  private setMode(mode: Mode): void {
+    if (this.mode === mode) return;
+    this.mode = mode;
+    this.emit({ type: 'mode', mode });
+  }
+
+  private snapshot(): BufferSnapshot {
+    return { lines: this.buf.lines.slice(), cursor: { ...this.cursor } };
+  }
+
+  pushUndo(): BufferSnapshot {
+    return this.snapshot();
+  }
+
+  private commit(before: BufferSnapshot, kind: string): void {
+    const after = this.buf.flat;
+    const beforeFlat = before.lines.join('\n');
+    if (after === beforeFlat) {
+      return;
+    }
+    this.undoStack.push(before);
+    if (this.undoStack.length > 200) this.undoStack.shift();
+    this.redoStack = [];
+    this.version++;
+    this.emit({ type: 'change', before: beforeFlat, after, cursor: { ...this.cursor }, kind });
+    if (this.replaying) return;
+    if (this.cmdKeys.length) this.lastChangeKeys = this.cmdKeys.slice();
+  }
+
+  /** Run a mutation with a single undo block. */
+  private mutate(kind: string, fn: () => void): void {
+    const before = this.snapshot();
+    fn();
+    this.clampCursor();
+    this.commit(before, kind);
+  }
+
+  get countNum(): number {
+    return this.count === '' ? 0 : parseInt(this.count, 10);
+  }
+
+  private takeCount(): number {
+    const n = this.countNum;
+    this.count = '';
+    return n > 0 ? n : 1;
+  }
+
+  private resetPending(clearKeys = true): void {
+    this.count = '';
+    this.op = null;
+    this.pending = null;
+    this.pendingReg = null;
+    if (clearKeys) this.cmdKeys = [];
+  }
+
+  /** Exposed for the HUD: the keys of the command currently being composed. */
+  get pendingCommand(): string {
+    return this.cmdKeys.join('');
+  }
+
+  get awaitingKey(): boolean {
+    return this.pending !== null || this.op !== null || this.count !== '' || this.pendingReg !== null;
+  }
+
+  // ------------------------------------------------------------------- input
+
+  feed(key: string): void {
+    if (this.recording && !(this.mode === 'normal' && key === 'q' && this.pending === null)) {
+      this.recording.keys.push(key);
+    }
+    if (!this.replaying) this.cmdKeys.push(key);
+
+    if (this.mode === 'insert' || this.mode === 'replace') {
+      this.insertKey(key);
+      return;
+    }
+    if (this.mode === 'cmdline' || this.mode === 'search') {
+      this.cmdlineKey(key);
+      return;
+    }
+    if (this.mode === 'visual' || this.mode === 'visual-line' || this.mode === 'visual-block') {
+      this.visualKey(key);
+      return;
+    }
+    this.normalKey(key);
+  }
+
+  feedString(keys: string): void {
+    for (const k of tokenize(keys)) this.feed(k);
+  }
+
+  // -------------------------------------------------------------- normal mode
+
+  private normalKey(key: string): void {
+    if (this.pending) {
+      this.resolvePending(key);
+      return;
+    }
+    if (key === ESC) {
+      this.resetPending();
+      this.say('');
+      return;
+    }
+    if (this.pendingReg !== null) {
+      const reg = key;
+      this.pendingReg = null;
+      if (/^[a-zA-Z0-9"_+*\-./:]$/.test(reg) || reg === '%' || reg === '#') {
+        this.pendingRegSet = reg;
+      } else {
+        this.bell();
+      }
+      this.afterUnit();
+      return;
+    }
+    if (key === '"') {
+      this.pendingReg = '';
+      return;
+    }
+    if (/^[1-9]$/.test(key) || (key === '0' && this.count !== '')) {
+      this.count += key;
+      return;
+    }
+    if (this.op) {
+      this.opKey(key);
+      return;
+    }
+
+    if (this.gate) {
+      const deny = this.gate(key);
+      if (deny) {
+        this.emit({ type: 'locked', key, message: deny });
+        this.resetPending();
+        return;
+      }
+    }
+
+    switch (key) {
+      case 'h':
+      case BS:
+        this.moveCount(key, (n) => this.moveBy({ line: 0, col: -n }));
+        return;
+      case 'l':
+      case SPACE:
+        this.moveCount(key, (n) => this.moveBy({ line: 0, col: n }));
+        return;
+      case 'j':
+      case 'k':
+        this.verticalCount(key, key === 'j' ? 1 : -1);
+        return;
+      case '0':
+        this.moveTo({ line: this.cursor.line, col: 0 }, 'char');
+        this.afterUnit();
+        return;
+      case '^':
+        this.moveTo({ line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) }, 'char');
+        this.afterUnit();
+        return;
+      case '$':
+        this.moveCount(key, (n) => {
+          const line = Math.min(this.buf.lineCount - 1, this.cursor.line + n - 1);
+          this.moveTo({ line, col: M.lineEnd(this.buf, line) }, 'char');
+        });
+        return;
+      case 'w':
+      case 'W':
+      case 'b':
+      case 'B':
+      case 'e':
+      case 'E':
+        this.wordMove(key);
+        return;
+      case 'G':
+        this.jumpTo({ line: this.countNum ? Math.min(this.buf.lineCount - 1, this.countNum - 1) : this.buf.lineCount - 1, col: 0 }, true);
+        this.takeCount();
+        this.afterUnit();
+        return;
+      case '%':
+        this.percentMotion(false);
+        return;
+      case '{':
+      case '}':
+        this.paragraphMove(key === '}' ? 1 : -1);
+        return;
+      case '(':
+      case ')':
+        this.sentenceMove(key === ')' ? 1 : -1);
+        return;
+      case '+':
+      case CR: {
+        const n = this.takeCount();
+        const line = Math.min(this.buf.lineCount - 1, this.cursor.line + n);
+        this.moveTo({ line, col: M.firstNonBlank(this.buf, line) }, 'char', true);
+        this.afterUnit();
+        return;
+      }
+      case '-': {
+        const n = this.takeCount();
+        const line = Math.max(0, this.cursor.line - n);
+        this.moveTo({ line, col: M.firstNonBlank(this.buf, line) }, 'char', true);
+        this.afterUnit();
+        return;
+      }
+      case '_': {
+        const n = this.takeCount();
+        const line = Math.min(this.buf.lineCount - 1, this.cursor.line + n - 1);
+        this.moveTo({ line, col: M.firstNonBlank(this.buf, line) }, 'char', true);
+        this.afterUnit();
+        return;
+      }
+      case '|': {
+        const n = this.takeCount();
+        this.moveTo({ line: this.cursor.line, col: Math.max(0, n - 1) }, 'char');
+        this.afterUnit();
+        return;
+      }
+      case 'f':
+      case 'F':
+      case 't':
+      case 'T':
+        this.pending = { kind: 'find', dir: key === 'f' || key === 't' ? 1 : -1, till: key === 't' || key === 'T' };
+        return;
+      case ';':
+      case ',': {
+        if (!this.lastFind) {
+          this.bell();
+          this.afterUnit();
+          return;
+        }
+        const f = this.lastFind;
+        const flip = key === ',' ? -1 : 1;
+        this.doFind(f.char, (f.dir * flip) as 1 | -1, f.till, this.countNum || 1);
+        return;
+      }
+      case 'n':
+      case 'N':
+        this.searchRepeat(key === 'n' ? this.searchDir : (-this.searchDir as 1 | -1));
+        return;
+      case '*':
+      case '#':
+        this.starSearch(key === '*');
+        return;
+      case '/':
+      case '?':
+        this.startCmdline(key === '/' ? '/' : '?');
+        return;
+      case ':':
+        this.startCmdline(':');
+        return;
+      case '`':
+      case "'":
+        this.pending = { kind: 'mark', set: false, jump: key === '`' ? 'exact' : 'line' };
+        return;
+      case 'm':
+        this.pending = { kind: 'mark', set: true, jump: 'exact' };
+        return;
+      case 'g':
+      case 'z':
+        this.pending = { kind: key as 'g' | 'z', op: false };
+        return;
+      case 'q':
+        if (this.recording) {
+          this.stopRecording();
+          this.afterUnit();
+        } else {
+          this.pending = { kind: 'macro-record' };
+        }
+        return;
+      case '@':
+        this.pending = { kind: 'macro-run' };
+        return;
+      case 'i':
+        this.enterInsert('i');
+        return;
+      case 'a':
+        this.enterInsert('a');
+        return;
+      case 'I':
+        this.enterInsert('I');
+        return;
+      case 'A':
+        this.enterInsert('A');
+        return;
+      case 'o':
+        this.enterInsert('o');
+        return;
+      case 'O':
+        this.enterInsert('O');
+        return;
+      case 's':
+        this.enterInsert('s');
+        return;
+      case 'S':
+        this.enterInsert('S');
+        return;
+      case 'C':
+        this.enterInsert('C');
+        return;
+      case 'D': {
+        const l = this.buf.line(this.cursor.line);
+        if (l.length === 0) {
+          this.bell();
+          this.afterUnit();
+          return;
+        }
+        this.deleteRange({ start: this.cursor, end: { line: this.cursor.line, col: l.length - 1 }, linewise: false }, true, this.pendingRegSet, false);
+        return;
+      }
+      case 'Y':
+        this.yankRange({ start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true }, true, this.pendingRegSet);
+        return;
+      case 'R':
+        this.enterReplace();
+        return;
+      case 'x':
+        this.deleteChars(this.countNum || 1, false);
+        return;
+      case 'X':
+        this.deleteChars(this.countNum || 1, true);
+        return;
+      case 'r':
+        this.pending = { kind: 'char', replace: true };
+        return;
+      case '~':
+        this.toggleCase(this.countNum || 1);
+        return;
+      case 'J':
+        this.joinLines(this.countNum || 2, true);
+        return;
+      case 'p':
+      case 'P':
+        this.put(this.targetRegister(), key === 'P');
+        return;
+      case 'u':
+        this.undo();
+        return;
+      case '<C-r>':
+        this.redo();
+        return;
+      case '.':
+        this.repeatChange();
+        return;
+      case 'v':
+        this.startVisual('visual');
+        return;
+      case 'V':
+        this.startVisual('visual-line');
+        return;
+      case '<C-v>':
+        this.startVisual('visual-block');
+        return;
+      case '<C-d>':
+        this.scrollHalf(1);
+        return;
+      case '<C-u>':
+        this.scrollHalf(-1);
+        return;
+      case '<C-f>':
+        this.scrollPage(1);
+        return;
+      case '<C-b>':
+        this.scrollPage(-1);
+        return;
+      case '<C-e>':
+        this.moveTo({ line: Math.min(this.buf.lineCount - 1, this.cursor.line + 1), col: this.cursor.col }, 'char');
+        return;
+      case '<C-y>':
+        this.moveTo({ line: Math.max(0, this.cursor.line - 1), col: this.cursor.col }, 'char');
+        return;
+      case '<C-o>':
+        this.jumpBack();
+        return;
+      case '<C-i>':
+        this.jumpForward();
+        return;
+      case '<Del>':
+        this.deleteChars(1, false);
+        return;
+      case 'd':
+      case 'c':
+      case 'y':
+      case '>':
+      case '<':
+        this.startOp(key);
+        return;
+      case '=':
+        this.startOp('=');
+        return;
+      default:
+        this.bell();
+        this.afterUnit();
+    }
+  }
+
+  private pendingRegSet: string | null = null;
+
+  private targetRegister(): string {
+    const r = this.pendingRegSet;
+    this.pendingRegSet = null;
+    return r ?? '"';
+  }
+
+  private afterUnit(): void {
+    if (this.mode === 'insert' || this.mode === 'replace') return;
+    if (!this.replaying && this.cmdKeys.length && !this.awaitingKey) this.cmdKeys = [];
+  }
+
+  private startOp(key: string): void {
+    this.op = { key, count: this.countNum || 1, motionCount: this.countNum || 1, reg: this.pendingRegSet };
+    this.pendingRegSet = null;
+    this.count = '';
+  }
+
+  private opKey(key: string): void {
+    const op = this.op!;
+    if (key === ESC) {
+      this.resetPending();
+      return;
+    }
+    if ((key === op.key && key !== '<') || (key === '<' && op.key === '<')) {
+      // dd, yy, cc, >>, <<, ==
+      const n = (this.countNum || 1) * op.count;
+      this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line + n - 1, col: 0 }, linewise: true });
+      return;
+    }
+    if (key === 'i' || key === 'a') {
+      this.pending = { kind: 'textobj', around: key === 'a' };
+      return;
+    }
+    if (/^[1-9]$/.test(key) || (key === '0' && this.count !== '')) {
+      this.count += key;
+      return;
+    }
+    if (key === 'g') {
+      this.pending = { kind: 'g', op: true };
+      return;
+    }
+    if (key === '/' || key === '?') {
+      this.pendingOpSearch = op;
+      this.startCmdline(key);
+      return;
+    }
+    if (key === 'f' || key === 'F' || key === 't' || key === 'T') {
+      this.pending = { kind: 'find', dir: key === 'f' || key === 't' ? 1 : -1, till: key === 't' || key === 'T' };
+      return;
+    }
+    if (key === 'w' || key === 'W') {
+      // Famous Vim special case: cw on a word acts like ce.
+      const ch = this.buf.line(this.cursor.line)[this.cursor.col] ?? '';
+      if (op.key === 'c' && ch !== '' && !/\s/.test(ch)) {
+        const m = M.wordMotion(this.motionEnv(), (this.countNum || 1) * op.count, { dir: 1, end: true, big: key === 'W' });
+        if (m) {
+          this.finishOpWithMotion(op, m);
+          return;
+        }
+      }
+    }
+    const motion = this.motionFor(key, (this.countNum || 1) * op.count);
+    if (!motion) {
+      this.bell();
+      this.resetPending();
+      return;
+    }
+    this.finishOpWithMotion(op, motion);
+  }
+
+  private finishOpWithMotion(op: Op, motion: MotionResult): void {
+    const from = { ...this.cursor };
+    const to = motion.to;
+    let range: SelRange;
+    if (motion.kind === 'linewise') {
+      const lr = motion.lineRange ?? [Math.min(from.line, to.line), Math.max(from.line, to.line)];
+      range = {
+        start: { line: Math.min(lr[0], lr[1]), col: 0 },
+        end: { line: Math.max(lr[0], lr[1]), col: 0 },
+        linewise: true,
+      };
+    } else {
+      range = { start: from, end: to, linewise: false };
+      this.rangeInclusive = motion.kind === 'inclusive';
+    }
+    this.applyOp(op, range);
+    if (motion.jump) this.pushJump(from);
+  }
+
+  rangeInclusive = false;
+
+  /** Convert a (start,end) pair plus inclusivity into flat [s,e). */
+  private flatRange(r: SelRange, inclusive: boolean): [number, number] {
+    const a = this.buf.idx(r.start);
+    const b = this.buf.idx(r.end);
+    if (b >= a) {
+      let end = inclusive ? b + 1 : b;
+      if (!inclusive && r.end.col === 0 && r.end.line > r.start.line) end = b - 1;
+      return [a, Math.max(a, end)];
+    }
+    let end = inclusive ? a + 1 : a;
+    if (!inclusive && r.start.col === 0 && r.start.line > r.end.line) end = a - 1;
+    return [b, Math.max(b, end)];
+  }
+
+  private applyOp(op: Op, r: SelRange): void {
+    const inclusive = this.rangeInclusive;
+    if (op.key === 'd') this.deleteRange(r, inclusive, op.reg, false);
+    else if (op.key === 'c') this.deleteRange(r, inclusive, op.reg, true);
+    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg);
+    else if (op.key === '>') this.shiftRange(r, 1);
+    else if (op.key === '<') this.shiftRange(r, -1);
+    else if (op.key === '=') this.say('no indent rules here', 'info');
+    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle');
+    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower');
+    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper');
+    else if (op.key === 'gq' || op.key === 'gw') this.formatRange(r);
+    this.resetPending(false);
+    this.afterUnit();
+  }
+
+  private startVisual(mode: 'visual' | 'visual-line' | 'visual-block'): void {
+    this.visualAnchor = { ...this.cursor };
+    this.setMode(mode);
+    this.cmdKeys = [];
+  }
+
+  // ------------------------------------------------------------------ motions
+
+  private motionEnv(): M.MotionEnv {
+    return {
+      buf: this.buf,
+      cursor: this.cursor,
+      wantCol: this.wantCol(),
+      lastFind: this.lastFind,
+      marks: this.marks,
+      getMark: (n) => this.marks.get(n) ?? null,
+      searchNext: () => null,
+      searchWord: () => null,
+      textwidth: this.textwidth,
+    };
+  }
+
+  wantColValue = 0;
+
+  private wantCol(): number {
+    return this.wantColValue;
+  }
+
+  private moveTo(p: Pos, kind: 'char' | 'line' = 'char', jump = false): void {
+    const prev = { ...this.cursor };
+    this.cursor = M.moveTo(this.buf, p);
+    if (kind === 'char') this.wantColValue = this.cursor.col;
+    if (jump) this.pushJump(prev);
+  }
+
+  private pushJump(from: Pos): void {
+    this.jumps = this.jumps.slice(0, this.jumpIndex + 1);
+    this.jumps.push({ ...from });
+    if (this.jumps.length > 50) this.jumps.shift();
+    this.jumpIndex = this.jumps.length - 1;
+  }
+
+  private jumpTo(p: Pos, push: boolean): void {
+    this.moveTo(p, 'char');
+    if (push) this.pushJump({ ...this.cursor });
+  }
+
+  private moveBy(delta: Pos): void {
+    this.moveTo({ line: this.cursor.line + delta.line, col: this.cursor.col + delta.col }, 'char');
+  }
+
+  private moveCount(key: string, fn: (n: number) => void): void {
+    const n = this.takeCount();
+    fn(n);
+    void key;
+    this.afterUnit();
+  }
+
+  private verticalCount(key: string, dir: 1 | -1): void {
+    const n = this.takeCount();
+    const target = Math.max(0, Math.min(this.buf.lineCount - 1, this.cursor.line + dir * n));
+    const len = this.buf.line(target).length;
+    const col = Math.max(0, Math.min(this.wantColValue, Math.max(0, len - 1)));
+    this.cursor = { line: target, col };
+    void key;
+    this.afterUnit();
+  }
+
+  private wordMove(key: string): void {
+    const n = this.takeCount();
+    const big = key === 'W' || key === 'B' || key === 'E';
+    const dir = key === 'b' || key === 'B' ? -1 : 1;
+    const end = key === 'e' || key === 'E';
+    const res = M.wordMotion(this.motionEnv(), n, { big, dir, end });
+    if (res) this.moveTo(res.to, 'char');
+    this.afterUnit();
+  }
+
+  private paragraphMove(dir: 1 | -1): void {
+    const n = this.takeCount();
+    const res = M.paragraphMotion(this.motionEnv(), dir, n);
+    this.moveTo(res.to, 'char', true);
+    this.afterUnit();
+  }
+
+  private sentenceMove(dir: 1 | -1): void {
+    const n = this.takeCount();
+    const res = M.sentenceMotion(this.motionEnv(), dir, n);
+    this.moveTo(res.to, 'char', true);
+    this.afterUnit();
+  }
+
+  private percentMotion(force: boolean): void {
+    const n = this.countNum;
+    const res = M.matchBracket(this.motionEnv());
+    if (res) {
+      this.moveTo(res.to, 'char', true);
+    } else if (n > 0 || force) {
+      const pct = n > 0 ? Math.min(100, n) : 50;
+      const line = Math.min(this.buf.lineCount - 1, Math.floor(((this.buf.lineCount - 1) * pct) / 100));
+      this.moveTo({ line, col: 0 }, 'char', true);
+    } else {
+      this.bell();
+    }
+    this.takeCount();
+    this.afterUnit();
+  }
+
+  private doFind(char: string, dir: 1 | -1, till: boolean, count: number): void {
+    this.lastFind = { char, dir, till };
+    const res = M.findChar(this.motionEnv(), char, dir, till, count);
+    if (!res) {
+      this.bell();
+    } else {
+      this.moveTo(res.to, 'char');
+    }
+    this.afterUnit();
+  }
+
+  private scrollHalf(dir: 1 | -1): void {
+    const n = this.takeCount();
+    const target = Math.max(0, Math.min(this.buf.lineCount - 1, this.cursor.line + dir * 5 * n));
+    this.moveTo({ line: target, col: this.cursor.col }, 'char');
+    this.afterUnit();
+  }
+
+  private scrollPage(dir: 1 | -1): void {
+    const n = this.takeCount();
+    const target = Math.max(0, Math.min(this.buf.lineCount - 1, this.cursor.line + dir * 15 * n));
+    this.moveTo({ line: target, col: this.cursor.col }, 'char', true);
+    this.afterUnit();
+  }
+
+  private jumpBack(): void {
+    if (this.jumpIndex > 0) {
+      const here = { ...this.cursor };
+      this.jumpIndex--;
+      this.cursor = M.moveTo(this.buf, this.jumps[this.jumpIndex]);
+      this.jumps.push(here);
+      this.jumpIndex = this.jumps.length - 1;
+    } else this.bell();
+    this.afterUnit();
+  }
+
+  private jumpForward(): void {
+    if (this.jumpIndex < this.jumps.length - 1) {
+      this.jumpIndex++;
+      this.cursor = M.moveTo(this.buf, this.jumps[this.jumpIndex]);
+    } else this.bell();
+    this.afterUnit();
+  }
+
+  /** Resolve a key to a motion for operator-pending mode. */
+  private motionFor(key: string, count: number): MotionResult | null {
+    const env = this.motionEnv();
+    switch (key) {
+      case 'h':
+      case BS:
+        return { to: { line: this.cursor.line, col: Math.max(0, this.cursor.col - count) }, kind: 'exclusive' };
+      case 'l':
+      case SPACE:
+        return { to: { line: this.cursor.line, col: Math.min(M.lineEnd(this.buf, this.cursor.line), this.cursor.col + count) }, kind: 'exclusive' };
+      case 'j':
+        return M.vertical(env, count);
+      case 'k':
+        return M.vertical(env, -count);
+      case '0':
+        return { to: { line: this.cursor.line, col: 0 }, kind: 'exclusive' };
+      case '^':
+        return { to: { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) }, kind: 'exclusive' };
+      case '$': {
+        const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count - 1);
+        return { to: { line, col: M.lineEnd(this.buf, line) }, kind: 'inclusive' };
+      }
+      case 'w':
+        return M.wordMotion(env, count, { dir: 1 });
+      case 'W':
+        return M.wordMotion(env, count, { dir: 1, big: true });
+      case 'b':
+        return M.wordMotion(env, count, { dir: -1 });
+      case 'B':
+        return M.wordMotion(env, count, { dir: -1, big: true });
+      case 'e':
+        return M.wordMotion(env, count, { dir: 1, end: true });
+      case 'E':
+        return M.wordMotion(env, count, { dir: 1, end: true, big: true });
+      case 'G':
+        return { to: { line: this.buf.lineCount - 1, col: 0 }, kind: 'linewise', jump: true };
+      case '}':
+        return M.paragraphMotion(env, 1, count);
+      case '{':
+        return M.paragraphMotion(env, -1, count);
+      case ')':
+        return M.sentenceMotion(env, 1, count);
+      case '(':
+        return M.sentenceMotion(env, -1, count);
+      case '%':
+        return M.matchBracket(env);
+      case ',':
+      case ';': {
+        if (!this.lastFind) return null;
+        const f = this.lastFind;
+        const flip = key === ',' ? -1 : 1;
+        return M.findChar(env, f.char, (f.dir * flip) as 1 | -1, f.till, count);
+      }
+      case 'n':
+      case 'N': {
+        const pos = this.findSearchMatch(count, key === 'n' ? this.searchDir : (-this.searchDir as 1 | -1));
+        return pos ? { to: pos, kind: 'exclusive', jump: true } : null;
+      }
+      default:
+        return null;
+    }
+  }
+
+  // ----------------------------------------------------------------- editing
+
+  private deleteChars(n: number, backward: boolean): void {
+    this.takeCount();
+    const line = this.buf.line(this.cursor.line);
+    const s = backward ? Math.max(0, this.cursor.col - n) : this.cursor.col;
+    const e = backward ? this.cursor.col : Math.min(line.length, this.cursor.col + n);
+    if (e <= s) {
+      this.bell();
+      this.afterUnit();
+      return;
+    }
+    const before = this.snapshot();
+    const text = line.slice(s, e);
+    this.buf.setLine(this.cursor.line, line.slice(0, s) + line.slice(e));
+    this.cursor = M.moveTo(this.buf, { line: this.cursor.line, col: s });
+    this.wantColValue = this.cursor.col;
+    this.storeRegister(this.pendingRegSet, text, false, false, true);
+    this.pendingRegSet = null;
+    this.commit(before, 'delete');
+    this.afterUnit();
+  }
+
+  private normalizeRegisterName(name: string): string {
+    if (/^[A-Z]$/.test(name)) return name.toLowerCase();
+    return name;
+  }
+
+  private storeRegister(name: string | null, text: string, linewise: boolean, yank: boolean, small = false): void {
+    const append = !!name && /^[A-Z]$/.test(name);
+    const n = name ? this.normalizeRegisterName(name) : null;
+    if (n === '_') return;
+    const entry: Register = { text, linewise };
+    if (n && n !== '"') {
+      if (append) {
+        const prev = this.registers.get(n);
+        if (prev) entry.text = prev.text + text;
+      }
+      this.registers.set(n, entry);
+    }
+    if (yank) {
+      this.registers.set('0', entry);
+    } else if (!small) {
+      for (let i = 9; i >= 2; i--) {
+        const prev = this.registers.get(String(i - 1));
+        if (prev) this.registers.set(String(i), prev);
+      }
+      this.registers.set('1', entry);
+    } else {
+      this.registers.set('-', entry);
+    }
+    this.registers.set('"', entry);
+    if (n === '+') this.registers.set('+', entry);
+  }
+
+  private readRegister(name: string): Register {
+    if (name === '"') return this.registers.get('"') ?? { text: '', linewise: false };
+    if (name === '%') return { text: this.buf.flat, linewise: false };
+    if (name === '#') return { text: '', linewise: false };
+    if (name === ':') return { text: this.history[this.history.length - 1] ?? '', linewise: false };
+    return this.registers.get(this.normalizeRegisterName(name)) ?? this.registers.get('"') ?? { text: '', linewise: false };
+  }
+
+  deleteRange(r: SelRange, inclusive: boolean, reg: string | null, change: boolean): void {
+    const before = this.snapshot();
+    if (r.linewise) {
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const count = l2 - l1 + 1;
+      const removed = this.buf.lines.splice(l1, count, ...(change ? [''] : []));
+      if (this.buf.lines.length === 0) this.buf.setLines(['']);
+      this.buf.setLines(this.buf.lines);
+      this.storeRegister(reg, removed.join('\n') + '\n', true, false);
+      const target = Math.min(l1, this.buf.lineCount - 1);
+      if (change) {
+        this.openInsertAt({ line: l1, col: 0 }, before);
+        return;
+      }
+      this.cursor = { line: target, col: M.firstNonBlank(this.buf, target) };
+      this.wantColValue = this.cursor.col;
+    } else {
+      const [s, e] = this.flatRange(r, inclusive);
+      if (e > s) {
+        const text = this.buf.flat.slice(s, e);
+        this.buf.replaceFlat(s, e, '');
+        this.storeRegister(reg, text, false, false, text.length < 40 && !text.includes('\n'));
+        const p = this.buf.pos(Math.min(s, this.buf.flat.length));
+        if (change) {
+          this.openInsertAt(p, before);
+          return;
+        }
+        this.cursor = M.moveTo(this.buf, p);
+        this.wantColValue = this.cursor.col;
+      } else {
+        this.cursor = M.moveTo(this.buf, r.start);
+      }
+    }
+    if (change) {
+      this.openInsertAt(this.cursor, before);
+    } else {
+      this.commit(before, 'delete');
+      this.afterUnit();
+    }
+  }
+
+  yankRange(r: SelRange, inclusive: boolean, reg: string | null): void {
+    if (r.linewise) {
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const text = this.buf.lines.slice(l1, l2 + 1).join('\n') + '\n';
+      this.storeRegister(reg, text, true, true);
+      this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+      this.emit({ type: 'yank', register: reg ?? '"', text });
+    } else {
+      const [s, e] = this.flatRange(r, inclusive);
+      const text = this.buf.flat.slice(s, Math.max(s, e));
+      this.storeRegister(reg, text, false, true);
+      const p = this.buf.pos(s);
+      this.cursor = M.moveTo(this.buf, p);
+      this.emit({ type: 'yank', register: reg ?? '"', text });
+    }
+    this.wantColValue = this.cursor.col;
+    this.say(`yanked ${this.describeRange(r, inclusive)}`, 'good');
+    this.afterUnit();
+  }
+
+  private describeRange(r: SelRange, inclusive: boolean): string {
+    const [s, e] = this.flatRange(r, inclusive);
+    const n = Math.max(0, e - s);
+    if (r.linewise) return `${Math.abs(r.end.line - r.start.line) + 1} line(s)`;
+    return `${n} char(s)`;
+  }
+
+  private shiftRange(r: SelRange, dir: 1 | -1): void {
+    const l1 = Math.min(r.start.line, r.end.line);
+    const l2 = Math.max(r.start.line, r.end.line);
+    const before = this.snapshot();
+    const pad = ' '.repeat(this.shiftwidth);
+    for (let l = l1; l <= l2; l++) {
+      const line = this.buf.line(l);
+      if (dir > 0) this.buf.setLine(l, pad + line);
+      else {
+        let k = 0;
+        while (k < this.shiftwidth && (line[k] === ' ' || line[k] === '\t')) k++;
+        this.buf.setLine(l, line.slice(k));
+      }
+    }
+    this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+    this.commit(before, dir > 0 ? 'indent' : 'outdent');
+    this.say(dir > 0 ? '>>' : '<<', 'good');
+    this.afterUnit();
+  }
+
+  private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper'): void {
+    const before = this.snapshot();
+    let [s, e] = this.flatRange(r, inclusive);
+    if (r.linewise) {
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      s = this.buf.idx({ line: l1, col: 0 });
+      e = this.buf.idx({ line: l2, col: this.buf.line(l2).length });
+    }
+    const text = this.buf.flat.slice(s, e);
+    const fn = mode === 'upper' ? (c: string) => c.toUpperCase() : mode === 'lower' ? (c: string) => c.toLowerCase() : (c: string) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase());
+    this.buf.replaceFlat(s, e, text.replace(/[a-zA-Z]/g, fn));
+    this.cursor = M.moveTo(this.buf, this.buf.pos(s));
+    this.commit(before, 'case');
+    this.afterUnit();
+  }
+
+  private formatRange(r: SelRange): void {
+    const l1 = Math.min(r.start.line, r.end.line);
+    const l2 = Math.max(r.start.line, r.end.line);
+    const before = this.snapshot();
+    const wrapped = M.wrapLines(this.buf.lines.slice(l1, l2 + 1), this.textwidth);
+    this.buf.lines.splice(l1, l2 - l1 + 1, ...wrapped);
+    this.buf.setLines(this.buf.lines);
+    this.cursor = { line: l1, col: 0 };
+    this.commit(before, 'format');
+    this.afterUnit();
+  }
+
+  private toggleCase(n: number): void {
+    this.takeCount();
+    const before = this.snapshot();
+    const line = this.buf.line(this.cursor.line);
+    const end = Math.min(line.length, this.cursor.col + n);
+    const seg = line.slice(this.cursor.col, end);
+    this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col) + seg.replace(/[a-zA-Z]/g, (c) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase())) + line.slice(end));
+    this.cursor = M.moveTo(this.buf, { line: this.cursor.line, col: Math.min(line.length - 1, this.cursor.col + n) });
+    this.commit(before, 'case');
+    this.afterUnit();
+  }
+
+  private joinLines(count: number, withSpace: boolean): void {
+    this.takeCount();
+    const n = Math.max(2, count);
+    const before = this.snapshot();
+    let line = this.cursor.line;
+    for (let i = 1; i < n && line < this.buf.lineCount - 1; i++) {
+      const cur = this.buf.line(line);
+      const next = this.buf.line(line + 1).replace(/^[ \t]+/, '');
+      const spaces = withSpace ? (cur.endsWith(' ') || next === '' ? 0 : 1) : 0;
+      this.buf.setLine(line, cur + ' '.repeat(spaces) + next);
+      this.buf.removeLine(line + 1);
+      this.cursor = { line, col: Math.min(Math.max(0, cur.length), Math.max(0, this.buf.line(line).length - 1)) };
+    }
+    this.commit(before, 'join');
+    this.afterUnit();
+  }
+
+  private put(regName: string, before: boolean): void {
+    const reg = this.readRegister(regName);
+    if (!reg.text && reg.text !== '') {
+      this.bell();
+      this.afterUnit();
+      return;
+    }
+    const n = this.countNum || 1;
+    this.takeCount();
+    const snap = this.snapshot();
+    if (reg.linewise) {
+      const raw = reg.text.endsWith('\n') ? reg.text.slice(0, -1) : reg.text;
+      const lines = raw.split('\n');
+      const at = before ? this.cursor.line : this.cursor.line + 1;
+      const insert: string[] = [];
+      for (let i = 0; i < n; i++) insert.push(...lines);
+      this.buf.lines.splice(at, 0, ...insert);
+      this.buf.setLines(this.buf.lines);
+      this.cursor = { line: at, col: M.firstNonBlank(this.buf, at) };
+      this.wantColValue = this.cursor.col;
+    } else {
+      const text = reg.text.repeat(n);
+      const line = this.buf.line(this.cursor.line);
+      const col = before ? this.cursor.col : Math.min(line.length, this.cursor.col + 1);
+      this.buf.setLine(this.cursor.line, line.slice(0, col) + text + line.slice(col));
+      const p = this.buf.pos(this.buf.idx({ line: this.cursor.line, col: col + text.length }) - 1);
+      this.cursor = M.moveTo(this.buf, p);
+      this.wantColValue = this.cursor.col;
+    }
+    this.commit(snap, 'put');
+    this.afterUnit();
+  }
+
+  private undo(): void {
+    const s = this.undoStack.pop();
+    if (!s) {
+      this.bell();
+      this.say('already at oldest change', 'error');
+      return;
+    }
+    this.redoStack.push(this.snapshot());
+    this.buf.setLines(s.lines);
+    this.cursor = M.moveTo(this.buf, s.cursor);
+    this.wantColValue = this.cursor.col;
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'undo' });
+    this.say('undo', 'info');
+    this.takeCount();
+    this.afterUnit();
+  }
+
+  private redo(): void {
+    const s = this.redoStack.pop();
+    if (!s) {
+      this.bell();
+      this.say('already at newest change', 'error');
+      return;
+    }
+    this.undoStack.push(this.snapshot());
+    this.buf.setLines(s.lines);
+    this.cursor = M.moveTo(this.buf, s.cursor);
+    this.wantColValue = this.cursor.col;
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'redo' });
+    this.say('redo', 'info');
+    this.takeCount();
+    this.afterUnit();
+  }
+
+  private repeatChange(): void {
+    const keys = this.lastChangeKeys;
+    const n = this.takeCount();
+    if (!keys || keys.length === 0) {
+      this.say('nothing to repeat', 'error');
+      this.bell();
+      return;
+    }
+    for (let i = 0; i < n; i++) {
+      this.replaying = true;
+      for (const k of keys) this.feed(k);
+      this.replaying = false;
+    }
+    this.cmdKeys = [];
+    this.afterUnit();
+  }
+
+  // ------------------------------------------------------------------- insert
+
+  private enterInsert(kind: 'i' | 'a' | 'I' | 'A' | 'o' | 'O' | 's' | 'S' | 'C'): void {
+    const line = this.buf.line(this.cursor.line);
+    if (kind === 'a') this.cursor = { line: this.cursor.line, col: Math.min(line.length, this.cursor.col + 1) };
+    if (kind === 'I') this.cursor = { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) };
+    if (kind === 'A') this.cursor = { line: this.cursor.line, col: line.length };
+    if (kind === 's') {
+      this.deleteRange({ start: this.cursor, end: this.cursor, linewise: false }, true, this.pendingRegSet, true);
+      return;
+    }
+    if (kind === 'S') {
+      this.changeWholeLines(this.countNum || 1);
+      return;
+    }
+    if (kind === 'C') {
+      const l = this.buf.line(this.cursor.line);
+      this.deleteRange({ start: this.cursor, end: { line: this.cursor.line, col: Math.max(0, l.length - 1) }, linewise: false }, true, this.pendingRegSet, true);
+      return;
+    }
+    if (kind === 'o' || kind === 'O') {
+      const snap = this.snapshot();
+      const at = kind === 'o' ? this.cursor.line + 1 : this.cursor.line;
+      this.buf.insertLine(at, '');
+      this.cursor = { line: at, col: 0 };
+      this.openInsertAt(this.cursor, snap);
+      return;
+    }
+    this.openInsertAt(this.cursor);
+  }
+
+  private changeWholeLines(n: number): void {
+    const before = this.snapshot();
+    const l1 = this.cursor.line;
+    const l2 = Math.min(this.buf.lineCount - 1, l1 + n - 1);
+    const removed = this.buf.lines.splice(l1, l2 - l1 + 1, '');
+    this.storeRegister(this.pendingRegSet, removed.join('\n') + '\n', true, false);
+    this.buf.setLines(this.buf.lines);
+    this.cursor = { line: l1, col: 0 };
+    this.openInsertAt(this.cursor, before);
+  }
+
+  private enterReplace(): void {
+    this.insertStart = { ...this.cursor };
+    this.mode = 'replace';
+    this.emit({ type: 'mode', mode: 'replace' });
+    this.takeCount();
+  }
+
+  openInsertAt(pos: Pos, undoSnapshot?: BufferSnapshot): void {
+    const line = Math.max(0, Math.min(pos.line, this.buf.lineCount - 1));
+    this.cursor = { line, col: Math.max(0, Math.min(pos.col, this.buf.line(line).length)) };
+    this.insertStart = { ...this.cursor };
+    this.insertUndo = undoSnapshot ?? this.snapshot();
+    this.say('');
+    this.setMode('insert');
+    this.takeCount();
+  }
+
+  private insertKey(key: string): void {
+    if (key === ESC) {
+      this.closeInsert();
+      return;
+    }
+    if (key === CR) {
+      this.insertTextAtCursor('\n');
+      return;
+    }
+    if (key === BS) {
+      this.backspace();
+      return;
+    }
+    if (key === '<Del>') {
+      this.deleteForwardChar();
+      return;
+    }
+    if (key === TAB) {
+      this.insertTextAtCursor(' '.repeat(this.tabstop - (this.cursor.col % this.tabstop)));
+      return;
+    }
+    if (key === CTRL_W) {
+      this.deleteWordBackward();
+      return;
+    }
+    if (key === CTRL_U) {
+      this.deleteToLineStart();
+      return;
+    }
+    if (key === '<C-r>') {
+      this.say('Ctrl-r not available here', 'info');
+      return;
+    }
+    if (key.length === 1) {
+      if (this.blockInsertState) {
+        this.blockInsertState.text += key;
+        this.insertTextAtCursor(key);
+      } else if (this.mode === 'replace') this.replaceCharAtCursor(key);
+      else this.insertTextAtCursor(key);
+    }
+  }
+
+  private insertTextAtCursor(text: string): void {
+    const line = this.buf.line(this.cursor.line);
+    this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col) + text + line.slice(this.cursor.col));
+    if (text.includes('\n')) {
+      const parts = this.buf.line(this.cursor.line).split('\n');
+      this.buf.lines.splice(this.cursor.line, 1, ...parts);
+      this.buf.setLines(this.buf.lines);
+      this.cursor = { line: this.cursor.line + parts.length - 1, col: parts[parts.length - 1].length };
+    } else {
+      this.cursor = { line: this.cursor.line, col: this.cursor.col + text.length };
+    }
+    this.lastInsertPos = { ...this.cursor };
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'insert' });
+  }
+
+  private replaceCharAtCursor(ch: string): void {
+    const line = this.buf.line(this.cursor.line);
+    if (this.cursor.col >= line.length) {
+      this.insertTextAtCursor(ch);
+      return;
+    }
+    this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col) + ch + line.slice(this.cursor.col + 1));
+    this.cursor = { line: this.cursor.line, col: this.cursor.col + 1 };
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'replace' });
+  }
+
+  private backspace(): void {
+    if (this.cursor.col === 0) {
+      if (this.cursor.line === 0) return;
+      const prevLen = this.buf.line(this.cursor.line - 1).length;
+      this.buf.setLine(this.cursor.line - 1, this.buf.line(this.cursor.line - 1) + this.buf.line(this.cursor.line));
+      this.buf.removeLine(this.cursor.line);
+      this.cursor = { line: this.cursor.line - 1, col: prevLen };
+    } else {
+      const line = this.buf.line(this.cursor.line);
+      this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col - 1) + line.slice(this.cursor.col));
+      this.cursor = { line: this.cursor.line, col: this.cursor.col - 1 };
+    }
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'delete' });
+  }
+
+  private deleteForwardChar(): void {
+    const line = this.buf.line(this.cursor.line);
+    if (this.cursor.col < line.length) {
+      this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col) + line.slice(this.cursor.col + 1));
+      this.version++;
+    }
+  }
+
+  private deleteWordBackward(): void {
+    const line = this.buf.line(this.cursor.line);
+    let i = this.cursor.col;
+    while (i > 0 && /\s/.test(line[i - 1])) i--;
+    while (i > 0 && !/\s/.test(line[i - 1])) i--;
+    this.buf.setLine(this.cursor.line, line.slice(0, i) + line.slice(this.cursor.col));
+    this.cursor = { line: this.cursor.line, col: i };
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'delete' });
+  }
+
+  private deleteToLineStart(): void {
+    const line = this.buf.line(this.cursor.line);
+    this.buf.setLine(this.cursor.line, line.slice(this.cursor.col));
+    this.cursor = { line: this.cursor.line, col: 0 };
+    this.version++;
+    this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'delete' });
+  }
+
+  private closeInsert(): void {
+    const block = this.blockInsertState;
+    this.mode = 'normal';
+    this.emit({ type: 'mode', mode: 'normal' });
+    if (block) {
+      this.blockInsertState = null;
+      const text = block.text;
+      for (let l = block.l1; l <= block.l2; l++) {
+        if (l === block.curLine) continue;
+        const line = this.buf.line(l);
+        const col = Math.min(block.col, line.length);
+        this.buf.setLine(l, line.slice(0, col) + text + line.slice(col));
+      }
+      this.buf.setLines(this.buf.lines);
+      this.cursor = M.moveTo(this.buf, { line: block.l1, col: Math.max(0, block.col + text.length - 1) });
+      this.commit(block.snap, 'insert');
+      this.wantColValue = this.cursor.col;
+      this.takeCount();
+      if (!this.replaying) this.lastChangeKeys = this.cmdKeys.slice();
+      this.cmdKeys = [];
+      return;
+    }
+    const entry = this.insertUndo;
+    this.insertUndo = null;
+    if (entry) this.commit(entry, 'insert');
+    this.cursor = M.moveTo(this.buf, { line: this.cursor.line, col: Math.max(0, this.cursor.col - 1) });
+    this.wantColValue = this.cursor.col;
+    this.takeCount();
+    if (!this.replaying) this.lastChangeKeys = this.cmdKeys.slice();
+    this.cmdKeys = [];
+  }
+
+  insertUndo: BufferSnapshot | null = null;
+
+  // ------------------------------------------------------------------ visual
+
+  private visualKey(key: string): void {
+    if (key === ESC) {
+      this.visualAnchor = null;
+      this.setMode('normal');
+      this.resetPending();
+      return;
+    }
+    if (key === 'v' && this.mode === 'visual') {
+      this.visualAnchor = null;
+      this.setMode('normal');
+      return;
+    }
+    if (key === 'V' && this.mode === 'visual-line') {
+      this.visualAnchor = null;
+      this.setMode('normal');
+      return;
+    }
+    if (key === 'o') {
+      const a = this.visualAnchor;
+      this.visualAnchor = { ...this.cursor };
+      if (a) this.cursor = a;
+      this.afterUnit();
+      return;
+    }
+    if (/^[1-9]$/.test(key) || (key === '0' && this.count !== '')) {
+      this.count += key;
+      return;
+    }
+    if (key === 'g') {
+      this.pending = { kind: 'g', op: false };
+      return;
+    }
+    if (this.pending) {
+      this.resolvePending(key);
+      return;
+    }
+    const sel = this.selection();
+    switch (key) {
+      case 'd':
+      case 'x':
+      case 'y':
+      case 'c':
+      case 's':
+        if (!sel) return;
+        if (key === 'y') this.yankRange(sel, true, this.pendingRegSet);
+        else this.deleteRange(sel, true, this.pendingRegSet, key === 'c' || key === 's');
+        this.pendingRegSet = null;
+        this.visualAnchor = null;
+        this.setMode('normal');
+        this.cmdKeys = [];
+        return;
+      case '>':
+        if (sel) this.shiftRange(sel, 1);
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case '<':
+        if (sel) this.shiftRange(sel, -1);
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case '~':
+        if (sel) this.caseRange(sel, true, 'toggle');
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case 'u':
+        if (sel) this.caseRange(sel, true, 'lower');
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case 'U':
+        if (sel) this.caseRange(sel, true, 'upper');
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case 'J':
+        if (sel) {
+          const l1 = Math.min(sel.start.line, sel.end.line);
+          const l2 = Math.max(sel.start.line, sel.end.line);
+          const snap = this.snapshot();
+          this.buf.lines.splice(l1, l2 - l1 + 1, this.buf.lines.slice(l1, l2 + 1).join(' '));
+          this.buf.setLines(this.buf.lines);
+          this.cursor = { line: l1, col: 0 };
+          this.commit(snap, 'join');
+        }
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case 'p':
+      case 'P':
+        if (sel) this.pasteOver(sel, this.pendingRegSet);
+        this.pendingRegSet = null;
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case 'I':
+        if (this.mode === 'visual-block' && sel?.block) {
+          this.blockInsert(sel, true);
+          return;
+        }
+        this.setMode('insert');
+        return;
+      case 'A':
+        if (this.mode === 'visual-block' && sel?.block) {
+          this.blockInsert(sel, false);
+          return;
+        }
+        this.setMode('insert');
+        return;
+      case 'r':
+        this.pending = { kind: 'char', replace: true };
+        return;
+      case 'g':
+        this.pending = { kind: 'g', op: false };
+        return;
+      case ':':
+        this.startCmdline(':');
+        return;
+      default:
+        break;
+    }
+    // motions extend the selection
+    const motion = this.motionFor(key, this.takeCount());
+    if (motion) {
+      this.moveTo(motion.to, 'char');
+    } else if (key === 'l' || key === 'h' || key === 'j' || key === 'k') {
+      this.moveBy({ line: key === 'j' ? 1 : key === 'k' ? -1 : 0, col: key === 'l' ? 1 : key === 'h' ? -1 : 0 });
+    } else {
+      this.bell();
+    }
+  }
+
+  selection(): SelRange | null {
+    if (!this.visualAnchor) return null;
+    const a = this.visualAnchor;
+    const b = this.cursor;
+    if (this.mode === 'visual-line') {
+      return { start: { line: Math.min(a.line, b.line), col: 0 }, end: { line: Math.max(a.line, b.line), col: 0 }, linewise: true };
+    }
+    if (this.mode === 'visual-block') {
+      return {
+        start: { line: Math.min(a.line, b.line), col: Math.min(a.col, b.col) },
+        end: { line: Math.max(a.line, b.line), col: Math.max(a.col, b.col) },
+        linewise: false,
+        block: { c1: Math.min(a.col, b.col), c2: Math.max(a.col, b.col) },
+      };
+    }
+    const aIdx = this.buf.idx(a);
+    const bIdx = this.buf.idx(b);
+    return aIdx <= bIdx ? { start: a, end: b, linewise: false } : { start: b, end: a, linewise: false };
+  }
+
+  private pasteOver(sel: SelRange, reg: string | null): void {
+    const regData = this.readRegister(reg ?? '"');
+    const before = this.snapshot();
+    if (sel.linewise) {
+      const l1 = Math.min(sel.start.line, sel.end.line);
+      const l2 = Math.max(sel.start.line, sel.end.line);
+      const raw = regData.linewise ? regData.text.replace(/\n$/, '') : regData.text;
+      this.buf.lines.splice(l1, l2 - l1 + 1, ...raw.split('\n'));
+      this.buf.setLines(this.buf.lines);
+      this.cursor = { line: l1, col: 0 };
+    } else {
+      const [s, e] = this.flatRange(sel, true);
+      this.buf.replaceFlat(s, e, regData.text);
+      this.cursor = this.buf.pos(s);
+    }
+    this.commit(before, 'put');
+    this.say('replaced selection', 'good');
+  }
+
+  private blockInsert(sel: SelRange, before: boolean): void {
+    const block = sel.block!;
+    const l1 = Math.min(sel.start.line, sel.end.line);
+    const l2 = Math.max(sel.start.line, sel.end.line);
+    const col = before ? block.c1 : block.c2 + 1;
+    const snap = this.snapshot();
+    this.cursor = { line: l1, col };
+    this.insertStart = { ...this.cursor };
+    this.blockInsertState = { snap, l1, l2, col, curLine: l1, text: '' };
+    this.mode = 'insert';
+    this.emit({ type: 'mode', mode: 'insert' });
+  }
+
+  blockInsertState: { snap: BufferSnapshot; l1: number; l2: number; col: number; curLine: number; text: string } | null = null;
+
+  // ------------------------------------------------------------------ cmdline
+
+  private cmdlineBackup: Pos | null = null;
+
+  private startCmdline(kind: ':' | '/' | '?'): void {
+    if (kind === ':' && this.mode !== 'normal') {
+      // Visual range command: remember the selection as marks.
+      const sel = this.selection();
+      if (sel) {
+        this.marks.set('<', sel.start);
+        this.marks.set('>', sel.end);
+      }
+    }
+    this.cmdKind = kind;
+    this.cmdline = '';
+    this.cmdlineBackup = { ...this.cursor };
+    this.setMode(kind === ':' ? 'cmdline' : 'search');
+  }
+
+  private cmdlineKey(key: string): void {
+    if (key === ESC) {
+      this.cmdKind = null;
+      this.cmdline = '';
+      if (this.cmdlineBackup) this.cursor = this.cmdlineBackup;
+      this.setMode(this.mode === 'search' && this.visualAnchor ? 'visual' : 'normal');
+      this.emit({ type: 'search', pattern: null });
+      return;
+    }
+    if (key === CR) {
+      const input = this.cmdline;
+      const kind = this.cmdKind;
+      this.cmdKind = null;
+      this.cmdline = '';
+      this.setMode('normal');
+      if (kind === ':') {
+        this.history.push(input);
+        this.emit({ type: 'ex', command: input });
+        executeEx(this, input);
+      } else if (this.pendingOpSearch) {
+        const op = this.pendingOpSearch;
+        this.pendingOpSearch = null;
+        this.applySearchOp(op, input, kind === '/' ? 1 : -1);
+      } else {
+        this.commitSearch(input, kind === '/' ? 1 : -1);
+      }
+      this.cmdKeys = [];
+      return;
+    }
+    if (key === BS) {
+      this.cmdline = this.cmdline.slice(0, -1);
+      if (this.cmdline === '' && this.mode === 'search') this.emit({ type: 'search', pattern: null });
+      else if (this.mode === 'search') this.emit({ type: 'search', pattern: this.cmdline });
+      return;
+    }
+    if (key === CTRL_U) {
+      this.cmdline = '';
+      return;
+    }
+    if (key === CTRL_W) {
+      this.cmdline = this.cmdline.replace(/\S+\s*$/, '');
+      return;
+    }
+    if (key.length === 1) {
+      this.cmdline += key;
+      if (this.mode === 'search') this.emit({ type: 'search', pattern: this.cmdline });
+    }
+  }
+
+  pendingOpSearch: Op | null = null;
+
+  private applySearchOp(op: Op, pattern: string, dir: 1 | -1): void {
+    if (!pattern) {
+      this.resetPending();
+      return;
+    }
+    this.lastSearch = pattern;
+    this.searchDir = dir;
+    const matches = this.searchMatches();
+    const from = this.buf.idx(this.cursor);
+    const m = pickMatch(matches, from, dir, 1);
+    if (!m) {
+      this.bell();
+      this.say(`pattern not found: ${pattern}`, 'error');
+      this.resetPending();
+      return;
+    }
+    const dest = this.buf.pos(m.start);
+    if (dest.col === 0 && dest.line !== this.cursor.line && dir === 1) {
+      this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: dest.line - 1, col: 0 }, linewise: true });
+      return;
+    }
+    this.rangeInclusive = false;
+    this.applyOp(op, { start: { ...this.cursor }, end: dest, linewise: false });
+  }
+
+  get cmdPrompt(): string {
+    return this.cmdKind ?? '';
+  }
+
+  commitSearch(pattern: string, dir: 1 | -1): void {
+    if (!pattern) return;
+    this.lastSearch = pattern;
+    this.searchDir = dir;
+    const found = this.findSearchMatch(1, dir);
+    if (found) {
+      this.jumpTo(found, true);
+      const count = this.searchMatches().length;
+      this.say(`/${pattern}  ${count} match${count === 1 ? '' : 'es'}`, 'info');
+    } else {
+      this.say(`pattern not found: ${pattern}`, 'error');
+      this.bell();
+    }
+    this.emit({ type: 'search', pattern });
+    this.afterUnit();
+  }
+
+  private searchRepeat(dir: 1 | -1): void {
+    if (!this.lastSearch) {
+      this.bell();
+      this.say('no previous search', 'error');
+      return;
+    }
+    const n = this.takeCount();
+    const found = this.findSearchMatch(n, dir);
+    if (found) this.jumpTo(found, true);
+    else this.bell();
+    this.afterUnit();
+  }
+
+  private starSearch(forward: boolean): void {
+    const line = this.buf.line(this.cursor.line);
+    const re = /[A-Za-z0-9_]+|[\u0080-\uffff]+/g;
+    let m: RegExpExecArray | null;
+    let word = '';
+    while ((m = re.exec(line))) {
+      if (m.index <= this.cursor.col && this.cursor.col < m.index + m[0].length) {
+        word = m[0];
+        break;
+      }
+      if (m.index > this.cursor.col) break;
+    }
+    if (!word) {
+      this.bell();
+      return;
+    }
+    this.lastSearch = `\\<${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\>`;
+    this.searchDir = forward ? 1 : -1;
+    const found = this.findSearchMatch(1, this.searchDir);
+    if (found) this.jumpTo(found, true);
+    else this.bell();
+    this.emit({ type: 'search', pattern: this.lastSearch });
+    this.afterUnit();
+  }
+
+  searchMatches(pattern = this.lastSearch): Match[] {
+    if (!pattern) return [];
+    const re = compilePattern(pattern, { smartcase: true });
+    if (!re) return [];
+    return allMatches(this.buf.flat, re);
+  }
+
+  private findSearchMatch(count: number, dir: 1 | -1): Pos | null {
+    if (!this.lastSearch) return null;
+    const matches = this.searchMatches();
+    const from = this.buf.idx(this.cursor);
+    const m = pickMatch(matches, from, dir, count);
+    return m ? this.buf.pos(m.start) : null;
+  }
+
+  // ------------------------------------------------------------- pending keys
+
+  private resolvePending(key: string): void {
+    const p = this.pending!;
+    if (key === ESC) {
+      this.resetPending();
+      return;
+    }
+    switch (p.kind) {
+      case 'find': {
+        this.pending = null;
+        if (key.length !== 1) {
+          this.bell();
+          this.resetPending();
+          return;
+        }
+        if (this.op) {
+          const op = this.op;
+          const n = (this.countNum || 1) * op.count;
+          this.count = '';
+          const motion = M.findChar(this.motionEnv(), key, p.dir, p.till, n);
+          this.lastFind = { char: key, dir: p.dir, till: p.till };
+          if (!motion) {
+            this.bell();
+            this.resetPending();
+            return;
+          }
+          this.finishOpWithMotion(op, motion);
+        } else {
+          this.doFind(key, p.dir, p.till, this.countNum || 1);
+        }
+        return;
+      }
+      case 'char': {
+        this.pending = null;
+        if (this.mode === 'visual' || this.mode === 'visual-line') {
+          const sel = this.selection();
+          this.visualAnchor = null;
+          this.setMode('normal');
+          if (!sel) return;
+          this.takeCount();
+          const before = this.snapshot();
+          const l1 = Math.min(sel.start.line, sel.end.line);
+          const l2 = Math.max(sel.start.line, sel.end.line);
+          for (let l = l1; l <= l2; l++) {
+            const line = this.buf.line(l);
+            const a = l === l1 ? sel.start.col : 0;
+            const b = l === l2 ? sel.end.col + 1 : line.length;
+            this.buf.setLine(l, line.slice(0, a) + key.repeat(Math.max(0, b - a)) + line.slice(b));
+          }
+          this.buf.setLines(this.buf.lines);
+          this.commit(before, 'replace');
+          this.afterUnit();
+          return;
+        }
+        const n = this.countNum || 1;
+        this.takeCount();
+        const line = this.buf.line(this.cursor.line);
+        const end = Math.min(line.length, this.cursor.col + n);
+        if (end <= this.cursor.col) {
+          this.bell();
+          this.afterUnit();
+          return;
+        }
+        const before = this.snapshot();
+        this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col) + key.repeat(end - this.cursor.col) + line.slice(end));
+        this.cursor = { line: this.cursor.line, col: end - 1 };
+        this.wantColValue = this.cursor.col;
+        this.commit(before, 'replace');
+        this.afterUnit();
+        return;
+      }
+      case 'mark': {
+        this.pending = null;
+        if (p.set) {
+          this.marks.set(key, { ...this.cursor });
+          this.say(`mark ${key} set`, 'info');
+          this.afterUnit();
+          return;
+        }
+        const mark = this.marks.get(key);
+        if (!mark) {
+          this.bell();
+          this.say(`mark ${key} not set`, 'error');
+          this.afterUnit();
+          return;
+        }
+        const pos = p.jump === 'line' ? { line: mark.line, col: M.firstNonBlank(this.buf, mark.line) } : mark;
+        if (this.op) {
+          const op = this.op;
+          const motion: MotionResult = { to: pos, kind: 'linewise' };
+          this.finishOpWithMotion(op, motion);
+        } else {
+          this.jumpTo(pos, true);
+          this.afterUnit();
+        }
+        return;
+      }
+      case 'g': {
+        this.pending = null;
+        this.afterG(key, p.op);
+        return;
+      }
+      case 'z': {
+        this.pending = null;
+        if (key === 'z' || key === 't' || key === 'b') {
+          this.say('viewport is the whole scroll', 'info');
+        }
+        this.afterUnit();
+        return;
+      }
+      case 'macro-record': {
+        this.pending = null;
+        if (/^[a-z0-9]$/.test(key)) {
+          this.recording = { reg: key, keys: [] };
+          this.say(`recording @${key}`, 'info');
+        } else {
+          this.bell();
+        }
+        return;
+      }
+      case 'macro-run': {
+        this.pending = null;
+        this.runMacro(key);
+        return;
+      }
+      case 'reg': {
+        this.pending = null;
+        return;
+      }
+      case 'textobj': {
+        this.pending = null;
+        const obj = textObject(this.buf, this.cursor, p.around, key);
+        if (!obj) {
+          this.bell();
+          this.say(`no ${p.around ? 'a' : 'i'}${key} here`, 'error');
+          this.resetPending();
+          return;
+        }
+        const op = this.op;
+        if (!op) return;
+        const count = this.countNum || 1;
+        this.count = '';
+        let start = obj.start;
+        let end = obj.end;
+        if (count > 1) {
+          // Repeat the object outward (approximation of Vim's behaviour).
+          const line = this.buf.line(end.line);
+          if (obj.linewise) end = { line: Math.min(this.buf.lineCount - 1, end.line + count - 1), col: 0 };
+          else end = { line: end.line, col: Math.min(Math.max(0, line.length - 1), end.col + count - 1) };
+        }
+        if (obj.linewise && op.key !== 'c' && op.key !== 'y' && op.key !== 'd') {
+          this.applyOp(op, { start, end, linewise: true });
+          return;
+        }
+        this.rangeInclusive = true;
+        this.applyOp(op, { start, end, linewise: obj.linewise === true });
+        return;
+      }
+    }
+  }
+
+  private afterG(key: string, asOp: boolean): void {
+    if (key === 'g') {
+      if (asOp && this.op) {
+        const op = this.op;
+        this.finishOpWithMotion(op, { to: { line: 0, col: 0 }, kind: 'linewise', jump: true });
+        return;
+      }
+      const n = this.countNum || 1;
+      this.takeCount();
+      const line = Math.min(this.buf.lineCount - 1, n - 1);
+      this.jumpTo({ line, col: M.firstNonBlank(this.buf, line) }, true);
+      this.afterUnit();
+      return;
+    }
+    if (key === 'e' || key === 'E') {
+      const n = this.countNum || 1;
+      this.takeCount();
+      const res = M.wordMotion(this.motionEnv(), n, { dir: -1, end: true, big: key === 'E' });
+      if (res) this.moveTo(res.to, 'char');
+      this.afterUnit();
+      return;
+    }
+    if (key === 'J') {
+      this.joinLines(this.countNum || 2, false);
+      return;
+    }
+    if (key === 'v') {
+      this.visualAnchor = this.visualAnchor ?? { ...this.cursor };
+      this.setMode('visual');
+      this.afterUnit();
+      return;
+    }
+    if (key === 'i') {
+      const pos = this.lastInsertPos ?? this.cursor;
+      this.openInsertAt(pos);
+      return;
+    }
+    if (key === '~' || key === 'u' || key === 'U' || key === 'q' || key === 'w') {
+      const opKey = 'g' + key;
+      if (asOp && this.op) {
+        this.op.key = opKey;
+        this.pending = null;
+        return;
+      }
+      this.op = { key: opKey, count: this.countNum || 1, motionCount: 1, reg: this.pendingRegSet };
+      this.pendingRegSet = null;
+      this.count = '';
+      return;
+    }
+    this.bell();
+    this.afterUnit();
+  }
+
+  // ------------------------------------------------------------------ macros
+
+  private stopRecording(): void {
+    if (!this.recording) return;
+    const { reg, keys } = this.recording;
+    this.registers.set(reg, { text: keys.join(''), linewise: false });
+    this.recording = null;
+    this.say(`recorded @${reg} (${keys.length} keys)`, 'good');
+  }
+
+  private runMacro(regName: string): void {
+    let name = regName;
+    if (name === '@') name = this.lastMacro ?? '';
+    if (!name) {
+      this.bell();
+      return;
+    }
+    const reg = this.registers.get(name);
+    if (!reg || !reg.text) {
+      this.bell();
+      this.say(`register ${name} is empty`, 'error');
+      return;
+    }
+    this.lastMacro = name;
+    const n = this.countNum || 1;
+    this.takeCount();
+    const keys = tokenize(reg.text);
+    this.replaying = true;
+    for (let i = 0; i < n; i++) for (const k of keys) this.feed(k);
+    this.replaying = false;
+    this.cmdKeys = [];
+    this.say(`@${name} x${n}`, 'good');
+  }
+
+  // -------------------------------------------------------------------- misc
+
+  clampCursor(): void {
+    this.cursor = M.moveTo(this.buf, this.cursor);
+  }
+
+  // ---------------------------------------------------------------- ex layer
+
+  echo(text: string, level: 'info' | 'error' | 'good' = 'info'): void {
+    this.say(text, level);
+  }
+
+  /** 1-based line jump. */
+  gotoLine(n: number): void {
+    const line = Math.max(0, Math.min(this.buf.lineCount - 1, n - 1));
+    this.cursor = { line, col: M.firstNonBlank(this.buf, line) };
+    this.wantColValue = this.cursor.col;
+    this.pushJump(this.cursor);
+    this.afterUnit();
+  }
+
+  private translateReplacement(rep: string): string {
+    let out = '';
+    for (let i = 0; i < rep.length; i++) {
+      const c = rep[i];
+      if (c === '\\') {
+        const n = rep[i + 1];
+        i++;
+        if (n === '&') out += '&';
+        else if (n === '\\') out += '\\';
+        else if (n === 'n' || n === 'r') out += '\n';
+        else if (n && /[0-9]/.test(n)) out += '$' + n;
+        else if (n === 'u' || n === 'l' || n === 'U' || n === 'L' || n === 'e') out += '';
+        else out += n ?? '';
+      } else if (c === '&') {
+        out += '$&';
+      } else if (c === '$') {
+        out += '$$';
+      } else {
+        out += c;
+      }
+    }
+    return out;
+  }
+
+  exSubstitute(l1: number, l2: number, pat: string, rep: string, flags: string): void {
+    let pattern = pat;
+    let replacement = rep;
+    let f = flags;
+    if (f.includes('&') || (pattern === '' && replacement === '' && this.lastSubstitute)) {
+      if (!this.lastSubstitute) {
+        this.echo('E35: no previous regular expression', 'error');
+        return;
+      }
+      pattern = this.lastSubstitute.pat;
+      replacement = this.lastSubstitute.rep;
+      f = this.lastSubstitute.flags;
+    } else {
+      if (pattern === '' && this.lastSearch) pattern = this.lastSearch;
+      this.lastSubstitute = { pat: pattern, rep: replacement, flags: f };
+    }
+    const base = compilePattern(pattern, { smartcase: true });
+    if (!base) {
+      this.echo(`E486: pattern not found: ${pattern}`, 'error');
+      return;
+    }
+    const flags2 = base.flags.includes('g') ? base.flags : base.flags + 'g';
+    const reGlobal = new RegExp(base.source, flags2);
+    const reOnce = new RegExp(base.source, base.flags.replace('g', ''));
+    const lines = this.buf.lines.slice();
+    const jsRep = this.translateReplacement(replacement);
+    const before = this.snapshot();
+    let total = 0;
+    let lastLine = -1;
+    let delta = 0;
+    for (let l = Math.max(0, l1); l <= Math.min(lines.length - 1, l2); l++) {
+      const line = lines[l];
+      const hits = f.includes('g') ? line.match(reGlobal)?.length ?? 0 : redge(reOnce, line);
+      if (hits === 0) continue;
+      const next = line.replace(f.includes('g') ? reGlobal : reOnce, jsRep);
+      const parts = next.split('\n');
+      lines.splice(l + delta, 1, ...parts);
+      delta += parts.length - 1;
+      total += hits;
+      lastLine = l + delta;
+    }
+    if (total === 0) {
+      this.echo(`E486: pattern not found: ${pattern}`, 'error');
+      return;
+    }
+    this.buf.setLines(lines);
+    this.cursor = { line: Math.min(this.buf.lineCount - 1, Math.max(0, lastLine)), col: 0 };
+    this.wantColValue = 0;
+    this.commit(before, 'substitute');
+    this.echo(`${total} substitution${total === 1 ? '' : 's'}`, 'good');
+    this.afterUnit();
+  }
+
+  exDeleteLines(l1: number, l2: number): void {
+    const a = Math.max(0, Math.min(l1, l2));
+    const b = Math.min(this.buf.lineCount - 1, Math.max(l1, l2));
+    const before = this.snapshot();
+    const removed = this.buf.lines.splice(a, b - a + 1);
+    if (this.buf.lines.length === 0) this.buf.setLines(['']);
+    this.storeRegister(null, removed.join('\n') + '\n', true, false);
+    this.cursor = { line: Math.min(a, this.buf.lineCount - 1), col: 0 };
+    this.commit(before, 'delete');
+    this.echo(`${removed.length} line(s) deleted`, 'good');
+    this.afterUnit();
+  }
+
+  exCopyLines(l1: number, l2: number, dest: number): void {
+    const a = Math.max(0, Math.min(l1, l2));
+    const b = Math.min(this.buf.lineCount - 1, Math.max(l1, l2));
+    const before = this.snapshot();
+    const block = this.buf.lines.slice(a, b + 1);
+    const at = Math.max(0, Math.min(this.buf.lines.length, dest + 1));
+    this.buf.lines.splice(at, 0, ...block);
+    this.buf.setLines(this.buf.lines);
+    this.cursor = { line: Math.min(at, this.buf.lineCount - 1), col: M.firstNonBlank(this.buf, Math.min(at, this.buf.lineCount - 1)) };
+    this.commit(before, 'put');
+    this.echo(`${block.length} line(s) copied`, 'good');
+    this.afterUnit();
+  }
+
+  exMoveLines(l1: number, l2: number, dest: number): void {
+    const a = Math.max(0, Math.min(l1, l2));
+    const b = Math.min(this.buf.lineCount - 1, Math.max(l1, l2));
+    const before = this.snapshot();
+    const block = this.buf.lines.splice(a, b - a + 1);
+    const at = Math.max(0, Math.min(this.buf.lines.length, dest < a ? dest + 1 : dest - block.length + 1));
+    this.buf.lines.splice(at, 0, ...block);
+    this.buf.setLines(this.buf.lines);
+    this.cursor = { line: Math.min(at, this.buf.lineCount - 1), col: M.firstNonBlank(this.buf, Math.min(at, this.buf.lineCount - 1)) };
+    this.commit(before, 'move');
+    this.echo(`${block.length} line(s) moved`, 'good');
+    this.afterUnit();
+  }
+
+  exGlobal(pat: string, cmd: string, invert: boolean): void {
+    const re = compilePattern(pat, { smartcase: true });
+    if (!re) {
+      this.echo(`E486: pattern not found: ${pat}`, 'error');
+      return;
+    }
+    const reLine = new RegExp(re.source);
+    const lines: number[] = [];
+    for (let l = 0; l < this.buf.lineCount; l++) {
+      const hit = reLine.test(this.buf.line(l));
+      if (hit !== invert) lines.push(l);
+    }
+    if (lines.length === 0) {
+      this.echo(`pattern not found: ${pat}`, 'error');
+      return;
+    }
+    if (cmd === 'd' || cmd === 'delete') {
+      const before = this.snapshot();
+      for (let i = lines.length - 1; i >= 0; i--) this.buf.lines.splice(lines[i], 1);
+      if (this.buf.lines.length === 0) this.buf.setLines(['']);
+      this.cursor = { line: Math.min(lines[0], this.buf.lineCount - 1), col: 0 };
+      this.commit(before, 'delete');
+      this.echo(`${lines.length} line(s) deleted`, 'good');
+      return;
+    }
+    if (cmd === 'p' || cmd === 'print') {
+      this.echo(lines.map((l) => this.buf.line(l)).join(' | '), 'info');
+      return;
+    }
+    if (cmd.startsWith('s') && cmd.length > 1) {
+      const args = /^(.)(.*?)\1(.*?)(\1([a-z]*))?$/.exec(cmd.slice(1));
+      const before = this.snapshot();
+      let total = 0;
+      for (const l of lines) {
+        const line = this.buf.line(l);
+        const reSrc = compilePattern(args?.[2] ?? '', { smartcase: true });
+        if (!reSrc) continue;
+        const g = new RegExp(reSrc.source, args?.[5]?.includes('g') ? 'g' : '');
+        const next = line.replace(g, this.translateReplacement(args?.[3] ?? ''));
+        if (next !== line) {
+          this.buf.setLine(l, next);
+          total++;
+        }
+      }
+      this.buf.setLines(this.buf.lines);
+      this.commit(before, 'substitute');
+      this.echo(`${total} line(s) changed`, 'good');
+      return;
+    }
+    if (cmd.startsWith('normal') || cmd.startsWith('norm')) {
+      const keys = cmd.replace(/^norm(al)?\s*/, '');
+      this.exNormal(lines[0], lines[lines.length - 1], keys);
+      return;
+    }
+    this.echo(`E492: not supported: :g/${pat}/${cmd}`, 'error');
+  }
+
+  exNormal(l1: number, l2: number, keys: string): void {
+    if (!keys) return;
+    const toks = tokenize(keys);
+    this.replaying = true;
+    for (let l = Math.max(0, l1); l <= Math.min(this.buf.lineCount - 1, l2); l++) {
+      this.cursor = { line: l, col: 0 };
+      for (const k of toks) this.feed(k);
+    }
+    this.replaying = false;
+    this.cmdKeys = [];
+    this.echo(`normal! on ${l2 - l1 + 1} line(s)`, 'good');
+  }
+
+  exSort(l1: number, l2: number, args: string): void {
+    const a = Math.max(0, Math.min(l1, l2));
+    const b = Math.min(this.buf.lineCount - 1, Math.max(l1, l2));
+    const block = this.buf.lines.slice(a, b + 1);
+    const numeric = args.includes('n');
+    const unique = args.includes('u');
+    const fold = args.includes('i');
+    const reverse = args.includes('!');
+    const key = (s: string) => (fold ? s.toLowerCase() : s);
+    block.sort((x, y) => {
+      if (numeric) {
+        const nx = parseFloat(x.replace(/[^0-9.+-]/g, '')) || 0;
+        const ny = parseFloat(y.replace(/[^0-9.+-]/g, '')) || 0;
+        return nx - ny;
+      }
+      return key(x) < key(y) ? -1 : key(x) > key(y) ? 1 : 0;
+    });
+    const out = unique ? block.filter((x, i) => i === 0 || x !== block[i - 1]) : block;
+    if (reverse) out.reverse();
+    const before = this.snapshot();
+    this.buf.lines.splice(a, b - a + 1, ...out);
+    this.buf.setLines(this.buf.lines);
+    this.cursor = { line: a, col: 0 };
+    this.commit(before, 'sort');
+    this.echo(`${out.length} line(s) sorted`, 'good');
+    this.afterUnit();
+  }
+
+  /** True when the buffer content matches another. */
+  get text(): string {
+    return this.buf.flat;
+  }
+
+  setText(text: string): void {
+    this.buf.setLines(text.split('\n'));
+    this.cursor = { line: 0, col: 0 };
+    this.undoStack = [];
+    this.redoStack = [];
+    this.clampCursor();
+  }
+}
