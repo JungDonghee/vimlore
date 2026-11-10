@@ -62,6 +62,7 @@ export class App {
   constructor(root: HTMLElement) {
     this.root = root;
     this.progress = loadProgress();
+    this.sfx.setEnabled(this.progress.sound);
     this.mapSel = clamp(this.progress.currentChapter, 0, CHAPTERS.length - 1);
     this.keyHandler = (e) => this.onKey(e);
     window.addEventListener('keydown', this.keyHandler);
@@ -614,7 +615,7 @@ export class App {
       h(
         'div',
         { class: 'actions' },
-        h('button', { class: 'btn', onclick: () => { this.sfx.setEnabled(!this.sfx.enabled); this.save(); this.goAbout(); } }, this.sfx.enabled ? this.t('sound: on', '소리: 켜짐') : this.t('sound: off', '소리: 꺼짐')),
+        h('button', { class: 'btn', onclick: () => { this.progress.sound = !this.sfx.enabled; this.sfx.setEnabled(this.progress.sound); this.save(); this.goAbout(); } }, this.sfx.enabled ? this.t('sound: on', '소리: 켜짐') : this.t('sound: off', '소리: 꺼짐')),
         h('button', { class: 'btn', onclick: () => { this.progress.lang = this.progress.lang === 'ko' ? 'en' : 'ko'; this.save(); this.goAbout(); } }, this.lang === 'ko' ? 'language: 한국어' : 'language: english'),
         h('button', { class: 'btn', onclick: () => { this.progress.crt = !this.progress.crt; this.save(); this.applyCrt(); this.goAbout(); } }, this.progress.crt ? this.t('crt fx: on', 'CRT 효과: 켜짐') : this.t('crt fx: off', 'CRT 효과: 꺼짐')),
         h('button', {

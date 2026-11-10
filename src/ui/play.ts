@@ -74,7 +74,7 @@ export class PlayScreen {
     this.renderer = new Renderer(this.canvas);
     this.renderer.setHue(122 + ((host.chapter.index * 7) % 3) * 6);
     this.renderer.bloom = host.crt;
-    this.session.vim.number = host.lineNumbers !== 'off';
+    this.session.vim.number = host.lineNumbers === 'abs' || host.lineNumbers === 'both';
     this.session.vim.relativenumber = host.lineNumbers === 'rel' || host.lineNumbers === 'both';
   }
 
@@ -416,6 +416,9 @@ export class PlayScreen {
   restart(): void {
     this.stopRepeat();
     this.session = this.session.restart();
+    // Re-apply the gutter setting: restart() builds a fresh Vim with defaults.
+    this.session.vim.number = this.host.lineNumbers === 'abs' || this.host.lineNumbers === 'both';
+    this.session.vim.relativenumber = this.host.lineNumbers === 'rel' || this.host.lineNumbers === 'both';
     this.state = 'playing';
     this.overlay?.remove();
     this.overlay = null;
@@ -449,6 +452,7 @@ export class PlayScreen {
     const sel = vim.selection();
     this.renderer.render(
       {
+        version: vim.buf.version,
         lines: vim.buf.lines,
         cursor: vim.cursor,
         mode: vim.mode,
@@ -625,6 +629,7 @@ export class PlayScreen {
       if (this.session.status === 'won') break;
     }
     await new Promise((r) => setTimeout(r, 700));
+    if (this.destroyed) return;
     this.ghosting = false;
     this.restart();
     this.toast(this.host.lang === 'ko' ? '이제 네 차례' : 'Now you', false);

@@ -22,6 +22,7 @@ export interface SelView {
 }
 
 export interface View {
+  version: number;
   lines: string[];
   cursor: Cell;
   mode: string;
@@ -103,10 +104,13 @@ export class Renderer {
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
     this.w = Math.max(1, Math.floor(cssW));
     this.h = Math.max(1, Math.floor(cssH));
-    for (const c of [this.canvas, this.layer, this.bloomLayer]) {
-      c.width = Math.floor(this.w * this.dpr);
-      c.height = Math.floor(this.h * this.dpr);
-    }
+    this.canvas.width = Math.floor(this.w * this.dpr);
+    this.canvas.height = Math.floor(this.h * this.dpr);
+    this.layer.width = this.canvas.width;
+    this.layer.height = this.canvas.height;
+    // Bloom is a soft glow: render it at half resolution and upscale on blit.
+    this.bloomLayer.width = Math.max(1, Math.floor(this.w * this.dpr * 0.5));
+    this.bloomLayer.height = Math.max(1, Math.floor(this.h * this.dpr * 0.5));
     this.canvas.style.width = `${this.w}px`;
     this.canvas.style.height = `${this.h}px`;
     this.layout(lines);
@@ -246,6 +250,13 @@ export class Renderer {
           continue;
         }
         if (ch === '~') {
+          if (!view.hazard.includes('~')) {
+            // A decorative tilde (hazard turned off for this stage): draw it
+            // like an ordinary glyph instead of the jagged hazard mark.
+            g.fillStyle = this.glyphColor('~');
+            g.fillText(ch, x, y + this.fontSize * 0.04);
+            continue;
+          }
           const px = x + cx * 0.12;
           g.strokeStyle = '#68e08d';
           g.lineWidth = Math.max(1, cy * 0.055);
@@ -306,10 +317,9 @@ export class Renderer {
   /** Bloom is baked once per glyph-layer change, never per frame. */
   private paintBloom(): void {
     const b = this.bctx;
-    const W = this.w * this.dpr;
-    const H = this.h * this.dpr;
-    b.setTransform(1, 0, 0, 1, 0, 0);
-    b.clearRect(0, 0, W, H);
+    // The bloom layer is half resolution, so scale everything down by 0.5.
+    b.setTransform(0.5, 0, 0, 0.5, 0, 0);
+    b.clearRect(0, 0, this.w, this.h);
     b.globalCompositeOperation = 'lighter';
     b.globalAlpha = 0.16;
     for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as const) b.drawImage(this.layer, dx * this.dpr, dy * this.dpr);
@@ -340,7 +350,7 @@ export class Renderer {
 
   render(view: View, now: number): void {
     const g = this.ctx;
-    const key = `${view.lines.join('\n')}|${this.hue}|${[...view.collected].join(',')}`;
+    const key = `${view.version}|${this.hue}|${view.collected.size}`;
     if (key !== this.layerKey) {
       this.layerKey = key;
       this.paintLayer(view);
