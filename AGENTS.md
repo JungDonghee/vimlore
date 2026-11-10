@@ -13,7 +13,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 107/107 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 114/114 must pass
 npm test
 ```
 
