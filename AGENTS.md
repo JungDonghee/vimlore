@@ -28,6 +28,7 @@ npm run build          # dist/ + single-file dist/vimlore.html
 npm run lint:levels    # validate EVERY stage (par, solution, gating, win)
 npm run lint:levels -- 4   # just chapter 4
 npm test               # unit tests (engine + goals + progress)
+npm run doc-check      # doc numbers/links must match the code (CI gate)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
 ```
 

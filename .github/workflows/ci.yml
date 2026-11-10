@@ -12,6 +12,7 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm test
       - run: npm run lint:levels
+      - run: npm run doc-check
       - run: npm run build
       - name: absolute asset paths must not exist (blank page on subpath hosting)
         run: |

@@ -3,6 +3,7 @@
  * what to do next. No context from a previous chat required.
  */
 import { existsSync, readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 const line = (b: boolean, label: string, hint: string): void => console.log(`${b ? 'PASS' : 'MISS'}  ${label}${b ? '' : `  →  ${hint}`}`);
 const count = (dir: string, ext: string): number => (existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(ext)).length : 0);
@@ -18,13 +19,21 @@ line(existsSync('/home/jung/ai_station/sandbox/.secrets/github_token'), 'deploy 
 console.log(`
 NEXT
   1. read AGENTS.md            (invariants, voice, known gaps, shipping)
-  2. read docs/LEVEL_FORMAT.md (how to add a stage)
-  3. npm test                  (engine fidelity + trials)
-  4. npm run lint:levels       (all 51 stages must be green)
-  5. npm run dev               (play at http://localhost:5173)
+  2. read docs/ARCHITECTURE.md (how the layers fit together)
+  3. read docs/LEVEL_FORMAT.md (how to add a stage)
+  4. npm test                  (engine fidelity + trials)
+  5. npm run lint:levels       (all 51 stages must be green)
+  6. npm run dev               (play at http://localhost:5173)
 
 RULES THAT ARE NOT NEGOTIABLE
   · the engine must keep matching real Vim  (tools/oracle-diff.ts)
   · every level must pass lint:levels       (par, gating, win on last key)
+  · docs never drift from the code          (tools/doc-check.ts)
   · no server, no secrets in the repo, no runtime dependencies
 `);
+
+// Also run the doc integrity gate right now, so a stale number or a dangling
+// docs link cannot hide from a fresh agent.
+console.log('--- doc-check ---');
+const dc = spawnSync(process.execPath, ['--experimental-strip-types', 'tools/doc-check.ts'], { stdio: 'inherit' });
+if (dc.status !== 0) process.exit(dc.status ?? 1);

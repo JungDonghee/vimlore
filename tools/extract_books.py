@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
-"""Extract text from the Vim book PDFs/EPUBs into books-text/*.txt (not committed)."""
+"""Extract text from the Vim book PDFs/EPUBs into books-text/*.txt (not committed).
+
+Known limits (keep in mind before re-extracting):
+  * Some Leanpub PDFs store inter-word spaces only as glyph *positions*, not as
+    space characters in the text stream. pypdf cannot reconstruct those words;
+    `pdf_text()` therefore prefers pypdfium2 (PDFium), which reads glyph
+    positions and recovers the spaces. If pypdfium2 is missing it falls back to
+    pypdf, and the affected books (gourmet-vim, use-vim-like-a-pro,
+    vim-reference-guide) come out with run-on words.
+  * `scrub()` removes the per-page buyer watermark (name/email + transaction id)
+    that PDF storefronts stamp onto copies, so personal data never lands in the
+    text files.
+"""
 import os, re, sys, zipfile
 from html.parser import HTMLParser
 from pathlib import Path
@@ -24,7 +36,19 @@ FILES = {
     "neovim-for-beginners": "b0/b048fcf3bfd524905df2068673c0db45e0ed86a794f82699acbe6d9e11ee8445/Neovim for Beginners_ A Complete Guide From Installation to a Fully-Fledged IDE - Alvaro Leal.epub",
 }
 
-def pdf_text(path):
+def pdfium_text(path):
+    import pypdfium2 as pdfium
+    pdf = pdfium.PdfDocument(str(path))
+    out = []
+    for page in pdf:
+        try:
+            tp = page.get_textpage()
+            out.append(tp.get_text_bounded() or "")
+        except Exception as e:
+            out.append(f"\n[extract error: {e}]\n")
+    return "\n\f\n".join(out)
+
+def pypdf_text(path):
     from pypdf import PdfReader
     r = PdfReader(str(path))
     out = []
@@ -34,6 +58,15 @@ def pdf_text(path):
         except Exception as e:
             out.append(f"\n[extract error p{i}: {e}]\n")
     return "\n\f\n".join(out)
+
+def pdf_text(path):
+    # PDFium reconstructs inter-word spaces from glyph positions, which pypdf
+    # cannot do for some Leanpub PDFs. Fall back to pypdf if PDFium is absent.
+    try:
+        import pypdfium2  # noqa: F401
+        return pdfium_text(path)
+    except ImportError:
+        return pypdf_text(path)
 
 class Stripper(HTMLParser):
     def __init__(self):
@@ -75,7 +108,17 @@ def epub_text(path):
             if t.strip(): out.append(t)
     return "\n\n".join(out)
 
+def scrub(t):
+    """Remove personal data that PDF storefronts watermark onto pages."""
+    # buyer watermark (name + email) and transaction id, repeated per page
+    t = re.sub(r"(?im)^\s*Buyer:\s*[^\n]*\n?", "", t)
+    t = re.sub(r"(?im)^\s*Transaction\s+ID:\s*[^\n]*\n?", "", t)
+    # any line that is nothing but an email address
+    t = re.sub(r"(?im)^\s*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\s*\n?", "", t)
+    return t
+
 def clean(t):
+    t = scrub(t)
     t = t.replace("\u00ad", "")
     t = re.sub(r"[ \t]+\n", "\n", t)
     t = re.sub(r"\n{3,}", "\n\n", t)
@@ -91,7 +134,7 @@ def discover():
 for slug, rel in discover():
     src = Path(rel) if str(rel).startswith("/") else (ATTACH / rel)
     dst = OUT / f"{slug}.txt"
-    if dst.exists() and dst.stat().st_size > 1000:
+    if dst.exists() and dst.stat().st_size > 1000 and "--force" not in sys.argv:
         print(f"skip {slug}")
         continue
     try:

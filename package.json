@@ -11,6 +11,7 @@
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "lint:levels": "node --experimental-strip-types tools/level-lint.ts",
     "oracle": "node --experimental-strip-types tools/oracle-diff.ts",
+    "doc-check": "node --experimental-strip-types tools/doc-check.ts",
     "doctor": "node --experimental-strip-types tools/doctor.ts"
   },
   "devDependencies": {
