@@ -35,10 +35,14 @@ export function skillModel(p: Progress): SkillModel {
   };
   const chapterOpen = (i: number): boolean => i === 0 || chapterDone(i - 1);
 
+  // A command counts as learned when a stage that teaches it has been cleared.
+  const learnedIds = new Set<string>();
+  for (const ch of CHAPTERS) for (const st of ch.stages) if (p.stages[st.id]?.cleared) for (const t of st.teaches ?? []) learnedIds.add(t);
+
   const rows: SkillRow[] = COMMANDS.map((c) => {
     const unlocked = chapterOpen(c.chapter - 1) || (p.stats[c.id]?.attempts ?? 0) > 0;
     const st = p.stats[c.id] ?? p.stats[c.keys] ?? { attempts: 0, clears: 0, keys: 0, par: 0, restarts: 0 };
-    const learned = st.clears > 0;
+    const learned = learnedIds.has(c.id) || st.clears > 0;
     const rate = st.attempts ? st.clears / st.attempts : 0;
     const eff = st.par ? Math.min(1, st.par / Math.max(1, st.keys)) : 0;
     const mastery = learned ? Math.min(1, 0.55 + 0.45 * rate * Math.max(0.4, eff)) : 0;
