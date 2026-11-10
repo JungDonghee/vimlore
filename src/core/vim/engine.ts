@@ -211,6 +211,19 @@ export class Vim {
     }
     if (!this.replaying) this.cmdKeys.push(key);
 
+    // Gate every key in normal/visual modes so a not-yet-unlocked skill cannot
+    // be reached through `:normal`, macros or dot-repeat either. Insert, replace
+    // and command-line modes are never gated (they are free-form text entry).
+    const gateMode = this.mode === 'normal' || this.mode === 'visual' || this.mode === 'visual-line' || this.mode === 'visual-block';
+    if (gateMode && this.gate) {
+      const deny = this.gate(key);
+      if (deny) {
+        this.emit({ type: 'locked', key, message: deny });
+        this.resetPending();
+        return;
+      }
+    }
+
     if (this.mode === 'insert' || this.mode === 'replace') {
       this.insertKey(key);
       return;
@@ -268,15 +281,6 @@ export class Vim {
     if (this.op) {
       this.opKey(key);
       return;
-    }
-
-    if (this.gate) {
-      const deny = this.gate(key);
-      if (deny) {
-        this.emit({ type: 'locked', key, message: deny });
-        this.resetPending();
-        return;
-      }
     }
 
     switch (key) {
@@ -567,8 +571,8 @@ export class Vim {
       this.resetPending();
       return;
     }
-    if ((key === op.key && key !== '<') || (key === '<' && op.key === '<')) {
-      // dd, yy, cc, >>, <<, ==
+    if ((key === op.key && key !== '<') || (key === '<' && op.key === '<') || (op.key.length === 2 && key === op.key[1])) {
+      // dd, yy, cc, >>, <<, == and the two-key g operators: guu, gUU, g~~, gqq, gww
       const n = (this.countNum || 1) * op.count;
       this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line + n - 1, col: 0 }, linewise: true });
       return;
@@ -840,7 +844,9 @@ export class Vim {
         return { to: { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) }, kind: 'exclusive' };
       case '$': {
         const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count - 1);
-        return { to: { line, col: M.lineEnd(this.buf, line) }, kind: 'inclusive' };
+        // A counted `$` that crosses lines is linewise in Vim, not charwise.
+        const kind = line !== this.cursor.line ? 'linewise' : 'inclusive';
+        return { to: { line, col: M.lineEnd(this.buf, line) }, kind };
       }
       case 'w':
         return M.wordMotion(env, count, { dir: 1 });
@@ -854,8 +860,10 @@ export class Vim {
         return M.wordMotion(env, count, { dir: 1, end: true });
       case 'E':
         return M.wordMotion(env, count, { dir: 1, end: true, big: true });
-      case 'G':
-        return { to: { line: this.buf.lineCount - 1, col: 0 }, kind: 'linewise', jump: true };
+      case 'G': {
+        const target = count > 0 ? Math.min(count - 1, this.buf.lineCount - 1) : this.buf.lineCount - 1;
+        return { to: { line: target, col: 0 }, kind: 'linewise', jump: true };
+      }
       case '}':
         return M.paragraphMotion(env, 1, count);
       case '{':
@@ -1333,7 +1341,7 @@ export class Vim {
       const parts = this.buf.line(this.cursor.line).split('\n');
       this.buf.lines.splice(this.cursor.line, 1, ...parts);
       this.buf.setLines(this.buf.lines);
-      this.cursor = { line: this.cursor.line + parts.length - 1, col: parts[parts.length - 1].length };
+      this.cursor = { line: this.cursor.line + parts.length - 1, col: 0 };
     } else {
       this.cursor = { line: this.cursor.line, col: this.cursor.col + text.length };
     }

@@ -798,7 +798,8 @@ body.crt-off .overlay {
 }
 
 .btn:hover,
-.btn:focus-visible {
+.btn:focus-visible,
+.btn.focused {
   color: var(--ph-bright);
   border-color: var(--ph);
   background: rgb(102 255 158 / 0.1);
@@ -813,7 +814,8 @@ body.crt-off .overlay {
   box-shadow: 0 0 26px rgb(102 255 158 / 0.35);
 }
 
-.btn.primary:hover {
+.btn.primary:hover,
+.btn.primary.focused {
   background: var(--ph-bright);
   color: #03130a;
 }

@@ -36,3 +36,31 @@ export function sleep(ms: number): Promise<void> {
 }
 
 export const isTouch = (): boolean => window.matchMedia('(pointer: coarse)').matches;
+
+/** A group of buttons navigated with Vim keys (h/l or j/k + Enter). */
+export interface FocusGroup {
+  els: HTMLButtonElement[];
+  index: number;
+}
+
+export function focusGroup(container: HTMLElement, sel = '.btn'): FocusGroup {
+  return { els: Array.from(container.querySelectorAll<HTMLButtonElement>(sel)), index: 0 };
+}
+
+export function focusIndex(g: FocusGroup, i: number): void {
+  const n = g.els.length;
+  if (!n) return;
+  g.index = ((i % n) + n) % n;
+  g.els.forEach((el, idx) => el.classList.toggle('focused', idx === g.index));
+}
+
+export function focusStep(g: FocusGroup, d: 1 | -1): void {
+  focusIndex(g, g.index + d);
+}
+
+export function focusActivate(g: FocusGroup): boolean {
+  const el = g.els[g.index];
+  if (!el) return false;
+  el.click();
+  return true;
+}

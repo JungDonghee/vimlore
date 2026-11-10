@@ -77,7 +77,12 @@ export function wordMotion(env: MotionEnv, count: number, opts: { big?: boolean;
         } else {
           next = list.find((x) => x.start > off);
         }
-        if (!next) return { to: env.buf.pos(lastCharOffset(env.buf)), kind: 'exclusive' };
+        if (!next) {
+          // Exclusive endpoint must be one past the last char, so an operator
+          // like `d2w` deletes the final word instead of leaving its last char.
+          const lastLine = env.buf.lineCount - 1;
+          return { to: { line: lastLine, col: env.buf.line(lastLine).length }, kind: 'exclusive' };
+        }
         off = next.start;
       } else {
         const t = tokenAt(list, off);

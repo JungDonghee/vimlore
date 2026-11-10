@@ -111,10 +111,14 @@ function bracketObject(buf: Buffer, pos: Pos, around: boolean, openCh: string): 
   const [open, close] = PAIRS[openCh];
   const flat = buf.flat;
   const off = buf.idx(pos);
-  // Scan backwards for an unmatched opening bracket.
+  // Scan backwards for an unmatched opening bracket. If the cursor sits on a
+  // closing bracket, start just before it: that bracket is the pair's own
+  // closer, not a nested one.
+  let start = off;
+  if (flat[off] === close) start = off - 1;
   let depth = 0;
   let startOff = -1;
-  for (let i = off; i >= 0; i--) {
+  for (let i = start; i >= 0; i--) {
     const c = flat[i];
     if (c === close) depth++;
     else if (c === open) {
@@ -144,7 +148,8 @@ function bracketObject(buf: Buffer, pos: Pos, around: boolean, openCh: string): 
   if (around) return { start: buf.pos(startOff), end: buf.pos(endOff) };
   const s = startOff + 1;
   const e = endOff - 1;
-  if (e < s) return { start: buf.pos(startOff + 1), end: buf.pos(startOff) };
+  // An empty pair like "()" has no inner text; Vim treats it as a no-op.
+  if (e < s) return null;
   return { start: buf.pos(s), end: buf.pos(e) };
 }
 
@@ -171,7 +176,11 @@ function tagObject(buf: Buffer, pos: Pos, around: boolean): ObjectRange | null {
         if (depth === 0) {
           if (u.start >= off) {
             if (around) return { start: buf.pos(t.start), end: buf.pos(u.end) };
-            return { start: buf.pos(t.end + 1), end: buf.pos(Math.max(t.end, u.start - 1)) };
+            const innerStart = t.end + 1;
+            const innerEnd = Math.max(t.end, u.start - 1);
+            // An empty tag pair has no inner text; Vim treats it as a no-op.
+            if (innerStart > innerEnd) return null;
+            return { start: buf.pos(innerStart), end: buf.pos(innerEnd) };
           }
           break;
         }

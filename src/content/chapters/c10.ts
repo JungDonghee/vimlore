@@ -33,7 +33,7 @@ export const c10: Chapter = {
   },
   sigil: '▦',
   hue: 130,
-  unlocks: ['g'],
+  unlocks: ['gq', 'gU', 'gu', 'g~'],
   stages: [
     {
       id: 'c10s1',

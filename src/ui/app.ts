@@ -4,7 +4,7 @@ import { emptyProgress, type Chapter, type Progress, type StageRecord, type Star
 import { generateTrial, dailySeed, skillLabel, TRIAL_SKILLS, type Trial } from '../core/game/trials.ts';
 import { weakestSkills, recordStat, encodeSave, decodeSave, weaknessScore } from '../core/game/stats.ts';
 import { skillModel, activityGrid, streak, bumpActivity } from '../core/game/skills.ts';
-import { h, mount, isTouch } from './dom.ts';
+import { h, mount, isTouch, focusGroup, focusStep, focusActivate, focusIndex, type FocusGroup } from './dom.ts';
 import { Sfx } from './sfx.ts';
 import { PlayScreen } from './play.ts';
 
@@ -57,6 +57,7 @@ export class App {
   private trialEls: HTMLElement[] = [];
   private trialSel = 0;
   private keyHandler: (e: KeyboardEvent) => void;
+  private actions: FocusGroup | null = null;
 
   constructor(root: HTMLElement) {
     this.root = root;
@@ -121,6 +122,12 @@ export class App {
     const el = this.scroller();
     if (!el) return;
     el.scrollTop = where === 'top' ? 0 : el.scrollHeight;
+  }
+
+  private moveTrial(delta: number): void {
+    this.trialSel = clamp(this.trialSel + delta, 0, Math.max(0, this.trialEls.length - 1));
+    this.paintTrial();
+    this.trialEls[this.trialSel]?.scrollIntoView({ block: 'nearest' });
   }
 
   private hue(h: number): void {
@@ -675,6 +682,8 @@ export class App {
       h('div', { class: 'actions' }, h('button', { class: 'btn primary', onclick: () => this.goMap() }, this.t('BACK', '뒤로'), h('kbd', {}, 'esc'))),
     );
     mount(this.root, h('div', { class: 'overlay', style: { position: 'relative', background: 'transparent', backdropFilter: 'none' } }, card));
+    this.actions = focusGroup(card);
+    focusIndex(this.actions, 0);
   }
 
   // -------------------------------------------------------------------- keys
@@ -733,8 +742,12 @@ export class App {
       if (e.key === '1') this.startTrial('endless');
       else if (e.key === '2') this.startTrial('weak');
       else if (e.key === '3') this.startTrial('daily');
-      else if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); this.trialSel = clamp(this.trialSel - 1, 0, Math.max(0, this.trialEls.length - 1)); this.paintTrial(); this.trialEls[this.trialSel]?.scrollIntoView({ block: 'nearest' }); }
-      else if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); this.trialSel = clamp(this.trialSel + 1, 0, Math.max(0, this.trialEls.length - 1)); this.paintTrial(); this.trialEls[this.trialSel]?.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); this.moveTrial(-1); }
+      else if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); this.moveTrial(1); }
+      else if (e.key === 'g' || e.key === 'Home') { e.preventDefault(); this.moveTrial(-this.trialSel); }
+      else if (e.key === 'G' || e.key === 'End') { e.preventDefault(); this.moveTrial(Math.max(0, this.trialEls.length - 1) - this.trialSel); }
+      else if (e.key === 'PageDown' || (e.key === 'd' && e.ctrlKey)) { e.preventDefault(); this.moveTrial(5); }
+      else if (e.key === 'PageUp' || (e.key === 'u' && e.ctrlKey)) { e.preventDefault(); this.moveTrial(-5); }
       else if (e.key === 'Enter') { e.preventDefault(); this.runTrial(this.trialSel); }
       else if (e.key === 'Escape') this.goMap();
       return;
@@ -755,9 +768,18 @@ export class App {
       return;
     }
     if (this.screen === 'about') {
-      if (e.key === 'Escape' || e.key === 'Enter') {
+      if (e.key === 'Escape') {
         e.preventDefault();
         this.goMap();
+      } else if (e.key === 'j' || e.key === 'l') {
+        e.preventDefault();
+        if (this.actions) focusStep(this.actions, 1);
+      } else if (e.key === 'k' || e.key === 'h') {
+        e.preventDefault();
+        if (this.actions) focusStep(this.actions, -1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (this.actions) focusActivate(this.actions);
       }
     }
   }

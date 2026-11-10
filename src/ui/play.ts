@@ -5,7 +5,7 @@ import type { Chapter, Localized, Stage, Stars } from '../core/game/types.ts';
 import { COMMAND_BY_ID } from '../content/commands.ts';
 import { Renderer } from './render.ts';
 import { Sfx } from './sfx.ts';
-import { h, mount } from './dom.ts';
+import { h, mount, focusGroup, focusStep, focusActivate, focusIndex, type FocusGroup } from './dom.ts';
 
 export interface PlayHost {
   sfx: Sfx;
@@ -59,6 +59,7 @@ export class PlayScreen {
   private repeating = false;
   private repeatDelay = 0;
   private repeatTimer = 0;
+  private actions: FocusGroup | null = null;
 
   constructor(root: HTMLElement, host: PlayHost) {
     this.host = host;
@@ -330,37 +331,33 @@ export class PlayScreen {
   handleKey(e: KeyboardEvent): boolean {
     this.dirty = true;
     if (e.repeat) return true; // our own repeat loop handles held keys
-    if (this.state === 'intro') {
+    if (this.state === 'intro' || this.state === 'won' || this.state === 'lost') {
+      // Overlay buttons are navigated with Vim keys: h/l or j/k moves the
+      // focus, Enter activates. Escape always leaves.
+      if (e.key === 'j' || e.key === 'l') {
+        if (this.actions) focusStep(this.actions, 1);
+        return true;
+      }
+      if (e.key === 'k' || e.key === 'h') {
+        if (this.actions) focusStep(this.actions, -1);
+        return true;
+      }
       if (e.key === 'Enter') {
-        this.begin();
+        if (this.actions && focusActivate(this.actions)) return true;
+        if (this.state === 'intro') this.begin();
+        else if (this.state === 'won') this.host.onNext();
+        else this.restart();
         return true;
       }
       if (e.key === 'Escape') {
         this.host.onExit();
         return true;
       }
-      return false;
-    }
-    if (this.state === 'won') {
-      if (e.key === 'Enter') {
-        this.host.onNext();
-        return true;
-      }
-      if (e.key === 'Escape') {
-        this.host.onExit();
-        return true;
-      }
-      return true;
-    }
-    if (this.state === 'lost') {
-      if (e.key === 'Enter' || e.key === 'r' || e.key === 'R') {
+      if (this.state === 'lost' && (e.key === 'r' || e.key === 'R')) {
         this.restart();
         return true;
       }
-      if (e.key === 'Escape') {
-        this.host.onExit();
-        return true;
-      }
+      if (this.state === 'intro') return false;
       return true;
     }
     if (e.key === 'Tab') {
@@ -513,6 +510,8 @@ export class PlayScreen {
     );
     this.overlay = h('div', { class: 'overlay' }, card);
     this.root.append(this.overlay);
+    this.actions = focusGroup(card);
+    focusIndex(this.actions, 0);
   }
 
   private showResults(stars: Stars, keys: number, par: number): void {
@@ -557,6 +556,8 @@ export class PlayScreen {
     this.overlay?.remove();
     this.overlay = h('div', { class: 'overlay' }, card);
     this.root.append(this.overlay);
+    this.actions = focusGroup(card);
+    focusIndex(this.actions, 0);
     this.host.onWin(stars, keys, par);
     for (let i = 0; i < stars; i++) setTimeout(() => this.host.sfx.play('star', i * 0.08), 260 + i * 220);
   }
@@ -574,6 +575,8 @@ export class PlayScreen {
     this.overlay?.remove();
     this.overlay = h('div', { class: 'overlay' }, card);
     this.root.append(this.overlay);
+    this.actions = focusGroup(card);
+    focusIndex(this.actions, 0);
   }
 
   private showHint(): void {

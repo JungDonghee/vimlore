@@ -24,7 +24,7 @@ export const c03: Chapter = {
   },
   sigil: '▞',
   hue: 130,
-  unlocks: ['d', 'c', 'y', 'p', 'P', '.', 's', 'S'],
+  unlocks: ['d', 'c', 'y', 'p', 'P', '.', 's', 'S', 'D', 'C'],
   stages: [
     {
       id: 'c03s1',

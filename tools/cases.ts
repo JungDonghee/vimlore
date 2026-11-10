@@ -149,6 +149,15 @@ export const CASES: VimCase[] = [
   { name: 'n', text: 'a x b x c x', cursor: [1, 0], keys: '/x<CR>n' },
   { name: '*', text: 'foo bar foo', cursor: [1, 0], keys: '*' },
   { name: 'd/search', text: 'a\nb\ntarget', cursor: [1, 0], keys: 'd/target<CR>' },
+  { name: 'd2G count', text: 'a\nb\nc\nd', cursor: [1, 0], keys: 'd2G' },
+  { name: 'd2$ linewise', text: 'foo\nbar\nbaz', cursor: [1, 0], keys: 'd2$' },
+  { name: 'd2w last word', text: 'baz qux', cursor: [1, 0], keys: 'd2w' },
+  { name: 'cit empty tag', text: '<p></p>', cursor: [1, 2], keys: 'cit' },
+  { name: 'insert CR newline', text: 'ab', cursor: [1, 1], keys: 'i<CR>X<Esc>' },
+  { name: 'guu doubled', text: 'ABC', cursor: [1, 0], keys: 'guu' },
+  { name: 'gUU doubled', text: 'abc', cursor: [1, 0], keys: 'gUU' },
+  { name: 'di( on close paren', text: 'f(a, b) g', cursor: [1, 6], keys: 'di(' },
+  { name: 'di{ on inner close', text: '{a{b}c}', cursor: [1, 4], keys: 'di{' },
 
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

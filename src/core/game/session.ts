@@ -59,6 +59,9 @@ export class Session {
       textwidth: opts.stage.textwidth ?? 40,
       onEvent: (e) => this.onVim(e),
     });
+    // The engine-level gate catches keys that bypass `Session.feed` — `:normal`,
+    // macro replay and dot-repeat — so a locked skill cannot leak through them.
+    this.vim.gate = (k) => (this.keyAllowed(k) ? null : 'LOCKED');
   }
 
   private emit(e: SessionEvent): void {
@@ -149,10 +152,29 @@ export class Session {
   private keyAllowed(key: string): boolean {
     const m = this.vim.mode;
     if (m !== 'normal' && m !== 'visual' && m !== 'visual-line' && m !== 'visual-block') return true;
-    if (this.vim.awaitingKey) return true;
     if (UNIVERSAL_KEYS.has(key)) return true;
     if (/^[0-9]$/.test(key)) return true;
+    // `g` alone does nothing: it is a prefix. The two-key combination is gated
+    // at its second letter (below), so a chapter cannot unlock the whole g menu
+    // by accident.
+    if (key === 'g') return true;
+
+    const p = this.vim.pending;
+    // Argument positions (f/t/F/T, r, m, ", q, @, z): the first key was already
+    // gated; the argument is free-form, not a skill in its own right.
+    if (p && (p.kind === 'find' || p.kind === 'char' || p.kind === 'mark' || p.kind === 'macro-record' || p.kind === 'macro-run' || p.kind === 'reg' || p.kind === 'z')) return true;
+    // Two-key g commands: gate the whole "gJ"/"gq"/"gU" name.
+    if (p && p.kind === 'g') return this.allowed.has('g' + key);
+    // Text objects: gate the combined "iw"/"a(" name so an object from a later
+    // chapter cannot be reached through an already-unlocked operator. This must
+    // run before the bare `"` check below, because `"` here is an object
+    // delimiter, not the register prefix.
+    if (p && p.kind === 'textobj') {
+      const combo = (p.around ? 'a' : 'i') + key;
+      return this.allowed.has(combo) || this.allowed.has(key);
+    }
     if (key === '"') return this.allowed.has('"');
+    // Operator-pending and every other normal/visual key: it must be unlocked.
     return this.allowed.has(key);
   }
 

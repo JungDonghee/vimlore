@@ -79,6 +79,8 @@ export const COMMANDS: CommandInfo[] = [
   c('a(', 'a(', 'around parens', '괄호 포함', 4, 'Inside plus the brackets.', '괄호까지 포함.'),
   c('it', 'it', 'inside tag', '태그 안', 4, 'Inside an HTML/XML tag pair.', '태그 사이 내용.'),
   c('ip', 'ip', 'inner paragraph', '문단', 4, 'The paragraph you are in.', '현재 문단.'),
+  c('i{', 'i{', 'inside braces', '중괄호 안', 4, 'Inside the nearest { }.', '가장 가까운 { } 안쪽.'),
+  c('a{', 'a{', 'around braces', '중괄호 포함', 4, 'Inside plus the braces.', '중괄호까지 포함.'),
 
   // Chapter 5 — visual mode
   c('v', 'v', 'visual', '비주얼', 5, 'Start a character-wise selection.', '문자 단위 선택 시작.'),
@@ -87,6 +89,7 @@ export const COMMANDS: CommandInfo[] = [
   c('>', '>', 'indent', '들여쓰기', 5, 'Shift right.', '오른쪽으로 들여쓰기.'),
   c('<', '<', 'outdent', '내어쓰기', 5, 'Shift left.', '왼쪽으로 내어쓰기.'),
   c('J', 'J', 'join lines', '줄 합치기', 5, 'Join this line with the next.', '다음 줄과 합친다.'),
+  c('gJ', 'gJ', 'join raw', '공백 없이 합치기', 5, 'Join lines without adding a space.', '공백 없이 줄을 합친다.'),
   c('gv', 'gv', 'reselect', '재선택', 5, 'Reselect the last visual range.', '마지막 선택을 다시.'),
 
   // Chapter 6 — search & replace
@@ -120,9 +123,9 @@ export const COMMANDS: CommandInfo[] = [
 
   // Chapter 10 — the weave
   c('gq', 'gq', 'format', '재포맷', 10, 'Reflow text to the text width.', '텍스트 폭에 맞춰 줄바꿈.'),
-  c('gJ', 'gJ', 'join raw', '공백 없이 합치기', 10, 'Join lines without adding a space.', '공백 없이 줄을 합친다.'),
   c('gu', 'gu', 'lowercase', '소문자', 10, 'Operator: lowercase over a motion.', '오퍼레이터: 소문자로.'),
   c('gU', 'gU', 'uppercase', '대문자', 10, 'Operator: uppercase over a motion.', '오퍼레이터: 대문자로.'),
+  c('g~', 'g~', 'toggle case', '대소문자 뒤집기', 10, 'Operator: flip case over a motion.', '오퍼레이터: 모션 범위의 대소문자를 뒤집는다.'),
 ];
 
 export const COMMAND_BY_ID = new Map(COMMANDS.map((x) => [x.id, x]));

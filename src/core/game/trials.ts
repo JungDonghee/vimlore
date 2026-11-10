@@ -256,6 +256,8 @@ function allowAll(keys: string): Set<string> {
   const set = new Set<string>();
   for (const k of tokenize(keys)) set.add(k);
   for (const c of 'hjkl0123456789dcypPwiabAescxru."\'()[]{}<>=%~/ $') set.add(c);
+  // Two-key combinations the gate checks by their combined name.
+  for (const combo of ['gU', 'gu', 'gq', 'gJ', 'g~', 'gv', 'iw', 'aw', 'i"', 'a"', 'i(', 'a(', 'it', 'at', 'ip', 'ap', 'i{', 'a{', 'i[', 'a[', 'i<', 'a<', 'iW', 'aW', 'ib', 'ab', 'is', 'as']) set.add(combo);
   return set;
 }
 

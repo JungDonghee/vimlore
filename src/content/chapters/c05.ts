@@ -21,7 +21,7 @@ export const c05: Chapter = {
   },
   sigil: '▥',
   hue: 130,
-  unlocks: ['v', 'V', '<C-v>', '>', '<', 'J', 'g'],
+  unlocks: ['v', 'V', '<C-v>', '>', '<', 'J', 'gJ', 'gv'],
   stages: [
     {
       id: 'c05s1',
