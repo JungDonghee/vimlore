@@ -3,13 +3,14 @@ import { COMMANDS, chapterUnlockKeys, chapterForKey } from '../content/commands.
 import { emptyProgress, type Chapter, type Progress, type StageRecord, type Stars } from '../core/game/types.ts';
 import { generateTrial, dailySeed, skillLabel, TRIAL_SKILLS, type Trial } from '../core/game/trials.ts';
 import { weakestSkills, recordStat, encodeSave, decodeSave, weaknessScore } from '../core/game/stats.ts';
+import { skillModel, activityGrid, streak, bumpActivity } from '../core/game/skills.ts';
 import { h, mount, isTouch } from './dom.ts';
 import { Sfx } from './sfx.ts';
 import { PlayScreen } from './play.ts';
 
 const SAVE_KEY = 'vimlore.save.v2';
 
-type Screen = 'title' | 'map' | 'play' | 'codex' | 'about' | 'trials';
+type Screen = 'title' | 'map' | 'play' | 'codex' | 'about' | 'trials' | 'progress';
 
 const clamp = (n: number, a: number, b: number): number => Math.max(a, Math.min(b, n));
 
@@ -214,6 +215,7 @@ export class App {
           h(
             'span',
             { style: { display: 'flex', gap: '8px' } },
+            h('button', { class: 'chip', onclick: () => this.goProgress() }, this.t('P · PROGRESS', 'P · 성장')),
             h('button', { class: 'chip', onclick: () => this.goTrials() }, this.t('T · TRIALS', 'T · 시련')),
             h('button', { class: 'chip', onclick: () => this.goCodex() }, this.t('C · GRIMOIRE', 'C · 마법서')),
             h('button', { class: 'chip', onclick: () => this.goAbout() }, this.t('S · SETTINGS', 'S · 설정')),
@@ -269,6 +271,7 @@ export class App {
   private recordClear(id: string, stars: Stars, keys: number): void {
     const st = CHAPTERS[this.chapterIndex]?.stages.find((x) => x.id === id);
     recordStat(this.progress, st?.teaches?.[0] ?? `floor${this.chapterIndex + 1}`, { cleared: stars > 0, keys, par: st?.par ?? keys });
+    bumpActivity(this.progress);
     const prev: StageRecord | undefined = this.progress.stages[id];
     const better = !prev || stars > prev.stars || (stars === prev.stars && keys < prev.bestKeys);
     this.progress.stages[id] = {
@@ -435,6 +438,7 @@ export class App {
       onSave: () => this.saveTrial(trial),
       onWin: (stars, keys) => {
         this.progress.trialsCleared++;
+        bumpActivity(this.progress);
         recordStat(this.progress, trial.skillId, { cleared: stars > 0, keys, par: trial.stage.par });
         this.save();
       },
@@ -450,6 +454,42 @@ export class App {
     this.progress.saved.push({ seed: t.seed, skill: t.skillId, at: Date.now() });
     if (this.progress.saved.length > 60) this.progress.saved.shift();
     this.save();
+  }
+
+  goProgress(): void {
+    this.killPlay();
+    this.screen = 'progress';
+    this.hue(128);
+    const m = skillModel(this.progress);
+    const grid = activityGrid(this.progress, 20);
+    const total = Object.values(this.progress.activity).reduce((a, b) => a + b, 0);
+    mount(
+      this.root,
+      h(
+        'div',
+        { class: 'screen fade-in' },
+        h('div', { class: 'topbar' }, h('h1', {}, 'PROGRESS'), h('div', { class: 'meta' }, `${m.totals.learned}/${m.totals.total} ${this.t('skills', '스킬')} · ${streak(this.progress)}d ${this.t('streak', '연속')} · ★ ${this.totalStars()}`)),
+        h(
+          'div',
+          { class: 'map-wrap' },
+          h(
+            'div',
+            { class: 'map' },
+            h('div', { class: 'kicker' }, `${total} ${this.t('actions logged', '기록된 행동')} · ${this.t('mastered', '숙련')} ${m.totals.mastered}`),
+            h('div', { class: 'grass' }, ...grid.flatMap((col) => col.map((d) => h('i', { class: `g${d.level}`, title: `${d.key} · ${d.count}` })))),
+            ...m.byChapter.map((ch) =>
+              h(
+                'div',
+                { style: { marginTop: '18px' } },
+                h('div', { class: 'kicker', style: { marginBottom: '6px' } }, `${String(ch.index).padStart(2, '0')} ${ch.title} · ${ch.learned}/${ch.total}${ch.unlocked ? '' : ' · SEALED'}`),
+                h('div', {}, ...ch.rows.map((r) => h('span', { class: `sk ${r.learned ? 'on' : r.unlocked ? 'open' : 'off'}`, title: r.desc }, r.keys))),
+              ),
+            ),
+          ),
+        ),
+        h('div', { class: 'map-foot' }, h('span', {}, this.t('solid = learned · outline = available · dim = locked', '채움=습득 · 테두리=가능 · 흐림=잠김')), h('button', { class: 'chip', onclick: () => this.goMap() }, this.t('MAP', '지도'))),
+      ),
+    );
   }
 
   goCodex(): void {
@@ -594,6 +634,8 @@ export class App {
         else this.sfx.play('locked');
       } else if (e.key === 'Escape') {
         this.goTitle();
+      } else if (e.key === 'p' || e.key === 'P') {
+        this.goProgress();
       } else if (e.key === 't' || e.key === 'T') {
         this.goTrials();
       } else if (e.key === 'c' || e.key === 'C') {
@@ -608,6 +650,10 @@ export class App {
       else if (e.key === '2') this.startTrial('weak');
       else if (e.key === '3') this.startTrial('daily');
       else if (e.key === 'Escape') this.goMap();
+      return;
+    }
+    if (this.screen === 'progress') {
+      if (e.key === 'Escape') this.goMap();
       return;
     }
     if (this.screen === 'codex' || this.screen === 'about') {

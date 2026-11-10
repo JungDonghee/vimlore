@@ -137,6 +137,42 @@ const SKILLS: TrialSkill[] = [
       };
     },
   },
+
+  {
+    id: 'delete-line',
+    label: 'DELETE LINES',
+    tier: 1,
+    keys: ['d', 'd'],
+    make: (rng) => {
+      const n = int(rng, 2, 3);
+      const lines: string[] = [];
+      for (let i = 0; i < n; i++) lines.push('# core dump ' + pick(rng, ['0x1f', '0x2a', '0x3c', '0x4d']));
+      return {
+        text: ['keep header', ...lines, 'keep footer'].join('\n'),
+        goalText: ['keep header', 'keep footer'].join('\n'),
+        keys: 'j' + 'dd'.repeat(n),
+        blurb: 'Whole lines are already dead. Remove them at once.',
+      };
+    },
+  },
+  {
+    id: 'dot-repeat',
+    label: 'DOT REPEAT',
+    tier: 3,
+    keys: ['.'],
+    make: (rng) => {
+      const n = int(rng, 3, 4);
+      const ch = pick(rng, ['#', '>', '*']);
+      const text = Array.from({ length: n }, () => ch + 'data line').join('\n');
+      const goal = Array.from({ length: n }, () => 'data line').join('\n');
+      return {
+        text,
+        goalText: goal,
+        keys: 'x' + 'j.'.repeat(n - 1),
+        blurb: 'One edit, then let . carry it down the file.',
+      };
+    },
+  },
 ];
 
 const NEWS = ['new', 'on', 'ok', 'yes', 'set', 'live'];

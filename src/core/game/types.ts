@@ -106,6 +106,8 @@ export interface Progress {
   /** Generated chambers the player chose to keep. */
   saved: SavedTrial[];
   trialsCleared: number;
+  /** YYYY-MM-DD -> actions, for the contribution grass. */
+  activity: Record<string, number>;
 }
 
 export const emptyProgress = (): Progress => ({
@@ -123,4 +125,5 @@ export const emptyProgress = (): Progress => ({
   stats: {},
   saved: [],
   trialsCleared: 0,
+  activity: {},
 });

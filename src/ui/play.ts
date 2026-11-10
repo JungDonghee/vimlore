@@ -405,6 +405,7 @@ export class PlayScreen {
         ? h(
             'div',
             { class: 'learned' },
+            h('div', { class: 'kicker', style: { marginBottom: '4px' } }, 'SKILL UNLOCKED'),
             ...learned.map((c) =>
               h('div', { class: 'item' }, h('code', {}, c!.keys), h('span', {}, lang === 'ko' ? c!.name.ko : c!.name.en), h('span', { style: { marginLeft: 'auto', opacity: '0.6' } }, lang === 'ko' ? c!.desc.ko : c!.desc.en)),
             ),
