@@ -65,7 +65,7 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 4. No dead ends: `u` must always rescue the player.
 5. Hazards teach precision (`t` vs `f`), never luck.
 6. Buffers ≤ 56 columns, ≤ 14 rows, ASCII only, no trailing whitespace.
-7. Korean and English are both first-class; Korean must read naturally.
+7. English is the game's voice; Korean is a translation (`Localized.ko`).
 
 ## Performance budget
 

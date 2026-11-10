@@ -1,20 +1,28 @@
 import type { Chapter } from '../../core/game/types.ts';
 
 /**
- * CHAPTER 10 — THE WEAVE
+ * CHAPTER 10 — THE WEAVE (the exam)
  *
- * The exam. Six rooms, and the last one is a page that has to be read.
+ * Six rooms; the last one is a page that has to be read.
+ *
  * Design notes:
- *  - s1..s4 each add one g-operator to the hand: gq, gU/gu/g~, gJ, and the
- *    macro that turns one gesture into a chorus.
- *  - s5 is freeform (code + prose, four wounds, no scaffolding): the player
- *    chooses the order. s6 is the boss: five damage classes at once, and par
- *    only falls if the fixes are done in the right order (words before lines,
- *    and the dot last).
- *  - unlocks: 'g' is the floor's new key. Chapters 3..9 are still placeholders
- *    in this checkout, so the chapter also re-grants the editing keys the exam
- *    leans on (J q @ . d c < >) rather than letting the gate block a player
- *    mid-sentence. Once those floors land these entries are harmless duplicates.
+ *  - s1..s4 each add one g-operator to the hand, in the order the curriculum
+ *    asks for: gq (reflow), gU/gu/g~ (case over a motion), gJ vs J (the seam),
+ *    then the macro that turns one gesture into a chorus (qa … q, 2@a, .).
+ *  - s5 is freeform: a program plus the thought under it, four wounds, no
+ *    scaffolding — the player picks the order. s6 is the boss: five damage
+ *    classes at once (case, width, a doubled line, an indent, a repeated
+ *    misspelling), and par only falls if the fixes happen in the right order:
+ *    words before lines, and the dot last.
+ *  - `unlocks: ['g']` is the floor's key; every other key in the ghosts (d, c,
+ *    ., q, @, J, <) is already granted by c03/c05/c07, so the gate agrees with
+ *    the cumulative curriculum and nothing here re-grants an old key.
+ *  - `unlocks` note: c05 also grants 'g' (for gv/gJ); the duplicate is
+ *    deliberate — this floor must stand on its own if the c05 slot changes.
+ *  - The two heavy stages were verified with `--trace`: s4 ends on the dot
+ *    after 2@a, s6 ends on a dot that repeats `ciwthreads<Esc>` from the
+ *    couplet up into the reflowed paragraph. Do not reorder those ghosts
+ *    without re-running the linter — the win has to land on the last key.
  */
 export const c10: Chapter = {
   id: 'c10',
