@@ -138,11 +138,13 @@ export class App {
           { class: 'title-mark' },
           ...letters.map((c, i) => h('span', { style: { animationDelay: `${i * 0.07}s` } }, c)),
         ),
+        h('div', { class: 'title-rule' }),
         h('div', { class: 'title-tag ko' }, this.t('The world is written. Rewrite it.', '세계는 쓰여 있다. 다시 써라.')),
-        h('div', { class: 'title-sub' }, this.t('a vim adventure · 10 floors', '빔 어드벤처 · 열 개의 층')),
+        h('div', { class: 'title-sub' }, this.t('a vim adventure · 10 floors · 51 chambers', '빔 어드벤처 · 10개 층 · 51개 챔버')),
+        h('div', { class: 'title-credit' }, this.t('created by', '만든 사람'), ' ', h('b', {}, 'JUNG DONGHEE')),
         h('div', { class: 'press' }, this.t('PRESS ANY KEY', '아무 키나 누르세요')),
         isTouch() ? h('div', { class: 'title-foot ko' }, this.t('a physical keyboard is required', '물리 키보드가 필요합니다')) : null,
-        h('div', { class: 'title-foot' }, 'v0.9 · offline · no tracking'),
+        h('div', { class: 'title-foot' }, 'v1.0 · offline · no tracking · made by Jung Donghee'),
       ),
     );
   }
@@ -351,6 +353,8 @@ export class App {
       h('div', { class: 'rule' }),
       h('div', { class: 'row' }, h('span', {}, this.t('keys pressed', '누른 키')), h('b', {}, String(this.progress.totalKeys))),
       h('div', { class: 'row' }, h('span', {}, this.t('stars', '별')), h('b', {}, `${this.totalStars()} / ${this.totalPossible()}`)),
+      h('div', { class: 'row', style: { marginTop: '6px' } }, h('span', {}, this.t('created by', '만든 사람')), h('b', {}, 'Jung Donghee')),
+      h('div', { class: 'row', style: { marginTop: '6px' } }, h('span', {}, this.t('engine', '엔진')), h('b', {}, this.t('diff-tested against real vim', '실제 vim과 대조 검증'))),
       h('div', { class: 'actions' }, h('button', {
         class: 'btn',
         onclick: () => {

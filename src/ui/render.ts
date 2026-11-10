@@ -55,6 +55,8 @@ export class Renderer {
   private ctx: CanvasRenderingContext2D;
   private layer: HTMLCanvasElement;
   private lctx: CanvasRenderingContext2D;
+  private bloomLayer: HTMLCanvasElement;
+  private bctx: CanvasRenderingContext2D;
   private dpr = 1;
   private w = 0;
   private h = 0;
@@ -70,6 +72,7 @@ export class Renderer {
   private layerKey = '';
   private particles: Particle[] = [];
   private pIndex = 0;
+  private alive = 0;
   private hue = 130;
   private glow: HTMLCanvasElement | null = null;
   bloom = true;
@@ -79,6 +82,8 @@ export class Renderer {
     this.ctx = canvas.getContext('2d', { alpha: true })!;
     this.layer = document.createElement('canvas');
     this.lctx = this.layer.getContext('2d')!;
+    this.bloomLayer = document.createElement('canvas');
+    this.bctx = this.bloomLayer.getContext('2d')!;
     this.particles = Array.from({ length: MAX_PARTICLES }, () => ({ x: 0, y: 0, vx: 0, vy: 0, life: 0, max: 1, size: 2, color: '#fff', rot: 0 }));
   }
 
@@ -93,7 +98,7 @@ export class Renderer {
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
     this.w = Math.max(1, Math.floor(cssW));
     this.h = Math.max(1, Math.floor(cssH));
-    for (const c of [this.canvas, this.layer]) {
+    for (const c of [this.canvas, this.layer, this.bloomLayer]) {
       c.width = Math.floor(this.w * this.dpr);
       c.height = Math.floor(this.h * this.dpr);
     }
@@ -277,6 +282,23 @@ export class Renderer {
     }
   }
 
+  /** Bloom is baked once per glyph-layer change, never per frame. */
+  private paintBloom(): void {
+    const b = this.bctx;
+    const W = this.w * this.dpr;
+    const H = this.h * this.dpr;
+    b.setTransform(1, 0, 0, 1, 0, 0);
+    b.clearRect(0, 0, W, H);
+    b.globalCompositeOperation = 'lighter';
+    b.globalAlpha = 0.16;
+    for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as const) b.drawImage(this.layer, dx * this.dpr, dy * this.dpr);
+    b.globalAlpha = 0.07;
+    b.drawImage(this.layer, -3 * this.dpr, 0);
+    b.drawImage(this.layer, 3 * this.dpr, 0);
+    b.globalAlpha = 1;
+    b.globalCompositeOperation = 'source-over';
+  }
+
   burst(line: number, col: number, count: number, color: string): void {
     const n = Math.min(count, 18);
     for (let i = 0; i < n; i++) {
@@ -291,6 +313,7 @@ export class Renderer {
       p.size = Math.max(1.5, this.cellW * (0.1 + Math.random() * 0.12));
       p.color = color;
       p.rot = Math.random() * Math.PI;
+      this.alive++;
     }
   }
 
@@ -300,6 +323,7 @@ export class Renderer {
     if (key !== this.layerKey) {
       this.layerKey = key;
       this.paintLayer(view);
+      this.paintBloom();
     }
 
     g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
@@ -354,10 +378,11 @@ export class Renderer {
     g.drawImage(this.layer, 0, 0, this.w, this.h);
 
     // particles
-    if (this.particles.some((p) => p.life > 0)) {
+    if (this.alive > 0) {
       for (const p of this.particles) {
         if (p.life <= 0) continue;
         p.life -= 16;
+        if (p.life <= 0) this.alive--;
         p.x += p.vx;
         p.y += p.vy;
         p.vy += 0.004;
@@ -396,18 +421,10 @@ export class Renderer {
       g.strokeRect(cx + 0.5, cy + 1.5, this.cellW, this.cellH - 3);
     }
 
-    // phosphor bloom: four offset blits in lighter mode (cheap box blur)
+    // phosphor bloom: one pre-baked additive layer
     if (this.bloom) {
       g.globalCompositeOperation = 'lighter';
-      g.globalAlpha = 0.14;
-      g.drawImage(this.layer, -1, 0, this.w, this.h);
-      g.drawImage(this.layer, 1, 0, this.w, this.h);
-      g.drawImage(this.layer, 0, -1, this.w, this.h);
-      g.drawImage(this.layer, 0, 1, this.w, this.h);
-      g.globalAlpha = 0.08;
-      g.drawImage(this.layer, -3, 0, this.w, this.h);
-      g.drawImage(this.layer, 3, 0, this.w, this.h);
-      g.globalAlpha = 1;
+      g.drawImage(this.bloomLayer, 0, 0, this.w, this.h);
       g.globalCompositeOperation = 'source-over';
     }
 
@@ -416,6 +433,10 @@ export class Renderer {
       g.fillStyle = `rgba(255,80,70,${Math.min(0.26, view.flash * 0.26)})`;
       g.fillRect(-40, -40, this.w + 80, this.h + 80);
     }
+  }
+
+  get busy(): boolean {
+    return this.alive > 0;
   }
 
   private roundRect(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number): void {

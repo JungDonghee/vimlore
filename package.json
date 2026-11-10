@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "VIMLORE — a Vim adventure game that teaches real Vim by feel",
+  "description": "VIMLORE \u2014 a Vim adventure game that teaches real Vim by feel",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node tools/inline.mjs",
@@ -16,5 +16,7 @@
     "@types/node": "^26.6.6",
     "typescript": "^5.6.3",
     "vite": "^5.4.10"
-  }
+  },
+  "author": "Jung Donghee",
+  "license": "MIT"
 }

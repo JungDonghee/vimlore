@@ -84,4 +84,8 @@ The curriculum was built from ten books on Vim and Neovim (*Practical Vim*,
 Vim itself is by Bram Moolenaar and the Vim community. This game is a love
 letter to it, not a replacement.
 
+## Created by
+
+**Jung Donghee** — idea, direction, and the unreasonable demand that it feel like a game.
+
 MIT licensed. Have fun, and never park in insert mode.

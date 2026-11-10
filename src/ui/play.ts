@@ -48,6 +48,8 @@ export class PlayScreen {
   private ro: ResizeObserver | null = null;
   private destroyed = false;
   private overlay: HTMLElement | null = null;
+  private dirty = true;
+  private lastBlink = -1;
 
   constructor(root: HTMLElement, host: PlayHost) {
     this.host = host;
@@ -94,6 +96,7 @@ export class PlayScreen {
   }
 
   private fit(): void {
+    this.dirty = true;
     const r = this.board.getBoundingClientRect();
     if (r.width < 10 || r.height < 10) return;
     this.renderer.resize(r.width, r.height, this.session.vim.buf.lines);
@@ -167,6 +170,7 @@ export class PlayScreen {
   }
 
   private onVimEvent(ev: { type: string; [k: string]: unknown }): void {
+    this.dirty = true;
     if (ev.type === 'change') {
       const before = String(ev.before ?? '');
       const after = String(ev.after ?? '');
@@ -205,6 +209,7 @@ export class PlayScreen {
   // ------------------------------------------------------------------- input
 
   handleKey(e: KeyboardEvent): boolean {
+    this.dirty = true;
     if (this.state === 'intro') {
       if (e.key === 'Enter') {
         this.begin();
@@ -307,6 +312,15 @@ export class PlayScreen {
     this.lastT = t;
     this.flash = Math.max(0, this.flash - dt / 320);
     this.shake = Math.max(0, this.shake - dt / 40);
+    // Idle frames cost nothing: no keys, no particles, no flash => no draw.
+    const blink = Math.floor(t / 530) % 2;
+    const busy = this.dirty || this.flash > 0 || this.shake > 0 || this.renderer.busy || blink !== this.lastBlink;
+    if (!busy) {
+      this.raf = requestAnimationFrame(this.loop);
+      return;
+    }
+    this.dirty = false;
+    this.lastBlink = blink;
     const vim = this.session.vim;
     const sel = vim.selection();
     this.renderer.render(
