@@ -111,3 +111,18 @@ VIMLORE is a **CRT terminal from a machine that should be dead**.
 one `drawImage`, four offset blits for bloom, then cursor/particles. If you add
 an effect, measure it on a 2019 phone: the budget is one 60fps frame at
 390×844. Never introduce per-frame allocation in `render()`.
+
+## Known gaps (fix these next, carefully)
+
+The engine is faithful for everything the levels use, but three motions are off:
+
+1. `<C-i>` never advances — `jumpForward` requires `jumpIndex < jumps.length-1`
+   while every push sets `jumpIndex` to the end.
+2. `<C-o>` skips one entry (off by one, and it needs 2+ jumps to respond).
+3. `(` (sentence back) scans for whitespace *before* the terminator and falls
+   through to offset 0.
+
+`c08s4` is built on the current `<C-o>` behaviour: if you fix the jumplist,
+re-derive that stage and re-run `npm run lint:levels -- 8`. Also unimplemented:
+`:s///c` confirmation, split windows/buffers (levels are single-buffer), and
+`gq` uses the stage's `textwidth` rather than the editor option.
