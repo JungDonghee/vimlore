@@ -100,6 +100,8 @@ export class Vim {
   textwidth: number;
   tabstop: number;
   shiftwidth: number;
+  number = true;
+  relativenumber = false;
   onEvent?: (e: VimEvent) => void;
   gate?: (key: string) => string | null;
   jumps: Pos[] = [];
@@ -222,6 +224,10 @@ export class Vim {
       return;
     }
     this.normalKey(key);
+    if (this.insertOneShot && this.mode === 'normal' && !this.awaitingKey) {
+      this.insertOneShot = false;
+      this.setMode('insert');
+    }
   }
 
   feedString(keys: string): void {
@@ -1289,8 +1295,26 @@ export class Vim {
       this.deleteToLineStart();
       return;
     }
+    if (this.insertRegPending) {
+      this.insertRegPending = false;
+      const reg = this.readRegister(key);
+      if (reg.text) this.insertTextAtCursor(reg.text.replace(/\n$/, ''));
+      return;
+    }
     if (key === '<C-r>') {
-      this.say('Ctrl-r not available here', 'info');
+      this.insertRegPending = true;
+      return;
+    }
+    if (key === '<C-o>') {
+      this.insertOneShot = true;
+      this.setMode('normal');
+      return;
+    }
+    if (key === SPACE || key === ' ') {
+      if (this.blockInsertState) {
+        this.blockInsertState.text += ' ';
+      }
+      this.insertTextAtCursor(' ');
       return;
     }
     if (key.length === 1) {
@@ -1374,6 +1398,8 @@ export class Vim {
   }
 
   private closeInsert(): void {
+    this.insertOneShot = false;
+    this.insertRegPending = false;
     const block = this.blockInsertState;
     this.mode = 'normal';
     this.emit({ type: 'mode', mode: 'normal' });
@@ -1406,6 +1432,8 @@ export class Vim {
   }
 
   insertUndo: BufferSnapshot | null = null;
+  private insertRegPending = false;
+  private insertOneShot = false;
 
   // ------------------------------------------------------------------ visual
 
@@ -1616,6 +1644,23 @@ export class Vim {
   }
 
   private cmdlineKey(key: string): void {
+    if (this.cmdHistIndex !== -1 && this.cmdHistIndex < this.history.length && key !== '<Up>' && key !== '<Down>' && key !== '<CR>') {
+      this.cmdHistIndex = -1;
+    }
+    if (key === '<Up>' || key === '<Down>') {
+      const hist = this.history.filter((h) => h !== '');
+      if (!hist.length) return;
+      if (this.cmdHistIndex === -1) this.cmdHistIndex = hist.length;
+      this.cmdHistIndex += key === '<Up>' ? -1 : 1;
+      this.cmdHistIndex = Math.max(0, Math.min(hist.length - 1, this.cmdHistIndex));
+      this.cmdline = hist[this.cmdHistIndex] ?? '';
+      if (this.mode === 'search') this.emit({ type: 'search', pattern: this.cmdline });
+      return;
+    }
+    if (key === '<C-r>') {
+      this.cmdline += this.readRegister('"').text.replace(/\n/g, ' ');
+      return;
+    }
     if (key === ESC) {
       this.cmdKind = null;
       this.cmdline = '';
@@ -1658,13 +1703,14 @@ export class Vim {
       this.cmdline = this.cmdline.replace(/\S+\s*$/, '');
       return;
     }
-    if (key.length === 1) {
-      this.cmdline += key;
+    if (key === SPACE || key.length === 1) {
+      this.cmdline += key === SPACE ? ' ' : key;
       if (this.mode === 'search') this.emit({ type: 'search', pattern: this.cmdline });
     }
   }
 
   pendingOpSearch: Op | null = null;
+  private cmdHistIndex = -1;
 
   private applySearchOp(op: Op, pattern: string, dir: 1 | -1): void {
     if (!pattern) {

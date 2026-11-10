@@ -34,6 +34,8 @@ export interface View {
   ghost: { line: number; col: number; len: number } | null;
   flash: number;
   shake: number;
+  /** gutter style: off | abs | rel | both */
+  numbers: 'off' | 'abs' | 'rel' | 'both';
 }
 
 interface Particle {
@@ -182,13 +184,6 @@ export class Renderer {
     const cy = this.cellH;
 
     // gutter: line numbers + a thin rule, like a real editor
-    g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
-    g.textAlign = 'right';
-    g.fillStyle = 'rgba(66,168,108,0.42)';
-    for (let li = 0; li < view.lines.length; li++) {
-      g.fillText(String(li + 1), this.ox + (this.digits + 0.55) * cx, this.yOf(li) + cy / 2);
-    }
-    g.textAlign = 'left';
     g.fillStyle = 'rgba(66,168,108,0.22)';
     g.fillRect(this.ox + (this.digits + 1.15) * cx, this.oy, 1, view.lines.length * cy);
 
@@ -405,12 +400,21 @@ export class Renderer {
     const curLine = view.cursor.line;
     g.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.055)`;
     g.fillRect(this.ox, this.yOf(curLine) + 1, this.w - this.ox * 2, this.cellH - 2);
-    g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
-    g.textAlign = 'right';
-    g.fillStyle = 'rgba(190,255,214,0.92)';
-    g.fillText(String(curLine + 1), this.ox + (this.digits + 0.55) * this.cellW, this.yOf(curLine) + this.cellH / 2);
-    g.textAlign = 'left';
-    g.font = `${this.fontSize}px ${MONO}`;
+    if (view.numbers !== 'off') {
+      g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
+      g.textAlign = 'right';
+      for (let li = 0; li < view.lines.length; li++) {
+        const isCur = li === curLine;
+        let label: string;
+        if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
+        else if (view.numbers === 'both') label = String(isCur ? li + 1 : Math.abs(li - curLine));
+        else label = String(li + 1);
+        g.fillStyle = isCur ? 'rgba(190,255,214,0.92)' : 'rgba(66,168,108,0.42)';
+        g.fillText(label, this.ox + (this.digits + 0.55) * this.cellW, this.yOf(li) + this.cellH / 2);
+      }
+      g.textAlign = 'left';
+      g.font = `${this.fontSize}px ${MONO}`;
+    }
 
     // glyphs
     g.drawImage(this.layer, 0, 0, this.w, this.h);

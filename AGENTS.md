@@ -182,3 +182,18 @@ Two rules keep it correct:
    `PlayScreen`): 320 ms delay, 50 ms cadence, OS `repeat` events swallowed,
    stopped on keyup / blur / visibilitychange / win / restart. Repeats are
    silent and never start for a key the session rejected.
+
+## Input & UI rules (v1.4)
+
+- The game must be **fully playable with a keyboard only**. Every list screen
+  scrolls with `j`/`k`, `Ctrl-d`/`Ctrl-u`, `PageUp`/`PageDown`, `g`/`G`,
+  `Home`/`End`; the map moves its selection with the same keys. Mouse and touch
+  are a convenience, never a requirement.
+- Any "press any key" screen also advances on `pointerdown` (touch/click).
+- The space bar arrives as the token `<Space>`; `insertKey` and `cmdlineKey`
+  must map it to `' '` explicitly — a `key.length === 1` check alone silently
+  drops it.
+- The gutter supports `off | abs | rel | both` (`progress.lineNumbers`), and
+  `:set number / relativenumber / nonumber / nornu` overrides it for the
+  current chamber. Numbers are drawn on the FX layer because they depend on the
+  cursor; the cached glyph layer must stay cursor-free.

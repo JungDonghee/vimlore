@@ -99,6 +99,8 @@ export interface Progress {
   ghost: boolean;
   /** CRT scanlines / bloom / flicker. Off for weak devices. */
   crt: boolean;
+  /** gutter: off | abs | rel | both */
+  lineNumbers: 'off' | 'abs' | 'rel' | 'both';
   /** Local, login-free identity. `code` is a portable export of everything. */
   profile: { name: string; since: number };
   /** Per-skill telemetry powering the weakness trainer. */
@@ -121,6 +123,7 @@ export const emptyProgress = (): Progress => ({
   sound: true,
   ghost: true,
   crt: true,
+  lineNumbers: 'abs',
   profile: { name: 'operator', since: Date.now() },
   stats: {},
   saved: [],

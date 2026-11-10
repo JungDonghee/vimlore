@@ -53,6 +53,9 @@ export class App {
   play: PlayScreen | null = null;
   mapSel = 0;
   private mapFloors: HTMLElement[] = [];
+  private trialRuns: (() => void)[] = [];
+  private trialEls: HTMLElement[] = [];
+  private trialSel = 0;
   private keyHandler: (e: KeyboardEvent) => void;
 
   constructor(root: HTMLElement) {
@@ -61,6 +64,9 @@ export class App {
     this.mapSel = clamp(this.progress.currentChapter, 0, CHAPTERS.length - 1);
     this.keyHandler = (e) => this.onKey(e);
     window.addEventListener('keydown', this.keyHandler);
+    window.addEventListener('pointerdown', () => {
+      if (this.screen === 'title') this.goMap();
+    });
     window.addEventListener('keyup', (e) => this.play?.handleKeyUp(e));
     window.addEventListener('blur', () => this.play?.stopRepeatNow());
     document.addEventListener('visibilitychange', () => { if (document.hidden) this.play?.stopRepeatNow(); });
@@ -96,6 +102,25 @@ export class App {
   /** Every floor is the same green tube, with a whisper of drift. */
   phosphorHue(chapterIndex: number): number {
     return 122 + ((chapterIndex * 7) % 3) * 6;
+  }
+
+  /** The active screen's scroll container (all list screens share this class). */
+  private scroller(): HTMLElement | null {
+    return this.root.querySelector('.map-wrap, .map-scroll');
+  }
+
+  private scrollStep(dir: 1 | -1, page = false): void {
+    const el = this.scroller();
+    if (!el) return;
+    const d = page ? el.clientHeight * 0.85 : 64;
+    el.scrollTop += dir * d;
+    this.sfx.play('move');
+  }
+
+  private scrollTo(where: 'top' | 'bottom'): void {
+    const el = this.scroller();
+    if (!el) return;
+    el.scrollTop = where === 'top' ? 0 : el.scrollHeight;
   }
 
   private hue(h: number): void {
@@ -278,6 +303,7 @@ export class App {
       bestStars: rec?.stars ?? 0,
       bestKeys: rec?.cleared ? rec.bestKeys : null,
       crt: this.progress.crt,
+      lineNumbers: this.progress.lineNumbers,
       chapterForKey: (k) => chapterForKey(k),
       onWin: (stars, keys) => this.recordClear(stage.id, stars, keys),
       onNext: () => this.nextStage(),
@@ -322,6 +348,8 @@ export class App {
 
   goTrials(): void {
     this.killPlay();
+    this.trialRuns = [];
+    this.trialSel = 0;
     this.screen = 'trials';
     this.hue(128);
     const weak = weakestSkills(this.progress, 3);
@@ -355,37 +383,54 @@ export class App {
           h(
             'div',
             { class: 'map' },
-            ...modes.map((m) =>
-              h(
+            ...modes.map((m) => {
+              this.trialRuns.push(m.run);
+              const idx = this.trialRuns.length - 1;
+              return h(
                 'div',
-                { class: 'floor', onclick: m.run, style: { '--fh': '130' } },
+                { class: 'floor', onclick: () => this.runTrial(idx), style: { '--fh': '130' } },
                 h('div', { class: 'sig' }, m.key),
                 h('div', {}, h('div', { class: 'name' }, m.title), h('div', { class: 'sub' }, m.desc)),
                 h('div', { class: 'stars' }, '›'),
-              ),
-            ),
+              );
+            }),
             saved.length
               ? h(
                   'div',
                   { style: { marginTop: '26px' } },
                   h('div', { class: 'kicker', style: { marginBottom: '8px' } }, this.t('SAVED CHAMBERS', '저장한 챔버')),
-                  ...saved.map((sv) =>
-                    h(
+                  ...saved.map((sv) => {
+                    const run = () => this.startSavedTrial(sv.seed, sv.skill);
+                    this.trialRuns.push(run);
+                    const idx = this.trialRuns.length - 1;
+                    return h(
                       'div',
-                      { class: 'floor', style: { '--fh': '130' }, onclick: () => this.startSavedTrial(sv.seed, sv.skill) },
+                      { class: 'floor', style: { '--fh': '130' }, onclick: () => this.runTrial(idx) },
                       h('div', { class: 'sig' }, '☆'),
                       h('div', {}, h('div', { class: 'name' }, skillLabel(sv.skill)), h('div', { class: 'sub' }, `seed ${sv.seed}`)),
                       h('div', { class: 'stars' }, '›'),
-                    ),
-                  ),
+                    );
+                  }),
                 )
               : null,
             this.statsTable(),
           ),
         ),
-        h('div', { class: 'map-foot' }, h('span', {}, this.t('1/2/3 · play   ESC · back', '1/2/3 · 시작   ESC · 뒤로')), h('button', { class: 'chip', onclick: () => this.goMap() }, this.t('MAP', '지도'))),
+        h('div', { class: 'map-foot' }, h('span', {}, this.t('↑↓ move · ↵ play · ESC back', '↑↓ 이동 · ↵ 시작 · ESC 뒤로')), h('button', { class: 'chip', onclick: () => this.goMap() }, this.t('MAP', '지도'))),
       ),
     );
+    this.trialEls = Array.from(this.root.querySelectorAll('.floor')) as HTMLElement[];
+    this.paintTrial();
+  }
+
+  private runTrial(i: number): void {
+    this.trialSel = Math.max(0, Math.min(i, this.trialRuns.length - 1));
+    this.paintTrial();
+    this.trialRuns[this.trialSel]?.();
+  }
+
+  private paintTrial(): void {
+    this.trialEls.forEach((el, i) => el.classList.toggle('sel', i === this.trialSel));
   }
 
   private statsTable(): HTMLElement | null {
@@ -452,6 +497,7 @@ export class App {
       bestStars: 0,
       bestKeys: null,
       crt: this.progress.crt,
+      lineNumbers: this.progress.lineNumbers,
       canSave: true,
       chapterForKey: () => null,
       onSave: () => this.saveTrial(trial),
@@ -544,7 +590,7 @@ export class App {
         'div',
         { class: 'screen fade-in' },
         h('div', { class: 'topbar' }, h('h1', {}, this.t('GRIMOIRE', '마법서')), h('div', { class: 'meta' }, `${COMMANDS.length} ${this.t('commands', '명령')}`)),
-        h('div', { class: 'map-scroll', style: { paddingTop: '18px' } }, ...groups),
+        h('div', { class: 'map-wrap' }, h('div', { class: 'map' }, ...groups)),
         h('div', { class: 'map-foot' }, h('span', {}, this.t('ESC · back', 'ESC · 뒤로')), h('button', { class: 'chip', onclick: () => this.goMap() }, this.t('MAP', '지도'))),
       ),
     );
@@ -564,6 +610,15 @@ export class App {
         h('button', { class: 'btn', onclick: () => { this.sfx.setEnabled(!this.sfx.enabled); this.save(); this.goAbout(); } }, this.sfx.enabled ? this.t('sound: on', '소리: 켜짐') : this.t('sound: off', '소리: 꺼짐')),
         h('button', { class: 'btn', onclick: () => { this.progress.lang = this.progress.lang === 'ko' ? 'en' : 'ko'; this.save(); this.goAbout(); } }, this.lang === 'ko' ? 'language: 한국어' : 'language: english'),
         h('button', { class: 'btn', onclick: () => { this.progress.crt = !this.progress.crt; this.save(); this.applyCrt(); this.goAbout(); } }, this.progress.crt ? this.t('crt fx: on', 'CRT 효과: 켜짐') : this.t('crt fx: off', 'CRT 효과: 꺼짐')),
+        h('button', {
+          class: 'btn',
+          onclick: () => {
+            const order: Progress['lineNumbers'][] = ['abs', 'rel', 'both', 'off'];
+            this.progress.lineNumbers = order[(order.indexOf(this.progress.lineNumbers) + 1) % order.length];
+            this.save();
+            this.goAbout();
+          },
+        }, `${this.t('line numbers', '줄번호')}: ${this.progress.lineNumbers}`),
       ),
       h(
         'div',
@@ -645,6 +700,18 @@ export class App {
       } else if (e.key === 'ArrowDown' || e.key === 'j') {
         e.preventDefault();
         this.selectFloor(this.mapSel + 1, false);
+      } else if (e.key === 'PageDown' || (e.key === 'd' && e.ctrlKey) || (e.key === 'D' && e.ctrlKey)) {
+        e.preventDefault();
+        this.selectFloor(this.mapSel + 3, false);
+      } else if (e.key === 'PageUp' || (e.key === 'u' && e.ctrlKey) || (e.key === 'U' && e.ctrlKey)) {
+        e.preventDefault();
+        this.selectFloor(this.mapSel - 3, false);
+      } else if (e.key === 'g' || e.key === 'Home') {
+        e.preventDefault();
+        this.selectFloor(0, false);
+      } else if (e.key === 'G' || e.key === 'End') {
+        e.preventDefault();
+        this.selectFloor(CHAPTERS.length - 1, false);
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (chapterUnlocked(this.progress, this.mapSel)) this.enterChapter(this.mapSel);
@@ -666,14 +733,28 @@ export class App {
       if (e.key === '1') this.startTrial('endless');
       else if (e.key === '2') this.startTrial('weak');
       else if (e.key === '3') this.startTrial('daily');
+      else if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); this.trialSel = clamp(this.trialSel - 1, 0, Math.max(0, this.trialEls.length - 1)); this.paintTrial(); this.trialEls[this.trialSel]?.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); this.trialSel = clamp(this.trialSel + 1, 0, Math.max(0, this.trialEls.length - 1)); this.paintTrial(); this.trialEls[this.trialSel]?.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'Enter') { e.preventDefault(); this.runTrial(this.trialSel); }
       else if (e.key === 'Escape') this.goMap();
       return;
     }
-    if (this.screen === 'progress') {
-      if (e.key === 'Escape') this.goMap();
+    if (this.screen === 'progress' || this.screen === 'codex') {
+      if (e.key === 'Escape') {
+        this.goMap();
+        return;
+      }
+      if (e.key === 'j' || e.key === 'ArrowDown') { e.preventDefault(); this.scrollStep(1); }
+      else if (e.key === 'k' || e.key === 'ArrowUp') { e.preventDefault(); this.scrollStep(-1); }
+      else if (e.key === 'd' && e.ctrlKey) { e.preventDefault(); this.scrollStep(1, true); }
+      else if (e.key === 'u' && e.ctrlKey) { e.preventDefault(); this.scrollStep(-1, true); }
+      else if (e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); this.scrollStep(1, true); }
+      else if (e.key === 'PageUp') { e.preventDefault(); this.scrollStep(-1, true); }
+      else if (e.key === 'g' || e.key === 'Home') { e.preventDefault(); this.scrollTo('top'); }
+      else if (e.key === 'G' || e.key === 'End') { e.preventDefault(); this.scrollTo('bottom'); }
       return;
     }
-    if (this.screen === 'codex' || this.screen === 'about') {
+    if (this.screen === 'about') {
       if (e.key === 'Escape' || e.key === 'Enter') {
         e.preventDefault();
         this.goMap();

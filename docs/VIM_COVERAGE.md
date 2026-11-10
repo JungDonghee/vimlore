@@ -14,6 +14,10 @@ Below is the exact boundary, so nobody has to guess.
 **Modes** normal · insert · replace · visual · visual-line · visual-block ·
 command-line · search · operator-pending.
 
+**Insert mode** printable text (including the space bar), `<CR>`, `<BS>`,
+`<Del>`, `<Tab>`, `<C-w>`, `<C-u>`, `<C-r>{register}`, `<C-o>{one normal
+command}`, `<Esc>`.
+
 **Motions** `h j k l 0 ^ $ |` · `w W b B e E ge gE` · `f F t T ; ,` · `gg G` ·
 `{ } ( )` · `%` · `/ ? n N * #` · `'` and `` ` `` marks · `<C-d> <C-u> <C-f>
 <C-b> <C-e> <C-y>` · `<C-o> <C-i>` jumplist · `+ - _ <CR> <Space> <BS>` ·
@@ -30,7 +34,10 @@ command-line · search · operator-pending.
 **Search** magic, `\v`, `\V`, `\c`, `\C`, smartcase, highlight.
 
 **Ex** `:s` (flags `g i &`), `:g`, `:v`, `:d`, `:m`, `:t`, `:sort` (`n u i !`),
-`:normal`, `:w :q :wq :x :noh`, ranges `% . $ N 'a , ; + -`.
+`:normal`, `:set number/nonumber/relativenumber/nornu`, `:w :q :wq :x :noh`,
+ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
+`<C-r>` and `↑`/`↓` history.
+
 
 **Registers** unnamed, `0-9`, `a-z`, `A-Z` (append), `-`, `_`, `+`, `*`, `/`,
 `:` — the last four are internal aliases, not the system clipboard.

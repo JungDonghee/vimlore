@@ -18,6 +18,7 @@ export interface PlayHost {
   bestStars: Stars;
   bestKeys: number | null;
   crt: boolean;
+  lineNumbers: 'off' | 'abs' | 'rel' | 'both';
   canSave?: boolean;
   onSave?: () => void;
   onWin(stars: Stars, keys: number, par: number): void;
@@ -72,6 +73,8 @@ export class PlayScreen {
     this.renderer = new Renderer(this.canvas);
     this.renderer.setHue(122 + ((host.chapter.index * 7) % 3) * 6);
     this.renderer.bloom = host.crt;
+    this.session.vim.number = host.lineNumbers !== 'off';
+    this.session.vim.relativenumber = host.lineNumbers === 'rel' || host.lineNumbers === 'both';
   }
 
   mount(): void {
@@ -461,11 +464,19 @@ export class PlayScreen {
         ghost: this.hintLevel >= 3 && this.host.stage.solution ? this.ghostHint() : null,
         flash: this.flash,
         shake: this.shake,
+        numbers: this.numberMode(),
       },
       t,
     );
     this.raf = requestAnimationFrame(this.loop);
   };
+
+  private numberMode(): 'off' | 'abs' | 'rel' | 'both' {
+    const vim = this.session.vim;
+    if (!vim.number && !vim.relativenumber) return 'off';
+    if (vim.number && vim.relativenumber) return 'both';
+    return vim.relativenumber ? 'rel' : 'abs';
+  }
 
   private ghostHint(): { line: number; col: number; len: number } | null {
     const sol = this.host.stage.solution;

@@ -157,3 +157,46 @@ test('session hazard costs a heart once per tile', () => {
   assert.equal(s.hearts, 2, 'the same tile should only bite once');
   assert.equal(s.status, 'playing');
 });
+
+test('command-line history recalls the previous ex command', () => {
+  const v = new Vim({ text: 'aaa' });
+  v.feedString(':s/aaa/bbb/<CR>');
+  assert.equal(v.text, 'bbb');
+  v.feedString('u');
+  assert.equal(v.text, 'aaa');
+  v.feedString(':<Up><CR>');
+  assert.equal(v.text, 'bbb');
+});
+
+test('insert <C-r> pastes a register, <C-o> runs one normal command', () => {
+  const v = new Vim({ text: 'foo bar' });
+  v.feedString('yiwA<C-r>"<Esc>');
+  assert.equal(v.text, 'foo barfoo');
+  const w = new Vim({ text: 'ab cd' });
+  w.feedString('i<C-o>wX<Esc>');
+  assert.equal(w.text, 'ab Xcd');
+});
+
+test(':set number / relativenumber toggle the gutter flags', () => {
+  const v = new Vim({ text: 'a\nb' });
+  assert.equal(v.number, true);
+  assert.equal(v.relativenumber, false);
+  v.feedString(':set relativenumber<CR>');
+  assert.equal(v.relativenumber, true);
+  v.feedString(':set nonumber<CR>');
+  assert.equal(v.number, false);
+  v.feedString(':set nornu number<CR>');
+  assert.equal(v.relativenumber, false);
+  assert.equal(v.number, true);
+});
+
+test('the space bar types a space in insert and command-line modes', () => {
+  const v = new Vim({ text: '' });
+  v.feed('i');
+  for (const k of ['a', '<Space>', 'b']) v.feed(k);
+  v.feed('<Esc>');
+  assert.equal(v.text, 'a b');
+  const w = new Vim({ text: 'aaa bbb' });
+  for (const k of [':', 's', '/', 'a', 'a', 'a', '<Space>', 'b', 'b', 'b', '/', 'o', 'k', '/', '<CR>']) w.feed(k);
+  assert.equal(w.text, 'ok');
+});

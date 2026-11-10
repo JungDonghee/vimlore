@@ -131,7 +131,7 @@ export function executeEx(vim: Vim, input: string): void {
   }
 
   // Commands may be glued to their argument in Vim (`:1m5`, `:sort!`, `:2t4`).
-  const CMDS = ['nohlsearch', 'normal', 'sort', 'copy', 'noh', 'norm', 'wq', 'co', 'd', 'm', 't', 'w', 'x', 'q'];
+  const CMDS = ['nohlsearch', 'relativenumber', 'nonumber', 'nohlsearch', 'normal', 'sort', 'copy', 'noh', 'norm', 'set', 'wq', 'co', 'd', 'm', 't', 'w', 'x', 'q'];
   let name = '';
   let arg = '';
   for (const k of CMDS) {
@@ -161,6 +161,15 @@ export function executeEx(vim: Vim, input: string): void {
     case 'sort':
       vim.exSort(range?.l1 ?? 0, range?.l2 ?? vim.buf.lineCount - 1, arg);
       return;
+    case 'set': {
+      for (const opt of arg.split(/\s+/).filter(Boolean)) {
+        if (opt === 'number' || opt === 'nu') vim.number = true;
+        else if (opt === 'nonumber' || opt === 'nonu') vim.number = false;
+        else if (opt === 'relativenumber' || opt === 'rnu') vim.relativenumber = true;
+        else if (opt === 'norelativenumber' || opt === 'nornu') vim.relativenumber = false;
+      }
+      return;
+    }
     case 'noh':
     case 'nohlsearch':
       vim.echo('search highlight cleared', 'info');

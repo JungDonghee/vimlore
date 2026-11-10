@@ -123,6 +123,11 @@ export const CASES: VimCase[] = [
   { name: 'sentence back mid', text: 'One. Two. Three.', cursor: [1, 12], keys: '(' },
   { name: 'sentence forward', text: 'One. Two. Three.', cursor: [1, 0], keys: ')' },
 
+  // --- insert-mode extras / cmdline history ---
+  { name: 'insert C-r register', text: 'foo bar', cursor: [1, 0], keys: 'yiwA<C-r>"<Esc>' },
+  { name: 'insert C-o one command', text: 'ab cd', cursor: [1, 0], keys: 'i<C-o>wX<Esc>' },
+  { name: 'insert C-o then insert', text: 'one two', cursor: [1, 0], keys: 'A<C-o>0Ifoo<Esc>' },
+
   // --- numbers ---
   { name: 'C-a', text: 'x = 41', cursor: [1, 0], keys: '<C-a>' },
   { name: 'C-a count', text: 'x = 41', cursor: [1, 0], keys: '3<C-a>' },

@@ -45,7 +45,8 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   Each stage exists to make one command feel *necessary*.
 - **It runs on a potato.** Zero runtime dependencies, ~55 kB gzipped, a cached
   glyph layer, and a CRT effect switch for weak devices.
-- **It plays on a phone in landscape** with a Bluetooth keyboard.
+- **It plays on a phone in landscape** with a Bluetooth keyboard — and it is
+  fully playable with keyboard only (touch/mouse is optional).
 - **It never runs out.** After the tower, TRIALS generates endless chambers (11
   verified skill generators),
   biases a WEAKNESS mode from your own telemetry, and keeps the rooms you save.
