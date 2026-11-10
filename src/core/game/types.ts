@@ -73,6 +73,20 @@ export interface StageRecord {
   stars: Stars;
 }
 
+export interface StatEntry {
+  attempts: number;
+  clears: number;
+  restarts: number;
+  keys: number;
+  par: number;
+}
+
+export interface SavedTrial {
+  seed: number;
+  skill: string;
+  at: number;
+}
+
 export interface Progress {
   version: number;
   currentChapter: number;
@@ -85,6 +99,13 @@ export interface Progress {
   ghost: boolean;
   /** CRT scanlines / bloom / flicker. Off for weak devices. */
   crt: boolean;
+  /** Local, login-free identity. `code` is a portable export of everything. */
+  profile: { name: string; since: number };
+  /** Per-skill telemetry powering the weakness trainer. */
+  stats: Record<string, StatEntry>;
+  /** Generated chambers the player chose to keep. */
+  saved: SavedTrial[];
+  trialsCleared: number;
 }
 
 export const emptyProgress = (): Progress => ({
@@ -98,4 +119,8 @@ export const emptyProgress = (): Progress => ({
   sound: true,
   ghost: true,
   crt: true,
+  profile: { name: 'operator', since: Date.now() },
+  stats: {},
+  saved: [],
+  trialsCleared: 0,
 });

@@ -18,6 +18,8 @@ export interface PlayHost {
   bestStars: Stars;
   bestKeys: number | null;
   crt: boolean;
+  canSave?: boolean;
+  onSave?: () => void;
   onWin(stars: Stars, keys: number, par: number): void;
   onNext(): void;
   onExit(): void;
@@ -414,6 +416,7 @@ export class PlayScreen {
         { class: 'actions' },
         h('button', { class: 'btn primary', onclick: () => this.host.onNext() }, lang === 'ko' ? '다음' : 'NEXT', h('kbd', {}, '↵')),
         h('button', { class: 'btn', onclick: () => this.restart() }, lang === 'ko' ? '다시' : 'RETRY'),
+        this.host.canSave ? h('button', { class: 'btn', onclick: () => { this.host.onSave?.(); this.host.sfx.play('yank'); } }, lang === 'ko' ? '저장' : 'SAVE') : null,
         h('button', { class: 'btn', onclick: () => this.host.onExit() }, `${lang === 'ko' ? '챕터' : 'CHAPTER'} ${String(chapter.index).padStart(2, '0')}`),
       ),
     );

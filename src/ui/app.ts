@@ -1,13 +1,15 @@
 import { CHAPTERS } from '../content/chapters/index.ts';
 import { COMMANDS, chapterUnlockKeys, chapterForKey } from '../content/commands.ts';
-import { emptyProgress, type Progress, type StageRecord, type Stars } from '../core/game/types.ts';
+import { emptyProgress, type Chapter, type Progress, type StageRecord, type Stars } from '../core/game/types.ts';
+import { generateTrial, dailySeed, skillLabel, TRIAL_SKILLS, type Trial } from '../core/game/trials.ts';
+import { weakestSkills, recordStat, encodeSave, decodeSave, weaknessScore } from '../core/game/stats.ts';
 import { h, mount, isTouch } from './dom.ts';
 import { Sfx } from './sfx.ts';
 import { PlayScreen } from './play.ts';
 
 const SAVE_KEY = 'vimlore.save.v2';
 
-type Screen = 'title' | 'map' | 'play' | 'codex' | 'about';
+type Screen = 'title' | 'map' | 'play' | 'codex' | 'about' | 'trials';
 
 const clamp = (n: number, a: number, b: number): number => Math.max(a, Math.min(b, n));
 
@@ -212,6 +214,7 @@ export class App {
           h(
             'span',
             { style: { display: 'flex', gap: '8px' } },
+            h('button', { class: 'chip', onclick: () => this.goTrials() }, this.t('T · TRIALS', 'T · 시련')),
             h('button', { class: 'chip', onclick: () => this.goCodex() }, this.t('C · GRIMOIRE', 'C · 마법서')),
             h('button', { class: 'chip', onclick: () => this.goAbout() }, this.t('S · SETTINGS', 'S · 설정')),
           ),
@@ -264,6 +267,8 @@ export class App {
   }
 
   private recordClear(id: string, stars: Stars, keys: number): void {
+    const st = CHAPTERS[this.chapterIndex]?.stages.find((x) => x.id === id);
+    recordStat(this.progress, st?.teaches?.[0] ?? `floor${this.chapterIndex + 1}`, { cleared: stars > 0, keys, par: st?.par ?? keys });
     const prev: StageRecord | undefined = this.progress.stages[id];
     const better = !prev || stars > prev.stars || (stars === prev.stars && keys < prev.bestKeys);
     this.progress.stages[id] = {
@@ -289,6 +294,162 @@ export class App {
     } else {
       this.goMap();
     }
+  }
+
+  // ------------------------------------------------------------------ trials
+
+  goTrials(): void {
+    this.killPlay();
+    this.screen = 'trials';
+    this.hue(128);
+    const weak = weakestSkills(this.progress, 3);
+    const attempts = Object.values(this.progress.stats).reduce((n, s) => n + s.attempts, 0);
+    const modes: { key: string; title: string; desc: string; run: () => void }[] = [
+      { key: '1', title: this.t('ENDLESS', '무한'), desc: this.t('a fresh generated chamber, forever', '끝없이 생성되는 챔버'), run: () => this.startTrial('endless') },
+      {
+        key: '2',
+        title: this.t('WEAKNESS', '약점 단련'),
+        desc: weak.length ? `${this.t('bias', '가중')}: ${weak.map(skillLabel).join(' · ')}` : this.t('play a few rooms first', '먼저 몇 판 플레이'),
+        run: () => this.startTrial('weak'),
+      },
+      { key: '3', title: this.t('DAILY', '데일리'), desc: `seed ${dailySeed()}`, run: () => this.startTrial('daily') },
+    ];
+    const saved = this.progress.saved.slice(-8).reverse();
+
+    mount(
+      this.root,
+      h(
+        'div',
+        { class: 'screen fade-in' },
+        h(
+          'div',
+          { class: 'topbar' },
+          h('h1', {}, 'TRIALS'),
+          h('div', { class: 'meta' }, `${attempts} ${this.t('attempts', '시도')} · ${this.progress.trialsCleared} ${this.t('cleared', '클리어')} · ${this.progress.saved.length} ${this.t('saved', '저장')}`),
+        ),
+        h(
+          'div',
+          { class: 'map-wrap' },
+          h(
+            'div',
+            { class: 'map' },
+            ...modes.map((m) =>
+              h(
+                'div',
+                { class: 'floor', onclick: m.run, style: { '--fh': '130' } },
+                h('div', { class: 'sig' }, m.key),
+                h('div', {}, h('div', { class: 'name' }, m.title), h('div', { class: 'sub' }, m.desc)),
+                h('div', { class: 'stars' }, '›'),
+              ),
+            ),
+            saved.length
+              ? h(
+                  'div',
+                  { style: { marginTop: '26px' } },
+                  h('div', { class: 'kicker', style: { marginBottom: '8px' } }, this.t('SAVED CHAMBERS', '저장한 챔버')),
+                  ...saved.map((sv) =>
+                    h(
+                      'div',
+                      { class: 'floor', style: { '--fh': '130' }, onclick: () => this.startSavedTrial(sv.seed, sv.skill) },
+                      h('div', { class: 'sig' }, '☆'),
+                      h('div', {}, h('div', { class: 'name' }, skillLabel(sv.skill)), h('div', { class: 'sub' }, `seed ${sv.seed}`)),
+                      h('div', { class: 'stars' }, '›'),
+                    ),
+                  ),
+                )
+              : null,
+            this.statsTable(),
+          ),
+        ),
+        h('div', { class: 'map-foot' }, h('span', {}, this.t('1/2/3 · play   ESC · back', '1/2/3 · 시작   ESC · 뒤로')), h('button', { class: 'chip', onclick: () => this.goMap() }, this.t('MAP', '지도'))),
+      ),
+    );
+  }
+
+  private statsTable(): HTMLElement | null {
+    const rows = Object.entries(this.progress.stats)
+      .map(([k, v]) => ({ k, v, s: weaknessScore(v) }))
+      .sort((a, b) => b.s - a.s)
+      .slice(0, 6);
+    if (!rows.length) return null;
+    return h(
+      'div',
+      { style: { marginTop: '26px' } },
+      h('div', { class: 'kicker', style: { marginBottom: '8px' } }, this.t('WEAKNESS MAP', '약점 지도')),
+      ...rows.map((r) =>
+        h(
+          'div',
+          { class: 'row', style: { padding: '5px 0', borderBottom: '1px solid var(--line-soft)' } },
+          h('span', {}, skillLabel(r.k)),
+          h('b', {}, `${Math.round((r.v.clears / Math.max(1, r.v.attempts)) * 100)}% · ${(r.v.keys / Math.max(1, r.v.par)).toFixed(2)}× par`),
+        ),
+      ),
+    );
+  }
+
+  private trialChapter(t: Trial): Chapter {
+    return {
+      id: 'trial',
+      index: 0,
+      title: { en: 'TRIALS', ko: '시련' },
+      subtitle: { en: skillLabel(t.skillId), ko: skillLabel(t.skillId) },
+      story: { en: '', ko: '' },
+      sigil: '·',
+      hue: 130,
+      unlocks: [],
+      stages: [t.stage],
+    };
+  }
+
+  private startTrial(mode: 'endless' | 'weak' | 'daily', seedArg?: number): void {
+    const weak = weakestSkills(this.progress, 3);
+    const seed = seedArg ?? (mode === 'daily' ? dailySeed() : Math.floor(Math.random() * 1e9));
+    const trial = mode === 'weak' ? generateTrial(seed, undefined, weak.length ? weak : undefined) : generateTrial(seed, undefined, mode === 'daily' ? undefined : weak);
+    this.playTrial(trial, mode);
+  }
+
+  private startSavedTrial(seed: number, skill: string): void {
+    const trial = generateTrial(seed, skill);
+    this.playTrial(trial, 'endless');
+  }
+
+  private playTrial(trial: Trial, mode: 'endless' | 'weak' | 'daily'): void {
+    const ch = this.trialChapter(trial);
+    this.killPlay();
+    this.screen = 'play';
+    this.hue(128);
+    const allowed = new Set<string>('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ '.split(''));
+    const play = new PlayScreen(this.root, {
+      sfx: this.sfx,
+      lang: this.lang,
+      chapter: ch,
+      stage: trial.stage,
+      stageIndex: 0,
+      stageCount: 1,
+      allowed,
+      bestStars: 0,
+      bestKeys: null,
+      crt: this.progress.crt,
+      canSave: true,
+      chapterForKey: () => null,
+      onSave: () => this.saveTrial(trial),
+      onWin: (stars, keys) => {
+        this.progress.trialsCleared++;
+        recordStat(this.progress, trial.skillId, { cleared: stars > 0, keys, par: trial.stage.par });
+        this.save();
+      },
+      onNext: () => this.startTrial(mode),
+      onExit: () => this.goTrials(),
+    });
+    this.play = play;
+    play.mount();
+  }
+
+  private saveTrial(t: Trial): void {
+    if (this.progress.saved.some((s) => s.seed === t.seed && s.skill === t.skillId)) return;
+    this.progress.saved.push({ seed: t.seed, skill: t.skillId, at: Date.now() });
+    if (this.progress.saved.length > 60) this.progress.saved.shift();
+    this.save();
   }
 
   goCodex(): void {
@@ -344,6 +505,37 @@ export class App {
         h('button', { class: 'btn', onclick: () => { this.sfx.setEnabled(!this.sfx.enabled); this.save(); this.goAbout(); } }, this.sfx.enabled ? this.t('sound: on', '소리: 켜짐') : this.t('sound: off', '소리: 꺼짐')),
         h('button', { class: 'btn', onclick: () => { this.progress.lang = this.progress.lang === 'ko' ? 'en' : 'ko'; this.save(); this.goAbout(); } }, this.lang === 'ko' ? 'language: 한국어' : 'language: english'),
         h('button', { class: 'btn', onclick: () => { this.progress.crt = !this.progress.crt; this.save(); this.applyCrt(); this.goAbout(); } }, this.progress.crt ? this.t('crt fx: on', 'CRT 효과: 켜짐') : this.t('crt fx: off', 'CRT 효과: 꺼짐')),
+      ),
+      h(
+        'div',
+        { class: 'actions' },
+        h('button', {
+          class: 'btn',
+          onclick: () => {
+            const name = prompt(this.t('Operator name', '오퍼레이터 이름'), this.progress.profile.name);
+            if (name) { this.progress.profile.name = name.slice(0, 24); this.save(); this.goAbout(); }
+          },
+        }, `${this.t('operator', '오퍼레이터')}: ${this.progress.profile.name}`),
+        h('button', {
+          class: 'btn',
+          onclick: () => {
+            const code = encodeSave(this.progress);
+            void navigator.clipboard?.writeText(code);
+            prompt(this.t('Save code (copied) — keep it', '세이브 코드 (복사됨) — 보관하세요'), code);
+          },
+        }, this.t('export save', '세이브 내보내기')),
+        h('button', {
+          class: 'btn',
+          onclick: () => {
+            const code = prompt(this.t('Paste a save code', '세이브 코드 붙여넣기'));
+            if (!code) return;
+            const p = decodeSave(code);
+            if (!p) { alert(this.t('Not a valid code', '올바른 코드가 아닙니다')); return; }
+            this.progress = { ...emptyProgress(), ...p };
+            this.save();
+            this.goAbout();
+          },
+        }, this.t('import save', '세이브 가져오기')),
       ),
       h('div', { class: 'rule' }),
       h('div', { class: 'brief ko' }, this.t(
@@ -402,11 +594,20 @@ export class App {
         else this.sfx.play('locked');
       } else if (e.key === 'Escape') {
         this.goTitle();
+      } else if (e.key === 't' || e.key === 'T') {
+        this.goTrials();
       } else if (e.key === 'c' || e.key === 'C') {
         this.goCodex();
       } else if (e.key === 's' || e.key === 'S') {
         this.goAbout();
       }
+      return;
+    }
+    if (this.screen === 'trials') {
+      if (e.key === '1') this.startTrial('endless');
+      else if (e.key === '2') this.startTrial('weak');
+      else if (e.key === '3') this.startTrial('daily');
+      else if (e.key === 'Escape') this.goMap();
       return;
     }
     if (this.screen === 'codex' || this.screen === 'about') {

@@ -29,6 +29,9 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 - **It runs on a potato.** Zero runtime dependencies, ~55 kB gzipped, a cached
   glyph layer, and a CRT effect switch for weak devices.
 - **It plays on a phone in landscape** with a Bluetooth keyboard.
+- **It never runs out.** After the tower, TRIALS generates endless chambers,
+  biases a WEAKNESS mode from your own telemetry, and keeps the rooms you save.
+  No account, no server: one export code carries your profile.
 
 ## Play
 
@@ -46,6 +49,7 @@ the game is played with Vim keys, not with prose.
 
 ```bash
 npm run build        # dist/ plus a single-file dist/vimlore.html
+npm test             # includes: every generated trial is solvable at par
 npm test             # engine fidelity + game logic
 npm run lint:levels  # replay every stage's solution, assert par and gating
 ```

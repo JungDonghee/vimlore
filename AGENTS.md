@@ -146,3 +146,24 @@ git remote set-url origin https://github.com/JungDonghee/vimlore.git
 ```
 
 After a successful push, remind the human to rotate the token.
+
+## TRIALS (endless / weakness / daily)
+
+`src/core/game/trials.ts` generates chambers from six skill generators. **Every
+candidate is verified by simulation** (`verify()` runs the intended keystrokes
+through a real `Session`) and is rejected unless it wins on its last key — so a
+generated level can never be unbeatable. Preserve that invariant when you add a
+generator:
+
+1. build `{ text, goalText, keys }` deterministically from the seeded `rng`;
+2. add it to `SKILLS` with `tier` and the `keys` it trains;
+3. run `npm test` — `tests/trials.test.ts` proves every generator ships.
+
+Telemetry lives in `progress.stats` (per skill: attempts / clears / restarts /
+keys / par). `weakestSkills()` ranks them with
+`weaknessScore = (1-clearRate) + 0.8·max(0, keys/par−1) + 0.6·restartRate`.
+The WEAKNESS mode feeds those ids back into `generateTrial(seed, undefined, weak)`.
+
+Identity is login-free: `progress.profile{name, since}` plus an export code
+(`encodeSave`/`decodeSave`, base64 JSON) in Settings. There is no server and
+there must not be one — the game is static hosting only.
