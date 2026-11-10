@@ -173,6 +173,58 @@ const SKILLS: TrialSkill[] = [
       };
     },
   },
+
+  {
+    id: 'duplicate-line',
+    label: 'YANK & PUT',
+    tier: 2,
+    keys: ['y', 'y', 'p'],
+    make: (rng) => {
+      const k = pick(rng, ['key', 'flag', 'port', 'path']);
+      const v = pick(rng, ['1', 'on', '8080', '/tmp']);
+      return {
+        text: [`${k}=${v}`, 'other=0'].join('\n'),
+        goalText: [`${k}=${v}`, `${k}=${v}`, 'other=0'].join('\n'),
+        keys: 'yyp',
+        blurb: 'Clone the first line. The register is already loaded.',
+      };
+    },
+  },
+  {
+    id: 'join-lines',
+    label: 'JOIN',
+    tier: 2,
+    keys: ['J'],
+    make: (rng) => {
+      const a = pick(rng, ['load', 'read', 'open']);
+      const b = pick(rng, ['core', 'shell', 'driver']);
+      const c = pick(rng, ['wait', 'halt', 'exit']);
+      const d = pick(rng, ['now', 'soon', 'here']);
+      return {
+        text: [a, b, c, d].join('\n'),
+        goalText: [`${a} ${b}`, `${c} ${d}`].join('\n'),
+        keys: 'JjJ',
+        blurb: 'Four lines, two statements. J welds each pair.',
+      };
+    },
+  },
+  {
+    id: 'substitute',
+    label: 'SUBSTITUTE ALL',
+    tier: 3,
+    keys: [':', 's'],
+    make: (rng) => {
+      const oldW = pick(rng, ['bad', 'fail', 'stale']);
+      const newW = pick(rng, ['ok', 'pass', 'fresh']);
+      const n = int(rng, 2, 3);
+      return {
+        text: Array.from({ length: n }, () => `status=${oldW}`).join('\n'),
+        goalText: Array.from({ length: n }, () => `status=${newW}`).join('\n'),
+        keys: `:%s/${oldW}/${newW}/g<CR>`,
+        blurb: 'One command, every line. Do not walk them.',
+      };
+    },
+  },
 ];
 
 const NEWS = ['new', 'on', 'ok', 'yes', 'set', 'live'];

@@ -13,7 +13,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 102/102 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 107/107 must pass
 npm test
 ```
 
@@ -148,7 +148,9 @@ After a successful push, remind the human to rotate the token.
 
 ## TRIALS (endless / weakness / daily)
 
-`src/core/game/trials.ts` generates chambers from six skill generators. **Every
+`src/core/game/trials.ts` generates chambers from eleven skill generators
+(delete-word, delete-line, change-inner, change-quotes, capture-case,
+indent-block, fix-typo, dot-repeat, duplicate-line, join-lines, substitute). **Every
 candidate is verified by simulation** (`verify()` runs the intended keystrokes
 through a real `Session`) and is rejected unless it wins on its last key — so a
 generated level can never be unbeatable. Preserve that invariant when you add a

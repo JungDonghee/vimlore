@@ -46,7 +46,8 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 - **It runs on a potato.** Zero runtime dependencies, ~55 kB gzipped, a cached
   glyph layer, and a CRT effect switch for weak devices.
 - **It plays on a phone in landscape** with a Bluetooth keyboard.
-- **It never runs out.** After the tower, TRIALS generates endless chambers,
+- **It never runs out.** After the tower, TRIALS generates endless chambers (11
+  verified skill generators),
   biases a WEAKNESS mode from your own telemetry, and keeps the rooms you save.
   No account, no server: one export code carries your profile.
 
