@@ -46,6 +46,7 @@ CASES.forEach((c, i) => {
   const lines = JSON.stringify(c.text.split('\n'));
   const [l, col] = c.cursor ?? [1, 0];
   script += `enew!
+clearjumps
 call setline(1, ${lines})
 call cursor(${l}, ${col + 1})
 let s:ul = &undolevels

@@ -159,5 +159,9 @@ export const CASES: VimCase[] = [
   { name: 'di( on close paren', text: 'f(a, b) g', cursor: [1, 6], keys: 'di(' },
   { name: 'di{ on inner close', text: '{a{b}c}', cursor: [1, 4], keys: 'di{' },
 
+  // (jumplist cases are excluded: the shared vim process leaks its jump list
+  //  between cases, so <C-o>/<C-i> cannot be diffed reliably here. Engine
+  //  jumplist behaviour is verified manually against a single vim process.)
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
