@@ -4,3 +4,8 @@ books-text/
 .npm-cache/
 *.log
 .DS_Store
+
+# local secrets (kept outside the repo anyway)
+.secrets/
+*.pem
+.env

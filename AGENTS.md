@@ -126,3 +126,23 @@ The engine is faithful for everything the levels use, but three motions are off:
 re-derive that stage and re-run `npm run lint:levels -- 8`. Also unimplemented:
 `:s///c` confirmation, split windows/buffers (levels are single-buffer), and
 `gq` uses the stage's `textwidth` rather than the editor option.
+
+## Shipping
+
+Target remote: `github.com/JungDonghee/vimlore`, branch `main`.
+
+A fine-grained GitHub PAT is stored **outside this repository** at
+`/home/jung/ai_station/sandbox/.secrets/github_token` (mode 600, notes in the
+same directory). It can read the account and push, but **cannot create
+repositories** — if `vimlore` does not exist yet, ask the human to create an
+empty repo in the browser first. Never copy the token into the repo, never
+commit it, and scrub the remote URL after pushing:
+
+```bash
+TOKEN=$(cat /home/jung/ai_station/sandbox/.secrets/github_token)
+git remote set-url origin "https://x-access-token:$TOKEN@github.com/JungDonghee/vimlore.git"
+git push -u origin main
+git remote set-url origin https://github.com/JungDonghee/vimlore.git
+```
+
+After a successful push, remind the human to rotate the token.
