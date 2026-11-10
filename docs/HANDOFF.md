@@ -1,7 +1,8 @@
 # HANDOFF — VIMLORE 완성 작업 인계서
 
 > **이 문서를 읽는 새 AI(또는 사람)에게:** 이 파일이 현재 작업의 유일한 진실(Source of Truth)입니다.
-> 프로젝트 불변식은 [`AGENTS.md`](../AGENTS.md)에, 아키텍처는 [`ARCHITECTURE.md`](ARCHITECTURE.md)에 있습니다.
+> 프로젝트 불변식은 [`AGENTS.md`](../AGENTS.md)에, 아키텍처는 [`ARCHITECTURE.md`](ARCHITECTURE.md)에,
+> 그리고 **코드의 규모·복잡성·리스크와 완성 전략은 [`EVALUATION.md`](EVALUATION.md)에** 있습니다.
 > 여기서부터 시작하고, `npm run doctor`를 먼저 실행하세요.
 
 마지막 갱신: 2026-11-10
