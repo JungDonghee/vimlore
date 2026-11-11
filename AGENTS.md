@@ -19,7 +19,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 205/205 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 216/216 must pass
 npm test
 ```
 
@@ -129,12 +129,12 @@ per-frame allocation in `render()`.
 ## Coverage and known gaps
 
 The authoritative matrix of what the engine does and does not do is
-[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **205/205**
+[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **216/216**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Missing on purpose: windows/buffers, folds, completion,
 `:!`, quickfix/LSP, Vimscript/Lua, `:s///c`, and viewport motions (`zz`, `zt`,
-exact `H/M/L`). Queued Tier 1: `gn` / `g*` / `g#` (search operators), then
-`g;`/`g,` and interactive `:s///c`.
+exact `H/M/L`). `gn` / `g*` / `g#` are implemented. Next Tier 2: `g;`/`g,`, interactive
+`:s///c`, `\zs`/`\ze`, `gi`, `=` indent.
 
 ## Shipping
 

@@ -12,10 +12,10 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **205 oracle cases**, all matching real Vim |
-| gates | oracle 205/205 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 210,220 B · single `dist/vimlore.html` 231,530 B · gzip 74,651 B |
-| perf (headless) | desktop 1280×800 **56 fps** (x1), 48 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
+| engine | 2,532 lines; **216 oracle cases**, all matching real Vim |
+| gates | oracle 216/216 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 211,174 B · single `dist/vimlore.html` 232,484 B · gzip 74,875 B |
+| perf (headless) | desktop 1280×800 **55–56 fps** (x1), 48–49 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | last deployed commit is `f5eec60`; slice 1 is pushed after this snapshot |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -36,7 +36,7 @@ this file.
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
   numbers, glyphs, bloom) and blits it once per frame; FX is cursor, ghost,
-  particles, flash. Desktop **23.5 → 56 fps**; phone stable at 59–60.
+  particles, flash. Desktop **23.5 → 55–56 fps**; phone stable at 59–60.
 - Play screen is a **Vim window**: text starts top-left, `~` fills to the
   statusline, no rounded game card, cursorline, tabline, statusline.
 - **Cursor shapes**: block (normal), vertical bar (insert), underline
@@ -49,8 +49,11 @@ this file.
   scanlines so briefing text is crisp (this was a real readability bug).
 - Landscape 844×390 uses a two-column briefing so BEGIN is above the fold.
 
+### Advanced coverage delivered
+- `gn` (visual selection, operator-pending `dgn`/`cgn`, counts, dot repeat),
+  `g*`/`g#` (word under cursor without boundaries), `2*` counts.
+
 ### Not done (queued, do not pretend otherwise)
-- `gn` / `g*` / `g#` (Tier 1 advanced coverage). This is the next engine task.
 - Change list (`g;`/`g,`), `:s///c`, `\zs/\ze`, `gi`, `=` indent.
 - Remaining cross-seed fuzz edges (seed 11: `dt(`, `2cw`, `cw`; seed 23:
   visual `vk$d`/`vlB<`, block `U`, `3cW`, `2daW`).
@@ -110,7 +113,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 205/205
+node --experimental-strip-types tools/oracle-diff.ts        # 216/216
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

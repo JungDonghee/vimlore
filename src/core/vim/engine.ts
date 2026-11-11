@@ -1978,14 +1978,16 @@ export class Vim {
     this.afterUnit();
   }
 
-  private starSearch(forward: boolean): void {
+  private starSearch(forward: boolean, wordBoundaries = true): void {
     const line = this.buf.line(this.cursor.line);
     const re = /[A-Za-z0-9_]+|[\u0080-\uffff]+/g;
     let m: RegExpExecArray | null;
     let word = '';
+    let wordStart = -1;
     while ((m = re.exec(line))) {
       if (m.index <= this.cursor.col && this.cursor.col < m.index + m[0].length) {
         word = m[0];
+        wordStart = m.index;
         break;
       }
       if (m.index > this.cursor.col) break;
@@ -1994,11 +1996,19 @@ export class Vim {
       this.bell();
       return;
     }
-    this.lastSearch = `\\<${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\>`;
+    const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    this.lastSearch = wordBoundaries ? `\\<${escaped}\\>` : escaped;
     this.searchDir = forward ? 1 : -1;
-    const found = this.findSearchMatch(1, this.searchDir);
+    // `*`/`g*` search from *after* the word under the cursor (and `#`/`g#`
+    // from before it), so a count skips the word you are standing on.
+    const saved = { ...this.cursor };
+    this.cursor = { line: this.cursor.line, col: forward ? Math.min(line.length, wordStart + word.length) : Math.max(0, wordStart - 1) };
+    const found = this.findSearchMatch(this.countNum || 1, this.searchDir);
     if (found) this.jumpTo(found, true);
-    else this.bell();
+    else {
+      this.cursor = saved;
+      this.bell();
+    }
     this.emit({ type: 'search', pattern: this.lastSearch });
     this.afterUnit();
   }
@@ -2186,6 +2196,48 @@ export class Vim {
   }
 
   private afterG(key: string, asOp: boolean): void {
+    if (key === '*' || key === '#') {
+      this.starSearch(key === '*', false);
+      return;
+    }
+    if (key === 'n') {
+      // gn: the next match of the last search. In operator-pending mode it is
+      // the range for dgn/cgn; otherwise it starts a visual selection on it.
+      if (!this.lastSearch) {
+        this.bell();
+        return;
+      }
+      const matches = this.searchMatches();
+      if (!matches.length) {
+        this.bell();
+        return;
+      }
+      const from = this.buf.idx(this.cursor);
+      let base = matches.findIndex((m) => m.start <= from && from < m.end);
+      if (base < 0) base = matches.findIndex((m) => m.start >= from);
+      if (base < 0) base = 0;
+      const count = (this.countNum || 1) * (this.op?.count || 1);
+      if (this.countNum) this.takeCount();
+      const target = matches[(base + count - 1) % matches.length];
+      const start = this.buf.pos(target.start);
+      const end = this.buf.pos(target.end - 1);
+      if (asOp && this.op) {
+        const op = this.op;
+        this.rangeInclusive = true;
+        this.applyOp(op, { start, end, linewise: false });
+        return;
+      }
+      if (this.mode === 'visual' || this.mode === 'visual-line' || this.mode === 'visual-block') {
+        this.cursor = M.moveTo(this.buf, end);
+        this.afterUnit();
+        return;
+      }
+      this.visualAnchor = start;
+      this.cursor = M.moveTo(this.buf, end);
+      this.setMode('visual');
+      this.afterUnit();
+      return;
+    }
     if (key === 'g') {
       if (asOp && this.op) {
         const op = this.op;

@@ -56,11 +56,11 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine oracle | **205/205** vs `vim -u NONE` (142 at session start, +63 cases) |
+| engine oracle | **216/216** vs `vim -u NONE` (142 at session start, +74 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 210,220 B · single `dist/vimlore.html` 231,530 B · gzip 74,651 B |
-| perf (headless) | desktop 1280×800: **56 fps** (x1), 48 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
+| build | JS 211,174 B · single `dist/vimlore.html` 232,484 B · gzip 74,875 B |
+| perf (headless) | desktop 1280×800: **55–56 fps** (x1), 48–49 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · last deployed `f5eec60`; slice 1 pushed after this file |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
@@ -68,7 +68,7 @@
 63 new oracle cases and a large engine-correctness pass (operator ranges with
 `gg`/`G`/`{`/`}`, counts on doubled operators, `2J`, visual-block `~`/`>`/`<`,
 word/sentence/paragraph edges, visual find `f/F/t/T`); a composite-frame
-renderer (**23.5 → 56 fps** desktop); a Vim-like top-left window with `~` fill,
+renderer (**23.5 → 55–56 fps** desktop); a Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
 and an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing.
 
@@ -131,7 +131,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥205/205; new cases committed; tests green.
+  oracle ≥216/216; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -179,9 +179,9 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +63 cases, oracle 205/205, gates green |
-| S3 | `gn` / `g*` / `g#` | **not done — queued** (Tier 1 remains the next engine task) |
-| S4 | renderer composite + fps pass | **done** — desktop 56 fps x1, phone 59–60 |
+| S2 | fixed engine bugs | **done** — +74 cases, oracle 216/216, gates green; `gn`/`g*`/`g#` shipped |
+| S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
+| S4 | renderer composite + fps pass | **done** — desktop 55–56 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
 | S6 | handoff | **in progress** — commit/push at the end of this slice |
 
@@ -195,8 +195,8 @@ rest to the task board. Never commit a red level or a failing oracle.
 | D1 | write master plan + handoff protocol | W5 | **done** | `docs/MASTER_PLAN.md` |
 | E1 | fuzz harness | W1 | **done** | `tools/fuzz.ts` |
 | E2 | triage/fix fuzz divergences | W1 | **done** (seed 7; seeds 11/23 listed above) | `src/core/vim/**`, `tools/cases.ts` |
-| E3 | `gn` / `g*` / `g#` | W2 | queued | `src/core/vim/engine.ts`, `search.ts` |
-| E4 | coverage doc + counts | W2 | **done** (count; no new feature yet) | `docs/VIM_COVERAGE.md` |
+| E3 | `gn` / `g*` / `g#` | W2 | **done** | `src/core/vim/engine.ts`, `search.ts` |
+| E4 | coverage doc + counts | W2 | **done** | `docs/VIM_COVERAGE.md` |
 | R1 | composite frame cache | W3 | **done** | `src/ui/render.ts` |
 | R2 | cursor shapes by mode | W4 | **done** | `src/ui/render.ts` |
 | R3 | Vim window layout | W4 | **done** | `src/ui/render.ts`, `src/style.css` |
@@ -246,7 +246,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 205/205
+node --experimental-strip-types tools/oracle-diff.ts        # 216/216
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

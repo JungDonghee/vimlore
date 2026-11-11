@@ -261,5 +261,20 @@ export const CASES: VimCase[] = [
   { name: ') over blank line', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: ')' },
   { name: '2) over blank line', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: '2)' },
 
+  // --- g*/g# (search the word without word boundaries) ----------------------
+  { name: 'g* finds inside words', text: 'foo foobar foo', cursor: [1, 0], keys: 'g*' },
+  { name: 'g# finds back inside words', text: 'foo foobar foo', cursor: [1, 12], keys: 'g#' },
+  { name: '2g* second match', text: 'foo foo bar foo', cursor: [1, 0], keys: '2g*' },
+  { name: '2* second occurrence', text: 'foo foo bar foo', cursor: [1, 0], keys: '2*' },
+
+  // --- gn: next search match as a motion/selection --------------------------
+  { name: 'gn selects next match', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>gggn' },
+  { name: '2gn selects second match', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>gg2gn' },
+  { name: 'dgn deletes next match', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>dgn' },
+  { name: 'cgn changes next match', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>cgnX<Esc>' },
+  { name: 'dgn dot repeats', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>dgn.' },
+  { name: 'cgn dot changes next match', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>cgnX<Esc>.' },
+  { name: 'visual gn extends', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>ggvgn' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

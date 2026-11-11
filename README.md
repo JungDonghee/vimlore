@@ -9,7 +9,7 @@
 # VIMLORE
 
 **A Vim adventure that runs on a dead terminal.** No install, no account, no
-tracking, no third-party requests — one 226 kB page. A keyboard is required;
+tracking, no third-party requests — one 227 kB page. A keyboard is required;
 on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
@@ -36,7 +36,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
   of Vim (`src/core/vim/`), diff-tested against a real `vim -u NONE` binary:
-  205/205 identical buffers and cursors (`tools/oracle-diff.ts`).
+  216/216 identical buffers and cursors (`tools/oracle-diff.ts`).
 - **Three stars means elegance, not survival.** Every stage has a `par` — the
   keystroke count of the intended solution. Clear it any way you like; master it
   in par.

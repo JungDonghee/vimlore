@@ -80,6 +80,6 @@ NOTES:   <surprises, decisions, next step>
 ```
 
 **Current state** (update this from `MASTER_PLAN.md` §2, never trust this copy):
-slice 1 is landed: oracle 205/205, 51 stages, 84 commands, desktop 56 fps,
-live and deployed after the push. Slice 2 starts with `gn`/`g*`/`g#`; the board
-is authoritative.
+slice 1 is landed: oracle 216/216, 51 stages, 84 commands, desktop 55–56 fps,
+live and deployed. `gn`/`g*`/`g#` shipped; slice 2 starts with the remaining
+fuzz edges, `g;`/`g,`, `:s///c`, and curriculum metadata. The board is authoritative.
