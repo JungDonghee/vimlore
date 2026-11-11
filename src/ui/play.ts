@@ -895,6 +895,9 @@ export class PlayScreen {
     this.stopRepeat();
     this.ghosting = true;
     this.session = demo;
+    // The demo Session has no event callback, so the render loop must be told
+    // explicitly that the visible buffer/cursor changed.
+    this.dirty = true;
     this.overlay?.remove();
     this.overlay = h(
       'div',
@@ -906,7 +909,9 @@ export class PlayScreen {
     for (const k of keys) {
       if (this.destroyed) return;
       this.session.feed(k);
+      this.updateMatches();
       this.updateHud();
+      this.dirty = true;
       await new Promise((r) => setTimeout(r, 240));
     }
     await new Promise((r) => setTimeout(r, 700));
@@ -919,6 +924,7 @@ export class PlayScreen {
     this.overlay = null;
     this.ghosting = false;
     this.updateHud();
+    this.dirty = true;
     this.toast(this.host.lang === 'ko' ? '이제 네 차례' : 'Now you', false);
   }
 

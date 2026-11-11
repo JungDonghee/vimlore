@@ -156,7 +156,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **271,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 270,224 B raw / 84,749 B gzip, so headroom is
+that needed it. Current build is 270,287 B raw / 84,756 B gzip, so headroom is
 ~776 B raw / ~1,251 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -195,6 +195,15 @@ fix in a level.
 keys can expose a skill before a stage teaches it, and 12 unlock keys have no
 Grimoire row. Book-derived curriculum/provenance will fix the ordering; do not
 paper over it with ad-hoc locks now.
+
+### Ghost redraw / perceived stutter (2026-11-11)
+
+The ghost played on a demo Session with no event callback, so the render loop
+did not know the demo cursor/buffer had changed. It redrew only when the cursor
+blink flipped (~530 ms), making the ghost look like it teleported. `playGhost`
+now calls `updateMatches()` and sets the dirty flag on start, after every key
+and on restore; the 60 fps loop draws each demo step (240 ms cadence). This is
+a redraw fix, not a new animation; the ghost remains real Vim key steps.
 
 ### Relative line numbers by default (2026-11-11)
 

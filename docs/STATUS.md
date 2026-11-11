@@ -12,7 +12,7 @@
 | chapters / stages | 10 / 51 |
 | state matrix matched / total / open | 21,539 / 21,712 / 173 |
 | state open by field | undo 164, reg 10, regtype 8 |
-| built single file (raw) | 270,224 B |
+| built single file (raw) | 270,287 B |
 | raw ceiling | 271,000 B |
 ## Reports
 - Oracle: `tools/oracle-diff.ts` + `tests/vim-expected.json`
