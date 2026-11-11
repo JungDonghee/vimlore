@@ -12,7 +12,7 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **248 oracle cases**, all matching real Vim |
+| engine | 3,053 lines; **266 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 266/266 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors |
 | build | JS 230,962 B · single `dist/vimlore.html` 254,635 B · gzip 81,047 B · budget gate 258k/82k |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
@@ -26,7 +26,7 @@ this file.
 ### Engine correctness (the big win)
 - `tools/fuzz.ts` added: seeded differential fuzzer, one shared `vim -es`
   process, sentinel-based detection of Vim aborts. `npm run fuzz`.
-- **111 new oracle cases** (142 → 253): operator ranges with `gg`/`G`/`{`/`}`,
+- **124 new oracle cases** (142 → 266): operator ranges with `gg`/`G`/`{`/`}`,
   counts on doubled operators, visual-block `~`/`>`/`<`, `cw`/`cW`/text-object
   edges, `vlB<` visual-EOL, `2daW`/`2daw`, sentence/paragraph boundaries,
   `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
@@ -74,8 +74,13 @@ this file.
 
 ### Not done (queued, do not pretend otherwise)
 - Change list (`g;`/`g,`).
-- Keep seeds 7/11/23 clean; extended seeds 31/47/101 are the next correctness
-  frontier (11 cursor-only edges listed in `MASTER_PLAN.md` §2.1).
+- Cursor-only fuzz: 14 edges across seeds 31 (5), 101 (5) and 211 (4); seeds
+  7/11/23/47/131/173 are fully clean. All nine seeds are buffer-content clean.
+  List in `MASTER_PLAN.md` §2.1.
+- `invariants` has 15 coverage warnings (commands never declared by a stage /
+  unlock keys without a Grimoire row), not errors.
+- Desktop 60 fps is not verified in the headless environment; the ceiling is
+  documented below. Bundle is 254.6 kB (stretch 200 kB; hard ceiling 258 kB).
 - c04s3's goal was corrected to Vim's real multi-line `di(` result
   (`connect(` and `)` on separate lines); the old goal only passed because
   `di{`/`di(` joined the closing bracket.

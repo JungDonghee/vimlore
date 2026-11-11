@@ -83,7 +83,7 @@
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
 **What changed in slice 1:** a seeded differential fuzzer (`tools/fuzz.ts`),
-111 new oracle cases and a large engine-correctness pass (operator ranges with
+124 new oracle cases and a large engine-correctness pass (operator ranges with
 `gg`/`G`/`{`/`}`, counts on doubled operators, visual-block `~`/`>`/`<`,
 word/sentence/paragraph edges, visual find `f/F/t/T`, `vlB<`, `2daW`); a
 composite-frame renderer (**23.5 → 52–57 fps** desktop); `gn`/`g*`/`g#`,
