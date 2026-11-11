@@ -135,7 +135,13 @@ against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Missing on purpose: windows/buffers, folds, completion,
 `:!`, quickfix/LSP, Vimscript/Lua, and viewport motions (`zz`, `zt`, exact
 `H/M/L`). `gn` / `g*` / `g#`, `\zs`/`\ze` and interactive `:s///c` are
-implemented. Next Tier 2: `g;`/`g,`, `gi`, `=` indent.
+implemented. Next Tier 2: `g;`/`g,`, `=` indent.
+
+**Buffers, files, splits and tabs are deliberately deferred, not rejected.**
+The engine is single-buffer today. The target model, phases, invariants and
+tests are in [`docs/FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md); never fake
+`:b`/`:sp` by mutating `Vim.buf`, and do not start that program before Tier 2
+plus the cursor-only fuzz backlog are green.
 
 ## Shipping
 

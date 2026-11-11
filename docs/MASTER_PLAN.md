@@ -218,10 +218,11 @@ rest to the task board. Never commit a red level or a failing oracle.
 | E5 | `gI` / `gi` coverage | W2 | **done** | `src/core/vim/engine.ts`, `tools/cases.ts` |
 | D2 | refresh AGENTS/HANDOFF | W5 | **done** | `AGENTS.md`, `docs/HANDOFF.md` |
 | D3 | final gates + build + push | W5 | **done** | all |
+| ED0 | deferred buffer/file/window architecture | later | **design done** | `docs/FUTURE_EDITOR.md` |
 
 ## 7. Handoff protocol (for the next AI)
 
-1. Read §0 and §1. Run `npm run doctor`, then the four gates (§9). Trust the
+1. Read §0 and §1. Run `npm run doctor`, then the four gates (§10). Trust the
    gates over any prose, including this file.
 2. Claim a task by changing its status to `in progress` **in the same commit**
    as the work. Never work on two workstreams that touch the same file
@@ -241,14 +242,25 @@ rest to the task board. Never commit a red level or a failing oracle.
   alphabet; an unsupported construct is excluded, not "fixed" in the engine.
 - **UI/perf conflict**: one owner for `src/ui/render.ts` at a time. Perf first,
   then visual polish, then re-measure.
-- **Scope creep**: no stages, no windows/splits, no server, no plugin system in
-  this program. New chapters are allowed only after Tier 2 coverage is green.
+- **Scope creep**: no stages in this program; no server, no plugin system. New
+  chapters are allowed only after Tier 2 coverage is green. Buffers/files/splits/
+  tabs are a deliberate later editor program — **design and phases in
+  [`FUTURE_EDITOR.md`](FUTURE_EDITOR.md)**; never fake `:b`/`:sp` by mutating the
+  single `buf`.
 - **Doc drift**: the oracle count, command count and perf numbers are checked
   by `doc-check` only partially; update them by hand in the same commit.
 - **Deploy**: Pages builds from `main`; a broken build blocks the live site.
   Build locally before pushing.
 
-## 9. Command reference (unchanged)
+## 9. Deferred editor program
+
+Buffers (`:ls/:b/:bn/:bp/:bd/:bufdo`, alternate `#`, hidden), files
+(`:e/:r/:w file` over a browser VFS), splits, tabs and `<C-w>` are **not** in the
+current slice. The concrete architecture, phases, invariants and tests are in
+[`FUTURE_EDITOR.md`](FUTURE_EDITOR.md). Do not start Phase A until Tier 2 and the
+cursor-only fuzz backlog are green.
+
+## 10. Command reference (unchanged)
 
 ```bash
 cd /home/jung/ai_station/sandbox/vimlore

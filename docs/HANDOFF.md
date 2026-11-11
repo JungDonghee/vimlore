@@ -87,7 +87,8 @@ this file.
 
 ## 2. Open product gaps
 
-- **Coverage** is a chosen subset: no windows/splits/buffers/tabs, folds,
+- **Coverage** is a chosen subset: no windows/splits/buffers/tabs in this
+  program (deferred design: `FUTURE_EDITOR.md`), folds,
   completion, `:!`/filesystem, quickfix/LSP, Vimscript/Lua, undo tree,
   change list, viewport motions (`zz/zt`, exact `H/M/L`), filters.
 - **Curriculum truth**: `level-lint` checks par/gating/win but not

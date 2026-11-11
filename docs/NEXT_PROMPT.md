@@ -23,6 +23,11 @@ You are the next orchestration AI for **VIMLORE**, a Vim-teaching game at
 6. Leave the project greener than you found it: gates green, docs current,
    commit pushed, Pages deployed.
 
+**Deferred:** buffers/files/windows/tabs are a later editor program, not this
+slice. The design and phases are in
+[`FUTURE_EDITOR.md`](FUTURE_EDITOR.md); never fake `:b`/`:sp` on the single
+buffer. Do not start it before Tier 2 + the cursor-only fuzz backlog are green.
+
 **First 30 minutes — do not skip:**
 
 ```bash

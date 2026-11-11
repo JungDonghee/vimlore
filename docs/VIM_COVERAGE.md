@@ -58,7 +58,7 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 
 | area | missing | why |
 |---|---|---|
-| windows | splits, tabs, buffers, `:vsp`, `<C-w>` | every level is one buffer |
+| windows | splits, tabs, buffers, `:vsp`, `<C-w>` | deferred editor program, design in `FUTURE_EDITOR.md`; every level is one buffer |
 | folds | `zf zo zc za zR` | no viewport worth folding |
 | completion | `<C-n> <C-p> <C-x>`, digraphs, abbreviations | no file corpus at runtime |
 | indentation | `=`/`gg=G` with filetype rules | no `indentexpr`; `>` shifts by a fixed 2 |
