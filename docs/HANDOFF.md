@@ -46,6 +46,30 @@ The fix is structural:
 - If a number in a narrative doc disagrees with STATUS, STATUS wins; delete the
   duplicate number instead of updating it by hand.
 
+## 0b. Final handoff (2026-11-11 23:10 KST)
+
+All gates are green on the last commit: tests, level lint, doc-check,
+invariants, surface strict, oracle, grammar matrix, count matrix (with manifest
+freshness), 12 fuzz seeds, build+budget, STATUS freshness. **Numbers live in
+[`STATUS.md`](STATUS.md).**
+
+The last engine debt is the local state matrix (undo cursor + register edge
+cases). The count matrix is the structural guard for the `3i0` class and CI
+runs it. Dot-count undo/register grouping is the one counted command explicitly
+deferred in [`COMMAND_MANIFEST.md`](COMMAND_MANIFEST.md).
+
+Next safe slices, in order:
+
+1. run `npm run trace -- --case=<failing>` and fix the first divergent prefix
+   for the remaining state failures; add a shrinker next.
+2. dot-count: make Vim's one undo block and register text match (real Vim only).
+3. extend the count matrix to the deferred rows (search/macros/H-M-L), after
+   probing Vim; never invent behavior. Buffers/files/z/register-listing stay
+   deferred.
+
+The scheduled automation is set to stop issuing new work at 23:30 KST and to
+only finalize by 23:50; the machine shuts down at 00:00.
+
 ## 1. What pass 2 delivered
 
 ### The 14 cursor-only fuzz edges are gone
