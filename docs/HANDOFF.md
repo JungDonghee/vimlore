@@ -146,6 +146,9 @@ cd /home/jung/ai_station/sandbox && node pw/audit.mjs   # 게이팅 + 스테이�
    "N/N"이나 "N keystroke cases"를 케이스 수와 일치시켜라.
 7. **성능 예산**: 렌더 루프(`render()`)에서 객체/배열 할당 금지. 글리프 레이어는 캐시되고 커서 의존
    요소는 FX 레이어에만. 이걸 위반하면 프리징/렉이 재발한다.
+8. **보안(제3자 획득 원천 차단)**: GitHub 계정은 **AI 목적 전용**이라 토큰 회전은 **불필요**하다.
+   하지만 토큰 값은 절대 프롬프트·로그·커밋·채팅·이슈·PR 어디에도 출력/붙여넣지 마라.
+   push 후 remote URL scrub은 항상. 상세 규칙은 `.secrets/README.md`와 `AGENTS.md` Shipping 절.
 
 ---
 

@@ -144,7 +144,10 @@ git push -u origin main
 git remote set-url origin https://github.com/JungDonghee/vimlore.git
 ```
 
-After a successful push, remind the human to rotate the token.
+This is an **AI-purpose account**: token rotation is NOT required. But the token
+must never leak to a third party — never print it into a prompt/log/commit, never
+paste it into a chat/issue/PR, and always scrub the remote URL after pushing.
+`.secrets/README.md` holds the full rules.
 
 ## TRIALS (endless / weakness / daily)
 
