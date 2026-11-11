@@ -2280,14 +2280,37 @@ export class Vim {
         let start = obj.start;
         let end = obj.end;
         if (count > 1) {
-          if (p.around && (key === 'w' || key === 'W')) {
+          if (!p.around && (key === 'w' || key === 'W')) {
+            // Counted inner-word objects extend to the Nth word. When that
+            // crosses a line, Vim treats the range as linewise.
+            const list = tokens(this.buf, key === 'W');
+            const off = this.buf.idx(this.cursor);
+            let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
+            if (ti < 0) ti = list.findIndex((t) => !t.blank && t.start >= off);
+            const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
+            if (target && ti >= 0) {
+              start = obj.start;
+              end = this.buf.pos(target.end);
+              if (start.line !== end.line) obj.linewise = true;
+            }
+          } else if (p.around && (key === 'w' || key === 'W')) {
             // `2daW`/`2daw`: select `count` words and the whitespace after the
             // last one, across lines (Vim joins the lines when this is deleted).
             const list = tokens(this.buf, key === 'W');
             const off = this.buf.idx(this.cursor);
-            const ti = list.findIndex((t) => t.start <= off && off <= t.end);
-            const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
-            if (target && ti >= 0) {
+            let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
+            if (ti < 0) {
+              // Cursor on whitespace: the blank run plus the next word is the
+              // first object, then count-1 further words.
+              ti = list.findIndex((t) => !t.blank && t.start > off);
+              const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
+              if (target) {
+                start = obj.start;
+                end = this.buf.pos(target.end);
+              }
+            } else {
+              const target = list[Math.min(list.length - 1, ti + count - 1)];
+              if (target) {
               let e = target.end;
               const flat = this.buf.flat;
               while (e + 1 < flat.length && /\s/.test(flat[e + 1])) e++;
@@ -2301,6 +2324,7 @@ export class Vim {
               }
               start = this.buf.pos(startOff);
               end = this.buf.pos(e);
+              }
             }
           } else {
             // Repeat the object outward (approximation of Vim's behaviour).

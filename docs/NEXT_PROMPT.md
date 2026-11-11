@@ -80,7 +80,7 @@ NOTES:   <surprises, decisions, next step>
 ```
 
 **Current state** (update this from `MASTER_PLAN.md` §2, never trust this copy):
-slice 1 + Tier 1 + the fuzz-fix pass are landed: oracle 243/243, 51 stages, 86
+slice 1 + Tier 1 + the fuzz-fix pass are landed: oracle 247/247, 51 stages, 86
 commands, desktop 52–57 fps, live and deployed. `gn`/`g*`/`g#`, `\zs`/`\ze`,
 `gi`/`gI` and interactive `:s///c` shipped. Slice 2 starts with the remaining
 fuzz edges, `g;`/`g,`, `=` indent and the bundle/60fps budget. The board is
