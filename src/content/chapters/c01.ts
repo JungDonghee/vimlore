@@ -39,6 +39,9 @@ export const c01: Chapter = {
       par: 9,
       solution: 'llllllljj',
       teaches: ['h', 'j', 'k', 'l'],
+      sources: [
+        { book: 'Learning the vi and Vim Editors', section: 'Ch. 2, “Single Movements”', note: 'h j k l movement' },
+      ],
       hints: [
         { en: 'h left, l right, j down, k up.', ko: 'h 왼쪽, l 오른쪽, j 아래, k 위.' },
         { en: 'Seven steps right, then two down.', ko: '오른쪽으로 일곱 번, 아래로 두 번.' },
@@ -63,6 +66,9 @@ export const c01: Chapter = {
       par: 5,
       solution: '13l5j',
       teaches: ['count'],
+      sources: [
+        { book: 'Practical Vim', section: 'Tip 10, “Use Counts to Do Simple Arithmetic”', note: 'count before a motion' },
+      ],
       hints: [
         { en: '13l is thirteen steps in two keystrokes.', ko: '13l은 두 번의 키로 열세 걸음.' },
         { en: '13l then 5j.', ko: '13l 그리고 5j.' },
@@ -84,6 +90,10 @@ export const c01: Chapter = {
       solution: 'l7x$h',
       hazard: '',
       teaches: ['x', '$'],
+      sources: [
+        { book: 'Learning the vi and Vim Editors', section: 'Ch. 2, “Deleting Text”', note: 'x deletes under the cursor' },
+        { book: 'Learning the vi and Vim Editors', section: 'Ch. 2, “Moving the Cursor in Command Mode”', note: '$ is end of line' },
+      ],
       hints: [
         { en: 'l puts you on the noise. 7x removes all seven bytes.', ko: 'l로 노이즈 위에 선다. 7x가 일곱 바이트를 한 번에 지운다.' },
         { en: 'After the noise is gone, $ jumps to the last column.', ko: '노이즈가 사라지면 $가 마지막 칸으로 간다.' },
@@ -102,6 +112,10 @@ print("boot ok")`,
       par: 9,
       solution: '6la=<Esc>jA;<Esc>',
       teaches: ['i', 'a', 'A', 'esc'],
+      sources: [
+        { book: 'Learning the vi and Vim Editors', section: 'Ch. 2, “Inserting New Text”', note: 'i enters insert' },
+        { book: 'Learning the vi and Vim Editors', section: 'Ch. 2, “Appending Text”', note: 'a / A append' },
+      ],
       hints: [
         { en: '6l stands on the =. a= adds the second = after it.', ko: '6l로 = 위에 선다. a=가 그 뒤에 두 번째 =를 넣는다.' },
         { en: 'Then j to the next line, and A; to close the statement.', ko: '그다음 j로 다음 줄, A;로 문장을 닫는다.' },
@@ -120,6 +134,9 @@ print("boot ok")`,
       par: 11,
       solution: '7l4xi3000<Esc>j',
       teaches: ['u'],
+      sources: [
+        { book: 'Learning the vi and Vim Editors', section: 'Ch. 2, “Repeating or Undoing Your Last Command” (§Undo)', note: 'u restores the last change' },
+      ],
       hints: [
         { en: '7l to the first ?, 4x to clear all four.', ko: '7l로 첫 ?에, 4x로 네 개를 지운다.' },
         { en: 'i3000 inserts the port, Esc leaves, j lands on the marker.', ko: 'i3000으로 포트를 넣고, Esc로 나와 j로 표식에.' },

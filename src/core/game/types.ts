@@ -39,6 +39,8 @@ export interface Stage {
   solution?: string;
   /** Command ids taught here (see src/content/commands.ts). */
   teaches?: string[];
+  /** Book-derived provenance; see docs/CURRICULUM_PROVENANCE.md. */
+  sources?: StageSource[];
   /** Progressive hints, cheapest first. */
   hints?: Localized[];
   /** Characters that hurt when the cursor lands on them. Defaults to "~". */
@@ -66,6 +68,12 @@ export interface Chapter {
 }
 
 export type Stars = 0 | 1 | 2 | 3;
+
+export interface StageSource {
+  book: string;
+  section: string;
+  note?: string;
+}
 
 export interface StageRecord {
   cleared: boolean;

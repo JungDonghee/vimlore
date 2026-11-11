@@ -59,15 +59,15 @@ elastic.
 | chapter themes (movement → words → operators → objects → visual → search → registers → marks → ex → mastery) | broadly aligned |
 | per-stage `teaches` command ids | present for 51/51 |
 | section index of the corpus | generated in `BOOKS_INDEX.md` (3 books need manual scan) |
-| per-stage **book + section citation** | **missing / unaudited** |
+| per-stage **book + section citation** | **5/51 cited; 46 unmapped** |
 | prerequisite graph | informal; not machine-readable |
 | pacing metrics (new commands/stage, review ratio, par ramp) | not measured |
 | gap list of book topics outside the 51 | partial (see §6) |
 
 This table is intentionally embarrassing: it prevents the next AI from
 mistaking “the chapters feel right” for provenance. The actionable per-stage
-worksheet is [`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md); every row is
-`unmapped` until it is actually cited.
+worksheet is [`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md); five rows are
+cited so far and 46 remain unmapped.
 
 ## 4. Audit method (the next curriculum program)
 

@@ -11,7 +11,7 @@
 **The most complete Vim training terminal ever attempted — a Vim adventure that
 runs on a dead terminal.** That is the destination, not a claim about today: the
 coverage ledger is public. No install, no account, no tracking, no third-party
-requests — one 255 kB page. A keyboard is required; on a phone, turn it sideways.
+requests — one 256 kB page. A keyboard is required; on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
