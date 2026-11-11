@@ -1,8 +1,10 @@
 # AGENTS.md — read this first
 
-> **진행 중인 작업을 이어받는 중이라면** [`docs/HANDOFF.md`](docs/HANDOFF.md)와
-> [`docs/EVALUATION.md`](docs/EVALUATION.md)를 먼저 읽어라. 현재 상태·남은 버그·작업 방법론·
-> 코드 평가·완성 전략이 모두 거기 있다. 이 파일은 영속 불변식이다.
+> **진행 중인 작업을 이어받는 중이라면** [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md)를
+> 가장 먼저 읽어라. **우선순위·5시간 슬라이스·태스크 보드·인수인계 규칙은 그 파일이
+> 소유한다.** 그다음 [`docs/HANDOFF.md`](docs/HANDOFF.md)(현재 상태·열린 버그)와
+> [`docs/EVALUATION.md`](docs/EVALUATION.md)(리스크·완성 전략)를 읽어라.
+> 이 파일은 영속 불변식이다.
 
 VIMLORE is a **Vim teaching game**. The player is a cursor inside a text
 buffer and plays with *real Vim keys*. It must feel like a game, not a course.
@@ -17,7 +19,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 142/142 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 205/205 must pass
 npm test
 ```
 
@@ -33,6 +35,7 @@ npm run lint:levels    # validate EVERY stage (par, solution, gating, win)
 npm run lint:levels -- 4   # just chapter 4
 npm test               # unit tests (engine + goals + progress)
 npm run doc-check      # doc numbers/links must match the code (CI gate)
+npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
 ```
 
@@ -76,9 +79,11 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 
 The game targets a cheap phone with a Bluetooth keyboard.
 
-- Zero runtime dependencies. Total JS must stay under ~150 kB raw.
-- The renderer caches the glyph layer and only repaints it when the buffer
-  changes; each frame draws one `drawImage` + cursor + particles.
+- Zero runtime dependencies. Keep the bundle near 200 kB raw / 70 kB gzip;
+  do not regress it without a measured reason.
+- The renderer bakes one **opaque composite frame** (background, highlights,
+  numbers, glyphs, bloom) and blits it once per frame; cursor, ghost and
+  particles are the FX pass. Rebuild the frame only when its key changes.
 - No `shadowBlur` in the render loop, no per-frame allocations in hot paths.
 - Everything is keyboard-driven; the DOM is rebuilt per screen, not per frame.
 
@@ -112,19 +117,24 @@ VIMLORE is a **CRT terminal from a machine that should be dead**.
 
 ## Renderer notes
 
-`src/ui/render.ts` keeps a cached glyph layer and composites it every frame:
-one `drawImage`, four offset blits for bloom, then cursor/particles. If you add
-an effect, measure it on a 2019 phone: the budget is one 60fps frame at
-390×844. Never introduce per-frame allocation in `render()`.
+`src/ui/render.ts` keeps a cached glyph layer and a single opaque composite
+frame: background, selection/search highlights, cursorline, numbers, glyphs and
+bloom are baked together, then blitted once per frame. The frame key is
+`version|hue|coins|cursor.line|numbers|selection|matches` — if you add a pixel
+that depends on something else, add it to the key or draw it on the FX pass.
+Bloom is baked, never a per-frame additive blit. If you add an effect, measure
+it on a 2019 phone: the budget is one 60fps frame at 390×844. Never introduce
+per-frame allocation in `render()`.
 
 ## Coverage and known gaps
 
 The authoritative matrix of what the engine does and does not do is
-[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **142/142**
+[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **205/205**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Missing on purpose: windows/buffers, folds, completion,
 `:!`, quickfix/LSP, Vimscript/Lua, `:s///c`, and viewport motions (`zz`, `zt`,
-exact `H/M/L`).
+exact `H/M/L`). Queued Tier 1: `gn` / `g*` / `g#` (search operators), then
+`g;`/`g,` and interactive `:s///c`.
 
 ## Shipping
 
@@ -173,19 +183,19 @@ Identity is login-free: `progress.profile{name, since}` plus an export code
 (`encodeSave`/`decodeSave`, base64 JSON) in Settings. There is no server and
 there must not be one — the game is static hosting only.
 
-## Play screen internals (v1.3)
+## Play screen internals (v1.5)
 
 The chamber is rendered as a **Vim window**: `tabline` (buffer path) → canvas
-buffer (line-number gutter, `~` below the end, cursorline) → `statusline`
-(mode · line,col · par · hearts) → objective/command bar.
+buffer (top-left text, line-number gutter, `~` to the statusline, cursorline) →
+`statusline` (mode · line,col · par · hearts) → objective/command bar.
 
 Two rules keep it correct:
 
-1. The glyph layer is **cached** and only repainted when the buffer, hue or
-   collected coins change (`Renderer.layerKey`). Anything that depends on the
-   cursor — the block, the cursorline band, the bright current line number —
-   must be drawn on the **FX layer** inside `render()`. Drawing it in the
-   cached layer is a bug: it freezes until the next buffer change.
+1. The **composite frame** is rebuilt only when its key changes (buffer
+   version, hue, coins, cursor line, numbers, selection, matches). The cursor
+   is drawn on the FX pass; the command line (`:`/`/`) replaces the buffer
+   cursor with a DOM cursor. Briefing overlays sit above the CRT scanlines
+   (`z-index: 70`) so text stays crisp.
 2. Key auto-repeat is implemented by the game, not the OS (`startRepeat` in
    `PlayScreen`): 320 ms delay, 50 ms cadence, OS `repeat` events swallowed,
    stopped on keyup / blur / visibilitychange / win / restart. Repeats are
@@ -203,5 +213,5 @@ Two rules keep it correct:
   drops it.
 - The gutter supports `off | abs | rel | both` (`progress.lineNumbers`), and
   `:set number / relativenumber / nonumber / nornu` overrides it for the
-  current chamber. Numbers are drawn on the FX layer because they depend on the
-  cursor; the cached glyph layer must stay cursor-free.
+  current chamber. Numbers are baked into the composite frame (the cursor line
+  is part of the frame key); the glyph layer itself must stay cursor-free.

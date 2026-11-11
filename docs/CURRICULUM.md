@@ -31,7 +31,7 @@ Vim 101 Hacks · Gourmet Vim · Vim Reference Guide · Use Vim Like A Pro ·
 | 2 | Backwards Through | `b`/`B` walk back; coins behind you |
 | 3 | The Typo | `r` replaces without leaving normal mode |
 | 4 | The Shouting King | count + `~` flips a whole line |
-| 5 | The Broken Sign | hazards make `t` safer than `f` |
+| 5 | CONFIG | hazards punish the wrong landing; `f`/`;` is precise (the `t` lesson is queued) |
 
 ## 3. Operators — the grammar of verbs
 `d c y p P . dd yy cc D C`

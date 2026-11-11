@@ -9,7 +9,7 @@
 # VIMLORE
 
 **A Vim adventure that runs on a dead terminal.** No install, no account, no
-tracking, no third-party requests — one 200 kB page. A keyboard is required;
+tracking, no third-party requests — one 226 kB page. A keyboard is required;
 on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
@@ -36,18 +36,18 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
   of Vim (`src/core/vim/`), diff-tested against a real `vim -u NONE` binary:
-  142/142 identical buffers and cursors (`tools/oracle-diff.ts`).
+  205/205 identical buffers and cursors (`tools/oracle-diff.ts`).
 - **Three stars means elegance, not survival.** Every stage has a `par` — the
   keystroke count of the intended solution. Clear it any way you like; master it
   in par.
 - **The levels are the curriculum.** 10 floors, 51 chambers: motion → tokens →
   operators → objects → visual → search → registers → marks → ex → mastery.
   Each stage exists to make one command feel *necessary*.
-- **It runs on a potato.** Zero runtime dependencies, ~55 kB gzipped, a cached
-  glyph layer, and a CRT effect switch for weak devices.
+- **It runs on a potato.** Zero runtime dependencies, ~69 kB gzipped, a cached
+  composite frame, and a CRT effect switch for weak devices.
 - **It plays on a phone in landscape** with a Bluetooth keyboard — and it is
   fully playable with keyboard only (touch/mouse is optional).
-- **It never runs out.** After the tower, TRIALS generates endless chambers (11
+- **It never runs out.** After the tower, TRIALS generates endless chambers (12
   verified skill generators),
   biases a WEAKNESS mode from your own telemetry, and keeps the rooms you save.
   No account, no server: one export code carries your profile.
