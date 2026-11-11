@@ -191,28 +191,41 @@ export function matchBracket(env: MotionEnv): MotionResult | null {
   }
 }
 
-export function paragraphMotion(env: MotionEnv, dir: 1 | -1, count: number): MotionResult {
+export function paragraphMotion(env: MotionEnv, dir: 1 | -1, count: number): MotionResult | null {
   const buf = env.buf;
   let line = env.cursor.line;
   const isBlank = (l: number) => buf.line(l).trim() === '';
   for (let n = 0; n < count; n++) {
+    const before = line;
     if (dir === 1) {
+      // From a blank line, skip the blank run first, then the paragraph,
+      // landing on the first blank line of the next run (or EOF).
       if (isBlank(line) && line < buf.lineCount - 1) {
-        line++;
+        while (line < buf.lineCount - 1 && isBlank(line)) line++;
       }
       while (line < buf.lineCount - 1 && !isBlank(line)) line++;
-      while (line < buf.lineCount - 1 && isBlank(line) && line + 1 < buf.lineCount && isBlank(line + 1)) line++;
     } else {
-      line--;
-      while (line > 0 && isBlank(line)) line--;
+      // From a blank line, skip the blank run upward, then the paragraph,
+      // landing on the blank line above it (or BOF).
+      if (isBlank(line)) {
+        while (line > 0 && isBlank(line)) line--;
+      }
       while (line > 0 && !isBlank(line - 1)) line--;
-      if (isBlank(line)) line = Math.max(0, line);
+      if (line > 0) line--;
     }
+    // A counted motion fails (no-op) when a step has nowhere to move.
+    if (line === before) return null;
   }
   const target = Math.max(0, Math.min(line, buf.lineCount - 1));
   const from = env.cursor.line;
-  // As an operator target, "}" stops *before* the blank line (Vim's d} keeps it).
-  const range: [number, number] = dir === 1 ? [Math.min(from, target - 1), Math.max(from, target - 1)] : [target, from];
+  let range: [number, number];
+  if (dir === 1) {
+    // Exclusive of a real blank line, but inclusive when the motion ran off to
+    // the non-blank end of the buffer.
+    range = isBlank(target) ? [Math.min(from, target - 1), Math.max(from, target - 1)] : [Math.min(from, target), Math.max(from, target)];
+  } else {
+    range = [Math.min(target, from - 1), Math.max(target, from - 1)];
+  }
   return { to: { line: target, col: 0 }, kind: 'linewise', lineRange: [Math.min(range[0], range[1]), Math.max(range[0], range[1])] };
 }
 

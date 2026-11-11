@@ -131,8 +131,8 @@ only on the address you were about to read.
 block 3: missing. someone
 moved it. the wall is where it hung.`,
       goal: { type: 'collect', char: '*' },
-      par: 8,
-      solution: ')))))}}{',
+      par: 9,
+      solution: ')))))}}{j',
       teaches: ['{', '}'],
       hints: [
         {
@@ -207,8 +207,8 @@ $  {  node 1: the wall
 the map folds back on itself here.
 the light is the one you kept in your pocket.`,
       goal: { type: 'collect', char: '$' },
-      par: 7,
-      solution: "ma%${'a",
+      par: 10,
+      solution: '06l3j04jf$',
       teaches: [],
       hints: [
         {

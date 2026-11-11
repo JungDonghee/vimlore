@@ -49,6 +49,8 @@ export interface MotionResult {
 export interface Register {
   text: string;
   linewise: boolean;
+  /** True when the register holds a visual-block selection (paste column-wise). */
+  blockwise?: boolean;
 }
 
 export interface BufferSnapshot {

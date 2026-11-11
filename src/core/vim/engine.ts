@@ -752,6 +752,11 @@ export class Vim {
   private paragraphMove(dir: 1 | -1): void {
     const n = this.takeCount();
     const res = M.paragraphMotion(this.motionEnv(), dir, n);
+    if (!res) {
+      this.bell();
+      this.afterUnit();
+      return;
+    }
     this.moveTo(res.to, 'char', true);
     this.afterUnit();
   }
@@ -833,7 +838,7 @@ export class Vim {
         return { to: { line: this.cursor.line, col: Math.max(0, this.cursor.col - count) }, kind: 'exclusive' };
       case 'l':
       case SPACE:
-        return { to: { line: this.cursor.line, col: Math.min(M.lineEnd(this.buf, this.cursor.line), this.cursor.col + count) }, kind: 'exclusive' };
+        return { to: { line: this.cursor.line, col: this.cursor.col + count }, kind: 'exclusive' };
       case 'j':
         return M.vertical(env, count);
       case 'k':
@@ -848,6 +853,23 @@ export class Vim {
         const kind = line !== this.cursor.line ? 'linewise' : 'inclusive';
         return { to: { line, col: M.lineEnd(this.buf, line) }, kind };
       }
+      case '+':
+      case CR: {
+        const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count);
+        if (line === this.cursor.line) return null;
+        return { to: { line, col: M.firstNonBlank(this.buf, line) }, kind: 'linewise', lineRange: [this.cursor.line, line] };
+      }
+      case '-': {
+        const line = Math.max(0, this.cursor.line - count);
+        if (line === this.cursor.line) return null;
+        return { to: { line, col: M.firstNonBlank(this.buf, line) }, kind: 'linewise', lineRange: [line, this.cursor.line] };
+      }
+      case '_': {
+        const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count - 1);
+        return { to: { line, col: M.firstNonBlank(this.buf, line) }, kind: 'linewise', lineRange: [this.cursor.line, line] };
+      }
+      case '|':
+        return { to: { line: this.cursor.line, col: Math.max(0, Math.min(count - 1, M.lineEnd(this.buf, this.cursor.line))) }, kind: 'exclusive' };
       case 'w':
         return M.wordMotion(env, count, { dir: 1 });
       case 'W':
@@ -946,11 +968,11 @@ export class Vim {
     return name;
   }
 
-  private storeRegister(name: string | null, text: string, linewise: boolean, yank: boolean, small = false): void {
+  private storeRegister(name: string | null, text: string, linewise: boolean, yank: boolean, small = false, blockwise = false): void {
     const append = !!name && /^[A-Z]$/.test(name);
     const n = name ? this.normalizeRegisterName(name) : null;
     if (n === '_') return;
-    const entry: Register = { text, linewise };
+    const entry: Register = { text, linewise, blockwise };
     if (n && n !== '"') {
       if (append) {
         const prev = this.registers.get(n);
@@ -983,6 +1005,31 @@ export class Vim {
 
   deleteRange(r: SelRange, inclusive: boolean, reg: string | null, change: boolean): void {
     const before = this.snapshot();
+    if (r.block) {
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const c1 = r.block.c1;
+      const c2 = r.block.c2;
+      const removed: string[] = [];
+      for (let l = l1; l <= l2; l++) {
+        const line = this.buf.line(l);
+        const from = Math.min(c1, line.length);
+        const to = Math.min(c2 + 1, line.length);
+        removed.push(to > from ? line.slice(from, to) : '');
+        this.buf.setLine(l, line.slice(0, from) + line.slice(to));
+      }
+      this.buf.setLines(this.buf.lines);
+      this.storeRegister(reg, removed.join('\n'), false, false, false, true);
+      this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
+      this.wantColValue = this.cursor.col;
+      if (change) {
+        this.openInsertAt(this.cursor, before);
+      } else {
+        this.commit(before, 'delete');
+        this.afterUnit();
+      }
+      return;
+    }
     if (r.linewise) {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
@@ -1024,6 +1071,25 @@ export class Vim {
   }
 
   yankRange(r: SelRange, inclusive: boolean, reg: string | null): void {
+    if (r.block) {
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const c1 = r.block.c1;
+      const c2 = r.block.c2;
+      const parts: string[] = [];
+      for (let l = l1; l <= l2; l++) {
+        const line = this.buf.line(l);
+        parts.push(line.slice(Math.min(c1, line.length), Math.min(c2 + 1, line.length)));
+      }
+      const text = parts.join('\n');
+      this.storeRegister(reg, text, false, true, false, true);
+      this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
+      this.wantColValue = this.cursor.col;
+      this.emit({ type: 'yank', register: reg ?? '"', text });
+      this.say(`yanked ${l2 - l1 + 1} line(s)`, 'good');
+      this.afterUnit();
+      return;
+    }
     if (r.linewise) {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
@@ -1139,6 +1205,24 @@ export class Vim {
     const n = this.countNum || 1;
     this.takeCount();
     const snap = this.snapshot();
+    if (reg.blockwise) {
+      const lines = reg.text.split('\n');
+      const baseLine = this.cursor.line;
+      const insertCol = before ? this.cursor.col : this.cursor.col + 1;
+      for (let i = 0; i < lines.length; i++) {
+        const target = baseLine + i;
+        while (this.buf.lineCount <= target) this.buf.insertLine(this.buf.lineCount, '');
+        const line = this.buf.line(target);
+        const col = Math.min(insertCol, line.length);
+        this.buf.setLine(target, line.slice(0, col) + lines[i] + line.slice(col));
+      }
+      this.buf.setLines(this.buf.lines);
+      this.cursor = M.moveTo(this.buf, { line: baseLine, col: before ? this.cursor.col : this.cursor.col + 1 });
+      this.wantColValue = this.cursor.col;
+      this.commit(snap, 'put');
+      this.afterUnit();
+      return;
+    }
     if (reg.linewise) {
       const raw = reg.text.endsWith('\n') ? reg.text.slice(0, -1) : reg.text;
       const lines = raw.split('\n');
@@ -1601,6 +1685,26 @@ export class Vim {
   private pasteOver(sel: SelRange, reg: string | null): void {
     const regData = this.readRegister(reg ?? '"');
     const before = this.snapshot();
+    if (sel.block) {
+      const l1 = Math.min(sel.start.line, sel.end.line);
+      const l2 = Math.max(sel.start.line, sel.end.line);
+      const c1 = sel.block.c1;
+      const c2 = sel.block.c2;
+      const regLines = regData.text.split('\n');
+      for (let l = l1; l <= l2; l++) {
+        const line = this.buf.line(l);
+        const from = Math.min(c1, line.length);
+        const to = Math.min(c2 + 1, line.length);
+        const repl = regLines[l - l1] ?? '';
+        this.buf.setLine(l, line.slice(0, from) + repl + line.slice(to));
+      }
+      this.buf.setLines(this.buf.lines);
+      this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
+      this.wantColValue = this.cursor.col;
+      this.commit(before, 'put');
+      this.say('replaced selection', 'good');
+      return;
+    }
     if (sel.linewise) {
       const l1 = Math.min(sel.start.line, sel.end.line);
       const l2 = Math.max(sel.start.line, sel.end.line);

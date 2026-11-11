@@ -17,7 +17,6 @@ export interface SearchOptions {
 function translate(pat: string, opts: SearchOptions): { source: string; flags: string } {
   let src = pat;
   let veryMagic = false;
-  let caseFlag: 'i' | 's' | '' = '';
   if (src.startsWith('\\v')) {
     veryMagic = true;
     src = src.slice(2);
@@ -31,12 +30,25 @@ function translate(pat: string, opts: SearchOptions): { source: string; flags: s
     src = src.slice(2);
     src = src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
-  if (src.startsWith('\\c')) {
-    caseFlag = 'i';
-    src = src.slice(2);
-  } else if (src.startsWith('\\C')) {
-    caseFlag = 's';
-    src = src.slice(2);
+
+  // `\c` / `\C` toggle case sensitivity for the whole pattern and may appear
+  // anywhere (Vim semantics), unlike the leading magic-mode prefixes above.
+  let caseFlag: 'i' | 's' | '' = '';
+  {
+    let out = '';
+    for (let i = 0; i < src.length; i++) {
+      if (src[i] === '\\' && (src[i + 1] === 'c' || src[i + 1] === 'C')) {
+        let run = 1;
+        for (let j = i - 1; j >= 0 && src[j] === '\\'; j--) run++;
+        if (run % 2 === 1) {
+          caseFlag = src[i + 1] === 'c' ? 'i' : 's';
+          i++;
+          continue;
+        }
+      }
+      out += src[i];
+    }
+    src = out;
   }
 
   let out = '';

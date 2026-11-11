@@ -27,7 +27,7 @@ you can run it headless (the tests do).
 
 The heart of the project. A faithful re-implementation of the Vim commands the
 curriculum needs, diff-tested against real Vim (`tools/oracle-diff.ts`,
-**117/117**).
+**142/142**).
 
 | file | responsibility |
 |---|---|

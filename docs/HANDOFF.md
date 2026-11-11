@@ -13,7 +13,7 @@
 
 | 영역 | 상태 |
 |---|---|
-| 엔진 ↔ 실제 Vim 정합성 (oracle) | **126/126 통과** (엔진 med/low 수정 중, 아래 참고) |
+| 엔진 ↔ 실제 Vim 정합성 (oracle) | **142/142 통과** (엔진 med/low 수정 중, 아래 참고) |
 | 레벨 무결성 (lint:levels) | **51/51 통과** |
 | 단위 테스트 (npm test) | **23/23 통과** |
 | 타입체크 (tsc) | 통과 |
@@ -68,14 +68,15 @@
   각 줄의 `[c1,c2]` 컬럼만 삭제/복사해야 함. 재현 `<C-v>ljd` on "abcd\nefgh" → vim ["cd","gh"].
 - **M10~M20, L21~L23** 목록은 §3 "버그 카탈로그"에 상세 기술.
 
-### P1 — 성능 재측정 (반드시)
-`layerKey` + bloom 저해상도를 적용했지만 **아직 재측정 안 함**.
-```bash
-cd /home/jung/ai_station/sandbox && node pw/perf_local.mjs
-```
-- desktop(1280×800) 22fps → **60fps**가 목표. phone 59fps는 기준 유지.
-- 여전히 느리면: bloom을 끄는 임계값 추가, 또는 desktop에서 `crt` 효과(scanlines/bloom)를
-  자동으로 줄이는 분기. `body.crt-off`는 이미 모든 효과를 끈다.
+### P1 — 성능 (미해결, 근본 원인 파악됨)
+`layerKey` O(1) + bloom 반해상도를 적용했지만 **desktop은 여전히 22fps** (재측정 완료).
+- 측정: desktop 1280×800 = 22fps(avg ~44ms), phone 844×390 = 59fps.
+- 근본 원인: `render()`가 매 프레임 **layer + bloom 전체 캔버스를 blit**하고, 이 비용이
+  픽셀 수(desktop dpr2 = 2560×1600 ≈ 4.1M)에 비례. bloom 반해상도로는 해결 안 됨.
+- 해결 방향(우선순위): (1) 큰 화면(폭>1000px)에서 `crt` 효과(bloom/scanlines)를 자동
+  경량화/off하는 분기, (2) bloom/scanlines를 CSS(배경/마스크, GPU)로 이전, (3) 글리프
+  layer를 DOM `<img>`/배경으로 옮기고 FX만 캔버스로. `body.crt-off`는 이미 모든 효과를
+  끈다(끈 상태로 60fps가 나오는지부터 확인하라).
 
 ### P2 — 실제 플레이 회귀 테스트 (반드시)
 수정 후 **로컬 빌드를 다시 만들고** 브라우저로 확인:
@@ -134,7 +135,7 @@ cd /home/jung/ai_station/sandbox && node pw/audit.mjs   # 게이팅 + 스테이�
    순차 실행하는데, jump list가 케이스 간에 누수된다(`clearjumps`로도 불완전). `<C-o>`/`<C-i>`
    케이스를 `cases.ts`에 넣지 말 것. jumplist는 1케이스=1프로세스로 수동 검증.
 2. **엔진 수정은 항상 oracle 케이스를 먼저 추가하고 diff로 실패를 확인한 뒤 고쳐라.** 케이스 없이
-   "고친 것 같다"는 착각이 117/117이 통과하는데도 버그가 있는 원인이다.
+   "고친 것 같다"는 착각이 142/142이 통과하는데도 버그가 있는 원인이다.
 3. **`npm test`의 `vim-expected.json`은 oracle `--emit`으로 재생성.** 케이스를 추가/삭제하면
    `node --experimental-strip-types tools/oracle-diff.ts --emit`으로 스냅샷을 갱신하지 않으면
    `engine matches real vim` 테스트가 개수 불일치로 실패한다.
@@ -168,7 +169,7 @@ cd /home/jung/ai_station/sandbox && node pw/audit.mjs   # 게이팅 + 스테이�
 6. `npm test` + `npm run lint:levels` + `npx tsc --noEmit` + `npm run doc-check` 전부 green.
 
 **새 기능/버그 발견 시:** 먼저 위 4개 게이트의 현재 상태를 확인하고, 수정 전에 재현 케이스를
-남겨라. 절대 "대충 고치고 넘어가지" 말 것 — 이 프로젝트는 117/117 oracle이 통과하는데도
+남겨라. 절대 "대충 고치고 넘어가지" 말 것 — 이 프로젝트는 142/142 oracle이 통과하는데도
 엣지케이스 버그 23건이 숨어 있던 사례다.
 
 ---

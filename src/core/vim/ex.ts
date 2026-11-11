@@ -147,12 +147,12 @@ export function executeEx(vim: Vim, input: string): void {
       vim.exDeleteLines(range?.l1 ?? vim.cursor.line, range?.l2 ?? vim.cursor.line);
       return;
     case 'm':
-      vim.exMoveLines(range?.l1 ?? vim.cursor.line, range?.l2 ?? vim.cursor.line, Math.max(0, parseInt(arg, 10) - 1));
+      vim.exMoveLines(range?.l1 ?? vim.cursor.line, range?.l2 ?? vim.cursor.line, parseInt(arg, 10) - 1);
       return;
     case 't':
     case 'co':
     case 'copy':
-      vim.exCopyLines(range?.l1 ?? vim.cursor.line, range?.l2 ?? vim.cursor.line, Math.max(0, parseInt(arg, 10) - 1));
+      vim.exCopyLines(range?.l1 ?? vim.cursor.line, range?.l2 ?? vim.cursor.line, parseInt(arg, 10) - 1);
       return;
     case 'normal':
     case 'norm':

@@ -35,9 +35,14 @@ for (const f of files) {
   if (!existsSync(f)) continue;
   const t = readFileSync(f, 'utf8');
 
-  // 1) "N/N" oracle counts (only self-referential pairs, e.g. 117/117)
+  // 1) "N/N" oracle counts — only self-referential pairs that actually refer to
+  //    the oracle (a nearby oracle/matching/identical/keystroke/must-pass word),
+  //    so unrelated ratios like "51/51 stages" or "23/23 tests" are ignored.
   for (const m of t.matchAll(/\b(\d+)\/(\d+)\b/g)) {
-    if (m[1] === m[2] && Number(m[1]) !== n) {
+    if (m[1] !== m[2]) continue;
+    const ctx = t.slice(Math.max(0, m.index - 50), m.index + 60);
+    if (!/oracle|matching|identical|keystroke|must pass/i.test(ctx)) continue;
+    if (Number(m[1]) !== n) {
       fail(`${f}: "${m[0]}" should be ${n}/${n}`);
     }
   }

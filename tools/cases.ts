@@ -163,5 +163,25 @@ export const CASES: VimCase[] = [
   //  between cases, so <C-o>/<C-i> cannot be diffed reliably here. Engine
   //  jumplist behaviour is verified manually against a single vim process.)
 
+  // --- visual-block ----------------------------------------------------------
+  { name: 'v-block d', text: 'abcd\nefgh', cursor: [1, 0], keys: '<C-v>ljd' },
+  { name: 'v-block yP', text: 'abcd\nefgh', cursor: [1, 0], keys: '<C-v>jyP' },
+
+  // --- operator-pending motions (+ - _ |) -----------------------------------
+  { name: 'd2+', text: 'a\nb\nc\nd', cursor: [1, 0], keys: 'd2+' },
+  { name: 'd2|', text: 'abcdef', cursor: [1, 0], keys: 'd2|' },
+  { name: 'dl last char', text: 'abc', cursor: [1, 2], keys: 'dl' },
+  { name: 'daw on space', text: 'foo   bar', cursor: [1, 4], keys: 'daw' },
+  { name: 'da" trailing spaces', text: 'say "hi"   ok', cursor: [1, 6], keys: 'da"' },
+  { name: 'di" adjacent quotes', text: 'say ""x""', cursor: [1, 6], keys: 'di"' },
+  { name: 'dip on blank line', text: 'a\nb\n\nc\nd', cursor: [3, 0], keys: 'dip' },
+  { name: 'dap on blank line', text: 'a\nb\n\nc\nd', cursor: [3, 0], keys: 'dap' },
+  { name: 'search \\c flag', text: 'bar FOO', cursor: [1, 0], keys: '/foo\\c<CR>' },
+  { name: 'search \\C flag', text: 'Cfoo', cursor: [1, 0], keys: '/foo\\C<CR>' },
+  { name: ':2m0', text: 'a\nb\nc', cursor: [1, 0], keys: ':2m0<CR>' },
+  { name: ':2t0', text: 'a\nb\nc', cursor: [1, 0], keys: ':2t0<CR>' },
+  { name: 'd2}', text: 'a\nb\n\nc\nd', cursor: [1, 0], keys: 'd2}' },
+  { name: 'd2{', text: 'a\nb\n\nc\nd', cursor: [5, 0], keys: 'd2{' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

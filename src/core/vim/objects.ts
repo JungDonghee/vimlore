@@ -30,7 +30,12 @@ function wordObject(buf: Buffer, pos: Pos, around: boolean, big: boolean): Objec
   const t = tokenAt(list, off);
   if (!t) {
     if (!around) return blankRun(buf, pos);
-    return blankRun(buf, pos);
+    // `aw`/`aW` on whitespace: Vim selects the whitespace run plus the
+    // following word (not that word's trailing whitespace).
+    const next = list.find((x) => x.start > off);
+    if (!next) return blankRun(buf, pos);
+    const run = blankRun(buf, pos);
+    return { start: run.start, end: buf.pos(next.end) };
   }
   let start = t.start;
   let end = t.end;
@@ -51,12 +56,12 @@ function wordObject(buf: Buffer, pos: Pos, around: boolean, big: boolean): Objec
 }
 
 /**
- * Quote-ish objects. Finds the enclosing pair on the current line by
- * pairing delimiters left-to-right (Vim's heuristic for simple text).
+ * Quote-ish objects. Finds the enclosing pair on the current line: when the
+ * cursor sits on a quote, quotes pair left-to-right (0,1),(2,3),…; otherwise
+ * the nearest quote on each side forms the pair (so adjacent/nested quotes work).
  */
 function quoteObject(buf: Buffer, pos: Pos, around: boolean, q: string): ObjectRange | null {
   const line = buf.line(pos.line);
-  const close = q === '`' ? '`' : q;
   const positions: number[] = [];
   for (let i = 0; i < line.length; i++) {
     if (line[i] === q) positions.push(i);
@@ -64,33 +69,39 @@ function quoteObject(buf: Buffer, pos: Pos, around: boolean, q: string): ObjectR
   if (positions.length < 2) return null;
   let pairStart = -1;
   let pairEnd = -1;
-  for (let i = 0; i + 1 < positions.length; i += 2) {
-    if (pos.col <= positions[i + 1] && pos.col >= positions[i]) {
-      pairStart = positions[i];
-      pairEnd = positions[i + 1];
-      break;
-    }
-  }
-  if (pairStart === -1) {
-    // Cursor is on the opening quote of the next pair.
-    for (let i = 0; i + 1 < positions.length; i += 2) {
-      if (pos.col === positions[i]) {
-        pairStart = positions[i];
-        pairEnd = positions[i + 1];
+  const idx = positions.indexOf(pos.col);
+  if (idx !== -1) {
+    const pairIdx = idx - (idx % 2);
+    pairStart = positions[pairIdx];
+    pairEnd = positions[pairIdx + 1] ?? -1;
+  } else {
+    let prev = -1;
+    let next = -1;
+    for (const p of positions) {
+      if (p < pos.col) prev = p;
+      else if (p > pos.col) {
+        next = p;
         break;
       }
     }
+    if (prev !== -1 && next !== -1) {
+      pairStart = prev;
+      pairEnd = next;
+    } else if (prev === -1 && next !== -1) {
+      pairStart = positions[0];
+      pairEnd = positions[1] ?? -1;
+    } else {
+      return null;
+    }
   }
-  if (pairStart === -1) return null;
-  void close;
+  if (pairStart === -1 || pairEnd === -1) return null;
   if (around) {
     let end = pairEnd;
-    if (line[end + 1] === ' ' || line[end + 1] === '\t') end++;
+    while (line[end + 1] === ' ' || line[end + 1] === '\t') end++;
     return { start: { line: pos.line, col: pairStart }, end: { line: pos.line, col: end } };
   }
-  if (pairEnd === pairStart + 1) {
-    return { start: { line: pos.line, col: pairStart + 1 }, end: { line: pos.line, col: pairEnd - 1 } };
-  }
+  // An empty pair like "" has no inner text; Vim treats it as a no-op.
+  if (pairEnd === pairStart + 1) return null;
   return { start: { line: pos.line, col: pairStart + 1 }, end: { line: pos.line, col: pairEnd - 1 } };
 }
 
@@ -192,7 +203,19 @@ function tagObject(buf: Buffer, pos: Pos, around: boolean): ObjectRange | null {
 
 function paragraphObject(buf: Buffer, pos: Pos, around: boolean): ObjectRange | null {
   const isBlank = (l: number) => buf.line(l).trim() === '';
-  if (isBlank(pos.line)) return null;
+  if (isBlank(pos.line)) {
+    // On a blank line: `ip` is the blank run; `ap` is the blank run plus the
+    // following paragraph (a no-op when the run already ends the buffer).
+    let s = pos.line;
+    let e = pos.line;
+    while (s > 0 && isBlank(s - 1)) s--;
+    while (e < buf.lineCount - 1 && isBlank(e + 1)) e++;
+    if (around) {
+      if (e >= buf.lineCount - 1) return null;
+      while (e < buf.lineCount - 1 && !isBlank(e + 1)) e++;
+    }
+    return { start: { line: s, col: 0 }, end: { line: e, col: Math.max(0, buf.line(e).length - 1) }, linewise: true };
+  }
   let s = pos.line;
   let e = pos.line;
   while (s > 0 && !isBlank(s - 1)) s--;
