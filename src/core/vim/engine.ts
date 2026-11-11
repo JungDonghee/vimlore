@@ -779,7 +779,7 @@ export class Vim {
     else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled);
     else if (op.key === '>') this.shiftRange(r, 1);
     else if (op.key === '<') this.shiftRange(r, -1);
-    else if (op.key === '=') this.say('no indent rules here', 'info');
+    else if (op.key === '=') this.indentRange(r);
     else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle', false, op.doubled, fromTextObject);
     else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower', false, op.doubled, fromTextObject);
     else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper', false, op.doubled, fromTextObject);
@@ -1350,6 +1350,41 @@ export class Vim {
     this.afterUnit();
   }
 
+  /** Simple C-like `=` indent: brace depth * shiftwidth, spaces. */
+  private indentRange(r: SelRange): void {
+    const l1 = Math.min(r.start.line, r.end.line);
+    const l2 = Math.max(r.start.line, r.end.line);
+    const braces = (text: string): number => {
+      let d = 0;
+      for (const c of text) {
+        if (c === '{') d++;
+        else if (c === '}') d--;
+      }
+      return d;
+    };
+    let depth = 0;
+    for (let l = 0; l < l1; l++) depth = Math.max(0, depth + braces(this.buf.line(l)));
+    const before = this.snapshot();
+    const lines = this.buf.lines.slice();
+    for (let l = l1; l <= l2; l++) {
+      const text = lines[l].trim();
+      if (!text) {
+        lines[l] = '';
+        continue;
+      }
+      const startsClose = text.startsWith('}');
+      const d = Math.max(0, depth - (startsClose ? 1 : 0));
+      lines[l] = ' '.repeat(d * this.shiftwidth) + text;
+      depth = Math.max(0, d + braces(text));
+    }
+    this.buf.setLines(lines);
+    this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+    this.wantColValue = this.cursor.col;
+    this.commit(before, 'indent');
+    this.say('= reindented', 'good');
+    this.afterUnit();
+  }
+
   private formatRange(r: SelRange): void {
     const l1 = Math.min(r.start.line, r.end.line);
     const l2 = Math.max(r.start.line, r.end.line);
@@ -1793,6 +1828,11 @@ export class Vim {
         return;
       case '<':
         if (sel) this.shiftRange(sel, -1);
+        this.visualAnchor = null;
+        this.setMode('normal');
+        return;
+      case '=':
+        if (sel) this.indentRange(sel);
         this.visualAnchor = null;
         this.setMode('normal');
         return;

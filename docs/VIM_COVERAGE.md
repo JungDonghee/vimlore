@@ -4,7 +4,7 @@ VIMLORE is being built as **the most comprehensive Vim training terminal ever
 attempted** — no artificial cap on commands, tips, or advanced features. That is
 a destination, not a current-completeness claim. The engine is a **subset chosen
 for this slice**, kept honest by a differential oracle:
-`tools/oracle-diff.ts` replays **248 keystroke cases** through a real
+`tools/oracle-diff.ts` replays **253 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
 
@@ -58,6 +58,10 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 
 **Undo** linear undo/redo (`u`, `<C-r>`).
 
+**Indentation** `>`/`<` shift by `shiftwidth`; `=` / `gg=G` / visual `=` do a
+simple brace-depth C indent in spaces. No filetype `indentexpr`, and braces
+inside strings/comments are not parsed.
+
 ## Not implemented (deliberate)
 
 | area | missing | why |
@@ -65,7 +69,7 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 | windows | splits, tabs, buffers, `:vsp`, `<C-w>` | deferred editor program, design in `FUTURE_EDITOR.md`; every level is one buffer |
 | folds | `zf zo zc za zR` | no viewport worth folding |
 | completion | `<C-n> <C-p> <C-x>`, digraphs, abbreviations | no file corpus at runtime |
-| indentation | `=`/`gg=G` with filetype rules | no `indentexpr`; `>` shifts by a fixed 2 |
+| indentation | filetype-aware `=`/`indentexpr`, tab/expandtab policy | simple brace-depth `=` exists; no filetype rules |
 | files | `:e :r :w file`, `:!cmd`, terminal, `:bd` | no filesystem in the browser |
 | options | `:set` | `textwidth`/`shiftwidth` come from the level |
 | undo tree | `g-`, `g+`, `:earlier/:later`, persistent undo | linear stack is enough |

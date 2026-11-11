@@ -74,10 +74,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **248/248** vs `vim -u NONE` (142 at session start, +106 cases) |
+| engine oracle | **253/253** vs `vim -u NONE` (142 at session start, +111 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 228,810 B · single `dist/vimlore.html` 252,483 B · gzip 80,435 B |
+| build | JS 229,487 B · single `dist/vimlore.html` 253,160 B · gzip 80,589 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -137,9 +137,9 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Both must work with counts, operators, visual mode and `.` repeat.
 
 **Tier 2 — next slice:**
-`g;` / `g,` change list · `=` simple indent (`gg=G`, no filetype rules) ·
-`:earlier` / `:later` (linear undo is enough for now). `\zs`/`\ze`, `gi`/`gI`
-and interactive `:s///c` are already implemented.
+`g;` / `g,` change list · `:earlier` / `:later` (linear undo is enough for
+now). `\zs`/`\ze`, `gi`/`gI`, interactive `:s///c` and simple brace-depth
+`=`/`gg=G` are already implemented.
 
 **Tier 3 — later, only if a stage needs it:**
 `zz`/`zt`/`zb` and exact `H/M/L` (needs a viewport model) · folds · completion ·
@@ -157,7 +157,7 @@ and interactive `:s///c` are already implemented.
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥248/248; new cases committed; tests green.
+  oracle ≥253/253; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -205,7 +205,7 @@ and interactive `:s///c` are already implemented.
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +106 cases, oracle 248/248, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +111 cases, oracle 253/253, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -293,7 +293,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 248/248
+node --experimental-strip-types tools/oracle-diff.ts        # 253/253
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

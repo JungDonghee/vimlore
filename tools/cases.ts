@@ -328,5 +328,12 @@ export const CASES: VimCase[] = [
 
   { name: '2ciw same line', text: 'foo bar baz', cursor: [1, 1], keys: '2ciwxy<Esc>' },
 
+  { name: 'gg=G simple braces', text: 'if (x) {\ny;\n}', cursor: [1, 0], keys: 'gg=G' },
+  { name: 'j== simple braces', text: 'if (x) {\ny;\n}', cursor: [2, 0], keys: 'j==' },
+  { name: '=G simple braces', text: 'if (x) {\ny;\n}', cursor: [1, 0], keys: '=G' },
+  { name: 'Vj= simple braces', text: 'if (x) {\ny;\n}', cursor: [1, 0], keys: 'Vj=' },
+
+  { name: 'gg=G nested braces', text: 'if (x) {\nif (y) {\nz;\n}\n}', cursor: [1, 0], keys: 'gg=G' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
