@@ -34,6 +34,11 @@ short lines were each a **range/cursor rule**, but each landed as a separate
 patch in a different function. They are the "essence" of Vim editing, and they
 deserve one home.
 
+**Direction (2026-11-11):** engine fidelity is exact on the tested surface, so
+the next leverage is verified content. [`DIVINE_MOVE.md`](DIVINE_MOVE.md) defines
+the observable-state oracle, corpus and level-compiler tracks. Engine features
+freeze except failures those tracks expose.
+
 ## 1. Definitions
 
 - **Surface**: every key, command, motion, text object, ex command and mode the

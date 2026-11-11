@@ -157,6 +157,15 @@ geometry on multi-line/short lines, `dW` on a blank line, and a one-column block
 `<` cursor after `j`. They are outside the current curriculum; do not fake a
 fix in a level.
 
+## 3c. Next direction (the divine move)
+
+The engine is no longer the bottleneck. See [`DIVINE_MOVE.md`](DIVINE_MOVE.md):
+(1) observable-state oracle (mode/registers/undo/marks, not just buffer+cursor),
+(2) a license-safe corpus generated from Vim's own tests / VimGolf / book code,
+(3) a level compiler that proves command necessity and par by search, then
+shifts the roadmap to curriculum mastery loops. Engine features freeze except
+oracle/corpus failures.
+
 ## 4. Not done (queued, do not pretend otherwise)
 
 - **Curriculum provenance**: 5/51 stages cited, 46 unmapped. The audit is
