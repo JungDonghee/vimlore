@@ -89,7 +89,7 @@ lines). Insert-mode keys: text, space, `<CR>`, `<BS>`, `<Del>`, `<Tab>`,
 
 - oracle **373/373** buffer+cursor cases against real Vim
 - matrix **21,712/21,712** generated operator/motion cases
-- state matrix **21,503/21,712** local (209 open: undo cursor 200, register 18)
+- state matrix **21,539/21,712** local (173 open: undo cursor 200, register 18)
 - fuzz **12 seeds × 1,000 keys**, 0 divergences
 - level lint 51/51; surface audit strict green; tests 38
 

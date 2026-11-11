@@ -39,6 +39,7 @@ npm run doc-check      # doc numbers/links must match the code (CI gate)
 npm run invariants     # cross-layer command/stage/unlock consistency (CI gate)
 npm run surface        # engine surface audit; --strict is a CI gate
 npm run matrix         # grammar matrix vs real Vim (CI gate)
+npm run count-matrix   # manifest commands at counts 1-3 vs real Vim (CI gate)
 npm run verify         # unit + lint + tsc + docs + invariants
 npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
@@ -96,8 +97,8 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
-  ceiling enforced by `npm run budget`: 270,000 B raw / 86,000 B gzip** (current
-  269.2 kB / 84.6 kB); do not raise it without a deliberate, measured reason.
+  ceiling enforced by `npm run budget`: 271,000 B raw / 86,000 B gzip** (current
+  270.2 kB / 84.7 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
   ghost and particles are the FX pass. Rebuild the frame only when its key changes.

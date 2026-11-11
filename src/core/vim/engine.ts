@@ -542,6 +542,12 @@ export class Vim {
         this.enterInsert('C');
         return;
       case 'D': {
+        const n = this.countNum || 1;
+        if (n > 1) {
+          const last = Math.min(this.buf.lineCount - 1, this.cursor.line + n - 1);
+          this.deleteRange({ start: { line: this.cursor.line, col: 0 }, end: { line: last, col: 0 }, linewise: true }, true, this.pendingRegSet, false);
+          return;
+        }
         const l = this.buf.line(this.cursor.line);
         if (l.length === 0) {
           this.bell();
@@ -1039,12 +1045,20 @@ export class Vim {
 
   private percentMotion(force: boolean): void {
     const n = this.countNum;
+    if (n > 0) {
+      // `[count]%` is a percentage motion even when the cursor is on a
+      // bracket; only the bare `%` is bracket matching.
+      const line = Math.min(this.buf.lineCount - 1, Math.max(0, Math.ceil((n * this.buf.lineCount) / 100) - 1));
+      this.moveTo({ line, col: 0 }, 'char', true);
+      this.takeCount();
+      this.afterUnit();
+      return;
+    }
     const res = M.matchBracket(this.motionEnv());
     if (res) {
       this.moveTo(res.to, 'char', true);
-    } else if (n > 0 || force) {
-      const pct = n > 0 ? Math.min(100, n) : 50;
-      const line = Math.min(this.buf.lineCount - 1, Math.floor(((this.buf.lineCount - 1) * pct) / 100));
+    } else if (force) {
+      const line = Math.min(this.buf.lineCount - 1, Math.floor(((this.buf.lineCount - 1) * 50) / 100));
       this.moveTo({ line, col: 0 }, 'char', true);
     } else {
       this.bell();
@@ -1343,7 +1357,7 @@ export class Vim {
           }
         : becameEmpty
           ? { line: l1, col: before.lines.length === 1 ? 0 : undoCol }
-          : { line: l2, col: 0 };
+          : { line: wasVisual ? l2 : l1, col: 0 };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);
@@ -1729,6 +1743,7 @@ export class Vim {
     const before = this.snapshot();
     let line = this.cursor.line;
     const startedAt = this.cursor.line;
+    before.undoCursor = { line: startedAt, col: 0 };
     let joined = 0;
     for (let i = 1; i < n && line < this.buf.lineCount - 1; i++) {
       joined++;
@@ -1760,6 +1775,7 @@ export class Vim {
     const n = this.countNum || 1;
     this.takeCount();
     const snap = this.snapshot();
+    snap.undoCursor = { ...this.cursor };
     if (reg.blockwise) {
       const lines = reg.text.split('\n');
       const baseLine = this.cursor.line;
@@ -1908,12 +1924,25 @@ export class Vim {
       return;
     }
     if (kind === 'C') {
+      if (count > 1) {
+        const before = this.snapshot();
+        const l1 = this.cursor.line;
+        const l2 = Math.min(this.buf.lineCount - 1, l1 + count - 1);
+        const removed = this.buf.lines.splice(l1, l2 - l1 + 1, '');
+        before.undoCursor = { line: l1, col: 0 };
+        this.storeRegister(this.pendingRegSet, removed.join('\n'), false, false);
+        this.buf.setLines(this.buf.lines);
+        this.cursor = { line: l1, col: 0 };
+        this.openInsertAt(this.cursor, before);
+        return;
+      }
       const l = this.buf.line(this.cursor.line);
       this.deleteRange({ start: this.cursor, end: { line: this.cursor.line, col: Math.max(0, l.length - 1) }, linewise: false }, true, this.pendingRegSet, true);
       return;
     }
     if (kind === 'o' || kind === 'O') {
       const snap = this.snapshot();
+      snap.undoCursor = { ...this.cursor };
       const at = kind === 'o' ? this.cursor.line + 1 : this.cursor.line;
       this.buf.insertLine(at, '');
       this.cursor = { line: at, col: 0 };
@@ -1928,6 +1957,7 @@ export class Vim {
     const l1 = this.cursor.line;
     const l2 = Math.min(this.buf.lineCount - 1, l1 + n - 1);
     const removed = this.buf.lines.splice(l1, l2 - l1 + 1, '');
+    before.undoCursor = { line: l1 === l2 ? l1 : l1 + 1, col: 0 };
     this.storeRegister(this.pendingRegSet, removed.join('\n') + '\n', true, false);
     this.buf.setLines(this.buf.lines);
     this.cursor = { line: l1, col: 0 };

@@ -27,7 +27,8 @@
     "matrix:write": "node --experimental-strip-types tools/matrix.ts --write",
     "state-matrix": "node --experimental-strip-types tools/state-matrix.ts",
     "state-matrix:write": "node --experimental-strip-types tools/state-matrix.ts --write",
-    "trace": "node --experimental-strip-types tools/trace.ts"
+    "trace": "node --experimental-strip-types tools/trace.ts",
+    "count-matrix": "node --experimental-strip-types tools/count-matrix.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

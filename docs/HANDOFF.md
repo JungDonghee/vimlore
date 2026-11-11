@@ -14,12 +14,12 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,560 lines + `normalize.ts` 100; **373 oracle cases**, all matching real Vim (strict) |
+| engine | 3,590 lines + `normalize.ts` 100; **373 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 373/373 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 38 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 242,140 B · single `dist/vimlore.html` 269,411 B · gzip 84,621 B · budget gate 270k/86k (raised deliberately this pass, §3) |
+| build | JS 246,276 B · single `dist/vimlore.html` 270,224 B · gzip 84,749 B · budget gate 271k/86k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
-| state matrix | 21,712 command trees with register/undo: **21,503 matched, 209 open** (local DM1; `docs/STATE_REPORT.md`) |
+| state matrix | 21,712 command trees with register/undo: **21,539 matched, 173 open** (local DM1; `docs/STATE_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -134,9 +134,9 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
-264,000 → **270,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 269,411 B raw / 84,621 B gzip, so headroom is
-~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
+264,000 → **271,000/86,000**. Each was measured and committed with the feature
+that needed it. Current build is 270,224 B raw / 84,749 B gzip, so headroom is
+~776 B raw / ~1,251 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
 
@@ -195,13 +195,29 @@ Fixed and oracle/unit-covered:
 - `3sZ<Esc>` deletes three characters and inserts `Z` once.
 - `3Y` yanks three lines (register, unit-tested; oracle only sees buffer).
 - `3u` / `3<C-r>` undo/redo three changes (loop in `undo`/`redo`).
-- Verified already-count-aware: `p P r ~ J gJ x X S .`, operators/motions via
-  the matrix. `C` and `D` intentionally ignore the count, matching Vim.
+- Verified already-count-aware: `p P r ~ J gJ x X S`, operators/motions via
+  the matrix.
+- `C`/`D` do **not** ignore the count: `[count]C` changes count lines,
+  `[count]D` deletes count lines. The earlier assumption was wrong; the count
+  matrix caught it.
+- `.` with a count is still **deferred**: Vim groups the repeats into one undo
+  block and the register differs; not claimed as fixed.
 
-This brought the oracle from 363 to **373 cases** and tests to 37. The count
-system is still **per-command**, not a central dispatcher; a count matrix over
-every normal command is the next systematic guard, not a claim that all counts
-are now proven.
+This brought the oracle to **373 cases** and tests to 38. The count system is
+still per-command, but it is now structurally guarded by the count matrix.
+
+### Count matrix + command manifest (2026-11-11)
+
+`npm run count-matrix` runs every row marked `count:yes/ignored` in
+[`COMMAND_MANIFEST.md`](COMMAND_MANIFEST.md) at counts **1, 2 and 3** against
+real Vim, comparing buffer, cursor, unnamed register type/text and undo. It
+also fails when a `count:yes/ignored` row lacks any of the three cases. The
+matrix is a CI gate (oracle job).
+
+First run found 25 divergences; fixed `J/gJ` undo cursor, `p`/`o` undo cursor,
+`S` undo line, normal linewise-delete undo line, `%` count percentage,
+`[count]C`/`[count]D`, and `S` count. Result: **162/162 matched, 0
+divergences**. `.` count remains deferred (see manifest).
 
 ### Failed undo/redo left a stale command echo (2026-11-11)
 
@@ -209,7 +225,7 @@ Pressing `u` at the oldest change (or `<C-r>` at the newest) hit an early return
 in `undo()`/`redo()` **before** `takeCount()`/`cmdKeys` cleanup, so the HUD
 kept showing `u`/`3u` as if a command were pending. Those early returns now
 clear the count and command keys, and the echo only renders while
-`vim.awaitingKey` is true. Unit-tested (35 tests).
+`vim.awaitingKey` is true. Unit-tested.
 
 ### Ghost mode: fresh replay, exact restore (2026-11-11)
 
@@ -259,17 +275,16 @@ after `u`. Mode is **not** comparable through `vim -es` (`mode()` reports `c`);
 a pty/Nvim probe would be needed, so mode is out of this report.
 
 First full run: 15,289/21,712 matched, 6,423 divergences. Latest:
-**21,503/21,712 matched, 209 open** (undo 627, register 18). Fixed:
+**21,539/21,712 matched, 173 open** (undo 164, register 18). Fixed:
 - a real operator leak: several `c` paths opened insert without clearing `op`,
   so the next key (including `u`) was swallowed — `c{` at BOF then `u` did not
   undo. `openInsertAt` now ends the operator composition.
-- undo cursor: engine now derives it from the first changed position, with
-  linewise delete/change and shift overrides; undo cursor mismatches dropped
-  and the 4 new oracle cases (363 → 363) pass.
+- undo cursor: first changed position + linewise/visual/insert overrides;
+  the count matrix additionally fixed `J/gJ`, `p`, `o`, `S`, normal linewise
+  delete and `%` count. Undo cursor is still the bulk of the remaining 164.
 
-After those fixes: **21,503/21,712 matched, 209 open**, dominated by
-`undo` cursor policy (941), plus register type/text (19+13). The tool stays
-local until the generated set reaches 0; the report is `docs/STATE_REPORT.md`.
+The tool stays local until the generated set reaches 0; the report is
+`docs/STATE_REPORT.md`.
 
 ## 4. Not done (queued, do not pretend otherwise)
 

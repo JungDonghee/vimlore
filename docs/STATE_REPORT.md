@@ -8,13 +8,13 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21503 |
-| divergences | 209 |
+| matched | 21539 |
+| divergences | 173 |
 | engine errors | 0 |
 
 | field | count |
 |---|---:|
-| undo | 200 |
+| undo | 164 |
 | reg | 10 |
 | regtype | 8 |
 
@@ -111,63 +111,9 @@
 - `visual/V/c/k` keys=`VkcX<Esc>` text=`"foo bar\nbaz qux"` @[2,1] fields=undo
   - vim: `{"reg":"foo bar\nbaz qux\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,1],"lines":["foo bar","baz qux"]}}`
   - eng: `{"lines":["X"],"cursor":[1,0],"reg":"foo bar\nbaz qux\n","regtype":"linewise","undo":{"lines":["foo bar","baz qux"],"cursor":[2,0]}}`
-- `normal/d/motion/j` keys=`dj` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/e` keys=`de` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
-- `normal/d/motion/E` keys=`dE` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
-- `normal/d/object/ap` keys=`dap` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
 - `normal/c/motion/)` keys=`c)X<Esc>` text=`"a\n\nb\n\nc"` @[1,0] fields=reg,regtype
   - vim: `{"reg":"a\n","cursor":[1,0],"lines":["X","","b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["X","","b","","c"],"cursor":[1,0],"reg":"a","regtype":"charwise","undo":{"lines":["a","","b","","c"],"cursor":[1,0]}}`
-- `normal/d/motion/j` keys=`2dj` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
-- `normal/d/motion/w` keys=`2dw` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/W` keys=`2dW` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/$` keys=`2d$` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/gg` keys=`2dgg` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/G` keys=`2dG` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/}` keys=`2d}` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
-- `normal/d/motion/)` keys=`2d)` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/object/iw` keys=`2diw` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/object/aw` keys=`2daw` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
-- `normal/d/object/iW` keys=`2diW` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/object/aW` keys=`2daW` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
-- `normal/d/object/ip` keys=`2dip` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/object/ap` keys=`2dap` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\nb\n\n","cursor":[1,0],"lines":["c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["c"],"cursor":[1,0],"reg":"a\n\nb\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[4,0]}}`
 - `normal/c/motion/$` keys=`2c$X<Esc>` text=`"a\n\nb\n\nc"` @[1,0] fields=reg,regtype,undo
   - vim: `{"reg":"a\n","cursor":[1,0],"lines":["X","b","","c"],"regtype":"charwise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["X","b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
@@ -180,42 +126,12 @@
 - `normal/y/object/iw` keys=`2yiw` text=`"a\n\nb\n\nc"` @[1,0] fields=reg
   - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["a","","b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":[""]}}`
   - eng: `{"lines":["a","","b","","c"],"cursor":[1,0],"reg":"a\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[1,0]}}`
-- `normal/doubled/dd` keys=`2dd` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
-  - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
 - `visual/V/d/j` keys=`Vjd` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
   - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
 - `visual/V/d/}` keys=`V}d` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
   - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
-- `normal/d/motion/k` keys=`dk` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"\nc\n","cursor":[3,0],"lines":["a","","b"],"regtype":"linewise","undo":{"cursor":[4,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a","","b"],"cursor":[3,0],"reg":"\nc\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[5,0]}}`
-- `normal/d/object/ap` keys=`dap` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"\nc\n","cursor":[3,0],"lines":["a","","b"],"regtype":"linewise","undo":{"cursor":[4,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a","","b"],"cursor":[3,0],"reg":"\nc\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[5,0]}}`
-- `normal/d/motion/k` keys=`2dk` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"b\n\nc\n","cursor":[2,0],"lines":["a",""],"regtype":"linewise","undo":{"cursor":[3,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a",""],"cursor":[2,0],"reg":"b\n\nc\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[5,0]}}`
-- `normal/d/motion/b` keys=`2db` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"b\n\n","cursor":[3,0],"lines":["a","","c"],"regtype":"linewise","undo":{"cursor":[3,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a","","c"],"cursor":[3,0],"reg":"b\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[4,0]}}`
-- `normal/d/motion/B` keys=`2dB` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"b\n\n","cursor":[3,0],"lines":["a","","c"],"regtype":"linewise","undo":{"cursor":[3,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a","","c"],"cursor":[3,0],"reg":"b\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[4,0]}}`
-- `normal/d/motion/gg` keys=`2dgg` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"\nb\n\nc\n","cursor":[1,0],"lines":["a"],"regtype":"linewise","undo":{"cursor":[2,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a"],"cursor":[1,0],"reg":"\nb\n\nc\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[5,0]}}`
-- `normal/d/motion/G` keys=`2dG` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"\nb\n\nc\n","cursor":[1,0],"lines":["a"],"regtype":"linewise","undo":{"cursor":[2,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a"],"cursor":[1,0],"reg":"\nb\n\nc\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[5,0]}}`
-- `normal/d/motion/{` keys=`2d{` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"\nb\n\n","cursor":[2,0],"lines":["a","c"],"regtype":"linewise","undo":{"cursor":[2,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a","c"],"cursor":[2,0],"reg":"\nb\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[4,0]}}`
-- `normal/d/motion/(` keys=`2d(` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
-  - vim: `{"reg":"b\n\n","cursor":[3,0],"lines":["a","","c"],"regtype":"linewise","undo":{"cursor":[3,0],"lines":["a","","b","","c"]}}`
-  - eng: `{"lines":["a","","c"],"cursor":[3,0],"reg":"b\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[4,0]}}`
 - `visual/V/d/k` keys=`Vkd` text=`"a\n\nb\n\nc"` @[5,0] fields=undo
   - vim: `{"reg":"\nc\n","cursor":[3,0],"lines":["a","","b"],"regtype":"linewise","undo":{"cursor":[4,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["a","","b"],"cursor":[3,0],"reg":"\nc\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[5,0]}}`
@@ -258,3 +174,87 @@
 - `normal/</motion/w` keys=`<w` text=`"  indented\nnormal"` @[1,2] fields=undo
   - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
   - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/</motion/W` keys=`<W` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/</motion/gg` keys=`<gg` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/</object/ip` keys=`<ip` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,0],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,2]}}`
+- `normal/</object/ap` keys=`<ap` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,0],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,2]}}`
+- `normal/doubled/dd` keys=`dd` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\n","cursor":[1,0],"lines":["normal"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["normal"],"cursor":[1,0],"reg":"  indented\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/doubled/cc` keys=`ccX<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\n","cursor":[1,0],"lines":["X","normal"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["X","normal"],"cursor":[1,0],"reg":"  indented\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/doubled/>>` keys=`>>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,4],"lines":["    indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["    indented","normal"],"cursor":[1,4],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/doubled/<<` keys=`<<` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/d/motion/%` keys=`2d%` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\n","cursor":[1,0],"lines":["normal"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["normal"],"cursor":[1,0],"reg":"  indented\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/c/motion/j` keys=`2cjX<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[2,0]}}`
+- `normal/c/motion/gg` keys=`2cggX<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[2,0]}}`
+- `normal/c/motion/G` keys=`2cGX<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[2,0]}}`
+- `normal/c/motion/%` keys=`2c%X<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\n","cursor":[1,0],"lines":["X","normal"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["X","normal"],"cursor":[1,0],"reg":"  indented\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/y/object/iW` keys=`2yiW` text=`"  indented\nnormal"` @[1,2] fields=reg,regtype
+  - vim: `{"reg":"indented\nnormal","cursor":[1,2],"lines":["  indented","normal"],"regtype":"charwise","undo":{"cursor":[1,0],"lines":[""]}}`
+  - eng: `{"lines":["  indented","normal"],"cursor":[1,2],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,2]}}`
+- `normal/>/motion/%` keys=`2>%` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,4],"lines":["    indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["    indented","normal"],"cursor":[1,4],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/</motion/%` keys=`2<%` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/doubled/cc` keys=`2ccX<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[2,0]}}`
+- `normal/doubled/>>` keys=`2>>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,4],"lines":["    indented","  normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["    indented","  normal"],"cursor":[1,4],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `normal/doubled/<<` keys=`2<<` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `visual/v/>/w` keys=`vw>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,4],"lines":["    indented","  normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["    indented","  normal"],"cursor":[1,4],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `visual/v/</w` keys=`vw<` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `visual/v/>/G` keys=`vG>` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,4],"lines":["    indented","  normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["    indented","  normal"],"cursor":[1,4],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `visual/v/</G` keys=`vG<` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
+- `visual/V/d/j` keys=`Vjd` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":[""],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":[""],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,2]}}`
+- `visual/V/d/}` keys=`V}d` text=`"  indented\nnormal"` @[1,2] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":[""],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":[""],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,5]}}`
+- `normal/d/motion/gg` keys=`dgg` text=`"  indented\nnormal"` @[2,1] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":[""],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":[""],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,1]}}`
+- `normal/d/object/ip` keys=`dip` text=`"  indented\nnormal"` @[2,1] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":[""],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":[""],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,1]}}`
+- `normal/d/object/ap` keys=`dap` text=`"  indented\nnormal"` @[2,1] fields=undo
+  - vim: `{"reg":"  indented\nnormal\n","cursor":[1,0],"lines":[""],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["  indented","normal"]}}`
+  - eng: `{"lines":[""],"cursor":[1,0],"reg":"  indented\nnormal\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,1]}}`
