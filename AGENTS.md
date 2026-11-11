@@ -95,8 +95,8 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
-  ceiling enforced by `npm run budget`: 266,000 B raw / 85,000 B gzip** (current
-  265.7 kB / 83.7 kB); do not raise it without a deliberate, measured reason.
+  ceiling enforced by `npm run budget`: 269,000 B raw / 86,000 B gzip** (current
+  267.6 kB / 84.2 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
   ghost and particles are the FX pass. Rebuild the frame only when its key changes.
@@ -259,12 +259,16 @@ Three rules keep it correct:
   cursor line; the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
-- **Esc leaves an idle play screen**, but only when Vim is in normal mode with
-  no pending operator/count. While insert/visual/operator-pending is active,
-  Esc must reach the engine to cancel that command first. F10 always exits.
+- **Esc is Vim's Esc, never an exit shortcut.** It cancels insert/visual/
+  operator-pending and otherwise does nothing. Leaving mid-play goes through
+  the F10/× LEAVE prompt (CANCEL is focused by default; LEAVE confirms); Esc
+  closes that prompt without leaving.
 - **Ghost playback never wins.** F3 replays the solution through a demo session
   that must not count keys, check hazards, pick up coins, or set `won`; the next
   overlay must never appear from a ghost run. Enter during the ghost is ignored.
+- **F9 / the tabline ‹ and results PREV** go to the previous chamber when one
+  exists. The map resumes at the first uncleared stage, so an explicit PREV is
+  the way back to a cleared stage.
 - Results shows a **DRILL** cue: repeat the par solution or RETRY to close the
   keys-to-par gap. Repetition is deliberate; never remove it for novelty.
 - Settings name/export/import use an **in-game keyboard prompt** (input focused,

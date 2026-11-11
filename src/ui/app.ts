@@ -222,7 +222,7 @@ export class App {
           {},
           h('div', { class: 'name' }, h('span', { class: 'num' }, `FLOOR ${String(i + 1).padStart(2, '0')}`), this.lang === 'ko' ? c.title.ko : c.title.en),
           h('div', { class: 'sub ko' }, unlocked ? (this.lang === 'ko' ? c.subtitle.ko : c.subtitle.en) : this.t('sealed — clear the floor below', '봉인됨 — 아래층을 먼저')),
-          unlocked ? h('div', { class: 'story ko', style: { display: 'none' } }, this.lang === 'ko' ? c.story.ko : c.story.en) : null,
+          unlocked ? h('div', { class: 'story ko' }, this.lang === 'ko' ? c.story.ko : c.story.en) : null,
         ),
         h('div', { class: 'stars' }, cleared ? '★' : '☆', ' ', h('span', { class: got > 0 ? '' : 'off' }, `${got}/${total}`)),
       );
@@ -264,14 +264,24 @@ export class App {
     this.mapFloors.forEach((el, i) => {
       const on = i === this.mapSel;
       el.classList.toggle('sel', on);
-      const story = el.querySelector('.story') as HTMLElement | null;
-      if (story) story.style.display = on ? 'block' : 'none';
     });
     const el = this.mapFloors[this.mapSel];
     if (el) {
-      const r = el.getBoundingClientRect();
-      const top = el.parentElement?.parentElement?.getBoundingClientRect();
-      if (top && (r.top < top.top + 8 || r.bottom > top.bottom - 8)) el.scrollIntoView({ block: 'nearest' });
+      const wrap = el.closest('.map-wrap') as HTMLElement | null;
+      if (wrap && this.mapSel === this.mapFloors.length - 1) {
+        // Keyboard selection must reach the same bottom as the mouse wheel.
+        // The selected floor's story expands after this paint, so re-pin the
+        // bottom once the transition has settled.
+        const target = this.mapSel;
+        wrap.scrollTop = wrap.scrollHeight;
+        setTimeout(() => {
+          if (this.screen === 'map' && this.mapSel === target) wrap.scrollTop = wrap.scrollHeight;
+        }, 220);
+      } else {
+        const r = el.getBoundingClientRect();
+        const top = wrap?.getBoundingClientRect();
+        if (top && (r.top < top.top + 8 || r.bottom > top.bottom - 8)) el.scrollIntoView({ block: 'nearest' });
+      }
     }
   }
 
@@ -327,10 +337,19 @@ export class App {
       chapterForKey: (k) => chapterForKey(k),
       onWin: (stars, keys) => this.recordClear(stage.id, stars, keys),
       onNext: () => this.nextStage(),
+      onPrev: () => this.prevStage(),
+      canPrev: this.stageIndex > 0,
       onExit: () => this.goMap(),
     });
     this.play = play;
     play.mount();
+  }
+
+  private prevStage(): void {
+    if (this.stageIndex > 0) {
+      this.stageIndex--;
+      this.startStage();
+    }
   }
 
   private recordClear(id: string, stars: Stars, keys: number): void {

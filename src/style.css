@@ -461,9 +461,18 @@ h2,
   font-size: 12px;
   line-height: 1.8;
   color: var(--ph-mid);
-  margin-top: 9px;
+  margin-top: 0;
   max-width: 62ch;
-  animation: fade 0.3s var(--ease);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.18s var(--ease), opacity 0.18s var(--ease), margin-top 0.18s var(--ease);
+}
+
+.floor.sel .story {
+  max-height: 120px;
+  opacity: 1;
+  margin-top: 9px;
 }
 
 .floor .stars {

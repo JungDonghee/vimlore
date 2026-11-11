@@ -26,6 +26,8 @@ export interface PlayHost {
   onSave?: () => void;
   onWin(stars: Stars, keys: number, par: number): void;
   onNext(): void;
+  onPrev?(): void;
+  canPrev?: boolean;
   onExit(): void;
   chapterForKey(key: string): number | null;
 }
@@ -86,6 +88,8 @@ export class PlayScreen {
   private repeatDelay = 0;
   private repeatTimer = 0;
   private actions: FocusGroup | null = null;
+  private exitPrompt: HTMLElement | null = null;
+  private exitActions: FocusGroup | null = null;
   private coachEl: HTMLElement | null = null;
   private lastInputAt = 0;
   private coachStep = 0;
@@ -125,7 +129,10 @@ export class PlayScreen {
         { class: 'flags' },
         h('span', { class: 'mod' }, '[+]'),
         ` ${this.host.stageIndex + 1}/${this.host.stageCount}`,
-        h('button', { class: 'tabclose', title: 'close buffer (F10)', onclick: () => this.host.onExit() }, '×'),
+        this.host.canPrev
+          ? h('button', { class: 'tabclose', title: 'previous chamber (F9)', onclick: () => this.host.onPrev?.() }, '‹')
+          : null,
+        h('button', { class: 'tabclose', title: 'close buffer (F10)', onclick: () => this.openExit() }, '×'),
       ),
     );
     const statusline = h(
@@ -413,6 +420,18 @@ export class PlayScreen {
       if (this.state === 'intro') return false;
       return true;
     }
+    if (this.exitPrompt) {
+      if (e.key === 'Escape') {
+        this.closeExit();
+      } else if (e.key === 'h' || e.key === 'ArrowLeft') {
+        if (this.exitActions) focusStep(this.exitActions, -1);
+      } else if (e.key === 'l' || e.key === 'ArrowRight') {
+        if (this.exitActions) focusStep(this.exitActions, 1);
+      } else if (e.key === 'Enter') {
+        if (this.exitActions) focusActivate(this.exitActions);
+      }
+      return true;
+    }
     if (e.key === 'Tab') {
       // In insert/replace mode Tab is text, not the hint key. The engine
       // expands it to spaces up to the next tabstop (4).
@@ -427,7 +446,11 @@ export class PlayScreen {
       return true;
     }
     if (e.key === 'F10') {
-      this.host.onExit();
+      this.openExit();
+      return true;
+    }
+    if (e.key === 'F9' && this.host.canPrev) {
+      this.host.onPrev?.();
       return true;
     }
     if (e.key === 'F3') {
@@ -435,16 +458,6 @@ export class PlayScreen {
       return true;
     }
     if (this.ghosting) return true;
-
-    // Esc leaves an idle play screen. While an insert/visual/pending command is
-    // in flight it must reach the engine to cancel that command first.
-    if (e.key === 'Escape') {
-      const vim = this.session.vim;
-      if (vim.mode === 'normal' && !vim.awaitingKey) {
-        this.host.onExit();
-        return true;
-      }
-    }
 
     const key = fromKeyboardEvent(e);
     if (!key) return false;
@@ -705,6 +718,7 @@ export class PlayScreen {
         'div',
         { class: 'actions' },
         h('button', { class: 'btn primary', onclick: () => this.host.onNext() }, lang === 'ko' ? '다음' : 'NEXT', h('kbd', {}, '↵')),
+        this.host.canPrev ? h('button', { class: 'btn', onclick: () => this.host.onPrev?.() }, lang === 'ko' ? '이전' : 'PREV') : null,
         h('button', { class: 'btn', onclick: () => this.restart() }, lang === 'ko' ? '다시' : 'RETRY'),
         this.host.canSave ? h('button', { class: 'btn', onclick: () => { this.host.onSave?.(); this.host.sfx.play('yank'); } }, lang === 'ko' ? '저장' : 'SAVE') : null,
         h('button', { class: 'btn', onclick: () => this.host.onExit() }, `${lang === 'ko' ? '챕터' : 'CHAPTER'} ${String(chapter.index).padStart(2, '0')}`),
@@ -803,6 +817,34 @@ export class PlayScreen {
   private hideCoach(): void {
     this.coachEl?.remove();
     this.coachEl = null;
+  }
+
+  private openExit(): void {
+    if (this.exitPrompt) return;
+    const lang = this.host.lang;
+    const card = h(
+      'div',
+      { class: 'card' },
+      h('div', { class: 'eyebrow' }, 'LEAVE'),
+      h('h2', {}, lang === 'ko' ? '챔버를 떠날까?' : 'Leave this chamber?'),
+      h('div', { class: 'brief ko' }, lang === 'ko' ? '진행은 저장된다. 나가려면 LEAVE를 선택해라.' : 'Your progress is saved. Choose LEAVE to exit.'),
+      h(
+        'div',
+        { class: 'actions' },
+        h('button', { class: 'btn primary', onclick: () => this.closeExit() }, lang === 'ko' ? '취소' : 'CANCEL', h('kbd', {}, 'Esc')),
+        h('button', { class: 'btn', onclick: () => { this.closeExit(); this.host.onExit(); } }, lang === 'ko' ? '나가기' : 'LEAVE'),
+      ),
+    );
+    this.exitPrompt = h('div', { class: 'overlay' }, card);
+    this.root.append(this.exitPrompt);
+    this.exitActions = focusGroup(card);
+    focusIndex(this.exitActions, 0);
+  }
+
+  private closeExit(): void {
+    this.exitPrompt?.remove();
+    this.exitPrompt = null;
+    this.exitActions = null;
   }
 
   private showHint(): void {
