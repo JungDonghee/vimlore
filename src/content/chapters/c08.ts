@@ -209,7 +209,7 @@ the light is the one you kept in your pocket.`,
       goal: { type: 'collect', char: '$' },
       par: 10,
       solution: '06l3j04jf$',
-      teaches: [],
+      teaches: ['0', 'j', 'f'],
       hints: [
         {
           en: 'Three lights, three tools: a pin for home, % for the wall, { for the room.',
