@@ -1,0 +1,210 @@
+# ENGINE PROGRAM — closed-world completeness
+
+> **Status: direction, not implementation.** This document defines what "the
+> engine is perfect" means for VIMLORE, how the engine is layered, and the
+> gates that make the claim checkable. It supersedes "add more oracle cases
+> until it feels done" as the engine roadmap.
+>
+> Read with [`MASTER_PLAN.md`](MASTER_PLAN.md), [`VIM_COVERAGE.md`](VIM_COVERAGE.md),
+> [`HANDOFF.md`](HANDOFF.md) and [`FUTURE_EDITOR.md`](FUTURE_EDITOR.md).
+
+## 0. Why this program exists
+
+VIMLORE does **not** need to run Vim or Neovim. It needs to be **complete and
+provably correct inside the surface it teaches**, and **explicitly closed
+outside it**. That is a different, smaller and harder-to-cheat goal than "be
+Vim".
+
+The current engine is strong at the grammar and weak at the boundary:
+
+| layer | current state |
+|---|---|
+| command grammar (count → register → operator → motion/object → mode) | present, compositional |
+| effects (buffer, undo, registers, marks, jumps, insert) | present |
+| **range normalization** (what a motion+operator actually selects) | scattered across `finishOpWithMotion`, `applyOp`, `deleteRange`, `caseRange`, `shiftRange` |
+| **cursor policy** (where the cursor lands after an operation) | scattered, one branch per quirk |
+| **surface manifest** (what is in scope, with evidence) | prose only (`VIM_COVERAGE.md`, fuzz alphabet) |
+| **systematic matrix coverage** | missing; fuzz is random |
+| **explicit refusal outside scope** | missing; unsupported input can half-work |
+| oracle / fuzz / invariants | strong (352 cases, 12 seeds clean) |
+
+The last engine pass proved the point: `de`/`2dw` linewise conversion,
+counted `$`, zero-range `^`/`h`, bracket linewise objects and visual-block
+short lines were each a **range/cursor rule**, but each landed as a separate
+patch in a different function. They are the "essence" of Vim editing, and they
+deserve one home.
+
+## 1. Definitions
+
+- **Surface**: every key, command, motion, text object, ex command and mode the
+  game can encounter — levels, TRIALS, the Grimoire, gating, hazards, save.
+- **In scope**: taught features (a stage or grimoire entry teaches them) plus
+  engine-only features used by TRIALS/tests plus infrastructure (undo, registers,
+  marks, jumps, gating, search state).
+- **Out of scope**: the deferred editor program (buffers, files, windows, tabs,
+  folds, completion, `:!`, quickfix/LSP, Vimscript/Lua), and anything not in the
+  surface.
+- **Closed world**: for every in-scope input the result must match real Vim; for
+  every out-of-scope input the engine must produce a deterministic refusal
+  (bell + a capability event), never a silent half-edit.
+- **Proof obligation**: the evidence a feature must ship with — oracle cases,
+  matrix coverage, fuzz alphabet membership, invariants, a docs row, and a game
+  usage tag.
+
+## 2. Architecture — five layers, one normalization
+
+```
+grammar     count · register · operator/command · motion/object/prefix · mode
+geometry    Pos · SelRange · inclusive/exclusive · linewise · virtual column
+normalize   (op, motion, from, to, mode, ctx) -> effective range
+cursor      (op, range, ctx) -> cursor position
+effects     buffer / undo / registers / marks / jumps / insert
+```
+
+The first, second and fifth layers already exist. This program extracts the
+third and fourth into `src/core/vim/normalize.ts` and `src/core/vim/cursor.ts`,
+then rewrites the existing call sites to use them. **This is an extraction, not
+a rewrite.** The oracle stays green at every commit.
+
+### 2.1 The quirk registry
+
+Vim is a language plus thirty years of compatibility decisions. The quirks are
+part of the semantics, so they are named, documented and oracle-linked instead
+of living as anonymous `if`s. Known families (IDs are stable):
+
+| id | rule | evidence |
+|---|---|---|
+| Q01 | `cw` behaves like `ce`; counts extend through words | oracle `cw on comma`, `2cw` |
+| Q02 | a charwise `d` spanning lines to EOL from the indent is linewise (`2dw`, `de`); `c`/`y` stay charwise | pass-2 cases |
+| Q03 | counted `$` is charwise; only `d` converts | `3c$`, `3y$` |
+| Q04 | zero-range `0`/`^`/`h` at column 0 of a non-first line is linewise; line 1 toggles one character | `g~0`, `g~^`, `g~h` |
+| Q05 | multi-line bracket objects are linewise when the brackets own their lines; empty pairs park on the closer | `di{`, `ci(`, `f()` |
+| Q06 | visual-block geometry shrinks on short lines for `<` | block cases |
+| Q07 | backward `(` uses real sentence starts (BOF, blank-run tail, paragraph, punctuation+space) | sentence cases |
+| Q08 | counted `iw` counts a space run as a unit and skips line breaks; `iW` across lines is linewise | `2diw`, `3ciW` |
+| Q09 | case-operator cursor: backward motion keeps its landing column; single-line uses min(col, fnb); text-object yanks start at column 0 | pass-1/2 cases |
+| Q10 | backward column-0 ranges (`cB`/`dB`/`yB` from an empty line) are linewise on the lines above | `cB`, `dB` |
+| Q11 | `ap` at the last paragraph takes the preceding blank; counted `ap` crosses separators | `2cip`, `2dap` |
+
+A new quirk is a new row plus oracle cases, never a new branch in an operator.
+`normalize.ts`/`cursor.ts` are allowed to grow only through this table.
+
+## 3. The surface manifest
+
+the generated human surface view and a machine manifest
+(`src/core/vim/surface.ts` or `docs/surface.json`) describe every entry:
+
+```ts
+type Scope = 'taught' | 'engine-only' | 'infrastructure' | 'out';
+
+interface SurfaceEntry {
+  id: string;              // 'operator.d', 'motion.w', 'object.iw', 'ex.s'
+  keys: string[];
+  scope: Scope;
+  modes: Mode[];
+  oracle: string[];        // case names in tools/cases.ts
+  matrix?: string[];       // generated matrix groups
+  game?: string[];         // stage ids / TRIALS skill ids
+  docs?: string;           // VIM_COVERAGE.md row
+  refusal?: string;        // required for scope: 'out'
+}
+```
+
+`tools/surface-audit.ts` derives the initial manifest from `commands.ts`,
+`CHAPTERS`, `tools/cases.ts`, `trials.ts` and the fuzz alphabet, then reports:
+
+- taught entries with no oracle case (gap),
+- entries with no mode coverage (operator only tested in normal mode),
+- oracle cases that map to no entry (orphans),
+- engine behaviour with no entry (accidental support),
+- out-of-scope keys that currently do something (silent half-support).
+
+The audit is a **CI gate**. Prose coverage stops being the source of truth.
+
+## 4. Gates — what "perfect" means, numerically
+
+| gate | rule |
+|---|---|
+| **surface** | 100% of in-scope entries have a pointer to oracle cases (≥1 per mode), a matrix group, and a docs row; 0 orphans; 0 accidental features |
+| **matrix** | for the taught surface, generate motion/object × operator × mode × count and boundary conditions, diff against real Vim; **0 divergences**; coverage % ratchets up, never down |
+| **compose-fuzz** | generate valid command trees from the manifest (not random ASCII keys) and diff; failures shrink to a readable command |
+| **fuzz** | alphabet derived from the manifest; 12 seeds × n=1200 = 0 divergences |
+| **invariants** | strict post-key state; no out-of-scope mutation; refusal is side-effect free |
+| **oracle** | only grows; every case mapped; snapshot emitted |
+| **CI** | native vim oracle + surface audit + matrix subset (currently missing — the biggest verification hole) |
+| **performance** | key handling p99 budget; frame budget unchanged (engine < 1 ms/key on desktop) |
+
+"Perfect within the covered set" is exactly: **surface 100%, matrix 0
+divergences, compose-fuzz 0, fuzz 0, 0 silent half-support.** Out-of-scope is
+allowed to be absent; it is not allowed to be mysterious.
+
+## 5. Phases
+
+### Phase A — manifest and audit (no behaviour change)
+Build the manifest + `surface-audit.ts`; produce a gap report; classify
+accidental features; add refusal tests for out-of-scope keys. Acceptance: the
+audit runs in CI and its numbers are in `VIM_COVERAGE.md`/`HANDOFF.md`.
+
+### Phase B — essence extraction
+Create `normalize.ts` + `cursor.ts`; move Q02–Q04, Q06, Q09, Q10 into them as
+named rules; rewrite `finishOpWithMotion`/`applyOp`/`deleteRange`/`caseRange`/
+`shiftRange` call sites. Acceptance: oracle green at every commit; every
+normalization branch references a quirk ID; `engine.ts` loses branches.
+
+### Phase C — matrix and compose-fuzz
+`tools/matrix.ts` generates systematic cases; `tools/compose-fuzz.ts` generates
+valid command trees. Acceptance: 0 divergences in the generated set for the
+taught surface; coverage thresholds recorded; failures become oracle cases.
+
+### Phase D — closed world
+`Vim.supports(key)` / capability events; out-of-scope input refuses
+deterministically; the game shows a clear message instead of a half-edit.
+Acceptance: no silent out-of-scope mutation; refusal covered by tests.
+
+### Phase E — performance and handoff
+Measure key→render latency and allocations; optimize only what the profile
+shows. Update `HANDOFF.md`, `MASTER_PLAN.md`, `AGENTS.md` and this file.
+
+## 6. Non-goals
+
+- No real Vim/Neovim runtime. (See "why" below.)
+- No new stages or chapters in this program.
+- No buffers/files/windows/tabs/folds/completion/terminal/scripting.
+- No big-bang rewrite of `engine.ts`.
+- No silent bundle-gate raise.
+- No "teach everything Vim does" — only the surface, perfectly.
+
+## 7. Why not embed real Vim/Neovim
+
+It is now technically possible (Neovim's wasm/emscripten browser demo merged in
+2026; `nvim-wasm` runs the real process in a worker), but for this product it
+trades the wrong things:
+
+- 7.8–8.4 MB wasm vs a 260 kB single file; startup and memory on the target
+  phone; COOP/COEP on GitHub Pages or Asyncify overhead.
+- Neovim is driven as a **process over msgpack-RPC**, not called as a library;
+  the game's key gating, coins, hazards and par counting would straddle that
+  boundary (macros and `:normal` replay inside Neovim and bypass a front-end
+  gate).
+- Level lint, TRIALS verification, deterministic replay and the native-Vim
+  oracle would need a second harness on top.
+- The engine is not the frame-time bottleneck; replacing it does not make the
+  game smoother.
+
+Real Neovim belongs in an optional free-play mode or a development oracle, not
+in the campaign engine. This program is how the campaign engine earns the word
+"complete" without it.
+
+## 8. First three tasks
+
+1. `tools/surface-audit.ts` + manifest skeleton + a report (no engine edits).
+2. A CI job that runs the native-Vim oracle (`apt install vim`) — the cheapest
+   close of the current verification gap.
+3. Phase B pilot: extract **delete normalization** (Q02, Q10) into
+   `normalize.ts`, with the existing 352 oracle cases as the safety net.
+
+## 9. One sentence
+
+**Define the surface, make every rule in it named and oracle-linked, prove the
+composition systematically, refuse the rest explicitly — that is what "the
+engine is the product" means.**

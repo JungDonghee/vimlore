@@ -116,6 +116,12 @@ shapes the corpus produces; see HANDOFF §2.
 
 ## 3. Coverage ladder — what "advanced Vim" means here
 
+> **Engine-completeness program:** the surface manifest, the
+> normalization/cursor extraction and the systematic matrix/compose-fuzz gates
+> are owned by [`ENGINE_PROGRAM.md`](ENGINE_PROGRAM.md). "Advanced Vim" below is
+> feature breadth; ENGINE_PROGRAM is how the covered breadth becomes provably
+> complete.
+
 The game is single-buffer by design. We teach the *language of editing*, not
 IDE plumbing. Add features in this order; each one ships with oracle cases and
 a `VIM_COVERAGE.md` row.
@@ -141,6 +147,12 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 **Never:** a server, accounts, telemetry, third-party requests, cloud saves.
 
 ## 4. Workstreams and acceptance
+
+### W0 — Engine completeness (owner: engine agent; plan in `ENGINE_PROGRAM.md`)
+- Surface manifest + audit (all in-scope features with proof obligations; out-of-scope refusals).
+- Normalization/cursor extraction: named quirks, one range function, one cursor policy.
+- Matrix + compose-fuzz: systematic grammar coverage, 0 divergences on the taught surface.
+- Acceptance: surface 100%, matrix 0 divergences, 12-seed fuzz 0, no silent half-support.
 
 ### W1 — Engine correctness (owner: engine agent)
 - `tools/fuzz.ts`: seeded differential fuzzer. Random ASCII buffers × random
@@ -236,6 +248,9 @@ rest to the task board. Never commit a red level or a failing oracle.
 | E10 | visual-block outdent, counted WORD failure | W1 | **done** — 12 seeds 0 @ n=1200 | `engine.ts` |
 | D4 | fix c04s3 to a Vim-valid solution (par 8) | W5 | **done** | `src/content/chapters/c04.ts` |
 | D5 | deliberate budget raise 260k/83k | W5 | **done** | `tools/bundle-budget.ts`, docs |
+| A1 | surface manifest + `surface-audit.ts` | W0 | **next** | `src/core/vim/surface.ts`, `tools/surface-audit.ts` |
+| A2 | CI native-Vim oracle job | W0 | **next** | `.github/workflows/ci.yml` |
+| A3 | extract delete normalization (Q02/Q10) | W0 | **next** | `src/core/vim/normalize.ts`, `engine.ts` |
 | ED0 | deferred buffer/file/window architecture | later | **design done** | `docs/FUTURE_EDITOR.md` |
 
 ## 7. Handoff protocol (for the next AI)

@@ -152,6 +152,11 @@ quickfix/LSP, Vimscript/Lua, and viewport motions (`zz`, `zt`, exact `H/M/L`). `
 implemented; simple brace-depth `=`/`gg=G` is also implemented. Next Tier 2:
 `g;`/`g,`.
 
+**Engine-completeness program:** the surface manifest, the normalization/
+cursor extraction and the matrix/compose-fuzz gates are defined in
+[`docs/ENGINE_PROGRAM.md`](docs/ENGINE_PROGRAM.md); read it before adding an
+engine feature or a quirk patch.
+
 **Buffers, files, splits and tabs are deliberately deferred, not rejected.**
 The engine is single-buffer today. The target model, phases, invariants and
 tests are in [`docs/FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md); never fake
