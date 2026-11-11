@@ -107,7 +107,7 @@ export function wordMotion(env: MotionEnv, count: number, opts: { big?: boolean;
           off = t.end;
         } else {
           let next: Token | undefined;
-          for (const x of list) if (x.start > off) { next = x; break; }
+          for (const x of list) if (x.start > off && !x.blank) { next = x; break; }
           if (!next) return { to: env.buf.pos(lastCharOffset(env.buf)), kind: 'inclusive' };
           off = next.end;
         }
@@ -193,17 +193,19 @@ export function matchBracket(env: MotionEnv): MotionResult | null {
 
 export function paragraphMotion(env: MotionEnv, dir: 1 | -1, count: number): MotionResult | null {
   const buf = env.buf;
-  let line = env.cursor.line;
+  const last = buf.lineCount - 1;
   const isBlank = (l: number) => buf.line(l).trim() === '';
+  const startedBlank = isBlank(env.cursor.line);
+  let line = env.cursor.line;
   for (let n = 0; n < count; n++) {
     const before = line;
     if (dir === 1) {
       // From a blank line, skip the blank run first, then the paragraph,
       // landing on the first blank line of the next run (or EOF).
-      if (isBlank(line) && line < buf.lineCount - 1) {
-        while (line < buf.lineCount - 1 && isBlank(line)) line++;
+      if (isBlank(line) && line < last) {
+        while (line < last && isBlank(line)) line++;
       }
-      while (line < buf.lineCount - 1 && !isBlank(line)) line++;
+      while (line < last && !isBlank(line)) line++;
     } else {
       // From a blank line, skip the blank run upward, then the paragraph,
       // landing on the blank line above it (or BOF).
@@ -213,29 +215,55 @@ export function paragraphMotion(env: MotionEnv, dir: 1 | -1, count: number): Mot
       while (line > 0 && !isBlank(line - 1)) line--;
       if (line > 0) line--;
     }
-    // A counted motion fails (no-op) when a step has nowhere to move.
-    if (line === before) return null;
+    if (line === before) {
+      // A counted motion fails (no-op) when a step has nowhere to move. A
+      // single uncounted motion still moves: `{` goes to column 0 at BOF and
+      // `}` goes to the last character at EOF.
+      if (n === 0 && count === 1) {
+        if (dir === 1) {
+          const to = { line: last, col: Math.max(0, buf.line(last).length - 1) };
+          if (buf.flat === '') return null;
+          return { to, kind: 'inclusive' };
+        } else if (env.cursor.col > 0) {
+          return { to: { line: 0, col: 0 }, kind: 'exclusive' };
+        }
+      }
+      return null;
+    }
   }
-  const target = Math.max(0, Math.min(line, buf.lineCount - 1));
-  const from = env.cursor.line;
-  let range: [number, number];
+  const fromLine = env.cursor.line;
+  const fromCol = env.cursor.col;
   if (dir === 1) {
-    // Exclusive of a real blank line, but inclusive when the motion ran off to
-    // the non-blank end of the buffer.
-    range = isBlank(target) ? [Math.min(from, target - 1), Math.max(from, target - 1)] : [Math.min(from, target), Math.max(from, target)];
-  } else {
-    range = [Math.min(target, from - 1), Math.max(target, from - 1)];
+    if (!startedBlank && line === last && !isBlank(last)) {
+      // Ran through the final paragraph to EOF: Vim lands on the last character
+      // and an operator runs to it inclusively.
+      return { to: { line: last, col: Math.max(0, buf.line(last).length - 1) }, kind: 'inclusive' };
+    }
+    const to = { line, col: 0 };
+    // `d}` from column 0 takes whole lines (the exclusive endpoint at column 0
+    // is moved back to the end of the previous line, which is linewise here).
+    if (fromCol === 0 && line > fromLine) return { to, kind: 'linewise', lineRange: [fromLine, line - 1] };
+    return { to, kind: 'exclusive' };
   }
-  return { to: { line: target, col: 0 }, kind: 'linewise', lineRange: [Math.min(range[0], range[1]), Math.max(range[0], range[1])] };
+  const to = { line, col: 0 };
+  if (fromCol === 0 && line < fromLine) return { to, kind: 'linewise', lineRange: [line, fromLine - 1] };
+  return { to, kind: 'exclusive' };
 }
 
 export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): MotionResult {
   const flat = env.buf.flat;
   let off = env.buf.idx(env.cursor);
+  let hitEof = false;
   for (let n = 0; n < count; n++) {
     if (dir === 1) {
       let moved = false;
       for (let i = off + 1; i < flat.length; i++) {
+        // A blank line starts a new sentence in Vim: `)` stops there.
+        if (flat[i] === '\n' && i + 1 < flat.length && flat[i + 1] === '\n' && i + 1 !== off) {
+          off = i + 1;
+          moved = true;
+          break;
+        }
         if (/[.!?]/.test(flat[i]) && (i + 1 >= flat.length || /[\s"'\])]/.test(flat[i + 1]))) {
           let j = i + 1;
           while (j < flat.length && /\s/.test(flat[j])) j++;
@@ -244,7 +272,10 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
           break;
         }
       }
-      if (!moved) off = Math.max(0, flat.length - 1);
+      if (!moved) {
+        off = Math.max(0, flat.length - 1);
+        hitEof = true;
+      }
     } else {
       // Start of the current sentence, else the previous one. A sentence ends
       // at [.!?] followed by whitespace, so scan for that, then skip the gap.
@@ -262,7 +293,7 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
       off = target;
     }
   }
-  return { to: env.buf.pos(off), kind: 'exclusive', jump: true };
+  return { to: env.buf.pos(off), kind: hitEof ? 'inclusive' : 'exclusive', jump: true };
 }
 
 /** Greedy wrapping used by gq/gw; returns the reformatted block lines. */

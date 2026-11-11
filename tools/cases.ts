@@ -183,5 +183,83 @@ export const CASES: VimCase[] = [
   { name: 'd2}', text: 'a\nb\n\nc\nd', cursor: [1, 0], keys: 'd2}' },
   { name: 'd2{', text: 'a\nb\n\nc\nd', cursor: [5, 0], keys: 'd2{' },
 
+  // --- fuzz-discovered: operator ranges (G, gg, doubled ops) ----------------
+  { name: 'g~G from last line', text: 'one two\nthree four', cursor: [2, 2], keys: 'g~G' },
+  { name: 'cG to end', text: 'function f() {\n  return 1;\n}', cursor: [1, 6], keys: 'cGxy<Esc>' },
+  { name: 'VG> current line', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: 'VG>' },
+  { name: '2>gg', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: '2>gg' },
+  { name: '3>> at eof', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 3], keys: '3>>' },
+  { name: '3g~~ count', text: 'a\nb\nc\nd', cursor: [3, 0], keys: '3g~~' },
+  { name: '2J empty line', text: 'a\n\nb\n\nc', cursor: [4, 0], keys: '2J' },
+  { name: 'J empty line', text: 'a\n\nb', cursor: [2, 0], keys: 'J' },
+
+  // --- fuzz-discovered: paragraph motions in operator range -----------------
+  { name: 'g~{ same line', text: 'x = "a"; y = "b";', cursor: [1, 14], keys: 'g~{' },
+  { name: 'd{ same line', text: 'x = "a"; y = "b";', cursor: [1, 14], keys: 'd{' },
+  { name: '{ at bof', text: 'x = "a"; y = "b";', cursor: [1, 14], keys: '{' },
+  { name: 'd} midline to eof', text: 'one two\nthree four', cursor: [1, 6], keys: 'd}' },
+  { name: '} at eof', text: 'one two\nthree four', cursor: [2, 6], keys: '}' },
+  { name: 'd} midline paragraph', text: 'one two\nthree four\n\nfive', cursor: [1, 6], keys: 'd}' },
+  { name: 'd{ midline paragraph', text: 'one two\nthree four\n\nfive', cursor: [4, 6], keys: 'd{' },
+  { name: 'vB{d', text: 'foo bar baz', cursor: [1, 7], keys: 'vB{d' },
+
+  // --- fuzz-discovered: visual g-pending + sentence range at EOF -------------
+  { name: 'VlggU', text: 'foo bar baz', cursor: [1, 2], keys: 'VlggU' },
+  { name: 'vgg)U', text: 'the end is nigh', cursor: [1, 7], keys: 'vgg)U' },
+  { name: 'c) at eof', text: 'foo.bar baz', cursor: [1, 8], keys: 'c)xy<Esc>' },
+  { name: 'd) at eof', text: 'foo.bar baz', cursor: [1, 8], keys: 'd)' },
+  { name: 'd) to next sentence', text: 'One. Two. Three.', cursor: [1, 0], keys: 'd)' },
+
+  // --- fuzz-discovered: word motions stop on empty lines ---------------------
+  { name: 'w over blank line', text: 'a\n\nb\n\nc', cursor: [1, 0], keys: 'w' },
+  { name: '2w over blank lines', text: 'a\n\nb\n\nc', cursor: [1, 0], keys: '2w' },
+  { name: 'b to blank line', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: 'b' },
+  { name: '2b over blank lines', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: '2b' },
+  { name: 'ge to blank line', text: 'a\n\nb', cursor: [3, 0], keys: 'ge' },
+  { name: 'g~B blank lines', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: 'g~B' },
+  { name: 'E skips blank line', text: 'a\n\nb', cursor: [1, 0], keys: 'E' },
+
+  // --- fuzz-discovered: visual-block / visual find --------------------------
+  { name: 'v0tb~', text: 'a,b,c,d', cursor: [1, 4], keys: 'v0tb~' },
+  { name: 'v-block ~', text: 'one\ntwo\nthree\nfour\nfive', cursor: [5, 2], keys: '<C-v>{~' },
+  { name: 'v-block >', text: 'if (x) { y(); }', cursor: [1, 9], keys: '<C-v>t(>' },
+  { name: 'v-block $hd', text: 'a,b,c,d', cursor: [1, 0], keys: '<C-v>$hd' },
+
+  // --- fuzz-discovered: cursor placement of yank / case / join --------------
+  { name: 'yy keeps column', text: 'the end is nigh', cursor: [1, 8], keys: 'yy' },
+  { name: '2yy keeps column', text: '  indented\nnormal', cursor: [1, 3], keys: '2yy' },
+  { name: '3yG backward', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 2], keys: '3yG' },
+  { name: 'yk top of range', text: 'a\nb\nc\nd', cursor: [3, 1], keys: 'yk' },
+  { name: 'guu cursor', text: '  indented\nnormal', cursor: [1, 9], keys: 'guu' },
+  { name: '2guu cursor', text: '  indented\nnormal', cursor: [1, 9], keys: '2guu' },
+  { name: 'gUgg cursor', text: '  indented\nnormal', cursor: [1, 3], keys: 'gUgg' },
+  { name: 'VU cursor', text: '  a', cursor: [1, 2], keys: 'VU' },
+  { name: 'VjU cursor', text: '  a\n  b', cursor: [1, 2], keys: 'VjU' },
+  { name: 'Vjy cursor', text: '  a\n  b', cursor: [1, 2], keys: 'Vjy' },
+  { name: '3J last line', text: 'a\nbb', cursor: [2, 1], keys: '3J' },
+  { name: '3J single line', text: 'a b c', cursor: [1, 3], keys: '3J' },
+  { name: '3gJ joins', text: 'one two\nthree four', cursor: [1, 4], keys: '3gJ' },
+  { name: 'd} at last char', text: 'foo bar', cursor: [1, 6], keys: 'd}' },
+  { name: '<} at last char', text: 'foo bar', cursor: [1, 6], keys: '<}' },
+
+  // --- fuzz-discovered: backward ranges / zero ranges / text objects --------
+  { name: 'd( from column 0', text: 'a\nb', cursor: [2, 0], keys: 'd(' },
+  { name: 'd( from col0 mid buffer', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: 'd(' },
+  { name: 'db from column 0', text: 'a\n\nb\n\nc', cursor: [4, 0], keys: 'db' },
+  { name: 'gu0 zero range', text: 'AB', cursor: [1, 0], keys: 'gu0' },
+  { name: 'g~0 zero range', text: 'ab', cursor: [1, 0], keys: 'g~0' },
+  { name: 'gJ keeps indent', text: 'function f() {\n  return 1;\n}', cursor: [1, 11], keys: '3gJ' },
+  { name: 'J strips indent', text: 'function f() {\n  return 1;\n}', cursor: [1, 11], keys: '3J' },
+  { name: 'block < mid-line spaces', text: 'x = "a"; y = "b";', cursor: [1, 8], keys: '<C-v>E<' },
+  { name: 'i( ahead fallback', text: 'const x = (a + b);', cursor: [1, 0], keys: 'di(' },
+  { name: 'i( ahead cursor', text: 'const x = (a + b);', cursor: [1, 0], keys: 'yi(' },
+  { name: '2di( fallback no-op', text: 'const x = (a + b);', cursor: [1, 0], keys: '2di(' },
+
+  { name: 'yG single line cursor', text: 'ab', cursor: [1, 1], keys: 'yG' },
+  { name: 'yG last line cursor', text: 'ab\ncd', cursor: [2, 1], keys: 'yG' },
+  { name: 'guk cursor', text: '  indented\nnormal', cursor: [2, 2], keys: 'guk' },
+  { name: ') over blank line', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: ')' },
+  { name: '2) over blank line', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: '2)' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

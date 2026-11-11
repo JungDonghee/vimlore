@@ -11,6 +11,8 @@ import { Buffer } from './buffer.ts';
 export interface Token {
   start: number; // flat offset, inclusive
   end: number; // flat offset, inclusive
+  /** An empty line: Vim's word motions stop on it, but `e`/`E` skip it. */
+  blank?: boolean;
 }
 
 interface Index {
@@ -39,6 +41,12 @@ function buildIndex(buf: Buffer): Index {
   while (i < flat.length) {
     const c = flat[i];
     if (c === '\n') {
+      // An empty line is a word-motion stop in Vim (w/W/b/B/ge land on it).
+      if (i === 0 || flat[i - 1] === '\n') {
+        const blank: Token = { start: i, end: i, blank: true };
+        word.push(blank);
+        big.push(blank);
+      }
       i++;
       continue;
     }

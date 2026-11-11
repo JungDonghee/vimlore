@@ -36,6 +36,8 @@ interface Op {
   count: number;
   motionCount: number;
   reg: string | null;
+  /** dd/yy/cc/>>/guu/... (doubled operator) instead of a motion. */
+  doubled?: boolean;
 }
 
 export interface SelRange {
@@ -455,7 +457,7 @@ export class Vim {
         return;
       }
       case 'Y':
-        this.yankRange({ start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true }, true, this.pendingRegSet);
+        this.yankRange({ start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true }, true, this.pendingRegSet, false, true);
         return;
       case 'R':
         this.enterReplace();
@@ -560,7 +562,7 @@ export class Vim {
   }
 
   private startOp(key: string): void {
-    this.op = { key, count: this.countNum || 1, motionCount: this.countNum || 1, reg: this.pendingRegSet };
+    this.op = { key, count: this.countNum, motionCount: 0, reg: this.pendingRegSet, doubled: false };
     this.pendingRegSet = null;
     this.count = '';
   }
@@ -573,8 +575,10 @@ export class Vim {
     }
     if ((key === op.key && key !== '<') || (key === '<' && op.key === '<') || (op.key.length === 2 && key === op.key[1])) {
       // dd, yy, cc, >>, <<, == and the two-key g operators: guu, gUU, g~~, gqq, gww
-      const n = (this.countNum || 1) * op.count;
-      this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line + n - 1, col: 0 }, linewise: true });
+      const n = (this.countNum || 1) * (op.count || 1);
+      const last = this.buf.lineCount - 1;
+      op.doubled = true;
+      this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: Math.min(last, this.cursor.line + n - 1), col: 0 }, linewise: true });
       return;
     }
     if (key === 'i' || key === 'a') {
@@ -583,6 +587,7 @@ export class Vim {
     }
     if (/^[1-9]$/.test(key) || (key === '0' && this.count !== '')) {
       this.count += key;
+      op.motionCount = this.countNum;
       return;
     }
     if (key === 'g') {
@@ -602,14 +607,14 @@ export class Vim {
       // Famous Vim special case: cw on a word acts like ce.
       const ch = this.buf.line(this.cursor.line)[this.cursor.col] ?? '';
       if (op.key === 'c' && ch !== '' && !/\s/.test(ch)) {
-        const m = M.wordMotion(this.motionEnv(), (this.countNum || 1) * op.count, { dir: 1, end: true, big: key === 'W' });
+        const m = M.wordMotion(this.motionEnv(), (this.countNum || 1) * (op.count || 1), { dir: 1, end: true, big: key === 'W' });
         if (m) {
           this.finishOpWithMotion(op, m);
           return;
         }
       }
     }
-    const motion = this.motionFor(key, (this.countNum || 1) * op.count);
+    const motion = this.motionFor(key, (this.countNum || 1) * (op.count || 1), this.countNum > 0 || op.count > 0);
     if (!motion) {
       this.bell();
       this.resetPending();
@@ -648,8 +653,7 @@ export class Vim {
       if (!inclusive && r.end.col === 0 && r.end.line > r.start.line) end = b - 1;
       return [a, Math.max(a, end)];
     }
-    let end = inclusive ? a + 1 : a;
-    if (!inclusive && r.start.col === 0 && r.start.line > r.end.line) end = a - 1;
+    const end = inclusive ? a + 1 : a;
     return [b, Math.max(b, end)];
   }
 
@@ -657,13 +661,13 @@ export class Vim {
     const inclusive = this.rangeInclusive;
     if (op.key === 'd') this.deleteRange(r, inclusive, op.reg, false);
     else if (op.key === 'c') this.deleteRange(r, inclusive, op.reg, true);
-    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg);
+    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled);
     else if (op.key === '>') this.shiftRange(r, 1);
     else if (op.key === '<') this.shiftRange(r, -1);
     else if (op.key === '=') this.say('no indent rules here', 'info');
-    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle');
-    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower');
-    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper');
+    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle', false, op.doubled);
+    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower', false, op.doubled);
+    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper', false, op.doubled);
     else if (op.key === 'gq' || op.key === 'gw') this.formatRange(r);
     this.resetPending(false);
     this.afterUnit();
@@ -830,7 +834,7 @@ export class Vim {
   }
 
   /** Resolve a key to a motion for operator-pending mode. */
-  private motionFor(key: string, count: number): MotionResult | null {
+  private motionFor(key: string, count: number, explicitCount = count > 1): MotionResult | null {
     const env = this.motionEnv();
     switch (key) {
       case 'h':
@@ -883,7 +887,8 @@ export class Vim {
       case 'E':
         return M.wordMotion(env, count, { dir: 1, end: true, big: true });
       case 'G': {
-        const target = count > 0 ? Math.min(count - 1, this.buf.lineCount - 1) : this.buf.lineCount - 1;
+        // Without a typed count `G` goes to the last line; `2G`/`dG` count means line N.
+        const target = explicitCount ? Math.min(count - 1, this.buf.lineCount - 1) : this.buf.lineCount - 1;
         return { to: { line: target, col: 0 }, kind: 'linewise', jump: true };
       }
       case '}':
@@ -1070,7 +1075,7 @@ export class Vim {
     }
   }
 
-  yankRange(r: SelRange, inclusive: boolean, reg: string | null): void {
+  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false): void {
     if (r.block) {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
@@ -1095,7 +1100,12 @@ export class Vim {
       const l2 = Math.max(r.start.line, r.end.line);
       const text = this.buf.lines.slice(l1, l2 + 1).join('\n') + '\n';
       this.storeRegister(reg, text, true, true);
-      this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+      // Vim puts the cursor on the first line of a linewise yank: the original
+      // column when it is already there, otherwise the first non-blank. A
+      // visual yank puts it at the start of the selection (column 0).
+      if (visual) this.cursor = { line: l1, col: 0 };
+      else if (keepCol || (l1 === this.cursor.line && l2 > this.cursor.line)) this.cursor = M.moveTo(this.buf, this.cursor);
+      else this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
       this.emit({ type: 'yank', register: reg ?? '"', text });
     } else {
       const [s, e] = this.flatRange(r, inclusive);
@@ -1122,8 +1132,36 @@ export class Vim {
     const l2 = Math.max(r.start.line, r.end.line);
     const before = this.snapshot();
     const pad = ' '.repeat(this.shiftwidth);
+    if (r.block) {
+      // Block shift moves the selected columns: `>` inserts at c1, while `<`
+      // only outdents lines whose indent the block starts inside.
+      const c1 = r.block.c1;
+      for (let l = l1; l <= l2; l++) {
+        const line = this.buf.line(l);
+        if (line.trim() === '') continue;
+        if (dir > 0) {
+          const col = Math.min(c1, line.length);
+          this.buf.setLine(l, line.slice(0, col) + pad + line.slice(col));
+        } else {
+          const from = Math.min(c1, line.length);
+          let k = 0;
+          while (k < this.shiftwidth && (line[from + k] === ' ' || line[from + k] === '\t')) k++;
+          if (k === 0) continue;
+          this.buf.setLine(l, line.slice(0, from) + line.slice(from + k));
+        }
+      }
+      this.buf.setLines(this.buf.lines);
+      this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
+      this.wantColValue = this.cursor.col;
+      this.commit(before, dir > 0 ? 'indent' : 'outdent');
+      this.say(dir > 0 ? '>>' : '<<', 'good');
+      this.afterUnit();
+      return;
+    }
     for (let l = l1; l <= l2; l++) {
       const line = this.buf.line(l);
+      // Vim leaves blank lines blank when shifting.
+      if (line.trim() === '') continue;
       if (dir > 0) this.buf.setLine(l, pad + line);
       else {
         let k = 0;
@@ -1137,8 +1175,29 @@ export class Vim {
     this.afterUnit();
   }
 
-  private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper'): void {
+  private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper', visual = false, doubled = false): void {
     const before = this.snapshot();
+    const fn0 = mode === 'upper' ? (c: string) => c.toUpperCase() : mode === 'lower' ? (c: string) => c.toLowerCase() : (c: string) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase());
+    if (r.block) {
+      // Visual-block case change touches only the selected columns on each line.
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const c1 = r.block.c1;
+      const c2 = r.block.c2;
+      for (let l = l1; l <= l2; l++) {
+        const line = this.buf.line(l);
+        const from = Math.min(c1, line.length);
+        const to = Math.min(c2 + 1, line.length);
+        if (to <= from) continue;
+        this.buf.setLine(l, line.slice(0, from) + line.slice(from, to).replace(/[a-zA-Z]/g, fn0) + line.slice(to));
+      }
+      this.buf.setLines(this.buf.lines);
+      this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
+      this.wantColValue = this.cursor.col;
+      this.commit(before, 'case');
+      this.afterUnit();
+      return;
+    }
     let [s, e] = this.flatRange(r, inclusive);
     if (r.linewise) {
       const l1 = Math.min(r.start.line, r.end.line);
@@ -1146,10 +1205,19 @@ export class Vim {
       s = this.buf.idx({ line: l1, col: 0 });
       e = this.buf.idx({ line: l2, col: this.buf.line(l2).length });
     }
+    if (!r.linewise && e === s && s < this.buf.flat.length) e = s + 1;
     const text = this.buf.flat.slice(s, e);
-    const fn = mode === 'upper' ? (c: string) => c.toUpperCase() : mode === 'lower' ? (c: string) => c.toLowerCase() : (c: string) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase());
-    this.buf.replaceFlat(s, e, text.replace(/[a-zA-Z]/g, fn));
-    this.cursor = M.moveTo(this.buf, this.buf.pos(s));
+    this.buf.replaceFlat(s, e, text.replace(/[a-zA-Z]/g, fn0));
+    if (r.linewise) {
+      // A one-line `guu`/`gUU`/`g~~` moves to the first non-blank; a multi-line
+      // one leaves the cursor alone (Vim behaviour, oracle-verified).
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const keep = !visual && doubled && l1 !== l2;
+      this.cursor = keep ? M.moveTo(this.buf, this.cursor) : visual ? { line: l1, col: 0 } : { line: l1, col: M.firstNonBlank(this.buf, l1) };
+    } else {
+      this.cursor = M.moveTo(this.buf, this.buf.pos(s));
+    }
     this.commit(before, 'case');
     this.afterUnit();
   }
@@ -1183,13 +1251,21 @@ export class Vim {
     const n = Math.max(2, count);
     const before = this.snapshot();
     let line = this.cursor.line;
+    const startedAt = this.cursor.line;
+    let joined = 0;
     for (let i = 1; i < n && line < this.buf.lineCount - 1; i++) {
+      joined++;
       const cur = this.buf.line(line);
-      const next = this.buf.line(line + 1).replace(/^[ \t]+/, '');
-      const spaces = withSpace ? (cur.endsWith(' ') || next === '' ? 0 : 1) : 0;
+      const rawNext = this.buf.line(line + 1);
+      const next = withSpace ? rawNext.replace(/^[ \t]+/, '') : rawNext;
+      const spaces = withSpace ? (cur === '' || cur.endsWith(' ') || next === '' ? 0 : 1) : 0;
       this.buf.setLine(line, cur + ' '.repeat(spaces) + next);
       this.buf.removeLine(line + 1);
       this.cursor = { line, col: Math.min(Math.max(0, cur.length), Math.max(0, this.buf.line(line).length - 1)) };
+    }
+    if (n >= 3 && joined === 0 && line === startedAt && line === this.buf.lineCount - 1) {
+      // `3J` on the last line: Vim moves to column 0 even though nothing joins.
+      this.cursor = { line, col: 0 };
     }
     this.commit(before, 'join');
     this.afterUnit();
@@ -1197,7 +1273,9 @@ export class Vim {
 
   private put(regName: string, before: boolean): void {
     const reg = this.readRegister(regName);
-    if (!reg.text && reg.text !== '') {
+    if (reg.text === '') {
+      this.takeCount();
+      this.pendingRegSet = null;
       this.bell();
       this.afterUnit();
       return;
@@ -1557,12 +1635,12 @@ export class Vim {
       this.count += key;
       return;
     }
-    if (key === 'g') {
-      this.pending = { kind: 'g', op: false };
-      return;
-    }
     if (this.pending) {
       this.resolvePending(key);
+      return;
+    }
+    if (key === 'g') {
+      this.pending = { kind: 'g', op: false };
       return;
     }
     const sel = this.selection();
@@ -1573,7 +1651,7 @@ export class Vim {
       case 'c':
       case 's':
         if (!sel) return;
-        if (key === 'y') this.yankRange(sel, true, this.pendingRegSet);
+        if (key === 'y') this.yankRange(sel, true, this.pendingRegSet, true);
         else this.deleteRange(sel, true, this.pendingRegSet, key === 'c' || key === 's');
         this.pendingRegSet = null;
         this.visualAnchor = null;
@@ -1591,17 +1669,17 @@ export class Vim {
         this.setMode('normal');
         return;
       case '~':
-        if (sel) this.caseRange(sel, true, 'toggle');
+        if (sel) this.caseRange(sel, true, 'toggle', true);
         this.visualAnchor = null;
         this.setMode('normal');
         return;
       case 'u':
-        if (sel) this.caseRange(sel, true, 'lower');
+        if (sel) this.caseRange(sel, true, 'lower', true);
         this.visualAnchor = null;
         this.setMode('normal');
         return;
       case 'U':
-        if (sel) this.caseRange(sel, true, 'upper');
+        if (sel) this.caseRange(sel, true, 'upper', true);
         this.visualAnchor = null;
         this.setMode('normal');
         return;
@@ -1642,6 +1720,12 @@ export class Vim {
       case 'r':
         this.pending = { kind: 'char', replace: true };
         return;
+      case 'f':
+      case 'F':
+      case 't':
+      case 'T':
+        this.pending = { kind: 'find', dir: key === 'f' || key === 't' ? 1 : -1, till: key === 't' || key === 'T' };
+        return;
       case 'g':
         this.pending = { kind: 'g', op: false };
         return;
@@ -1651,8 +1735,19 @@ export class Vim {
       default:
         break;
     }
+    // In visual-block mode Vim's `$` extends to (virtual) MAXCOL, so a
+    // following `h` lands on the last character, not one before it.
+    if (key === '$' && this.mode === 'visual-block' && this.count === '') {
+      // Keep the virtual one-past-end column (M.moveTo would clamp it away).
+      const line = this.cursor.line;
+      this.cursor = { line, col: this.buf.line(line).length };
+      this.wantColValue = this.cursor.col;
+      this.afterUnit();
+      return;
+    }
     // motions extend the selection
-    const motion = this.motionFor(key, this.takeCount());
+    const typedCount = this.countNum;
+    const motion = this.motionFor(key, this.takeCount(), typedCount > 0);
     if (motion) {
       this.moveTo(motion.to, 'char');
     } else if (key === 'l' || key === 'h' || key === 'j' || key === 'k') {
@@ -1941,7 +2036,7 @@ export class Vim {
         }
         if (this.op) {
           const op = this.op;
-          const n = (this.countNum || 1) * op.count;
+          const n = (this.countNum || 1) * (op.count || 1);
           this.count = '';
           const motion = M.findChar(this.motionEnv(), key, p.dir, p.till, n);
           this.lastFind = { char: key, dir: p.dir, till: p.till };
@@ -2064,8 +2159,13 @@ export class Vim {
         }
         const op = this.op;
         if (!op) return;
-        const count = this.countNum || 1;
+        const count = (this.countNum || 1) * (this.op ? this.op.count || 1 : 1);
         this.count = '';
+        if (count > 1 && obj.fallback) {
+          this.bell();
+          this.resetPending();
+          return;
+        }
         let start = obj.start;
         let end = obj.end;
         if (count > 1) {
@@ -2089,7 +2189,11 @@ export class Vim {
     if (key === 'g') {
       if (asOp && this.op) {
         const op = this.op;
-        this.finishOpWithMotion(op, { to: { line: 0, col: 0 }, kind: 'linewise', jump: true });
+        const n = (this.countNum || 1) * (op.count || 1);
+        const explicit = this.countNum > 0 || op.count > 0;
+        const last = this.buf.lineCount - 1;
+        const targetLine = explicit ? Math.min(n - 1, last) : 0;
+        this.finishOpWithMotion(op, { to: { line: targetLine, col: 0 }, kind: 'linewise', jump: true });
         return;
       }
       const n = this.countNum || 1;
@@ -2129,7 +2233,7 @@ export class Vim {
         this.pending = null;
         return;
       }
-      this.op = { key: opKey, count: this.countNum || 1, motionCount: 1, reg: this.pendingRegSet };
+      this.op = { key: opKey, count: this.countNum, motionCount: 0, reg: this.pendingRegSet, doubled: false };
       this.pendingRegSet = null;
       this.count = '';
       return;

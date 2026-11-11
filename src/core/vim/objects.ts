@@ -12,6 +12,8 @@ export interface ObjectRange {
   start: Pos;
   end: Pos;
   linewise?: boolean;
+  /** Found ahead of the cursor rather than around it (Vim's `i(` fallback). */
+  fallback?: boolean;
 }
 
 function blankRun(buf: Buffer, pos: Pos): ObjectRange {
@@ -140,7 +142,22 @@ function bracketObject(buf: Buffer, pos: Pos, around: boolean, openCh: string): 
       depth--;
     }
   }
-  if (startOff === -1) return null;
+  let fallback = false;
+  if (startOff === -1) {
+    // Vim's bracket objects fall back to the first pair starting ahead on the
+    // current line (e.g. `di(` with the cursor before the opening paren).
+    const lineStart = buf.idx({ line: pos.line, col: 0 });
+    const lineLen = buf.line(pos.line).length;
+    for (let i = off; i < lineStart + lineLen; i++) {
+      if (flat[i] === open || flat[i] === close) {
+        startOff = i;
+        break;
+      }
+    }
+    if (startOff === -1) return null;
+    fallback = true;
+    if (flat[startOff] === close) return null;
+  }
   // Scan forward for its match.
   depth = 0;
   let endOff = -1;
@@ -156,12 +173,12 @@ function bracketObject(buf: Buffer, pos: Pos, around: boolean, openCh: string): 
     }
   }
   if (endOff === -1) return null;
-  if (around) return { start: buf.pos(startOff), end: buf.pos(endOff) };
+  if (around) return { start: buf.pos(startOff), end: buf.pos(endOff), fallback };
   const s = startOff + 1;
   const e = endOff - 1;
   // An empty pair like "()" has no inner text; Vim treats it as a no-op.
   if (e < s) return null;
-  return { start: buf.pos(s), end: buf.pos(e) };
+  return { start: buf.pos(s), end: buf.pos(e), fallback };
 }
 
 function tagObject(buf: Buffer, pos: Pos, around: boolean): ObjectRange | null {
