@@ -280,6 +280,11 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
       // at [.!?] followed by whitespace, so scan for that, then skip the gap.
       let target = 0;
       for (let i = off - 1; i > 0; i--) {
+        // A blank line starts a new sentence/paragraph in Vim: `(` stops there.
+        if (flat[i] === '\n' && flat[i - 1] === '\n') {
+          target = i;
+          break;
+        }
         if (/[.!?]/.test(flat[i]) && /\s/.test(flat[i + 1] ?? ' ')) {
           let j = i + 1;
           while (j < flat.length && /\s/.test(flat[j])) j++;

@@ -56,10 +56,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **237/237** vs `vim -u NONE` (142 at session start, +95 cases) |
+| engine oracle | **238/238** vs `vim -u NONE` (142 at session start, +96 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 223,173 B · single `dist/vimlore.html` 246,846 B · gzip 78,891 B |
+| build | JS 223,214 B · single `dist/vimlore.html` 246,887 B · gzip 78,900 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -82,14 +82,14 @@ so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug
 
 | seed | matched | skipped | divergences | buffer-content |
 |---:|---:|---:|---:|---:|
-| 7 | 682 | 317 | **1** | **0** |
+| 7 | 683 | 317 | **0** | **0** |
 | 11 | 662 | 338 | **0** | **0** |
 | 23 | 651 | 349 | **0** | **0** |
 
-**Seeds 11 and 23 are completely clean; seed 7 has 0 buffer-content and one
-cursor-only edge (`V(y`).** Also fixed: `2yaW`, `<i(` empty-object shift,
-`vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual `$`, case-change cursors,
-block virtual column, `2daW`/`2daw`.
+**All three seeds are completely clean: 0 divergences (buffer and cursor).**
+Also fixed: backward sentence motion at blank lines (`V(y`), `2yaW`, `<i(`
+empty-object shift, `vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual
+`$`, case-change cursors, block virtual column, `2daW`/`2daw`.
 
 ## 3. Coverage ladder — what "advanced Vim" means here
 
@@ -128,7 +128,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥237/237; new cases committed; tests green.
+  oracle ≥238/238; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -176,7 +176,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +95 cases, oracle 237/237, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +96 cases, oracle 238/238, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -246,7 +246,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 237/237
+node --experimental-strip-types tools/oracle-diff.ts        # 238/238
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build
