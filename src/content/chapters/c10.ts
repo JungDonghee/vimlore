@@ -221,7 +221,7 @@ and you tie it. That is the whole loom.`,
       },
       par: 18,
       solution: '6j<<guiw3jwdawgqip',
-      teaches: [],
+      teaches: ['<', 'gu', 'iw', 'aw', 'gq'],
       hazard: '',
       hints: [
         {
@@ -283,7 +283,7 @@ and read me back to myself.`,
       },
       par: 39,
       solution: 'gU$2jgqip4jg~$jdd4j<<3wciwthreads<Esc>9k5w.',
-      teaches: [],
+      teaches: ['gU', 'gq', 'g~', 'dd', '<', 'iw', '.'],
       hazard: '',
       hints: [
         {

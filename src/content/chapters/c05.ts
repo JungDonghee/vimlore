@@ -152,7 +152,7 @@ cato    6 |`,
       },
       par: 14,
       solution: 'J013~j$<C-v>2jA |<Esc>',
-      teaches: [],
+      teaches: ['J', 'C-v', 'A', '~'],
       hints: [
         { en: 'J joins the broken title. Then 0 takes you to the line start and 13~ flips the whole line to shouting.', ko: 'J로 깨진 제목을 잇는다. 그다음 0으로 줄 앞에 가서 13~, 줄 전체를 고함으로 뒤집는다.' },
         { en: 'On the right edge of the first ledger row, Ctrl-V 2j takes the column; A adds | to all three rows at once.', ko: '첫 장부 줄의 오른쪽 끝에서 Ctrl-V 2j로 열을 잡고, A로 세 줄에 |를 한 번에 붙인다.' },

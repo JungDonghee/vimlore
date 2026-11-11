@@ -106,7 +106,7 @@ export const c02: Chapter = {
       goal: { type: 'all', of: [{ type: 'exact', text: 'WELCOME TO THE VILLAGE\n..~~~~........~~~~..\n...$...$......$.....' }, { type: 'collect', char: '$' }] },
       par: 12,
       solution: 'fGiA<Esc>jj0f$;;',
-      teaches: [],
+      teaches: ['f', ';'],
       hints: [
         { en: 'VILLGE is missing an A before the G. Use w to get there.', ko: 'VILLGE에는 G 앞에 A가 빠졌다. w로 이동해.' },
         { en: 'Try fG, then iA.', ko: 'fG로 간 뒤 iA를 써 봐.' },

@@ -280,7 +280,7 @@ trace : off`,
       },
       par: 31,
       solution: ':%normal 3x<CR>:sort<CR>:%s/ - / : /<CR>',
-      teaches: [],
+      teaches: [':normal', ':sort', ':%s'],
       hints: [
         {
           en: 'Three passes: strip, sort, replace. Begin with the numbers — three characters on every line: `:%normal 3x`.',

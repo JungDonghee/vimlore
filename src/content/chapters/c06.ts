@@ -242,7 +242,7 @@ the moon is a name that moves`,
       },
       par: 14,
       solution: '*n:%s//moon/g<CR>',
-      teaches: [],
+      teaches: ['*', 'n', ':%s'],
       hints: [
         {
           en: 'Start on the word. `*` searches the whole word — "mothball" and "mothlight" are other words and will not answer.',
