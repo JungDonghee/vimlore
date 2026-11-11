@@ -326,5 +326,7 @@ export const CASES: VimCase[] = [
   { name: '2daw on whitespace', text: 'x = "a"; y = "b";', cursor: [1, 1], keys: '2daw' },
   { name: '3gUaw on whitespace', text: 'x = "a"; y = "b";', cursor: [1, 3], keys: '3gUaw' },
 
+  { name: '2ciw same line', text: 'foo bar baz', cursor: [1, 1], keys: '2ciwxy<Esc>' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

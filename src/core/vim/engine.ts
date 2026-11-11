@@ -2280,25 +2280,32 @@ export class Vim {
         let start = obj.start;
         let end = obj.end;
         if (count > 1) {
+          const list = key === 'w' || key === 'W' ? tokens(this.buf, key === 'W') : [];
+          const off = this.buf.idx(this.cursor);
+          let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
+          const nextSameLine = list.some(
+            (t) => !t.blank && t.start > off && this.buf.pos(t.start).line === this.cursor.line,
+          );
           if (!p.around && (key === 'w' || key === 'W')) {
-            // Counted inner-word objects extend to the Nth word. When that
-            // crosses a line, Vim treats the range as linewise.
-            const list = tokens(this.buf, key === 'W');
-            const off = this.buf.idx(this.cursor);
-            let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
-            if (ti < 0) ti = list.findIndex((t) => !t.blank && t.start >= off);
-            const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
-            if (target && ti >= 0) {
-              start = obj.start;
-              end = this.buf.pos(target.end);
-              if (start.line !== end.line) obj.linewise = true;
+            if (key === 'w' && count === 2 && nextSameLine) {
+              // Vim's `2iw` on a line with another word selects the current
+              // word plus trailing whitespace, not the next word.
+              let e = this.buf.idx(obj.end);
+              const flat = this.buf.flat;
+              while (e + 1 < flat.length && (flat[e + 1] === ' ' || flat[e + 1] === '\t')) e++;
+              end = this.buf.pos(e);
+            } else {
+              if (ti < 0) ti = list.findIndex((t) => !t.blank && t.start >= off);
+              const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
+              if (target) {
+                start = obj.start;
+                end = this.buf.pos(target.end);
+                if (start.line !== end.line) obj.linewise = true;
+              }
             }
           } else if (p.around && (key === 'w' || key === 'W')) {
             // `2daW`/`2daw`: select `count` words and the whitespace after the
             // last one, across lines (Vim joins the lines when this is deleted).
-            const list = tokens(this.buf, key === 'W');
-            const off = this.buf.idx(this.cursor);
-            let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
             if (ti < 0) {
               // Cursor on whitespace: the blank run plus the next word is the
               // first object, then count-1 further words.
@@ -2311,19 +2318,19 @@ export class Vim {
             } else {
               const target = list[Math.min(list.length - 1, ti + count - 1)];
               if (target) {
-              let e = target.end;
-              const flat = this.buf.flat;
-              while (e + 1 < flat.length && /\s/.test(flat[e + 1])) e++;
-              let startOff = list[ti].start;
-              // Like count-1 `aw`: at end of line/buffer there is no trailing
-              // whitespace, so Vim takes the whitespace *before* the words.
-              if (e === target.end) {
-                let j = startOff - 1;
-                while (j >= 0 && (flat[j] === ' ' || flat[j] === '\t')) j--;
-                if (j < startOff - 1) startOff = j + 1;
-              }
-              start = this.buf.pos(startOff);
-              end = this.buf.pos(e);
+                let e = target.end;
+                const flat = this.buf.flat;
+                while (e + 1 < flat.length && /\s/.test(flat[e + 1])) e++;
+                let startOff = list[ti].start;
+                // Like count-1 `aw`: at end of line/buffer there is no trailing
+                // whitespace, so Vim takes the whitespace *before* the words.
+                if (e === target.end) {
+                  let j = startOff - 1;
+                  while (j >= 0 && (flat[j] === ' ' || flat[j] === '\t')) j--;
+                  if (j < startOff - 1) startOff = j + 1;
+                }
+                start = this.buf.pos(startOff);
+                end = this.buf.pos(e);
               }
             }
           } else {
