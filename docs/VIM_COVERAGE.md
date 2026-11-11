@@ -4,9 +4,14 @@ VIMLORE is being built as **the most comprehensive Vim training terminal ever
 attempted** — no artificial cap on commands, tips, or advanced features. That is
 a destination, not a current-completeness claim. The engine is a **subset chosen
 for this slice**, kept honest by a differential oracle:
-`tools/oracle-diff.ts` replays **352 keystroke cases** through a real
+`tools/oracle-diff.ts` replays **356 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
+
+The **surface audit** (`npm run surface -- --strict`, CI gate) proves the other
+direction: every Grimoire command has oracle or unit evidence, every oracle case
+maps to a command or an explicit engine-only feature, and there are no orphan
+cases. The generated map is [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md).
 
 This page is the answer to "does it support everything Vim does?" — **not yet.**
 Below is the exact boundary, so nobody has to guess. Deferred domains (buffers,

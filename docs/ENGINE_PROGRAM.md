@@ -1,6 +1,6 @@
 # ENGINE PROGRAM — closed-world completeness
 
-> **Status: direction, not implementation.** This document defines what "the
+> **Status: Phase A live (2026-11-11).** This document defines what "the
 > engine is perfect" means for VIMLORE, how the engine is layered, and the
 > gates that make the claim checkable. It supersedes "add more oracle cases
 > until it feels done" as the engine roadmap.
@@ -26,7 +26,7 @@ The current engine is strong at the grammar and weak at the boundary:
 | **surface manifest** (what is in scope, with evidence) | prose only (`VIM_COVERAGE.md`, fuzz alphabet) |
 | **systematic matrix coverage** | missing; fuzz is random |
 | **explicit refusal outside scope** | missing; unsupported input can half-work |
-| oracle / fuzz / invariants | strong (352 cases, 12 seeds clean) |
+| oracle / fuzz / invariants | strong (356 cases, 12 seeds clean) |
 
 The last engine pass proved the point: `de`/`2dw` linewise conversion,
 counted `$`, zero-range `^`/`h`, bracket linewise objects and visual-block
@@ -91,8 +91,9 @@ A new quirk is a new row plus oracle cases, never a new branch in an operator.
 
 ## 3. The surface manifest
 
-the generated human surface view and a machine manifest
-(`src/core/vim/surface.ts` or `docs/surface.json`) describe every entry:
+the generated human surface view [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md) and a
+machine manifest (`src/core/vim/surface.ts` or `docs/surface.json`) describe
+every entry:
 
 ```ts
 type Scope = 'taught' | 'engine-only' | 'infrastructure' | 'out';
@@ -120,6 +121,18 @@ interface SurfaceEntry {
 - out-of-scope keys that currently do something (silent half-support).
 
 The audit is a **CI gate**. Prose coverage stops being the source of truth.
+**Phase A is live.** `npm run surface -- --strict` runs in CI. Current numbers:
+
+- 86 of 86 Grimoire commands have engine evidence (78 oracle-touched + 8 unit-only:
+  `q`, `@`, `:g`, `'`, `:d`, `:sort`, `:normal`, `gq` — ex/macro/mark/format
+  commands the `normal!` oracle harness cannot drive);
+- 9 engine-only features without a Grimoire row (`^`, `gg`, `G`, `(`, `)`,
+  `<C-a>`, `<C-x>`, `g#`, `=`) each have oracle cases;
+- 0 orphan oracle cases: every one of the 356 cases maps to a command or an
+  engine-only feature;
+- 15 grimoire-only commands and 12 commands no stage solution uses remain
+  **curriculum** gaps, reported separately, not engine gaps.
+
 
 ## 4. Gates — what "perfect" means, numerically
 
@@ -131,7 +144,7 @@ The audit is a **CI gate**. Prose coverage stops being the source of truth.
 | **fuzz** | alphabet derived from the manifest; 12 seeds × n=1200 = 0 divergences |
 | **invariants** | strict post-key state; no out-of-scope mutation; refusal is side-effect free |
 | **oracle** | only grows; every case mapped; snapshot emitted |
-| **CI** | native vim oracle + surface audit + matrix subset (currently missing — the biggest verification hole) |
+| **CI** | native vim oracle + surface audit are live (`.github/workflows/ci.yml`); matrix/compose-fuzz still local-only |
 | **performance** | key handling p99 budget; frame budget unchanged (engine < 1 ms/key on desktop) |
 
 "Perfect within the covered set" is exactly: **surface 100%, matrix 0
@@ -140,10 +153,11 @@ allowed to be absent; it is not allowed to be mysterious.
 
 ## 5. Phases
 
-### Phase A — manifest and audit (no behaviour change)
-Build the manifest + `surface-audit.ts`; produce a gap report; classify
-accidental features; add refusal tests for out-of-scope keys. Acceptance: the
-audit runs in CI and its numbers are in `VIM_COVERAGE.md`/`HANDOFF.md`.
+### Phase A — manifest and audit (done, first cut)
+Built `tools/surface-audit.ts` + generated [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md);
+`--strict` is a CI gate. Evidence went from 86/91 to **86 of 86 commands**, with 9
+engine-only features and 0 orphan cases. Out-of-scope refusal (Phase D) is the
+remaining half of the closed-world contract.
 
 ### Phase B — essence extraction
 Create `normalize.ts` + `cursor.ts`; move Q02–Q04, Q06, Q09, Q10 into them as
@@ -197,11 +211,10 @@ in the campaign engine. This program is how the campaign engine earns the word
 
 ## 8. First three tasks
 
-1. `tools/surface-audit.ts` + manifest skeleton + a report (no engine edits).
-2. A CI job that runs the native-Vim oracle (`apt install vim`) — the cheapest
-   close of the current verification gap.
-3. Phase B pilot: extract **delete normalization** (Q02, Q10) into
-   `normalize.ts`, with the existing 352 oracle cases as the safety net.
+1. ~~`tools/surface-audit.ts` + report~~ — done, strict CI gate.
+2. ~~CI native-Vim oracle job~~ — done (`oracle` job: 356 cases + fuzz smoke).
+3. **Phase B pilot (next):** extract **delete normalization** (Q02, Q10) into
+   `normalize.ts`, with the 356 oracle cases as the safety net.
 
 ## 9. One sentence
 

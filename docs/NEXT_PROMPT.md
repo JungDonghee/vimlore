@@ -52,8 +52,8 @@ The human's standing directive, in priority order:
 
 | item | value at `20a1c3a` |
 |---|---|
-| oracle (strict) | **352/352** real-Vim cases |
-| unit tests | **24/24** |
+| oracle (strict) | **356/356** real-Vim cases |
+| unit tests | **28/28** |
 | level lint | **51/51** stages; every solution wins on its last key at `par` |
 | tsc / doc-check | clean |
 | invariants | **0 errors**, **15 coverage warnings** (not errors) |
@@ -82,7 +82,7 @@ npm run budget
 node --experimental-strip-types tools/oracle-diff.ts
 ```
 
-Expected: 352/352, 24 pass, 51 valid, tsc 0, docs OK, 0 invariant errors,
+Expected: 356/356, 28 pass, 51 valid, tsc 0, docs OK, 0 invariant errors,
 build under budget. Then run the fuzz seeds you plan to touch; do not assume
 they are still clean.
 

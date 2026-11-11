@@ -14,6 +14,7 @@ jobs:
       - run: npm run lint:levels
       - run: npm run doc-check
       - run: npm run invariants
+      - run: npm run surface -- --strict
       - run: npm run build
       - run: npm run budget
       - name: absolute asset paths must not exist (blank page on subpath hosting)
@@ -22,3 +23,21 @@ jobs:
             echo 'ABSOLUTE ASSET PATH: rebuild with base: ./ (see vite.config.ts)'
             exit 1
           fi
+
+  oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: install Vim (the oracle)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y vim
+          vim --version | head -3
+      - run: npm ci || npm install
+      - name: differential oracle (356 cases vs real Vim)
+        run: node --experimental-strip-types tools/oracle-diff.ts
+      - name: seeded differential fuzz (smoke)
+        run: node --experimental-strip-types tools/fuzz.ts --n=500 --seed=7

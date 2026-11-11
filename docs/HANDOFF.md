@@ -14,8 +14,8 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,213 lines; **352 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 352/352 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| engine | 3,213 lines; **356 oracle cases**, all matching real Vim (strict) |
+| gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
 | build | JS 235,313 B · single `dist/vimlore.html` 259,440 B · gzip 81,993 B · budget gate 260k/83k (raised deliberately this pass, §3) |
 | fuzz | **12 seeds, 0 divergences at n=1200** (and 9 seeds 0 at n=1000), buffer and cursor |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
@@ -62,6 +62,16 @@ run the gates.
   `ap` crosses separators and includes surrounding blanks (`2cip`, `2dap`,
   `2yap`, `2g~ap`).
 
+### Surface program (Phase A)
+`tools/surface-audit.ts` maps the Grimoire, chapters, oracle cases, unit tests
+and TRIALS into one evidence report, now a **strict CI gate**
+(`npm run surface -- --strict`). 86 of 86 commands have oracle or unit evidence
+(8 ex/macro/mark/format commands are unit-only because `normal!` cannot drive
+them), 9 engine-only features are explicit, and 0 of the 356 oracle cases are
+orphans. The generated view is [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md); the
+program is [`ENGINE_PROGRAM.md`](ENGINE_PROGRAM.md). Curriculum gaps (15
+grimoire-only, 12 unused in solutions) are reported separately.
+
 ### Curriculum correction forced by the engine
 `c04s3` used `solution: 'di(kdi('`, par 7. It only passed because the old
 charwise `di(` left the cursor at the end of the opening line. Real Vim parks
@@ -96,7 +106,7 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 ## 3. Budget decision (deliberate)
 
-Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (352 cases, up from 266).
+Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (356 cases, up from 266).
 The bundle gate was raised **in the same commit** from 258,000/82,000 to
 **260,000/83,000**; current build is 259,440 B raw / 81,993 B gzip. This is the
 documented "pay for itself or raise deliberately" path. Headroom is still
@@ -113,9 +123,9 @@ justify another measured raise.
   the ceiling (trap 9). Needs a real GPU browser measurement.
 - **Change list** (`g;`/`g,`) and the deferred editor program (buffers/files/
   splits/tabs) remain out of scope; design in `FUTURE_EDITOR.md`.
-- **CI gap**: CI runs tests, lint, tsc, docs, invariants, build and budget; it
-  does **not** run the real-Vim oracle, fuzz, browser audit or perf. Local
-  proof is stronger than CI.
+- **CI**: now runs tests, lint, tsc, docs, invariants, surface `--strict`,
+  build, budget **and the real-Vim oracle + a fuzz smoke** (`oracle` job).
+  Browser audit and perf still run locally only; local proof is still stronger.
 - **Docs**: `doc-check` guards oracle counts/links and several numbers, not all
   prose. If a number disagrees with a fresh gate, the gate wins.
 
@@ -144,7 +154,10 @@ justify another measured raise.
    1280×800 the headless shell caps rAF around 54–57 fps even with the game
    canvas hidden and CRT off. Use `perf_local.mjs` for *relative* regressions;
    verify 60 fps on a real GPU browser.
-10. **Security:** PAT at `/home/jung/ai_station/sandbox/.secrets/github_token`
+10. **A new command without evidence fails `surface --strict`.** Add oracle
+    cases (or a unit test when `normal!` cannot drive it) and, if it has no
+    Grimoire row, add it to `ENGINE_ONLY` in `tools/surface-audit.ts`.
+11. **Security:** PAT at `/home/jung/ai_station/sandbox/.secrets/github_token`
     (mode 600, outside the repo). Never print/commit it; scrub the remote URL
     after pushing. A red build on `main` breaks the live site.
 
@@ -158,7 +171,8 @@ npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
 npm run invariants
-node --experimental-strip-types tools/oracle-diff.ts        # 352/352
+npm run surface -- --strict
+node --experimental-strip-types tools/oracle-diff.ts        # 356/356
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7
 npm run build

@@ -74,9 +74,10 @@
 |---|---|
 | src | 10,539 lines; `engine.ts` 3,213 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **352/352** vs `vim -u NONE` (266 at pass-2 start, +77 cases) |
+| engine oracle | **356/356** vs `vim -u NONE` (266 at pass-2 start, +77 cases) |
 | level lint | **51/51 stages valid** |
-| unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
+| surface | **86 of 86 commands with engine evidence**, 9 engine-only features, 0 orphan cases (`npm run surface -- --strict`, CI gate) |
+| unit tests | **28 pass**; `tsc --noEmit` clean; `doc-check` OK |
 | build | JS 235,313 B · single `dist/vimlore.html` 259,440 B · gzip 81,993 B · budget gate 260k/83k (raised this pass) |
 | fuzz | **12 seeds, 0 divergences at n=1200**; 9 documented seeds also 0 at n=1000 |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green |
@@ -85,7 +86,7 @@
 **What changed in pass 2 (engine correctness, the product):**
 
 - Cleared all **14 documented cursor-only fuzz edges**; nine seeds are now
-  0-divergence at n=1000 (they are pinned by 352 oracle cases).
+  0-divergence at n=1000 (they are pinned by 356 oracle cases).
 - Rebuilt/corrected semantics: multi-line bracket objects are linewise (empty
   pairs park on the close delimiter); backward `(` is built from real sentence
   starts; counted `iw`/`iW` counts space runs as units and skips line breaks;
@@ -95,6 +96,10 @@
   `de`); counted `$` is charwise; shift operator ranges exclude a column-0 end
   line while visual selections include the cursor line; `ap` takes the
   preceding blank at the last paragraph and counted `ap` crosses separators.
+- **Surface program (Phase A):** `tools/surface-audit.ts` + generated
+  `ENGINE_SURFACE.md`; `--strict` is a CI gate. 86 of 86 Grimoire commands have
+  oracle or unit evidence, 9 engine-only features are explicit, 0 oracle cases
+  are orphans. CI now also runs the real-Vim oracle and a fuzz smoke.
 - **Curriculum correction:** `c04s3` was only passing because the old charwise
   `di(` left the cursor at the end of the opening line. Real Vim parks it on
   the closing-paren line, so the stage now uses `di(kkdi(` (par 8, same goal).
@@ -149,7 +154,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 ## 4. Workstreams and acceptance
 
 ### W0 — Engine completeness (owner: engine agent; plan in `ENGINE_PROGRAM.md`)
-- Surface manifest + audit (all in-scope features with proof obligations; out-of-scope refusals).
+- Surface manifest + audit: **done (Phase A)** — 86 of 86 commands with evidence, 0 orphans, strict CI gate.
 - Normalization/cursor extraction: named quirks, one range function, one cursor policy.
 - Matrix + compose-fuzz: systematic grammar coverage, 0 divergences on the taught surface.
 - Acceptance: surface 100%, matrix 0 divergences, 12-seed fuzz 0, no silent half-support.
@@ -162,7 +167,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥352/352; new cases committed; tests green.
+  oracle ≥356/356; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -210,7 +215,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +171 cases, oracle 352/352, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +171 cases, oracle 356/356, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -248,8 +253,8 @@ rest to the task board. Never commit a red level or a failing oracle.
 | E10 | visual-block outdent, counted WORD failure | W1 | **done** — 12 seeds 0 @ n=1200 | `engine.ts` |
 | D4 | fix c04s3 to a Vim-valid solution (par 8) | W5 | **done** | `src/content/chapters/c04.ts` |
 | D5 | deliberate budget raise 260k/83k | W5 | **done** | `tools/bundle-budget.ts`, docs |
-| A1 | surface manifest + `surface-audit.ts` | W0 | **next** | `src/core/vim/surface.ts`, `tools/surface-audit.ts` |
-| A2 | CI native-Vim oracle job | W0 | **next** | `.github/workflows/ci.yml` |
+| A1 | surface manifest + `surface-audit.ts` | W0 | **done** — strict CI gate | `tools/surface-audit.ts`, `docs/ENGINE_SURFACE.md` |
+| A2 | CI native-Vim oracle job | W0 | **done** — oracle + fuzz smoke | `.github/workflows/ci.yml` |
 | A3 | extract delete normalization (Q02/Q10) | W0 | **next** | `src/core/vim/normalize.ts`, `engine.ts` |
 | ED0 | deferred buffer/file/window architecture | later | **design done** | `docs/FUTURE_EDITOR.md` |
 
@@ -312,7 +317,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 352/352
+node --experimental-strip-types tools/oracle-diff.ts        # 356/356
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

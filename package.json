@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "VIMLORE \u2014 a Vim adventure game that teaches real Vim by feel",
+  "description": "VIMLORE — a Vim adventure game that teaches real Vim by feel",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node tools/inline.mjs",
@@ -20,7 +20,9 @@
     "budget": "node --experimental-strip-types tools/bundle-budget.ts",
     "books:index": "node --experimental-strip-types tools/book-index.ts",
     "provenance": "node --experimental-strip-types tools/stage-provenance.ts",
-    "kickoff": "node --experimental-strip-types tools/kickoff.ts"
+    "kickoff": "node --experimental-strip-types tools/kickoff.ts",
+    "surface": "node --experimental-strip-types tools/surface-audit.ts",
+    "surface:write": "node --experimental-strip-types tools/surface-audit.ts --write"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

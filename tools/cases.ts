@@ -475,5 +475,11 @@ export const CASES: VimCase[] = [
   { name: 'block < anchor0 via motion', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: '<C-v>0k<' },
   { name: 'block < no indent cursor', text: 'abc abc abc', cursor: [1, 0], keys: '<C-v>W$<' },
 
+  // --- surface-audit gaps: previously uncovered taught commands -------------
+  { name: 'S substitutes line', text: 'abc', cursor: [1, 0], keys: 'SXY<Esc>' },
+  { name: 'ya{ around braces', text: 'function f() {\n  return 1;\n}', cursor: [2, 3], keys: 'ya{' },
+  { name: '? backward search', text: 'one two one two', cursor: [1, 8], keys: '?one<CR>' },
+  { name: 'N previous match', text: 'one two one two', cursor: [1, 0], keys: '/one<CR>N' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

@@ -68,6 +68,30 @@ test('dot repeat replays the full change', () => {
   assert.equal(v.text, 'X X cc');
 });
 
+test('marks jump back', () => {
+  const v = new Vim({ text: 'abc\ndef' });
+  v.feedString("maj'a");
+  assert.deepEqual(v.cursor, { line: 0, col: 0 });
+});
+
+test('ex sort reorders lines', () => {
+  const v = new Vim({ text: 'c\na\nb' });
+  v.feedString(':sort<CR>');
+  assert.equal(v.text, 'a\nb\nc');
+});
+
+test('ex normal applies keys to a range', () => {
+  const v = new Vim({ text: 'a\nb' });
+  v.feedString(':%normal A!<CR>');
+  assert.equal(v.text, 'a!\nb!');
+});
+
+test('gq wraps to textwidth', () => {
+  const v = new Vim({ text: 'one two three four five six', textwidth: 12 });
+  v.feedString('gqq');
+  assert.deepEqual(v.buf.lines, ['one two', 'three four', 'five six']);
+});
+
 test('macro records and replays', () => {
   const v = new Vim({ text: 'a\nb\nc' });
   v.feedString('qaIx<Esc>jq');
