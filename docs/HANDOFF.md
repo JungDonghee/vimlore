@@ -35,8 +35,8 @@ this file.
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
-  numbers, glyphs, bloom) and blits it once per frame; FX is cursor, ghost,
-  particles, flash. Desktop **23.5 → 55–56 fps**; phone stable at 59–60.
+  glyphs, bloom) and blits it once per frame; FX is cursor, cursorline, numbers,
+  ghost, particles, flash. Desktop **23.5 → 55–56 fps**; phone stable at 59–60.
 - Play screen is a **Vim window**: text starts top-left, `~` fills to the
   statusline, no rounded game card, cursorline, tabline, statusline.
 - **Cursor shapes**: block (normal), vertical bar (insert), underline
@@ -107,7 +107,7 @@ this file.
 6. **Doc numbers are checked only partially.** Oracle counts/links are gated;
    command/stage/perf numbers are not. Update them in the same commit.
 7. **Renderer rule (new):** the composite frame key is
-   `version|hue|coins|cursor.line|numbers|selection|matches`. If you add a
+   `version|hue|coins|selection|matches|scroll`. If you add a
    pixel that depends on something else, add it to the key or draw it on FX.
 8. **Overlay stacking:** `.overlay` is `z-index: 70`, above the CRT scanlines
    (60) and beam (61); do not lower it or the briefing goes soft.

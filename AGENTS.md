@@ -82,8 +82,8 @@ The game targets a cheap phone with a Bluetooth keyboard.
 - Zero runtime dependencies. Keep the bundle near 200 kB raw / 70 kB gzip;
   do not regress it without a measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
-  numbers, glyphs, bloom) and blits it once per frame; cursor, ghost and
-  particles are the FX pass. Rebuild the frame only when its key changes.
+  glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
+  ghost and particles are the FX pass. Rebuild the frame only when its key changes.
 - No `shadowBlur` in the render loop, no per-frame allocations in hot paths.
 - Everything is keyboard-driven; the DOM is rebuilt per screen, not per frame.
 
@@ -118,13 +118,14 @@ VIMLORE is a **CRT terminal from a machine that should be dead**.
 ## Renderer notes
 
 `src/ui/render.ts` keeps a cached glyph layer and a single opaque composite
-frame: background, selection/search highlights, cursorline, numbers, glyphs and
-bloom are baked together, then blitted once per frame. The frame key is
-`version|hue|coins|cursor.line|numbers|selection|matches|scroll` — if you add a pixel
-that depends on something else, add it to the key or draw it on the FX pass.
-Bloom is baked, never a per-frame additive blit. If you add an effect, measure
-it on a 2019 phone: the budget is one 60fps frame at 390×844. Never introduce
-per-frame allocation in `render()`.
+frame: background, selection/search highlights, glyphs and bloom are baked
+together, then blitted once per frame. **Cursorline, line numbers and the
+cursor are drawn on the FX pass** so vertical motion does not force a glyph
+repaint. The frame key is `version|hue|coins|selection|matches|scroll` — if you
+add a pixel that depends on something else, add it to the key or draw it on the
+FX pass. Bloom is baked, never a per-frame additive blit. If you add an effect,
+measure it on a 2019 phone: the budget is one 60fps frame at 390×844. Never
+introduce per-frame allocation in `render()`.
 
 ## Coverage and known gaps
 
@@ -192,9 +193,9 @@ buffer (top-left text, line-number gutter, `~` to the statusline, cursorline) �
 Three rules keep it correct:
 
 1. The **composite frame** is rebuilt only when its key changes (buffer
-   version, hue, coins, cursor line, numbers, selection, matches, scroll).
-   The cursor is drawn on the FX pass; the command line (`:`/`/`) replaces the
-   buffer cursor with a DOM cursor. Briefing overlays sit above the CRT
+   version, hue, coins, selection, matches, scroll). Cursorline, line numbers
+   and the cursor are drawn on the FX pass; the command line (`:`/`/`) replaces
+   the buffer cursor with a DOM cursor. Briefing overlays sit above the CRT
    scanlines (`z-index: 70`) so text stays crisp.
 2. **The view follows the cursor, Vim-style.** Lines never wrap: a long insert
    scrolls horizontally, and more lines than fit scroll vertically
@@ -223,8 +224,8 @@ Three rules keep it correct:
   drops it.
 - The gutter supports `off | abs | rel | both` (`progress.lineNumbers`), and
   `:set number / relativenumber / nonumber / nornu` overrides it for the
-  current chamber. Numbers are baked into the composite frame (the cursor line
-  is part of the frame key); the glyph layer itself must stay cursor-free.
+  current chamber. Numbers are drawn on the FX pass because they depend on the
+  cursor line; the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
 - Settings name/export/import use an **in-game keyboard prompt** (input focused,
