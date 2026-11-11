@@ -1880,6 +1880,7 @@ export class Vim {
   // ------------------------------------------------------------------- insert
 
   private enterInsert(kind: 'i' | 'a' | 'I' | 'A' | 'o' | 'O' | 's' | 'S' | 'C'): void {
+    const count = this.countNum || 1;
     const line = this.buf.line(this.cursor.line);
     if (kind === 'a') this.cursor = { line: this.cursor.line, col: Math.min(line.length, this.cursor.col + 1) };
     if (kind === 'I') this.cursor = { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) };
@@ -1902,10 +1903,10 @@ export class Vim {
       const at = kind === 'o' ? this.cursor.line + 1 : this.cursor.line;
       this.buf.insertLine(at, '');
       this.cursor = { line: at, col: 0 };
-      this.openInsertAt(this.cursor, snap);
+      this.openInsertAt(this.cursor, snap, count, true);
       return;
     }
-    this.openInsertAt(this.cursor);
+    this.openInsertAt(this.cursor, undefined, count);
   }
 
   private changeWholeLines(n: number): void {
@@ -1926,7 +1927,7 @@ export class Vim {
     this.takeCount();
   }
 
-  openInsertAt(pos: Pos, undoSnapshot?: BufferSnapshot): void {
+  openInsertAt(pos: Pos, undoSnapshot?: BufferSnapshot, repeat = 1, lineRepeat = false): void {
     // Insert mode ends the operator composition. Several `c` paths open insert
     // without going through applyOp (zero-range/failed motions, empty objects);
     // leaving `op` set would swallow the next key and break undo.
@@ -1936,6 +1937,9 @@ export class Vim {
     this.cursor = { line, col: Math.max(0, Math.min(pos.col, this.buf.line(line).length)) };
     this.insertStart = { ...this.cursor };
     this.insertUndo = undoSnapshot ?? this.snapshot();
+    this.insertRepeat = repeat;
+    this.insertLineRepeat = lineRepeat;
+    this.insertBase = repeat > 1 ? this.snapshot() : null;
     this.say('');
     this.setMode('insert');
     this.takeCount();
@@ -2001,14 +2005,17 @@ export class Vim {
     }
   }
 
-  private insertTextAtCursor(text: string): void {
+  private insertTextAtCursor(text: string, atEnd = false): void {
     const line = this.buf.line(this.cursor.line);
     this.buf.setLine(this.cursor.line, line.slice(0, this.cursor.col) + text + line.slice(this.cursor.col));
     if (text.includes('\n')) {
       const parts = this.buf.line(this.cursor.line).split('\n');
       this.buf.lines.splice(this.cursor.line, 1, ...parts);
       this.buf.setLines(this.buf.lines);
-      this.cursor = { line: this.cursor.line + parts.length - 1, col: 0 };
+      this.cursor = {
+        line: this.cursor.line + parts.length - 1,
+        col: atEnd ? parts[parts.length - 1].length : 0,
+      };
     } else {
       this.cursor = { line: this.cursor.line, col: this.cursor.col + text.length };
     }
@@ -2072,6 +2079,17 @@ export class Vim {
     this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'delete' });
   }
 
+  /** Text produced by the first insert pass, from a pre-insert snapshot. */
+  private insertedText(): string {
+    const base = this.insertBase?.lines.join('\n') ?? '';
+    const cur = this.buf.flat;
+    let p = 0;
+    while (p < base.length && p < cur.length && base[p] === cur[p]) p++;
+    let s = 0;
+    while (s < base.length - p && s < cur.length - p && base[base.length - 1 - s] === cur[cur.length - 1 - s]) s++;
+    return cur.slice(p, cur.length - s);
+  }
+
   private closeInsert(): void {
     this.insertOneShot = false;
     this.insertRegPending = false;
@@ -2096,6 +2114,16 @@ export class Vim {
       this.cmdKeys = [];
       return;
     }
+    if (this.insertRepeat > 1 && this.insertBase) {
+      const inserted = this.insertedText();
+      if (inserted) {
+        const chunk = this.insertLineRepeat ? '\n' + inserted : inserted;
+        this.insertTextAtCursor(chunk.repeat(this.insertRepeat - 1), true);
+      }
+    }
+    this.insertRepeat = 1;
+    this.insertLineRepeat = false;
+    this.insertBase = null;
     const entry = this.insertUndo;
     this.insertUndo = null;
     if (entry) this.commit(entry, 'insert');
@@ -2107,6 +2135,9 @@ export class Vim {
   }
 
   insertUndo: BufferSnapshot | null = null;
+  private insertRepeat = 1;
+  private insertLineRepeat = false;
+  private insertBase: BufferSnapshot | null = null;
   private insertRegPending = false;
   private insertOneShot = false;
 

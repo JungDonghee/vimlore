@@ -50,6 +50,23 @@ test('buffer index round-trips', () => {
 // ---------------------------------------------------------------------------
 // Undo / repeat / macros
 // ---------------------------------------------------------------------------
+test('count before insert repeats the typed text', () => {
+  const a = new Vim({ text: 'abc' });
+  a.feedString('3i0<Esc>');
+  assert.equal(a.text, '000abc');
+  assert.deepEqual(a.cursor, { line: 0, col: 2 });
+
+  const b = new Vim({ text: 'abc' });
+  b.feedString('3a0<Esc>');
+  assert.equal(b.text, 'a000bc');
+  assert.deepEqual(b.cursor, { line: 0, col: 3 });
+
+  const c = new Vim({ text: 'abc' });
+  c.feedString('3o0<Esc>');
+  assert.deepEqual(c.buf.lines, ['abc', '0', '0', '0']);
+  assert.deepEqual(c.cursor, { line: 3, col: 0 });
+});
+
 test('Tab in insert mode inserts spaces to the next tabstop', () => {
   const v = new Vim({ text: 'x' });
   v.feedString('i<Tab>y<Esc>');

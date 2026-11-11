@@ -26,7 +26,7 @@ The current engine is strong at the grammar and weak at the boundary:
 | **surface manifest** (what is in scope, with evidence) | prose only (`VIM_COVERAGE.md`, fuzz alphabet) |
 | **systematic matrix coverage** | missing; fuzz is random |
 | **explicit refusal outside scope** | missing; unsupported input can half-work |
-| oracle / fuzz / invariants | strong (363 cases; 12 of 12 fuzz seeds clean at n=1000) |
+| oracle / fuzz / invariants | strong (368 cases; 12 of 12 fuzz seeds clean at n=1000) |
 
 The last engine pass proved the point: `de`/`2dw` linewise conversion,
 counted `$`, zero-range `^`/`h`, bracket linewise objects and visual-block
@@ -141,7 +141,7 @@ The audit is a **CI gate**. Prose coverage stops being the source of truth.
   commands the `normal!` oracle harness cannot drive);
 - 9 engine-only features without a Grimoire row (`^`, `gg`, `G`, `(`, `)`,
   `<C-a>`, `<C-x>`, `g#`, `=`) each have oracle cases;
-- 0 orphan oracle cases: every one of the 363 cases maps to a command or an
+- 0 orphan oracle cases: every one of the 368 cases maps to a command or an
   engine-only feature;
 - 15 grimoire-only commands and 12 commands no stage solution uses remain
   **curriculum** gaps, reported separately, not engine gaps.
@@ -175,7 +175,7 @@ remaining half of the closed-world contract.
 ### Phase B — essence extraction (normalize + cursor done)
 `normalize.ts` owns `flatRange` and Q02/Q10; `cursor.ts` owns the Q04/Q09 cursor
 policy (zero-range case motions and the linewise case-operator landing). The
-engine keeps only effect dispatch and calls both modules; oracle 363/363 and
+engine keeps only effect dispatch and calls both modules; oracle 368/368 and
 matrix 21,712/21,712 stayed green through the extraction. Remaining: Q03/Q06
 (case/yank cursor details) if they earn a separate home. Acceptance is
 unchanged: oracle green at every commit, every branch linked to a quirk ID.
@@ -236,7 +236,7 @@ in the campaign engine. This program is how the campaign engine earns the word
 ## 8. First three tasks
 
 1. ~~`tools/surface-audit.ts` + report~~ — done, strict CI gate.
-2. ~~CI native-Vim oracle job~~ — done (`oracle` job: 363 cases + fuzz smoke).
+2. ~~CI native-Vim oracle job~~ — done (`oracle` job: 368 cases + fuzz smoke).
 3. ~~Phase B pilot: delete normalization (Q02/Q10) into `normalize.ts`~~ — done;
    next is the cursor policy (Q04/Q09) and Q03/Q06 in the same module.
 4. **Phase C next:** close the 263 matrix divergences by family (counted

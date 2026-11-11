@@ -6,7 +6,7 @@
 
 ## Why this move
 
-The engine is now exact on the tested surface: **oracle 363/363**, **matrix
+The engine is now exact on the tested surface: **oracle 368/368**, **matrix
 21,712/21,712**, all 51 stages, 28 tests, 12 fuzz seeds at n=1000 clean. Remaining
 n=3000 divergences are rare visual-block/blank-line edges, recorded in
 `HANDOFF.md` §3b.
@@ -81,7 +81,7 @@ book section (no invented lesson).
 
 ## Guardrails (non-negotiable)
 
-- Oracle **363/363**, matrix **21,712/21,712**, tests **28**, level lint **51**,
+- Oracle **368/368**, matrix **21,712/21,712**, tests **28**, level lint **51**,
   surface `--strict`, invariants, build/budget stay green.
 - Zero runtime dependencies; no server; no embedded Vim/Neovim runtime.
 - A deferred Vim feature is **deferred, not out of scope**; it enters the

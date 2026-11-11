@@ -490,5 +490,10 @@ export const CASES: VimCase[] = [
   { name: 'V{ yank cursor at the selection start', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 3], keys: 'V{y' },
   { name: 'block < after } outdents fully', text: 'function f() {\n  return 1;\n}', cursor: [1, 11], keys: '<C-v>}<' },
   // --- DM1: observable state (operator leak + undo cursor) -----------------
+  { name: '3i0 count insert', text: 'abc', cursor: [1, 0], keys: '3i0<Esc>' },
+  { name: '3iab count insert', text: 'abc', cursor: [1, 0], keys: '3iab<Esc>' },
+  { name: '3a0 count append', text: 'abc', cursor: [1, 0], keys: '3a0<Esc>' },
+  { name: '3A0 count append end', text: 'abc', cursor: [1, 0], keys: '3A0<Esc>' },
+  { name: '3o0 count open', text: 'abc', cursor: [1, 0], keys: '3o0<Esc>' },
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
