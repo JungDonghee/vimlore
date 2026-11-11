@@ -14,7 +14,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **248 oracle cases**, all matching real Vim |
 | gates | oracle 262/262 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors |
-| build | JS 230,512 B · single `dist/vimlore.html` 254,185 B · gzip 80,858 B |
+| build | JS 230,512 B · single `dist/vimlore.html` 254,185 B · gzip 80,858 B · budget gate 258k/82k |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 

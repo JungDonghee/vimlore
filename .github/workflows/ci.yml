@@ -15,6 +15,7 @@ jobs:
       - run: npm run doc-check
       - run: npm run invariants
       - run: npm run build
+      - run: npm run budget
       - name: absolute asset paths must not exist (blank page on subpath hosting)
         run: |
           if grep -qE 'src="/assets|href="/assets' dist/index.html; then

@@ -108,6 +108,7 @@ npx tsc --noEmit
 npm run doc-check
 npm run invariants
 npm run build
+npm run budget
 node --experimental-strip-types tools/oracle-diff.ts    # 262/262
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7
 cd /home/jung/ai_station/sandbox && node pw/audit.mjs

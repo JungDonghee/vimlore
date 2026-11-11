@@ -77,7 +77,7 @@
 | engine oracle | **262/262** vs `vim -u NONE` (142 at session start, +120 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 230,512 B · single `dist/vimlore.html` 254,185 B · gzip 80,858 B |
+| build | JS 230,512 B · single `dist/vimlore.html` 254,185 B · gzip 80,858 B · budget gate 258k/82k |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |

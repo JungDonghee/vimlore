@@ -53,7 +53,8 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   registers, macros, marks, search, `:s`/`:g`, undo/jumps, visual/block, ex, and
   eventually buffers/files/splits/tabs are all in scope. Deferred is not
   rejected; the roadmap is [`docs/FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md).
-- **It runs on a potato.** Zero runtime dependencies, ~80 kB gzipped, one
+- **It runs on a potato.** Zero runtime dependencies, ~80 kB gzipped with a
+  hard 258 kB / 82 kB bundle-budget gate, one
   canvas with a cached opaque composite frame, cursorline/numbers on a cheap FX
   pass, and a CRT switch for weak devices. Phone profile: 60 fps. The desktop
   headless measurement (52–57 fps) is bounded by the headless browser itself;
