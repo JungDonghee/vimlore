@@ -12,9 +12,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **238 oracle cases**, all matching real Vim |
-| gates | oracle 238/238 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 223,214 B · single `dist/vimlore.html` 246,887 B · gzip 78,900 B |
+| engine | 2,532 lines; **239 oracle cases**, all matching real Vim |
+| gates | oracle 239/239 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 223,258 B · single `dist/vimlore.html` 246,931 B · gzip 78,916 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -31,7 +31,10 @@ this file.
   edges, `vlB<` visual-EOL, `2daW`/`2daw`, sentence/paragraph boundaries,
   `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
 - Fuzz seed 7: **71 → 0**, seed 11: **4 → 0**, seed 23: **8 → 0**.
-  **All three seeds are fully clean: 0 divergences, buffer and cursor.**
+  **Seeds 7/11/23 are fully clean: 0 divergences, buffer and cursor.**
+  Extended seeds 31/47/101 still expose 18 edges (counts/text objects,
+  `<C-v>w>` tab-vs-space, `gU{`, `2daw`, `di{`, `dFa`); `d$` on an empty line
+  was fixed in the same pass.
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
@@ -65,7 +68,8 @@ this file.
 
 ### Not done (queued, do not pretend otherwise)
 - Change list (`g;`/`g,`), interactive `:s///c`, `=` indent.
-- Fuzz corpus is clean on all three seeds; keep it that way.
+- Keep seeds 7/11/23 clean; extended seeds 31/47/101 are the next correctness
+  frontier (18 edges listed in `MASTER_PLAN.md` §2.1).
 - Curriculum metadata: every one of the 51 stages now declares `teaches`
   (c08s5 uses `0/j/f` as its maze tools; c01s2 `count`, c09s1 `:d` are grimoire
   entries). 18 older grimoire commands still have no stage that declares them;
@@ -130,7 +134,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 238/238
+node --experimental-strip-types tools/oracle-diff.ts        # 239/239
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

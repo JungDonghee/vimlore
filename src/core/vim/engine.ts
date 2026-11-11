@@ -870,7 +870,9 @@ export class Vim {
       case '$': {
         const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count - 1);
         // A counted `$` that crosses lines is linewise in Vim, not charwise.
-        const kind = line !== this.cursor.line ? 'linewise' : 'inclusive';
+        // On an empty line `$` has zero width, so `d$` must not eat the newline.
+        const empty = this.buf.line(line).length === 0;
+        const kind = line !== this.cursor.line ? 'linewise' : empty ? 'exclusive' : 'inclusive';
         return { to: { line, col: M.lineEnd(this.buf, line) }, kind };
       }
       case '+':

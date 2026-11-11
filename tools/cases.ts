@@ -311,5 +311,7 @@ export const CASES: VimCase[] = [
 
   { name: 'V(y blank-line sentence', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: 'V(y' },
 
+  { name: 'd$ on empty line', text: 'a\n\nb', cursor: [2, 0], keys: 'd$' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
