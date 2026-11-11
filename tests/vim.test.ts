@@ -50,6 +50,18 @@ test('buffer index round-trips', () => {
 // ---------------------------------------------------------------------------
 // Undo / repeat / macros
 // ---------------------------------------------------------------------------
+test('whole-line charwise yanks are linewise registers', () => {
+  const a = new Vim({ text: 'a\n\nb\n\nc' });
+  a.feedString('y)');
+  assert.equal(a.registers.get('"')?.text, 'a\n');
+  assert.equal(a.registers.get('"')?.linewise, true);
+
+  const b = new Vim({ text: 'a\n\nb\n\nc' });
+  b.feedString('2yw');
+  assert.equal(b.registers.get('"')?.text, 'a\n\n');
+  assert.equal(b.registers.get('"')?.linewise, true);
+});
+
 test('undo restores before a change session', () => {
   const v = new Vim({ text: 'hello world' });
   v.feedString('ciwX<Esc>');

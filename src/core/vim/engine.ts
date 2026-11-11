@@ -1440,8 +1440,25 @@ export class Vim {
       this.emit({ type: 'yank', register: reg ?? '"', text });
     } else {
       const [s, e] = this.flatRange(r, inclusive);
-      const text = this.buf.flat.slice(s, Math.max(s, e));
-      this.storeRegister(reg, text, false, true);
+      let text = this.buf.flat.slice(s, Math.max(s, e));
+      // Vim stores a charwise yank that covers complete lines (both ends at
+      // column 0) as a linewise register (`y)`, `2yw`, `yb`). `$` is the
+      // exception: it stays charwise.
+      const l1 = Math.min(r.start.line, r.end.line);
+      const l2 = Math.max(r.start.line, r.end.line);
+      const blankBetween = this.buf.lines.slice(l1, l2 + 1).some((line) => line.trim() === '');
+      const targetBlank = this.buf.line(r.end.line).trim() === '';
+      const wholeLines =
+        !((motionKey === 'w' || motionKey === 'W') && targetBlank) &&
+        r.start.col === 0 &&
+        r.end.col === 0 &&
+        l2 > l1 &&
+        !visual &&
+        blankBetween &&
+        motionKey !== '$' &&
+        (!inclusive || (fromTextObject && text.endsWith('\n')));
+      if (wholeLines) text = this.buf.lines.slice(l1, l2).join('\n') + '\n';
+      this.storeRegister(reg, text, wholeLines, true);
       const p = this.buf.pos(s);
       this.cursor = M.moveTo(this.buf, p);
       this.emit({ type: 'yank', register: reg ?? '"', text });
@@ -1612,6 +1629,12 @@ export class Vim {
       });
     } else {
       this.cursor = M.moveTo(this.buf, this.buf.pos(s));
+    }
+    if (!visual && !r.block) {
+      before.undoCursor = {
+        line: Math.min(r.start.line, r.end.line),
+        col: this.cursor.col,
+      };
     }
     this.commit(before, 'case');
     this.afterUnit();
