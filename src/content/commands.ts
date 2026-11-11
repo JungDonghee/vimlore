@@ -28,6 +28,7 @@ export const COMMANDS: CommandInfo[] = [
   c('j', 'j', 'down', '아래', 1, 'Move one line down.', '한 줄 아래로.'),
   c('k', 'k', 'up', '위', 1, 'Move one line up.', '한 줄 위로.'),
   c('l', 'l', 'right', '오른쪽', 1, 'Move one character right.', '한 칸 오른쪽으로.'),
+  c('count', '3l', 'count', '반복 횟수', 1, 'A number before a motion repeats it.', '모션 앞의 숫자는 반복 횟수.'),
   c('0', '0', 'line start', '줄 시작', 1, 'Jump to column 0.', '줄 맨 앞으로.'),
   c('$', '$', 'line end', '줄 끝', 1, 'Jump to the last character.', '줄 맨 끝으로.'),
   c('X', 'X', 'delete before', '앞 글자 삭제', 1, 'Delete the character before the cursor.', '커서 앞 글자를 지운다.'),
@@ -116,6 +117,7 @@ export const COMMANDS: CommandInfo[] = [
   c('C-o', '<C-o>', 'jump back', '점프 뒤로', 8, 'Go back in the jumplist.', '점프 목록에서 뒤로.'),
 
   // Chapter 9 — command line
+  c(':d', ':1,3d', 'delete range', '범위 삭제', 9, 'Delete a line range by address.', '주소 범위의 줄을 지운다.'),
   c(':m', ':m', 'move line', '줄 이동', 9, 'Move lines after another line.', '줄을 다른 위치로 옮긴다.'),
   c(':t', ':t', 'copy line', '줄 복사', 9, 'Copy lines after another line.', '줄을 다른 위치로 복사.'),
   c(':sort', ':sort', 'sort', '정렬', 9, 'Sort lines.', '줄을 정렬.'),

@@ -62,7 +62,7 @@ export const c01: Chapter = {
       goal: { type: 'reach', char: '*' },
       par: 5,
       solution: '13l5j',
-      teaches: [],
+      teaches: ['count'],
       hints: [
         { en: '13l is thirteen steps in two keystrokes.', ko: '13l은 두 번의 키로 열세 걸음.' },
         { en: '13l then 5j.', ko: '13l 그리고 5j.' },

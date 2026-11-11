@@ -55,12 +55,12 @@
 | item | value |
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
-| content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
+| content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine oracle | **228/228** vs `vim -u NONE` (142 at session start, +86 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 220,521 B · single `dist/vimlore.html` 244,194 B · gzip 78,222 B |
-| perf (headless) | desktop 1280×800: **50–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
+| build | JS 220,709 B · single `dist/vimlore.html` 244,382 B · gzip 78,293 B |
+| perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
@@ -183,7 +183,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
 | S2 | fixed engine bugs | **done** — +86 cases, oracle 228/228, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
-| S4 | renderer composite + fps pass | **done** — desktop 50–56 fps x1, phone 59–60 |
+| S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
 | S6 | handoff | **done** — commit `224175d` pushed; CI + Pages green |
 

@@ -386,8 +386,7 @@ export class Renderer {
 
   /** Cheap numeric hash of everything baked into the composite frame. */
   private frameKeyFor(view: View): number {
-    let k = (view.version * 131 + this.hue * 17 + view.collected.size * 7 + view.cursor.line * 3 + this.scrollX * 11 + this.scrollY * 13 + (this.bloom ? 1 : 0)) | 0;
-    k = (k * 31 + (view.numbers === 'off' ? 0 : view.numbers === 'abs' ? 1 : view.numbers === 'rel' ? 2 : 3)) | 0;
+    let k = (view.version * 131 + this.hue * 17 + view.collected.size * 7 + this.scrollX * 11 + this.scrollY * 13 + (this.bloom ? 1 : 0)) | 0;
     const s = view.sel;
     k = (k * 31 + (s ? 1 : 0)) | 0;
     if (s) {
@@ -442,31 +441,6 @@ export class Renderer {
 
     this.paintHighlights(f, view);
 
-    // cursorline spans the window, like 'cursorline'
-    const curLine = view.cursor.line;
-    if (curLine >= this.scrollY && curLine < this.scrollY + this.visibleRows) {
-      f.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.06)`;
-      f.fillRect(0, this.yOf(curLine) + 1, this.w, this.cellH - 2);
-    }
-
-    if (view.numbers !== 'off') {
-      f.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
-      f.textAlign = 'right';
-      f.textBaseline = 'middle';
-      const nFirst = Math.max(0, this.scrollY);
-      const nLast = Math.min(view.lines.length, this.scrollY + this.visibleRows);
-      for (let li = nFirst; li < nLast; li++) {
-        const isCur = li === curLine;
-        let label: string;
-        if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
-        else if (view.numbers === 'both') label = String(isCur ? li + 1 : Math.abs(li - curLine));
-        else label = String(li + 1);
-        f.fillStyle = isCur ? 'rgba(190,255,214,0.92)' : 'rgba(66,168,108,0.42)';
-        f.fillText(label, this.ox + (this.digits + 0.55) * this.cellW, this.yOf(li) + this.cellH / 2);
-      }
-      f.textAlign = 'left';
-      f.font = `${this.fontSize}px ${MONO}`;
-    }
 
     f.drawImage(this.layer, 0, 0, this.w, this.h);
 
@@ -497,6 +471,33 @@ export class Renderer {
     }
     // One opaque blit: no clearRect, no per-frame bloom pass.
     g.drawImage(this.frame, 0, 0, this.w, this.h);
+
+    // cursorline and gutter numbers are cheap FX, not part of the baked frame:
+    // vertical motions must not force a full glyph/bloom repaint.
+    const curLine = view.cursor.line;
+    if (curLine >= this.scrollY && curLine < this.scrollY + this.visibleRows) {
+      g.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.06)`;
+      g.fillRect(0, this.yOf(curLine) + 1, this.w, this.cellH - 2);
+    }
+    if (view.numbers !== 'off') {
+      g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
+      g.textAlign = 'right';
+      g.textBaseline = 'middle';
+      const nFirst = Math.max(0, this.scrollY);
+      const nLast = Math.min(view.lines.length, this.scrollY + this.visibleRows);
+      for (let li = nFirst; li < nLast; li++) {
+        const isCur = li === curLine;
+        let label: string;
+        if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
+        else if (view.numbers === 'both') label = String(isCur ? li + 1 : Math.abs(li - curLine));
+        else label = String(li + 1);
+        g.fillStyle = isCur ? 'rgba(190,255,214,0.92)' : 'rgba(66,168,108,0.42)';
+        g.fillText(label, this.ox + (this.digits + 0.55) * this.cellW, this.yOf(li) + this.cellH / 2);
+      }
+      g.textAlign = 'left';
+      g.textBaseline = 'middle';
+      g.font = `${this.fontSize}px ${MONO}`;
+    }
 
     // ghost hint
     if (view.ghost) {

@@ -11,11 +11,11 @@
 |---|---|
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
-| content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
+| content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **228 oracle cases**, all matching real Vim |
 | gates | oracle 228/228 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 220,521 B · single `dist/vimlore.html` 244,194 B · gzip 78,222 B |
-| perf (headless) | desktop 1280×800 **50–56 fps** (x1), 47–50 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
+| build | JS 220,709 B · single `dist/vimlore.html` 244,382 B · gzip 78,293 B |
+| perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -65,10 +65,10 @@ this file.
 - Change list (`g;`/`g,`), `:s///c`, `\zs/\ze`, `gi`, `=` indent.
 - Remaining cross-seed fuzz edges (seed 11: `dt(`, `2cw`, `cw`; seed 23:
   visual `vk$d`/`vlB<`, block `U`, `3cW`, `2daW`).
-- Curriculum metadata: 6 integration stages now declare `teaches`; 3 remain
-  generic (c01s2 count, c08s5 maze, c09s1 ranges) and 18 grimoire commands are
-  still never declared. `c02s5` is now declared as `f`/`;` (the old `t` claim
-  was corrected in CURRICULUM).
+- Curriculum metadata: `count` (`3l`) and `:d` (`:1,3d`) are now grimoire
+  entries, so c01s2 and c09s1 declare real lessons; only c08s5 (maze/integration)
+  is still generic. 18 older commands remain never-declared. `c02s5` is declared
+  as `f`/`;` (the old `t` claim was corrected in CURRICULUM).
 - `progress.ghost` dead field; version/tag mismatch; chapter title casing.
 - CI has no real `vim` job and no browser/perf gate; fuzz is local-only.
 - Doc drift outside the numbers fixed in this slice (see §2).

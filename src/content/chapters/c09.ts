@@ -61,7 +61,7 @@ ID  NAME    STATE
       },
       par: 12,
       solution: ':1,3d<CR>:2,4d<CR>',
-      teaches: [],
+      teaches: [':d'],
       hints: [
         {
           en: 'A colon opens the command line. A range is `first,last`: `:1,3d` deletes lines 1 to 3.',
