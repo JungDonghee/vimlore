@@ -668,6 +668,13 @@ export class PlayScreen {
         lang === 'ko' ? ` 키  ·  3별 기준 ${par}` : ` keys  ·  par ${par}`,
         this.host.bestKeys !== null && this.host.bestKeys <= keys ? (lang === 'ko' ? '  ·  최고 기록' : '  ·  best') : '',
       ),
+      h(
+        'div',
+        { class: 'res-drill' },
+        keys <= par
+          ? this.t('DRILL — repeat it once more. The hand remembers what the head forgets.', 'DRILL — 한 번 더 반복하라. 머리가 잊은 것을 손이 기억한다.')
+          : this.t(`DRILL — RETRY and close the gap: ${keys - par} key${keys - par === 1 ? '' : 's'} to par.`, `DRILL — RETRY로 격차를 좁혀라. par까지 ${keys - par}키.`),
+      ),
       learned.length
         ? h(
             'div',

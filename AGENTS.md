@@ -249,6 +249,8 @@ Three rules keep it correct:
   cursor line; the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
+- Results shows a **DRILL** cue: repeat the par solution or RETRY to close the
+  keys-to-par gap. Repetition is deliberate; never remove it for novelty.
 - Settings name/export/import use an **in-game keyboard prompt** (input focused,
   Enter submits, Esc cancels, readonly export with Ctrl+A/Ctrl+C); erase uses an
   in-game YES/CANCEL confirm (h/l, Enter, Esc). No browser dialogs for these.

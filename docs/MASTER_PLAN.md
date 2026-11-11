@@ -77,7 +77,7 @@
 | engine oracle | **266/266** vs `vim -u NONE` (142 at session start, +124 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 231,196 B · single `dist/vimlore.html` 254,869 B · gzip 81,139 B · budget gate 258k/82k |
+| build | JS 231,540 B · single `dist/vimlore.html` 255,330 B · gzip 81,368 B · budget gate 258k/82k |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -90,7 +90,8 @@ composite-frame renderer (**23.5 → 52–57 fps** desktop); `gn`/`g*`/`g#`,
 `gI`/`gi`, `\zs`/`\ze`, interactive `:s///c` and simple brace-depth `=`; a
 Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
-an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing; Vim-style horizontal/
+an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing and a results **DRILL**
+cue for varied repetition; Vim-style horizontal/
 vertical viewport scrolling; an **F1 primer**
 on every screen and an auto-**coach** after idle/locked/damage.
 

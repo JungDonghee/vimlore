@@ -1379,3 +1379,14 @@ body.crt-off .board::after { display: none; }
 }
 .text-input:focus { outline: 1px solid var(--ph); outline-offset: 1px; }
 .prompt-card .actions { margin-top: 16px; }
+
+
+/* results: repetition is part of the lesson, not an afterthought */
+.res-drill {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--ph-dim);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}

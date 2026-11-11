@@ -14,7 +14,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 3,053 lines; **266 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 266/266 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors |
-| build | JS 231,196 B · single `dist/vimlore.html` 254,869 B · gzip 81,139 B · budget gate 258k/82k |
+| build | JS 231,540 B · single `dist/vimlore.html` 255,330 B · gzip 81,368 B · budget gate 258k/82k |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -63,6 +63,8 @@ this file.
   **coach** after ~6–10 s idle, on locked keys and on damage; any key dismisses
   it, Tab escalates. First-ever session shows a NORMAL/INSERT primer in the
   briefing. Focused controls scroll into view, so no screen needs a mouse.
+- Results screen carries a **DRILL** cue: repeat the par solution, or RETRY and
+  close the keys-to-par gap; repetition is part of the lesson, not an afterthought.
 - Landscape 844×390 uses a two-column briefing so BEGIN is above the fold.
 
 ### Advanced coverage delivered
