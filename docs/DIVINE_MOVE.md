@@ -7,7 +7,7 @@
 ## Why this move
 
 The engine is now exact on the tested surface: **oracle 363/363**, **matrix
-21,712/21,712**, 51/51 stages, 28 tests, 12 fuzz seeds at n=1000 clean. Remaining
+21,712/21,712**, all 51 stages, 28 tests, 12 fuzz seeds at n=1000 clean. Remaining
 n=3000 divergences are rare visual-block/blank-line edges, recorded in
 `HANDOFF.md` §3b.
 

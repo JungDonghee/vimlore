@@ -227,6 +227,19 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 If the clock runs out, **stop at a green gate**: commit what passes, move the
 rest to the task board. Never commit a red level or a failing oracle.
 
+## Direction: the divine move (2026-11-11)
+
+The engine is exact on the tested surface; the bottleneck is now verified
+content. [`DIVINE_MOVE.md`](DIVINE_MOVE.md) owns the three tracks and their
+acceptance criteria:
+
+| id | track | status |
+|---|---|---|
+| DM1 | observable-state oracle (mode/registers/undo/marks) | **next** — local tool first |
+| DM2 | license-safe corpus from Vim tests / VimGolf / book code | queued after DM1 |
+| DM3 | level compiler (BFS/A*, necessity + par + citation) | queued after DM2 |
+| DM4 | curriculum mastery loops on synthesized drills | after DM3 |
+
 ## 6. Task board
 
 | id | task | workstream | status | files |
