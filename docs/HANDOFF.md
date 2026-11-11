@@ -3,7 +3,7 @@
 > **Priority and the task board live in [`MASTER_PLAN.md`](MASTER_PLAN.md).**
 > This file is the snapshot a new AI needs in the first ten minutes: what is
 > true now, what is broken, and which traps cost the last session hours.
-> **Last rewritten:** 2026-11-11, after slice 1 + Tier 1 coverage.
+> **Last rewritten:** 2026-11-11, end of the engine/UI hardening pass.
 
 ## 0. Snapshot (after slice 1)
 
@@ -12,9 +12,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **232 oracle cases**, all matching real Vim |
-| gates | oracle 232/232 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 222,365 B · single `dist/vimlore.html` 246,038 B · gzip 78,727 B |
+| engine | 2,532 lines; **233 oracle cases**, all matching real Vim |
+| gates | oracle 233/233 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 222,638 B · single `dist/vimlore.html` 246,311 B · gzip 78,749 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -26,12 +26,13 @@ this file.
 ### Engine correctness (the big win)
 - `tools/fuzz.ts` added: seeded differential fuzzer, one shared `vim -es`
   process, sentinel-based detection of Vim aborts. `npm run fuzz`.
-- **63 new oracle cases** (142 → 205): operator ranges with `gg`/`G`/`{`/`}`,
-  counts on doubled operators (`3>>`, `3g~~`, `2J`), visual-block `~`/`>`/`<`,
-  visual `f/F/t/T`, `cw`/`cW`/text-object edges, `y`/`P` cursor rules, join
-  stripping, sentence/paragraph boundaries, block `$`.
-- Fuzz seed 7: **71 → 2**, seed 11: **4 → 2**, both **0 buffer-content**.
-  Seed 23 still has 3 content edges + 1 cursor edge (listed in `MASTER_PLAN.md` §2.1).
+- **91 new oracle cases** (142 → 233): operator ranges with `gg`/`G`/`{`/`}`,
+  counts on doubled operators, visual-block `~`/`>`/`<`, `cw`/`cW`/text-object
+  edges, `vlB<` visual-EOL, `2daW`/`2daw`, sentence/paragraph boundaries,
+  `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
+- Fuzz seed 7: **71 → 2**, seed 11: **4 → 2**, seed 23: **8 → 1**.
+  **All three seeds now have 0 buffer-content divergences**; only cursor-only
+  edges remain (`2yaW`, `V(y`, `gUap`, `<i(`, `Vku`).
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
@@ -61,11 +62,11 @@ this file.
 ### Advanced coverage delivered
 - `gn` (visual selection, operator-pending `dgn`/`cgn`, counts, dot repeat),
   `g*`/`g#` (word under cursor without boundaries), `2*` counts.
+- `gI` / `gi`, and `\zs` / `\ze` in search and `:s`.
 
 ### Not done (queued, do not pretend otherwise)
-- Change list (`g;`/`g,`), `:s///c`, `\zs/\ze`, `gi`, `=` indent.
-- Remaining cross-seed fuzz edges (seed 11: `dt(`, `2cw`, `cw`; seed 23:
-  visual `vk$d`/`vlB<`, block `U`, `3cW`, `2daW`).
+- Change list (`g;`/`g,`), interactive `:s///c`, `=` indent.
+- Cursor-only fuzz edges (`2yaW`, `V(y`, `gUap`, `<i(`, `Vku`); no content diffs.
 - Curriculum metadata: every one of the 51 stages now declares `teaches`
   (c08s5 uses `0/j/f` as its maze tools; c01s2 `count`, c09s1 `:d` are grimoire
   entries). 18 older grimoire commands still have no stage that declares them;
@@ -130,7 +131,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 232/232
+node --experimental-strip-types tools/oracle-diff.ts        # 233/233
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

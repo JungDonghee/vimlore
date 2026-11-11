@@ -298,5 +298,8 @@ export const CASES: VimCase[] = [
   { name: ':s with \zs', text: 'foo bar\nfoo baz', cursor: [1, 0], keys: ':%s/foo \zsbar/X/<CR>' },
   { name: ':s with \ze', text: 'foo bar\nfoo baz', cursor: [1, 0], keys: ':%s/foo\ze bar/X/<CR>' },
 
+  { name: 'vlB< visual EOL', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: 'vlB<' },
+
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

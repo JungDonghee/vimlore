@@ -1756,6 +1756,20 @@ export class Vim {
     }
     // In visual-block mode Vim's `$` extends to (virtual) MAXCOL, so a
     // following `h` lands on the last character, not one before it.
+    if (
+      key === 'l' &&
+      (this.mode === 'visual' || this.mode === 'visual-block') &&
+      this.count === '' &&
+      this.cursor.col === this.buf.line(this.cursor.line).length - 1
+    ) {
+      // Vim's visual `l` may sit one past EOL; a following `B` then collapses
+      // to the start of the current word instead of jumping a word back.
+      const line = this.cursor.line;
+      this.cursor = { line, col: this.buf.line(line).length };
+      this.wantColValue = this.cursor.col;
+      this.afterUnit();
+      return;
+    }
     if (key === '$' && (this.mode === 'visual' || this.mode === 'visual-block') && this.count === '') {
       // Keep the virtual one-past-end column (M.moveTo would clamp it away).
       const line = this.cursor.line;
