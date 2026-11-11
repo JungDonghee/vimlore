@@ -15,8 +15,8 @@
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 3,499 lines + `normalize.ts` 100; **363 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 32 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 241,908 B · single `dist/vimlore.html` 265,698 B · gzip 83,735 B · budget gate 266k/85k (raised deliberately this pass, §3) |
+| gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 33 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| build | JS 241,970 B · single `dist/vimlore.html` 265,760 B · gzip 83,758 B · budget gate 266k/85k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | state matrix | 21,712 command trees with register/undo: **21,373 matched, 339 open** (local DM1; `docs/STATE_REPORT.md`) |
@@ -135,7 +135,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **266,000/85,000**. Each was measured and committed with the feature
-that needed it. Current build is 265,698 B raw / 83,735 B gzip, so headroom is
+that needed it. Current build is 265,760 B raw / 83,758 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -157,6 +157,13 @@ Known edge divergences (not taught, recorded but not fixed): `<C-v>)` block
 geometry on multi-line/short lines, `dW` on a blank line, and a one-column block
 `<` cursor after `j`. They are outside the current curriculum; do not fake a
 fix in a level.
+
+### Tab in insert mode (2026-11-11)
+
+Fixed a real gameplay bug: the play screen intercepted Tab for the hint even in
+insert mode, so `i` + Tab typed no spaces. Tab now reaches the engine in
+insert/replace (it expands to spaces to the next tabstop, 4); outside those
+modes it still opens the hint. Unit-tested.
 
 ## 3c. Next direction (the divine move)
 

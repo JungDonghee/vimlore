@@ -414,8 +414,13 @@ export class PlayScreen {
       return true;
     }
     if (e.key === 'Tab') {
-      this.showHint();
-      return true;
+      // In insert/replace mode Tab is text, not the hint key. The engine
+      // expands it to spaces up to the next tabstop (4).
+      const mode = this.session.vim.mode;
+      if (mode !== 'insert' && mode !== 'replace') {
+        this.showHint();
+        return true;
+      }
     }
     if (e.key === 'F2') {
       this.restart();

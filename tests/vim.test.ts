@@ -50,6 +50,12 @@ test('buffer index round-trips', () => {
 // ---------------------------------------------------------------------------
 // Undo / repeat / macros
 // ---------------------------------------------------------------------------
+test('Tab in insert mode inserts spaces to the next tabstop', () => {
+  const v = new Vim({ text: 'x' });
+  v.feedString('i<Tab>y<Esc>');
+  assert.equal(v.text, '    yx');
+});
+
 test('change that opens insert clears the pending operator', () => {
   const v = new Vim({ text: 'one two three' });
   v.feedString('c{X<Esc>');

@@ -250,6 +250,9 @@ Three rules keep it correct:
 - The space bar arrives as the token `<Space>`; `insertKey` and `cmdlineKey`
   must map it to `' '` explicitly — a `key.length === 1` check alone silently
   drops it.
+- **Tab is the hint key outside insert/replace.** In insert/replace it must
+  reach the engine, which expands it to spaces to the next tabstop (4); never
+  intercept it globally.
 - The gutter supports `off | abs | rel | both` (`progress.lineNumbers`), and
   `:set number / relativenumber / nonumber / nornu` overrides it for the
   current chamber. Numbers are drawn on the FX pass because they depend on the
