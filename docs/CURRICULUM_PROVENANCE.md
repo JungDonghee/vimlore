@@ -65,7 +65,9 @@ elastic.
 | gap list of book topics outside the 51 | partial (see §6) |
 
 This table is intentionally embarrassing: it prevents the next AI from
-mistaking “the chapters feel right” for provenance.
+mistaking “the chapters feel right” for provenance. The actionable per-stage
+worksheet is [`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md); every row is
+`unmapped` until it is actually cited.
 
 ## 4. Audit method (the next curriculum program)
 
@@ -101,6 +103,7 @@ other as an optional advanced path.
 
 ### Step 3 — annotate every stage
 
+Start from the generated worksheet [`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md).
 Add a provenance record per stage (proposed schema; not yet in `Stage`):
 
 ```ts

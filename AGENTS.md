@@ -61,8 +61,9 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 
 - **A stage**: edit `src/content/chapters/cNN.ts`. Read `docs/LEVEL_FORMAT.md`
   and [`docs/CURRICULUM_PROVENANCE.md`](docs/CURRICULUM_PROVENANCE.md) + [`docs/BOOKS_INDEX.md`](docs/BOOKS_INDEX.md). Every
-  stage must cite a source-book section and fit the prerequisite graph; never
-  invent a plausible lesson. Run `npm run lint:levels -- NN` until green.
+  stage must cite a source-book section and fit the prerequisite graph; start
+  from `docs/STAGE_PROVENANCE.md` (all rows are unmapped) and `docs/BOOKS_INDEX.md`;
+  never invent a plausible lesson. Run `npm run lint:levels -- NN` until green.
 - **A chapter**: copy `c01.ts`, set `id`/`index`/`unlocks`/`stages`, register it
   in `src/content/chapters/index.ts`. Then lint it.
 - **A command**: add it to `src/content/commands.ts` (id, keys, bilingual name

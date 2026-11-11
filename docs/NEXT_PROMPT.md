@@ -32,8 +32,9 @@ You are the next orchestration AI for **VIMLORE**, a Vim-teaching game at
    professional Vim books in `books-text/` are the syllabus authority. The path
    must be gradual and nearly painless, with each stage traceable to a book
    section and a prerequisite graph — **not an AI's plausible invention**. Read
-   [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) and the generated
-   [`BOOKS_INDEX.md`](BOOKS_INDEX.md) before touching curriculum. The current
+   [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md), the generated
+   [`BOOKS_INDEX.md`](BOOKS_INDEX.md) and [`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md)
+   before touching curriculum. The current
    audit is incomplete; say so if you have not finished it.
 
 **Deferred:** buffers/files/windows/tabs are a later editor program, not this
