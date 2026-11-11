@@ -37,6 +37,8 @@ jobs:
           sudo apt-get install -y vim
           vim --version | head -3
       - run: npm ci || npm install
+      - name: toolchain (gzip variance diagnostics)
+        run: node -p "process.version + ' ' + process.versions.zlib"
       - name: differential oracle (356 cases vs real Vim)
         run: node --experimental-strip-types tools/oracle-diff.ts
       - name: seeded differential fuzz (smoke)

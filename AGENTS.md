@@ -149,7 +149,7 @@ The authoritative matrix of what the engine does and does not do is
 [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **363/363**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Not in the current single-buffer slice: multi-buffer/files/
-windows/tabs (deferred by design, `FUTURE_EDITOR.md`), folds, completion, `:!`,
+windows/tabs (deferred, not rejected: `FUTURE_EDITOR.md`), folds, completion, `:!`,
 quickfix/LSP, Vimscript/Lua, and viewport motions (`zz`, `zt`, exact `H/M/L`). `gn` / `g*` / `g#`, `\zs`/`\ze` and interactive `:s///c` are
 implemented; simple brace-depth `=`/`gg=G` is also implemented. Next Tier 2:
 `g;`/`g,`.

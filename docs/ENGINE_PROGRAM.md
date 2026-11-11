@@ -41,12 +41,20 @@ deserve one home.
 - **In scope**: taught features (a stage or grimoire entry teaches them) plus
   engine-only features used by TRIALS/tests plus infrastructure (undo, registers,
   marks, jumps, gating, search state).
-- **Out of scope**: the deferred editor program (buffers, files, windows, tabs,
-  folds, completion, `:!`, quickfix/LSP, Vimscript/Lua), and anything not in the
-  surface.
-- **Closed world**: for every in-scope input the result must match real Vim; for
-  every out-of-scope input the engine must produce a deterministic refusal
-  (bell + a capability event), never a silent half-edit.
+- **Deferred, not out of scope**: features that are on the product backlog but
+  deliberately not in today's surface — buffers/files/windows/tabs
+  (`FUTURE_EDITOR.md`), folds, completion, `:!`, quickfix/LSP, Vimscript/Lua,
+  viewport motions. They are not rejected; their phases start only after the
+  current fidelity stage, and until then the engine refuses them
+  deterministically instead of half-editing.
+- **Never (product boundary)**: embedding a real Vim/Neovim runtime, a server,
+  or runtime dependencies. The game stays static and the engine is ours.
+- **Out of scope today**: any input not in the current surface. A deferred
+  feature enters the surface only when its phase starts and it ships with
+  oracle proof.
+- **Closed world**: for every current-surface input the result must match real
+  Vim; for every non-surface input the engine must produce a deterministic
+  refusal (bell + a capability event), never a silent half-edit.
 - **Proof obligation**: the evidence a feature must ship with — oracle cases,
   matrix coverage, fuzz alphabet membership, invariants, a docs row, and a game
   usage tag.

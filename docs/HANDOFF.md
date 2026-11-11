@@ -126,6 +126,12 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 ## 3. Budget decision (deliberate)
 
+CI has failed twice on this gate and **never on the oracle**: c61b2c4 emitted
+83,051 B gzip against an 83,000 ceiling (local: 82,305), and 6686cbe emitted
+84,088 B against 84,000 (local: 83,282). Both were zlib-build variance, not a
+grammar regression; the ceilings were raised with the measured numbers above.
+
+
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **265,000/85,000**. Each was measured and committed with the feature
 that needed it. Current build is 264,471 B raw / 83,398 B gzip, so headroom is
@@ -159,8 +165,10 @@ fix in a level.
   unlock keys without a Grimoire row), 0 errors. Not hidden; not yet resolved.
 - **Real-GPU 60 fps**: headless desktop is 52–57 fps; the headless browser is
   the ceiling (trap 9). Needs a real GPU browser measurement.
-- **Change list** (`g;`/`g,`) and the deferred editor program (buffers/files/
-  splits/tabs) remain out of scope; design in `FUTURE_EDITOR.md`.
+- **Change list** (`g;`/`g,`) and the editor program (buffers/files/splits/
+  tabs, folds, completion, viewport motions) are **deferred, not out of
+  scope**: they are backlog phases, designed in `FUTURE_EDITOR.md` where
+  applicable. They are simply not in today's taught surface yet.
 - **CI**: now runs tests, lint, tsc, docs, invariants, surface `--strict`,
   build, budget **and the real-Vim oracle + a fuzz smoke** (`oracle` job).
   Browser audit and perf still run locally only; local proof is still stronger.

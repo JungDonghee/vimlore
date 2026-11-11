@@ -2,6 +2,11 @@
  * Hard bundle budget. The stretch goal stays near 200 kB raw / 70 kB gzip, but
  * this ceiling is the line that fails CI: future features must pay for
  * themselves or the budget must be raised deliberately in the same commit.
+ *
+ * MAX_RAW is the deterministic hard gate. MAX_GZIP carries a measured ~1 kB
+ * allowance because the same dist compresses differently across zlib builds:
+ * local Fedora Node uses zlib-ng, CI's Node uses stock zlib (83,398 vs 84,201
+ * on 2026-11-11). Do not remove the allowance without re-measuring both.
  */
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';

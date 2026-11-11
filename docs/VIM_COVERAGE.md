@@ -76,23 +76,27 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 simple brace-depth C indent in spaces. No filetype `indentexpr`, and braces
 inside strings/comments are not parsed.
 
-## Not implemented (deliberate)
+## Not implemented yet (deferred)
+
+Everything below is backlog/deferred, not a product rejection, unless the
+`why` column names a product boundary. Deferred features are not in today's
+taught surface; they enter it only with oracle proof.
 
 | area | missing | why |
 |---|---|---|
 | windows | splits, tabs, buffers, `:vsp`, `<C-w>` | deferred editor program, design in `FUTURE_EDITOR.md`; every level is one buffer |
-| folds | `zf zo zc za zR` | no viewport worth folding |
-| completion | `<C-n> <C-p> <C-x>`, digraphs, abbreviations | no file corpus at runtime |
+| folds | `zf zo zc za zR` | deferred with the viewport/editor phases |
+| completion | `<C-n> <C-p> <C-x>`, digraphs, abbreviations | deferred; needs a file corpus and an editor phase |
 | indentation | filetype-aware `=`/`indentexpr`, tab/expandtab policy | simple brace-depth `=` exists; no filetype rules |
-| files | `:e :r :w file`, `:!cmd`, terminal, `:bd` | no filesystem in the browser |
+| files | `:e :r :w file`, `:!cmd`, terminal, `:bd` | deferred editor program; the browser has no filesystem today |
 | options | `:set` | `textwidth`/`shiftwidth` come from the level |
 | undo tree | `g-`, `g+`, time units for `:earlier/:later`, persistent undo | linear undo + numeric `:earlier/:later` only |
 | change list | `g;` `g,` | rare in teaching material |
 | filters | `!{motion}`, `:!` | no shell |
-| tooling | quickfix, `:vimgrep`, ctags, LSP, treesitter | Neovim-only, out of scope |
+| tooling | quickfix, `:vimgrep`, ctags, LSP, treesitter | outside the current surface; deferred until a tooling phase (not designed yet) |
 | scripting | Vimscript/Lua, `:map`, autocmds, plugins | the game *is* the plugin |
 | interactive substitute | `:s///c` with y/n/a/q/l, `g`+`c`, Esc abort | prompt/status integrated; oracle cannot automate the confirmation keys |
-| misc | `zz/zt/zb`, `H/M/L` exact semantics, `ZZ/ZQ`, mouse | viewport/mouse do not exist |
+| misc | `zz/zt/zb`, `H/M/L` exact semantics, `ZZ/ZQ`, mouse | deferred viewport/mouse phase; the canvas is one window today |
 
 ## If you need a missing feature
 
