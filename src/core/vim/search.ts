@@ -14,7 +14,7 @@ export interface SearchOptions {
   smartcase?: boolean;
 }
 
-function translate(pat: string, opts: SearchOptions): { source: string; flags: string } {
+function translateCore(pat: string, opts: SearchOptions): { source: string; flags: string } {
   let src = pat;
   let veryMagic = false;
   if (src.startsWith('\\v')) {
@@ -115,6 +115,42 @@ function translate(pat: string, opts: SearchOptions): { source: string; flags: s
   let flags = 'g';
   if (ignore) flags += 'i';
   return { source: out, flags };
+}
+
+/**
+ * `\zs` / `\ze` set the match start/end inside the pattern. Split the raw
+ * pattern and express the offsets with a JS lookbehind/lookahead around the
+ * translated middle segment. This covers the common `foo \zsbar` and
+ * `foo\ze bar` forms used by teaching material and by :s.
+ */
+function translate(pat: string, opts: SearchOptions): { source: string; flags: string } {
+  const zs = pat.indexOf('\\zs');
+  const ze = pat.indexOf('\\ze');
+  if (zs < 0 && ze < 0) return translateCore(pat, opts);
+  let head = '';
+  let mid = '';
+  let tail = '';
+  if (zs >= 0 && (ze < 0 || zs < ze)) {
+    head = pat.slice(0, zs);
+    if (ze >= 0) {
+      mid = pat.slice(zs + 3, ze);
+      tail = pat.slice(ze + 3);
+    } else {
+      mid = pat.slice(zs + 3);
+    }
+  } else if (ze >= 0) {
+    mid = pat.slice(0, ze);
+    tail = pat.slice(ze + 3);
+  }
+  const h = head ? translateCore(head, opts) : null;
+  const m = translateCore(mid, opts);
+  const t = tail ? translateCore(tail, opts) : null;
+  let source = '';
+  if (h) source += `(?<=${h.source})`;
+  source += m.source;
+  if (t) source += `(?=${t.source})`;
+  const ignore = [h, m, t].some((x) => x?.flags.includes('i'));
+  return { source, flags: ignore ? 'gi' : 'g' };
 }
 
 export interface Match {

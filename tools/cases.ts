@@ -292,5 +292,11 @@ export const CASES: VimCase[] = [
   { name: 'gI insert at column 0', text: '  abc', cursor: [1, 4], keys: 'gIX<Esc>' },
   { name: 'gi last insert position', text: 'abc\ndef', cursor: [1, 1], keys: 'iX<Esc>jgiY<Esc>' },
 
+  // --- \zs / \ze match endpoints ------------------------------------------
+  { name: 'search \zs start', text: 'foo bar baz', cursor: [1, 0], keys: '/foo \zsbar<CR>' },
+  { name: 'search \ze end', text: 'foo bar baz', cursor: [1, 0], keys: '/foo\ze bar<CR>' },
+  { name: ':s with \zs', text: 'foo bar\nfoo baz', cursor: [1, 0], keys: ':%s/foo \zsbar/X/<CR>' },
+  { name: ':s with \ze', text: 'foo bar\nfoo baz', cursor: [1, 0], keys: ':%s/foo\ze bar/X/<CR>' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

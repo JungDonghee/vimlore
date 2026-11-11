@@ -56,10 +56,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **228/228** vs `vim -u NONE` (142 at session start, +86 cases) |
+| engine oracle | **232/232** vs `vim -u NONE` (142 at session start, +90 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 221,924 B · single `dist/vimlore.html` 245,597 B · gzip 78,554 B |
+| build | JS 222,365 B · single `dist/vimlore.html` 246,038 B · gzip 78,727 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -68,7 +68,7 @@
 63 new oracle cases and a large engine-correctness pass (operator ranges with
 `gg`/`G`/`{`/`}`, counts on doubled operators, `2J`, visual-block `~`/`>`/`<`,
 word/sentence/paragraph edges, visual find `f/F/t/T`); a composite-frame
-renderer (**23.5 → 55–56 fps** desktop); `gn`/`g*`/`g#`; a Vim-like top-left window with `~` fill,
+renderer (**23.5 → 55–56 fps** desktop); `gn`/`g*`/`g#` and `\zs`/`\ze`; a Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
 an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing; Vim-style horizontal/
 vertical viewport scrolling; an **F1 primer**
@@ -133,7 +133,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥228/228; new cases committed; tests green.
+  oracle ≥232/232; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -181,7 +181,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +86 cases, oracle 228/228, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +90 cases, oracle 232/232, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -251,7 +251,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 228/228
+node --experimental-strip-types tools/oracle-diff.ts        # 232/232
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

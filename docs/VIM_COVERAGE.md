@@ -2,7 +2,7 @@
 
 VIMLORE runs on its own Vim engine (`src/core/vim/`), not on Vim. It is a
 **subset chosen for teaching**, kept honest by a differential oracle:
-`tools/oracle-diff.ts` replays **228 keystroke cases** through a real
+`tools/oracle-diff.ts` replays **232 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
 
@@ -34,7 +34,7 @@ command}`, `<Esc>`.
 **Search** magic, `\v`, `\V`, `\c`, `\C`, smartcase, highlight · `gn`
 (selects/operates the next match; counts, operator-pending `dgn`/`cgn`, visual
 extension, dot repeat) · `g*` / `g#` (word under cursor without `\<...\>`
-boundaries).
+boundaries) · `\zs` / `\ze` match start/end offsets (also inside `:s`).
 
 **Ex** `:s` (flags `g i &`), `:g`, `:v`, `:d`, `:m`, `:t`, `:sort` (`n u i !`),
 `:normal`, `:set number/nonumber/relativenumber/nornu`, `:w :q :wq :x :noh`,
@@ -66,7 +66,6 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 | options | `:set` | `textwidth`/`shiftwidth` come from the level |
 | undo tree | `g-`, `g+`, `:earlier/:later`, persistent undo | linear stack is enough |
 | change list | `g;` `g,` | rare in teaching material |
-| search extras | `\zs`, `\ze` | not needed by any level |
 | filters | `!{motion}`, `:!` | no shell |
 | tooling | quickfix, `:vimgrep`, ctags, LSP, treesitter | Neovim-only, out of scope |
 | scripting | Vimscript/Lua, `:map`, autocmds, plugins | the game *is* the plugin |
