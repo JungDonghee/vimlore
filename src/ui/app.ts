@@ -58,6 +58,9 @@ export class App {
   private trialSel = 0;
   private keyHandler: (e: KeyboardEvent) => void;
   private actions: FocusGroup | null = null;
+  private helpOpen = false;
+  private helpEl: HTMLElement | null = null;
+  private helpReturn: FocusGroup | null = null;
 
   constructor(root: HTMLElement) {
     this.root = root;
@@ -183,6 +186,7 @@ export class App {
         h('div', { class: 'title-sub' }, this.t('a vim adventure · 10 floors · 51 chambers', '빔 어드벤처 · 10개 층 · 51개 챔버')),
         h('div', { class: 'title-credit' }, this.t('created by', '만든 사람'), ' ', h('b', {}, 'JUNG DONGHEE')),
         h('div', { class: 'press' }, this.t('PRESS ANY KEY', '아무 키나 누르세요')),
+        h('div', { class: 'title-help' }, this.t('F1 · 60-SECOND PRIMER', 'F1 · 60초 입문')),
         isTouch() ? h('div', { class: 'title-foot ko' }, this.t('a physical keyboard is required', '물리 키보드가 필요합니다')) : null,
         h('div', { class: 'title-foot' }, 'v1.0 · offline · no tracking · made by Jung Donghee'),
       ),
@@ -312,6 +316,8 @@ export class App {
       bestKeys: rec?.cleared ? rec.bestKeys : null,
       crt: this.progress.crt,
       lineNumbers: this.progress.lineNumbers,
+      firstTime: this.progress.totalKeys < 5 && Object.keys(this.progress.stages).length === 0,
+      onHelp: () => this.toggleHelp(),
       chapterForKey: (k) => chapterForKey(k),
       onWin: (stars, keys) => this.recordClear(stage.id, stars, keys),
       onNext: () => this.nextStage(),
@@ -507,6 +513,7 @@ export class App {
       crt: this.progress.crt,
       lineNumbers: this.progress.lineNumbers,
       canSave: true,
+      onHelp: () => this.toggleHelp(),
       chapterForKey: () => null,
       onSave: () => this.saveTrial(trial),
       onWin: (stars, keys) => {
@@ -687,11 +694,76 @@ export class App {
     focusIndex(this.actions, 0);
   }
 
+  // -------------------------------------------------------------------- help
+
+  /** F1 everywhere: a keyboard-only primer that never depends on the mouse. */
+  toggleHelp(): void {
+    if (this.helpOpen) {
+      this.closeHelp();
+      return;
+    }
+    this.play?.stopRepeatNow();
+    this.helpReturn = this.actions;
+    const rows: [string, string][] = [
+      ['NORMAL', this.t('h j k l move · w b words · 0 $ line ends', 'h j k l 이동 · w b 단어 · 0 $ 줄 끝')],
+      ['INSERT', this.t('i a A o O type · Esc comes back', 'i a A o O 입력 · Esc로 복귀')],
+      ['EDIT', this.t('d c y + motion/object — dw, ci", di(', 'd c y + 모션/오브젝트 — dw, ci", di(')],
+      ['UNDO', this.t('u undo · Ctrl-r redo', 'u 실행취소 · Ctrl-r 재실행')],
+      ['BRIEFING', this.t('LEARN / GOAL / CLEAR / PAR — read it before you type', 'LEARN / GOAL / CLEAR / PAR — 시작 전에 읽기')],
+      ['STUCK', this.t('Tab hint · F2 retry · F3 ghost · F1 help', 'Tab 힌트 · F2 재시도 · F3 고스트 · F1 도움말')],
+    ];
+    const card = h(
+      'div',
+      { class: 'card help-card' },
+      h('div', { class: 'eyebrow' }, 'F1 · HELP'),
+      h('h2', {}, this.t('The 60-second primer', '60초 입문')),
+      h('div', { class: 'help-rows' }, ...rows.map(([k, v]) => h('div', { class: 'help-row' }, h('code', {}, k), h('span', {}, v)))),
+      h('div', { class: 'rule' }),
+      h('div', { class: 'brief ko' }, this.t(
+        'This whole site is keyboard-only: j/k move, Enter chooses, Esc goes back. In a chamber you are in NORMAL mode — h j k l move, i types, Esc returns. The briefing always states what you learn and what clears the room.',
+        '이 사이트 전체는 키보드만으로 동작합니다: j/k 이동, Enter 선택, Esc 뒤로. 챔버에서는 NORMAL 모드입니다 — h j k l 이동, i 입력, Esc 복귀. 브리핑에는 배울 것과 클리어 조건이 항상 적혀 있습니다.',
+      )),
+      h('div', { class: 'actions' }, h('button', { class: 'btn primary', onclick: () => this.closeHelp() }, this.t('CLOSE', '닫기'), h('kbd', {}, 'esc'))),
+    );
+    const overlay = h('div', { class: 'overlay help-overlay' }, card);
+    this.root.append(overlay);
+    this.helpEl = overlay;
+    this.helpOpen = true;
+    this.actions = focusGroup(card);
+    focusIndex(this.actions, 0);
+  }
+
+  closeHelp(): void {
+    this.helpEl?.remove();
+    this.helpEl = null;
+    this.helpOpen = false;
+    this.actions = this.helpReturn;
+    this.helpReturn = null;
+    this.sfx.play('close');
+  }
+
   // -------------------------------------------------------------------- keys
 
   private onKey(e: KeyboardEvent): void {
     if (e.metaKey || e.altKey) return;
     this.sfx.unlock();
+    if (e.key === 'F1') {
+      e.preventDefault();
+      this.toggleHelp();
+      return;
+    }
+    if (this.helpOpen) {
+      e.preventDefault();
+      const card = this.helpEl?.querySelector<HTMLElement>('.help-card') ?? null;
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === 'q') this.closeHelp();
+      else if (e.key === 'j' || e.key === 'ArrowDown') card?.scrollBy({ top: 48 });
+      else if (e.key === 'k' || e.key === 'ArrowUp') card?.scrollBy({ top: -48 });
+      else if (e.key === 'PageDown' || e.key === ' ') card?.scrollBy({ top: card.clientHeight * 0.9 });
+      else if (e.key === 'PageUp') card?.scrollBy({ top: -card.clientHeight * 0.9 });
+      else if (e.key === 'g' || e.key === 'Home') card?.scrollTo({ top: 0 });
+      else if (e.key === 'G' || e.key === 'End') card?.scrollTo({ top: card.scrollHeight });
+      return;
+    }
     if (this.screen === 'title') {
       e.preventDefault();
       this.goMap();

@@ -52,6 +52,8 @@ export function focusIndex(g: FocusGroup, i: number): void {
   if (!n) return;
   g.index = ((i % n) + n) % n;
   g.els.forEach((el, idx) => el.classList.toggle('focused', idx === g.index));
+  // Keyboard-only: a focused control must be visible even in a scrolling card.
+  g.els[g.index]?.scrollIntoView({ block: 'nearest' });
 }
 
 export function focusStep(g: FocusGroup, d: 1 | -1): void {

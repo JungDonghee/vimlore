@@ -59,7 +59,7 @@
 | engine oracle | **223/223** vs `vim -u NONE` (142 at session start, +81 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 211,408 B · single `dist/vimlore.html` 232,718 B · gzip 74,906 B |
+| build | JS 217,037 B · single `dist/vimlore.html` 240,202 B · gzip 77,153 B |
 | perf (headless) | desktop 1280×800: **53–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -70,7 +70,8 @@
 word/sentence/paragraph edges, visual find `f/F/t/T`); a composite-frame
 renderer (**23.5 → 55–56 fps** desktop); `gn`/`g*`/`g#`; a Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
-and an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing.
+an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing; an **F1 primer**
+on every screen and an auto-**coach** after idle/locked/damage.
 
 ### 2.1 Fuzz results and remaining divergences
 
@@ -205,6 +206,7 @@ rest to the task board. Never commit a red level or a failing oracle.
 | U2 | in-play objective bar | W4 | **done** | `src/ui/play.ts` |
 | U3 | statusline/cmdline polish | W4 | **done** | `src/ui/play.ts` |
 | U4 | screenshots + audit | W4 | **done** | `pw/` |
+| U5 | F1 primer + idle coach + keyboard-only audit | W4 | **done** | `src/ui/app.ts`, `src/ui/play.ts`, `src/ui/dom.ts` |
 | D2 | refresh AGENTS/HANDOFF | W5 | **done** | `AGENTS.md`, `docs/HANDOFF.md` |
 | D3 | final gates + build + push | W5 | **done** | all |
 

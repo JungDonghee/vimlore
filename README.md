@@ -62,7 +62,8 @@ npm run dev      # http://localhost:5173
 ```
 
 A physical keyboard is required. Switch your input method to **English** —
-the game is played with Vim keys, not with prose.
+the game is played with Vim keys, not with prose. New to Vim? Press **F1** for
+the 60-second primer; the coach will also offer a hint if you idle or get stuck.
 
 ## Build
 

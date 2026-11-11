@@ -14,7 +14,7 @@
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **223 oracle cases**, all matching real Vim |
 | gates | oracle 223/223 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 211,408 B · single `dist/vimlore.html` 232,718 B · gzip 74,906 B |
+| build | JS 217,037 B · single `dist/vimlore.html` 240,202 B · gzip 77,153 B |
 | perf (headless) | desktop 1280×800 **53–56 fps** (x1), 47–50 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -47,6 +47,10 @@ this file.
   bar repeats `LEARN <keys>` + the live goal.
 - `:`/`/` echo with a command-line cursor; overlays sit above the CRT
   scanlines so briefing text is crisp (this was a real readability bug).
+- **F1 primer on every screen** (keyboard-only, scrollable) and an automatic
+  **coach** after ~6–10 s idle, on locked keys and on damage; any key dismisses
+  it, Tab escalates. First-ever session shows a NORMAL/INSERT primer in the
+  briefing. Focused controls scroll into view, so no screen needs a mouse.
 - Landscape 844×390 uses a two-column briefing so BEGIN is above the fold.
 
 ### Advanced coverage delivered

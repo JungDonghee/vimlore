@@ -19,6 +19,9 @@ export interface PlayHost {
   bestKeys: number | null;
   crt: boolean;
   lineNumbers: 'off' | 'abs' | 'rel' | 'both';
+  /** First-ever session: show the NORMAL/INSERT primer in the briefing. */
+  firstTime?: boolean;
+  onHelp?: () => void;
   canSave?: boolean;
   onSave?: () => void;
   onWin(stars: Stars, keys: number, par: number): void;
@@ -83,6 +86,9 @@ export class PlayScreen {
   private repeatDelay = 0;
   private repeatTimer = 0;
   private actions: FocusGroup | null = null;
+  private coachEl: HTMLElement | null = null;
+  private lastInputAt = 0;
+  private coachStep = 0;
 
   constructor(root: HTMLElement, host: PlayHost) {
     this.host = host;
@@ -149,6 +155,7 @@ export class PlayScreen {
       lessonKeys ? h('span', { class: 'lesson-chip', title: lessonName }, `${this.t('LEARN', '학습')} ${lessonKeys}`) : null,
       h('span', { class: 'goal' }, goalLabel(stage.goal, lang)),
       h('span', { class: 'spacer' }),
+      this.host.onHelp ? h('button', { class: 'chip help', onclick: () => this.host.onHelp?.() }, lang === 'ko' ? 'F1 도움' : 'F1 HELP') : null,
       h('button', { class: 'chip', onclick: () => this.showHint() }, lang === 'ko' ? 'TAB 힌트' : 'TAB HINT'),
       h('button', { class: 'chip', onclick: () => this.restart() }, lang === 'ko' ? 'F2 재시작' : 'F2 RETRY'),
       h('button', { class: 'chip', onclick: () => void this.playGhost() }, lang === 'ko' ? 'F3 고스트' : 'F3 GHOST'),
@@ -292,9 +299,12 @@ export class PlayScreen {
         this.shake = 9;
         this.host.sfx.play('hurt');
         this.updateHud();
+        this.coachStep = Math.max(this.coachStep, 1);
+        this.showCoach(this.coachText(0));
         break;
       case 'lost':
         this.state = 'lost';
+        this.hideCoach();
         this.showLost();
         break;
       case 'locked': {
@@ -305,6 +315,8 @@ export class PlayScreen {
             : `“${keyLabel(e.key)}” unlocks${ch ? ` in chapter ${ch}` : ' later'}`;
         this.toast(msg, true);
         this.host.sfx.play('locked');
+        this.coachStep = Math.max(this.coachStep, 1);
+        this.showCoach(`${msg} · ${this.t('TAB for a hint', 'TAB 힌트')}`);
         break;
       }
       case 'message':
@@ -365,6 +377,11 @@ export class PlayScreen {
 
   handleKey(e: KeyboardEvent): boolean {
     this.dirty = true;
+    if (this.state === 'playing') {
+      this.lastInputAt = performance.now();
+      this.coachStep = 0;
+      this.hideCoach();
+    }
     if (e.repeat) return true; // our own repeat loop handles held keys
     if (this.state === 'intro' || this.state === 'won' || this.state === 'lost') {
       // Overlay buttons are navigated with Vim keys: h/l or j/k moves the
@@ -452,6 +469,9 @@ export class PlayScreen {
     this.overlay?.remove();
     this.overlay = null;
     this.echo.classList.remove('on');
+    this.hideCoach();
+    this.lastInputAt = performance.now();
+    this.coachStep = 0;
     this.host.sfx.play('open');
     this.updateHud();
   }
@@ -470,6 +490,9 @@ export class PlayScreen {
     this.flash = 0;
     this.shake = 0;
     this.matches = [];
+    this.hideCoach();
+    this.lastInputAt = performance.now();
+    this.coachStep = 0;
     this.host.sfx.play('undo');
     this.fit();
     this.updateHud();
@@ -483,6 +506,7 @@ export class PlayScreen {
     this.lastT = t;
     this.flash = Math.max(0, this.flash - dt / 320);
     this.shake = Math.max(0, this.shake - dt / 40);
+    if (this.state === 'playing' && !this.ghosting) this.tickCoach(t);
     // Idle frames cost nothing: no keys, no particles, no flash => no draw.
     const blink = Math.floor(t / 530) % 2;
     const busy = this.dirty || this.flash > 0 || this.shake > 0 || this.renderer.busy || blink !== this.lastBlink;
@@ -581,6 +605,17 @@ export class PlayScreen {
       h('div', { class: 'eyebrow' }, `${lang === 'ko' ? '층' : 'FLOOR'} ${String(chapter.index).padStart(2, '0')} · ${KO(chapter.title, lang)} · ${stageIndex + 1}/${stageCount}`),
       h('h2', {}, KO(stage.name, lang)),
       h('div', { class: 'brief ko' }, KO(stage.brief, lang)),
+      this.host.firstTime
+        ? h(
+            'div',
+            { class: 'firsttime' },
+            h('b', {}, this.t('NEW TO VIM?', 'VIM이 처음인가요?')),
+            this.t(
+              'You are in NORMAL mode. h j k l move, i types, Esc comes back. Enter starts.',
+              '지금은 NORMAL 모드입니다. h j k l로 움직이고, i로 입력하고, Esc로 돌아옵니다. Enter로 시작.',
+            ),
+          )
+        : null,
       lesson,
       h(
         'div',
@@ -603,6 +638,7 @@ export class PlayScreen {
   }
 
   private showResults(stars: Stars, keys: number, par: number): void {
+    this.hideCoach();
     const { stage, lang, chapter } = this.host;
     const starEls = [0, 1, 2].map((i) => h('span', { class: i < stars ? 'on' : '' }, '★'));
     const learned = (stage.teaches ?? [])
@@ -667,8 +703,80 @@ export class PlayScreen {
     focusIndex(this.actions, 0);
   }
 
+  private lessonKeys(): string {
+    return (this.host.stage.teaches ?? [])
+      .map((id) => COMMAND_BY_ID.get(id)?.keys)
+      .filter(Boolean)
+      .slice(0, 3)
+      .join(' ');
+  }
+
+  /** Help that arrives without being asked, because a beginner is stuck. */
+  private coachText(level: number): string {
+    const { stage, lang } = this.host;
+    const hints = stage.hints ?? [];
+    if (level === 0) {
+      if (hints[0]) return KO(hints[0], lang);
+      const keys = this.lessonKeys();
+      return keys
+        ? this.t(`Try ${keys} — that is the lesson of this chamber.`, `${keys} 를 써 봐. 이 챔버의 교훈이야.`)
+        : this.t('Press TAB for a hint, or F1 for the 60-second primer.', 'TAB으로 힌트를, F1으로 60초 입문을 봐.');
+    }
+    if (level === 1) {
+      if (hints[1]) return KO(hints[1], lang);
+      const keys = this.lessonKeys();
+      return keys
+        ? this.t(`The intended keys are ${keys}.`, `의도된 키는 ${keys} 이야.`)
+        : this.t('Read the goal again, then try one small motion.', '목표를 다시 읽고, 작은 모션 하나부터 해 봐.');
+    }
+    return this.t(
+      'Still stuck? TAB for another hint · F3 to watch the ghost · F1 for the primer.',
+      '아직 막혔어? TAB으로 다음 힌트 · F3로 고스트 · F1으로 입문.',
+    );
+  }
+
+  private tickCoach(t: number): void {
+    if (!this.lastInputAt) return;
+    // Auto-repeat feeds the session directly, so a held key must also count as
+    // activity or the coach would pop up while the player is moving.
+    if (this.repeating) this.lastInputAt = t;
+    const idle = t - this.lastInputAt;
+    const first = !!this.host.firstTime;
+    if (this.coachStep === 0 && idle > (first ? 6000 : 10000)) {
+      this.showCoach(this.coachText(0));
+      this.coachStep = 1;
+    } else if (this.coachStep === 1 && idle > (first ? 15000 : 24000)) {
+      this.showCoach(this.coachText(1));
+      this.coachStep = 2;
+    } else if (this.coachStep === 2 && idle > (first ? 30000 : 45000)) {
+      this.showCoach(this.coachText(2));
+      this.coachStep = 3;
+    }
+  }
+
+  private showCoach(text: string): void {
+    if (this.state !== 'playing') return;
+    this.coachEl?.remove();
+    this.coachEl = h(
+      'div',
+      { class: 'coach' },
+      h('div', { class: 'coach-k' }, this.t('COACH', '코치')),
+      h('div', { class: 'coach-t' }, text),
+      h('div', { class: 'coach-h' }, this.t('TAB more · F1 help', 'TAB 더 · F1 도움')),
+    );
+    this.root.append(this.coachEl);
+  }
+
+  private hideCoach(): void {
+    this.coachEl?.remove();
+    this.coachEl = null;
+  }
+
   private showHint(): void {
     if (this.state !== 'playing') return;
+    this.lastInputAt = performance.now();
+    this.coachStep = Math.max(this.coachStep, 1);
+    this.hideCoach();
     const { stage, lang } = this.host;
     const hints = stage.hints ?? [];
     const text =
@@ -731,5 +839,6 @@ export class PlayScreen {
     cancelAnimationFrame(this.raf);
     this.ro?.disconnect();
     this.overlay?.remove();
+    this.hideCoach();
   }
 }

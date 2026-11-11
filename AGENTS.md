@@ -201,8 +201,14 @@ Two rules keep it correct:
    stopped on keyup / blur / visibilitychange / win / restart. Repeats are
    silent and never start for a key the session rejected.
 
-## Input & UI rules (v1.4)
+## Input & UI rules (v1.6)
 
+- **F1 opens the 60-second primer on every screen** (title, map, codex, progress,
+  trials, settings, play, results); Esc/Enter closes it and focus returns to the
+  control you had. The primer scrolls with j/k/PageUp/PageDown.
+- The play screen has a **coach** that appears without being asked after ~6–10 s
+  idle (first hint), then escalates. Locked keys and damage also raise it. Any
+  key dismisses it; Tab still gives the next hint; F3 still shows the ghost.
 - The game must be **fully playable with a keyboard only**. Every list screen
   scrolls with `j`/`k`, `Ctrl-d`/`Ctrl-u`, `PageUp`/`PageDown`, `g`/`G`,
   `Home`/`End`; the map moves its selection with the same keys. Mouse and touch
@@ -215,3 +221,5 @@ Two rules keep it correct:
   `:set number / relativenumber / nonumber / nornu` overrides it for the
   current chamber. Numbers are baked into the composite frame (the cursor line
   is part of the frame key); the glyph layer itself must stay cursor-free.
+- Focused buttons are scrolled into view (`focusIndex`), so a long settings or
+  results card never traps the keyboard user off-screen.
