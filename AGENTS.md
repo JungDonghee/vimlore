@@ -109,6 +109,9 @@ The game targets a cheap phone with a Bluetooth keyboard.
   Use `tokenize()` from `src/core/vim/keys.ts`.
 - Gating is **first-key** based (`Session.keyAllowed`). Keys typed inside
   insert mode are never gated.
+- **The command echo renders only while `vim.awaitingKey` is true.** Failed
+  commands must clear `count`/`cmdKeys` before returning; otherwise `u` at the
+  oldest change leaves a phantom pending `u` on screen.
 - `@` in level text marks the start and is replaced by `startChar` (default
   space) so grids never shift.
 - `~` is hazardous by default; a stage with decorative `~` must set `hazard: ''`.

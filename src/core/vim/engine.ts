@@ -1813,6 +1813,9 @@ export class Vim {
     if (!s) {
       this.bell();
       this.say('already at oldest change', 'error');
+      this.takeCount();
+      this.cmdKeys = [];
+      this.afterUnit();
       return;
     }
     this.redoStack.push(this.snapshot());
@@ -1841,6 +1844,9 @@ export class Vim {
     if (!s) {
       this.bell();
       this.say('already at newest change', 'error');
+      this.takeCount();
+      this.cmdKeys = [];
+      this.afterUnit();
       return;
     }
     this.undoStack.push(this.snapshot());

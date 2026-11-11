@@ -492,7 +492,7 @@ export class PlayScreen {
       this.echo.classList.add('on');
       return;
     }
-    const pending = vim.pendingCommand;
+    const pending = vim.awaitingKey ? vim.pendingCommand : '';
     const label = pending ? keyLabel(pending) : '';
     if (pending && pending.length > 0) {
       this.echo.textContent = label;

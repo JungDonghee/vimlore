@@ -212,6 +212,23 @@ test('session counts keys and awards stars', () => {
   assert.equal(s.stars, 3);
 });
 
+test('failed undo/redo clears the pending command display', () => {
+  const v = new Vim({ text: 'abc' });
+  v.feedString('u');
+  assert.equal(v.pendingCommand, '');
+  assert.equal(v.awaitingKey, false);
+
+  const w = new Vim({ text: 'abc' });
+  w.feedString('3u');
+  assert.equal(w.pendingCommand, '');
+  assert.equal(w.awaitingKey, false);
+
+  const r = new Vim({ text: 'abc' });
+  r.feedString('3<C-r>');
+  assert.equal(r.pendingCommand, '');
+  assert.equal(r.awaitingKey, false);
+});
+
 test('demo playback moves the vim but never wins or counts keys', () => {
   const s = new Session({ stage, chapterIndex: 0, allowed: new Set(['l']) });
   s.demo = true;
