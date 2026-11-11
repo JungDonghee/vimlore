@@ -114,18 +114,25 @@ this file.
 
 ## 2. Open product gaps
 
-- **Coverage** is a chosen subset: no windows/splits/buffers/tabs in this
-  program (deferred design: `FUTURE_EDITOR.md`), folds,
-  completion, `:!`/filesystem, quickfix/LSP, Vimscript/Lua, undo tree,
-  change list, viewport motions (`zz/zt`, exact `H/M/L`), filters.
-- **Curriculum truth**: `level-lint` checks par/gating/win but not
-  teaches↔solution↔unlocks coherence. `c02s5` is named CONFIG and should either
-  implement the `t`-vs-`f` lesson or stop claiming it.
-- **Performance headroom**: x4-throttled desktop is 47–48 fps. A real GPU
-  should be better, but the next perf step is dirty-rect cursor blits or
-  offloading scanlines/bloom to CSS.
-- **Docs**: README/EVALUATION/AGENTS still carry a few stale claims; `doc-check`
-  only guards oracle counts and links.
+- **Coverage** is a chosen subset: no multi-buffer/files/splits/tabs in this
+  program (deferred design: `FUTURE_EDITOR.md`), folds, completion,
+  `:!`/filesystem, quickfix/LSP, Vimscript/Lua, undo tree/time units, change
+  list, viewport motions (`zz/zt`, exact `H/M/L`), filters. Numeric
+  `:earlier/:later` and simple `=` are in.
+- **Curriculum truth**: `npm run invariants` checks teaches↔unlocks↔stage ids
+  and metadata (0 errors), but **not** that a stage's book citation exists or
+  that its solution uses every taught key. Those are provenance/pacing work.
+- **Performance**: desktop headless 52–57 fps x1 / 51–53 x4; phone 59–60.
+  x4 desktop is still below 60; the headless browser ceiling is the blocker
+  (see trap 9), not a measured renderer regression.
+- **Bundle risk**: 254,869 B raw / 81,139 B gzip vs hard budget
+  258,000/82,000. Only ~3.1 kB raw headroom remains, so a new feature needs a
+  deliberate reduction or budget decision.
+- **Verification gap**: CI runs tests, lint, tsc, docs, invariants, build and
+  budget. It does **not** run the real-Vim oracle, fuzz seeds, browser audit
+  or perf (all need local vim/browser). Local proof is stronger than CI.
+- **Docs**: `doc-check` guards oracle counts/links and several numbers, not all
+  prose claims; if a number disagrees with a fresh gate, the gate wins.
 - **Security**: the PAT has repo `admin/push`, outside the repo, never printed.
   The account is AI-purpose; rotation is not required, leakage is unacceptable.
 
