@@ -276,5 +276,14 @@ export const CASES: VimCase[] = [
   { name: 'cgn dot changes next match', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>cgnX<Esc>.' },
   { name: 'visual gn extends', text: 'foo bar foo baz', cursor: [1, 0], keys: '/foo<CR>ggvgn' },
 
+  // --- fuzz seed 11/23 leftovers (triage) -----------------------------------
+  { name: 'dt( bracket', text: '(a (b) c)', cursor: [1, 2], keys: 'dt(' },
+  { name: '2cw inside word', text: 'the end is nigh', cursor: [1, 2], keys: '2cwxy<Esc>' },
+  { name: 'cw on comma', text: 'a,b,c,d', cursor: [1, 3], keys: 'cwxy<Esc>' },
+  { name: 'vk$d', text: 'a\nb\nc\nd', cursor: [2, 0], keys: 'vk$d' },
+  { name: '3cW', text: 'x = "a"; y = "b";', cursor: [1, 0], keys: '3cWxy<Esc>' },
+  { name: '3gUgg cursor', text: 'function f() {\n  return 1;\n}', cursor: [1, 6], keys: '3gUgg' },
+  { name: 'g~j cursor', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 2], keys: 'g~j' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

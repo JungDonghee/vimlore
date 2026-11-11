@@ -56,12 +56,12 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine oracle | **216/216** vs `vim -u NONE` (142 at session start, +74 cases) |
+| engine oracle | **223/223** vs `vim -u NONE` (142 at session start, +81 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 211,174 B · single `dist/vimlore.html` 232,484 B · gzip 74,875 B |
-| perf (headless) | desktop 1280×800: **55–56 fps** (x1), 48–49 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
-| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · deployed `224175d` · CI + Pages green · local == origin |
+| build | JS 211,408 B · single `dist/vimlore.html` 232,718 B · gzip 74,906 B |
+| perf (headless) | desktop 1280×800: **53–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
+| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
 **What changed in slice 1:** a seeded differential fuzzer (`tools/fuzz.ts`),
@@ -80,19 +80,19 @@ so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug
 | seed | matched | skipped | divergences | buffer-content |
 |---:|---:|---:|---:|---:|
 | 7 | 681 | 317 | **2** | **0** |
-| 11 | 658 | 338 | 4 | 3 |
-| 23 | 643 | 349 | 8 | 5 |
+| 11 | 660 | 338 | **2** | **0** |
+| 23 | 647 | 349 | 4 | 3 |
 
-Seed 7 is clean on content. The remaining cross-seed content repros (next
-session: add an oracle case, fix, re-run):
+Seeds 7 and 11 are clean on content. Fixed in this pass: `dt(` adjacent target,
+`2cw`/`cw` on words and punctuation, `3cW`, visual `$` (`vk$d`), and the
+cursor rules for motion-based case changes (`gUgg`, `guk`, `g~j`, `3gUgg`).
 
-- `dt(` on `(a (b) c)` @1,2 — `t`-till with a bracket target.
-- `2cw` / `cw` on `the end is nigh` / `a,b,c,d` — `cw` on whitespace/punctuation.
-- `3cW` on `x = "a"; y = "b";` @1,0 — count + `cW`.
+The remaining seed-23 content repros (next session: add an oracle case, fix):
+
+- `<C-v>)kU` on `  indented\nnormal` @2,0 — block virtual column after `)`/`k`.
+- `vlB<` on `function f() {\n  return 1;\n}` @3,0 — visual `B` + outdent.
 - `2daW` on `one two\nthree four` @1,5 — count + `a`+`W` object.
-- `vk$d` / `vlB<` — visual `$`/`B` ranges.
-- `<C-v>)kU` on `  indented\nnormal` @2,0 — block `U` columns.
-- Cursor-only: `3gUgg`, `Vku`, `g~j`.
+- Cursor-only: `Vku`.
 
 ## 3. Coverage ladder — what "advanced Vim" means here
 
@@ -131,7 +131,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥216/216; new cases committed; tests green.
+  oracle ≥223/223; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -179,9 +179,9 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +74 cases, oracle 216/216, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +81 cases, oracle 223/223, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
-| S4 | renderer composite + fps pass | **done** — desktop 55–56 fps x1, phone 59–60 |
+| S4 | renderer composite + fps pass | **done** — desktop 53–56 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
 | S6 | handoff | **done** — commit `224175d` pushed; CI + Pages green |
 
@@ -246,7 +246,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 216/216
+node --experimental-strip-types tools/oracle-diff.ts        # 223/223
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

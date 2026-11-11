@@ -144,9 +144,8 @@ export function findChar(env: MotionEnv, char: string, dir: 1 | -1, till: boolea
   }
   const dest = till ? { line: env.cursor.line, col: col - dir } : { line: env.cursor.line, col };
   const clamped = moveTo(env.buf, dest);
-  if (till && clamped.col === env.cursor.col) return null;
-  // Vim treats t/T as inclusive for operators (dt, deletes through the char
-  // before the target) while the cursor lands on that same char.
+  // Vim's t/T is inclusive for operators even when the target is adjacent:
+  // `dt(` on "a(b" deletes the `a`. Do not collapse that to a null motion.
   return { to: clamped, kind: 'inclusive' };
 }
 

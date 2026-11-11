@@ -2,6 +2,7 @@ import { Buffer } from './buffer.ts';
 import { ESC, CR, BS, TAB, SPACE, CTRL_W, CTRL_U, tokenize } from './keys.ts';
 import * as M from './motions.ts';
 import { textObject } from './objects.ts';
+import { tokenAt, tokens } from './wordindex.ts';
 import { allMatches, compilePattern, pickMatch, type Match } from './search.ts';
 import { executeEx } from './ex.ts';
 import type { BufferSnapshot, Mode, MotionResult, Pos, Register } from './types.ts';
@@ -607,9 +608,22 @@ export class Vim {
       // Famous Vim special case: cw on a word acts like ce.
       const ch = this.buf.line(this.cursor.line)[this.cursor.col] ?? '';
       if (op.key === 'c' && ch !== '' && !/\s/.test(ch)) {
-        const m = M.wordMotion(this.motionEnv(), (this.countNum || 1) * (op.count || 1), { dir: 1, end: true, big: key === 'W' });
-        if (m) {
-          this.finishOpWithMotion(op, m);
+        // `cw`/`cW` changes through the end of the count-th word, counting the
+        // word under the cursor as the first. Token indexes are inclusive, so
+        // this also does the right thing on punctuation (`cw` on a comma
+        // changes just the comma) instead of overrunning into the next word.
+        const big = key === 'W';
+        const count = (this.countNum || 1) * (op.count || 1);
+        const list = tokens(this.buf, big);
+        const t = tokenAt(list, this.buf.idx(this.cursor));
+        if (t) {
+          let target = t;
+          for (let n = 1; n < count; n++) {
+            const next = list.find((x) => x.start > target.start && !x.blank);
+            if (!next) break;
+            target = next;
+          }
+          this.finishOpWithMotion(op, { to: this.buf.pos(target.end), kind: 'inclusive' });
           return;
         }
       }
@@ -1209,12 +1223,17 @@ export class Vim {
     const text = this.buf.flat.slice(s, e);
     this.buf.replaceFlat(s, e, text.replace(/[a-zA-Z]/g, fn0));
     if (r.linewise) {
-      // A one-line `guu`/`gUU`/`g~~` moves to the first non-blank; a multi-line
-      // one leaves the cursor alone (Vim behaviour, oracle-verified).
+      // Vim cursor rules for linewise case changes (oracle-verified):
+      //  - visual: start of the selection
+      //  - doubled (guu/gUU/g~~): one line -> first non-blank; multi-line -> keep
+      //  - motion-based (gUgg/g~j/3gUgg): keep the original column when the cursor
+      //    was inside the range, otherwise go to the first non-blank
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
-      const keep = !visual && doubled && l1 !== l2;
-      this.cursor = keep ? M.moveTo(this.buf, this.cursor) : visual ? { line: l1, col: 0 } : { line: l1, col: M.firstNonBlank(this.buf, l1) };
+      if (visual) this.cursor = { line: l1, col: 0 };
+      else if (doubled) this.cursor = l1 === l2 ? { line: l1, col: M.firstNonBlank(this.buf, l1) } : M.moveTo(this.buf, this.cursor);
+      else if (l1 === l2) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+      else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
     } else {
       this.cursor = M.moveTo(this.buf, this.buf.pos(s));
     }
@@ -1737,7 +1756,7 @@ export class Vim {
     }
     // In visual-block mode Vim's `$` extends to (virtual) MAXCOL, so a
     // following `h` lands on the last character, not one before it.
-    if (key === '$' && this.mode === 'visual-block' && this.count === '') {
+    if (key === '$' && (this.mode === 'visual' || this.mode === 'visual-block') && this.count === '') {
       // Keep the virtual one-past-end column (M.moveTo would clamp it away).
       const line = this.cursor.line;
       this.cursor = { line, col: this.buf.line(line).length };

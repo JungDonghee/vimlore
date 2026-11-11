@@ -12,11 +12,11 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **216 oracle cases**, all matching real Vim |
-| gates | oracle 216/216 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 211,174 B · single `dist/vimlore.html` 232,484 B · gzip 74,875 B |
-| perf (headless) | desktop 1280×800 **55–56 fps** (x1), 48–49 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
-| deploy | `224175d` deployed; CI + Pages green; local == origin |
+| engine | 2,532 lines; **223 oracle cases**, all matching real Vim |
+| gates | oracle 223/223 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 211,408 B · single `dist/vimlore.html` 232,718 B · gzip 74,906 B |
+| perf (headless) | desktop 1280×800 **53–56 fps** (x1), 47–50 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
+| deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
 this file.
@@ -30,8 +30,8 @@ this file.
   counts on doubled operators (`3>>`, `3g~~`, `2J`), visual-block `~`/`>`/`<`,
   visual `f/F/t/T`, `cw`/`cW`/text-object edges, `y`/`P` cursor rules, join
   stripping, sentence/paragraph boundaries, block `$`.
-- Seed 7 fuzz: **71 → 2 divergences, 0 buffer-content**. Seeds 11/23 find a
-  handful of remaining word/visual edges (listed in `MASTER_PLAN.md` §2.1).
+- Fuzz seed 7: **71 → 2**, seed 11: **4 → 2**, both **0 buffer-content**.
+  Seed 23 still has 3 content edges + 1 cursor edge (listed in `MASTER_PLAN.md` §2.1).
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
@@ -113,7 +113,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 216/216
+node --experimental-strip-types tools/oracle-diff.ts        # 223/223
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build
