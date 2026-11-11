@@ -228,6 +228,13 @@ insert mode, so `i` + Tab typed no spaces. Tab now reaches the engine in
 insert/replace (it expands to spaces to the next tabstop, 4); outside those
 modes it still opens the hint. Unit-tested.
 
+## Differential debugging
+
+`npm run trace -- --case=m-1234` (or `--text/--keys`) prints the first token
+prefix where Vim and the engine diverge in buffer/cursor/register, instead of
+only the final state. See [`DEBUGGING.md`](DEBUGGING.md). The next tool is a
+key-sequence shrinker.
+
 ## Vim Adventures checklist
 
 The command-by-command audit lives in

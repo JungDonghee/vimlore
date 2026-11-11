@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "VIMLORE — a Vim adventure game that teaches real Vim by feel",
+  "description": "VIMLORE \u2014 a Vim adventure game that teaches real Vim by feel",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node tools/inline.mjs",
@@ -26,7 +26,8 @@
     "matrix": "node --experimental-strip-types tools/matrix.ts",
     "matrix:write": "node --experimental-strip-types tools/matrix.ts --write",
     "state-matrix": "node --experimental-strip-types tools/state-matrix.ts",
-    "state-matrix:write": "node --experimental-strip-types tools/state-matrix.ts --write"
+    "state-matrix:write": "node --experimental-strip-types tools/state-matrix.ts --write",
+    "trace": "node --experimental-strip-types tools/trace.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

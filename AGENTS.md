@@ -42,6 +42,7 @@ npm run matrix         # grammar matrix vs real Vim (CI gate)
 npm run verify         # unit + lint + tsc + docs + invariants
 npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
+npm run trace -- --case=m-1234   # per-prefix differential trace (local)
 ```
 
 `npm run lint:levels` is the safety net: it replays each stage's `solution`
