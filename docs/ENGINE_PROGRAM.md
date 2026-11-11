@@ -77,12 +77,12 @@ of living as anonymous `if`s. Known families (IDs are stable):
 | Q01 | `cw` behaves like `ce`; counts extend through words | oracle `cw on comma`, `2cw` |
 | Q02 | a charwise `d` spanning lines to EOL from the indent is linewise (`2dw`, `de`); `c`/`y` stay charwise | pass-2 cases |
 | Q03 | counted `$` is charwise; only `d` converts | `3c$`, `3y$` |
-| Q04 | zero-range `0`/`^`/`h` at column 0 of a non-first line is linewise; line 1 toggles one character | `g~0`, `g~^`, `g~h` |
+| Q04 | zero-range `0`/`^`/`h` at column 0 of a non-first line is linewise; line 1 toggles one character (`cursor.ts`) | `g~0`, `g~^`, `g~h` |
 | Q05 | multi-line bracket objects are linewise when the brackets own their lines; empty pairs park on the closer | `di{`, `ci(`, `f()` |
 | Q06 | visual-block geometry shrinks on short lines for `<` | block cases |
 | Q07 | backward `(` uses real sentence starts (BOF, blank-run tail, paragraph, punctuation+space) | sentence cases |
 | Q08 | counted `iw` counts a space run as a unit and skips line breaks; `iW` across lines is linewise | `2diw`, `3ciW` |
-| Q09 | case-operator cursor: backward motion keeps its landing column; single-line uses min(col, fnb); text-object yanks start at column 0 | pass-1/2 cases |
+| Q09 | case-operator cursor: backward motion keeps its landing column; single-line uses min(col, fnb); text-object yanks start at column 0 (`cursor.ts`) | pass-1/2 cases |
 | Q10 | backward column-0 ranges (`cB`/`dB`/`yB` from an empty line) are linewise on the lines above | `cB`, `dB` |
 | Q11 | `ap` at the last paragraph takes the preceding blank; counted `ap` crosses separators | `2cip`, `2dap` |
 
@@ -159,14 +159,15 @@ Built `tools/surface-audit.ts` + generated [`ENGINE_SURFACE.md`](ENGINE_SURFACE.
 engine-only features and 0 orphan cases. Out-of-scope refusal (Phase D) is the
 remaining half of the closed-world contract.
 
-### Phase B — essence extraction (pilot done)
-`normalize.ts` now owns `flatRange` and Q02/Q10; `applyOp` calls
-`normalizeOperatorRange` and keeps only effect dispatch. The pilot removed the
-two ad-hoc range branches from `engine.ts` with the 356-case oracle green.
-Remaining: Q03/Q04/Q06/Q09 and the cursor policy (`cursor.ts`). Acceptance is
+### Phase B — essence extraction (normalize + cursor done)
+`normalize.ts` owns `flatRange` and Q02/Q10; `cursor.ts` owns the Q04/Q09 cursor
+policy (zero-range case motions and the linewise case-operator landing). The
+engine keeps only effect dispatch and calls both modules; oracle 356/356 and
+matrix 21,712/21,712 stayed green through the extraction. Remaining: Q03/Q06
+(case/yank cursor details) if they earn a separate home. Acceptance is
 unchanged: oracle green at every commit, every branch linked to a quirk ID.
 
-### Phase C — matrix and compose-fuzz (matrix v1 live)
+### Phase C — matrix and compose-fuzz (matrix done, CI gate)
 `tools/matrix.ts` generates **21,712** valid command trees (8 texts, 2-3 cursor
 positions, 20 motions, 20 objects, 8 operators, counts {none, 2}, normal +
 visual/visual-line/visual-block + doubled) and diffs them with

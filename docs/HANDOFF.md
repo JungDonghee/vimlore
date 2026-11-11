@@ -14,9 +14,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,464 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
+| engine | 3,409 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 240,504 B · single `dist/vimlore.html` 264,294 B · gzip 83,203 B · budget gate 265k/84k (raised deliberately this pass, §3) |
+| build | JS 240,277 B · single `dist/vimlore.html` 264,067 B · gzip 83,282 B · budget gate 265k/84k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=1200 not re-run since the object work |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
@@ -75,12 +75,12 @@ matrix runs in the CI `oracle` job now, so a grammar regression fails the
 build. Next: compose-fuzz (random command trees) and the cursor-policy
 extraction (`cursor.ts`).
 
-### Normalization extraction (Phase B pilot)
-`src/core/vim/normalize.ts` now owns `flatRange` and the first two named quirks:
-**Q02** (delete linewise conversion) and **Q10** (backward column-0 ranges).
-`applyOp` calls `normalizeOperatorRange(...)` and only dispatches effects; the
-engine lost its two ad-hoc range branches. `QUIRKS` is the registry new rules
-must join. Cursor policy (Q04/Q09) is the next extraction.
+### Normalization and cursor extraction (Phase B, done)
+`src/core/vim/normalize.ts` owns `flatRange` and Q02 (delete linewise
+conversion) / Q10 (backward column-0 ranges). `src/core/vim/cursor.ts` owns the
+Q04 (zero-range `0`/`^`/`h` case motions) and Q09 (case-operator landing) policy.
+`applyOp`/`caseRange` call both modules and keep only effect dispatch; oracle
+356/356 and matrix 21,712/21,712 stayed green through the extraction.
 
 ### Surface program (Phase A)
 `tools/surface-audit.ts` maps the Grimoire, chapters, oracle cases, unit tests
@@ -128,7 +128,7 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **265,000/84,000**. Each was measured and committed with the feature
-that needed it. Current build is 264,294 B raw / 83,203 B gzip, so headroom is
+that needed it. Current build is 264,067 B raw / 83,282 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.

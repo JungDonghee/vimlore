@@ -70,6 +70,7 @@ curriculum needs, diff-tested against real Vim (`tools/oracle-diff.ts`,
 | `search.ts` | regex compile/match/`pickMatch` for `/ ? n N * #` |
 | `ex.ts` | `executeEx()` — `:s :g :v :d :m :t :sort :normal :set` |
 | `normalize.ts` | operator range normalization (`flatRange`, Q02/Q10) + quirk registry |
+| `cursor.ts` | cursor policy after operators (Q04 zero-range case motions, Q09 case-operator landing) |
 | `wordindex.ts` | word-class tokens shared by word motions and objects |
 | `engine.ts` | `Vim` — the mode/operator state machine that binds it all |
 

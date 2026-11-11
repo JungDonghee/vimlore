@@ -6,6 +6,7 @@ import { tokenAt, tokens } from './wordindex.ts';
 import { allMatches, compilePattern, pickMatch, type Match } from './search.ts';
 import { executeEx } from './ex.ts';
 import { flatRange as flatRangeOf, normalizeOperatorRange } from './normalize.ts';
+import { caseOperatorCursor, zeroRangeCaseAction } from './cursor.ts';
 import type { BufferSnapshot, Mode, MotionResult, Pos, Register } from './types.ts';
 import { parseSubstituteArgs } from './ex.ts';
 
@@ -766,17 +767,11 @@ export class Vim {
   private finishOpWithMotion(op: Op, motion: MotionResult, motionKey = '', count = 1): void {
     const from = { ...this.cursor };
     const to = motion.to;
-    // On a non-first line, a zero-range `0` at column 0 is linewise for case
-    // operators (`g~0` toggles the whole line); on line 1 Vim toggles the one
-    // character. The oracle pins both behaviours.
-    if (
-      (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') &&
-      motionKey === '0' &&
-      to.line === from.line &&
-      to.col === from.col &&
-      from.col === 0 &&
-      from.line > 0
-    ) {
+    // Q04: a zero-range 0/^/h at column 0 of a non-first line is linewise
+    // for case operators; line 1 toggles one character; ^ at the first
+    // non-blank is a no-op. The policy lives in cursor.ts.
+    const zero = zeroRangeCaseAction(op.key, motionKey, from, to);
+    if (zero === 'linewise') {
       this.applyOp(op, {
         start: { line: from.line, col: 0 },
         end: { line: from.line, col: Math.max(0, this.buf.line(from.line).length - 1) },
@@ -784,46 +779,9 @@ export class Vim {
       });
       return;
     }
-    // A zero-range `^` at column 0 makes a case operator act on the whole
-    // line (`g~^` on an unindented line); at the first non-blank it is a no-op.
-    if (
-      (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') &&
-      motionKey === '^' &&
-      to.line === from.line &&
-      to.col === from.col
-    ) {
-      // Like `0`: a zero-range `^` at column 0 of a non-first line is linewise;
-      // at column 0 of line 1 it toggles that one character. At the first
-      // non-blank of an indented line it is a no-op.
-      if (from.col === 0 && from.line > 0) {
-        this.applyOp(op, {
-          start: { line: from.line, col: 0 },
-          end: { line: from.line, col: Math.max(0, this.buf.line(from.line).length - 1) },
-          linewise: true,
-        });
-        return;
-      }
-      if (from.col > 0) {
-        this.resetPending(false);
-        this.afterUnit();
-        return;
-      }
-    }
-    // A failed `h` at BOL applies gU/gu to the whole current line. `g~` is
-    // different: Vim toggles just the character at the cursor.
-    if (
-      (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') &&
-      motionKey === 'h' &&
-      to.line === from.line &&
-      to.col === from.col &&
-      from.col === 0 &&
-      from.line > 0
-    ) {
-      this.applyOp(op, {
-        start: { line: from.line, col: 0 },
-        end: { line: from.line, col: Math.max(0, this.buf.line(from.line).length - 1) },
-        linewise: true,
-      });
+    if (zero === 'noop') {
+      this.resetPending(false);
+      this.afterUnit();
       return;
     }
     // A sentence motion that ends at column 0 of a later line behaves
@@ -1605,30 +1563,17 @@ export class Vim {
     const text = this.buf.flat.slice(s, e);
     this.buf.replaceFlat(s, e, text.replace(/[a-zA-Z]/g, fn0));
     if (r.linewise) {
-      // Vim cursor rules for linewise case changes (oracle-verified):
-      //  - visual: start of the selection
-      //  - doubled (guu/gUU/g~~): one line -> first non-blank; multi-line -> keep
-      //  - motion-based (gUgg/g~j/3gUgg): keep the original column when the cursor
-      //    was inside the range, otherwise go to the first non-blank
-      const l1 = Math.min(r.start.line, r.end.line);
-      const l2 = Math.max(r.start.line, r.end.line);
-      if (visual) {
-        if (l1 === l2) this.cursor = { line: l1, col: 0 };
-        else if (this.cursor.line === l1) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
-        else this.cursor = { line: l1, col: 0 };
-      } else if (fromTextObject) this.cursor = { line: l1, col: 0 };
-      else if (l1 === l2) {
-        // Single-line linewise case: first non-blank, but a cursor that already
-        // sits inside the indent keeps its column (Vim does not move right).
-        const fnb = M.firstNonBlank(this.buf, l1);
-        this.cursor = this.cursor.col < fnb ? { line: l1, col: this.cursor.col } : { line: l1, col: fnb };
-      } else if (doubled) {
-        this.cursor = M.moveTo(this.buf, this.cursor);
-      } else if (motionFrom && motionTo && motionTo.line < motionFrom.line) {
-        // Backward linewise case: Vim leaves the cursor where the motion
-        // landed. `gg` lands on the first non-blank, `k` keeps the column.
-        this.cursor = M.moveTo(this.buf, { line: l1, col: motionTo.col });
-      } else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+      this.cursor = caseOperatorCursor({
+        buf: this.buf,
+        cursor: this.cursor,
+        start: r.start,
+        end: r.end,
+        visual,
+        doubled,
+        fromTextObject,
+        motionFrom,
+        motionTo,
+      });
     } else {
       this.cursor = M.moveTo(this.buf, this.buf.pos(s));
     }

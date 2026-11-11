@@ -51,7 +51,7 @@ won on the last keystroke in exactly `par` keys. **Never commit red levels.**
 ## Where things live
 
 ```
-src/core/vim/       the emulator (buffer, motions, objects, ex, normalize, engine)
+src/core/vim/       the emulator (buffer, motions, objects, ex, normalize, cursor, engine)
 src/core/game/      session (hearts, keys, coins), goals, progress types
 src/content/        commands.ts (the Grimoire) + chapters/cNN.ts (the game)
 src/ui/             canvas renderer, screens, WebAudio sfx
