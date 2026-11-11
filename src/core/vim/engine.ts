@@ -755,6 +755,16 @@ export class Vim {
       });
       return;
     }
+    // A sentence motion that ends at column 0 of a later line behaves
+    // linewise for operators (`d)` deletes the remaining lines, not a blank).
+    if (op.key === 'd' && motionKey === ')' && !motion.kind.startsWith('line') && to.col === 0 && to.line > from.line) {
+      this.applyOp(op, {
+        start: { line: from.line, col: 0 },
+        end: { line: to.line, col: 0 },
+        linewise: true,
+      });
+      return;
+    }
     let range: SelRange;
     if (motion.kind === 'linewise') {
       const lr = motion.lineRange ?? [Math.min(from.line, to.line), Math.max(from.line, to.line)];

@@ -339,5 +339,7 @@ export const CASES: VimCase[] = [
 
   { name: '3g~h BOL', text: 'a,b,c,d', cursor: [1, 0], keys: '3g~h' },
 
+  { name: 'd) remaining lines', text: 'a\nb\nc\nd', cursor: [2, 0], keys: 'd)' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
