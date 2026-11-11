@@ -157,6 +157,7 @@ for (const c of cases) {
   const [l, col] = c.cursor;
   script += `enew!
 clearjumps
+silent! call setcharsearch({'char': '', 'forward': 1, 'until': 0})
 silent! %d _
 call setline(1, ${lines})
 call cursor(${l}, ${col + 1})

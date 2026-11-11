@@ -7,175 +7,55 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21449 |
+| matched | 21664 |
 | engine errors | 0 |
-| divergences | 263 |
+| divergences | 48 |
 
 ## Divergences by category
 
 | category | count |
 |---|---:|
-| normal/d/object/iw | 4 |
-| normal/c/object/iw | 4 |
-| normal/>/object/iw | 4 |
-| normal/d/motion/, | 3 |
-| normal/c/motion/, | 3 |
-| normal/>/motion/, | 3 |
-| normal/g~/motion/, | 3 |
-| normal/gU/motion/, | 3 |
+| normal/y/motion/G | 7 |
+| normal/y/motion/gg | 6 |
 | normal/d/motion/) | 3 |
-| normal/g~/object/iw | 3 |
-| normal/gU/object/iw | 3 |
-| normal/d/object/aw | 3 |
-| normal/c/object/aw | 3 |
-| normal/>/object/aw | 3 |
-| normal/d/object/i" | 3 |
-| normal/d/object/a" | 3 |
-| normal/c/object/i" | 3 |
-| normal/c/object/a" | 3 |
-| normal/y/object/i" | 3 |
-| normal/g~/object/i" | 3 |
-| normal/g~/object/a" | 3 |
-| normal/gu/object/i" | 3 |
-| normal/gU/object/i" | 3 |
-| normal/gU/object/a" | 3 |
-| normal/d/object/i[ | 3 |
-| normal/d/object/a[ | 3 |
-| normal/c/object/i[ | 3 |
-| normal/c/object/a[ | 3 |
-| normal/>/object/i[ | 3 |
-| normal/>/object/a[ | 3 |
-| normal/d/object/i< | 3 |
-| normal/d/object/a< | 3 |
-| normal/d/object/it | 3 |
-| normal/d/object/at | 3 |
-| normal/c/object/i< | 3 |
-| normal/c/object/a< | 3 |
-| normal/c/object/it | 3 |
-| normal/c/object/at | 3 |
-| normal/y/object/it | 3 |
-| normal/>/object/i< | 3 |
-| normal/>/object/a< | 3 |
-| normal/>/object/it | 3 |
-| normal/>/object/at | 3 |
-| normal/g~/object/i< | 3 |
-| normal/g~/object/a< | 3 |
-| normal/g~/object/it | 3 |
-| normal/g~/object/at | 3 |
-| normal/gu/object/it | 3 |
-| normal/gU/object/i< | 3 |
-| normal/gU/object/a< | 3 |
-| normal/gU/object/it | 3 |
-| normal/gU/object/at | 3 |
-| normal/</motion/, | 2 |
 | visual/V/y/k | 2 |
-| normal/c/object/iW | 2 |
-| normal/g~/object/iW | 2 |
-| normal/gU/object/iW | 2 |
-| normal/g~/object/aw | 2 |
-| normal/gU/object/aw | 2 |
+| normal/y/motion/% | 2 |
 | normal/d/motion/b | 2 |
 | normal/d/motion/B | 2 |
 | normal/c/motion/b | 2 |
 | normal/c/motion/B | 2 |
-| normal/y/object/i[ | 2 |
-| normal/g~/object/i[ | 2 |
-| normal/gu/object/i[ | 2 |
-| normal/gU/object/i[ | 2 |
-| normal/y/object/a[ | 2 |
-| normal/</object/i[ | 2 |
-| normal/</object/a[ | 2 |
-| normal/g~/object/a[ | 2 |
-| normal/gu/object/a[ | 2 |
-| normal/gU/object/a[ | 2 |
-| normal/y/object/i< | 2 |
-| normal/gu/object/i< | 2 |
-| normal/y/object/a< | 2 |
-| normal/y/object/at | 2 |
-| normal/</object/i< | 2 |
-| normal/</object/a< | 2 |
-| normal/</object/it | 2 |
-| normal/</object/at | 2 |
-| normal/gu/object/a< | 2 |
-| normal/gu/object/at | 2 |
 | normal/d/motion/w | 1 |
 | normal/d/motion/W | 1 |
 | normal/d/motion/$ | 1 |
-| normal/d/object/iW | 1 |
 | normal/c/motion/$ | 1 |
-| normal/>/object/iW | 1 |
-| normal/y/motion/gg | 1 |
-| normal/y/motion/% | 1 |
+| normal/c/object/iw | 1 |
+| normal/c/object/iW | 1 |
 | normal/y/object/iW | 1 |
+| normal/g~/object/iW | 1 |
 | normal/gu/object/iW | 1 |
-| normal/y/object/iw | 1 |
-| normal/y/object/aw | 1 |
-| normal/</object/iw | 1 |
-| normal/</object/aw | 1 |
+| normal/gU/object/iW | 1 |
 | normal/g~/motion/% | 1 |
 | normal/gu/motion/% | 1 |
-| normal/gu/object/iw | 1 |
-| normal/gu/object/aw | 1 |
 | normal/gU/motion/% | 1 |
 | visual/V/y/gg | 1 |
 | normal/g~/motion/Ta | 1 |
 | normal/gU/motion/Ta | 1 |
 | visual/<C-v>/</G | 1 |
-| normal/d/object/i{ | 1 |
-| normal/d/object/a{ | 1 |
-| normal/c/object/i{ | 1 |
-| normal/c/object/a{ | 1 |
-| normal/y/object/i{ | 1 |
-| normal/y/object/a{ | 1 |
-| normal/>/object/i{ | 1 |
-| normal/>/object/a{ | 1 |
-| normal/</object/i{ | 1 |
-| normal/</object/a{ | 1 |
 | normal/g~/motion/G | 1 |
-| normal/g~/object/i{ | 1 |
-| normal/g~/object/a{ | 1 |
 | normal/gu/motion/G | 1 |
-| normal/gu/object/i{ | 1 |
-| normal/gu/object/a{ | 1 |
 | normal/gU/motion/G | 1 |
-| normal/gU/object/i{ | 1 |
-| normal/gU/object/a{ | 1 |
 
 ## First 40 failures
 
-- `normal/d/motion/,` keys=`d,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
-  - vim: `["ar","baz qux"]` @[1,0]
+- `normal/y/motion/G` keys=`yG<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foo bar","baz qux"]` @[1,2]
   - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/c/motion/,` keys=`c,X<Esc><Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
-  - vim: `["Xar","baz qux"]` @[1,0]
+- `normal/y/motion/gg` keys=`2ygg<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foo bar","baz qux"]` @[1,2]
   - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/>/motion/,` keys=`>,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
-  - vim: `["  foo bar","baz qux"]` @[1,2]
+- `normal/y/motion/G` keys=`2yG<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foo bar","baz qux"]` @[1,2]
   - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/g~/motion/,` keys=`g~,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
-  - vim: `["FOO Bar","baz qux"]` @[1,0]
-  - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/gU/motion/,` keys=`gU,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
-  - vim: `["FOO Bar","baz qux"]` @[1,0]
-  - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/d/motion/,` keys=`d,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,2]
-- `normal/c/motion/,` keys=`c,X<Esc><Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foXar","baz qux"]` @[1,2]
-  - engine: `["fo bar","baz qux"]` @[1,1]
-- `normal/>/motion/,` keys=`>,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["  foo bar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,2]
-- `normal/</motion/,` keys=`<,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foo bar","baz qux"]` @[1,0]
-  - engine: `["foo bar","baz qux"]` @[1,2]
-- `normal/g~/motion/,` keys=`g~,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foO Bar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,2]
-- `normal/gU/motion/,` keys=`gU,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foO Bar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,2]
 - `visual/V/y/k` keys=`Vky<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[2,1]
   - vim: `["foo bar","baz qux"]` @[1,1]
   - engine: `["foo bar","baz qux"]` @[1,0]
@@ -194,72 +74,96 @@
 - `normal/d/motion/)` keys=`2d)<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
   - vim: `["b","","c"]` @[1,0]
   - engine: `["","c"]` @[1,0]
-- `normal/d/object/iw` keys=`2diw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["b","","c"]` @[1,0]
-  - engine: `["","c"]` @[1,0]
-- `normal/d/object/iW` keys=`2diW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["b","","c"]` @[1,0]
-  - engine: `["","c"]` @[1,0]
 - `normal/c/motion/$` keys=`2c$X<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
   - vim: `["X","b","","c"]` @[1,0]
   - engine: `["X","","b","","c"]` @[1,0]
 - `normal/c/object/iw` keys=`2ciwX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
   - vim: `["X","b","","c"]` @[1,0]
-  - engine: `["X","","c"]` @[1,0]
-- `normal/c/object/iW` keys=`2ciWX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["X","b","","c"]` @[1,0]
-  - engine: `["X","","c"]` @[1,0]
-- `normal/>/object/iw` keys=`2>iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["  a","","b","","c"]` @[1,2]
-  - engine: `["  a","","  b","","c"]` @[1,2]
-- `normal/>/object/iW` keys=`2>iW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["  a","","b","","c"]` @[1,2]
-  - engine: `["  a","","  b","","c"]` @[1,2]
-- `normal/g~/object/iw` keys=`2g~iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["A","","b","","c"]` @[1,0]
-  - engine: `["A","","B","","c"]` @[1,0]
-- `normal/g~/object/iW` keys=`2g~iW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["A","","b","","c"]` @[1,0]
-  - engine: `["A","","B","","c"]` @[1,0]
-- `normal/gU/object/iw` keys=`2gUiw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["A","","b","","c"]` @[1,0]
-  - engine: `["A","","B","","c"]` @[1,0]
-- `normal/gU/object/iW` keys=`2gUiW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["A","","b","","c"]` @[1,0]
-  - engine: `["A","","B","","c"]` @[1,0]
-- `normal/d/object/iw` keys=`2diw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","",""]` @[5,0]
-- `normal/d/object/aw` keys=`2daw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","",""]` @[5,0]
-- `normal/c/object/iw` keys=`2ciwX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","X"]` @[5,0]
-- `normal/c/object/aw` keys=`2cawX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","X"]` @[5,0]
-- `normal/>/object/iw` keys=`2>iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","  c"]` @[5,2]
-- `normal/>/object/aw` keys=`2>aw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","  c"]` @[5,2]
-- `normal/g~/object/iw` keys=`2g~iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","C"]` @[5,0]
-- `normal/g~/object/aw` keys=`2g~aw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","C"]` @[5,0]
-- `normal/gU/object/iw` keys=`2gUiw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","C"]` @[5,0]
-- `normal/gU/object/aw` keys=`2gUaw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
-  - vim: `["a","","b","","c"]` @[5,0]
-  - engine: `["a","","b","","C"]` @[5,0]
-- `normal/y/motion/gg` keys=`ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,0]
-  - vim: `["  indented","normal"]` @[1,0]
-  - engine: `["  indented","normal"]` @[1,2]
-- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,0]
-  - vim: `["  indented","normal"]` @[1,0]
-  - engine: `["  indented","normal"]` @[1,2]
+  - engine: `["Xb","","c"]` @[1,0]
+- `normal/y/motion/gg` keys=`ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/y/motion/G` keys=`yG<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/c/object/iW` keys=`2ciWX<Esc><Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  X"]` @[1,2]
+  - engine: `["X"]` @[1,0]
+- `normal/y/motion/gg` keys=`2ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/y/motion/G` keys=`2yG<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/y/object/iW` keys=`2yiW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/g~/object/iW` keys=`2g~iW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  INDENTED","NORMAL"]` @[1,2]
+  - engine: `["  INDENTED","NORMAL"]` @[1,0]
+- `normal/gu/object/iW` keys=`2guiW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/gU/object/iW` keys=`2gUiW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
+  - vim: `["  INDENTED","NORMAL"]` @[1,2]
+  - engine: `["  INDENTED","NORMAL"]` @[1,0]
+- `normal/y/motion/gg` keys=`ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/g~/motion/%` keys=`2g~%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  INDENTED","NORMAL"]` @[1,2]
+  - engine: `["  INDENTED","NORMAL"]` @[1,0]
+- `normal/gu/motion/%` keys=`2gu%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/gU/motion/%` keys=`2gU%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  INDENTED","NORMAL"]` @[1,2]
+  - engine: `["  INDENTED","NORMAL"]` @[1,0]
+- `visual/V/y/k` keys=`Vky<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  indented","normal"]` @[1,1]
+  - engine: `["  indented","normal"]` @[1,0]
+- `visual/V/y/gg` keys=`Vggy<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
+  - vim: `["  indented","normal"]` @[1,2]
+  - engine: `["  indented","normal"]` @[1,0]
+- `normal/g~/motion/Ta` keys=`g~Ta<Esc>i!<Esc>` text=`"say \"hi\" there"` @[1,2]
+  - vim: `["say \"hi\" there"]` @[1,2]
+  - engine: `["saY \"hi\" there"]` @[1,2]
+- `normal/gU/motion/Ta` keys=`gUTa<Esc>i!<Esc>` text=`"say \"hi\" there"` @[1,2]
+  - vim: `["say \"hi\" there"]` @[1,2]
+  - engine: `["saY \"hi\" there"]` @[1,2]
+- `normal/d/motion/)` keys=`d)<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
+  - vim: `["if"]` @[1,1]
+  - engine: `[""]` @[1,0]
+- `normal/y/motion/G` keys=`yG<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
+  - vim: `["if (x) {","  y();","}"]` @[1,2]
+  - engine: `["if (x) {","  y();","}"]` @[1,0]
+- `normal/y/motion/gg` keys=`2ygg<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
+  - vim: `["if (x) {","  y();","}"]` @[1,2]
+  - engine: `["if (x) {","  y();","}"]` @[1,0]
+- `normal/y/motion/G` keys=`2yG<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
+  - vim: `["if (x) {","  y();","}"]` @[1,2]
+  - engine: `["if (x) {","  y();","}"]` @[1,0]
+- `visual/<C-v>/</G` keys=`<C-v>G<<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
+  - vim: `["if (x) {","y();","}"]` @[1,0]
+  - engine: `["if (x) {"," y();","}"]` @[1,1]
+- `normal/d/motion/b` keys=`db<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) {","  y","}"]` @[2,2]
+  - engine: `["if (x) {","  y}"]` @[2,3]
+- `normal/d/motion/B` keys=`dB<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) {","}"]` @[2,0]
+  - engine: `["if (x) {","  }"]` @[2,2]
+- `normal/c/motion/b` keys=`cbX<Esc><Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) {","  yX","}"]` @[2,3]
+  - engine: `["if (x) {","  yX}"]` @[2,3]
+- `normal/c/motion/B` keys=`cBX<Esc><Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) {","X","}"]` @[2,0]
+  - engine: `["if (x) {","  X}"]` @[2,2]
+- `normal/d/motion/b` keys=`2db<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) {","}"]` @[2,0]
+  - engine: `["if (x) {","  }"]` @[2,2]

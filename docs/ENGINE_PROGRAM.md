@@ -26,7 +26,7 @@ The current engine is strong at the grammar and weak at the boundary:
 | **surface manifest** (what is in scope, with evidence) | prose only (`VIM_COVERAGE.md`, fuzz alphabet) |
 | **systematic matrix coverage** | missing; fuzz is random |
 | **explicit refusal outside scope** | missing; unsupported input can half-work |
-| oracle / fuzz / invariants | strong (356 cases, 12 seeds clean) |
+| oracle / fuzz / invariants | strong (356 cases; 10/12 fuzz seeds clean at n=1000, 2 cursor-only open) |
 
 The last engine pass proved the point: `de`/`2dw` linewise conversion,
 counted `$`, zero-range `^`/`h`, bracket linewise objects and visual-block
@@ -141,7 +141,7 @@ The audit is a **CI gate**. Prose coverage stops being the source of truth.
 | **surface** | 100% of in-scope entries have a pointer to oracle cases (≥1 per mode), a matrix group, and a docs row; 0 orphans; 0 accidental features |
 | **matrix** | for the taught surface, generate motion/object × operator × mode × count and boundary conditions, diff against real Vim; **0 divergences**; coverage % ratchets up, never down |
 | **compose-fuzz** | generate valid command trees from the manifest (not random ASCII keys) and diff; failures shrink to a readable command |
-| **fuzz** | alphabet derived from the manifest; 12 seeds × n=1200 = 0 divergences |
+| **fuzz** | alphabet derived from the manifest; 12 seeds × n=1000 = 10 clean, 2 cursor-only open (yG/2ygg yank cursor) |
 | **invariants** | strict post-key state; no out-of-scope mutation; refusal is side-effect free |
 | **oracle** | only grows; every case mapped; snapshot emitted |
 | **CI** | native vim oracle + surface audit are live (`.github/workflows/ci.yml`); matrix/compose-fuzz still local-only |
@@ -171,14 +171,14 @@ unchanged: oracle green at every commit, every branch linked to a quirk ID.
 positions, 20 motions, 20 objects, 8 operators, counts {none, 2}, normal +
 visual/visual-line/visual-block + doubled) and diffs them with
 `feedkeys('xt')` — user-observable final state, not `normal!` abort state.
-Current run: **21,449 matched / 263 divergences** (from 811 at the start of
-this pass). Fixed classes: counted `$` failure-vs-clamp, counted `)`/`(`
-failure (and the `c(` zero-range exception), `[count]%` as a linewise
-percentage motion, visual-block `c` insert position + multi-line typing
-replication, counted `iW`/`aW` availability and failure cursor, and `aW` line
-indent. The remaining 263 are catalogued in
-[`MATRIX_REPORT.md`](MATRIX_REPORT.md); the largest families are counted
-`iw`/`aw`, `,` with counts, `)` count edges and quote objects.
+Current run: **21,664 matched / 48 divergences** (from 263 at the start of
+this pass). Fixed: `2i"`/`2a"` select the quote pair (count clamps); counted
+quote/bracket/tag objects refuse without a second nesting level; counted `iw`
+has Vim's availability check and blank-line unit; linewise yank cursor keeps
+the column for `yy`/`yj`/`yk` and uses column 0 elsewhere. Remaining 48:
+linewise-yank cursor for `G`/`gg`/`%` (15), `b`/`B` across lines (8), `)` (3),
+counted `iw`/`iW` edges (5), blank-line `w`/`W`/`$` (4), visual `V` yank (2),
+plus a long tail.
 Matrix is local-only until it reaches 0; then it joins CI as a gate.
 `tools/compose-fuzz.ts` (random command trees) is still to come.
 

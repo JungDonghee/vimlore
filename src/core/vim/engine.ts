@@ -1352,13 +1352,17 @@ export class Vim {
       const l2 = Math.max(r.start.line, r.end.line);
       const text = this.buf.lines.slice(l1, l2 + 1).join('\n') + '\n';
       this.storeRegister(reg, text, true, true);
-      // Vim puts the cursor on the first line of a linewise yank: the original
-      // column when it is already there, otherwise the first non-blank. A
-      // visual yank puts it at the start of the selection (column 0).
-      if (visual || fromTextObject) this.cursor = { line: l1, col: 0 };
-      else if (motionKey === 'j' || motionKey === 'k') this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
-      else if (keepCol || (l1 === this.cursor.line && l2 > this.cursor.line)) this.cursor = M.moveTo(this.buf, this.cursor);
-      else this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+      // Vim puts the cursor on the first line of a linewise yank. `yy`/`yj`
+      // keep the column; visual yanks use the anchor column; everything else
+      // (gg/G/%, text objects) lands on column 0 of the first line.
+      if (visual) {
+        const col = this.visualAnchor ? this.visualAnchor.col : 0;
+        this.cursor = M.moveTo(this.buf, { line: l1, col });
+      } else if (keepCol || motionKey === 'j' || motionKey === 'k') {
+        this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+      } else {
+        this.cursor = { line: l1, col: 0 };
+      }
       this.emit({ type: 'yank', register: reg ?? '"', text });
     } else {
       const [s, e] = this.flatRange(r, inclusive);
@@ -2589,6 +2593,33 @@ export class Vim {
         let start = obj.start;
         let end = obj.end;
         if (count > 1) {
+          const quoteKeys = key === '"' || key === "'" || key === '`';
+          if (quoteKeys) {
+            // `2i"` selects the quote pair (quotes included, no trailing
+            // space); `2a"` is the same around object Vim uses for count 1
+            // (including the trailing space). Higher counts clamp.
+            const outer = textObject(this.buf, this.cursor, true, key);
+            if (!outer) {
+              this.bell();
+              this.resetPending();
+              return;
+            }
+            start = outer.start;
+            end = outer.end;
+            if (!p.around) {
+              const line = this.buf.line(end.line);
+              while (end.col > start.col && (line[end.col] === ' ' || line[end.col] === '\t')) {
+                end = { line: end.line, col: end.col - 1 };
+              }
+            }
+          } else if (key !== 'w' && key !== 'W' && key !== 'p') {
+            // A counted bracket/tag object needs a second nesting level; with
+            // only one level Vim errors. No outer-object expansion yet, so
+            // refuse instead of fabricating a longer range.
+            this.bell();
+            this.resetPending();
+            return;
+          } else {
           const list = key === 'w' || key === 'W' ? tokens(this.buf, key === 'W') : [];
           const off = this.buf.idx(this.cursor);
           let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
@@ -2597,10 +2628,13 @@ export class Vim {
           const shiftOp = this.op && (this.op.key === '>' || this.op.key === '<');
           // Shift operators with a count > 2 fall back to the line-shift path
           // when the WORD object runs out (Vim `3>iW`); other cases refuse.
-          const checkW = key === 'W' && ti >= 0 && !(shiftOp && count > 2);
+          const checkW = (key === 'w' || key === 'W') && ti >= 0 && !(shiftOp && count > 2);
           if (checkW) {
             const available = list.slice(ti).filter((t) => !t.blank).length;
-            if (available < count) {
+            // Vim clamps a count one past the last WORD (`3diw` with two words
+            // left deletes both); a larger overshoot is refused.
+            const clampable = available >= 2 && count === available + 1;
+            if (available < count && !clampable) {
               // Vim refuses but parks the cursor on the last character of the
               // current WORD (the motion's partial endpoint).
               this.cursor = M.moveTo(this.buf, obj.end);
@@ -2624,8 +2658,13 @@ export class Vim {
                 const j = endOff + 1;
                 if (j >= flat.length) break;
                 if (flat[j] === '\n') {
-                  // A line break is not a unit: Vim skips it and reaches the
-                  // next word, keeping the newline inside the range.
+                  // A blank line is itself a unit (`2iw` on "a\n\nb" stops
+                  // after the empty line); a plain line break is skipped.
+                  if (j + 1 < flat.length && flat[j + 1] === '\n') {
+                    endOff = j + 1;
+                    units++;
+                    continue;
+                  }
                   let k = j;
                   while (k < flat.length && (flat[k] === '\n' || flat[k] === ' ' || flat[k] === '\t')) k++;
                   if (k >= flat.length) break;
@@ -2744,6 +2783,7 @@ export class Vim {
             const line = this.buf.line(end.line);
             if (obj.linewise) end = { line: Math.min(this.buf.lineCount - 1, end.line + count - 1), col: 0 };
             else end = { line: end.line, col: Math.min(Math.max(0, line.length - 1), end.col + count - 1) };
+          }
           }
         }
         if (obj.linewise && op.key !== 'c' && op.key !== 'y' && op.key !== 'd') {
