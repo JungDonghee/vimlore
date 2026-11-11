@@ -95,7 +95,7 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
-  ceiling enforced by `npm run budget`: 262,000 B raw / 83,000 B gzip** (current
+  ceiling enforced by `npm run budget`: 262,000 B raw / 84,000 B gzip** (current
   260.6 kB / 82.3 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,

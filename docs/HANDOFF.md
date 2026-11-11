@@ -16,7 +16,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 3,261 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 235,313 B · single `dist/vimlore.html` 260,620 B · gzip 82,305 B · budget gate 262k/83k (raised deliberately this pass, §3) |
+| build | JS 235,313 B · single `dist/vimlore.html` 260,620 B · gzip 82,305 B · budget gate 262k/84k (raised deliberately this pass, §3) |
 | fuzz | **12 seeds, 0 divergences at n=1200** (and 9 seeds 0 at n=1000), buffer and cursor |
 | matrix | 21,712 grammar cases: **20,901 matched, 811 open** (local; `docs/MATRIX_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
@@ -136,7 +136,7 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (356 cases, up from 266).
 The bundle gate was raised **in the same commit** from 258,000/82,000 to
-**262,000/83,000**; current build is 260,620 B raw / 82,305 B gzip. This is the
+**262,000/84,000**; current build is 260,620 B raw / 82,305 B gzip. This is the
 documented "pay for itself or raise deliberately" path. Headroom is still
 small (~900 B raw, ~1.1 kB gzip): the next feature must reduce bytes first or
 justify another measured raise.
