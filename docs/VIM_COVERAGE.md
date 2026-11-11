@@ -2,7 +2,7 @@
 
 VIMLORE runs on its own Vim engine (`src/core/vim/`), not on Vim. It is a
 **subset chosen for teaching**, kept honest by a differential oracle:
-`tools/oracle-diff.ts` replays **235 keystroke cases** through a real
+`tools/oracle-diff.ts` replays **237 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
 

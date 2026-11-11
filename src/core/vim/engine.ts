@@ -2209,6 +2209,14 @@ export class Vim {
         this.pending = null;
         const obj = textObject(this.buf, this.cursor, p.around, key);
         if (!obj) {
+          // Vim's shift operators still act on the current line when the
+          // object is an empty pair (`<i(` on `f()`), landing on the first
+          // non-blank; delete/change/yank stay a no-op.
+          if (this.op && (this.op.key === '<' || this.op.key === '>')) {
+            const op = this.op;
+            this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true });
+            return;
+          }
           this.bell();
           this.say(`no ${p.around ? 'a' : 'i'}${key} here`, 'error');
           this.resetPending();
@@ -2237,7 +2245,15 @@ export class Vim {
               let e = target.end;
               const flat = this.buf.flat;
               while (e + 1 < flat.length && /\s/.test(flat[e + 1])) e++;
-              start = this.buf.pos(list[ti].start);
+              let startOff = list[ti].start;
+              // Like count-1 `aw`: at end of line/buffer there is no trailing
+              // whitespace, so Vim takes the whitespace *before* the words.
+              if (e === target.end) {
+                let j = startOff - 1;
+                while (j >= 0 && (flat[j] === ' ' || flat[j] === '\t')) j--;
+                if (j < startOff - 1) startOff = j + 1;
+              }
+              start = this.buf.pos(startOff);
               end = this.buf.pos(e);
             }
           } else {
