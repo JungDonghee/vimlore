@@ -82,7 +82,7 @@ this file.
 - `invariants` has 15 coverage warnings (commands never declared by a stage /
   unlock keys without a Grimoire row), not errors.
 - Desktop 60 fps is not verified in the headless environment; the ceiling is
-  documented below. Bundle is 254.6 kB (stretch 200 kB; hard ceiling 258 kB).
+  documented below. Bundle is 256.2 kB (stretch 200 kB; hard ceiling 258 kB).
 - c04s3's goal was corrected to Vim's real multi-line `di(` result
   (`connect(` and `)` on separate lines); the old goal only passed because
   `di{`/`di(` joined the closing bracket.

@@ -72,7 +72,7 @@
 
 | item | value |
 |---|---|
-| src | 9,365 lines; `engine.ts` 2,532 lines |
+| src | 10,329 lines; `engine.ts` 3,063 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine oracle | **266/266** vs `vim -u NONE` (142 at session start, +124 cases) |
 | level lint | **51 stages valid** |
