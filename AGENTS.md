@@ -20,7 +20,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 367/367 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 363/363 must pass
 npm test
 ```
 
@@ -96,7 +96,7 @@ The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
   ceiling enforced by `npm run budget`: 266,000 B raw / 85,000 B gzip** (current
-  265.0 kB / 83.5 kB); do not raise it without a deliberate, measured reason.
+  265.5 kB / 83.7 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
   ghost and particles are the FX pass. Rebuild the frame only when its key changes.
@@ -146,7 +146,7 @@ introduce per-frame allocation in `render()`.
 ## Coverage and known gaps
 
 The authoritative matrix of what the engine does and does not do is
-[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **367/367**
+[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **363/363**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Not in the current single-buffer slice: multi-buffer/files/
 windows/tabs (deferred, not rejected: `FUTURE_EDITOR.md`), folds, completion, `:!`,

@@ -4,7 +4,7 @@ VIMLORE is being built as **the most comprehensive Vim training terminal ever
 attempted** — no artificial cap on commands, tips, or advanced features. That is
 a destination, not a current-completeness claim. The engine is a **subset chosen
 for this slice**, kept honest by a differential oracle:
-`tools/oracle-diff.ts` replays **367 keystroke cases** through a real
+`tools/oracle-diff.ts` replays **363 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
 

@@ -8,19 +8,16 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21076 |
-| divergences | 636 |
+| matched | 21117 |
+| divergences | 595 |
 | engine errors | 0 |
 
 | field | count |
 |---|---:|
-| undo | 627 |
+| undo | 586 |
 | reg | 10 |
 | regtype | 8 |
 
-- `visual/V/c/}` keys=`V}cX<Esc>` text=`"one two three"` @[1,0] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,12]}}`
 - `normal/c/motion/gg` keys=`cggX<Esc>` text=`"one two three"` @[1,2] fields=undo
   - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
   - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,2]}}`
@@ -45,15 +42,6 @@
 - `normal/c/motion/%` keys=`2c%X<Esc>` text=`"one two three"` @[1,2] fields=undo
   - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
   - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,2]}}`
-- `visual/V/c/j` keys=`VjcX<Esc>` text=`"one two three"` @[1,2] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,2]}}`
-- `visual/V/c/k` keys=`VkcX<Esc>` text=`"one two three"` @[1,2] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,2]}}`
-- `visual/V/c/}` keys=`V}cX<Esc>` text=`"one two three"` @[1,2] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,12]}}`
 - `normal/c/motion/gg` keys=`cggX<Esc>` text=`"one two three"` @[1,1] fields=undo
   - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
   - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,1]}}`
@@ -78,18 +66,6 @@
 - `normal/c/motion/%` keys=`2c%X<Esc>` text=`"one two three"` @[1,1] fields=undo
   - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
   - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,1]}}`
-- `visual/V/c/j` keys=`VjcX<Esc>` text=`"one two three"` @[1,1] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,1]}}`
-- `visual/V/c/k` keys=`VkcX<Esc>` text=`"one two three"` @[1,1] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,1]}}`
-- `visual/V/c/}` keys=`V}cX<Esc>` text=`"one two three"` @[1,1] fields=undo
-  - vim: `{"reg":"one two three\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["one two three"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"one two three\n","regtype":"linewise","undo":{"lines":["one two three"],"cursor":[1,12]}}`
-- `visual/V/c/}` keys=`V}cX<Esc>` text=`"foo bar\nbaz qux"` @[1,0] fields=undo
-  - vim: `{"reg":"foo bar\nbaz qux\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,0],"lines":["foo bar","baz qux"]}}`
-  - eng: `{"lines":["X"],"cursor":[1,0],"reg":"foo bar\nbaz qux\n","regtype":"linewise","undo":{"lines":["foo bar","baz qux"],"cursor":[2,6]}}`
 - `normal/d/motion/h` keys=`dh` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
   - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
   - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
@@ -258,3 +234,27 @@
 - `normal/c/object/i{` keys=`2ci{X<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
   - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
   - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/a{` keys=`2ca{X<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/i<` keys=`2ci<X<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/a<` keys=`2ca<X<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/it` keys=`2citX<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/at` keys=`2catX<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/ip` keys=`2cipX<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/c/object/ap` keys=`2capX<Esc>` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"o","cursor":[1,1],"lines":["fo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["fo bar","baz qux"],"cursor":[1,1],"reg":"o","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
+- `normal/>/motion/w` keys=`2>w` text=`"foo bar\nbaz qux"` @[1,2] fields=undo
+  - vim: `{"reg":"","cursor":[1,2],"lines":["  foo bar","baz qux"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["foo bar","baz qux"]}}`
+  - eng: `{"lines":["  foo bar","baz qux"],"cursor":[1,2],"reg":"","regtype":"charwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,0]}}`

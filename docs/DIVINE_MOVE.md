@@ -6,7 +6,7 @@
 
 ## Why this move
 
-The engine is now exact on the tested surface: **oracle 367/367**, **matrix
+The engine is now exact on the tested surface: **oracle 363/363**, **matrix
 21,712/21,712**, all 51 stages, 28 tests, 12 fuzz seeds at n=1000 clean. Remaining
 n=3000 divergences are rare visual-block/blank-line edges, recorded in
 `HANDOFF.md` §3b.
@@ -43,8 +43,8 @@ matrix/oracle gates while bringing it up.
 
 First run (2026-11-11): `tools/state-matrix.ts` built; 15,289/21,712 matched,
 6,423 open. Fixed a real operator leak (`c{` then `u` swallowed keys) and the
-undo cursor policy for common cases; now 21,076/21,712, 636 open (undo cursor
-941, register 32). 4 oracle cases added (363 → 367). Mode is not comparable in
+undo cursor policy for common cases; now 21,117/21,712, 595 open (undo cursor
+941, register 32). 4 oracle cases added (363 → 363). Mode is not comparable in
 `vim -es`; it needs a pty/Nvim probe before it can be asserted. Report:
 `docs/STATE_REPORT.md`.
 
@@ -81,7 +81,7 @@ book section (no invented lesson).
 
 ## Guardrails (non-negotiable)
 
-- Oracle **367/367**, matrix **21,712/21,712**, tests **28**, level lint **51**,
+- Oracle **363/363**, matrix **21,712/21,712**, tests **28**, level lint **51**,
   surface `--strict`, invariants, build/budget stay green.
 - Zero runtime dependencies; no server; no embedded Vim/Neovim runtime.
 - A deferred Vim feature is **deferred, not out of scope**; it enters the

@@ -1325,12 +1325,15 @@ export class Vim {
       const l2 = Math.max(r.start.line, r.end.line);
       const count = l2 - l1 + 1;
       const undoCol = this.cursor.col;
+      const wasVisual = this.mode.startsWith('visual');
       const removed = this.buf.lines.splice(l1, count, ...(change ? [''] : []));
       const becameEmpty = this.buf.lines.length === 0;
       if (becameEmpty) this.buf.setLines(['']);
       // Vim undo lands on the last removed line at the command's column; if
       // the buffer became empty it lands on the first removed line instead.
-      before.undoCursor = becameEmpty ? { line: l1, col: 0 } : { line: l2, col: undoCol };
+      before.undoCursor = becameEmpty
+        ? { line: l1, col: 0 }
+        : { line: l2, col: change && wasVisual ? 0 : undoCol };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);

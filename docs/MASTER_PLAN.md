@@ -72,14 +72,14 @@
 
 | item | value |
 |---|---|
-| src | 11,041 lines; `engine.ts` 3,488 · `normalize.ts` 100 |
+| src | 11,044 lines; `engine.ts` 3,491 · `normalize.ts` 100 |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **367/367** vs `vim -u NONE` (266 at pass-2 start, +77 cases) |
+| engine oracle | **363/363** vs `vim -u NONE` (266 at pass-2 start, +77 cases) |
 | level lint | **51/51 stages valid** |
 | surface | **86 of 86 commands with engine evidence**, 9 engine-only features, 0 orphan cases (`npm run surface -- --strict`, CI gate) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 divergences** (CI gate; `docs/MATRIX_REPORT.md`) |
 | unit tests | **28 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 241,626 B · single `dist/vimlore.html` 265,416 B · gzip 83,671 B · budget gate 266k/85k (raised this pass) |
+| build | JS 241,666 B · single `dist/vimlore.html` 265,456 B · gzip 83,690 B · budget gate 266k/85k (raised this pass) |
 | fuzz | 12 seeds at n=1000: **0 divergences** |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -87,7 +87,7 @@
 **What changed in pass 2 (engine correctness, the product):**
 
 - Cleared all **14 documented cursor-only fuzz edges**; nine seeds are now
-  0-divergence at n=1000 (they are pinned by 367 oracle cases).
+  0-divergence at n=1000 (they are pinned by 363 oracle cases).
 - Rebuilt/corrected semantics: multi-line bracket objects are linewise (empty
   pairs park on the close delimiter); backward `(` is built from real sentence
   starts; counted `iw`/`iW` counts space runs as units and skips line breaks;
@@ -105,7 +105,7 @@
   `di(` left the cursor at the end of the opening line. Real Vim parks it on
   the closing-paren line, so the stage now uses `di(kkdi(` (par 8, same goal).
 - Budget gate raised deliberately twice: 258k/82k → 260k → **266k/85k**
-  (engine correctness + matrix failure semantics); gzip is 83,671 B. See
+  (engine correctness + matrix failure semantics); gzip is 83,690 B. See
   HANDOFF §3.
 
 ### 2.1 Fuzz results
@@ -170,7 +170,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥367/367; new cases committed; tests green.
+  oracle ≥363/363; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -218,7 +218,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +171 cases, oracle 367/367, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +171 cases, oracle 363/363, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -235,7 +235,7 @@ acceptance criteria:
 
 | id | track | status |
 |---|---|---|
-| DM1 | observable-state oracle (mode/registers/undo/marks) | **in progress** — tool built, 636 open local |
+| DM1 | observable-state oracle (mode/registers/undo/marks) | **in progress** — tool built, 595 open local |
 | DM2 | license-safe corpus from Vim tests / VimGolf / book code | queued after DM1 |
 | DM3 | level compiler (BFS/A*, necessity + par + citation) | queued after DM2 |
 | DM4 | curriculum mastery loops on synthesized drills | after DM3 |
@@ -316,7 +316,7 @@ acceptance criteria:
   Build locally before pushing.
 - **Budget (pass 2 decision)**: the raw/gzip ceiling was raised 258k/82k →
   266k/85k in the same commit as the engine work (+2.9 kB for 30 pinned
-  behaviours; gzip 83,671 B). Headroom is ~900 B raw. The next feature must
+  behaviours; gzip 83,690 B). Headroom is ~900 B raw. The next feature must
   reduce bytes or justify another measured raise; do not raise it silently.
 
 ## 9. Deferred editor program
@@ -336,7 +336,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 367/367
+node --experimental-strip-types tools/oracle-diff.ts        # 363/363
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

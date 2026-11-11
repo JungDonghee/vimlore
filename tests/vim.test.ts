@@ -50,6 +50,20 @@ test('buffer index round-trips', () => {
 // ---------------------------------------------------------------------------
 // Undo / repeat / macros
 // ---------------------------------------------------------------------------
+test('change that opens insert clears the pending operator', () => {
+  const v = new Vim({ text: 'one two three' });
+  v.feedString('c{X<Esc>');
+  v.feedString('u');
+  assert.equal(v.text, 'one two three');
+});
+
+test('visual-line change then undo lands on column 0 (feedkeys Vim)', () => {
+  const v = new Vim({ text: 'one two three' });
+  v.feedString('VjcX<Esc>u');
+  assert.equal(v.text, 'one two three');
+  assert.deepEqual(v.cursor, { line: 0, col: 0 });
+});
+
 test('whole-line charwise yanks are linewise registers', () => {
   const a = new Vim({ text: 'a\n\nb\n\nc' });
   a.feedString('y)');
