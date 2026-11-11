@@ -12,6 +12,9 @@ export interface ObjectRange {
   start: Pos;
   end: Pos;
   linewise?: boolean;
+  /** Inner pair is empty (`f()`): no text, but Vim still moves the cursor to
+   *  the closing delimiter (or inserts before it for `c`). */
+  empty?: boolean;
   /** Found ahead of the cursor rather than around it (Vim's `i(` fallback). */
   fallback?: boolean;
 }
@@ -102,8 +105,9 @@ function quoteObject(buf: Buffer, pos: Pos, around: boolean, q: string): ObjectR
     while (line[end + 1] === ' ' || line[end + 1] === '\t') end++;
     return { start: { line: pos.line, col: pairStart }, end: { line: pos.line, col: end } };
   }
-  // An empty pair like "" has no inner text; Vim treats it as a no-op.
-  if (pairEnd === pairStart + 1) return null;
+  // An empty pair like "" has no inner text; Vim treats it as an empty range
+  // whose cursor sits on the closing quote (`ci"` inserts before it).
+  if (pairEnd === pairStart + 1) return { start: { line: pos.line, col: pairEnd }, end: { line: pos.line, col: pairEnd }, empty: true };
   return { start: { line: pos.line, col: pairStart + 1 }, end: { line: pos.line, col: pairEnd - 1 } };
 }
 
@@ -174,14 +178,36 @@ function bracketObject(buf: Buffer, pos: Pos, around: boolean, openCh: string): 
   }
   if (endOff === -1) return null;
   if (around) return { start: buf.pos(startOff), end: buf.pos(endOff), fallback };
+  const openLine = buf.pos(startOff).line;
+  const closeLine = buf.pos(endOff).line;
+  // A block whose opening bracket ends a line and whose closing bracket starts
+  // a line is linewise in Vim: `di{` removes whole lines and keeps the braces
+  // on their own lines. Zero inner lines is a no-op that parks on `}`.
+  if (flat[startOff + 1] === '\n' && flat[endOff - 1] === '\n') {
+    const l1 = openLine + 1;
+    const l2 = closeLine - 1;
+    if (l1 > l2) {
+      return { start: { line: closeLine, col: 0 }, end: { line: closeLine, col: 0 }, linewise: true, empty: true, fallback };
+    }
+    return { start: { line: l1, col: 0 }, end: { line: l2, col: Math.max(0, buf.line(l2).length - 1) }, linewise: true, fallback };
+  }
+  // Opening bracket at end of line, closing one mid-line: the inner range
+  // begins at the start of the next line (`if {\n  x }`).
+  if (flat[startOff + 1] === '\n') {
+    const s = startOff + 2;
+    const e = endOff - 1;
+    if (e < s) return { start: buf.pos(endOff), end: buf.pos(endOff), empty: true, fallback };
+    return { start: buf.pos(s), end: buf.pos(e), fallback };
+  }
   const s = startOff + 1;
   let e = endOff - 1;
   // If the closing bracket starts a line, Vim's inner object ends on the last
   // character of the previous line, not on the newline before the bracket;
   // otherwise `di{` would join the closing brace onto the opening line.
   while (e > s && flat[e] === '\n') e--;
-  // An empty pair like "()" has no inner text; Vim treats it as a no-op.
-  if (e < s) return null;
+  // An empty pair like "()" has no inner text; Vim leaves the text alone but
+  // parks the cursor on the closing delimiter (and `ci(` inserts before it).
+  if (e < s) return { start: buf.pos(endOff), end: buf.pos(endOff), empty: true, fallback };
   return { start: buf.pos(s), end: buf.pos(e), fallback };
 }
 
@@ -242,7 +268,11 @@ function paragraphObject(buf: Buffer, pos: Pos, around: boolean): ObjectRange | 
   while (s > 0 && !isBlank(s - 1)) s--;
   while (e < buf.lineCount - 1 && !isBlank(e + 1)) e++;
   if (around) {
+    // `ap` includes the blank lines after the paragraph; at the end of the
+    // buffer (no trailing blank run) Vim takes the blank lines before it.
+    const hadTrailing = e < buf.lineCount - 1;
     while (e < buf.lineCount - 1 && isBlank(e + 1)) e++;
+    if (!hadTrailing) while (s > 0 && isBlank(s - 1)) s--;
   }
   return { start: { line: s, col: 0 }, end: { line: e, col: Math.max(0, buf.line(e).length - 1) }, linewise: true };
 }

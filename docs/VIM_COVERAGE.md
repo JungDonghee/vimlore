@@ -4,7 +4,7 @@ VIMLORE is being built as **the most comprehensive Vim training terminal ever
 attempted** — no artificial cap on commands, tips, or advanced features. That is
 a destination, not a current-completeness claim. The engine is a **subset chosen
 for this slice**, kept honest by a differential oracle:
-`tools/oracle-diff.ts` replays **266 keystroke cases** through a real
+`tools/oracle-diff.ts` replays **343 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
 
@@ -25,6 +25,8 @@ command}`, `<Esc>`.
 **Motions** `h j k l 0 ^ $ |` · `w W b B e E ge gE` · `f F t T ; ,` · `gg G` ·
 `{ } ( )` · `%` · `/ ? n N * # g* g#` · `'` and `` ` `` marks · `<C-d> <C-u> <C-f>
 <C-b> <C-e> <C-y>` · `<C-o> <C-i>` jumplist · `+ - _ <CR> <Space> <BS>` ·
+backward `(` built from real sentence starts (BOF, blank-run last line,
+paragraph starts, `[.!?]` + whitespace) ·
 `H M L` (approximated as top/middle/bottom of the buffer).
 
 **Operators** `d c y > <` · `g~ gu gU gq gw` · doubled forms `dd cc yy >> <<` ·
@@ -32,6 +34,13 @@ command}`, `<Esc>`.
 
 **Text objects** `iw aw iW aW` · `i" a" i' a' i\`` a\`` · `i( a( ib` ·
 `i[ a[` · `i{ a{ iB aB` · `i< a<` · `it at` · `ip ap` · `is as`.
+
+Multi-line bracket blocks whose brackets own their lines are **linewise**
+(`di{` removes whole inner lines and keeps the braces on separate lines;
+`ci{` opens an empty line); an empty pair (`f()`, `""`) is a no-op that
+parks the cursor on the closing delimiter, and `ci(`/`ci"` insert before it.
+Counted `iw` counts a run of spaces as one unit, skips line breaks, and keeps
+an adjacent punctuation token in range; `iW` across lines is linewise.
 
 **Visual** `v V <C-v>` · `o` · operators · block `I`/`A` · `gv`.
 

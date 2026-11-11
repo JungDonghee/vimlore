@@ -28,7 +28,7 @@ you can run it headless (the tests do).
 Correctness is layered so a single plausible mistake cannot reach production
 unnoticed. Each ring must pass before the next is trusted:
 
-1. **Real-Vim oracle** (`tools/oracle-diff.ts`, 266 cases): every engine
+1. **Real-Vim oracle** (`tools/oracle-diff.ts`, 343 cases): every engine
    behavior that can be automated is diffed against `vim -u NONE`.
 2. **Strict post-key invariants** (`Vim({ strict: true })`): after every single
    key, `Vim.assertInvariants()` checks mode, cursor bounds, visual anchor,
@@ -58,7 +58,7 @@ A red ring stops the line. Fix or revert; never commit a “mostly green” stat
 
 The heart of the project. A faithful re-implementation of the Vim commands the
 curriculum needs, diff-tested against real Vim (`tools/oracle-diff.ts`,
-**266/266**).
+**343/343**).
 
 | file | responsibility |
 |---|---|

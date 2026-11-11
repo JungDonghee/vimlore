@@ -234,9 +234,10 @@ export function paragraphMotion(env: MotionEnv, dir: 1 | -1, count: number): Mot
   const fromLine = env.cursor.line;
   const fromCol = env.cursor.col;
   if (dir === 1) {
-    if (!startedBlank && line === last && !isBlank(last)) {
+    if (line === last && !isBlank(last)) {
       // Ran through the final paragraph to EOF: Vim lands on the last character
-      // and an operator runs to it inclusively.
+      // and an operator runs to it inclusively. This also holds when the motion
+      // started on a blank line (`}` from the separator before the last one).
       return { to: { line: last, col: Math.max(0, buf.line(last).length - 1) }, kind: 'inclusive' };
     }
     const to = { line, col: 0 };
@@ -250,64 +251,93 @@ export function paragraphMotion(env: MotionEnv, dir: 1 | -1, count: number): Mot
   return { to, kind: 'exclusive' };
 }
 
-export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): MotionResult {
-  const flat = env.buf.flat;
-  let off = env.buf.idx(env.cursor);
+export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): MotionResult | null {
+  const buf = env.buf;
+  const flat = buf.flat;
+  let off = buf.idx(env.cursor);
+  if (dir === -1) {
+    // Backward: Vim's `(` lands on the previous *sentence start*. A sentence
+    // start is BOF, the last blank line of a blank run, the first non-blank of
+    // a paragraph, or the first non-blank after `[.!?]` + whitespace.
+    const starts: number[] = [0];
+    const push = (n: number) => {
+      if (n >= 0 && n < flat.length) starts.push(n);
+    };
+    const blank = (l: number) => buf.line(l).trim() === '';
+    for (let l = 0; l < buf.lineCount; l++) {
+      if (!blank(l)) continue;
+      if (l + 1 < buf.lineCount && blank(l + 1)) continue;
+      push(buf.idx({ line: l, col: 0 }));
+    }
+    for (let l = 0; l < buf.lineCount; l++) {
+      if (blank(l)) continue;
+      if (l > 0 && blank(l - 1)) push(lineFirstNonBlank(buf, l));
+    }
+    for (let i = 0; i < flat.length; i++) {
+      if (!/[.!?]/.test(flat[i])) continue;
+      let j = i + 1;
+      while (j < flat.length && /["')\]]/.test(flat[j])) j++;
+      if (j >= flat.length || !/\s/.test(flat[j])) continue;
+      while (j < flat.length && /\s/.test(flat[j])) j++;
+      if (j < flat.length) push(j);
+    }
+    const uniq = [...new Set(starts)].sort((a, b) => a - b);
+    const startOff = off;
+    let target = off;
+    for (let n = 0; n < count; n++) {
+      let best = -1;
+      for (const s of uniq) {
+        if (s < target) best = s;
+        else break;
+      }
+      // A counted `(` that runs out of sentences is a no-op, not a partial
+      // move: Vim keeps the original cursor (and `c(` still opens insert).
+      if (best < 0) return { to: buf.pos(startOff), kind: 'exclusive' };
+      target = best;
+    }
+    return { to: buf.pos(target), kind: 'exclusive', jump: true };
+  }
   let hitEof = false;
   for (let n = 0; n < count; n++) {
-    if (dir === 1) {
-      let moved = false;
-      // If we are on a blank separator line, the next sentence starts on the
-      // next non-blank line; scanning for the next blank run would skip it.
-      const blankLine = env.buf.pos(off).line;
-      if (env.buf.line(blankLine).trim() === '' && blankLine < env.buf.lineCount - 1) {
-        let l = blankLine + 1;
-        while (l < env.buf.lineCount - 1 && env.buf.line(l).trim() === '') l++;
-        off = env.buf.idx({ line: l, col: 0 });
-        continue;
+    // If we are on a blank separator line, skip the blank run first, then the
+    // paragraph, landing on the first blank line of the next run (or EOF).
+    const blankLine = buf.pos(off).line;
+    if (buf.line(blankLine).trim() === '' && blankLine < buf.lineCount - 1) {
+      let l = blankLine + 1;
+      while (l < buf.lineCount - 1 && buf.line(l).trim() === '') l++;
+      off = buf.idx({ line: l, col: 0 });
+      continue;
+    }
+    let moved = false;
+    for (let i = off + 1; i < flat.length; i++) {
+      // A blank line starts a new sentence in Vim: `)` stops there.
+      if (flat[i] === '\n' && i + 1 < flat.length && flat[i + 1] === '\n' && i + 1 !== off) {
+        off = i + 1;
+        moved = true;
+        break;
       }
-      for (let i = off + 1; i < flat.length; i++) {
-        // A blank line starts a new sentence in Vim: `)` stops there.
-        if (flat[i] === '\n' && i + 1 < flat.length && flat[i + 1] === '\n' && i + 1 !== off) {
-          off = i + 1;
-          moved = true;
-          break;
-        }
-        if (/[.!?]/.test(flat[i]) && (i + 1 >= flat.length || /[\s"'\])]/.test(flat[i + 1]))) {
-          let j = i + 1;
-          while (j < flat.length && /\s/.test(flat[j])) j++;
-          off = Math.min(j, flat.length - 1);
-          moved = true;
-          break;
-        }
+      if (/[.!?]/.test(flat[i]) && (i + 1 >= flat.length || /[\s"'\])]/.test(flat[i + 1]))) {
+        let j = i + 1;
+        while (j < flat.length && /\s/.test(flat[j])) j++;
+        off = Math.min(j, flat.length - 1);
+        moved = true;
+        break;
       }
-      if (!moved) {
-        off = Math.max(0, flat.length - 1);
-        hitEof = true;
-      }
-    } else {
-      // Start of the current sentence, else the previous one. A sentence ends
-      // at [.!?] followed by whitespace, so scan for that, then skip the gap.
-      let target = 0;
-      for (let i = off - 1; i > 0; i--) {
-        // A blank line starts a new sentence/paragraph in Vim: `(` stops there.
-        if (flat[i] === '\n' && flat[i - 1] === '\n') {
-          target = i;
-          break;
-        }
-        if (/[.!?]/.test(flat[i]) && /\s/.test(flat[i + 1] ?? ' ')) {
-          let j = i + 1;
-          while (j < flat.length && /\s/.test(flat[j])) j++;
-          if (j < off) {
-            target = j;
-            break;
-          }
-        }
-      }
-      off = target;
+    }
+    if (!moved) {
+      off = Math.max(0, flat.length - 1);
+      hitEof = true;
     }
   }
-  return { to: env.buf.pos(off), kind: hitEof ? 'inclusive' : 'exclusive', jump: true };
+  return { to: buf.pos(off), kind: hitEof ? 'inclusive' : 'exclusive', jump: true };
+}
+
+/** First non-blank offset of a line. */
+function lineFirstNonBlank(buf: Buffer, line: number): number {
+  const start = buf.idx({ line, col: 0 });
+  const text = buf.line(line);
+  const m = /[^ \t]/.exec(text);
+  return start + (m ? m.index : 0);
 }
 
 /** Greedy wrapping used by gq/gw; returns the reformatted block lines. */

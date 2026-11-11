@@ -410,11 +410,13 @@ export class Vim {
       case 'E':
         this.wordMove(key);
         return;
-      case 'G':
-        this.jumpTo({ line: this.countNum ? Math.min(this.buf.lineCount - 1, this.countNum - 1) : this.buf.lineCount - 1, col: 0 }, true);
+      case 'G': {
+        const line = this.countNum ? Math.min(this.buf.lineCount - 1, this.countNum - 1) : this.buf.lineCount - 1;
+        this.jumpTo({ line, col: M.firstNonBlank(this.buf, line) }, true);
         this.takeCount();
         this.afterUnit();
         return;
+      }
       case '%':
         this.percentMotion(false);
         return;
@@ -757,14 +759,40 @@ export class Vim {
       });
       return;
     }
+    // A zero-range `^` at column 0 makes a case operator act on the whole
+    // line (`g~^` on an unindented line); at the first non-blank it is a no-op.
+    if (
+      (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') &&
+      motionKey === '^' &&
+      to.line === from.line &&
+      to.col === from.col
+    ) {
+      // Like `0`: a zero-range `^` at column 0 of a non-first line is linewise;
+      // at column 0 of line 1 it toggles that one character. At the first
+      // non-blank of an indented line it is a no-op.
+      if (from.col === 0 && from.line > 0) {
+        this.applyOp(op, {
+          start: { line: from.line, col: 0 },
+          end: { line: from.line, col: Math.max(0, this.buf.line(from.line).length - 1) },
+          linewise: true,
+        });
+        return;
+      }
+      if (from.col > 0) {
+        this.resetPending(false);
+        this.afterUnit();
+        return;
+      }
+    }
     // A failed `h` at BOL applies gU/gu to the whole current line. `g~` is
     // different: Vim toggles just the character at the cursor.
     if (
-      (op.key === 'gU' || op.key === 'gu') &&
+      (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') &&
       motionKey === 'h' &&
       to.line === from.line &&
       to.col === from.col &&
-      from.col === 0
+      from.col === 0 &&
+      from.line > 0
     ) {
       this.applyOp(op, {
         start: { line: from.line, col: 0 },
@@ -796,11 +824,16 @@ export class Vim {
       this.rangeInclusive = motion.kind === 'inclusive';
     }
     this.yankMotionKey = motionKey;
+    this.opMotionFrom = from;
+    this.opMotionTo = to;
     this.applyOp(op, range);
     if (motion.jump) this.pushJump(from);
   }
 
   rangeInclusive = false;
+  /** Motion endpoints of the operator that is currently being applied. */
+  private opMotionFrom: Pos | null = null;
+  private opMotionTo: Pos | null = null;
 
   /** Convert a (start,end) pair plus inclusivity into flat [s,e). */
   private flatRange(r: SelRange, inclusive: boolean): [number, number] {
@@ -818,18 +851,49 @@ export class Vim {
   private applyOp(op: Op, r: SelRange): void {
     const fromTextObject = this.fromTextObject;
     const yankMotionKey = this.yankMotionKey;
+    const motionFrom = this.opMotionFrom;
+    const motionTo = this.opMotionTo;
     this.fromTextObject = false;
     this.yankMotionKey = '';
+    this.opMotionFrom = null;
+    this.opMotionTo = null;
     const inclusive = this.rangeInclusive;
-    if (op.key === 'd') this.deleteRange(r, inclusive, op.reg, false);
-    else if (op.key === 'c') this.deleteRange(r, inclusive, op.reg, true);
-    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled, yankMotionKey);
+    // Vim's vi-compatible rule: a charwise *delete* spanning lines that ends
+    // at the end of its last line becomes linewise when it starts in the
+    // indent. This is why `2dw`/`de` from column 0 remove whole lines while
+    // `2dw` from inside a word stays charwise. Change/yank and visual do not.
+    let range = r;
+    if (
+      op.key === 'd' &&
+      !r.linewise &&
+      !r.block &&
+      !this.mode.startsWith('visual') &&
+      r.start.line < r.end.line
+    ) {
+      const [s, e] = this.flatRange(r, inclusive);
+      if (e > s) {
+        const startPos = this.buf.pos(s);
+        const endPos = this.buf.pos(e - 1);
+        const endText = this.buf.line(endPos.line);
+        const tail = endText.slice(endPos.col + 1);
+        if (
+          endPos.line > startPos.line &&
+          tail.trim() === '' &&
+          startPos.col <= M.firstNonBlank(this.buf, startPos.line)
+        ) {
+          range = { start: { line: startPos.line, col: 0 }, end: { line: endPos.line, col: 0 }, linewise: true };
+        }
+      }
+    }
+    if (op.key === 'd') this.deleteRange(range, inclusive, op.reg, false);
+    else if (op.key === 'c') this.deleteRange(range, inclusive, op.reg, true);
+    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled, yankMotionKey, fromTextObject);
     else if (op.key === '>') this.shiftRange(r, 1);
     else if (op.key === '<') this.shiftRange(r, -1);
     else if (op.key === '=') this.indentRange(r);
-    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle', false, op.doubled, fromTextObject);
-    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower', false, op.doubled, fromTextObject);
-    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper', false, op.doubled, fromTextObject);
+    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle', false, op.doubled, fromTextObject, motionFrom, motionTo);
+    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower', false, op.doubled, fromTextObject, motionFrom, motionTo);
+    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper', false, op.doubled, fromTextObject, motionFrom, motionTo);
     else if (op.key === 'gq' || op.key === 'gw') this.formatRange(r);
     this.resetPending(false);
     this.afterUnit();
@@ -930,6 +994,12 @@ export class Vim {
   private sentenceMove(dir: 1 | -1): void {
     const n = this.takeCount();
     const res = M.sentenceMotion(this.motionEnv(), dir, n);
+    if (!res) {
+      // A counted motion that runs out of sentences fails and keeps the cursor.
+      this.bell();
+      this.afterUnit();
+      return;
+    }
     this.moveTo(res.to, 'char', true);
     this.afterUnit();
   }
@@ -1015,11 +1085,11 @@ export class Vim {
         return { to: { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) }, kind: 'exclusive' };
       case '$': {
         const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count - 1);
-        // A counted `$` that crosses lines is linewise in Vim, not charwise.
+        // `$` is always a charwise motion; a counted `$` that crosses lines
+        // becomes linewise only through the delete conversion below.
         // On an empty line `$` has zero width, so `d$` must not eat the newline.
         const empty = this.buf.line(line).length === 0;
-        const kind = line !== this.cursor.line ? 'linewise' : empty ? 'exclusive' : 'inclusive';
-        return { to: { line, col: M.lineEnd(this.buf, line) }, kind };
+        return { to: { line, col: M.lineEnd(this.buf, line) }, kind: empty ? 'exclusive' : 'inclusive' };
       }
       case '+':
       case CR: {
@@ -1239,7 +1309,7 @@ export class Vim {
     }
   }
 
-  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false, motionKey = ''): void {
+  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false, motionKey = '', fromTextObject = false): void {
     if (r.block) {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
@@ -1267,7 +1337,7 @@ export class Vim {
       // Vim puts the cursor on the first line of a linewise yank: the original
       // column when it is already there, otherwise the first non-blank. A
       // visual yank puts it at the start of the selection (column 0).
-      if (visual) this.cursor = { line: l1, col: 0 };
+      if (visual || fromTextObject) this.cursor = { line: l1, col: 0 };
       else if (motionKey === 'j' || motionKey === 'k') this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
       else if (keepCol || (l1 === this.cursor.line && l2 > this.cursor.line)) this.cursor = M.moveTo(this.buf, this.cursor);
       else this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
@@ -1293,8 +1363,18 @@ export class Vim {
   }
 
   private shiftRange(r: SelRange, dir: 1 | -1): void {
-    const l1 = Math.min(r.start.line, r.end.line);
-    const l2 = Math.max(r.start.line, r.end.line);
+    let l1 = Math.min(r.start.line, r.end.line);
+    let l2 = Math.max(r.start.line, r.end.line);
+    if (!r.linewise && !r.block && !this.mode.startsWith('visual')) {
+      // A charwise operator range that ends at column 0 of a later line
+      // contributes no characters to that line: Vim shifts only the lines the
+      // text touches. Visual selections include the cursor line regardless.
+      const [s, e] = this.flatRange(r, this.rangeInclusive);
+      if (e > s) {
+        l1 = this.buf.pos(s).line;
+        l2 = this.buf.pos(Math.max(s, e - 1)).line;
+      }
+    }
     const before = this.snapshot();
     const pad = ' '.repeat(this.shiftwidth);
     if (r.block) {
@@ -1343,7 +1423,16 @@ export class Vim {
   private fromTextObject = false;
   private yankMotionKey = '';
 
-  private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper', visual = false, doubled = false, fromTextObject = false): void {
+  private caseRange(
+    r: SelRange,
+    inclusive: boolean,
+    mode: 'toggle' | 'lower' | 'upper',
+    visual = false,
+    doubled = false,
+    fromTextObject = false,
+    motionFrom: Pos | null = null,
+    motionTo: Pos | null = null,
+  ): void {
     const before = this.snapshot();
     const fn0 = mode === 'upper' ? (c: string) => c.toUpperCase() : mode === 'lower' ? (c: string) => c.toLowerCase() : (c: string) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase());
     if (r.block) {
@@ -1389,15 +1478,18 @@ export class Vim {
         else if (this.cursor.line === l1) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
         else this.cursor = { line: l1, col: 0 };
       } else if (fromTextObject) this.cursor = { line: l1, col: 0 };
-      else if (doubled) {
-        if (l1 !== l2) this.cursor = M.moveTo(this.buf, this.cursor);
-        else {
-          const fnb = M.firstNonBlank(this.buf, l1);
-          this.cursor = this.cursor.col < fnb ? { line: l1, col: this.cursor.col } : { line: l1, col: fnb };
-        }
-      }
-      else if (l1 === l2) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
-      else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+      else if (l1 === l2) {
+        // Single-line linewise case: first non-blank, but a cursor that already
+        // sits inside the indent keeps its column (Vim does not move right).
+        const fnb = M.firstNonBlank(this.buf, l1);
+        this.cursor = this.cursor.col < fnb ? { line: l1, col: this.cursor.col } : { line: l1, col: fnb };
+      } else if (doubled) {
+        this.cursor = M.moveTo(this.buf, this.cursor);
+      } else if (motionFrom && motionTo && motionTo.line < motionFrom.line) {
+        // Backward linewise case: Vim leaves the cursor where the motion
+        // landed. `gg` lands on the first non-blank, `k` keeps the column.
+        this.cursor = M.moveTo(this.buf, { line: l1, col: motionTo.col });
+      } else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
     } else {
       this.cursor = M.moveTo(this.buf, this.buf.pos(s));
     }
@@ -2430,6 +2522,25 @@ export class Vim {
         }
         const op = this.op;
         if (!op) return;
+        if (obj.empty) {
+          this.count = '';
+          // Vim's shift operators still act on the current line for an empty
+          // pair; delete/yank/case leave the text alone but move the cursor to
+          // the closing delimiter, and change inserts just before it.
+          if (op.key === '<' || op.key === '>') {
+            this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true });
+            return;
+          }
+          if (op.key === 'c') {
+            this.openInsertAt(obj.start);
+            return;
+          }
+          this.resetPending(false);
+          this.cursor = M.moveTo(this.buf, obj.start);
+          this.wantColValue = this.cursor.col;
+          this.afterUnit();
+          return;
+        }
         const count = (this.countNum || 1) * (this.op ? this.op.count || 1 : 1);
         this.count = '';
         if (count > 1 && obj.fallback) {
@@ -2443,39 +2554,49 @@ export class Vim {
           const list = key === 'w' || key === 'W' ? tokens(this.buf, key === 'W') : [];
           const off = this.buf.idx(this.cursor);
           let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
-          const nextSameLine = list.some(
-            (t) => !t.blank && t.start > off && this.buf.pos(t.start).line === this.cursor.line,
-          );
           if (!p.around && (key === 'w' || key === 'W')) {
-            if (key === 'w' && count === 2 && nextSameLine && ti >= 0) {
-              // Vim's `2iw` on a line with another word selects the current
-              // word plus trailing whitespace, not the next word.
-              let e = this.buf.idx(obj.end);
-              const flat = this.buf.flat;
-              while (e + 1 < flat.length && (flat[e + 1] === ' ' || flat[e + 1] === '\t')) e++;
-              end = this.buf.pos(e);
-            } else {
-              const onWhitespace = ti < 0;
-              if (ti < 0) ti = list.findIndex((t) => !t.blank && t.start >= off);
-              if (ti >= 0) {
-                // Same-line `Niw` extends N-1 words; a count that reaches a
-                // later line is linewise and extends N words (Vim's behaviour).
-                const startLine = this.buf.pos(list[ti].start).line;
-                let targetIdx = Math.min(list.length - 1, ti + count - 1);
-                const targetLine = this.buf.pos(list[targetIdx].start).line;
-                if (targetLine === startLine) targetIdx = Math.max(ti, ti + count - 2);
-                const target = list[targetIdx];
-                if (target) {
-                  start = onWhitespace ? obj.start : this.buf.pos(list[ti].start);
-                  end = this.buf.pos(target.end);
-                  if (key === 'W' && target.end < this.buf.flat.length && /[ \t]/.test(this.buf.flat[target.end + 1] ?? '')) {
-                    let e = target.end;
-                    while (e + 1 < this.buf.flat.length && (this.buf.flat[e + 1] === ' ' || this.buf.flat[e + 1] === '\t')) e++;
-                    end = this.buf.pos(e);
-                  }
-                  if (start.line !== end.line) obj.linewise = true;
+            const flat = this.buf.flat;
+            const onWhitespace = ti < 0;
+            if (ti < 0) ti = list.findIndex((t) => !t.blank && t.start >= off);
+            if (ti >= 0) {
+              const first = list[ti];
+              const startOff = onWhitespace ? this.buf.idx(obj.start) : first.start;
+              // On whitespace the blank run itself is the first unit.
+              let endOff = onWhitespace ? this.buf.idx(obj.end) : first.end;
+              let units = 1;
+              while (units < count) {
+                const j = endOff + 1;
+                if (j >= flat.length) break;
+                if (flat[j] === '\n') {
+                  // A line break is not a unit: Vim skips it and reaches the
+                  // next word, keeping the newline inside the range.
+                  let k = j;
+                  while (k < flat.length && (flat[k] === '\n' || flat[k] === ' ' || flat[k] === '\t')) k++;
+                  if (k >= flat.length) break;
+                  const nt = list.find((t) => !t.blank && t.start === k) ?? list.find((t) => !t.blank && t.start >= k);
+                  if (!nt) break;
+                  endOff = nt.end;
+                  units++;
+                  continue;
                 }
+                if (flat[j] === ' ' || flat[j] === '\t') {
+                  // A run of spaces is one unit: `2iw` on the last word of a
+                  // line selects the word plus its trailing spaces.
+                  let e = j;
+                  while (e + 1 < flat.length && (flat[e + 1] === ' ' || flat[e + 1] === '\t')) e++;
+                  endOff = e;
+                  units++;
+                  continue;
+                }
+                // Adjacent token (punctuation or a word with no space).
+                const nt = list.find((t) => !t.blank && t.start === j);
+                if (!nt) break;
+                endOff = nt.end;
+                units++;
               }
+              start = this.buf.pos(startOff);
+              end = this.buf.pos(endOff);
+              if (key === 'W' && start.line !== end.line) obj.linewise = true;
             }
           } else if (p.around && (key === 'w' || key === 'W')) {
             // `2daW`/`2daw`: select `count` words and the whitespace after the
@@ -2490,24 +2611,49 @@ export class Vim {
                 end = this.buf.pos(target.end);
               }
             } else {
-              const target = list[Math.min(list.length - 1, ti + count - 1)];
+              let idx = ti;
+              for (let u = 1; u < count && idx < list.length - 1; u++) {
+                idx++;
+                // Blank lines are not words to count, but stay inside the range.
+                while (idx < list.length - 1 && list[idx].blank) idx++;
+              }
+              const target = list[idx];
               if (target) {
                 let e = target.end;
                 const flat = this.buf.flat;
-                while (e + 1 < flat.length && /\s/.test(flat[e + 1])) e++;
+                while (e + 1 < flat.length && (flat[e + 1] === ' ' || flat[e + 1] === '\t')) e++;
                 let startOff = list[ti].start;
-                // Like count-1 `aw`: at end of line/buffer there is no trailing
-                // whitespace, so Vim takes the whitespace *before* the words.
-                const atEol = target.end + 1 >= flat.length || flat[target.end + 1] === '\n';
-                if (e === target.end && atEol) {
+                // No whitespace after the last word: Vim takes the whitespace
+                // *before* the first word instead (so `2daw` on `x = (a)` eats
+                // ` = (` rather than `= (`).
+                if (e === target.end) {
                   let j = startOff - 1;
                   while (j >= 0 && (flat[j] === ' ' || flat[j] === '\t')) j--;
-                  if (j < startOff - 1) startOff = j + 1;
+                  // Do not swallow line indentation: the run must start after
+                  // a real character on the same line (a newline means col 0).
+                  if (j >= 0 && j < startOff - 1 && flat[j] !== '\n') startOff = j + 1;
                 }
                 start = this.buf.pos(startOff);
                 end = this.buf.pos(e);
               }
             }
+          } else if (p.around && key === 'p' && obj.linewise) {
+            // Counted `ap` repeats the paragraph: cross the blank separator and
+            // the next paragraph `count - 1` times, including the blanks that
+            // surround the result (Vim counts the separator inside the range).
+            let last = end.line;
+            for (let k = 1; k < count; k++) {
+              while (last + 1 < this.buf.lineCount && this.buf.line(last + 1).trim() === '') last++;
+              let n = last + 1;
+              if (n >= this.buf.lineCount) break;
+              while (n < this.buf.lineCount && this.buf.line(n).trim() !== '') {
+                last = n;
+                n++;
+              }
+            }
+            while (last + 1 < this.buf.lineCount && this.buf.line(last + 1).trim() === '') last++;
+            while (start.line > 0 && this.buf.line(start.line - 1).trim() === '') start = { line: start.line - 1, col: 0 };
+            end = { line: last, col: Math.max(0, this.buf.line(last).length - 1) };
           } else {
             // Repeat the object outward (approximation of Vim's behaviour).
             const line = this.buf.line(end.line);
@@ -2578,7 +2724,11 @@ export class Vim {
         const explicit = this.countNum > 0 || op.count > 0;
         const last = this.buf.lineCount - 1;
         const targetLine = explicit ? Math.min(n - 1, last) : 0;
-        this.finishOpWithMotion(op, { to: { line: targetLine, col: 0 }, kind: 'linewise', jump: true });
+        this.finishOpWithMotion(op, {
+          to: { line: targetLine, col: M.firstNonBlank(this.buf, targetLine) },
+          kind: 'linewise',
+          jump: true,
+        });
         return;
       }
       const n = this.countNum || 1;

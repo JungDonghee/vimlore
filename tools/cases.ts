@@ -357,5 +357,110 @@ export const CASES: VimCase[] = [
 
   { name: 'guu keeps indented cursor', text: '  indented\nnormal', cursor: [1, 1], keys: 'guu' },
 
+  // --- fuzz-cleared: case-operator cursor over linewise ranges ---------------
+  { name: 'gUgg backward keeps fnb', text: '  aa\n  bb\n  cc', cursor: [3, 4], keys: 'gUgg' },
+  { name: 'gUgg backward from last', text: 'one\ntwo\nthree\nfour\nfive', cursor: [5, 2], keys: 'gUgg' },
+  { name: '3g~gg backward', text: 'one\ntwo\nthree\nfour\nfive', cursor: [5, 2], keys: '3g~gg' },
+  { name: '2gUG same line keeps col', text: 'function f() {\n  return 1;\n}', cursor: [2, 1], keys: '2gUG' },
+  { name: 'gUj forward keeps col', text: 'one\ntwo\nthree', cursor: [1, 1], keys: 'gUj' },
+  { name: 'gUk backward keeps col', text: 'one\ntwo\nthree', cursor: [3, 1], keys: 'gUk' },
+  { name: 'gUU indented keeps col', text: '  indented\nnormal', cursor: [1, 1], keys: 'gUU' },
+  { name: '2gUU multi keeps col', text: 'one\ntwo\nthree', cursor: [1, 1], keys: '2gUU' },
+  { name: 'gUbrace backward', text: 'one\ntwo\nthree', cursor: [3, 1], keys: 'gU{' },
+  { name: 'gUbraceclose forward', text: '  a\n  b', cursor: [1, 1], keys: 'gU}' },
+
+  // --- fuzz-cleared: multi-line bracket objects are linewise -----------------
+  { name: 'di{ multiline linewise', text: 'function f() {\n  return 1;\n}', cursor: [2, 3], keys: 'di{' },
+  { name: 'ci{ multiline linewise', text: 'function f() {\n  return 1;\n}', cursor: [2, 3], keys: 'ci{XY<Esc>' },
+  { name: 'yi{ multiline cursor', text: 'function f() {\n  return 1;\n}', cursor: [2, 3], keys: 'yi{' },
+  { name: 'g~i{ multiline cursor', text: 'function f() {\n  return 1;\n}', cursor: [2, 3], keys: 'g~i{' },
+  { name: 'di( open eol close mid', text: 'foo(\n  a,\n  b)', cursor: [2, 2], keys: 'di(' },
+  { name: 'ci( open eol close mid', text: 'foo(\n  a,\n  b)', cursor: [2, 2], keys: 'ci(X<Esc>' },
+  { name: 'di( open mid close bol', text: 'foo(a,\n  b\n)', cursor: [1, 4], keys: 'di(' },
+  { name: 'di{ adjacent multiline', text: 'x {\n}', cursor: [1, 2], keys: 'di{' },
+  { name: 'ci{ adjacent multiline', text: '{\n}', cursor: [1, 0], keys: 'ci{X<Esc>' },
+
+  // --- fuzz-cleared: empty pairs ---------------------------------------------
+  { name: 'di( empty pair cursor', text: 'function f() {', cursor: [1, 3], keys: 'di(' },
+  { name: 'yi( empty pair cursor', text: 'function f() {', cursor: [1, 3], keys: 'yi(' },
+  { name: 'g~i( empty pair cursor', text: 'function f() {', cursor: [1, 3], keys: 'g~i(' },
+  { name: 'ci( empty pair', text: 'a () b', cursor: [1, 3], keys: 'ci(X<Esc>' },
+  { name: 'di" empty pair cursor', text: 'a "" b', cursor: [1, 1], keys: 'di"' },
+  { name: 'c( at bof opens insert', text: '[1, 2, 3]', cursor: [1, 0], keys: 'c(X<Esc>' },
+
+  // --- fuzz-cleared: paragraph objects at the last paragraph -----------------
+  { name: 'yap end takes leading blank', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: 'yap' },
+  { name: 'dap end takes leading blank', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: 'dap' },
+  { name: '>ap end cursor', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: '>ap' },
+  { name: 'yap middle takes trailing blank', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: 'yap' },
+
+  // --- fuzz-cleared: backward sentence motion --------------------------------
+  { name: '2( over blank run', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: '2(' },
+  { name: '3( over blank run', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: '3(' },
+  { name: '( from paragraph end', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: '(' },
+  { name: '2( mid-line fails', text: 'One. Two.', cursor: [1, 5], keys: '2(' },
+  { name: '( mid-sentence', text: 'One. Two.', cursor: [1, 7], keys: '(' },
+  { name: '2( punctuation', text: 'One. Two. Three.', cursor: [1, 16], keys: '2(' },
+  { name: '2( blank then punctuation', text: 'One. Two.\n\nThree.', cursor: [3, 0], keys: '2(' },
+  { name: '( leading blank run', text: '\n\n\na', cursor: [4, 0], keys: '2(' },
+  { name: '( indented paragraph', text: 'a\n\n  b', cursor: [3, 2], keys: '(' },
+
+  // --- fuzz-cleared: counted aw/iw and linewise W ----------------------------
+  { name: '2gUaw punctuation leading', text: 'const x = (a + b);', cursor: [1, 8], keys: '2gUaw' },
+  { name: '2diw across lines', text: 'one two\nthree four', cursor: [1, 4], keys: '2diw' },
+  { name: '2guiw across lines cursor', text: 'one two\nthree four', cursor: [1, 4], keys: '2guiw' },
+  { name: '3diW across lines', text: 'a\nb\nc\nd', cursor: [2, 0], keys: '3diW' },
+  { name: '3ciW across lines', text: 'a\nb\nc\nd', cursor: [2, 0], keys: '3ciWxy<Esc>' },
+
+  // --- fuzz-cleared: G/gg and paragraph motion at EOF ------------------------
+  { name: 'G indented last line', text: 'a\n  b', cursor: [1, 0], keys: 'G' },
+  { name: '2G indented line', text: 'a\n  b\nc', cursor: [1, 0], keys: '2G' },
+  { name: 'gg indented first line', text: '  a\nb', cursor: [2, 0], keys: 'gg' },
+  { name: '} from blank to indented eof', text: '  aa\n  bb\n\n  cc', cursor: [3, 0], keys: '}' },
+
+  // --- fuzz-cleared: delete linewise conversion and counted $ ---------------
+  { name: '2dw from line start is linewise', text: 'a\nb\nc\nd', cursor: [2, 0], keys: '2dw' },
+  { name: '3dw from line start is linewise', text: 'a\nb\nc\nd', cursor: [2, 0], keys: '3dw' },
+  { name: 'dw single stays charwise', text: 'a\nb\nc\nd', cursor: [2, 0], keys: 'dw' },
+  { name: '2dw mid-word stays charwise', text: 'ab\ncd\nef\ngh', cursor: [2, 1], keys: '2dw' },
+  { name: 'de across lines is linewise', text: 'a\nb\nc', cursor: [1, 0], keys: 'de' },
+  { name: 'ce across lines stays charwise', text: 'a\nb', cursor: [1, 0], keys: 'ceX<Esc>' },
+  { name: '3c$ clamps charwise', text: 'one two\nthree four', cursor: [1, 4], keys: '3c$xy<Esc>' },
+  { name: '3y$ charwise register', text: 'one two\nthree four', cursor: [1, 4], keys: '3y$' },
+
+  // --- fuzz-cleared: shift operand ranges -----------------------------------
+  { name: 'shift-b backward', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: '>b' },
+  { name: 'shift-W end col0', text: 'one two\nthree four', cursor: [1, 4], keys: '>W' },
+  { name: 'shift-3B end col0', text: 'a\nb\nc\nd', cursor: [3, 0], keys: '3>B' },
+  { name: 'visual shift includes cursor line', text: 'a\nb\nc\nd', cursor: [3, 0], keys: 'v}>' },
+  { name: 'visual block shift spans lines', text: 'a\n\nb\n\nc', cursor: [5, 0], keys: '<C-v>b(>' },
+
+  // --- fuzz-cleared: counted iw units ---------------------------------------
+  { name: '2diw punctuation pair', text: 'if (x) { y(); }', cursor: [1, 4], keys: '2diw' },
+  { name: '2yiw punctuation pair', text: 'f(x) y', cursor: [1, 2], keys: '2yiw' },
+  { name: '3diw three units', text: 'aa bb cc dd', cursor: [1, 4], keys: '3diw' },
+  { name: '2g~iw punctuation', text: 'if (x) { y(); }', cursor: [1, 4], keys: '2g~iw' },
+
+  // --- fuzz-cleared: zero-range ^ in case operators -------------------------
+  { name: 'g~^ at line1 col0', text: 'a,b,c,d', cursor: [1, 0], keys: 'g~^' },
+  { name: 'g~^ at line2 col0 is linewise', text: 'one two\nthree four', cursor: [2, 0], keys: 'g~^' },
+  { name: 'gU^ at indented fnb is no-op', text: '  abc', cursor: [1, 2], keys: 'gU^' },
+  { name: 'gU^ from col0 indented', text: '  abc', cursor: [1, 0], keys: 'gU^' },
+
+  // --- fuzz-cleared: counted paragraph case ---------------------------------
+  { name: '2g~ap from blank', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: '2g~ap' },
+
+  // --- fuzz-cleared: counted paragraph objects ------------------------------
+  { name: '2cip from paragraph', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: '2cipxy<Esc>' },
+  { name: '2dap from paragraph', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: '2dap' },
+  { name: '2yap from paragraph cursor', text: 'a\n\nb\n\nc', cursor: [3, 0], keys: '2yap' },
+  { name: '2g~ap from first paragraph', text: 'a\n\nb\n\nc', cursor: [1, 0], keys: '2g~ap' },
+
+  // --- fuzz-cleared: zero-range h in case operators -------------------------
+  { name: 'g~h line1 toggles one char', text: 'a,b\nc,d', cursor: [1, 0], keys: 'g~h' },
+  { name: 'g~h line2 toggles line', text: 'a,b\nc,d', cursor: [2, 0], keys: 'g~h' },
+  { name: 'gUh line1 toggles one char', text: 'a,b\nc,d', cursor: [1, 0], keys: 'gUh' },
+  { name: 'gUh line2 toggles line', text: 'a,b\nc,d', cursor: [2, 0], keys: 'gUh' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

@@ -68,68 +68,56 @@
 - **Docs never drift.** If you add a command, count, or gate, update
   `VIM_COVERAGE.md` / this file in the same commit.
 
-## 2. Verified snapshot (2026-11-11, end of slice 1)
+## 2. Verified snapshot (2026-11-11, end of engine pass 2)
 
 | item | value |
 |---|---|
-| src | 10,329 lines; `engine.ts` 3,063 lines |
+| src | 10,539 lines; `engine.ts` 3,213 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **266/266** vs `vim -u NONE` (142 at session start, +124 cases) |
-| level lint | **51 stages valid** |
+| engine oracle | **343/343** vs `vim -u NONE` (266 at pass-2 start, +77 cases) |
+| level lint | **51/51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 232,391 B · single `dist/vimlore.html` 256,181 B · gzip 81,640 B · budget gate 258k/82k |
-| perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
-| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
+| build | JS 235,313 B · single `dist/vimlore.html` 259,103 B · gzip 81,877 B · budget gate 260k/83k (raised this pass) |
+| fuzz | 9 documented seeds: **0 divergences at n=1000**; at n=1200, 10/12 seeds clean, seed 23 + seed 999 each 1 content edge (HANDOFF §2) |
+| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
-**What changed in slice 1:** a seeded differential fuzzer (`tools/fuzz.ts`),
-124 new oracle cases and a large engine-correctness pass (operator ranges with
-`gg`/`G`/`{`/`}`, counts on doubled operators, visual-block `~`/`>`/`<`,
-word/sentence/paragraph edges, visual find `f/F/t/T`, `vlB<`, `2daW`); a
-composite-frame renderer (**23.5 → 52–57 fps** desktop); `gn`/`g*`/`g#`,
-`gI`/`gi`, `\zs`/`\ze`, interactive `:s///c` and simple brace-depth `=`; a
-Vim-like top-left window with `~` fill,
-mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
-an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing and a results **DRILL**
-cue for varied repetition; Vim-style horizontal/
-vertical viewport scrolling; an **F1 primer**
-on every screen and an auto-**coach** after idle/locked/damage.
+**What changed in pass 2 (engine correctness, the product):**
+
+- Cleared all **14 documented cursor-only fuzz edges**; nine seeds are now
+  0-divergence at n=1000 (they are pinned by 343 oracle cases).
+- Rebuilt/corrected semantics: multi-line bracket objects are linewise (empty
+  pairs park on the close delimiter); backward `(` is built from real sentence
+  starts; counted `iw`/`iW` counts space runs as units and skips line breaks;
+  `iW` across lines is linewise while `iw` is charwise; case-operator cursor
+  rules for backward `gg`, single-line ranges, `^`/`h` zero ranges and
+  text-object yanks; the vi linewise conversion for charwise `d` (`2dw`,
+  `de`); counted `$` is charwise; shift operator ranges exclude a column-0 end
+  line while visual selections include the cursor line; `ap` takes the
+  preceding blank at the last paragraph and counted `ap` crosses separators.
+- **Curriculum correction:** `c04s3` was only passing because the old charwise
+  `di(` left the cursor at the end of the opening line. Real Vim parks it on
+  the closing-paren line, so the stage now uses `di(kkdi(` (par 8, same goal).
+- Budget gate raised deliberately 258k/82k → **260k/83k** in the same commit
+  (+2.9 kB for 30 pinned behaviours); gzip is 81,877 B. See HANDOFF §3.
 
 ### 2.1 Fuzz results and remaining divergences
 
 `tools/fuzz.ts` appends `<Esc>i!<Esc>` and strips the sentinel before comparing,
 so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug.
 
-| seed | matched | skipped | divergences | buffer-content |
-|---:|---:|---:|---:|---:|
-| 7 | 683 | 317 | **0** | **0** |
-| 11 | 662 | 338 | **0** | **0** |
-| 23 | 651 | 349 | **0** | **0** |
-| 31 | 644 | 351 | **5** | **0** |
-| 47 | 682 | 318 | **0** | **0** |
-| 101 | 634 | 361 | **5** | **0** |
-| 131 | 670 | 325 | **5** | **4** |
-| 173 | 630 | 370 | **0** | **0** |
-| 211 | 666 | 329 | **5** | **1** |
+At n=1000 the documented corpus is **clean on all nine seeds** (7, 11, 23, 31,
+47, 101, 131, 173, 211): 0 content and 0 cursor divergences. At n=1200 with
+extra seeds (5, 999, 1234) two edges remain, both outside the corpus and unused
+by stages:
 
-**Seeds 7/11/23 are completely clean; seeds 31/47/101 have 0 content edges.**
-Seeds 131/211 expose the remaining content frontier: `2diw`/`2diW`, `2caw`,
-`g~0`, `3ciw`. `d)`, `3gUh`/`g~h` are now oracle-covered and fixed; seed 173
-is fully clean. Treat the clean
-set as a regression corpus, not proof of total coverage.
-Also fixed: backward sentence motion at blank lines (`V(y`), `2yaW`, `<i(`
-empty-object shift, `vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual
-`$`, case-change cursors, block virtual column, `2daW`/`2daw`, `d$` on an
-empty line.
+| seed | repro | vim | engine |
+|---:|---|---|---|
+| 999 | `<C-v>)<` on `function f() {\n  return 1;\n}` @(2,2) | one indent space left | removes two |
+| 23 | `2cBxy<Esc>` on `a\n\nb\n\nc` @(2,0) | `["xy","","b","","c"]` | `["xy","b","","c"]` |
 
-Remaining cursor-only repros: `3g~gg`, `2gUG`, `>ap`, `gUgg`, `2gu(`, `yi(`,
-`di{`, `<C-v>b(`/`w>`, `2guiw`, `2gUaw`. No content repros remain in the
-nine-seed corpus. Fixed this pass: counted
-`iW` across lines, counted around-word from whitespace (`2daw`/`3gUaw`), `2ciw`,
-`d$`, `=`/`gg=G`, `3gUh`/`g~h`, `d)`, `yk`/`yj`, `guu`, `2)`, `2caw`, `2diw`/`2diW`, `3ciw`,
-`di{` content, `gU{`, `gUaW`, backward `dFa`/`gUF`. The oracle/fuzz harness uses
-`expandtab`, matching the game's space indent; c04s3 now expects Vim's real
-multi-line `di(` result.
+Treat the nine-seed n=1000 set as the regression corpus; the two edges above are
+the next engine tickets. Do not hide them.
 
 ## 3. Coverage ladder — what "advanced Vim" means here
 
@@ -167,7 +155,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥266/266; new cases committed; tests green.
+  oracle ≥343/343; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -215,7 +203,7 @@ brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +124 cases, oracle 266/266, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +171 cases, oracle 343/343, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -246,6 +234,13 @@ rest to the task board. Never commit a red level or a failing oracle.
 | E5 | `gI` / `gi` coverage | W2 | **done** | `src/core/vim/engine.ts`, `tools/cases.ts` |
 | D2 | refresh AGENTS/HANDOFF | W5 | **done** | `AGENTS.md`, `docs/HANDOFF.md` |
 | D3 | final gates + build + push | W5 | **done** | all |
+| E6 | clear the 14 cursor-only fuzz edges | W1 | **done** — nine seeds 0 @ n=1000 | `engine.ts`, `cases.ts` |
+| E7 | multi-line bracket objects linewise + empty pairs | W1 | **done** | `objects.ts` |
+| E8 | backward `(` sentence starts, counted `ap`/`iw` | W1 | **done** | `motions.ts`, `engine.ts` |
+| E9 | delete/shift/`$`/case-operator cursor semantics | W1 | **done** | `engine.ts` |
+| E10 | visual-block outdent, counted WORD failure | W1 | **open** — n=1200 only, HANDOFF §2 | `engine.ts` |
+| D4 | fix c04s3 to a Vim-valid solution (par 8) | W5 | **done** | `src/content/chapters/c04.ts` |
+| D5 | deliberate budget raise 260k/83k | W5 | **done** | `tools/bundle-budget.ts`, docs |
 | ED0 | deferred buffer/file/window architecture | later | **design done** | `docs/FUTURE_EDITOR.md` |
 
 ## 7. Handoff protocol (for the next AI)
@@ -285,6 +280,10 @@ rest to the task board. Never commit a red level or a failing oracle.
   doc.
 - **Deploy**: Pages builds from `main`; a broken build blocks the live site.
   Build locally before pushing.
+- **Budget (pass 2 decision)**: the raw/gzip ceiling was raised 258k/82k →
+  260k/83k in the same commit as the engine work (+2.9 kB for 30 pinned
+  behaviours; gzip 81,877 B). Headroom is ~900 B raw. The next feature must
+  reduce bytes or justify another measured raise; do not raise it silently.
 
 ## 9. Deferred editor program
 
@@ -303,7 +302,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 266/266
+node --experimental-strip-types tools/oracle-diff.ts        # 343/343
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

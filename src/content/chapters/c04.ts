@@ -119,8 +119,8 @@ connect(
 connect(
 )`,
       },
-      par: 7,
-      solution: 'di(kdi(',
+      par: 8,
+      solution: 'di(kkdi(',
       teaches: ['i(', 'a('],
       hints: [
         {

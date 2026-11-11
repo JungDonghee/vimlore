@@ -37,7 +37,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
   of Vim (`src/core/vim/`), diff-tested against a real `vim -u NONE` binary:
-  266/266 identical buffers and cursors (`tools/oracle-diff.ts`).
+  343/343 identical buffers and cursors (`tools/oracle-diff.ts`).
 - **Three stars means elegance, not survival.** Every stage has a `par` — the
   keystroke count of the intended solution. Clear it any way you like; master it
   in par.
@@ -54,7 +54,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   eventually buffers/files/splits/tabs are all in scope. Deferred is not
   rejected; the roadmap is [`docs/FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md).
 - **It runs on a potato.** Zero runtime dependencies, ~80 kB gzipped with a
-  hard 258 kB / 82 kB bundle-budget gate, one
+  hard 260 kB / 83 kB bundle-budget gate, one
   canvas with a cached opaque composite frame, cursorline/numbers on a cheap FX
   pass, and a CRT switch for weak devices. Phone profile: 60 fps. The desktop
   headless measurement (52–57 fps) is bounded by the headless browser itself;
