@@ -1769,6 +1769,12 @@ export class Vim {
     const motion = this.motionFor(key, this.takeCount(), typedCount > 0);
     if (motion) {
       this.moveTo(motion.to, 'char');
+      if (this.mode === 'visual-block') {
+        // Vim keeps a virtual column at EOL: `)` then `k` on a block starts one
+        // past the last character, not on it.
+        const line = this.buf.line(this.cursor.line);
+        if (this.cursor.col === Math.max(0, line.length - 1)) this.wantColValue = this.cursor.col + 1;
+      }
     } else if (key === 'l' || key === 'h' || key === 'j' || key === 'k') {
       this.moveBy({ line: key === 'j' ? 1 : key === 'k' ? -1 : 0, col: key === 'l' ? 1 : key === 'h' ? -1 : 0 });
     } else {
@@ -2198,10 +2204,26 @@ export class Vim {
         let start = obj.start;
         let end = obj.end;
         if (count > 1) {
-          // Repeat the object outward (approximation of Vim's behaviour).
-          const line = this.buf.line(end.line);
-          if (obj.linewise) end = { line: Math.min(this.buf.lineCount - 1, end.line + count - 1), col: 0 };
-          else end = { line: end.line, col: Math.min(Math.max(0, line.length - 1), end.col + count - 1) };
+          if (p.around && (key === 'w' || key === 'W')) {
+            // `2daW`/`2daw`: select `count` words and the whitespace after the
+            // last one, across lines (Vim joins the lines when this is deleted).
+            const list = tokens(this.buf, key === 'W');
+            const off = this.buf.idx(this.cursor);
+            const ti = list.findIndex((t) => t.start <= off && off <= t.end);
+            const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
+            if (target && ti >= 0) {
+              let e = target.end;
+              const flat = this.buf.flat;
+              while (e + 1 < flat.length && /\s/.test(flat[e + 1])) e++;
+              start = this.buf.pos(list[ti].start);
+              end = this.buf.pos(e);
+            }
+          } else {
+            // Repeat the object outward (approximation of Vim's behaviour).
+            const line = this.buf.line(end.line);
+            if (obj.linewise) end = { line: Math.min(this.buf.lineCount - 1, end.line + count - 1), col: 0 };
+            else end = { line: end.line, col: Math.min(Math.max(0, line.length - 1), end.col + count - 1) };
+          }
         }
         if (obj.linewise && op.key !== 'c' && op.key !== 'y' && op.key !== 'd') {
           this.applyOp(op, { start, end, linewise: true });

@@ -56,10 +56,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine oracle | **223/223** vs `vim -u NONE` (142 at session start, +81 cases) |
+| engine oracle | **226/226** vs `vim -u NONE` (142 at session start, +84 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 217,037 B · single `dist/vimlore.html` 240,202 B · gzip 77,153 B |
+| build | JS 217,507 B · single `dist/vimlore.html` 240,672 B · gzip 77,296 B |
 | perf (headless) | desktop 1280×800: **53–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -82,18 +82,18 @@ so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug
 |---:|---:|---:|---:|---:|
 | 7 | 681 | 317 | **2** | **0** |
 | 11 | 660 | 338 | **2** | **0** |
-| 23 | 647 | 349 | 4 | 3 |
+| 23 | 649 | 349 | **2** | **1** |
 
-Seeds 7 and 11 are clean on content. Fixed in this pass: `dt(` adjacent target,
-`2cw`/`cw` on words and punctuation, `3cW`, visual `$` (`vk$d`), and the
-cursor rules for motion-based case changes (`gUgg`, `guk`, `g~j`, `3gUgg`).
+All seeds are clean on buffer content except one obscure seed-23 edge. Fixed in
+this pass: `dt(` adjacent target, `2cw`/`cw` on words and punctuation, `3cW`,
+visual `$` (`vk$d`), motion-based case-change cursors (`gUgg`, `guk`, `g~j`,
+`3gUgg`), block virtual column after `)`/`k` (`<C-v>)kU`), and count around-word
+objects (`2daW`/`2daw`).
 
-The remaining seed-23 content repros (next session: add an oracle case, fix):
+Remaining seed-23 edges (next session: add an oracle case, fix):
 
-- `<C-v>)kU` on `  indented\nnormal` @2,0 — block virtual column after `)`/`k`.
-- `vlB<` on `function f() {\n  return 1;\n}` @3,0 — visual `B` + outdent.
-- `2daW` on `one two\nthree four` @1,5 — count + `a`+`W` object.
-- Cursor-only: `Vku`.
+- `vlB<` on `function f() {\n  return 1;\n}` @3,0 — visual `l` at EOL + `B` range.
+- Cursor-only: `Vku` (visual-line lowercase on two lines).
 
 ## 3. Coverage ladder — what "advanced Vim" means here
 
@@ -132,7 +132,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥223/223; new cases committed; tests green.
+  oracle ≥226/226; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -180,7 +180,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +81 cases, oracle 223/223, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +84 cases, oracle 226/226, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 53–56 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -248,7 +248,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 223/223
+node --experimental-strip-types tools/oracle-diff.ts        # 226/226
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

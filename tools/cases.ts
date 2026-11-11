@@ -285,5 +285,9 @@ export const CASES: VimCase[] = [
   { name: '3gUgg cursor', text: 'function f() {\n  return 1;\n}', cursor: [1, 6], keys: '3gUgg' },
   { name: 'g~j cursor', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 2], keys: 'g~j' },
 
+  { name: '2daW', text: 'one two\nthree four', cursor: [1, 5], keys: '2daW' },
+  { name: '2daw', text: 'one two\nthree four', cursor: [1, 5], keys: '2daw' },
+  { name: 'v-block )kU', text: '  indented\nnormal', cursor: [2, 0], keys: '<C-v>)kU' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

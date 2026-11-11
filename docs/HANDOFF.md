@@ -12,9 +12,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **223 oracle cases**, all matching real Vim |
-| gates | oracle 223/223 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 217,037 B · single `dist/vimlore.html` 240,202 B · gzip 77,153 B |
+| engine | 2,532 lines; **226 oracle cases**, all matching real Vim |
+| gates | oracle 226/226 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 217,507 B · single `dist/vimlore.html` 240,672 B · gzip 77,296 B |
 | perf (headless) | desktop 1280×800 **53–56 fps** (x1), 47–50 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -117,7 +117,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 223/223
+node --experimental-strip-types tools/oracle-diff.ts        # 226/226
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build
