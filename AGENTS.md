@@ -56,8 +56,10 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 
 ## Adding content
 
-- **A stage**: edit `src/content/chapters/cNN.ts`. Read `docs/LEVEL_FORMAT.md`.
-  Run `npm run lint:levels -- NN` until green.
+- **A stage**: edit `src/content/chapters/cNN.ts`. Read `docs/LEVEL_FORMAT.md`
+  and [`docs/CURRICULUM_PROVENANCE.md`](docs/CURRICULUM_PROVENANCE.md). Every
+  stage must cite a source-book section and fit the prerequisite graph; never
+  invent a plausible lesson. Run `npm run lint:levels -- NN` until green.
 - **A chapter**: copy `c01.ts`, set `id`/`index`/`unlocks`/`stages`, register it
   in `src/content/chapters/index.ts`. Then lint it.
 - **A command**: add it to `src/content/commands.ts` (id, keys, bilingual name
@@ -74,6 +76,9 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 5. Hazards teach precision (`t` vs `f`), never luck.
 6. Buffers ≤ 56 columns, ≤ 14 rows, ASCII only, no trailing whitespace.
 7. English is the game's voice; Korean is a translation (`Localized.ko`).
+8. **The ten books are the syllabus.** Curriculum order and content must be
+   traceable to `books-text/` (see `docs/CURRICULUM_PROVENANCE.md`); do not
+   substitute an AI-invented lesson for book analysis.
 
 ## Performance budget
 

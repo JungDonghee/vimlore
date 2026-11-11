@@ -14,7 +14,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **248 oracle cases**, all matching real Vim |
 | gates | oracle 248/248 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK |
-| build | JS 227,073 B · single `dist/vimlore.html` 250,746 B · gzip 79,922 B |
+| build | JS 227,092 B · single `dist/vimlore.html` 250,765 B · gzip 79,937 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -77,6 +77,11 @@ this file.
 - c04s3's goal was corrected to Vim's real multi-line `di(` result
   (`connect(` and `)` on separate lines); the old goal only passed because
   `di{`/`di(` joined the closing bracket.
+- **Curriculum provenance audit is incomplete.** All 51 stages declare
+  `teaches` and the chapter themes align with the ten books, but per-stage
+  section citations, a machine-readable prerequisite graph and pacing metrics do
+  not exist yet. See `CURRICULUM_PROVENANCE.md`; do not claim the curriculum is
+  fully book-derived.
 - Curriculum metadata: every one of the 51 stages now declares `teaches`
   (c08s5 uses `0/j/f` as its maze tools; c01s2 `count`, c09s1 `:d` are grimoire
   entries). 18 older grimoire commands still have no stage that declares them;

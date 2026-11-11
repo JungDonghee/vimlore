@@ -189,7 +189,7 @@ export class App {
         ),
         h('div', { class: 'title-rule' }),
         h('div', { class: 'title-tag ko' }, this.t('The world is written. Rewrite it.', '세계는 쓰여 있다. 다시 써라.')),
-        h('div', { class: 'title-sub' }, this.t('a vim adventure · 10 floors · 51 chambers', '빔 어드벤처 · 10개 층 · 51개 챔버')),
+        h('div', { class: 'title-sub' }, this.t('the most complete Vim training terminal · 51 chambers', '가장 방대한 Vim 훈련 터미널 · 51개 챔버')),
         h('div', { class: 'title-credit' }, this.t('created by', '만든 사람'), ' ', h('b', {}, 'JUNG DONGHEE')),
         h('div', { class: 'press' }, this.t('PRESS ANY KEY', '아무 키나 누르세요')),
         h('div', { class: 'title-help' }, this.t('F1 · 60-SECOND PRIMER', 'F1 · 60초 입문')),

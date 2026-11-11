@@ -22,6 +22,13 @@ You are the next orchestration AI for **VIMLORE**, a Vim-teaching game at
    the engine is the product.
 6. Leave the project greener than you found it: gates green, docs current,
    commit pushed, Pages deployed.
+7. **Curriculum provenance is a core promise, not a nice-to-have.** The ten
+   professional Vim books in `books-text/` are the syllabus authority. The path
+   must be gradual and nearly painless, with each stage traceable to a book
+   section and a prerequisite graph — **not an AI's plausible invention**. Read
+   [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) before touching
+   curriculum. The current audit is incomplete; say so if you have not finished
+   it.
 
 **Deferred:** buffers/files/windows/tabs are a later editor program, not this
 slice. The design and phases are in
@@ -42,7 +49,8 @@ node --experimental-strip-types tools/oracle-diff.ts
 ```
 
 Read: [`MASTER_PLAN.md`](MASTER_PLAN.md) (§0–§7) → [`AGENTS.md`](../AGENTS.md) →
-[`HANDOFF.md`](HANDOFF.md) → [`ARCHITECTURE.md`](ARCHITECTURE.md) →
+[`HANDOFF.md`](HANDOFF.md) → [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) →
+[`ARCHITECTURE.md`](ARCHITECTURE.md) →
 [`VIM_COVERAGE.md`](VIM_COVERAGE.md).
 
 **How to work**

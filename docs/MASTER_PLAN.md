@@ -3,12 +3,14 @@
 > **Status: ACTIVE** · Orchestrator: the AI that wrote this file (2026-11-11)
 > **Read order for the next AI:** this file → [`AGENTS.md`](../AGENTS.md) →
 > [`ARCHITECTURE.md`](ARCHITECTURE.md) → [`VIM_COVERAGE.md`](VIM_COVERAGE.md) →
-> [`HANDOFF.md`](HANDOFF.md) → [`EVALUATION.md`](EVALUATION.md).
+> [`HANDOFF.md`](HANDOFF.md) → [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) →
+> [`EVALUATION.md`](EVALUATION.md).
 > If any of those disagree with this file about **priority**, this file wins.
 > If any of them disagree about **Vim semantics**, real `vim -u NONE` wins.
 
 ## 0. 한국어 요약 (사람이 읽는 용도)
 
+- **북극성: 역사상 가장 방대한 Vim 훈련 터미널.** 커맨드·팁·고급 기능에 인위적 상한을 두지 않는다. 지금의 coverage는 현재 슬라이스일 뿐이며, 문서와 oracle이 정직하게 경계를 표시한다.
 - **스테이지는 늘리지 않는다.** 지금은 엔진이 제품이다.
 - **순서: 엔진 버그 → 고급 Vim 기능 확장 → 성능 최적화 → UI/목표 명시.**
 - 플레이 화면은 **Vim/Neovim처럼** 보이고 동작해야 한다. 제목 화면의 CRT 감성은 유지.
@@ -22,7 +24,9 @@
    stages stay playable; content work is not the bottleneck.
 2. **Fix engine bugs first.** The engine is the product.
 3. **Then extend the engine upward**, so a player can learn *advanced* Vim, not
-   just beginner Vim. Coverage must stay honest (oracle-tested, documented).
+   just beginner Vim. **Breadth is the product**: no artificial cap on commands,
+   tips or advanced features. Coverage must stay honest (oracle-tested,
+   documented); deferred domains are queued, not rejected.
 4. **Optimize**: the game must hit 60 fps on a desktop and stay smooth on a
    cheap phone. Engine/render hot paths are fair game.
 5. **UI**: the title screen is loved — keep its soul. The **play space, cursor
@@ -33,6 +37,12 @@
    no drift, no "I think this was fixed". This file is that handoff.
 7. This program starts with a **5-hour slice** (§5). Everything else is queued,
    not forgotten.
+8. **The curriculum must be book-derived, not AI-plausible.** The ten
+   professional Vim books in `books-text/` are the syllabus authority; every
+   stage must trace to a book section and the prerequisite graph must support a
+   gradual, nearly painless path. Read
+   [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md). The current audit is
+   incomplete — do not claim otherwise.
 
 ## 1. Invariants — never violate these
 
@@ -43,9 +53,11 @@
 - **No server, no account, no tracking, no runtime dependencies, no secrets in
   the repo.** The deploy token lives in `../.secrets/github_token`; never print
   it, never commit it, always scrub the remote URL after pushing.
-- **Zero per-frame allocation** in `Renderer.render()`. The composite frame is
-  rebuilt only when its key changes (version, hue, coins, cursor line, numbers,
-  selection, matches); the cursor/particles/ghost are the only FX pass.
+- **Keep the render hot path allocation-light.** The composite frame is rebuilt
+  only when its key changes (`version|hue|coins|selection|matches|scroll`);
+  cursorline, line numbers, cursor, particles and ghost are the FX pass. Do not
+  add per-frame allocations or per-frame DOM work to `Renderer.render()`; font
+  and color strings should be cached if a profile shows them.
 - **English is the game's voice**; Korean is a translation (`Localized.ko`).
 - **Docs never drift.** If you add a command, count, or gate, update
   `VIM_COVERAGE.md` / this file in the same commit.
@@ -59,7 +71,7 @@
 | engine oracle | **248/248** vs `vim -u NONE` (142 at session start, +106 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 227,073 B · single `dist/vimlore.html` 250,746 B · gzip 79,922 B |
+| build | JS 227,092 B · single `dist/vimlore.html` 250,765 B · gzip 79,937 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -249,6 +261,9 @@ rest to the task board. Never commit a red level or a failing oracle.
   single `buf`.
 - **Doc drift**: the oracle count, command count and perf numbers are checked
   by `doc-check` only partially; update them by hand in the same commit.
+- **Curriculum drift**: a plausible level is not a book-derived level. Every
+  curriculum change needs a section citation and a prerequisite check; see
+  `CURRICULUM_PROVENANCE.md`. Do not “fix” a gap by inventing a lesson.
 - **Deploy**: Pages builds from `main`; a broken build blocks the live site.
   Build locally before pushing.
 

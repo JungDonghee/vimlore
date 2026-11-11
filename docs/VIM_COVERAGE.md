@@ -1,13 +1,17 @@
 # VIM COVERAGE — what this engine actually implements
 
-VIMLORE runs on its own Vim engine (`src/core/vim/`), not on Vim. It is a
-**subset chosen for teaching**, kept honest by a differential oracle:
+VIMLORE is being built as **the most comprehensive Vim training terminal ever
+attempted** — no artificial cap on commands, tips, or advanced features. That is
+a destination, not a current-completeness claim. The engine is a **subset chosen
+for this slice**, kept honest by a differential oracle:
 `tools/oracle-diff.ts` replays **248 keystroke cases** through a real
 `vim -u NONE` and through the engine, and requires identical buffers and
 cursors. If you implement something new, add a case there first.
 
-This page is the answer to "does it support everything Vim does?" — **no.**
-Below is the exact boundary, so nobody has to guess.
+This page is the answer to "does it support everything Vim does?" — **not yet.**
+Below is the exact boundary, so nobody has to guess. Deferred domains (buffers,
+files, splits, tabs, folds) are listed with the reason and, where designed, the
+roadmap in [`FUTURE_EDITOR.md`](FUTURE_EDITOR.md).
 
 ## Implemented
 

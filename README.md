@@ -8,9 +8,10 @@
 
 # VIMLORE
 
-**A Vim adventure that runs on a dead terminal.** No install, no account, no
-tracking, no third-party requests — one 227 kB page. A keyboard is required;
-on a phone, turn it sideways.
+**The most complete Vim training terminal ever attempted — a Vim adventure that
+runs on a dead terminal.** That is the destination, not a claim about today: the
+coverage ledger is public. No install, no account, no tracking, no third-party
+requests — one 250 kB page. A keyboard is required; on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
@@ -43,8 +44,16 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 - **The levels are the curriculum.** 10 floors, 51 chambers: motion → tokens →
   operators → objects → visual → search → registers → marks → ex → mastery.
   Each stage exists to make one command feel *necessary*.
-- **It runs on a potato.** Zero runtime dependencies, ~69 kB gzipped, a cached
-  composite frame, and a CRT effect switch for weak devices.
+- **Breadth is the product.** 86 grimoire commands today, 51 chambers, 248
+  oracle cases — and **no artificial cap**: motions, operators, text objects,
+  registers, macros, marks, search, `:s`/`:g`, undo/jumps, visual/block, ex, and
+  eventually buffers/files/splits/tabs are all in scope. Deferred is not
+  rejected; the roadmap is [`docs/FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md).
+- **It runs on a potato.** Zero runtime dependencies, ~80 kB gzipped, one
+  canvas with a cached opaque composite frame, cursorline/numbers on a cheap FX
+  pass, and a CRT switch for weak devices. Phone profile: 60 fps. The desktop
+  headless measurement (52–57 fps) is bounded by the headless browser itself;
+  see [`docs/HANDOFF.md`](docs/HANDOFF.md).
 - **It plays on a phone in landscape** with a Bluetooth keyboard — and it is
   fully playable with keyboard only (touch/mouse is optional).
 - **It never runs out.** After the tower, TRIALS generates endless chambers (12

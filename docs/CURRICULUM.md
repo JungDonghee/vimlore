@@ -4,10 +4,18 @@ The tower teaches Vim as a **language**: operators are verbs, motions and text
 objects are nouns, counts are numbers, registers are containers. Each chapter
 adds grammar, then immediately makes the player *speak*.
 
-Source material (all ten books are in `books-text/`, gitignored):
+**Source material (all ten books are in `books-text/`, gitignored):**
 Learning the vi and Vim Editors · Practical Vim · Pro Vim · Modern Vim ·
 Vim 101 Hacks · Gourmet Vim · Vim Reference Guide · Use Vim Like A Pro ·
 5 Years of Vim · Neovim for Beginners.
+
+> **Provenance rule — read [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md)
+> before changing any level.** The ten books are the syllabus authority; the
+> order must be gradual, prerequisite-correct and nearly painless. The current
+> chapters are theme-aligned, but **section-level book citations and a pacing
+> audit are not complete yet**. Do not invent a plausible stage and call it
+> book-derived. Engine support and curriculum coverage are separate: a command
+> can be oracle-tested before it is taught.
 
 ---
 
