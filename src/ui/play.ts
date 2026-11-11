@@ -1,7 +1,7 @@
 import { tokenize, fromKeyboardEvent, keyLabel } from '../core/vim/keys.ts';
 import { Session, type SessionEvent } from '../core/game/session.ts';
 import { goalLabel } from '../core/game/goals.ts';
-import type { Chapter, Localized, Stage, Stars } from '../core/game/types.ts';
+import type { Chapter, Goal, Localized, Stage, Stars } from '../core/game/types.ts';
 import { COMMAND_BY_ID } from '../content/commands.ts';
 import { Renderer } from './render.ts';
 import { Sfx } from './sfx.ts';
@@ -28,6 +28,29 @@ export interface PlayHost {
 }
 
 const KO = (s: Localized, lang: 'ko' | 'en'): string => (lang === 'ko' ? s.ko : s.en);
+
+/** One sentence that says exactly what clears the chamber, in player words. */
+function clearLabel(goal: Goal, lang: 'ko' | 'en'): string {
+  const ko = lang === 'ko';
+  switch (goal.type) {
+    case 'reach':
+      return ko ? `커서를 ${goal.char} 위에 올려라` : `Land the cursor on ${goal.char}`;
+    case 'exact':
+      return ko ? '버퍼를 목표 문서와 똑같이 만들어라' : 'Make the buffer match the target exactly';
+    case 'lines':
+      return ko ? `${goal.from}번째 줄을 고쳐라` : `Repair line ${goal.from}`;
+    case 'none':
+      return ko ? `${goal.chars} 를 하나도 남기지 마라` : `Leave no ${goal.chars} behind`;
+    case 'collect':
+      return ko ? `모든 ${goal.char} 위를 지나가라` : `Walk over every ${goal.char}`;
+    case 'cursor':
+      return ko ? '커서를 표시 지점에 놓아라' : 'Park the cursor on the mark';
+    case 'all':
+      return goal.of.map((g) => clearLabel(g, lang)).join(ko ? ' + ' : ' + ');
+    default:
+      return '';
+  }
+}
 
 export class PlayScreen {
   private host: PlayHost;
@@ -109,9 +132,21 @@ export class PlayScreen {
       this.hudKeys,
       this.hearts,
     );
+    const lessonKeys = (stage.teaches ?? [])
+      .map((id) => COMMAND_BY_ID.get(id)?.keys)
+      .filter(Boolean)
+      .slice(0, 4)
+      .join(' ');
+    const lessonName = (stage.teaches ?? [])
+      .map((id) => COMMAND_BY_ID.get(id)?.name)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((n) => KO(n!, lang))
+      .join(' · ');
     const objective = h(
       'div',
       { class: 'objective' },
+      lessonKeys ? h('span', { class: 'lesson-chip', title: lessonName }, `${this.t('LEARN', '학습')} ${lessonKeys}`) : null,
       h('span', { class: 'goal' }, goalLabel(stage.goal, lang)),
       h('span', { class: 'spacer' }),
       h('button', { class: 'chip', onclick: () => this.showHint() }, lang === 'ko' ? 'TAB 힌트' : 'TAB HINT'),
@@ -394,7 +429,14 @@ export class PlayScreen {
   }
 
   private showEcho(key: string): void {
-    const pending = this.session.vim.pendingCommand;
+    const vim = this.session.vim;
+    if (vim.mode === 'cmdline' || vim.mode === 'search') {
+      const kind = vim.cmdKind ?? (vim.mode === 'search' ? '/' : ':');
+      this.echo.textContent = `${kind}${vim.cmdline}`;
+      this.echo.classList.add('on');
+      return;
+    }
+    const pending = vim.pendingCommand;
     const label = pending ? keyLabel(pending) : '';
     if (pending && pending.length > 0) {
       this.echo.textContent = label;
@@ -409,6 +451,7 @@ export class PlayScreen {
     this.state = 'playing';
     this.overlay?.remove();
     this.overlay = null;
+    this.echo.classList.remove('on');
     this.host.sfx.play('open');
     this.updateHud();
   }
@@ -422,6 +465,7 @@ export class PlayScreen {
     this.state = 'playing';
     this.overlay?.remove();
     this.overlay = null;
+    this.echo.classList.remove('on');
     this.hintLevel = 0;
     this.flash = 0;
     this.shake = 0;
@@ -492,6 +536,44 @@ export class PlayScreen {
 
   private showIntro(): void {
     const { stage, chapter, lang, stageIndex, stageCount } = this.host;
+    const taught = (stage.teaches ?? [])
+      .map((id) => COMMAND_BY_ID.get(id))
+      .filter((c): c is NonNullable<typeof c> => !!c)
+      .slice(0, 4);
+    const why = stage.whisper
+      ? KO(stage.whisper, lang)
+      : taught[0]
+        ? KO(taught[0].desc, lang)
+        : lang === 'ko'
+          ? '이 챔버를 정화하면 다음 섹터가 열린다.'
+          : 'Clear this chamber to open the next sector.';
+    const lesson = h(
+      'div',
+      { class: 'lesson' },
+      h('div', { class: 'kicker' }, lang === 'ko' ? '배우는 것' : 'LEARN'),
+      taught.length
+        ? h(
+            'div',
+            {},
+            ...taught.map((c) =>
+              h(
+                'div',
+                { class: 'lesson-row' },
+                h('code', {}, c.keys),
+                h('span', { class: 'name' }, KO(c.name, lang)),
+                h('span', { class: 'desc' }, KO(c.desc, lang)),
+              ),
+            ),
+          )
+        : h(
+            'div',
+            { class: 'lesson-row' },
+            h('code', {}, '—'),
+            h('span', { class: 'name' }, lang === 'ko' ? '섹터 복구' : 'SECTOR REPAIR'),
+            h('span', { class: 'desc' }, goalLabel(stage.goal, lang)),
+          ),
+      h('div', { class: 'why' }, why),
+    );
     const card = h(
       'div',
       { class: 'card' },
@@ -499,10 +581,12 @@ export class PlayScreen {
       h('div', { class: 'eyebrow' }, `${lang === 'ko' ? '층' : 'FLOOR'} ${String(chapter.index).padStart(2, '0')} · ${KO(chapter.title, lang)} · ${stageIndex + 1}/${stageCount}`),
       h('h2', {}, KO(stage.name, lang)),
       h('div', { class: 'brief ko' }, KO(stage.brief, lang)),
+      lesson,
       h(
         'div',
         { class: 'facts' },
-        h('div', { class: 'fact' }, h('div', { class: 'k' }, lang === 'ko' ? '목표' : 'TARGET'), h('div', { class: 'v' }, goalLabel(stage.goal, lang))),
+        h('div', { class: 'fact' }, h('div', { class: 'k' }, lang === 'ko' ? '목표' : 'GOAL'), h('div', { class: 'v' }, goalLabel(stage.goal, lang))),
+        h('div', { class: 'fact' }, h('div', { class: 'k' }, lang === 'ko' ? '클리어' : 'CLEAR'), h('div', { class: 'v' }, clearLabel(stage.goal, lang))),
         h('div', { class: 'fact' }, h('div', { class: 'k' }, lang === 'ko' ? '3별 기준' : 'PAR'), h('div', { class: 'v' }, `${stage.par} ${lang === 'ko' ? '키' : 'keys'}`)),
       ),
       h(

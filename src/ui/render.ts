@@ -60,6 +60,9 @@ export class Renderer {
   private lctx: CanvasRenderingContext2D;
   private bloomLayer: HTMLCanvasElement;
   private bctx: CanvasRenderingContext2D;
+  /** Opaque composite: background + highlights + numbers + glyphs + bloom. */
+  private frame: HTMLCanvasElement;
+  private fctx: CanvasRenderingContext2D;
   private dpr = 1;
   private w = 0;
   private h = 0;
@@ -75,7 +78,7 @@ export class Renderer {
   digits = 2;
   gutterCols = 4;
 
-  private layerKey = '';
+  private layerKey = -1;
   private particles: Particle[] = [];
   private pIndex = 0;
   private alive = 0;
@@ -85,18 +88,20 @@ export class Renderer {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this.ctx = canvas.getContext('2d', { alpha: true })!;
+    this.ctx = canvas.getContext('2d', { alpha: false, desynchronized: true })!;
     this.layer = document.createElement('canvas');
     this.lctx = this.layer.getContext('2d')!;
     this.bloomLayer = document.createElement('canvas');
     this.bctx = this.bloomLayer.getContext('2d')!;
+    this.frame = document.createElement('canvas');
+    this.fctx = this.frame.getContext('2d', { alpha: false })!;
     this.particles = Array.from({ length: MAX_PARTICLES }, () => ({ x: 0, y: 0, vx: 0, vy: 0, life: 0, max: 1, size: 2, color: '#fff', rot: 0 }));
   }
 
   setHue(hue: number): void {
     if (this.hue === hue) return;
     this.hue = hue;
-    this.layerKey = '';
+    this.layerKey = -1;
     this.glow = null;
   }
 
@@ -111,33 +116,38 @@ export class Renderer {
     // Bloom is a soft glow: render it at half resolution and upscale on blit.
     this.bloomLayer.width = Math.max(1, Math.floor(this.w * this.dpr * 0.5));
     this.bloomLayer.height = Math.max(1, Math.floor(this.h * this.dpr * 0.5));
+    this.frame.width = this.canvas.width;
+    this.frame.height = this.canvas.height;
     this.canvas.style.width = `${this.w}px`;
     this.canvas.style.height = `${this.h}px`;
     this.layout(lines);
-    this.layerKey = '';
+    this.layerKey = -1;
   }
 
   layout(lines: string[]): void {
     const cols = Math.max(1, ...lines.map((l) => l.length));
-    const rows = Math.max(1, lines.length);
-    const padX = 18;
-    const padY = 14;
+    const padX = 10;
+    const padY = 6;
     const availW = this.w - padX * 2;
     const availH = this.h - padY * 2;
-    this.digits = Math.max(2, String(rows).length);
+    this.digits = Math.max(2, String(Math.max(1, lines.length)).length);
     this.gutterCols = this.digits + 2; // number, gap, rule
     const totalCols = cols + this.gutterCols;
-    const size = Math.min(availW / (totalCols * 0.66), availH / (rows * 1.3), 80);
-    this.fontSize = Math.max(8, Math.floor(size));
+    // Cap the glyph size: Vim density, not a poster. The height term only
+    // matters when the buffer is taller than the window.
+    const size = Math.min(availW / (totalCols * 0.62), availH / (Math.max(1, lines.length) * 1.32), 34);
+    this.fontSize = Math.max(9, Math.floor(size));
     this.ctx.font = `${this.fontSize}px ${MONO}`;
     const m = this.ctx.measureText('M').width || this.fontSize * 0.62;
     this.cellW = m;
     this.cellH = Math.round(this.fontSize * 1.3);
     this.cols = cols;
-    this.rows = rows;
-    this.ox = Math.round((this.w - totalCols * this.cellW) / 2);
+    this.rows = Math.max(lines.length, Math.floor(availH / this.cellH));
+    // Top-left, like a real Vim window — the game is inside the terminal, not
+    // a card floating in the middle of the screen.
+    this.ox = padX;
     this.textX = this.ox + this.gutterCols * this.cellW;
-    this.oy = Math.round((this.h - rows * this.cellH) / 2);
+    this.oy = padY;
   }
 
   private xOf(col: number): number {
@@ -187,15 +197,10 @@ export class Renderer {
     const cx = this.cellW;
     const cy = this.cellH;
 
-    // gutter: line numbers + a thin rule, like a real editor
-    g.fillStyle = 'rgba(66,168,108,0.22)';
-    g.fillRect(this.ox + (this.digits + 1.15) * cx, this.oy, 1, view.lines.length * cy);
-
-    // the classic `~` for empty space below the buffer
-    const maxRows = Math.floor((this.h - this.oy - 4) / cy);
+    // the classic `~` for empty space below the buffer, all the way down
     g.font = `${this.fontSize}px ${MONO}`;
     g.fillStyle = 'rgba(52,140,90,0.35)';
-    for (let li = view.lines.length; li < Math.min(view.lines.length + 6, maxRows); li++) {
+    for (let li = view.lines.length; li < this.rows; li++) {
       g.fillText('~', this.textX, this.yOf(li) + cy / 2);
     }
 
@@ -348,24 +353,22 @@ export class Renderer {
     }
   }
 
-  render(view: View, now: number): void {
-    const g = this.ctx;
-    const key = `${view.version}|${this.hue}|${view.collected.size}`;
-    if (key !== this.layerKey) {
-      this.layerKey = key;
-      this.paintLayer(view);
-      this.paintBloom();
+  /** Cheap numeric hash of everything baked into the composite frame. */
+  private frameKeyFor(view: View): number {
+    let k = (view.version * 131 + this.hue * 17 + view.collected.size * 7 + view.cursor.line * 3 + (this.bloom ? 1 : 0)) | 0;
+    k = (k * 31 + (view.numbers === 'off' ? 0 : view.numbers === 'abs' ? 1 : view.numbers === 'rel' ? 2 : 3)) | 0;
+    const s = view.sel;
+    k = (k * 31 + (s ? 1 : 0)) | 0;
+    if (s) {
+      k = (k * 31 + s.start.line * 10000 + s.start.col * 100 + s.end.line * 100 + s.end.col + (s.linewise ? 1 : 0)) | 0;
+      if (s.block) k = (k * 31 + s.block.c1 * 100 + s.block.c2) | 0;
     }
+    k = (k * 31 + view.matches.length) | 0;
+    for (const m of view.matches) k = (k * 31 + m.line * 10000 + m.col * 100 + m.len) | 0;
+    return k;
+  }
 
-    g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-    g.clearRect(0, 0, this.w, this.h);
-
-    const sh = view.shake;
-    if (sh > 0) {
-      g.translate((Math.random() - 0.5) * sh, (Math.random() - 0.5) * sh);
-    }
-
-    // selection
+  private paintHighlights(g: CanvasRenderingContext2D, view: View): void {
     if (view.sel) {
       g.fillStyle = `hsla(${this.hue}, 90%, 62%, 0.16)`;
       const s = view.sel;
@@ -374,9 +377,7 @@ export class Renderer {
       if (s.block) {
         const c1 = Math.min(s.block.c1, s.block.c2);
         const c2 = Math.max(s.block.c1, s.block.c2);
-        for (let l = l1; l <= l2; l++) {
-          g.fillRect(this.xOf(c1), this.yOf(l), (c2 - c1 + 1) * this.cellW, this.cellH);
-        }
+        for (let l = l1; l <= l2; l++) g.fillRect(this.xOf(c1), this.yOf(l), (c2 - c1 + 1) * this.cellW, this.cellH);
       } else if (s.linewise) {
         g.fillRect(this.xOf(0), this.yOf(l1), this.cols * this.cellW, (l2 - l1 + 1) * this.cellH);
       } else {
@@ -387,15 +388,79 @@ export class Renderer {
         }
       }
     }
-
-    // search matches
     if (view.matches.length) {
       g.fillStyle = 'rgba(255,196,107,0.9)';
       for (const m of view.matches) {
-        const w = Math.max(1, m.len) * this.cellW;
-        g.fillRect(this.xOf(m.col), this.yOf(m.line) + this.cellH - 2, w, 2);
+        g.fillRect(this.xOf(m.col), this.yOf(m.line) + this.cellH - 2, Math.max(1, m.len) * this.cellW, 2);
       }
     }
+  }
+
+  /** Bake the expensive, mostly-static pixels once; per frame we only blit. */
+  private paintFrame(view: View): void {
+    const f = this.fctx;
+    f.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    f.globalCompositeOperation = 'source-over';
+    f.globalAlpha = 1;
+    f.fillStyle = '#050b07';
+    f.fillRect(0, 0, this.w, this.h);
+
+    // gutter rule
+    f.fillStyle = 'rgba(66,168,108,0.22)';
+    f.fillRect(this.ox + (this.digits + 1.15) * this.cellW, this.oy, 1, Math.max(this.rows, view.lines.length) * this.cellH);
+
+    this.paintHighlights(f, view);
+
+    // cursorline spans the window, like 'cursorline'
+    const curLine = view.cursor.line;
+    f.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.06)`;
+    f.fillRect(0, this.yOf(curLine) + 1, this.w, this.cellH - 2);
+
+    if (view.numbers !== 'off') {
+      f.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
+      f.textAlign = 'right';
+      f.textBaseline = 'middle';
+      for (let li = 0; li < view.lines.length; li++) {
+        const isCur = li === curLine;
+        let label: string;
+        if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
+        else if (view.numbers === 'both') label = String(isCur ? li + 1 : Math.abs(li - curLine));
+        else label = String(li + 1);
+        f.fillStyle = isCur ? 'rgba(190,255,214,0.92)' : 'rgba(66,168,108,0.42)';
+        f.fillText(label, this.ox + (this.digits + 0.55) * this.cellW, this.yOf(li) + this.cellH / 2);
+      }
+      f.textAlign = 'left';
+      f.font = `${this.fontSize}px ${MONO}`;
+    }
+
+    f.drawImage(this.layer, 0, 0, this.w, this.h);
+
+    if (this.bloom) {
+      f.globalCompositeOperation = 'lighter';
+      f.drawImage(this.bloomLayer, 0, 0, this.w, this.h);
+      f.globalCompositeOperation = 'source-over';
+    }
+    f.globalAlpha = 1;
+  }
+
+  render(view: View, now: number): void {
+    const key = this.frameKeyFor(view);
+    if (key !== this.layerKey) {
+      this.layerKey = key;
+      this.paintLayer(view);
+      this.paintBloom();
+      this.paintFrame(view);
+    }
+
+    const g = this.ctx;
+    g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    const sh = view.shake;
+    if (sh > 0) {
+      g.clearRect(0, 0, this.w, this.h);
+      g.translate((Math.random() - 0.5) * sh, (Math.random() - 0.5) * sh);
+    }
+    // One opaque blit: no clearRect, no per-frame bloom pass.
+    g.drawImage(this.frame, 0, 0, this.w, this.h);
 
     // ghost hint
     if (view.ghost) {
@@ -404,30 +469,6 @@ export class Renderer {
       g.lineWidth = 1.5;
       g.strokeRect(this.xOf(view.ghost.col) - 1, this.yOf(view.ghost.line) + 1, view.ghost.len * this.cellW + 1, this.cellH - 2);
     }
-
-    // cursorline: a faint band + a bright line number, drawn every frame
-    // (the glyph layer is cached, so anything cursor-dependent must live here)
-    const curLine = view.cursor.line;
-    g.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.055)`;
-    g.fillRect(this.ox, this.yOf(curLine) + 1, this.w - this.ox * 2, this.cellH - 2);
-    if (view.numbers !== 'off') {
-      g.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
-      g.textAlign = 'right';
-      for (let li = 0; li < view.lines.length; li++) {
-        const isCur = li === curLine;
-        let label: string;
-        if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
-        else if (view.numbers === 'both') label = String(isCur ? li + 1 : Math.abs(li - curLine));
-        else label = String(li + 1);
-        g.fillStyle = isCur ? 'rgba(190,255,214,0.92)' : 'rgba(66,168,108,0.42)';
-        g.fillText(label, this.ox + (this.digits + 0.55) * this.cellW, this.yOf(li) + this.cellH / 2);
-      }
-      g.textAlign = 'left';
-      g.font = `${this.fontSize}px ${MONO}`;
-    }
-
-    // glyphs
-    g.drawImage(this.layer, 0, 0, this.w, this.h);
 
     // particles
     if (this.alive > 0) {
@@ -442,42 +483,49 @@ export class Renderer {
         g.globalAlpha = a;
         g.fillStyle = p.color;
         g.fillRect(p.x, p.y, p.size, p.size);
-        void p.rot;
         if (p.life <= 0) g.globalAlpha = 1;
       }
       g.globalAlpha = 1;
     }
 
-    // cursor: a block that blinks like a terminal, an underline while inserting
+    // cursor: Vim shapes — block (normal), bar (insert), underline (replace),
+    // hollow block (visual); no buffer cursor while the command line is open.
     const { line, col } = view.cursor;
     const cx = this.xOf(col);
     const cy = this.yOf(line);
-    const insert = view.mode === 'insert' || view.mode === 'replace';
-    const blinkOn = (now % 1060) < 820 || insert;
-    if (insert) {
-      g.fillStyle = `hsla(${this.hue}, 95%, 64%, ${blinkOn ? 0.95 : 0.4})`;
-      g.fillRect(cx, cy + this.cellH - Math.max(2, this.cellH * 0.07), this.cellW, Math.max(2, this.cellH * 0.07));
-    } else if (blinkOn) {
-      g.fillStyle = `hsla(${this.hue}, 95%, 66%, 0.92)`;
-      g.fillRect(cx, cy + 1, this.cellW + 1, this.cellH - 2);
-      const ch = (view.lines[line] ?? '')[col] ?? ' ';
-      if (ch !== ' ' && ch !== '.' && ch !== '#' && ch !== '|' && ch !== '-') {
-        g.fillStyle = '#04140a';
-        g.font = `${this.fontSize}px ${MONO}`;
-        g.textBaseline = 'middle';
-        g.fillText(ch, cx, cy + this.cellH / 2 + this.fontSize * 0.04);
+    const mode = view.mode;
+    const cmd = mode === 'cmdline' || mode === 'search';
+    const blinkOn = (now % 1060) < 820;
+    if (!cmd) {
+      if (mode === 'insert') {
+        const bw = Math.max(2, Math.round(this.cellW * 0.13));
+        g.fillStyle = `hsla(${this.hue}, 95%, 68%, ${blinkOn ? 0.95 : 0.4})`;
+        g.fillRect(cx + 1, cy + 1, bw, this.cellH - 2);
+      } else if (mode === 'replace') {
+        const bh = Math.max(2, Math.round(this.cellH * 0.1));
+        g.fillStyle = `hsla(${this.hue}, 95%, 66%, ${blinkOn ? 0.95 : 0.4})`;
+        g.fillRect(cx, cy + this.cellH - bh - 1, this.cellW, bh);
+      } else if (mode === 'visual' || mode === 'visual-line' || mode === 'visual-block') {
+        g.fillStyle = `hsla(${this.hue}, 95%, 66%, 0.2)`;
+        g.fillRect(cx, cy + 1, this.cellW + 1, this.cellH - 2);
+        g.strokeStyle = `hsla(${this.hue}, 95%, 72%, 0.9)`;
+        g.lineWidth = 1.5;
+        g.strokeRect(cx + 1, cy + 1.5, this.cellW - 1, this.cellH - 3);
+      } else if (blinkOn) {
+        g.fillStyle = `hsla(${this.hue}, 95%, 66%, 0.92)`;
+        g.fillRect(cx, cy + 1, this.cellW + 1, this.cellH - 2);
+        const ch = (view.lines[line] ?? '')[col] ?? ' ';
+        if (ch !== ' ' && ch !== '.' && ch !== '#' && ch !== '|' && ch !== '-') {
+          g.fillStyle = '#04140a';
+          g.font = `${this.fontSize}px ${MONO}`;
+          g.textBaseline = 'middle';
+          g.fillText(ch, cx, cy + this.cellH / 2 + this.fontSize * 0.04);
+        }
+      } else {
+        g.strokeStyle = `hsla(${this.hue}, 95%, 66%, 0.45)`;
+        g.lineWidth = 1;
+        g.strokeRect(cx + 0.5, cy + 1.5, this.cellW, this.cellH - 3);
       }
-    } else {
-      g.strokeStyle = `hsla(${this.hue}, 95%, 66%, 0.45)`;
-      g.lineWidth = 1;
-      g.strokeRect(cx + 0.5, cy + 1.5, this.cellW, this.cellH - 3);
-    }
-
-    // phosphor bloom: one pre-baked additive layer
-    if (this.bloom) {
-      g.globalCompositeOperation = 'lighter';
-      g.drawImage(this.bloomLayer, 0, 0, this.w, this.h);
-      g.globalCompositeOperation = 'source-over';
     }
 
     // damage flash
