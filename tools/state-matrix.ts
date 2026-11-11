@@ -30,6 +30,7 @@ const argv = process.argv.slice(2);
 const LIMIT = Number(argv.find((a) => a.startsWith('--limit='))?.split('=')[1] ?? 0);
 const FILTER = argv.find((a) => a.startsWith('--filter='))?.split('=')[1] ?? '';
 const SHOW = Number(argv.find((a) => a.startsWith('--show='))?.split('=')[1] ?? 8);
+const FIELD = argv.find((a) => a.startsWith('--field='))?.split('=')[1] ?? '';
 const WRITE = argv.includes('--write');
 
 let cases: MCase[] = makeCases();
@@ -156,7 +157,7 @@ for (let i = 0; i < cases.length; i++) {
   if (changed && (!sameLines(normVim.undo.lines, eng.undo.lines) || !samePos(normVim.undo.cursor, eng.undo.cursor))) {
     fields.push('undo');
   }
-  if (fields.length) {
+  if (fields.length && (!FIELD || fields.includes(FIELD))) {
     for (const f of fields) fieldCounts.set(f, (fieldCounts.get(f) ?? 0) + 1);
     failures.push({ c, vim: normVim, eng, fields });
   }
