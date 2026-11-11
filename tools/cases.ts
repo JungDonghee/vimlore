@@ -301,5 +301,7 @@ export const CASES: VimCase[] = [
   { name: 'vlB< visual EOL', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: 'vlB<' },
 
 
+  { name: 'Vku cursor', text: 'one two\nthree four', cursor: [2, 9], keys: 'Vku' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

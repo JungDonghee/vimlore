@@ -1230,8 +1230,11 @@ export class Vim {
       //    was inside the range, otherwise go to the first non-blank
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
-      if (visual) this.cursor = { line: l1, col: 0 };
-      else if (doubled) this.cursor = l1 === l2 ? { line: l1, col: M.firstNonBlank(this.buf, l1) } : M.moveTo(this.buf, this.cursor);
+      if (visual) {
+        if (l1 === l2) this.cursor = { line: l1, col: 0 };
+        else if (this.cursor.line === l1) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+        else this.cursor = { line: l1, col: 0 };
+      } else if (doubled) this.cursor = l1 === l2 ? { line: l1, col: M.firstNonBlank(this.buf, l1) } : M.moveTo(this.buf, this.cursor);
       else if (l1 === l2) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
       else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
     } else {
