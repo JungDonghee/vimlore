@@ -219,6 +219,13 @@ insert mode, so `i` + Tab typed no spaces. Tab now reaches the engine in
 insert/replace (it expands to spaces to the next tabstop, 4); outside those
 modes it still opens the hint. Unit-tested.
 
+## Vim Adventures checklist
+
+The command-by-command audit lives in
+[`VIM_ADVENTURES_COVERAGE.md`](VIM_ADVENTURES_COVERAGE.md). It marks buffers/
+files, `zt/zz/zb`, `:reg`, `:marks/:delmarks`, `[{ ]} [( ])` and real `:w/:e`
+as missing/deferred rather than pretending the engine has them.
+
 ## 3c. Next direction (the divine move)
 
 The engine is no longer the bottleneck. See [`DIVINE_MOVE.md`](DIVINE_MOVE.md):
