@@ -19,7 +19,8 @@
     "verify:full": "npm run verify && npm run oracle && node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7",
     "budget": "node --experimental-strip-types tools/bundle-budget.ts",
     "books:index": "node --experimental-strip-types tools/book-index.ts",
-    "provenance": "node --experimental-strip-types tools/stage-provenance.ts"
+    "provenance": "node --experimental-strip-types tools/stage-provenance.ts",
+    "kickoff": "node --experimental-strip-types tools/kickoff.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

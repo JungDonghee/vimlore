@@ -3,6 +3,9 @@
 > **Copy this entire file into the next session.** It is a task packet, a
 > baseline, and a challenge — not a summary to skim.
 >
+> For a single copy-paste startup message, use [`ONE_MESSAGE.md`](ONE_MESSAGE.md)
+> or run `npm run kickoff` (it fills the current HEAD).
+>
 > Baseline commit: **`20a1c3a`** (2026-11-11). If your checkout is at a different
 > HEAD, **re-run the gates and update the baseline before trusting any number
 > below**. Old prose is not evidence.

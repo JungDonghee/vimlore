@@ -3,6 +3,8 @@
 > **Priority and the task board live in [`MASTER_PLAN.md`](MASTER_PLAN.md).**
 > This file is the snapshot a new AI needs in the first ten minutes: what is
 > true now, what is broken, and which traps cost the last session hours.
+> For a single copy-paste start, use [`ONE_MESSAGE.md`](ONE_MESSAGE.md) or run
+> `npm run kickoff`.
 > **Last rewritten:** 2026-11-11, end of the engine/UI hardening pass.
 
 ## 0. Snapshot (after slice 1)
