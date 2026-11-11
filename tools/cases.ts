@@ -335,5 +335,9 @@ export const CASES: VimCase[] = [
 
   { name: 'gg=G nested braces', text: 'if (x) {\nif (y) {\nz;\n}\n}', cursor: [1, 0], keys: 'gg=G' },
 
+  { name: '3gUh at BOL', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 0], keys: '3gUh' },
+
+  { name: '3g~h BOL', text: 'a,b,c,d', cursor: [1, 0], keys: '3g~h' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

@@ -20,7 +20,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 253/253 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 255/255 must pass
 npm test
 ```
 
@@ -142,7 +142,7 @@ introduce per-frame allocation in `render()`.
 ## Coverage and known gaps
 
 The authoritative matrix of what the engine does and does not do is
-[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **253/253**
+[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **255/255**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Not in the current single-buffer slice: multi-buffer/files/
 windows/tabs (deferred by design, `FUTURE_EDITOR.md`), folds, completion, `:!`,

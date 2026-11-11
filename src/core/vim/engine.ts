@@ -733,12 +733,28 @@ export class Vim {
       this.resetPending();
       return;
     }
-    this.finishOpWithMotion(op, motion);
+    this.finishOpWithMotion(op, motion, key);
   }
 
-  private finishOpWithMotion(op: Op, motion: MotionResult): void {
+  private finishOpWithMotion(op: Op, motion: MotionResult, motionKey = ''): void {
     const from = { ...this.cursor };
     const to = motion.to;
+    // A failed `h` at BOL applies gU/gu to the whole current line. `g~` is
+    // different: Vim toggles just the character at the cursor.
+    if (
+      (op.key === 'gU' || op.key === 'gu') &&
+      motionKey === 'h' &&
+      to.line === from.line &&
+      to.col === from.col &&
+      from.col === 0
+    ) {
+      this.applyOp(op, {
+        start: { line: from.line, col: 0 },
+        end: { line: from.line, col: Math.max(0, this.buf.line(from.line).length - 1) },
+        linewise: true,
+      });
+      return;
+    }
     let range: SelRange;
     if (motion.kind === 'linewise') {
       const lr = motion.lineRange ?? [Math.min(from.line, to.line), Math.max(from.line, to.line)];
@@ -2243,7 +2259,7 @@ export class Vim {
             this.resetPending();
             return;
           }
-          this.finishOpWithMotion(op, motion);
+          this.finishOpWithMotion(op, motion, key);
         } else {
           this.doFind(key, p.dir, p.till, this.countNum || 1);
         }
@@ -2307,7 +2323,7 @@ export class Vim {
         if (this.op) {
           const op = this.op;
           const motion: MotionResult = { to: pos, kind: 'linewise' };
-          this.finishOpWithMotion(op, motion);
+          this.finishOpWithMotion(op, motion, key);
         } else {
           this.jumpTo(pos, true);
           this.afterUnit();
