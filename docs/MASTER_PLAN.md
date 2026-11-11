@@ -59,7 +59,7 @@
 | engine oracle | **239/239** vs `vim -u NONE` (142 at session start, +97 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 223,258 B · single `dist/vimlore.html` 246,931 B · gzip 78,916 B |
+| build | JS 223,352 B · single `dist/vimlore.html` 247,025 B · gzip 78,950 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -87,16 +87,18 @@ so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug
 | 23 | 651 | 349 | **0** | **0** |
 
 **Seeds 7/11/23 are completely clean: 0 divergences (buffer and cursor).**
-Extended seeds 31/47/101 still expose 18 edges (see below); treat the clean set
+Extended seeds 31/47/101 still expose 21 edges (see below); treat the clean set
 as a regression corpus, not proof of total coverage.
 Also fixed: backward sentence motion at blank lines (`V(y`), `2yaW`, `<i(`
 empty-object shift, `vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual
 `$`, case-change cursors, block virtual column, `2daW`/`2daw`, `d$` on an
 empty line.
 
-Extended-seed repros (next session): seed 31 `dFa`, `gUF `; seed 47
-`3gUiW`/`3ciW`/`3ciw`, `<C-v>w>` (tab vs spaces), `gUaW`, `gU{`, `2daw`;
-seed 101 `3gUaw`, `di{`, `<C-v>w>`, `gUFa`.
+Extended-seed repros (next session): seed 31 `dFa`, `gUF `, `2gUG`;
+seed 47 `3gUiW`/`3ciW`/`3ciw`, `gUaW`, `gU{`, `2daw`, `yk`; seed 101 `3gUaw`,
+`di{` (cursor only), `gUFa`, `2gUgg` cursor. The oracle/fuzz harness uses
+`expandtab`, matching the game's space indent; c04s3 now expects Vim's real
+multi-line `di(` result.
 
 ## 3. Coverage ladder — what "advanced Vim" means here
 

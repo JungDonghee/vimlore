@@ -14,7 +14,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **239 oracle cases**, all matching real Vim |
 | gates | oracle 239/239 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 223,258 B · single `dist/vimlore.html` 246,931 B · gzip 78,916 B |
+| build | JS 223,352 B · single `dist/vimlore.html` 247,025 B · gzip 78,950 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -32,9 +32,11 @@ this file.
   `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
 - Fuzz seed 7: **71 → 0**, seed 11: **4 → 0**, seed 23: **8 → 0**.
   **Seeds 7/11/23 are fully clean: 0 divergences, buffer and cursor.**
-  Extended seeds 31/47/101 still expose 18 edges (counts/text objects,
-  `<C-v>w>` tab-vs-space, `gU{`, `2daw`, `di{`, `dFa`); `d$` on an empty line
-  was fixed in the same pass.
+  Extended seeds 31/47/101 still expose 21 edges (counts/text objects, `gU{`,
+  `2daw`, `dFa`/`gUF*`, `di{` cursor). `d$` on an empty line and `di{` content
+  were fixed in the same pass. The oracle/fuzz harness now sets `expandtab`
+  because the game's indent is spaces; block `<C-v>w>` no longer diverges on
+  tab-vs-space.
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
@@ -69,7 +71,10 @@ this file.
 ### Not done (queued, do not pretend otherwise)
 - Change list (`g;`/`g,`), interactive `:s///c`, `=` indent.
 - Keep seeds 7/11/23 clean; extended seeds 31/47/101 are the next correctness
-  frontier (18 edges listed in `MASTER_PLAN.md` §2.1).
+  frontier (21 edges listed in `MASTER_PLAN.md` §2.1).
+- c04s3's goal was corrected to Vim's real multi-line `di(` result
+  (`connect(` and `)` on separate lines); the old goal only passed because
+  `di{`/`di(` joined the closing bracket.
 - Curriculum metadata: every one of the 51 stages now declares `teaches`
   (c08s5 uses `0/j/f` as its maze tools; c01s2 `count`, c09s1 `:d` are grimoire
   entries). 18 older grimoire commands still have no stage that declares them;

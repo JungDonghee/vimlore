@@ -39,7 +39,7 @@ const esc = (p: string) => p.replace(/\\/g, '/');
 
 let script = `set nocompatible
 set shiftwidth=2
-set noexpandtab
+set expandtab
 let s:out = []
 `;
 CASES.forEach((c, i) => {

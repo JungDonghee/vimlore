@@ -175,7 +175,11 @@ function bracketObject(buf: Buffer, pos: Pos, around: boolean, openCh: string): 
   if (endOff === -1) return null;
   if (around) return { start: buf.pos(startOff), end: buf.pos(endOff), fallback };
   const s = startOff + 1;
-  const e = endOff - 1;
+  let e = endOff - 1;
+  // If the closing bracket starts a line, Vim's inner object ends on the last
+  // character of the previous line, not on the newline before the bracket;
+  // otherwise `di{` would join the closing brace onto the opening line.
+  while (e > s && flat[e] === '\n') e--;
   // An empty pair like "()" has no inner text; Vim treats it as a no-op.
   if (e < s) return null;
   return { start: buf.pos(s), end: buf.pos(e), fallback };

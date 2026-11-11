@@ -184,7 +184,7 @@ const esc = (p: string): string => p.replace(/\\/g, '/');
 
 let script = `set nocompatible
 set shiftwidth=2
-set noexpandtab
+set expandtab
 set noswapfile
 let s:out = []
 `;

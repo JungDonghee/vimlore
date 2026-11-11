@@ -116,15 +116,16 @@ connect(
       goal: {
         type: 'exact',
         text: `start()
-connect()`,
+connect(
+)`,
       },
       par: 7,
       solution: 'di(kdi(',
       teaches: ['i(', 'a('],
       hints: [
         {
-          en: 'di( clears everything between the nearest parentheses, even when the arguments run across lines. a( would take the brackets with it.',
-          ko: 'di(는 가장 가까운 괄호 사이를 전부 비운다. 인자가 여러 줄에 걸쳐 있어도 그렇다. a(는 괄호까지 가져간다.',
+          en: 'di( clears everything between the nearest parentheses, even across lines. Vim keeps the closing parenthesis on its own line. a( would take the brackets with it.',
+          ko: 'di(는 가장 가까운 괄호 사이를 전부 비운다. 인자가 여러 줄에 걸쳐도 그렇고, 닫는 괄호는 자기 줄에 남는다. a(는 괄호까지 가져간다.',
         },
         {
           en: 'Start inside the long call: di(. Then k lands inside start(engine, fuel) — di( again.',
