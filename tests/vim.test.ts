@@ -50,6 +50,27 @@ test('buffer index round-trips', () => {
 // ---------------------------------------------------------------------------
 // Undo / repeat / macros
 // ---------------------------------------------------------------------------
+test('counts work for s, Y, u and redo', () => {
+  const s = new Vim({ text: 'abcdef' });
+  s.cursor = { line: 0, col: 1 };
+  s.feedString('3sZ<Esc>');
+  assert.equal(s.text, 'aZef');
+  assert.deepEqual(s.cursor, { line: 0, col: 1 });
+  assert.equal(s.registers.get('"')?.text, 'bcd');
+
+  const y = new Vim({ text: 'abcdef\nghijkl\nmnopqr' });
+  y.feedString('3Y');
+  assert.equal(y.registers.get('"')?.text, 'abcdef\nghijkl\nmnopqr\n');
+  assert.equal(y.registers.get('"')?.linewise, true);
+
+  const u = new Vim({ text: 'abcdef' });
+  u.feedString('xxx3u');
+  assert.equal(u.text, 'abcdef');
+  assert.deepEqual(u.cursor, { line: 0, col: 0 });
+  u.feedString('3<C-r>');
+  assert.equal(u.text, 'def');
+});
+
 test('count before insert repeats the typed text', () => {
   const a = new Vim({ text: 'abc' });
   a.feedString('3i0<Esc>');

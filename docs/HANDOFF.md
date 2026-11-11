@@ -14,9 +14,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,546 lines + `normalize.ts` 100; **368 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 368/368 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 36 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 242,140 B · single `dist/vimlore.html` 268,947 B · gzip 84,550 B · budget gate 269k/86k (raised deliberately this pass, §3) |
+| engine | 3,560 lines + `normalize.ts` 100; **373 oracle cases**, all matching real Vim (strict) |
+| gates | oracle 373/373 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 37 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| build | JS 242,140 B · single `dist/vimlore.html` 269,248 B · gzip 84,588 B · budget gate 270k/86k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | state matrix | 21,712 command trees with register/undo: **21,503 matched, 209 open** (local DM1; `docs/STATE_REPORT.md`) |
@@ -81,14 +81,14 @@ extraction (`cursor.ts`).
 conversion) / Q10 (backward column-0 ranges). `src/core/vim/cursor.ts` owns the
 Q04 (zero-range `0`/`^`/`h` case motions) and Q09 (case-operator landing) policy.
 `applyOp`/`caseRange` call both modules and keep only effect dispatch; oracle
-368/368 and matrix 21,712/21,712 stayed green through the extraction.
+373/373 and matrix 21,712/21,712 stayed green through the extraction.
 
 ### Surface program (Phase A)
 `tools/surface-audit.ts` maps the Grimoire, chapters, oracle cases, unit tests
 and TRIALS into one evidence report, now a **strict CI gate**
 (`npm run surface -- --strict`). 86 of 86 commands have oracle or unit evidence
 (8 ex/macro/mark/format commands are unit-only because `normal!` cannot drive
-them), 9 engine-only features are explicit, and 0 of the 368 oracle cases are
+them), 9 engine-only features are explicit, and 0 of the 373 oracle cases are
 orphans. The generated view is [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md); the
 program is [`ENGINE_PROGRAM.md`](ENGINE_PROGRAM.md). Curriculum gaps (15
 grimoire-only, 12 unused in solutions) are reported separately.
@@ -134,8 +134,8 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
-264,000 → **269,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 268,947 B raw / 84,550 B gzip, so headroom is
+264,000 → **270,000/86,000**. Each was measured and committed with the feature
+that needed it. Current build is 269,248 B raw / 84,588 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -175,14 +175,24 @@ keys can expose a skill before a stage teaches it, and 12 unlock keys have no
 Grimoire row. Book-derived curriculum/provenance will fix the ordering; do not
 paper over it with ad-hoc locks now.
 
-### Count before insert (2026-11-11)
+### Counts before simple commands (2026-11-11)
 
-`3i0<Esc>` does nothing? It now repeats the typed text three times, as Vim
-does. This was missing entirely: `i/a/I/A` dropped the count in `openInsertAt`.
-Counts now repeat the first pass for `i a I A`, and `o O` open that many lines
-with the typed text (`3o0` → three `0` lines, `3O0` → three above). Five oracle
-cases added (363 → 368); unit-tested. `<CR>` keeps the cursor at column 0 of
-the new line; only repeated register-style text uses the end-of-text cursor.
+The count audit found a **per-command gap**, not a broken count parser: counts
+were wired into motions/operators and some commands, but dropped by others.
+Fixed and oracle/unit-covered:
+
+- `3i0<Esc>` repeats the typed text; same for `a I A`.
+- `3o0` / `3O0` open three lines with the typed text.
+- `3sZ<Esc>` deletes three characters and inserts `Z` once.
+- `3Y` yanks three lines (register, unit-tested; oracle only sees buffer).
+- `3u` / `3<C-r>` undo/redo three changes (loop in `undo`/`redo`).
+- Verified already-count-aware: `p P r ~ J gJ x X S .`, operators/motions via
+  the matrix. `C` and `D` intentionally ignore the count, matching Vim.
+
+This brought the oracle from 363 to **373 cases** and tests to 37. The count
+system is still **per-command**, not a central dispatcher; a count matrix over
+every normal command is the next systematic guard, not a claim that all counts
+are now proven.
 
 ### Failed undo/redo left a stale command echo (2026-11-11)
 
@@ -300,7 +310,7 @@ npm run doc-check
 npm run invariants
 npm run surface -- --strict
 npm run matrix                                            # 21,712/21,712 (CI gate)
-node --experimental-strip-types tools/oracle-diff.ts        # 368/368
+node --experimental-strip-types tools/oracle-diff.ts        # 373/373
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7
 npm run build

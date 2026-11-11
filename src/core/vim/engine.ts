@@ -551,9 +551,12 @@ export class Vim {
         this.deleteRange({ start: this.cursor, end: { line: this.cursor.line, col: l.length - 1 }, linewise: false }, true, this.pendingRegSet, false);
         return;
       }
-      case 'Y':
-        this.yankRange({ start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true }, true, this.pendingRegSet, false, true);
+      case 'Y': {
+        const n = this.countNum || 1;
+        const last = Math.min(this.buf.lineCount - 1, this.cursor.line + n - 1);
+        this.yankRange({ start: { line: this.cursor.line, col: 0 }, end: { line: last, col: 0 }, linewise: true }, true, this.pendingRegSet, false, true);
         return;
+      }
       case 'R':
         this.enterReplace();
         return;
@@ -577,10 +580,10 @@ export class Vim {
         this.put(this.targetRegister(), key === 'P');
         return;
       case 'u':
-        this.undo();
+        this.undo(this.countNum || 1);
         return;
       case '<C-r>':
-        this.redo();
+        this.redo(this.countNum || 1);
         return;
       case '.':
         this.repeatChange();
@@ -1808,28 +1811,33 @@ export class Vim {
     this.echo(`${dir < 0 ? 'earlier' : 'later'} ${n}`, 'info');
   }
 
-  private undo(): void {
-    const s = this.undoStack.pop();
-    if (!s) {
+  private undo(count = 1): void {
+    let changed = false;
+    for (let i = 0; i < Math.max(1, count); i++) {
+      const s = this.undoStack.pop();
+      if (!s) break;
+      changed = true;
+      this.redoStack.push(this.snapshot());
+      const after = this.buf.lines.slice();
+      this.buf.setLines(s.lines);
+      // Vim leaves the cursor at the first changed position after `u`, not at
+      // the cursor stored before the change (`ch` from col 2 lands on col 1,
+      // `Vjd` on the first changed line). Derive it from the diff.
+      if (s.undoCursor) this.cursor = M.moveTo(this.buf, s.undoCursor);
+      else {
+        const restored = this.buf.flat, previous = after.join('\n');
+        let diff = 0;
+        while (diff < restored.length && diff < previous.length && restored[diff] === previous[diff]) diff++;
+        this.cursor = M.moveTo(this.buf, this.buf.pos(diff));
+      }
+    }
+    if (!changed) {
       this.bell();
       this.say('already at oldest change', 'error');
       this.takeCount();
       this.cmdKeys = [];
       this.afterUnit();
       return;
-    }
-    this.redoStack.push(this.snapshot());
-    const after = this.buf.lines.slice();
-    this.buf.setLines(s.lines);
-    // Vim leaves the cursor at the first changed position after `u`, not at
-    // the cursor stored before the change (`ch` from col 2 lands on col 1,
-    // `Vjd` on the first changed line). Derive it from the diff.
-    if (s.undoCursor) this.cursor = M.moveTo(this.buf, s.undoCursor);
-    else {
-      const restored = this.buf.flat, previous = after.join('\n');
-      let diff = 0;
-      while (diff < restored.length && diff < previous.length && restored[diff] === previous[diff]) diff++;
-      this.cursor = M.moveTo(this.buf, this.buf.pos(diff));
     }
     this.wantColValue = this.cursor.col;
     this.version++;
@@ -1839,9 +1847,17 @@ export class Vim {
     this.afterUnit();
   }
 
-  private redo(): void {
-    const s = this.redoStack.pop();
-    if (!s) {
+  private redo(count = 1): void {
+    let changed = false;
+    for (let i = 0; i < Math.max(1, count); i++) {
+      const s = this.redoStack.pop();
+      if (!s) break;
+      changed = true;
+      this.undoStack.push(this.snapshot());
+      this.buf.setLines(s.lines);
+      this.cursor = M.moveTo(this.buf, s.cursor);
+    }
+    if (!changed) {
       this.bell();
       this.say('already at newest change', 'error');
       this.takeCount();
@@ -1849,9 +1865,6 @@ export class Vim {
       this.afterUnit();
       return;
     }
-    this.undoStack.push(this.snapshot());
-    this.buf.setLines(s.lines);
-    this.cursor = M.moveTo(this.buf, s.cursor);
     this.wantColValue = this.cursor.col;
     this.version++;
     this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'redo' });
@@ -1886,7 +1899,8 @@ export class Vim {
     if (kind === 'I') this.cursor = { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) };
     if (kind === 'A') this.cursor = { line: this.cursor.line, col: line.length };
     if (kind === 's') {
-      this.deleteRange({ start: this.cursor, end: this.cursor, linewise: false }, true, this.pendingRegSet, true);
+      const col = Math.min(line.length - 1, this.cursor.col + count - 1);
+      this.deleteRange({ start: this.cursor, end: { line: this.cursor.line, col: Math.max(0, col) }, linewise: false }, true, this.pendingRegSet, true);
       return;
     }
     if (kind === 'S') {

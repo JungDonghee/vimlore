@@ -495,5 +495,10 @@ export const CASES: VimCase[] = [
   { name: '3a0 count append', text: 'abc', cursor: [1, 0], keys: '3a0<Esc>' },
   { name: '3A0 count append end', text: 'abc', cursor: [1, 0], keys: '3A0<Esc>' },
   { name: '3o0 count open', text: 'abc', cursor: [1, 0], keys: '3o0<Esc>' },
+  { name: '3s count substitute', text: 'abcdef', cursor: [1, 1], keys: '3sZ<Esc>' },
+  { name: '3S count change lines', text: 'abcdef\nghijkl\nmnopqr', cursor: [1, 1], keys: '3SZ<Esc>' },
+  { name: '3u count undo', text: 'abcdef', cursor: [1, 0], keys: 'xxx3u' },
+  { name: '3u3redo counts', text: 'abcdef', cursor: [1, 0], keys: 'xxx3u3<C-r>' },
+  { name: '3dot count repeat', text: 'abcdef', cursor: [1, 0], keys: 'x3.' },
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
