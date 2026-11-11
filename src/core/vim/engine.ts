@@ -731,7 +731,8 @@ export class Vim {
         }
       }
     }
-    const motion = this.motionFor(key, (this.countNum || 1) * (op.count || 1), this.countNum > 0 || op.count > 0);
+    const motionCount = (this.countNum || 1) * (op.count || 1);
+    const motion = this.motionFor(key, motionCount, this.countNum > 0 || op.count > 0);
     if (!motion) {
       // `{` at BOF is a zero-length motion: case operators touch the character
       // under the cursor, `>`/`<` shift the current line, `c` inserts without
@@ -759,10 +760,10 @@ export class Vim {
       this.resetPending();
       return;
     }
-    this.finishOpWithMotion(op, motion, key);
+    this.finishOpWithMotion(op, motion, key, motionCount);
   }
 
-  private finishOpWithMotion(op: Op, motion: MotionResult, motionKey = ''): void {
+  private finishOpWithMotion(op: Op, motion: MotionResult, motionKey = '', count = 1): void {
     const from = { ...this.cursor };
     const to = motion.to;
     // On a non-first line, a zero-range `0` at column 0 is linewise for case
@@ -827,12 +828,72 @@ export class Vim {
     }
     // A sentence motion that ends at column 0 of a later line behaves
     // linewise for operators (`d)` deletes the remaining lines, not a blank).
-    if (op.key === 'd' && motionKey === ')' && !motion.kind.startsWith('line') && to.col === 0 && to.line > from.line) {
+    if (op.key === 'd' && motionKey === ')' && !motion.kind.startsWith('line') && from.col === 0 && to.col === 0 && to.line > from.line) {
       this.applyOp(op, {
         start: { line: from.line, col: 0 },
-        end: { line: to.line, col: 0 },
+        end: { line: to.line === this.buf.lineCount - 1 ? to.line : Math.max(from.line, to.line - 1), col: 0 },
         linewise: true,
       });
+      return;
+    }
+    // `2dw`/`2dW` across a blank separator consumes the blank line with the
+    // word (Vim leaves the target line at the top); without a blank line the
+    // delete stays charwise and only empties the first line.
+    if (
+      op.key === 'd' &&
+      (motionKey === 'w' || motionKey === 'W') &&
+      count > 1 &&
+      from.col === 0 &&
+      to.col === 0 &&
+      to.line > from.line + 1
+    ) {
+      let blank = false;
+      for (let l = from.line + 1; l < to.line; l++) if (this.buf.line(l).trim() === '') blank = true;
+      if (blank) {
+        this.applyOp(op, {
+          start: { line: from.line, col: 0 },
+          end: { line: to.line - 1, col: 0 },
+          linewise: true,
+        });
+        return;
+      }
+    }
+    // Backward b/B from column 0 stays inside the previous line: when the
+    // target is that line's first non-blank the operator is linewise on it;
+    // otherwise it is charwise from the target through the line above the
+    // cursor. Neither form ever joins the cursor line.
+    if (
+      (op.key === 'd' || op.key === 'c') &&
+      (motionKey === 'b' || motionKey === 'B') &&
+      from.col === 0 &&
+      to.line < from.line
+    ) {
+      const fnb = M.firstNonBlank(this.buf, to.line);
+      if (to.col === fnb) {
+        // The word start is the line's first non-blank: the operator covers
+        // the lines from the target through the line above the cursor.
+        this.applyOp(op, {
+          start: { line: to.line, col: 0 },
+          end: { line: Math.max(to.line, from.line - 1), col: 0 },
+          linewise: true,
+        });
+        if (op.key === 'd') {
+          this.cursor = { line: to.line, col: 0 };
+          this.wantColValue = 0;
+        }
+        return;
+      }
+      const endLine = from.line - 1;
+      this.rangeInclusive = true;
+      this.applyOp(op, {
+        start: to,
+        end: { line: endLine, col: Math.max(0, this.buf.line(endLine).length - 1) },
+        linewise: false,
+      });
+      if (op.key === 'd') {
+        this.cursor = { line: to.line, col: Math.max(0, to.col - 1) };
+        this.wantColValue = this.cursor.col;
+      }
       return;
     }
     // A failed motion cancels the operator (`dj` on the last line, `cj` at
@@ -1106,6 +1167,9 @@ export class Vim {
         // becomes linewise only through the delete conversion below.
         // On an empty line `$` has zero width, so `d$` must not eat the newline.
         const empty = this.buf.line(line).length === 0;
+        if (empty && count > 1) {
+          return { to: { line, col: 0 }, kind: 'linewise', lineRange: [this.cursor.line, line] };
+        }
         return { to: { line, col: M.lineEnd(this.buf, line) }, kind: empty ? 'exclusive' : 'inclusive' };
       }
       case '+':
@@ -1454,7 +1518,7 @@ export class Vim {
           return false;
         })()
       ) {
-        c1 = 1;
+        c1 = this.visualMotionKey === 'G' || this.visualMotionKey === 'gg' || this.visualMotionKey === '$' ? 0 : 1;
       }
       for (let l = l1; l <= l2; l++) {
         const line = this.buf.line(l);

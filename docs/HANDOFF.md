@@ -14,11 +14,11 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,400 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
+| engine | 3,464 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 239,482 B · single `dist/vimlore.html` 263,272 B · gzip 82,990 B · budget gate 264k/84k (raised deliberately this pass, §3) |
+| build | JS 240,504 B · single `dist/vimlore.html` 264,294 B · gzip 83,203 B · budget gate 265k/84k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=1200 not re-run since the object work |
-| matrix | 21,712 grammar cases: **21,696 matched, 16 open** (local; `docs/MATRIX_REPORT.md`) |
+| matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -63,27 +63,17 @@ run the gates.
   `ap` crosses separators and includes surrounding blanks (`2cip`, `2dap`,
   `2yap`, `2g~ap`).
 
-### Grammar matrix (Phase C, first run)
-`tools/matrix.ts` generates valid command trees (motion/object × operator ×
-mode × count over boundary-rich texts) and diffs them with `feedkeys('xt')`, so
-Vim errors do not swallow later keys — the comparison is the user-observable
-final buffer + cursor. Current run: 21,696 / 21,712 matched, **16
-divergences** (from 48 at the start of this pass). Fixed this pass: linewise
-yank cursor for `G`/`gg`/`%`, visual yank anchor direction + motion tracking,
-counted `W`/`w` linewise rules for change/case, backward-T case no-op, and
-`%` case-op cursor. Remaining: `b`/`B` across lines (8), `)` (3), blank-line
-`w`/`W`/`$` (4), visual-block `<`+`G` (1); listed in
-[`MATRIX_REPORT.md`](MATRIX_REPORT.md). Matrix is **not** a CI gate until it
-reaches 0.
-
-**How to continue the matrix (no explanation needed):**
-1. `npm run matrix -- --filter="normal/d/motion/)" --show=5` — inspect one family.
-2. Decide whether Vim clamps, fails or acts; encode it in the motion/operator
-   contract, not in a one-off branch.
-3. Re-run that filter to 0, then the full `npm run matrix` to 0.
-4. Turn one representative matrix case into an oracle case (`tools/cases.ts`)
-   so the snapshot protects it after the fix.
-5. Only then add `matrix` to CI as a gate; until then it is a local instrument.
+### Grammar matrix (Phase C, done)
+`tools/matrix.ts` generates 21,712 valid command trees (motion/object ×
+operator × mode × count over boundary-rich texts) and diffs them with
+`feedkeys('xt')`, so Vim errors do not swallow later keys — the comparison is
+the user-observable final buffer + cursor. Current run: **21,712 / 21,712
+matched, 0 divergences**. The last families closed were `b`/`B` backward
+ranges (linewise at the first non-blank, charwise otherwise), `d)` linewise
+end, blank-line `w`/`W`/`$` conversion, and visual-block `<` after `G`. The
+matrix runs in the CI `oracle` job now, so a grammar regression fails the
+build. Next: compose-fuzz (random command trees) and the cursor-policy
+extraction (`cursor.ts`).
 
 ### Normalization extraction (Phase B pilot)
 `src/core/vim/normalize.ts` now owns `flatRange` and the first two named quirks:
@@ -136,12 +126,12 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 ## 3. Budget decision (deliberate)
 
-Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (356 cases, up from 266).
-The bundle gate was raised **in the same commit** from 258,000/82,000 to
-**264,000/84,000**; current build is 263,272 B raw / 82,990 B gzip. This is the
-documented "pay for itself or raise deliberately" path. Headroom is still
-small (~900 B raw, ~1.1 kB gzip): the next feature must reduce bytes first or
-justify another measured raise.
+Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
+264,000 → **265,000/84,000**. Each was measured and committed with the feature
+that needed it. Current build is 264,294 B raw / 83,203 B gzip, so headroom is
+~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
+another measured raise. Phase E is where bytes get reclaimed, not a permanent
+escalation.
 
 ## 4. Not done (queued, do not pretend otherwise)
 
@@ -202,7 +192,7 @@ npx tsc --noEmit
 npm run doc-check
 npm run invariants
 npm run surface -- --strict
-npm run matrix                                            # 16 open (local)
+npm run matrix                                            # 21,712/21,712 (CI gate)
 node --experimental-strip-types tools/oracle-diff.ts        # 356/356
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7

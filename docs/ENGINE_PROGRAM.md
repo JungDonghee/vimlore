@@ -171,14 +171,13 @@ unchanged: oracle green at every commit, every branch linked to a quirk ID.
 positions, 20 motions, 20 objects, 8 operators, counts {none, 2}, normal +
 visual/visual-line/visual-block + doubled) and diffs them with
 `feedkeys('xt')` — user-observable final state, not `normal!` abort state.
-Current run: **21,696 matched / 16 divergences** (from 48 at the start of
-this pass). Fixed: linewise yank cursor for `G`/`gg`/`%` (forward keeps the
-column, backward uses the target's first non-blank), visual yank anchor
-direction + visual motion tracking, counted `W`/`w` linewise rules for
-change/case, backward-T case no-op, and `%` case-op cursor. Remaining 16:
-`b`/`B` across lines (8), `)` (3), blank-line `w`/`W`/`$` (4), visual-block
-`<`+`G` (1).
-Matrix is local-only until it reaches 0; then it joins CI as a gate.
+Current run: **21,712 matched / 0 divergences**. The last families closed were
+`b`/`B` backward ranges across lines (linewise at the first non-blank, charwise
+otherwise), `d)` linewise ends, blank-line `w`/`W`/`$` conversion, and
+visual-block `<` after a `G` motion. The matrix now runs in the CI `oracle` job,
+so a grammar regression fails the build. `tools/compose-fuzz.ts` (random
+command trees) is the remaining Phase C work.
+Matrix is a CI gate (oracle job) now that it reaches 0.
 `tools/compose-fuzz.ts` (random command trees) is still to come.
 
 ### Phase D — closed world
