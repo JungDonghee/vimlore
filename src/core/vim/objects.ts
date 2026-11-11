@@ -51,10 +51,12 @@ function wordObject(buf: Buffer, pos: Pos, around: boolean, big: boolean): Objec
     while (i < flat.length && (flat[i] === ' ' || flat[i] === '\t')) i++;
     if (i > end + 1) end = i - 1;
     else {
-      // At end of line: include preceding whitespace instead.
+      // At end of line: include preceding whitespace instead, but never the
+      // line's own indentation (`daW` on an indented last word keeps the
+      // indent).
       let j = start - 1;
       while (j >= 0 && (flat[j] === ' ' || flat[j] === '\t')) j--;
-      if (j < start - 1) start = j + 1;
+      if (j >= 0 && j < start - 1 && flat[j] !== '\n') start = j + 1;
     }
   }
   return { start: buf.pos(start), end: buf.pos(end) };

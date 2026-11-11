@@ -305,9 +305,13 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
         if (s < target) best = s;
         else break;
       }
-      // A counted `(` that runs out of sentences is a no-op, not a partial
-      // move: Vim keeps the original cursor (and `c(` still opens insert).
-      if (best < 0) return { to: buf.pos(startOff), kind: 'exclusive' };
+      // A single uncounted `(` that cannot move is a zero-length motion:
+      // `c(` still opens insert and `d(` is a no-op. A counted one that runs
+      // out cancels the operator (`2d(` at BOF).
+      if (best < 0) {
+        if (count === 1) return { to: buf.pos(startOff), kind: 'exclusive' };
+        return { to: buf.pos(startOff), kind: 'exclusive', failed: true };
+      }
       target = best;
     }
     return { to: buf.pos(target), kind: 'exclusive', jump: true };
@@ -340,6 +344,10 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
       }
     }
     if (!moved) {
+      // Count 1 reaching EOF is success (`d)` deletes to the end). A counted
+      // `)` that hits EOF before its last step fails (`2d)` on the last
+      // sentence is a no-op).
+      if (n < count - 1) return { to: { ...env.cursor }, kind: 'exclusive', failed: true };
       off = Math.max(0, flat.length - 1);
       hitEof = true;
     }

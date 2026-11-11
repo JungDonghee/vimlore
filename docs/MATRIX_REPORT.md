@@ -7,76 +7,28 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 20901 |
+| matched | 21449 |
 | engine errors | 0 |
-| divergences | 811 |
+| divergences | 263 |
 
 ## Divergences by category
 
 | category | count |
 |---|---:|
-| normal/d/motion/) | 25 |
-| normal/d/motion/% | 22 |
-| normal/c/motion/( | 22 |
-| normal/c/motion/) | 22 |
-| normal/c/motion/% | 22 |
-| normal/>/motion/( | 22 |
-| normal/>/motion/) | 22 |
-| normal/g~/motion/% | 19 |
-| normal/gU/motion/% | 19 |
-| normal/g~/motion/) | 18 |
-| normal/gU/motion/) | 18 |
-| normal/d/motion/$ | 17 |
-| normal/c/motion/$ | 17 |
-| normal/>/motion/% | 17 |
-| normal/>/motion/$ | 16 |
-| normal/</motion/) | 15 |
-| normal/g~/motion/( | 14 |
-| normal/gU/motion/( | 14 |
-| normal/</motion/( | 14 |
-| visual/<C-v>/c/$ | 13 |
-| normal/g~/motion/$ | 12 |
-| normal/gU/motion/$ | 12 |
-| normal/y/motion/% | 12 |
-| normal/</motion/% | 12 |
-| normal/gu/motion/% | 12 |
-| normal/</motion/$ | 10 |
-| normal/c/object/iW | 8 |
-| visual/<C-v>/c/j | 7 |
-| visual/<C-v>/c/G | 7 |
-| normal/d/object/iW | 7 |
-| normal/>/object/iW | 7 |
-| normal/g~/object/iW | 7 |
-| normal/gU/object/iW | 7 |
-| normal/d/object/aW | 7 |
-| normal/c/object/aW | 7 |
-| normal/>/object/aW | 6 |
-| normal/g~/object/aW | 6 |
-| normal/gU/object/aW | 6 |
-| normal/y/object/aW | 5 |
-| normal/gu/object/aW | 5 |
-| normal/y/object/iW | 5 |
-| normal/gu/object/iW | 5 |
-| visual/<C-v>/c/e | 4 |
-| visual/<C-v>/c/k | 4 |
 | normal/d/object/iw | 4 |
 | normal/c/object/iw | 4 |
 | normal/>/object/iw | 4 |
-| normal/d/object/aw | 4 |
-| normal/c/object/aw | 4 |
-| normal/</object/iW | 4 |
-| normal/</object/aW | 4 |
 | normal/d/motion/, | 3 |
 | normal/c/motion/, | 3 |
 | normal/>/motion/, | 3 |
 | normal/g~/motion/, | 3 |
 | normal/gU/motion/, | 3 |
+| normal/d/motion/) | 3 |
 | normal/g~/object/iw | 3 |
 | normal/gU/object/iw | 3 |
-| visual/<C-v>/c/w | 3 |
+| normal/d/object/aw | 3 |
+| normal/c/object/aw | 3 |
 | normal/>/object/aw | 3 |
-| normal/g~/object/aw | 3 |
-| normal/gU/object/aw | 3 |
 | normal/d/object/i" | 3 |
 | normal/d/object/a" | 3 |
 | normal/c/object/i" | 3 |
@@ -117,9 +69,11 @@
 | normal/gU/object/at | 3 |
 | normal/</motion/, | 2 |
 | visual/V/y/k | 2 |
-| visual/<C-v>/c/b | 2 |
-| normal/y/object/aw | 2 |
-| normal/gu/object/aw | 2 |
+| normal/c/object/iW | 2 |
+| normal/g~/object/iW | 2 |
+| normal/gU/object/iW | 2 |
+| normal/g~/object/aw | 2 |
+| normal/gU/object/aw | 2 |
 | normal/d/motion/b | 2 |
 | normal/d/motion/B | 2 |
 | normal/c/motion/b | 2 |
@@ -146,11 +100,23 @@
 | normal/gu/object/at | 2 |
 | normal/d/motion/w | 1 |
 | normal/d/motion/W | 1 |
+| normal/d/motion/$ | 1 |
+| normal/d/object/iW | 1 |
+| normal/c/motion/$ | 1 |
+| normal/>/object/iW | 1 |
 | normal/y/motion/gg | 1 |
+| normal/y/motion/% | 1 |
+| normal/y/object/iW | 1 |
+| normal/gu/object/iW | 1 |
 | normal/y/object/iw | 1 |
+| normal/y/object/aw | 1 |
 | normal/</object/iw | 1 |
 | normal/</object/aw | 1 |
+| normal/g~/motion/% | 1 |
+| normal/gu/motion/% | 1 |
 | normal/gu/object/iw | 1 |
+| normal/gu/object/aw | 1 |
+| normal/gU/motion/% | 1 |
 | visual/V/y/gg | 1 |
 | normal/g~/motion/Ta | 1 |
 | normal/gU/motion/Ta | 1 |
@@ -177,123 +143,123 @@
 
 ## First 40 failures
 
-- `normal/d/motion/$` keys=`2d$<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `[""]` @[1,0]
-- `normal/d/motion/)` keys=`2d)<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `[""]` @[1,0]
-- `normal/d/motion/%` keys=`2d%<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `[""]` @[1,0]
-  - engine: `["one two three"]` @[1,0]
-- `normal/c/motion/$` keys=`2c$X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["X"]` @[1,0]
-- `normal/c/motion/(` keys=`2c(X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["Xone two three"]` @[1,0]
-- `normal/c/motion/)` keys=`2c)X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["X"]` @[1,0]
-- `normal/c/motion/%` keys=`2c%X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["X"]` @[1,0]
-  - engine: `["one two three"]` @[1,0]
-- `normal/>/motion/$` keys=`2>$<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["  one two three"]` @[1,2]
-- `normal/>/motion/(` keys=`2>(<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["  one two three"]` @[1,2]
-- `normal/>/motion/)` keys=`2>)<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["  one two three"]` @[1,2]
-- `normal/>/motion/%` keys=`2>%<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["  one two three"]` @[1,2]
-  - engine: `["one two three"]` @[1,0]
-- `normal/g~/motion/$` keys=`2g~$<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["ONE TWO THREE"]` @[1,0]
-- `normal/g~/motion/(` keys=`2g~(<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["One two three"]` @[1,0]
-- `normal/g~/motion/)` keys=`2g~)<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["ONE TWO THREE"]` @[1,0]
-- `normal/g~/motion/%` keys=`2g~%<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["ONE TWO THREE"]` @[1,0]
-  - engine: `["one two three"]` @[1,0]
-- `normal/gU/motion/$` keys=`2gU$<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["ONE TWO THREE"]` @[1,0]
-- `normal/gU/motion/(` keys=`2gU(<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["One two three"]` @[1,0]
-- `normal/gU/motion/)` keys=`2gU)<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["ONE TWO THREE"]` @[1,0]
-- `normal/gU/motion/%` keys=`2gU%<Esc>i!<Esc>` text=`"one two three"` @[1,0]
-  - vim: `["ONE TWO THREE"]` @[1,0]
-  - engine: `["one two three"]` @[1,0]
-- `normal/d/motion/$` keys=`2d$<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["on"]` @[1,1]
-- `normal/d/motion/)` keys=`2d)<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["on"]` @[1,1]
-- `normal/d/motion/%` keys=`2d%<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `[""]` @[1,0]
-  - engine: `["one two three"]` @[1,2]
-- `normal/c/motion/$` keys=`2c$X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["oe two three"]` @[1,1]
-  - engine: `["onX"]` @[1,2]
-- `normal/c/motion/(` keys=`2c(X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["oe two three"]` @[1,1]
-  - engine: `["onXe two three"]` @[1,2]
-- `normal/c/motion/)` keys=`2c)X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["oe two three"]` @[1,1]
-  - engine: `["onX"]` @[1,2]
-- `normal/c/motion/%` keys=`2c%X<Esc><Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["X"]` @[1,0]
-  - engine: `["oe two three"]` @[1,1]
-- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["one two three"]` @[1,2]
-- `normal/>/motion/$` keys=`2>$<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["  one two three"]` @[1,2]
-- `normal/>/motion/(` keys=`2>(<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["  one two three"]` @[1,2]
-- `normal/>/motion/)` keys=`2>)<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["  one two three"]` @[1,2]
-- `normal/>/motion/%` keys=`2>%<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["  one two three"]` @[1,2]
-  - engine: `["one two three"]` @[1,2]
-- `normal/</motion/$` keys=`2<$<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["one two three"]` @[1,0]
-- `normal/</motion/(` keys=`2<(<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["one two three"]` @[1,0]
-- `normal/</motion/)` keys=`2<)<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["one two three"]` @[1,0]
-- `normal/</motion/%` keys=`2<%<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["one two three"]` @[1,2]
-- `normal/g~/motion/$` keys=`2g~$<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["onE TWO THREE"]` @[1,2]
-- `normal/g~/motion/(` keys=`2g~(<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["onE two three"]` @[1,2]
-- `normal/g~/motion/)` keys=`2g~)<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,2]
-  - engine: `["onE TWO THREE"]` @[1,2]
-- `normal/g~/motion/%` keys=`2g~%<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["ONE TWO THREE"]` @[1,0]
-  - engine: `["one two three"]` @[1,2]
-- `normal/gu/motion/%` keys=`2gu%<Esc>i!<Esc>` text=`"one two three"` @[1,2]
-  - vim: `["one two three"]` @[1,0]
-  - engine: `["one two three"]` @[1,2]
+- `normal/d/motion/,` keys=`d,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
+  - vim: `["ar","baz qux"]` @[1,0]
+  - engine: `["foo bar","baz qux"]` @[1,0]
+- `normal/c/motion/,` keys=`c,X<Esc><Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
+  - vim: `["Xar","baz qux"]` @[1,0]
+  - engine: `["foo bar","baz qux"]` @[1,0]
+- `normal/>/motion/,` keys=`>,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
+  - vim: `["  foo bar","baz qux"]` @[1,2]
+  - engine: `["foo bar","baz qux"]` @[1,0]
+- `normal/g~/motion/,` keys=`g~,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
+  - vim: `["FOO Bar","baz qux"]` @[1,0]
+  - engine: `["foo bar","baz qux"]` @[1,0]
+- `normal/gU/motion/,` keys=`gU,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,0]
+  - vim: `["FOO Bar","baz qux"]` @[1,0]
+  - engine: `["foo bar","baz qux"]` @[1,0]
+- `normal/d/motion/,` keys=`d,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foar","baz qux"]` @[1,2]
+  - engine: `["foo bar","baz qux"]` @[1,2]
+- `normal/c/motion/,` keys=`c,X<Esc><Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foXar","baz qux"]` @[1,2]
+  - engine: `["fo bar","baz qux"]` @[1,1]
+- `normal/>/motion/,` keys=`>,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["  foo bar","baz qux"]` @[1,2]
+  - engine: `["foo bar","baz qux"]` @[1,2]
+- `normal/</motion/,` keys=`<,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foo bar","baz qux"]` @[1,0]
+  - engine: `["foo bar","baz qux"]` @[1,2]
+- `normal/g~/motion/,` keys=`g~,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foO Bar","baz qux"]` @[1,2]
+  - engine: `["foo bar","baz qux"]` @[1,2]
+- `normal/gU/motion/,` keys=`gU,<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
+  - vim: `["foO Bar","baz qux"]` @[1,2]
+  - engine: `["foo bar","baz qux"]` @[1,2]
+- `visual/V/y/k` keys=`Vky<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[2,1]
+  - vim: `["foo bar","baz qux"]` @[1,1]
+  - engine: `["foo bar","baz qux"]` @[1,0]
+- `normal/d/motion/)` keys=`d)<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["","b","","c"]` @[1,0]
+  - engine: `["b","","c"]` @[1,0]
+- `normal/d/motion/w` keys=`2dw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["b","","c"]` @[1,0]
+  - engine: `["","b","","c"]` @[1,0]
+- `normal/d/motion/W` keys=`2dW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["b","","c"]` @[1,0]
+  - engine: `["","b","","c"]` @[1,0]
+- `normal/d/motion/$` keys=`2d$<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["b","","c"]` @[1,0]
+  - engine: `["","","b","","c"]` @[1,0]
+- `normal/d/motion/)` keys=`2d)<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["b","","c"]` @[1,0]
+  - engine: `["","c"]` @[1,0]
+- `normal/d/object/iw` keys=`2diw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["b","","c"]` @[1,0]
+  - engine: `["","c"]` @[1,0]
+- `normal/d/object/iW` keys=`2diW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["b","","c"]` @[1,0]
+  - engine: `["","c"]` @[1,0]
+- `normal/c/motion/$` keys=`2c$X<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["X","b","","c"]` @[1,0]
+  - engine: `["X","","b","","c"]` @[1,0]
+- `normal/c/object/iw` keys=`2ciwX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["X","b","","c"]` @[1,0]
+  - engine: `["X","","c"]` @[1,0]
+- `normal/c/object/iW` keys=`2ciWX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["X","b","","c"]` @[1,0]
+  - engine: `["X","","c"]` @[1,0]
+- `normal/>/object/iw` keys=`2>iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["  a","","b","","c"]` @[1,2]
+  - engine: `["  a","","  b","","c"]` @[1,2]
+- `normal/>/object/iW` keys=`2>iW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["  a","","b","","c"]` @[1,2]
+  - engine: `["  a","","  b","","c"]` @[1,2]
+- `normal/g~/object/iw` keys=`2g~iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["A","","b","","c"]` @[1,0]
+  - engine: `["A","","B","","c"]` @[1,0]
+- `normal/g~/object/iW` keys=`2g~iW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["A","","b","","c"]` @[1,0]
+  - engine: `["A","","B","","c"]` @[1,0]
+- `normal/gU/object/iw` keys=`2gUiw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["A","","b","","c"]` @[1,0]
+  - engine: `["A","","B","","c"]` @[1,0]
+- `normal/gU/object/iW` keys=`2gUiW<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
+  - vim: `["A","","b","","c"]` @[1,0]
+  - engine: `["A","","B","","c"]` @[1,0]
+- `normal/d/object/iw` keys=`2diw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","",""]` @[5,0]
+- `normal/d/object/aw` keys=`2daw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","",""]` @[5,0]
+- `normal/c/object/iw` keys=`2ciwX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","X"]` @[5,0]
+- `normal/c/object/aw` keys=`2cawX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","X"]` @[5,0]
+- `normal/>/object/iw` keys=`2>iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","  c"]` @[5,2]
+- `normal/>/object/aw` keys=`2>aw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","  c"]` @[5,2]
+- `normal/g~/object/iw` keys=`2g~iw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","C"]` @[5,0]
+- `normal/g~/object/aw` keys=`2g~aw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","C"]` @[5,0]
+- `normal/gU/object/iw` keys=`2gUiw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","C"]` @[5,0]
+- `normal/gU/object/aw` keys=`2gUaw<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[5,0]
+  - vim: `["a","","b","","c"]` @[5,0]
+  - engine: `["a","","b","","C"]` @[5,0]
+- `normal/y/motion/gg` keys=`ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,0]
+  - vim: `["  indented","normal"]` @[1,0]
+  - engine: `["  indented","normal"]` @[1,2]
+- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,0]
+  - vim: `["  indented","normal"]` @[1,0]
+  - engine: `["  indented","normal"]` @[1,2]

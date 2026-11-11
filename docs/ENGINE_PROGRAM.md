@@ -171,13 +171,14 @@ unchanged: oracle green at every commit, every branch linked to a quirk ID.
 positions, 20 motions, 20 objects, 8 operators, counts {none, 2}, normal +
 visual/visual-line/visual-block + doubled) and diffs them with
 `feedkeys('xt')` — user-observable final state, not `normal!` abort state.
-Current run: **20,901 matched / 811 divergences**. Bring-up fixed eight
-systemic classes: visual `c` mode, missing-object shift, counted `j/k`
-failure-vs-clamp, doubled count clamping, failed-motion cancel, case-op EOF
-clamp, counted `ip`/`ap` validation, `b`/`B` at BOF, and `{` at BOF per
-operator. The remaining 811 are catalogued in
-[`MATRIX_REPORT.md`](MATRIX_REPORT.md); top families: `)`/`(`/`%`/`$` with
-operators and visual-block `c`.
+Current run: **21,449 matched / 263 divergences** (from 811 at the start of
+this pass). Fixed classes: counted `$` failure-vs-clamp, counted `)`/`(`
+failure (and the `c(` zero-range exception), `[count]%` as a linewise
+percentage motion, visual-block `c` insert position + multi-line typing
+replication, counted `iW`/`aW` availability and failure cursor, and `aW` line
+indent. The remaining 263 are catalogued in
+[`MATRIX_REPORT.md`](MATRIX_REPORT.md); the largest families are counted
+`iw`/`aw`, `,` with counts, `)` count edges and quote objects.
 Matrix is local-only until it reaches 0; then it joins CI as a gate.
 `tools/compose-fuzz.ts` (random command trees) is still to come.
 
@@ -226,10 +227,11 @@ in the campaign engine. This program is how the campaign engine earns the word
 2. ~~CI native-Vim oracle job~~ — done (`oracle` job: 356 cases + fuzz smoke).
 3. ~~Phase B pilot: delete normalization (Q02/Q10) into `normalize.ts`~~ — done;
    next is the cursor policy (Q04/Q09) and Q03/Q06 in the same module.
-4. **Phase C next:** close the 811 matrix divergences by family (`)`/`(`/`%`,
-   `$`, visual-block `c`), one rule at a time, with a matrix case turning into
-   an oracle case for each fix. Then extend the matrix comparison from
-   buffer+cursor to registers/mode/undo — still user-observable state.
+4. **Phase C next:** close the 263 matrix divergences by family (counted
+   `iw`/`aw`, `,`, `)` edges, quote objects), one rule at a time, with a matrix
+   case turning into an oracle case for each fix. Then extend the matrix
+   comparison from buffer+cursor to registers/mode/undo — still
+   user-observable state.
 
 ## 9. One sentence
 

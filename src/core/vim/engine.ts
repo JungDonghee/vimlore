@@ -1000,6 +1000,7 @@ export class Vim {
       return;
     }
     this.moveTo(res.to, 'char', true);
+    if (res.failed) this.bell();
     this.afterUnit();
   }
 
@@ -1083,7 +1084,13 @@ export class Vim {
       case '^':
         return { to: { line: this.cursor.line, col: M.firstNonBlank(this.buf, this.cursor.line) }, kind: 'exclusive' };
       case '$': {
-        const line = Math.min(this.buf.lineCount - 1, this.cursor.line + count - 1);
+        const last = this.buf.lineCount - 1;
+        // A counted `$` clamps to the last line when there is somewhere to go,
+        // but fails when the cursor is already there (`2d$` on the last line).
+        if (count > 1 && this.cursor.line === last) {
+          return { to: { ...this.cursor }, kind: 'inclusive', failed: true };
+        }
+        const line = Math.min(last, this.cursor.line + count - 1);
         // `$` is always a charwise motion; a counted `$` that crosses lines
         // becomes linewise only through the delete conversion below.
         // On an empty line `$` has zero width, so `d$` must not eat the newline.
@@ -1132,8 +1139,16 @@ export class Vim {
         return M.sentenceMotion(env, 1, count);
       case '(':
         return M.sentenceMotion(env, -1, count);
-      case '%':
+      case '%': {
+        if (explicitCount) {
+          // `[count]%` is a percentage motion, not a bracket match: it lands
+          // linewise on the ceil(count% of the file) line.
+          const last = this.buf.lineCount - 1;
+          const line = Math.min(last, Math.max(0, Math.ceil((count * this.buf.lineCount) / 100) - 1));
+          return { to: { line, col: 0 }, kind: 'linewise', lineRange: [this.cursor.line, line] };
+        }
         return M.matchBracket(env);
+      }
       case ',':
       case ';': {
         if (!this.lastFind) return null;
@@ -1258,14 +1273,18 @@ export class Vim {
       }
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n'), false, false, false, true);
+      if (change) {
+        // Block change inserts at the block's left edge, which may be one past
+        // the shortened line; do not clamp to the last character. Typed text
+        // is replicated on every block line when insert mode closes.
+        this.openInsertAt({ line: l1, col: Math.min(c1, this.buf.line(l1).length) }, before);
+        if (l2 > l1) this.blockInsertState = { snap: before, l1, l2, col: c1, curLine: l1, text: '' };
+        return;
+      }
       this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
       this.wantColValue = this.cursor.col;
-      if (change) {
-        this.openInsertAt(this.cursor, before);
-      } else {
-        this.commit(before, 'delete');
-        this.afterUnit();
-      }
+      this.commit(before, 'delete');
+      this.afterUnit();
       return;
     }
     if (r.linewise) {
@@ -2573,6 +2592,24 @@ export class Vim {
           const list = key === 'w' || key === 'W' ? tokens(this.buf, key === 'W') : [];
           const off = this.buf.idx(this.cursor);
           let ti = list.findIndex((t) => !t.blank && t.start <= off && off <= t.end);
+          // A counted WORD object needs `count` WORDs ahead (Vim refuses
+          // `2diW` on the last WORD instead of clamping the delete).
+          const shiftOp = this.op && (this.op.key === '>' || this.op.key === '<');
+          // Shift operators with a count > 2 fall back to the line-shift path
+          // when the WORD object runs out (Vim `3>iW`); other cases refuse.
+          const checkW = key === 'W' && ti >= 0 && !(shiftOp && count > 2);
+          if (checkW) {
+            const available = list.slice(ti).filter((t) => !t.blank).length;
+            if (available < count) {
+              // Vim refuses but parks the cursor on the last character of the
+              // current WORD (the motion's partial endpoint).
+              this.cursor = M.moveTo(this.buf, obj.end);
+              this.bell();
+              this.resetPending();
+              this.afterUnit();
+              return;
+            }
+          }
           if (!p.around && (key === 'w' || key === 'W')) {
             const flat = this.buf.flat;
             const onWhitespace = ti < 0;
