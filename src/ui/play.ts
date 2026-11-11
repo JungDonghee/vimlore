@@ -828,6 +828,7 @@ export class PlayScreen {
     const sol = this.host.stage.solution;
     if (!sol) return;
     this.ghosting = true;
+    this.session.demo = true;
     this.overlay?.remove();
     this.overlay = h(
       'div',
@@ -841,10 +842,10 @@ export class PlayScreen {
       this.session.feed(k);
       this.updateHud();
       await new Promise((r) => setTimeout(r, 240));
-      if (this.session.status === 'won') break;
     }
     await new Promise((r) => setTimeout(r, 700));
     if (this.destroyed) return;
+    this.session.demo = false;
     this.ghosting = false;
     this.restart();
     this.toast(this.host.lang === 'ko' ? '이제 네 차례' : 'Now you', false);

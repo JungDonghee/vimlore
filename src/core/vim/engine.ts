@@ -1306,6 +1306,7 @@ export class Vim {
       }
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n'), false, false, false, true);
+      before.undoCursor = { line: l1, col: c1 };
       if (change) {
         // Block change inserts at the block's left edge, which may be one past
         // the shortened line; do not clamp to the last character. Typed text
@@ -1505,8 +1506,8 @@ export class Vim {
     // Vim's undo lands on the start of the shifted range, not necessarily the
     // operator cursor (e.g. `>h` from col 2 undoes to col 1).
     const undoLine = Math.min(r.start.line, r.end.line);
-    if (this.mode.startsWith('visual') && !r.linewise && !r.block) {
-      before.undoCursor = { line: r.start.line, col: r.start.col };
+    if (this.mode.startsWith('visual') && !r.block) {
+      before.undoCursor = { line: undoLine, col: this.visualAnchor?.col ?? this.cursor.col };
     }
     const undoCol = r.linewise
       ? Math.max(r.start.line, r.end.line) > undoLine && !this.op?.doubled && !this.mode.startsWith('visual')
@@ -1612,6 +1613,7 @@ export class Vim {
       this.buf.setLines(this.buf.lines);
       this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
       this.wantColValue = this.cursor.col;
+      before.undoCursor = { line: l1, col: c1 };
       this.commit(before, 'case');
       this.afterUnit();
       return;

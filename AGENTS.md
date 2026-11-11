@@ -259,6 +259,9 @@ Three rules keep it correct:
   cursor line; the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
+- **Ghost playback never wins.** F3 replays the solution through a demo session
+  that must not count keys, check hazards, pick up coins, or set `won`; the next
+  overlay must never appear from a ghost run. Enter during the ghost is ignored.
 - Results shows a **DRILL** cue: repeat the par solution or RETRY to close the
   keys-to-par gap. Repetition is deliberate; never remove it for novelty.
 - Settings name/export/import use an **in-game keyboard prompt** (input focused,

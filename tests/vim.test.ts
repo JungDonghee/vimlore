@@ -212,6 +212,17 @@ test('session counts keys and awards stars', () => {
   assert.equal(s.stars, 3);
 });
 
+test('demo playback moves the vim but never wins or counts keys', () => {
+  const s = new Session({ stage, chapterIndex: 0, allowed: new Set(['l']) });
+  s.demo = true;
+  s.feed('l');
+  s.feed('l');
+  s.feed('l');
+  assert.equal(s.status, 'playing');
+  assert.equal(s.keys, 0);
+  assert.equal(s.vim.cursor.col, 3);
+});
+
 test('session gate blocks locked keys without counting them', () => {
   const s = new Session({ stage, chapterIndex: 0, allowed: new Set(['l']) });
   const ok = s.feed('d');

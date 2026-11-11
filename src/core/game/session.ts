@@ -36,6 +36,8 @@ export class Session {
   hearts: number;
   maxHearts: number;
   status: 'playing' | 'won' | 'lost' = 'playing';
+  /** Ghost/demo playback: move the Vim, but never count keys or win. */
+  demo = false;
   damage = 0;
   spent = new Set<number>();
   collected = new Set<number>();
@@ -144,10 +146,10 @@ export class Session {
       this.emit({ type: 'locked', key, message: this.lockedMessage(key) });
       return false;
     }
-    this.keys++;
+    if (!this.demo) this.keys++;
     this.emit({ type: 'key', key });
     this.vim.feed(key);
-    if (this.vim.mode === 'normal') this.afterAction();
+    if (this.vim.mode === 'normal' && !this.demo) this.afterAction();
     return true;
   }
 

@@ -8,13 +8,13 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21373 |
-| divergences | 339 |
+| matched | 21429 |
+| divergences | 283 |
 | engine errors | 0 |
 
 | field | count |
 |---|---:|
-| undo | 330 |
+| undo | 274 |
 | reg | 10 |
 | regtype | 8 |
 
@@ -249,12 +249,12 @@
 - `visual/V/c/k` keys=`VkcX<Esc>` text=`"foo bar\nbaz qux"` @[2,1] fields=undo
   - vim: `{"reg":"foo bar\nbaz qux\n","cursor":[1,0],"lines":["X"],"regtype":"linewise","undo":{"cursor":[2,1],"lines":["foo bar","baz qux"]}}`
   - eng: `{"lines":["X"],"cursor":[1,0],"reg":"foo bar\nbaz qux\n","regtype":"linewise","undo":{"lines":["foo bar","baz qux"],"cursor":[2,0]}}`
-- `visual/<C-v>/d/k` keys=`<C-v>kd` text=`"foo bar\nbaz qux"` @[2,1] fields=undo
-  - vim: `{"reg":"o\na","cursor":[1,1],"lines":["fo bar","bz qux"],"regtype":"blockwise","undo":{"cursor":[1,1],"lines":["foo bar","baz qux"]}}`
-  - eng: `{"lines":["fo bar","bz qux"],"cursor":[1,1],"reg":"o\na","regtype":"blockwise","undo":{"lines":["foo bar","baz qux"],"cursor":[1,2]}}`
 - `normal/d/motion/j` keys=`dj` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
   - vim: `{"reg":"a\n\n","cursor":[1,0],"lines":["b","","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["b","","c"],"cursor":[1,0],"reg":"a\n\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[2,0]}}`
 - `normal/d/motion/e` keys=`de` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
+  - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
+  - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
+- `normal/d/motion/E` keys=`dE` text=`"a\n\nb\n\nc"` @[1,0] fields=undo
   - vim: `{"reg":"a\n\nb\n","cursor":[1,0],"lines":["","c"],"regtype":"linewise","undo":{"cursor":[1,0],"lines":["a","","b","","c"]}}`
   - eng: `{"lines":["","c"],"cursor":[1,0],"reg":"a\n\nb\n","regtype":"linewise","undo":{"lines":["a","","b","","c"],"cursor":[3,0]}}`
