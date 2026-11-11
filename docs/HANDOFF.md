@@ -14,12 +14,12 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,491 lines + `normalize.ts` 100; **363 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 31 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 241,666 B · single `dist/vimlore.html` 265,456 B · gzip 83,690 B · budget gate 266k/85k (raised deliberately this pass, §3) |
+| engine | 3,497 lines + `normalize.ts` 100; **363 oracle cases**, all matching real Vim (strict) |
+| gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 32 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| build | JS 241,867 B · single `dist/vimlore.html` 265,657 B · gzip 83,723 B · budget gate 266k/85k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
-| state matrix | 21,712 command trees with register/undo: **21,117 matched, 595 open** (local DM1; `docs/STATE_REPORT.md`) |
+| state matrix | 21,712 command trees with register/undo: **21,240 matched, 472 open** (local DM1; `docs/STATE_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -135,7 +135,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **266,000/85,000**. Each was measured and committed with the feature
-that needed it. Current build is 265,456 B raw / 83,690 B gzip, so headroom is
+that needed it. Current build is 265,657 B raw / 83,723 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -175,7 +175,7 @@ after `u`. Mode is **not** comparable through `vim -es` (`mode()` reports `c`);
 a pty/Nvim probe would be needed, so mode is out of this report.
 
 First full run: 15,289/21,712 matched, 6,423 divergences. Latest:
-**21,117/21,712 matched, 595 open** (undo 627, register 18). Fixed:
+**21,240/21,712 matched, 472 open** (undo 627, register 18). Fixed:
 - a real operator leak: several `c` paths opened insert without clearing `op`,
   so the next key (including `u`) was swallowed — `c{` at BOF then `u` did not
   undo. `openInsertAt` now ends the operator composition.
@@ -183,7 +183,7 @@ First full run: 15,289/21,712 matched, 6,423 divergences. Latest:
   linewise delete/change and shift overrides; undo cursor mismatches dropped
   and the 4 new oracle cases (363 → 363) pass.
 
-After those fixes: **21,117/21,712 matched, 595 open**, dominated by
+After those fixes: **21,240/21,712 matched, 472 open**, dominated by
 `undo` cursor policy (941), plus register type/text (19+13). The tool stays
 local until the generated set reaches 0; the report is `docs/STATE_REPORT.md`.
 

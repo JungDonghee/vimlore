@@ -1332,8 +1332,8 @@ export class Vim {
       // Vim undo lands on the last removed line at the command's column; if
       // the buffer became empty it lands on the first removed line instead.
       before.undoCursor = becameEmpty
-        ? { line: l1, col: 0 }
-        : { line: l2, col: change && wasVisual ? 0 : undoCol };
+        ? { line: l1, col: wasVisual ? undoCol : 0 }
+        : { line: l2, col: wasVisual ? 0 : undoCol };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);
@@ -1344,6 +1344,9 @@ export class Vim {
       this.cursor = { line: target, col: M.firstNonBlank(this.buf, target) };
       this.wantColValue = this.cursor.col;
     } else {
+      if (this.mode.startsWith('visual') && !r.block) {
+        before.undoCursor = { line: r.start.line, col: r.start.col };
+      }
       const [s, e] = this.flatRange(r, inclusive);
       if (e > s) {
         const text = this.buf.flat.slice(s, e);
@@ -1500,6 +1503,9 @@ export class Vim {
     // Vim's undo lands on the start of the shifted range, not necessarily the
     // operator cursor (e.g. `>h` from col 2 undoes to col 1).
     const undoLine = Math.min(r.start.line, r.end.line);
+    if (this.mode.startsWith('visual') && !r.linewise && !r.block) {
+      before.undoCursor = { line: r.start.line, col: r.start.col };
+    }
     const undoCol = r.linewise
       ? Math.max(r.start.line, r.end.line) > undoLine && !this.op?.doubled && !this.mode.startsWith('visual')
         ? this.cursor.col
@@ -1633,7 +1639,7 @@ export class Vim {
     } else {
       this.cursor = M.moveTo(this.buf, this.buf.pos(s));
     }
-    if (!visual && !r.block) {
+    if (!r.block) {
       before.undoCursor = {
         line: Math.min(r.start.line, r.end.line),
         col: this.cursor.col,

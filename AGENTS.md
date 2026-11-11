@@ -96,7 +96,7 @@ The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
   ceiling enforced by `npm run budget`: 266,000 B raw / 85,000 B gzip** (current
-  265.5 kB / 83.7 kB); do not raise it without a deliberate, measured reason.
+  265.7 kB / 83.7 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
   ghost and particles are the FX pass. Rebuild the frame only when its key changes.

@@ -57,6 +57,20 @@ test('change that opens insert clears the pending operator', () => {
   assert.equal(v.text, 'one two three');
 });
 
+test('visual delete then undo restores the selection start (feedkeys Vim)', () => {
+  const a = new Vim({ text: '  indented' });
+  a.feedString('vbd');
+  a.feedString('u');
+  assert.equal(a.text, '  indented');
+  assert.deepEqual(a.cursor, { line: 0, col: 0 });
+
+  const b = new Vim({ text: 'foo bar\nbaz qux' });
+  b.cursor = { line: 1, col: 1 };
+  b.feedString('Vjdu');
+  assert.equal(b.text, 'foo bar\nbaz qux');
+  assert.deepEqual(b.cursor, { line: 1, col: 0 });
+});
+
 test('visual-line change then undo lands on column 0 (feedkeys Vim)', () => {
   const v = new Vim({ text: 'one two three' });
   v.feedString('VjcX<Esc>u');
