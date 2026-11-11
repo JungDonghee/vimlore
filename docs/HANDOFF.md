@@ -13,8 +13,8 @@
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **248 oracle cases**, all matching real Vim |
-| gates | oracle 256/256 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors |
-| build | JS 229,877 B · single `dist/vimlore.html` 253,550 B · gzip 80,681 B |
+| gates | oracle 262/262 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors |
+| build | JS 230,512 B · single `dist/vimlore.html` 254,185 B · gzip 80,858 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -32,12 +32,12 @@ this file.
   `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
 - Fuzz seed 7: **71 → 0**, seed 11: **4 → 0**, seed 23: **8 → 0**.
   **Seeds 7/11/23 are fully clean: 0 divergences, buffer and cursor.**
-  Seeds 31/47/101 have **0 buffer-content divergences** (11 cursor-only edges).
-  Seeds 131/211 expose the remaining content frontier: `2diw`/`2diW`, `2caw`,
-  `g~0`, `3ciw`. `d)`, `3gUh`/`g~h` are fixed and oracle-covered; seed 173 is
-  fully clean. Fixed in recent passes: counted `iW` across
+  **All nine tested seeds now have 0 buffer-content divergences.** The
+  remaining edges are cursor-only (17 total). `d)`, `3gUh`/`g~h`, `2diw`/`2diW`,
+  `2caw`, `g~0` and `3ciw` are fixed and oracle-covered; seed 173 is fully clean. Fixed in recent passes: counted `iW` across
   lines, counted around-word from whitespace, `2ciw`, `d$`, `di{` content,
-  `gU{`, `gUaW`, backward `dFa`/`gUF`, simple `=`/`gg=G`, `3gUh`/`g~h`, `d)`. The harness sets
+  `gU{`, `gUaW`, backward `dFa`/`gUF`, simple `=`/`gg=G`, `3gUh`/`g~h`, `d)`,
+  `2diw`/`2diW`, `2caw`, `3ciw`. The harness sets
   `expandtab` to match the game's space indent.
 
 ### UI / renderer
@@ -70,7 +70,7 @@ this file.
   `g*`/`g#` (word under cursor without boundaries), `2*` counts.
 - `gI` / `gi`, `\zs` / `\ze` in search and `:s`, interactive `:s///c`
   (y/n/a/q/l, g+c, Esc abort; prompt + CONFIRM statusline), and simple
-  brace-depth `=`/`gg=G` (oracle 256).
+  brace-depth `=`/`gg=G` (oracle 262).
 
 ### Not done (queued, do not pretend otherwise)
 - Change list (`g;`/`g,`).
@@ -159,7 +159,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 256/256
+node --experimental-strip-types tools/oracle-diff.ts        # 262/262
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

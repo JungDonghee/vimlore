@@ -739,6 +739,24 @@ export class Vim {
   private finishOpWithMotion(op: Op, motion: MotionResult, motionKey = ''): void {
     const from = { ...this.cursor };
     const to = motion.to;
+    // On a non-first line, a zero-range `0` at column 0 is linewise for case
+    // operators (`g~0` toggles the whole line); on line 1 Vim toggles the one
+    // character. The oracle pins both behaviours.
+    if (
+      (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') &&
+      motionKey === '0' &&
+      to.line === from.line &&
+      to.col === from.col &&
+      from.col === 0 &&
+      from.line > 0
+    ) {
+      this.applyOp(op, {
+        start: { line: from.line, col: 0 },
+        end: { line: from.line, col: Math.max(0, this.buf.line(from.line).length - 1) },
+        linewise: true,
+      });
+      return;
+    }
     // A failed `h` at BOL applies gU/gu to the whole current line. `g~` is
     // different: Vim toggles just the character at the cursor.
     if (
@@ -2408,7 +2426,7 @@ export class Vim {
             (t) => !t.blank && t.start > off && this.buf.pos(t.start).line === this.cursor.line,
           );
           if (!p.around && (key === 'w' || key === 'W')) {
-            if (key === 'w' && count === 2 && nextSameLine) {
+            if (key === 'w' && count === 2 && nextSameLine && ti >= 0) {
               // Vim's `2iw` on a line with another word selects the current
               // word plus trailing whitespace, not the next word.
               let e = this.buf.idx(obj.end);
@@ -2416,12 +2434,26 @@ export class Vim {
               while (e + 1 < flat.length && (flat[e + 1] === ' ' || flat[e + 1] === '\t')) e++;
               end = this.buf.pos(e);
             } else {
+              const onWhitespace = ti < 0;
               if (ti < 0) ti = list.findIndex((t) => !t.blank && t.start >= off);
-              const target = ti >= 0 ? list[Math.min(list.length - 1, ti + count - 1)] : null;
-              if (target) {
-                start = obj.start;
-                end = this.buf.pos(target.end);
-                if (start.line !== end.line) obj.linewise = true;
+              if (ti >= 0) {
+                // Same-line `Niw` extends N-1 words; a count that reaches a
+                // later line is linewise and extends N words (Vim's behaviour).
+                const startLine = this.buf.pos(list[ti].start).line;
+                let targetIdx = Math.min(list.length - 1, ti + count - 1);
+                const targetLine = this.buf.pos(list[targetIdx].start).line;
+                if (targetLine === startLine) targetIdx = Math.max(ti, ti + count - 2);
+                const target = list[targetIdx];
+                if (target) {
+                  start = onWhitespace ? obj.start : this.buf.pos(list[ti].start);
+                  end = this.buf.pos(target.end);
+                  if (key === 'W' && target.end < this.buf.flat.length && /[ \t]/.test(this.buf.flat[target.end + 1] ?? '')) {
+                    let e = target.end;
+                    while (e + 1 < this.buf.flat.length && (this.buf.flat[e + 1] === ' ' || this.buf.flat[e + 1] === '\t')) e++;
+                    end = this.buf.pos(e);
+                  }
+                  if (start.line !== end.line) obj.linewise = true;
+                }
               }
             }
           } else if (p.around && (key === 'w' || key === 'W')) {
@@ -2445,7 +2477,8 @@ export class Vim {
                 let startOff = list[ti].start;
                 // Like count-1 `aw`: at end of line/buffer there is no trailing
                 // whitespace, so Vim takes the whitespace *before* the words.
-                if (e === target.end) {
+                const atEol = target.end + 1 >= flat.length || flat[target.end + 1] === '\n';
+                if (e === target.end && atEol) {
                   let j = startOff - 1;
                   while (j >= 0 && (flat[j] === ' ' || flat[j] === '\t')) j--;
                   if (j < startOff - 1) startOff = j + 1;

@@ -341,5 +341,14 @@ export const CASES: VimCase[] = [
 
   { name: 'd) remaining lines', text: 'a\nb\nc\nd', cursor: [2, 0], keys: 'd)' },
 
+  { name: 'g~0 line2 ab', text: 'ab\ncd', cursor: [2, 0], keys: 'g~0' },
+  { name: 'g~0 line2 one two', text: 'one two\nthree four', cursor: [2, 0], keys: 'g~0' },
+
+  { name: '2diW single line', text: 'if (x) { y(); }', cursor: [1, 9], keys: '2diW' },
+  { name: '2diw whitespace', text: 'const x = (a + b);', cursor: [1, 7], keys: '2diw' },
+  { name: '3ciw same line', text: 'const x = (a + b);', cursor: [1, 1], keys: '3ciwxy<Esc>' },
+
+  { name: '2caw keeps indent', text: 'function f() {\n  return 1;\n}', cursor: [2, 7], keys: '2cawxy<Esc>' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

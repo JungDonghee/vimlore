@@ -74,10 +74,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **256/256** vs `vim -u NONE` (142 at session start, +114 cases) |
+| engine oracle | **262/262** vs `vim -u NONE` (142 at session start, +120 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 229,877 B · single `dist/vimlore.html` 253,550 B · gzip 80,681 B |
+| build | JS 230,512 B · single `dist/vimlore.html` 254,185 B · gzip 80,858 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -121,11 +121,11 @@ empty-object shift, `vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual
 `$`, case-change cursors, block virtual column, `2daW`/`2daw`, `d$` on an
 empty line.
 
-Remaining cursor-only repros (seeds 31/47/101): `3g~gg`, `2gUG`, `>ap`,
-`gUgg`, `2gu(`, `yk`, `yi(`, `di{`, `<C-v>b(`/`w>`. New-seed content repros:
-`2diw`/`2diW`, `2caw`, `g~0`, `3ciw`. Fixed this pass: counted
+Remaining cursor-only repros: `3g~gg`, `2gUG`, `>ap`, `gUgg`, `2gu(`, `yk`,
+`yi(`, `di{`, `<C-v>b(`/`w>`, `guu`, `2guiw`, `2)`. No content repros remain in
+the nine-seed corpus. Fixed this pass: counted
 `iW` across lines, counted around-word from whitespace (`2daw`/`3gUaw`), `2ciw`,
-`d$`, `=`/`gg=G`, `3gUh`/`g~h`, `d)`,
+`d$`, `=`/`gg=G`, `3gUh`/`g~h`, `d)`, `2caw`, `2diw`/`2diW`, `3ciw`,
 `di{` content, `gU{`, `gUaW`, backward `dFa`/`gUF`. The oracle/fuzz harness uses
 `expandtab`, matching the game's space indent; c04s3 now expects Vim's real
 multi-line `di(` result.
@@ -167,7 +167,7 @@ now). `\zs`/`\ze`, `gi`/`gI`, interactive `:s///c` and simple brace-depth
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥256/256; new cases committed; tests green.
+  oracle ≥262/262; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -215,7 +215,7 @@ now). `\zs`/`\ze`, `gi`/`gI`, interactive `:s///c` and simple brace-depth
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +114 cases, oracle 256/256, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +120 cases, oracle 262/262, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -303,7 +303,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 256/256
+node --experimental-strip-types tools/oracle-diff.ts        # 262/262
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build
