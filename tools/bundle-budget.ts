@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
-const MAX_RAW = 262_000;
+const MAX_RAW = 264_000;
 const MAX_GZIP = 84_000;
 const file = new URL('../dist/vimlore.html', import.meta.url);
 const buf = readFileSync(file);

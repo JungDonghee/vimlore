@@ -14,11 +14,11 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,338 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
+| engine | 3,400 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 237,988 B · single `dist/vimlore.html` 261,778 B · gzip 82,649 B · budget gate 262k/84k (raised deliberately this pass, §3) |
-| fuzz | 12 seeds at n=1000: **10 clean, 2 cursor-only open** (yG/2ygg yank cursor); n=1200 not re-run since the object work |
-| matrix | 21,712 grammar cases: **21,664 matched, 48 open** (local; `docs/MATRIX_REPORT.md`) |
+| build | JS 239,482 B · single `dist/vimlore.html` 263,272 B · gzip 82,990 B · budget gate 264k/84k (raised deliberately this pass, §3) |
+| fuzz | 12 seeds at n=1000: **0 divergences**; n=1200 not re-run since the object work |
+| matrix | 21,712 grammar cases: **21,696 matched, 16 open** (local; `docs/MATRIX_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -67,15 +67,14 @@ run the gates.
 `tools/matrix.ts` generates valid command trees (motion/object × operator ×
 mode × count over boundary-rich texts) and diffs them with `feedkeys('xt')`, so
 Vim errors do not swallow later keys — the comparison is the user-observable
-final buffer + cursor. Current run: 21,664 / 21,712 matched, **48
-divergences** (from 263 at the start of this pass). Fixed this pass: quote
-objects with count>=2 (`2i"` = the pair), counted quote/bracket/tag objects
-refuse without a second nesting level, counted `iw` availability + blank-line
-unit, and linewise-yank cursor for `yy`/`yj`/`yk`. The remaining families are
-linewise-yank cursor for `G`/`gg`/`%`, `b`/`B` across lines, `)` edges,
-counted `iw`/`iW` edges, blank-line `w`/`W`/`$`, and visual `V` yank; they are
-listed in [`MATRIX_REPORT.md`](MATRIX_REPORT.md). Matrix is **not** a CI gate
-until it reaches 0.
+final buffer + cursor. Current run: 21,696 / 21,712 matched, **16
+divergences** (from 48 at the start of this pass). Fixed this pass: linewise
+yank cursor for `G`/`gg`/`%`, visual yank anchor direction + motion tracking,
+counted `W`/`w` linewise rules for change/case, backward-T case no-op, and
+`%` case-op cursor. Remaining: `b`/`B` across lines (8), `)` (3), blank-line
+`w`/`W`/`$` (4), visual-block `<`+`G` (1); listed in
+[`MATRIX_REPORT.md`](MATRIX_REPORT.md). Matrix is **not** a CI gate until it
+reaches 0.
 
 **How to continue the matrix (no explanation needed):**
 1. `npm run matrix -- --filter="normal/d/motion/)" --show=5` — inspect one family.
@@ -139,7 +138,7 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (356 cases, up from 266).
 The bundle gate was raised **in the same commit** from 258,000/82,000 to
-**262,000/84,000**; current build is 261,778 B raw / 82,649 B gzip. This is the
+**264,000/84,000**; current build is 263,272 B raw / 82,990 B gzip. This is the
 documented "pay for itself or raise deliberately" path. Headroom is still
 small (~900 B raw, ~1.1 kB gzip): the next feature must reduce bytes first or
 justify another measured raise.
@@ -203,7 +202,7 @@ npx tsc --noEmit
 npm run doc-check
 npm run invariants
 npm run surface -- --strict
-npm run matrix                                            # 48 open (local)
+npm run matrix                                            # 16 open (local)
 node --experimental-strip-types tools/oracle-diff.ts        # 356/356
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7

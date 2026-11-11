@@ -7,19 +7,15 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21664 |
+| matched | 21696 |
 | engine errors | 0 |
-| divergences | 48 |
+| divergences | 16 |
 
 ## Divergences by category
 
 | category | count |
 |---|---:|
-| normal/y/motion/G | 7 |
-| normal/y/motion/gg | 6 |
 | normal/d/motion/) | 3 |
-| visual/V/y/k | 2 |
-| normal/y/motion/% | 2 |
 | normal/d/motion/b | 2 |
 | normal/d/motion/B | 2 |
 | normal/c/motion/b | 2 |
@@ -28,37 +24,10 @@
 | normal/d/motion/W | 1 |
 | normal/d/motion/$ | 1 |
 | normal/c/motion/$ | 1 |
-| normal/c/object/iw | 1 |
-| normal/c/object/iW | 1 |
-| normal/y/object/iW | 1 |
-| normal/g~/object/iW | 1 |
-| normal/gu/object/iW | 1 |
-| normal/gU/object/iW | 1 |
-| normal/g~/motion/% | 1 |
-| normal/gu/motion/% | 1 |
-| normal/gU/motion/% | 1 |
-| visual/V/y/gg | 1 |
-| normal/g~/motion/Ta | 1 |
-| normal/gU/motion/Ta | 1 |
 | visual/<C-v>/</G | 1 |
-| normal/g~/motion/G | 1 |
-| normal/gu/motion/G | 1 |
-| normal/gU/motion/G | 1 |
 
-## First 40 failures
+## First 16 failures
 
-- `normal/y/motion/G` keys=`yG<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foo bar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/y/motion/gg` keys=`2ygg<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foo bar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,0]
-- `normal/y/motion/G` keys=`2yG<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[1,2]
-  - vim: `["foo bar","baz qux"]` @[1,2]
-  - engine: `["foo bar","baz qux"]` @[1,0]
-- `visual/V/y/k` keys=`Vky<Esc>i!<Esc>` text=`"foo bar\nbaz qux"` @[2,1]
-  - vim: `["foo bar","baz qux"]` @[1,1]
-  - engine: `["foo bar","baz qux"]` @[1,0]
 - `normal/d/motion/)` keys=`d)<Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
   - vim: `["","b","","c"]` @[1,0]
   - engine: `["b","","c"]` @[1,0]
@@ -77,78 +46,9 @@
 - `normal/c/motion/$` keys=`2c$X<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
   - vim: `["X","b","","c"]` @[1,0]
   - engine: `["X","","b","","c"]` @[1,0]
-- `normal/c/object/iw` keys=`2ciwX<Esc><Esc>i!<Esc>` text=`"a\n\nb\n\nc"` @[1,0]
-  - vim: `["X","b","","c"]` @[1,0]
-  - engine: `["Xb","","c"]` @[1,0]
-- `normal/y/motion/gg` keys=`ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/y/motion/G` keys=`yG<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/c/object/iW` keys=`2ciWX<Esc><Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  X"]` @[1,2]
-  - engine: `["X"]` @[1,0]
-- `normal/y/motion/gg` keys=`2ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/y/motion/G` keys=`2yG<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/y/object/iW` keys=`2yiW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/g~/object/iW` keys=`2g~iW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  INDENTED","NORMAL"]` @[1,2]
-  - engine: `["  INDENTED","NORMAL"]` @[1,0]
-- `normal/gu/object/iW` keys=`2guiW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/gU/object/iW` keys=`2gUiW<Esc>i!<Esc>` text=`"  indented\nnormal"` @[1,2]
-  - vim: `["  INDENTED","NORMAL"]` @[1,2]
-  - engine: `["  INDENTED","NORMAL"]` @[1,0]
-- `normal/y/motion/gg` keys=`ygg<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/y/motion/%` keys=`2y%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/g~/motion/%` keys=`2g~%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  INDENTED","NORMAL"]` @[1,2]
-  - engine: `["  INDENTED","NORMAL"]` @[1,0]
-- `normal/gu/motion/%` keys=`2gu%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/gU/motion/%` keys=`2gU%<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  INDENTED","NORMAL"]` @[1,2]
-  - engine: `["  INDENTED","NORMAL"]` @[1,0]
-- `visual/V/y/k` keys=`Vky<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  indented","normal"]` @[1,1]
-  - engine: `["  indented","normal"]` @[1,0]
-- `visual/V/y/gg` keys=`Vggy<Esc>i!<Esc>` text=`"  indented\nnormal"` @[2,1]
-  - vim: `["  indented","normal"]` @[1,2]
-  - engine: `["  indented","normal"]` @[1,0]
-- `normal/g~/motion/Ta` keys=`g~Ta<Esc>i!<Esc>` text=`"say \"hi\" there"` @[1,2]
-  - vim: `["say \"hi\" there"]` @[1,2]
-  - engine: `["saY \"hi\" there"]` @[1,2]
-- `normal/gU/motion/Ta` keys=`gUTa<Esc>i!<Esc>` text=`"say \"hi\" there"` @[1,2]
-  - vim: `["say \"hi\" there"]` @[1,2]
-  - engine: `["saY \"hi\" there"]` @[1,2]
 - `normal/d/motion/)` keys=`d)<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
   - vim: `["if"]` @[1,1]
   - engine: `[""]` @[1,0]
-- `normal/y/motion/G` keys=`yG<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
-  - vim: `["if (x) {","  y();","}"]` @[1,2]
-  - engine: `["if (x) {","  y();","}"]` @[1,0]
-- `normal/y/motion/gg` keys=`2ygg<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
-  - vim: `["if (x) {","  y();","}"]` @[1,2]
-  - engine: `["if (x) {","  y();","}"]` @[1,0]
-- `normal/y/motion/G` keys=`2yG<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
-  - vim: `["if (x) {","  y();","}"]` @[1,2]
-  - engine: `["if (x) {","  y();","}"]` @[1,0]
 - `visual/<C-v>/</G` keys=`<C-v>G<<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[1,2]
   - vim: `["if (x) {","y();","}"]` @[1,0]
   - engine: `["if (x) {"," y();","}"]` @[1,1]
@@ -167,3 +67,12 @@
 - `normal/d/motion/b` keys=`2db<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
   - vim: `["if (x) {","}"]` @[2,0]
   - engine: `["if (x) {","  }"]` @[2,2]
+- `normal/d/motion/B` keys=`2dB<Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) ","}"]` @[1,6]
+  - engine: `["if (x) }"]` @[1,7]
+- `normal/c/motion/b` keys=`2cbX<Esc><Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) {","X","}"]` @[2,0]
+  - engine: `["if (x) {","  X}"]` @[2,2]
+- `normal/c/motion/B` keys=`2cBX<Esc><Esc>i!<Esc>` text=`"if (x) {\n  y();\n}"` @[3,0]
+  - vim: `["if (x) X","}"]` @[1,7]
+  - engine: `["if (x) X}"]` @[1,7]

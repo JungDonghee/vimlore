@@ -103,6 +103,7 @@ export class Vim {
   undoStack: BufferSnapshot[] = [];
   redoStack: BufferSnapshot[] = [];
   visualAnchor: Pos | null = null;
+  private visualMotionKey = '';
   insertStart: Pos | null = null;
   lastInsertPos: Pos | null = null;
   message = '';
@@ -858,6 +859,16 @@ export class Vim {
     this.opMotionFrom = from;
     this.opMotionTo = to;
     this.applyOp(op, range);
+    if ((op.key === 'g~' || op.key === 'gu' || op.key === 'gU') && motionKey === 'G' && range.linewise && to.line < from.line) {
+      const l1 = Math.min(range.start.line, range.end.line);
+      this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+      this.wantColValue = this.cursor.col;
+    }
+    if ((op.key === 'g~' || op.key === 'gu' || op.key === 'gU') && motionKey === '%' && range.linewise) {
+      const l1 = Math.min(range.start.line, range.end.line);
+      this.cursor = { line: l1, col: from.col === 0 ? 0 : M.firstNonBlank(this.buf, l1) };
+      this.wantColValue = this.cursor.col;
+    }
     if (motion.jump) this.pushJump(from);
   }
 
@@ -886,7 +897,7 @@ export class Vim {
     const range: SelRange = normalizeOperatorRange(this.buf, op.key, r, inclusive, this.mode.startsWith('visual'));
     if (op.key === 'd') this.deleteRange(range, inclusive, op.reg, false);
     else if (op.key === 'c') this.deleteRange(range, inclusive, op.reg, true);
-    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled, yankMotionKey, fromTextObject);
+    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled, yankMotionKey, fromTextObject, motionTo);
     else if (op.key === '>') this.shiftRange(r, 1);
     else if (op.key === '<') this.shiftRange(r, -1);
     else if (op.key === '=') this.indentRange(r);
@@ -1327,7 +1338,7 @@ export class Vim {
     }
   }
 
-  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false, motionKey = '', fromTextObject = false): void {
+  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false, motionKey = '', fromTextObject = false, motionTo?: Pos | null, visualAnchor?: Pos | null): void {
     if (r.block) {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
@@ -1356,10 +1367,38 @@ export class Vim {
       // keep the column; visual yanks use the anchor column; everything else
       // (gg/G/%, text objects) lands on column 0 of the first line.
       if (visual) {
-        const col = this.visualAnchor ? this.visualAnchor.col : 0;
-        this.cursor = M.moveTo(this.buf, { line: l1, col });
+        // A jump motion puts the cursor on the first selected line's first
+        // non-blank. A bottom-up selection keeps the anchor column; a top-down
+        // one puts the cursor at column 0.
+        if (motionKey === 'gg' || motionKey === 'G' || motionKey === '%') {
+          const upward = visualAnchor && visualAnchor.line > l1;
+          this.cursor = { line: l1, col: upward ? M.firstNonBlank(this.buf, l1) : 0 };
+        } else {
+          const upward = visualAnchor && visualAnchor.line > l1;
+          this.cursor = M.moveTo(this.buf, { line: l1, col: upward ? visualAnchor!.col : 0 });
+        }
       } else if (keepCol || motionKey === 'j' || motionKey === 'k') {
         this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+      } else if (fromTextObject) {
+        this.cursor = M.moveTo(this.buf, { line: l1, col: r.start.col });
+      } else if (motionKey === 'gg' && motionTo) {
+        // Uncounted gg lands on the first non-blank of line 1. A counted gg
+        // behaves like G: forward keeps the column, backward uses the target's
+        // first non-blank, and a no-op move zeroes it.
+        if (motionTo.line === 0) {
+          this.cursor = { line: l1, col: this.cursor.col === 0 ? 0 : M.firstNonBlank(this.buf, 0) };
+        }
+        else if (motionTo.line > this.cursor.line) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+        else if (motionTo.line < this.cursor.line) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+        else this.cursor = { line: l1, col: 0 };
+      } else if (motionKey === 'G' && motionTo) {
+        // Forward G keeps the column; a backward counted G lands on the target
+        // line's first non-blank; G that does not move zeroes the column.
+        if (motionTo.line > this.cursor.line) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
+        else if (motionTo.line < this.cursor.line) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
+        else this.cursor = { line: l1, col: 0 };
+      } else if (motionKey === '%') {
+        this.cursor = { line: l1, col: this.cursor.col === 0 ? 0 : M.firstNonBlank(this.buf, l1) };
       } else {
         this.cursor = { line: l1, col: 0 };
       }
@@ -2008,11 +2047,13 @@ export class Vim {
       case 's': {
         if (!sel) return;
         const reg = this.pendingRegSet;
+        const anchor = this.visualAnchor;
         this.pendingRegSet = null;
         this.visualAnchor = null;
         this.cmdKeys = [];
         if (key === 'y') {
-          this.yankRange(sel, true, reg, true);
+          this.yankRange(sel, true, reg, true, false, this.visualMotionKey, false, null, anchor);
+          this.visualMotionKey = '';
           this.setMode('normal');
           return;
         }
@@ -2133,6 +2174,7 @@ export class Vim {
     }
     // motions extend the selection
     const typedCount = this.countNum;
+    this.visualMotionKey = key;
     const motion = this.motionFor(key, this.takeCount(), typedCount > 0);
     if (motion) {
       this.moveTo(motion.to, 'char');
@@ -2447,6 +2489,19 @@ export class Vim {
             this.resetPending();
             return;
           }
+          if (
+            (op.key === 'g~' || op.key === 'gu' || op.key === 'gU') &&
+            p.till &&
+            p.dir === -1 &&
+            motion.to.line === this.cursor.line &&
+            motion.to.col === this.cursor.col
+          ) {
+            // A backward `T` that lands on the cursor is a zero-length motion;
+            // Vim's case operators refuse it instead of toggling one char.
+            this.bell();
+            this.resetPending();
+            return;
+          }
           this.finishOpWithMotion(op, motion, key);
         } else {
           this.doFind(key, p.dir, p.till, this.countNum || 1);
@@ -2691,7 +2746,13 @@ export class Vim {
               }
               start = this.buf.pos(startOff);
               end = this.buf.pos(endOff);
-              if (key === 'W' && start.line !== end.line) obj.linewise = true;
+              const caseOrChange = op.key === 'c' || op.key === 'g~' || op.key === 'gu' || op.key === 'gU';
+              // `W` objects are linewise across lines for every operator; a
+              // lowercase `w` is linewise only for change/case from column 0
+              // (delete stays charwise: `2diw` across lines joins).
+              if ((key === 'W' || (key === 'w' && caseOrChange)) && start.line !== end.line && (!caseOrChange || start.col === 0)) {
+                obj.linewise = true;
+              }
             }
           } else if (p.around && (key === 'w' || key === 'W')) {
             // `2daW`/`2daw`: select `count` words and the whitespace after the
@@ -2800,6 +2861,7 @@ export class Vim {
   }
 
   private afterG(key: string, asOp: boolean): void {
+    if (this.mode.startsWith('visual')) this.visualMotionKey = key === 'g' ? 'gg' : key;
     if (key === '*' || key === '#') {
       this.starSearch(key === '*', false);
       return;
@@ -2853,7 +2915,7 @@ export class Vim {
           to: { line: targetLine, col: M.firstNonBlank(this.buf, targetLine) },
           kind: 'linewise',
           jump: true,
-        });
+        }, 'gg');
         return;
       }
       const n = this.countNum || 1;
