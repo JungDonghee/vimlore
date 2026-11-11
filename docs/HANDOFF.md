@@ -12,9 +12,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **239 oracle cases**, all matching real Vim |
-| gates | oracle 239/239 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 223,352 B · single `dist/vimlore.html` 247,025 B · gzip 78,950 B |
+| engine | 2,532 lines; **243 oracle cases**, all matching real Vim |
+| gates | oracle 243/243 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 223,570 B · single `dist/vimlore.html` 247,243 B · gzip 79,010 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -32,11 +32,11 @@ this file.
   `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
 - Fuzz seed 7: **71 → 0**, seed 11: **4 → 0**, seed 23: **8 → 0**.
   **Seeds 7/11/23 are fully clean: 0 divergences, buffer and cursor.**
-  Extended seeds 31/47/101 still expose 21 edges (counts/text objects, `gU{`,
-  `2daw`, `dFa`/`gUF*`, `di{` cursor). `d$` on an empty line and `di{` content
-  were fixed in the same pass. The oracle/fuzz harness now sets `expandtab`
-  because the game's indent is spaces; block `<C-v>w>` no longer diverges on
-  tab-vs-space.
+  Extended seeds 31/47/101 still expose 16 edges: 5 content (count word
+  objects `3gUiW`/`3ciW`/`3ciw`/`3gUaw`, `2daw`) and 11 cursor-only
+  (`3g~gg`, `2gUG`, `>ap`, `gUgg`, `2gu(`, `yi(`, `di{`). Fixed this pass:
+  `d$`, `di{` content, `gU{`, `gUaW`, backward `dFa`/`gUF`. The harness sets
+  `expandtab` to match the game's space indent.
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
@@ -71,7 +71,7 @@ this file.
 ### Not done (queued, do not pretend otherwise)
 - Change list (`g;`/`g,`), interactive `:s///c`, `=` indent.
 - Keep seeds 7/11/23 clean; extended seeds 31/47/101 are the next correctness
-  frontier (21 edges listed in `MASTER_PLAN.md` §2.1).
+  frontier (16 edges listed in `MASTER_PLAN.md` §2.1).
 - c04s3's goal was corrected to Vim's real multi-line `di(` result
   (`connect(` and `)` on separate lines); the old goal only passed because
   `di{`/`di(` joined the closing bracket.
@@ -139,7 +139,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 239/239
+node --experimental-strip-types tools/oracle-diff.ts        # 243/243
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

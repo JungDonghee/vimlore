@@ -313,5 +313,12 @@ export const CASES: VimCase[] = [
 
   { name: 'd$ on empty line', text: 'a\n\nb', cursor: [2, 0], keys: 'd$' },
 
+  { name: 'gU{ at BOF', text: 'a\nb\nc', cursor: [1, 0], keys: 'gU{' },
+
+  { name: 'gUaW on blank line', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: 'gUaW' },
+
+  { name: 'dFa backward find', text: '(a (b) c)', cursor: [1, 3], keys: 'dFa' },
+  { name: 'gUF space backward', text: '  indented', cursor: [1, 3], keys: 'gUF ' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

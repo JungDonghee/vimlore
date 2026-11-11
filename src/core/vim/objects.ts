@@ -30,7 +30,7 @@ function wordObject(buf: Buffer, pos: Pos, around: boolean, big: boolean): Objec
   const off = buf.idx(pos);
   const list = tokens(buf, big);
   const t = tokenAt(list, off);
-  if (!t) {
+  if (!t || t.blank) {
     if (!around) return blankRun(buf, pos);
     // `aw`/`aW` on whitespace: Vim selects the whitespace run plus the
     // following word (not that word's trailing whitespace).

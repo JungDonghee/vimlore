@@ -56,10 +56,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine oracle | **239/239** vs `vim -u NONE` (142 at session start, +97 cases) |
+| engine oracle | **243/243** vs `vim -u NONE` (142 at session start, +101 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 223,352 B · single `dist/vimlore.html` 247,025 B · gzip 78,950 B |
+| build | JS 223,570 B · single `dist/vimlore.html` 247,243 B · gzip 79,010 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -87,16 +87,17 @@ so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug
 | 23 | 651 | 349 | **0** | **0** |
 
 **Seeds 7/11/23 are completely clean: 0 divergences (buffer and cursor).**
-Extended seeds 31/47/101 still expose 21 edges (see below); treat the clean set
+Extended seeds 31/47/101 still expose 16 edges (see below); treat the clean set
 as a regression corpus, not proof of total coverage.
 Also fixed: backward sentence motion at blank lines (`V(y`), `2yaW`, `<i(`
 empty-object shift, `vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual
 `$`, case-change cursors, block virtual column, `2daW`/`2daw`, `d$` on an
 empty line.
 
-Extended-seed repros (next session): seed 31 `dFa`, `gUF `, `2gUG`;
-seed 47 `3gUiW`/`3ciW`/`3ciw`, `gUaW`, `gU{`, `2daw`, `yk`; seed 101 `3gUaw`,
-`di{` (cursor only), `gUFa`, `2gUgg` cursor. The oracle/fuzz harness uses
+Extended-seed repros (next session): the five content edges are count word
+objects `3gUiW`, `3ciW`, `3ciw`, `3gUaw` and `2daw`; cursor-only edges are
+`3g~gg`, `2gUG`, `>ap`, `gUgg`, `2gu(`, `yi(`, `di{`. Fixed this pass: `d$`,
+`di{` content, `gU{`, `gUaW`, backward `dFa`/`gUF`. The oracle/fuzz harness uses
 `expandtab`, matching the game's space indent; c04s3 now expects Vim's real
 multi-line `di(` result.
 
@@ -137,7 +138,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥239/239; new cases committed; tests green.
+  oracle ≥243/243; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -185,7 +186,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +97 cases, oracle 239/239, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +101 cases, oracle 243/243, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 52–57 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -255,7 +256,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 239/239
+node --experimental-strip-types tools/oracle-diff.ts        # 243/243
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

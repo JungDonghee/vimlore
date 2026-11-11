@@ -144,9 +144,10 @@ export function findChar(env: MotionEnv, char: string, dir: 1 | -1, till: boolea
   }
   const dest = till ? { line: env.cursor.line, col: col - dir } : { line: env.cursor.line, col };
   const clamped = moveTo(env.buf, dest);
-  // Vim's t/T is inclusive for operators even when the target is adjacent:
-  // `dt(` on "a(b" deletes the `a`. Do not collapse that to a null motion.
-  return { to: clamped, kind: 'inclusive' };
+  // Forward f/t is inclusive for operators even when the target is adjacent:
+  // `dt(` on "a(b" deletes the `a`. Backward F/T ranges end just before the
+  // original cursor, so the cursor character itself is not consumed.
+  return { to: clamped, kind: dir === 1 ? 'inclusive' : 'exclusive' };
 }
 
 export function matchBracket(env: MotionEnv): MotionResult | null {

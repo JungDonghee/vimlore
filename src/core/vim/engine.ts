@@ -630,6 +630,16 @@ export class Vim {
     }
     const motion = this.motionFor(key, (this.countNum || 1) * (op.count || 1), this.countNum > 0 || op.count > 0);
     if (!motion) {
+      // At BOF Vim still applies gU/gu/g~ with `{` to the current line, while
+      // d/c/y with `{` are a no-op.
+      if ((op.key === 'gU' || op.key === 'gu' || op.key === 'g~') && key === '{' && this.cursor.line === 0) {
+        this.applyOp(op, {
+          start: { line: 0, col: 0 },
+          end: { line: 0, col: Math.max(0, this.buf.line(0).length - 1) },
+          linewise: true,
+        });
+        return;
+      }
       this.bell();
       this.resetPending();
       return;
