@@ -257,6 +257,15 @@ export function sentenceMotion(env: MotionEnv, dir: 1 | -1, count: number): Moti
   for (let n = 0; n < count; n++) {
     if (dir === 1) {
       let moved = false;
+      // If we are on a blank separator line, the next sentence starts on the
+      // next non-blank line; scanning for the next blank run would skip it.
+      const blankLine = env.buf.pos(off).line;
+      if (env.buf.line(blankLine).trim() === '' && blankLine < env.buf.lineCount - 1) {
+        let l = blankLine + 1;
+        while (l < env.buf.lineCount - 1 && env.buf.line(l).trim() === '') l++;
+        off = env.buf.idx({ line: l, col: 0 });
+        continue;
+      }
       for (let i = off + 1; i < flat.length; i++) {
         // A blank line starts a new sentence in Vim: `)` stops there.
         if (flat[i] === '\n' && i + 1 < flat.length && flat[i + 1] === '\n' && i + 1 !== off) {

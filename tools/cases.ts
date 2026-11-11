@@ -353,5 +353,9 @@ export const CASES: VimCase[] = [
   { name: 'yk up linewise cursor', text: 'one two\nthree four', cursor: [2, 3], keys: 'yk' },
   { name: 'yj down linewise cursor', text: 'one two\nthree four', cursor: [1, 3], keys: 'yj' },
 
+  { name: '2) count sentence', text: 'a\n\nb\n\nc', cursor: [1, 0], keys: '2)' },
+
+  { name: 'guu keeps indented cursor', text: '  indented\nnormal', cursor: [1, 1], keys: 'guu' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

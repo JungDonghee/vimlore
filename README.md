@@ -11,7 +11,7 @@
 **The most complete Vim training terminal ever attempted — a Vim adventure that
 runs on a dead terminal.** That is the destination, not a claim about today: the
 coverage ledger is public. No install, no account, no tracking, no third-party
-requests — one 254 kB page. A keyboard is required; on a phone, turn it sideways.
+requests — one 255 kB page. A keyboard is required; on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
@@ -37,7 +37,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
   of Vim (`src/core/vim/`), diff-tested against a real `vim -u NONE` binary:
-  264/264 identical buffers and cursors (`tools/oracle-diff.ts`).
+  266/266 identical buffers and cursors (`tools/oracle-diff.ts`).
 - **Three stars means elegance, not survival.** Every stage has a `par` — the
   keystroke count of the intended solution. Clear it any way you like; master it
   in par.

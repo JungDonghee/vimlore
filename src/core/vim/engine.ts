@@ -1389,7 +1389,13 @@ export class Vim {
         else if (this.cursor.line === l1) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
         else this.cursor = { line: l1, col: 0 };
       } else if (fromTextObject) this.cursor = { line: l1, col: 0 };
-      else if (doubled) this.cursor = l1 === l2 ? { line: l1, col: M.firstNonBlank(this.buf, l1) } : M.moveTo(this.buf, this.cursor);
+      else if (doubled) {
+        if (l1 !== l2) this.cursor = M.moveTo(this.buf, this.cursor);
+        else {
+          const fnb = M.firstNonBlank(this.buf, l1);
+          this.cursor = this.cursor.col < fnb ? { line: l1, col: this.cursor.col } : { line: l1, col: fnb };
+        }
+      }
       else if (l1 === l2) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
       else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
     } else {
