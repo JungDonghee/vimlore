@@ -40,6 +40,8 @@ npm run invariants     # cross-layer command/stage/unlock consistency (CI gate)
 npm run surface        # engine surface audit; --strict is a CI gate
 npm run matrix         # grammar matrix vs real Vim (CI gate)
 npm run count-matrix   # manifest commands at counts 1-3 vs real Vim (CI gate)
+npm run status:write   # regenerate docs/STATUS.md (never hand-edit it)
+npm run status:check   # fail if STATUS.md is stale (CI gate)
 npm run verify         # unit + lint + tsc + docs + invariants
 npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
@@ -111,6 +113,10 @@ The game targets a cheap phone with a Bluetooth keyboard.
   Use `tokenize()` from `src/core/vim/keys.ts`.
 - Gating is **first-key** based (`Session.keyAllowed`). Keys typed inside
   insert mode are never gated.
+- **Numbers are generated, not copied.** `docs/STATUS.md` is the single source
+  for measured counts/build size; `docs/COMMAND_MANIFEST.md` and
+  `docs/STATE_REPORT.md` are generated too. Re-run the reports and
+  `npm run status:write`; never hand-edit generated files.
 - **The command echo renders only while `vim.awaitingKey` is true.** Failed
   commands must clear `count`/`cmdKeys` before returning; otherwise `u` at the
   oldest change leaves a phantom pending `u` on screen.

@@ -87,12 +87,6 @@ lines). Insert-mode keys: text, space, `<CR>`, `<BS>`, `<Del>`, `<Tab>`,
 
 ## Current evidence
 
-- oracle **373/373** buffer+cursor cases against real Vim
-- matrix **21,712/21,712** generated operator/motion cases
-- state matrix **21,539/21,712** local (173 open: undo cursor 200, register 18)
-- fuzz **12 seeds × 1,000 keys**, 0 divergences
-- level lint 51/51; surface audit strict green; tests 38
-
-The engine is exact on the tested/taught surface, not "all of Vim". The
-remaining state divergences are undo-cursor and register edge cases; the
-missing rows above are the honest gaps.
+See [`STATUS.md`](STATUS.md) for generated oracle/matrix/count/state/build
+numbers. The status table is not copied here on purpose; this file owns the
+feature-by-feature verdicts, STATUS owns the measurements.

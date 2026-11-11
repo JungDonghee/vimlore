@@ -17,6 +17,7 @@ jobs:
       - run: npm run surface -- --strict
       - run: npm run build
       - run: npm run budget
+      - run: npm run status:check
       - name: absolute asset paths must not exist (blank page on subpath hosting)
         run: |
           if grep -qE 'src="/assets|href="/assets' dist/index.html; then
@@ -46,4 +47,4 @@ jobs:
       - name: grammar matrix (21,712 command trees vs real Vim)
         run: npm run matrix
       - name: count matrix (manifest commands at counts 1-3)
-        run: npm run count-matrix
+        run: npm run count-matrix -- --check-docs

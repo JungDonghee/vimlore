@@ -18,11 +18,21 @@ import { MANIFEST, countCases, manifestMarkdown } from './command-manifest.ts';
 
 const argv = process.argv.slice(2);
 const WRITE = argv.includes('--write');
+const CHECK_DOCS = argv.includes('--check-docs');
 const SHOW = Number(argv.find((a) => a.startsWith('--show='))?.split('=')[1] ?? 8);
 
+const manifestFile = 'docs/COMMAND_MANIFEST.md';
+const manifestText = manifestMarkdown();
 if (WRITE) {
-  writeFileSync('docs/COMMAND_MANIFEST.md', manifestMarkdown());
-  console.log('wrote docs/COMMAND_MANIFEST.md');
+  writeFileSync(manifestFile, manifestText);
+  console.log(`wrote ${manifestFile}`);
+} else if (CHECK_DOCS) {
+  const old = readFileSync(manifestFile, 'utf8');
+  if (old !== manifestText) {
+    console.error(`MANIFEST OUT OF DATE: run npm run count-matrix -- --write`);
+    process.exit(2);
+  }
+  console.log('manifest: current');
 }
 
 const cases = countCases();
