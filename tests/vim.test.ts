@@ -56,6 +56,10 @@ test('undo restores before a change session', () => {
   assert.equal(v.text, 'X world');
   v.feedString('u');
   assert.equal(v.text, 'hello world');
+  v.feedString(':later 1<CR>');
+  assert.equal(v.text, 'X world');
+  v.feedString(':earlier 1<CR>');
+  assert.equal(v.text, 'hello world');
 });
 
 test('dot repeat replays the full change', () => {

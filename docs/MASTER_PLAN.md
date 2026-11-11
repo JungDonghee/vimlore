@@ -77,7 +77,7 @@
 | engine oracle | **266/266** vs `vim -u NONE` (142 at session start, +124 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 230,962 B · single `dist/vimlore.html` 254,635 B · gzip 81,047 B · budget gate 258k/82k |
+| build | JS 231,196 B · single `dist/vimlore.html` 254,869 B · gzip 81,139 B · budget gate 258k/82k |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -147,9 +147,8 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Both must work with counts, operators, visual mode and `.` repeat.
 
 **Tier 2 — next slice:**
-`g;` / `g,` change list · `:earlier` / `:later` (linear undo is enough for
-now). `\zs`/`\ze`, `gi`/`gI`, interactive `:s///c` and simple brace-depth
-`=`/`gg=G` are already implemented.
+`g;` / `g,` change list. `\zs`/`\ze`, `gi`/`gI`, interactive `:s///c`, simple
+brace-depth `=`/`gg=G` and numeric `:earlier`/`:later` are already implemented.
 
 **Tier 3 — later, only if a stage needs it:**
 `zz`/`zt`/`zb` and exact `H/M/L` (needs a viewport model) · folds · completion ·

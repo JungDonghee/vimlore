@@ -1542,6 +1542,16 @@ export class Vim {
     this.afterUnit();
   }
 
+  /** Linear `:earlier N` / `:later N` (no time units / undo tree yet). */
+  exTravel(arg: string, dir: 1 | -1): void {
+    const n = Math.max(1, parseInt(arg, 10) || 1);
+    for (let i = 0; i < n; i++) {
+      if (dir < 0) this.undo();
+      else this.redo();
+    }
+    this.echo(`${dir < 0 ? 'earlier' : 'later'} ${n}`, 'info');
+  }
+
   private undo(): void {
     const s = this.undoStack.pop();
     if (!s) {

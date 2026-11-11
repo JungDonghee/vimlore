@@ -131,7 +131,7 @@ export function executeEx(vim: Vim, input: string): void {
   }
 
   // Commands may be glued to their argument in Vim (`:1m5`, `:sort!`, `:2t4`).
-  const CMDS = ['nohlsearch', 'relativenumber', 'nonumber', 'nohlsearch', 'normal', 'sort', 'copy', 'noh', 'norm', 'set', 'wq', 'co', 'd', 'm', 't', 'w', 'x', 'q'];
+  const CMDS = ['nohlsearch', 'relativenumber', 'nonumber', 'nohlsearch', 'normal', 'earlier', 'later', 'sort', 'copy', 'noh', 'norm', 'set', 'wq', 'co', 'd', 'm', 't', 'w', 'x', 'q'];
   let name = '';
   let arg = '';
   for (const k of CMDS) {
@@ -157,6 +157,10 @@ export function executeEx(vim: Vim, input: string): void {
     case 'normal':
     case 'norm':
       vim.exNormal(range?.l1 ?? vim.cursor.line, range?.l2 ?? vim.cursor.line, arg);
+      return;
+    case 'earlier':
+    case 'later':
+      vim.exTravel(arg, name === 'earlier' ? -1 : 1);
       return;
     case 'sort':
       vim.exSort(range?.l1 ?? 0, range?.l2 ?? vim.buf.lineCount - 1, arg);

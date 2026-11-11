@@ -56,7 +56,7 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 **Numbers** `<C-a>` / `<C-x>` including Vim's default `nrformats=octal,hex`
 (`007 + 1 → 010`, `0x1f + 1 → 0x20`).
 
-**Undo** linear undo/redo (`u`, `<C-r>`).
+**Undo** linear undo/redo (`u`, `<C-r>`) plus numeric `:earlier N` / `:later N`.
 
 **Indentation** `>`/`<` shift by `shiftwidth`; `=` / `gg=G` / visual `=` do a
 simple brace-depth C indent in spaces. No filetype `indentexpr`, and braces
@@ -72,7 +72,7 @@ inside strings/comments are not parsed.
 | indentation | filetype-aware `=`/`indentexpr`, tab/expandtab policy | simple brace-depth `=` exists; no filetype rules |
 | files | `:e :r :w file`, `:!cmd`, terminal, `:bd` | no filesystem in the browser |
 | options | `:set` | `textwidth`/`shiftwidth` come from the level |
-| undo tree | `g-`, `g+`, `:earlier/:later`, persistent undo | linear stack is enough |
+| undo tree | `g-`, `g+`, time units for `:earlier/:later`, persistent undo | linear undo + numeric `:earlier/:later` only |
 | change list | `g;` `g,` | rare in teaching material |
 | filters | `!{motion}`, `:!` | no shell |
 | tooling | quickfix, `:vimgrep`, ctags, LSP, treesitter | Neovim-only, out of scope |
