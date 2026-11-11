@@ -19,7 +19,7 @@ real `vim` binary (`tools/oracle-diff.ts`). If you change motions, operators or
 text objects:
 
 ```bash
-node --experimental-strip-types tools/oracle-diff.ts   # 226/226 must pass
+node --experimental-strip-types tools/oracle-diff.ts   # 228/228 must pass
 npm test
 ```
 
@@ -129,7 +129,7 @@ per-frame allocation in `render()`.
 ## Coverage and known gaps
 
 The authoritative matrix of what the engine does and does not do is
-[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **226/226**
+[`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **228/228**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Missing on purpose: windows/buffers, folds, completion,
 `:!`, quickfix/LSP, Vimscript/Lua, `:s///c`, and viewport motions (`zz`, `zt`,
@@ -227,3 +227,6 @@ Three rules keep it correct:
   is part of the frame key); the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
+- Settings name/export/import use an **in-game keyboard prompt** (input focused,
+  Enter submits, Esc cancels, readonly export with Ctrl+A/Ctrl+C); no browser
+  `prompt()` for those flows.

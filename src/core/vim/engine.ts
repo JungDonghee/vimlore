@@ -2319,6 +2319,10 @@ export class Vim {
       this.openInsertAt(pos);
       return;
     }
+    if (key === 'I') {
+      this.openInsertAt({ line: this.cursor.line, col: 0 });
+      return;
+    }
     if (key === '~' || key === 'u' || key === 'U' || key === 'q' || key === 'w') {
       const opKey = 'g' + key;
       if (asOp && this.op) {

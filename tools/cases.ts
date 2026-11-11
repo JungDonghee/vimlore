@@ -289,5 +289,8 @@ export const CASES: VimCase[] = [
   { name: '2daw', text: 'one two\nthree four', cursor: [1, 5], keys: '2daw' },
   { name: 'v-block )kU', text: '  indented\nnormal', cursor: [2, 0], keys: '<C-v>)kU' },
 
+  { name: 'gI insert at column 0', text: '  abc', cursor: [1, 4], keys: 'gIX<Esc>' },
+  { name: 'gi last insert position', text: 'abc\ndef', cursor: [1, 1], keys: 'iX<Esc>jgiY<Esc>' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

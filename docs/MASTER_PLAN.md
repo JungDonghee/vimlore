@@ -56,10 +56,10 @@
 |---|---|
 | src | 9,365 lines; `engine.ts` 2,532 lines |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine oracle | **226/226** vs `vim -u NONE` (142 at session start, +84 cases) |
+| engine oracle | **228/228** vs `vim -u NONE` (142 at session start, +86 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 218,854 B · single `dist/vimlore.html` 242,106 B · gzip 77,679 B |
+| build | JS 220,521 B · single `dist/vimlore.html` 244,194 B · gzip 78,222 B |
 | perf (headless) | desktop 1280×800: **50–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -133,7 +133,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Triage every divergence: real bug → add an oracle case → fix → emit snapshot;
   unsupported feature → exclude from generator and note it.
 - Acceptance: fuzz run of ≥1,500 cases with **0 unexplained divergences**;
-  oracle ≥226/226; new cases committed; tests green.
+  oracle ≥228/228; new cases committed; tests green.
 
 ### W2 — Advanced coverage (owner: engine agent, after W1)
 - `gn` in normal (starts visual selection on next match), operator-pending
@@ -181,7 +181,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | # | deliverable | acceptance |
 |---|---|---|
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
-| S2 | fixed engine bugs | **done** — +84 cases, oracle 226/226, gates green; `gn`/`g*`/`g#` shipped |
+| S2 | fixed engine bugs | **done** — +86 cases, oracle 228/228, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 50–56 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
@@ -208,6 +208,8 @@ rest to the task board. Never commit a red level or a failing oracle.
 | U3 | statusline/cmdline polish | W4 | **done** | `src/ui/play.ts` |
 | U4 | screenshots + audit | W4 | **done** | `pw/` |
 | U5 | F1 primer + idle coach + keyboard-only audit | W4 | **done** | `src/ui/app.ts`, `src/ui/play.ts`, `src/ui/dom.ts` |
+| U6 | in-game settings prompts (no browser dialogs) | W4 | **done** | `src/ui/app.ts`, `src/style.css` |
+| E5 | `gI` / `gi` coverage | W2 | **done** | `src/core/vim/engine.ts`, `tools/cases.ts` |
 | D2 | refresh AGENTS/HANDOFF | W5 | **done** | `AGENTS.md`, `docs/HANDOFF.md` |
 | D3 | final gates + build + push | W5 | **done** | all |
 
@@ -249,7 +251,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 226/226
+node --experimental-strip-types tools/oracle-diff.ts        # 228/228
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build

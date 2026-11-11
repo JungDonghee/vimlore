@@ -1361,3 +1361,21 @@ body.crt-off .board::after { display: none; }
   .help-card .actions { margin-top: 8px; }
   .help-card .btn { padding: 6px 12px; }
 }
+
+
+/* in-game keyboard prompt (settings: name / export / import) */
+.prompt-overlay { z-index: 80; }
+.prompt-card { width: min(620px, 100%); }
+.prompt-hint { margin-top: 10px; color: var(--ph-dim); font-size: 10px; letter-spacing: 0.04em; }
+.text-input {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: #020805;
+  color: var(--ph-bright);
+  font: 12px var(--mono);
+  letter-spacing: 0.04em;
+}
+.text-input:focus { outline: 1px solid var(--ph); outline-offset: 1px; }
+.prompt-card .actions { margin-top: 16px; }

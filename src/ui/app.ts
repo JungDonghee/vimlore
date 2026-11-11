@@ -61,6 +61,9 @@ export class App {
   private helpOpen = false;
   private helpEl: HTMLElement | null = null;
   private helpReturn: FocusGroup | null = null;
+  private promptEl: HTMLElement | null = null;
+  private promptInput: HTMLInputElement | null = null;
+  private promptSubmit: ((value: string) => void) | null = null;
 
   constructor(root: HTMLElement) {
     this.root = root;
@@ -640,30 +643,29 @@ export class App {
         { class: 'actions' },
         h('button', {
           class: 'btn',
-          onclick: () => {
-            const name = prompt(this.t('Operator name', '오퍼레이터 이름'), this.progress.profile.name);
+          onclick: () => this.openTextPrompt(this.t('Operator name', '오퍼레이터 이름'), this.progress.profile.name, (name) => {
             if (name) { this.progress.profile.name = name.slice(0, 24); this.save(); this.goAbout(); }
-          },
+          }),
         }, `${this.t('operator', '오퍼레이터')}: ${this.progress.profile.name}`),
         h('button', {
           class: 'btn',
           onclick: () => {
             const code = encodeSave(this.progress);
-            void navigator.clipboard?.writeText(code);
-            prompt(this.t('Save code (copied) — keep it', '세이브 코드 (복사됨) — 보관하세요'), code);
+            if (navigator.clipboard) void navigator.clipboard.writeText(code).catch(() => {});
+            this.openTextPrompt(this.t('Save code (copied) — keep it', '세이브 코드 (복사됨) — 보관하세요'), code, () => {}, true,
+              this.t('Ctrl+A then Ctrl+C to copy · Esc closes', 'Ctrl+A 후 Ctrl+C로 복사 · Esc 닫기'));
           },
         }, this.t('export save', '세이브 내보내기')),
         h('button', {
           class: 'btn',
-          onclick: () => {
-            const code = prompt(this.t('Paste a save code', '세이브 코드 붙여넣기'));
+          onclick: () => this.openTextPrompt(this.t('Paste a save code', '세이브 코드 붙여넣기'), '', (code) => {
             if (!code) return;
             const p = decodeSave(code);
             if (!p) { alert(this.t('Not a valid code', '올바른 코드가 아닙니다')); return; }
             this.progress = { ...emptyProgress(), ...p };
             this.save();
             this.goAbout();
-          },
+          }, false, this.t('Enter imports · Esc cancels', 'Enter 가져오기 · Esc 취소')),
         }, this.t('import save', '세이브 가져오기')),
       ),
       h('div', { class: 'rule' }),
@@ -692,6 +694,57 @@ export class App {
     mount(this.root, h('div', { class: 'overlay', style: { position: 'relative', background: 'transparent', backdropFilter: 'none' } }, card));
     this.actions = focusGroup(card);
     focusIndex(this.actions, 0);
+  }
+
+  // ------------------------------------------------------------------ prompts
+
+  /** In-game, keyboard-only text prompt; the browser prompt never appears. */
+  private openTextPrompt(title: string, value: string, submit: (value: string) => void, readonly = false, hint = ''): void {
+    this.closeTextPrompt();
+    const input = h('input', {
+      class: 'text-input',
+      value,
+      spellcheck: 'false',
+      autocomplete: 'off',
+      readonly: readonly ? 'readonly' : undefined,
+    }) as HTMLInputElement;
+    input.value = value;
+    const card = h(
+      'div',
+      { class: 'card prompt-card' },
+      h('div', { class: 'eyebrow' }, 'VIMLORE'),
+      h('h2', {}, title),
+      hint ? h('div', { class: 'prompt-hint' }, hint) : null,
+      input,
+      h(
+        'div',
+        { class: 'actions' },
+        h('button', { class: 'btn primary', onclick: () => this.submitTextPrompt() }, this.t('OK', '확인'), h('kbd', {}, 'enter')),
+        h('button', { class: 'btn', onclick: () => this.closeTextPrompt() }, this.t('CANCEL', '취소'), h('kbd', {}, 'esc')),
+      ),
+    );
+    const overlay = h('div', { class: 'overlay prompt-overlay' }, card);
+    this.root.append(overlay);
+    this.promptEl = overlay;
+    this.promptInput = input;
+    this.promptSubmit = submit;
+    input.focus();
+    input.select();
+  }
+
+  private submitTextPrompt(): void {
+    const value = this.promptInput?.value ?? '';
+    const submit = this.promptSubmit;
+    this.closeTextPrompt();
+    submit?.(value);
+  }
+
+  private closeTextPrompt(): void {
+    this.promptEl?.remove();
+    this.promptEl = null;
+    this.promptInput = null;
+    this.promptSubmit = null;
+    if (this.actions) focusIndex(this.actions, this.actions.index);
   }
 
   // -------------------------------------------------------------------- help
@@ -747,6 +800,18 @@ export class App {
   private onKey(e: KeyboardEvent): void {
     if (e.metaKey || e.altKey) return;
     this.sfx.unlock();
+    if (this.promptEl) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this.closeTextPrompt();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        this.submitTextPrompt();
+      } else if (e.target !== this.promptInput) {
+        e.preventDefault();
+      }
+      return;
+    }
     if (e.key === 'F1') {
       e.preventDefault();
       this.toggleHelp();

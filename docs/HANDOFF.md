@@ -12,9 +12,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 84 grimoire commands · 12 TRIALS skills |
-| engine | 2,532 lines; **226 oracle cases**, all matching real Vim |
-| gates | oracle 226/226 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 218,854 B · single `dist/vimlore.html` 242,106 B · gzip 77,679 B |
+| engine | 2,532 lines; **228 oracle cases**, all matching real Vim |
+| gates | oracle 228/228 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
+| build | JS 220,521 B · single `dist/vimlore.html` 244,194 B · gzip 78,222 B |
 | perf (headless) | desktop 1280×800 **50–56 fps** (x1), 47–50 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -49,6 +49,8 @@ this file.
   scanlines so briefing text is crisp (this was a real readability bug).
 - **Vim-style viewport scrolling**: long inserts scroll horizontally and tall
   buffers vertically, following the cursor instead of drawing off-canvas.
+- Settings name/export/import are in-game keyboard prompts (input focused,
+  Enter/Esc, readonly export) instead of browser dialogs.
 - **F1 primer on every screen** (keyboard-only, scrollable) and an automatic
   **coach** after ~6–10 s idle, on locked keys and on damage; any key dismisses
   it, Tab escalates. First-ever session shows a NORMAL/INSERT primer in the
@@ -63,8 +65,10 @@ this file.
 - Change list (`g;`/`g,`), `:s///c`, `\zs/\ze`, `gi`, `=` indent.
 - Remaining cross-seed fuzz edges (seed 11: `dt(`, `2cw`, `cw`; seed 23:
   visual `vk$d`/`vlB<`, block `U`, `3cW`, `2daW`).
-- Curriculum metadata holes (9 stages with `teaches: []`; 18 grimoire commands
-  never declared; `c02s5` promises a `t`-vs-`f` lesson but uses only `f`/`;`).
+- Curriculum metadata: 6 integration stages now declare `teaches`; 3 remain
+  generic (c01s2 count, c08s5 maze, c09s1 ranges) and 18 grimoire commands are
+  still never declared. `c02s5` is now declared as `f`/`;` (the old `t` claim
+  was corrected in CURRICULUM).
 - `progress.ghost` dead field; version/tag mismatch; chapter title casing.
 - CI has no real `vim` job and no browser/perf gate; fuzz is local-only.
 - Doc drift outside the numbers fixed in this slice (see §2).
@@ -119,7 +123,7 @@ npm test
 npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
-node --experimental-strip-types tools/oracle-diff.ts        # 226/226
+node --experimental-strip-types tools/oracle-diff.ts        # 228/228
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1500 --seed=7
 npm run build
