@@ -1334,7 +1334,10 @@ export class Vim {
       // Vim undo lands on the last removed line at the command's column; if
       // the buffer became empty it lands on the first removed line instead.
       before.undoCursor = change
-        ? { line: l2, col: wasVisual || l1 === l2 ? 0 : undoCol }
+        ? {
+            line: l1 === l2 ? l1 : l1 + 1,
+            col: wasVisual ? this.visualAnchor?.col ?? 0 : 0,
+          }
         : becameEmpty
           ? { line: l1, col: before.lines.length === 1 ? 0 : undoCol }
           : { line: l2, col: 0 };
