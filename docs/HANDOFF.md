@@ -14,10 +14,10 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,409 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 240,277 B · single `dist/vimlore.html` 264,067 B · gzip 83,282 B · budget gate 265k/85k (raised deliberately this pass, §3) |
-| fuzz | 12 seeds at n=1000: **0 divergences**; n=1200 not re-run since the object work |
+| engine | 3,434 lines + `normalize.ts` 100; **363 oracle cases**, all matching real Vim (strict) |
+| gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| build | JS 240,681 B · single `dist/vimlore.html` 264,471 B · gzip 83,398 B · budget gate 265k/85k (raised deliberately this pass, §3) |
+| fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -80,14 +80,14 @@ extraction (`cursor.ts`).
 conversion) / Q10 (backward column-0 ranges). `src/core/vim/cursor.ts` owns the
 Q04 (zero-range `0`/`^`/`h` case motions) and Q09 (case-operator landing) policy.
 `applyOp`/`caseRange` call both modules and keep only effect dispatch; oracle
-356/356 and matrix 21,712/21,712 stayed green through the extraction.
+363/363 and matrix 21,712/21,712 stayed green through the extraction.
 
 ### Surface program (Phase A)
 `tools/surface-audit.ts` maps the Grimoire, chapters, oracle cases, unit tests
 and TRIALS into one evidence report, now a **strict CI gate**
 (`npm run surface -- --strict`). 86 of 86 commands have oracle or unit evidence
 (8 ex/macro/mark/format commands are unit-only because `normal!` cannot drive
-them), 9 engine-only features are explicit, and 0 of the 356 oracle cases are
+them), 9 engine-only features are explicit, and 0 of the 363 oracle cases are
 orphans. The generated view is [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md); the
 program is [`ENGINE_PROGRAM.md`](ENGINE_PROGRAM.md). Curriculum gaps (15
 grimoire-only, 12 unused in solutions) are reported separately.
@@ -128,10 +128,28 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **265,000/85,000**. Each was measured and committed with the feature
-that needed it. Current build is 264,067 B raw / 83,282 B gzip, so headroom is
+that needed it. Current build is 264,471 B raw / 83,398 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
+
+## 3b. Engine review (2026-11-11, after matrix 0)
+
+Static pass over `buffer.ts`, `engine.ts`, `motions.ts`, `objects.ts`, `ex.ts`,
+`search.ts`, plus a 12-seed n=3000 fuzz run. Fixed the severe holes and pinned
+each with an oracle case (356 → 363):
+- `>W` at EOL shifted the next line's indentation too (Vim shifts only the
+  current line): charwise shift ranges now drop a final line that is all indent.
+- `ciw`/`ciW` on an empty line deleted the newline and joined the next line;
+  the empty-line word object is now `empty` and inserts in place.
+- `da"` left a space when there was no trailing whitespace (Vim takes the
+  preceding run); `2di"` then trimmed that run back to the quote pair.
+- `V{`/`V}` yank cursor and `<C-v>}` block outdent matched Vim now.
+
+Known edge divergences (not taught, recorded but not fixed): `<C-v>)` block
+geometry on multi-line/short lines, `dW` on a blank line, and a one-column block
+`<` cursor after `j`. They are outside the current curriculum; do not fake a
+fix in a level.
 
 ## 4. Not done (queued, do not pretend otherwise)
 
@@ -193,7 +211,7 @@ npm run doc-check
 npm run invariants
 npm run surface -- --strict
 npm run matrix                                            # 21,712/21,712 (CI gate)
-node --experimental-strip-types tools/oracle-diff.ts        # 356/356
+node --experimental-strip-types tools/oracle-diff.ts        # 363/363
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7
 npm run build

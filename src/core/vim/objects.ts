@@ -25,7 +25,10 @@ function blankRun(buf: Buffer, pos: Pos): ObjectRange {
   let e = pos.col;
   while (s > 0 && (line[s - 1] === ' ' || line[s - 1] === '\t')) s--;
   while (e + 1 < line.length && (line[e + 1] === ' ' || line[e + 1] === '\t')) e++;
-  return { start: { line: pos.line, col: s }, end: { line: pos.line, col: e } };
+  // An empty line has no text: a change must insert without eating the
+  // newline (`ciw` on a blank line keeps the next line separate).
+  const empty = line.length === 0;
+  return { start: { line: pos.line, col: s }, end: { line: pos.line, col: e }, empty };
 }
 
 function wordObject(buf: Buffer, pos: Pos, around: boolean, big: boolean): ObjectRange | null {
@@ -105,7 +108,15 @@ function quoteObject(buf: Buffer, pos: Pos, around: boolean, q: string): ObjectR
   if (around) {
     let end = pairEnd;
     while (line[end + 1] === ' ' || line[end + 1] === '\t') end++;
-    return { start: { line: pos.line, col: pairStart }, end: { line: pos.line, col: end } };
+    if (end > pairEnd) {
+      return { start: { line: pos.line, col: pairStart }, end: { line: pos.line, col: end } };
+    }
+    // No trailing whitespace: Vim takes the preceding run instead (but never
+    // a line's own indentation, so a quote at BOL stays at BOL).
+    let start = pairStart;
+    while (start > 0 && (line[start - 1] === ' ' || line[start - 1] === '\t')) start--;
+    if (start === 0) start = pairStart;
+    return { start: { line: pos.line, col: start }, end: { line: pos.line, col: pairEnd } };
   }
   // An empty pair like "" has no inner text; Vim treats it as an empty range
   // whose cursor sits on the closing quote (`ci"` inserts before it).

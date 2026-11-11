@@ -481,5 +481,13 @@ export const CASES: VimCase[] = [
   { name: '? backward search', text: 'one two one two', cursor: [1, 8], keys: '?one<CR>' },
   { name: 'N previous match', text: 'one two one two', cursor: [1, 0], keys: '/one<CR>N' },
 
+  // --- engine review: severe holes found by n=3000 fuzz --------------------
+  { name: '>W at EOL shifts only the current line', text: 'function f() {\n  return 1;\n}', cursor: [1, 13], keys: '>W' },
+  { name: 'ciw on an empty line inserts without joining', text: 'a\n\nb\n\nc', cursor: [4, 0], keys: 'ciwxy<Esc>' },
+  { name: 'ciW on an empty line inserts without joining', text: 'a\n\nb\n\nc', cursor: [4, 0], keys: 'ciWxy<Esc>' },
+  { name: 'da" without trailing space takes the preceding run', text: 'x = "a"; y = "b";', cursor: [1, 4], keys: 'da"' },
+  { name: '2di" takes only the quote pair', text: 'x = "a"; y = "b";', cursor: [1, 15], keys: '2di"' },
+  { name: 'V{ yank cursor at the selection start', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 3], keys: 'V{y' },
+  { name: 'block < after } outdents fully', text: 'function f() {\n  return 1;\n}', cursor: [1, 11], keys: '<C-v>}<' },
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

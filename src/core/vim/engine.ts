@@ -1392,7 +1392,15 @@ export class Vim {
         // A jump motion puts the cursor on the first selected line's first
         // non-blank. A bottom-up selection keeps the anchor column; a top-down
         // one puts the cursor at column 0.
-        if (motionKey === 'gg' || motionKey === 'G' || motionKey === '%') {
+        if (
+          motionKey === 'gg' ||
+          motionKey === 'G' ||
+          motionKey === '%' ||
+          motionKey === '}' ||
+          motionKey === '{' ||
+          motionKey === ')' ||
+          motionKey === '('
+        ) {
           const upward = visualAnchor && visualAnchor.line > l1;
           this.cursor = { line: l1, col: upward ? M.firstNonBlank(this.buf, l1) : 0 };
         } else {
@@ -1454,8 +1462,13 @@ export class Vim {
       // text touches. Visual selections include the cursor line regardless.
       const [s, e] = this.flatRange(r, this.rangeInclusive);
       if (e > s) {
-        l1 = this.buf.pos(s).line;
-        l2 = this.buf.pos(Math.max(s, e - 1)).line;
+        const start = this.buf.pos(s);
+        const last = this.buf.pos(Math.max(s, e - 1));
+        l1 = start.line;
+        l2 = last.line;
+        // If the part of the range on the last line is only indentation, Vim
+        // does not shift that line (`>W` at EOL shifts the current line only).
+        if (l2 > l1 && this.buf.line(l2).slice(0, last.col + 1).trim() === '') l2--;
       }
     }
     const before = this.snapshot();
@@ -1476,7 +1489,14 @@ export class Vim {
           return false;
         })()
       ) {
-        c1 = this.visualMotionKey === 'G' || this.visualMotionKey === 'gg' || this.visualMotionKey === '$' ? 0 : 1;
+        c1 =
+          this.visualMotionKey === 'G' ||
+          this.visualMotionKey === 'gg' ||
+          this.visualMotionKey === '$' ||
+          this.visualMotionKey === '}' ||
+          this.visualMotionKey === '{'
+            ? 0
+            : 1;
       }
       for (let l = l1; l <= l2; l++) {
         const line = this.buf.line(l);
@@ -2671,7 +2691,12 @@ export class Vim {
             start = outer.start;
             end = outer.end;
             if (!p.around) {
+              // `2i"` selects the quote pair only: drop the surrounding
+              // whitespace that the around object may have picked up.
               const line = this.buf.line(end.line);
+              while (start.col < end.col && (line[start.col] === ' ' || line[start.col] === '\t')) {
+                start = { line: start.line, col: start.col + 1 };
+              }
               while (end.col > start.col && (line[end.col] === ' ' || line[end.col] === '\t')) {
                 end = { line: end.line, col: end.col - 1 };
               }

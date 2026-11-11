@@ -109,7 +109,7 @@ npm run doc-check
 npm run invariants
 npm run build
 npm run budget
-node --experimental-strip-types tools/oracle-diff.ts    # 356/356
+node --experimental-strip-types tools/oracle-diff.ts    # 363/363
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7
 cd /home/jung/ai_station/sandbox && node pw/audit.mjs
 node pw/perf_local.mjs
