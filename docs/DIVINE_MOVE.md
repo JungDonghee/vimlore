@@ -6,7 +6,7 @@
 
 ## Why this move
 
-The engine is now exact on the tested surface: **oracle 363/363**, **matrix
+The engine is now exact on the tested surface: **oracle 367/367**, **matrix
 21,712/21,712**, all 51 stages, 28 tests, 12 fuzz seeds at n=1000 clean. Remaining
 n=3000 divergences are rare visual-block/blank-line edges, recorded in
 `HANDOFF.md` §3b.
@@ -22,7 +22,7 @@ giant we already stand on — real Vim as oracle.
 
 ## Three tracks, in this order
 
-### 1. Observable-state oracle (next)
+### 1. Observable-state oracle (in progress)
 
 The current matrix/fuzz compares **buffer + cursor only**. The game also cares
 about mode, registers, undo, marks and jumps: `y`/`p`/`u`/`.`/`"a` can look
@@ -40,6 +40,13 @@ Build `tools/state-matrix.ts` (local first, like matrix was):
 Acceptance: the tool runs; failures are catalogued; representative cases become
 oracle cases. Only then may it become a CI gate. Do not weaken the existing
 matrix/oracle gates while bringing it up.
+
+First run (2026-11-11): `tools/state-matrix.ts` built; 15,289/21,712 matched,
+6,423 open. Fixed a real operator leak (`c{` then `u` swallowed keys) and the
+undo cursor policy for common cases; now 20,752/21,712, 960 open (undo cursor
+941, register 32). 4 oracle cases added (363 → 367). Mode is not comparable in
+`vim -es`; it needs a pty/Nvim probe before it can be asserted. Report:
+`docs/STATE_REPORT.md`.
 
 ### 2. Corpus from the giants
 
@@ -74,7 +81,7 @@ book section (no invented lesson).
 
 ## Guardrails (non-negotiable)
 
-- Oracle **363/363**, matrix **21,712/21,712**, tests **28**, level lint **51**,
+- Oracle **367/367**, matrix **21,712/21,712**, tests **28**, level lint **51**,
   surface `--strict`, invariants, build/budget stay green.
 - Zero runtime dependencies; no server; no embedded Vim/Neovim runtime.
 - A deferred Vim feature is **deferred, not out of scope**; it enters the

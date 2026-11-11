@@ -58,6 +58,8 @@ export interface Register {
 export interface BufferSnapshot {
   lines: string[];
   cursor: Pos;
+  /** Cursor Vim leaves after undoing this change (linewise delete/change). */
+  undoCursor?: Pos;
 }
 
 export const isBlank = (ch: string): boolean => ch === ' ' || ch === '\t' || ch === '';

@@ -1324,8 +1324,13 @@ export class Vim {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
       const count = l2 - l1 + 1;
+      const undoCol = this.cursor.col;
       const removed = this.buf.lines.splice(l1, count, ...(change ? [''] : []));
-      if (this.buf.lines.length === 0) this.buf.setLines(['']);
+      const becameEmpty = this.buf.lines.length === 0;
+      if (becameEmpty) this.buf.setLines(['']);
+      // Vim undo lands on the last removed line at the command's column; if
+      // the buffer became empty it lands on the first removed line instead.
+      before.undoCursor = becameEmpty ? { line: l1, col: 0 } : { line: l2, col: undoCol };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);
@@ -1472,6 +1477,17 @@ export class Vim {
       }
     }
     const before = this.snapshot();
+    // Vim's undo lands on the start of the shifted range, not necessarily the
+    // operator cursor (e.g. `>h` from col 2 undoes to col 1).
+    const undoLine = Math.min(r.start.line, r.end.line);
+    const undoCol = r.linewise
+      ? Math.max(r.start.line, r.end.line) > undoLine && !this.op?.doubled && !this.mode.startsWith('visual')
+        ? this.cursor.col
+        : 0
+      : r.block
+        ? r.block.c1
+        : Math.min(r.start.col, r.end.col);
+    before.undoCursor = { line: undoLine, col: undoCol };
     const pad = ' '.repeat(this.shiftwidth);
     if (r.block) {
       // Block shift moves the selected columns: `>` inserts at c1, while `<`
@@ -1756,8 +1772,18 @@ export class Vim {
       return;
     }
     this.redoStack.push(this.snapshot());
+    const after = this.buf.lines.slice();
     this.buf.setLines(s.lines);
-    this.cursor = M.moveTo(this.buf, s.cursor);
+    // Vim leaves the cursor at the first changed position after `u`, not at
+    // the cursor stored before the change (`ch` from col 2 lands on col 1,
+    // `Vjd` on the first changed line). Derive it from the diff.
+    if (s.undoCursor) this.cursor = M.moveTo(this.buf, s.undoCursor);
+    else {
+      const restored = this.buf.flat, previous = after.join('\n');
+      let diff = 0;
+      while (diff < restored.length && diff < previous.length && restored[diff] === previous[diff]) diff++;
+      this.cursor = M.moveTo(this.buf, this.buf.pos(diff));
+    }
     this.wantColValue = this.cursor.col;
     this.version++;
     this.emit({ type: 'change', before: '', after: this.buf.flat, cursor: { ...this.cursor }, kind: 'undo' });
@@ -1851,6 +1877,11 @@ export class Vim {
   }
 
   openInsertAt(pos: Pos, undoSnapshot?: BufferSnapshot): void {
+    // Insert mode ends the operator composition. Several `c` paths open insert
+    // without going through applyOp (zero-range/failed motions, empty objects);
+    // leaving `op` set would swallow the next key and break undo.
+    this.op = null;
+    this.pending = null;
     const line = Math.max(0, Math.min(pos.line, this.buf.lineCount - 1));
     this.cursor = { line, col: Math.max(0, Math.min(pos.col, this.buf.line(line).length)) };
     this.insertStart = { ...this.cursor };

@@ -489,5 +489,10 @@ export const CASES: VimCase[] = [
   { name: '2di" takes only the quote pair', text: 'x = "a"; y = "b";', cursor: [1, 15], keys: '2di"' },
   { name: 'V{ yank cursor at the selection start', text: 'one\ntwo\nthree\nfour\nfive', cursor: [4, 3], keys: 'V{y' },
   { name: 'block < after } outdents fully', text: 'function f() {\n  return 1;\n}', cursor: [1, 11], keys: '<C-v>}<' },
+  // --- DM1: observable state (operator leak + undo cursor) -----------------
+  { name: 'c{ at BOF insert then undo', text: 'one two three', cursor: [1, 0], keys: 'c{X<Esc>u' },
+  { name: 'ch change then undo cursor', text: 'one two three', cursor: [1, 2], keys: 'chX<Esc>u' },
+  { name: '>j shift then undo cursor', text: 'foo bar\nbaz qux', cursor: [1, 2], keys: '>ju' },
+  { name: 'Vjd line delete then undo cursor', text: 'foo bar\nbaz qux', cursor: [2, 1], keys: 'Vjdu' },
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

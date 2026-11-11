@@ -24,7 +24,9 @@
     "surface": "node --experimental-strip-types tools/surface-audit.ts",
     "surface:write": "node --experimental-strip-types tools/surface-audit.ts --write",
     "matrix": "node --experimental-strip-types tools/matrix.ts",
-    "matrix:write": "node --experimental-strip-types tools/matrix.ts --write"
+    "matrix:write": "node --experimental-strip-types tools/matrix.ts --write",
+    "state-matrix": "node --experimental-strip-types tools/state-matrix.ts",
+    "state-matrix:write": "node --experimental-strip-types tools/state-matrix.ts --write"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
