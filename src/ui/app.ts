@@ -64,6 +64,9 @@ export class App {
   private promptEl: HTMLElement | null = null;
   private promptInput: HTMLInputElement | null = null;
   private promptSubmit: ((value: string) => void) | null = null;
+  private confirmEl: HTMLElement | null = null;
+  private confirmYes: (() => void) | null = null;
+  private confirmActions: FocusGroup | null = null;
 
   constructor(root: HTMLElement) {
     this.root = root;
@@ -680,14 +683,14 @@ export class App {
       h('div', { class: 'row', style: { marginTop: '6px' } }, h('span', {}, this.t('engine', '엔진')), h('b', {}, this.t('diff-tested against real vim', '실제 vim과 대조 검증'))),
       h('div', { class: 'actions' }, h('button', {
         class: 'btn',
-        onclick: () => {
-          if (confirm(this.t('Erase all progress?', '모든 진행을 지울까요?'))) {
+        onclick: () => this.openConfirm(this.t('Erase all progress?', '모든 진행을 지울까요?'),
+          this.t('This cannot be undone.', '이 작업은 되돌릴 수 없습니다.'),
+          () => {
             this.progress = emptyProgress();
             this.progress.lang = this.lang;
             this.save();
             this.goTitle();
-          }
-        },
+          }),
       }, this.t('erase progress', '진행 초기화'))),
       h('div', { class: 'actions' }, h('button', { class: 'btn primary', onclick: () => this.goMap() }, this.t('BACK', '뒤로'), h('kbd', {}, 'esc'))),
     );
@@ -744,6 +747,35 @@ export class App {
     this.promptEl = null;
     this.promptInput = null;
     this.promptSubmit = null;
+    if (this.actions) focusIndex(this.actions, this.actions.index);
+  }
+
+  /** Keyboard-only confirm; no browser dialog. */
+  private openConfirm(title: string, body: string, onYes: () => void): void {
+    this.closeConfirm();
+    const yes = h('button', { class: 'btn primary', onclick: () => { const fn = this.confirmYes; this.closeConfirm(); fn?.(); } }, this.t('YES', '예'), h('kbd', {}, '↵'));
+    const no = h('button', { class: 'btn', onclick: () => this.closeConfirm() }, this.t('CANCEL', '취소'), h('kbd', {}, 'esc'));
+    const card = h(
+      'div',
+      { class: 'card prompt-card' },
+      h('div', { class: 'eyebrow' }, 'VIMLORE'),
+      h('h2', {}, title),
+      h('div', { class: 'brief ko' }, body),
+      h('div', { class: 'actions' }, yes, no),
+    );
+    const overlay = h('div', { class: 'overlay prompt-overlay' }, card);
+    this.root.append(overlay);
+    this.confirmEl = overlay;
+    this.confirmYes = onYes;
+    this.confirmActions = focusGroup(card);
+    focusIndex(this.confirmActions, 0);
+  }
+
+  private closeConfirm(): void {
+    this.confirmEl?.remove();
+    this.confirmEl = null;
+    this.confirmYes = null;
+    this.confirmActions = null;
     if (this.actions) focusIndex(this.actions, this.actions.index);
   }
 
@@ -809,6 +841,16 @@ export class App {
         this.submitTextPrompt();
       } else if (e.target !== this.promptInput) {
         e.preventDefault();
+      }
+      return;
+    }
+    if (this.confirmEl) {
+      e.preventDefault();
+      if (e.key === 'Escape') this.closeConfirm();
+      else if (e.key === 'h' || e.key === 'l' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        if (this.confirmActions) focusStep(this.confirmActions, e.key === 'h' || e.key === 'ArrowLeft' ? -1 : 1);
+      } else if (e.key === 'Enter') {
+        if (this.confirmActions) focusActivate(this.confirmActions);
       }
       return;
     }

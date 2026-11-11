@@ -14,7 +14,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **228 oracle cases**, all matching real Vim |
 | gates | oracle 228/228 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 220,720 B · single `dist/vimlore.html` 244,393 B · gzip 78,298 B |
+| build | JS 221,924 B · single `dist/vimlore.html` 245,597 B · gzip 78,554 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -50,7 +50,8 @@ this file.
 - **Vim-style viewport scrolling**: long inserts scroll horizontally and tall
   buffers vertically, following the cursor instead of drawing off-canvas.
 - Settings name/export/import are in-game keyboard prompts (input focused,
-  Enter/Esc, readonly export) instead of browser dialogs.
+  Enter/Esc, readonly export); erase progress uses an in-game YES/CANCEL
+  confirm. No browser dialogs remain in Settings.
 - **F1 primer on every screen** (keyboard-only, scrollable) and an automatic
   **coach** after ~6–10 s idle, on locked keys and on damage; any key dismisses
   it, Tab escalates. First-ever session shows a NORMAL/INSERT primer in the
@@ -110,7 +111,13 @@ this file.
    pixel that depends on something else, add it to the key or draw it on FX.
 8. **Overlay stacking:** `.overlay` is `z-index: 70`, above the CRT scanlines
    (60) and beam (61); do not lower it or the briefing goes soft.
-9. **Security:** PAT at `/home/jung/ai_station/sandbox/.secrets/github_token`
+9. **Desktop fps ceiling is the headless browser, not the renderer.** At
+   1280×800 the headless shell caps rAF around 54–57 fps even with the game
+   canvas hidden and CRT off; dirty-cell restores, a separate static canvas,
+   and removing cursorline/numbers from the frame key all failed to move it.
+   Use `perf_local.mjs` for *relative* regressions; verify 60 fps on a real GPU
+   browser. Do not sacrifice text sharpness for a number measured in headless.
+10. **Security:** PAT at `/home/jung/ai_station/sandbox/.secrets/github_token`
    (mode 600, outside the repo). Never print/commit it; scrub the remote URL
    after pushing. A red build on `main` breaks the live site.
 

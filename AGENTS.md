@@ -228,5 +228,5 @@ Three rules keep it correct:
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
 - Settings name/export/import use an **in-game keyboard prompt** (input focused,
-  Enter submits, Esc cancels, readonly export with Ctrl+A/Ctrl+C); no browser
-  `prompt()` for those flows.
+  Enter submits, Esc cancels, readonly export with Ctrl+A/Ctrl+C); erase uses an
+  in-game YES/CANCEL confirm (h/l, Enter, Esc). No browser dialogs for these.
