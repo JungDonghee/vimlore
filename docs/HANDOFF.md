@@ -3,7 +3,7 @@
 > **Priority and the task board live in [`MASTER_PLAN.md`](MASTER_PLAN.md).**
 > This file is the snapshot a new AI needs in the first ten minutes: what is
 > true now, what is broken, and which traps cost the last session hours.
-> **Last rewritten:** 2026-11-11, end of completion-program slice 1.
+> **Last rewritten:** 2026-11-11, after slice 1 + Tier 1 coverage.
 
 ## 0. Snapshot (after slice 1)
 
@@ -16,7 +16,7 @@
 | gates | oracle 216/216 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
 | build | JS 211,174 B · single `dist/vimlore.html` 232,484 B · gzip 74,875 B |
 | perf (headless) | desktop 1280×800 **55–56 fps** (x1), 48–49 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
-| deploy | last deployed commit is `f5eec60`; slice 1 is pushed after this snapshot |
+| deploy | `224175d` deployed; CI + Pages green; local == origin |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
 this file.

@@ -61,14 +61,14 @@
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
 | build | JS 211,174 B · single `dist/vimlore.html` 232,484 B · gzip 74,875 B |
 | perf (headless) | desktop 1280×800: **55–56 fps** (x1), 48–49 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
-| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · last deployed `f5eec60`; slice 1 pushed after this file |
+| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · deployed `224175d` · CI + Pages green · local == origin |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
 **What changed in slice 1:** a seeded differential fuzzer (`tools/fuzz.ts`),
 63 new oracle cases and a large engine-correctness pass (operator ranges with
 `gg`/`G`/`{`/`}`, counts on doubled operators, `2J`, visual-block `~`/`>`/`<`,
 word/sentence/paragraph edges, visual find `f/F/t/T`); a composite-frame
-renderer (**23.5 → 55–56 fps** desktop); a Vim-like top-left window with `~` fill,
+renderer (**23.5 → 55–56 fps** desktop); `gn`/`g*`/`g#`; a Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
 and an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing.
 
@@ -183,7 +183,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
 | S4 | renderer composite + fps pass | **done** — desktop 55–56 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
-| S6 | handoff | **in progress** — commit/push at the end of this slice |
+| S6 | handoff | **done** — commit `224175d` pushed; CI + Pages green |
 
 If the clock runs out, **stop at a green gate**: commit what passes, move the
 rest to the task board. Never commit a red level or a failing oracle.
@@ -206,7 +206,7 @@ rest to the task board. Never commit a red level or a failing oracle.
 | U3 | statusline/cmdline polish | W4 | **done** | `src/ui/play.ts` |
 | U4 | screenshots + audit | W4 | **done** | `pw/` |
 | D2 | refresh AGENTS/HANDOFF | W5 | **done** | `AGENTS.md`, `docs/HANDOFF.md` |
-| D3 | final gates + build + push | W5 | in progress | all |
+| D3 | final gates + build + push | W5 | **done** | all |
 
 ## 7. Handoff protocol (for the next AI)
 
