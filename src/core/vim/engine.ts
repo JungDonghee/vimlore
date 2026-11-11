@@ -795,6 +795,7 @@ export class Vim {
       range = { start: from, end: to, linewise: false };
       this.rangeInclusive = motion.kind === 'inclusive';
     }
+    this.yankMotionKey = motionKey;
     this.applyOp(op, range);
     if (motion.jump) this.pushJump(from);
   }
@@ -816,11 +817,13 @@ export class Vim {
 
   private applyOp(op: Op, r: SelRange): void {
     const fromTextObject = this.fromTextObject;
+    const yankMotionKey = this.yankMotionKey;
     this.fromTextObject = false;
+    this.yankMotionKey = '';
     const inclusive = this.rangeInclusive;
     if (op.key === 'd') this.deleteRange(r, inclusive, op.reg, false);
     else if (op.key === 'c') this.deleteRange(r, inclusive, op.reg, true);
-    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled);
+    else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled, yankMotionKey);
     else if (op.key === '>') this.shiftRange(r, 1);
     else if (op.key === '<') this.shiftRange(r, -1);
     else if (op.key === '=') this.indentRange(r);
@@ -1236,7 +1239,7 @@ export class Vim {
     }
   }
 
-  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false): void {
+  yankRange(r: SelRange, inclusive: boolean, reg: string | null, visual = false, keepCol = false, motionKey = ''): void {
     if (r.block) {
       const l1 = Math.min(r.start.line, r.end.line);
       const l2 = Math.max(r.start.line, r.end.line);
@@ -1265,6 +1268,7 @@ export class Vim {
       // column when it is already there, otherwise the first non-blank. A
       // visual yank puts it at the start of the selection (column 0).
       if (visual) this.cursor = { line: l1, col: 0 };
+      else if (motionKey === 'j' || motionKey === 'k') this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
       else if (keepCol || (l1 === this.cursor.line && l2 > this.cursor.line)) this.cursor = M.moveTo(this.buf, this.cursor);
       else this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
       this.emit({ type: 'yank', register: reg ?? '"', text });
@@ -1337,6 +1341,7 @@ export class Vim {
   }
 
   private fromTextObject = false;
+  private yankMotionKey = '';
 
   private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper', visual = false, doubled = false, fromTextObject = false): void {
     const before = this.snapshot();

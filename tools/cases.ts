@@ -350,5 +350,8 @@ export const CASES: VimCase[] = [
 
   { name: '2caw keeps indent', text: 'function f() {\n  return 1;\n}', cursor: [2, 7], keys: '2cawxy<Esc>' },
 
+  { name: 'yk up linewise cursor', text: 'one two\nthree four', cursor: [2, 3], keys: 'yk' },
+  { name: 'yj down linewise cursor', text: 'one two\nthree four', cursor: [1, 3], keys: 'yj' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
