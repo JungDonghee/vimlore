@@ -462,5 +462,18 @@ export const CASES: VimCase[] = [
   { name: 'gUh line1 toggles one char', text: 'a,b\nc,d', cursor: [1, 0], keys: 'gUh' },
   { name: 'gUh line2 toggles line', text: 'a,b\nc,d', cursor: [2, 0], keys: 'gUh' },
 
+  // --- fuzz-cleared: backward column-0 linewise ranges ----------------------
+  { name: 'cB from blank line', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: 'cBxy<Esc>' },
+  { name: 'dB from blank line', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: 'dB' },
+  { name: 'yB from blank line', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: 'yB' },
+  { name: '2cB from blank line', text: 'a\n\nb\n\nc', cursor: [2, 0], keys: '2cBxy<Esc>' },
+
+  // --- fuzz-cleared: visual-block outdent on short lines --------------------
+  { name: 'block < short last line a0', text: 'function f() {\n  return 1;\n}', cursor: [2, 0], keys: '<C-v>j<' },
+  { name: 'block < short last line a2', text: 'function f() {\n  return 1;\n}', cursor: [2, 2], keys: '<C-v>j<' },
+  { name: 'block < short last line a3', text: 'function f() {\n  return 1;\n}', cursor: [2, 3], keys: '<C-v>j<' },
+  { name: 'block < anchor0 via motion', text: 'function f() {\n  return 1;\n}', cursor: [3, 0], keys: '<C-v>0k<' },
+  { name: 'block < no indent cursor', text: 'abc abc abc', cursor: [1, 0], keys: '<C-v>W$<' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];

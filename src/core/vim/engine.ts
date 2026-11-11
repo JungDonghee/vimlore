@@ -45,7 +45,7 @@ export interface SelRange {
   start: Pos;
   end: Pos;
   linewise: boolean;
-  block?: { c1: number; c2: number };
+  block?: { c1: number; c2: number; acol?: number };
 }
 
 export interface VimOptions {
@@ -863,12 +863,25 @@ export class Vim {
     // indent. This is why `2dw`/`de` from column 0 remove whole lines while
     // `2dw` from inside a word stays charwise. Change/yank and visual do not.
     let range = r;
+    // Backward charwise range whose cursor sits at column 0: the start line
+    // contributes no characters, so Vim operates linewise on the lines above
+    // it (`cB`/`dB`/`yB` from an empty line change only the previous line).
     if (
-      op.key === 'd' &&
       !r.linewise &&
       !r.block &&
       !this.mode.startsWith('visual') &&
-      r.start.line < r.end.line
+      r.start.line > r.end.line &&
+      r.start.col === 0 &&
+      r.end.col === 0
+    ) {
+      range = { start: { line: r.end.line, col: 0 }, end: { line: r.start.line - 1, col: 0 }, linewise: true };
+    }
+    if (
+      op.key === 'd' &&
+      !range.linewise &&
+      !range.block &&
+      !this.mode.startsWith('visual') &&
+      range.start.line < range.end.line
     ) {
       const [s, e] = this.flatRange(r, inclusive);
       if (e > s) {
@@ -1379,8 +1392,22 @@ export class Vim {
     const pad = ' '.repeat(this.shiftwidth);
     if (r.block) {
       // Block shift moves the selected columns: `>` inserts at c1, while `<`
-      // only outdents lines whose indent the block starts inside.
-      const c1 = r.block.c1;
+      // only outdents lines whose indent the block starts inside. When the
+      // anchor is right of column 0 but the block's left edge is 0 and a line
+      // is too short to reach c2, Vim shrinks the block to start at column 1.
+      let c1 = r.block.c1;
+      if (
+        dir < 0 &&
+        c1 === 0 &&
+        (r.block.acol ?? 0) > 0 &&
+        l1 !== l2 &&
+        (() => {
+          for (let l = l1; l <= l2; l++) if (this.buf.line(l).length <= r.block!.c2) return true;
+          return false;
+        })()
+      ) {
+        c1 = 1;
+      }
       for (let l = l1; l <= l2; l++) {
         const line = this.buf.line(l);
         if (line.trim() === '') continue;
@@ -2114,7 +2141,7 @@ export class Vim {
         start: { line: Math.min(a.line, b.line), col: Math.min(a.col, b.col) },
         end: { line: Math.max(a.line, b.line), col: Math.max(a.col, b.col) },
         linewise: false,
-        block: { c1: Math.min(a.col, b.col), c2: Math.max(a.col, b.col) },
+        block: { c1: Math.min(a.col, b.col), c2: Math.max(a.col, b.col), acol: a.col },
       };
     }
     const aIdx = this.buf.idx(a);

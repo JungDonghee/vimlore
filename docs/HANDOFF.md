@@ -14,10 +14,10 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,213 lines; **343 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 343/343 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 235,313 B · single `dist/vimlore.html` 259,103 B · gzip 81,877 B · budget gate 260k/83k (raised deliberately this pass, §3) |
-| fuzz | 9 documented seeds: **0 divergences at n=1000**; at n=1200 ten of twelve seeds are clean, seed 23 and seed 999 have one content edge each (§2) |
+| engine | 3,213 lines; **352 oracle cases**, all matching real Vim (strict) |
+| gates | oracle 352/352 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| build | JS 235,313 B · single `dist/vimlore.html` 259,440 B · gzip 81,993 B · budget gate 260k/83k (raised deliberately this pass, §3) |
+| fuzz | **12 seeds, 0 divergences at n=1200** (and 9 seeds 0 at n=1000), buffer and cursor |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -69,27 +69,36 @@ the cursor on the closing-paren line, so the next `k` went to the wrong call.
 The stage now uses `di(kkdi(`, par 8, with the same goal; `lint:levels` and a
 real Vim run both agree. This is a **level** fix, not an engine fix.
 
-## 2. Known open engine divergences (documented, not hidden)
+## 2. Engine divergence status
 
-At n=1200 (outside the nine-seed n=1000 corpus), two content edges remain:
+**The fuzz corpus is clean.** Twelve seeds at n=1200 (7, 11, 23, 31, 47, 101,
+131, 173, 211, 5, 999, 1234) report **0 buffer-content and 0 cursor
+divergences**; the nine documented seeds are also clean at n=1000. Every fix
+from this pass is pinned by an oracle case (352 total), so a regression fails
+the oracle before it can reach a level.
 
-1. **Visual-block outdent** — `<C-v>)<` on `function f() {\n  return 1;\n}`
-   from `(2,2)`: Vim removes one indent space, the engine removes two. Vim's
-   `shift_block` uses `start_vcol`/`shift_amount = min(shiftwidth,
-   block_space_width)`; the engine's block branch is still an approximation.
-2. **Counted WORD motion failure** — `2cB` from a blank line in
-   `a\n\nb\n\nc`: Vim keeps the blank line (`["xy","","b","","c"]`), the
-   engine deletes it (`["xy","b","","c"]`). The general counted-motion
-   failure/linewise rule is not modelled.
+The last two edges were closed by:
 
-Neither is used by a stage and neither appears at n=1000. Treat them as the
-next engine tickets, not as regressions.
+1. **Backward column-0 ranges**: a charwise range whose cursor sits at column 0
+   (e.g. `cB`/`dB`/`yB` from an empty line) contributes no characters on the
+   start line, so Vim operates linewise on the lines above it. This is now a
+   general rule, not a `B` special case.
+2. **Visual-block outdent on short lines**: when the anchor is right of column
+   0, the block's left edge is 0, and a line is too short to reach `c2`, Vim
+   shrinks the block to start at column 1. The engine applies that clamp for
+   `<` only; it is pinned by five oracle cases (anchors 0/2/3, motion-formed
+   anchor 0, and the no-indent cursor case).
+
+What is still an approximation: Vim's full visual-block virtual-column model
+(`start_vcol`, short lines, tabs). The oracle covers the shapes the fuzzer and
+levels produce, but a new block geometry can still surprise. Add an oracle case
+before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 ## 3. Budget decision (deliberate)
 
-Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (343 cases, up from 266).
+Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (352 cases, up from 266).
 The bundle gate was raised **in the same commit** from 258,000/82,000 to
-**260,000/83,000**; current build is 259,103 B raw / 81,877 B gzip. This is the
+**260,000/83,000**; current build is 259,440 B raw / 81,993 B gzip. This is the
 documented "pay for itself or raise deliberately" path. Headroom is still
 small (~900 B raw, ~1.1 kB gzip): the next feature must reduce bytes first or
 justify another measured raise.
@@ -149,7 +158,7 @@ npm run lint:levels
 npx tsc --noEmit
 npm run doc-check
 npm run invariants
-node --experimental-strip-types tools/oracle-diff.ts        # 343/343
+node --experimental-strip-types tools/oracle-diff.ts        # 352/352
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7
 npm run build

@@ -37,7 +37,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
   of Vim (`src/core/vim/`), diff-tested against a real `vim -u NONE` binary:
-  343/343 identical buffers and cursors (`tools/oracle-diff.ts`).
+  352/352 identical buffers and cursors (`tools/oracle-diff.ts`).
 - **Three stars means elegance, not survival.** Every stage has a `par` — the
   keystroke count of the intended solution. Clear it any way you like; master it
   in par.
