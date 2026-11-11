@@ -96,7 +96,7 @@ The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
   ceiling enforced by `npm run budget`: 269,000 B raw / 86,000 B gzip** (current
-  267.6 kB / 84.2 kB); do not raise it without a deliberate, measured reason.
+  268.1 kB / 84.3 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
   ghost and particles are the FX pass. Rebuild the frame only when its key changes.
@@ -263,9 +263,12 @@ Three rules keep it correct:
   operator-pending and otherwise does nothing. Leaving mid-play goes through
   the F10/× LEAVE prompt (CANCEL is focused by default; LEAVE confirms); Esc
   closes that prompt without leaving.
-- **Ghost playback never wins.** F3 replays the solution through a demo session
-  that must not count keys, check hazards, pick up coins, or set `won`; the next
-  overlay must never appear from a ghost run. Enter during the ghost is ignored.
+- **Ghost playback starts from the stage's initial text, never the edited
+  buffer, and restores the live session verbatim afterwards.** F3 builds a
+  fresh demo Session (no key count, hazards, pickups or `won`), plays the
+  solution there, then puts the untouched live Session back — buffer, cursor,
+  undo, registers, keys and mode. Do not `restart()` after a ghost; the next
+  overlay must never appear and Enter stays ignored while ghosting.
 - **F9 / the tabline ‹ and results PREV** go to the previous chamber when one
   exists. The map resumes at the first uncleared stage, so an explicit PREV is
   the way back to a cleared stage.

@@ -16,7 +16,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 3,506 lines + `normalize.ts` 100; **363 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 34 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 242,140 B · single `dist/vimlore.html` 267,697 B · gzip 84,217 B · budget gate 269k/86k (raised deliberately this pass, §3) |
+| build | JS 242,140 B · single `dist/vimlore.html` 268,090 B · gzip 84,282 B · budget gate 269k/86k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | state matrix | 21,712 command trees with register/undo: **21,485 matched, 227 open** (local DM1; `docs/STATE_REPORT.md`) |
@@ -135,7 +135,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **269,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 267,697 B raw / 84,217 B gzip, so headroom is
+that needed it. Current build is 268,090 B raw / 84,282 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -175,13 +175,15 @@ keys can expose a skill before a stage teaches it, and 12 unlock keys have no
 Grimoire row. Book-derived curriculum/provenance will fix the ordering; do not
 paper over it with ad-hoc locks now.
 
-### Ghost mode must not win (2026-11-11)
+### Ghost mode: fresh replay, exact restore (2026-11-11)
 
-Ghost playback (F3) used the live Session, so the demo could set `status=won`,
-flash the next overlay, and Enter-mashing advanced the player without clearing
-the stage. `Session.demo` now moves the Vim without counting keys or running
-`afterAction` (win/hazard/pickup); `playGhost` sets it for the replay and the
-next overlay never appears. Unit-tested.
+F3 now builds a **fresh Session seeded from the stage's initial text** and plays
+the solution there with `demo` set (no key count, hazard, pickup or win). The
+player's live Session is never fed, so an edited buffer cannot corrupt the
+demo, and after the replay the **same live Session object is restored verbatim**
+(buffer, cursor, undo stack, registers, keys, mode). No restart is performed.
+The live Vim version is bumped so the renderer frame cache rebuilds. The next
+overlay can never appear from a ghost run; Enter stays ignored while ghosting.
 
 ### Tab in insert mode (2026-11-11)
 

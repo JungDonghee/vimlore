@@ -879,8 +879,22 @@ export class PlayScreen {
     if (this.ghosting || this.state !== 'playing') return;
     const sol = this.host.stage.solution;
     if (!sol) return;
+    // Replay on a fresh session seeded from the stage's initial text, never
+    // from the player's edited buffer. The live session is kept untouched and
+    // restored verbatim afterwards.
+    const live = this.session;
+    const demo = new Session({
+      stage: this.host.stage,
+      chapterIndex: this.host.chapter.index - 1,
+      allowed: this.host.allowed,
+    });
+    demo.demo = true;
+    demo.chapterForKey = this.host.chapterForKey;
+    demo.vim.number = this.host.lineNumbers === 'abs' || this.host.lineNumbers === 'both';
+    demo.vim.relativenumber = this.host.lineNumbers === 'rel' || this.host.lineNumbers === 'both';
+    this.stopRepeat();
     this.ghosting = true;
-    this.session.demo = true;
+    this.session = demo;
     this.overlay?.remove();
     this.overlay = h(
       'div',
@@ -897,9 +911,14 @@ export class PlayScreen {
     }
     await new Promise((r) => setTimeout(r, 700));
     if (this.destroyed) return;
-    this.session.demo = false;
+    this.session = live;
+    // Force the renderer frame cache to rebuild: the live session's version
+    // may numerically collide with the last demo frame.
+    live.vim.version++;
+    this.overlay?.remove();
+    this.overlay = null;
     this.ghosting = false;
-    this.restart();
+    this.updateHud();
     this.toast(this.host.lang === 'ko' ? '이제 네 차례' : 'Now you', false);
   }
 
