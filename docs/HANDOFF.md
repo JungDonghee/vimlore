@@ -14,9 +14,9 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,213 lines; **356 oracle cases**, all matching real Vim (strict) |
+| engine | 3,196 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 235,313 B · single `dist/vimlore.html` 259,440 B · gzip 81,993 B · budget gate 260k/83k (raised deliberately this pass, §3) |
+| build | JS 235,313 B · single `dist/vimlore.html` 259,523 B · gzip 82,029 B · budget gate 260k/83k (raised deliberately this pass, §3) |
 | fuzz | **12 seeds, 0 divergences at n=1200** (and 9 seeds 0 at n=1000), buffer and cursor |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -61,6 +61,13 @@ run the gates.
 - **`ap` at the last paragraph** now takes the preceding blank run; counted
   `ap` crosses separators and includes surrounding blanks (`2cip`, `2dap`,
   `2yap`, `2g~ap`).
+
+### Normalization extraction (Phase B pilot)
+`src/core/vim/normalize.ts` now owns `flatRange` and the first two named quirks:
+**Q02** (delete linewise conversion) and **Q10** (backward column-0 ranges).
+`applyOp` calls `normalizeOperatorRange(...)` and only dispatches effects; the
+engine lost its two ad-hoc range branches. `QUIRKS` is the registry new rules
+must join. Cursor policy (Q04/Q09) is the next extraction.
 
 ### Surface program (Phase A)
 `tools/surface-audit.ts` maps the Grimoire, chapters, oracle cases, unit tests
@@ -108,7 +115,7 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (356 cases, up from 266).
 The bundle gate was raised **in the same commit** from 258,000/82,000 to
-**260,000/83,000**; current build is 259,440 B raw / 81,993 B gzip. This is the
+**260,000/83,000**; current build is 259,523 B raw / 82,029 B gzip. This is the
 documented "pay for itself or raise deliberately" path. Headroom is still
 small (~900 B raw, ~1.1 kB gzip): the next feature must reduce bytes first or
 justify another measured raise.

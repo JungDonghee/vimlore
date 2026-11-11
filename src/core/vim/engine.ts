@@ -5,6 +5,7 @@ import { textObject } from './objects.ts';
 import { tokenAt, tokens } from './wordindex.ts';
 import { allMatches, compilePattern, pickMatch, type Match } from './search.ts';
 import { executeEx } from './ex.ts';
+import { flatRange as flatRangeOf, normalizeOperatorRange } from './normalize.ts';
 import type { BufferSnapshot, Mode, MotionResult, Pos, Register } from './types.ts';
 import { parseSubstituteArgs } from './ex.ts';
 
@@ -837,15 +838,7 @@ export class Vim {
 
   /** Convert a (start,end) pair plus inclusivity into flat [s,e). */
   private flatRange(r: SelRange, inclusive: boolean): [number, number] {
-    const a = this.buf.idx(r.start);
-    const b = this.buf.idx(r.end);
-    if (b >= a) {
-      let end = inclusive ? b + 1 : b;
-      if (!inclusive && r.end.col === 0 && r.end.line > r.start.line) end = b - 1;
-      return [a, Math.max(a, end)];
-    }
-    const end = inclusive ? a + 1 : a;
-    return [b, Math.max(b, end)];
+    return flatRangeOf(this.buf, r, inclusive);
   }
 
   private applyOp(op: Op, r: SelRange): void {
@@ -858,46 +851,9 @@ export class Vim {
     this.opMotionFrom = null;
     this.opMotionTo = null;
     const inclusive = this.rangeInclusive;
-    // Vim's vi-compatible rule: a charwise *delete* spanning lines that ends
-    // at the end of its last line becomes linewise when it starts in the
-    // indent. This is why `2dw`/`de` from column 0 remove whole lines while
-    // `2dw` from inside a word stays charwise. Change/yank and visual do not.
-    let range = r;
-    // Backward charwise range whose cursor sits at column 0: the start line
-    // contributes no characters, so Vim operates linewise on the lines above
-    // it (`cB`/`dB`/`yB` from an empty line change only the previous line).
-    if (
-      !r.linewise &&
-      !r.block &&
-      !this.mode.startsWith('visual') &&
-      r.start.line > r.end.line &&
-      r.start.col === 0 &&
-      r.end.col === 0
-    ) {
-      range = { start: { line: r.end.line, col: 0 }, end: { line: r.start.line - 1, col: 0 }, linewise: true };
-    }
-    if (
-      op.key === 'd' &&
-      !range.linewise &&
-      !range.block &&
-      !this.mode.startsWith('visual') &&
-      range.start.line < range.end.line
-    ) {
-      const [s, e] = this.flatRange(r, inclusive);
-      if (e > s) {
-        const startPos = this.buf.pos(s);
-        const endPos = this.buf.pos(e - 1);
-        const endText = this.buf.line(endPos.line);
-        const tail = endText.slice(endPos.col + 1);
-        if (
-          endPos.line > startPos.line &&
-          tail.trim() === '' &&
-          startPos.col <= M.firstNonBlank(this.buf, startPos.line)
-        ) {
-          range = { start: { line: startPos.line, col: 0 }, end: { line: endPos.line, col: 0 }, linewise: true };
-        }
-      }
-    }
+    // All operator range quirks live in normalize.ts (Q02/Q10 ...). The engine
+    // keeps only the effect dispatch.
+    const range: SelRange = normalizeOperatorRange(this.buf, op.key, r, inclusive, this.mode.startsWith('visual'));
     if (op.key === 'd') this.deleteRange(range, inclusive, op.reg, false);
     else if (op.key === 'c') this.deleteRange(range, inclusive, op.reg, true);
     else if (op.key === 'y') this.yankRange(r, inclusive, op.reg, false, op.doubled, yankMotionKey, fromTextObject);

@@ -159,11 +159,12 @@ Built `tools/surface-audit.ts` + generated [`ENGINE_SURFACE.md`](ENGINE_SURFACE.
 engine-only features and 0 orphan cases. Out-of-scope refusal (Phase D) is the
 remaining half of the closed-world contract.
 
-### Phase B — essence extraction
-Create `normalize.ts` + `cursor.ts`; move Q02–Q04, Q06, Q09, Q10 into them as
-named rules; rewrite `finishOpWithMotion`/`applyOp`/`deleteRange`/`caseRange`/
-`shiftRange` call sites. Acceptance: oracle green at every commit; every
-normalization branch references a quirk ID; `engine.ts` loses branches.
+### Phase B — essence extraction (pilot done)
+`normalize.ts` now owns `flatRange` and Q02/Q10; `applyOp` calls
+`normalizeOperatorRange` and keeps only effect dispatch. The pilot removed the
+two ad-hoc range branches from `engine.ts` with the 356-case oracle green.
+Remaining: Q03/Q04/Q06/Q09 and the cursor policy (`cursor.ts`). Acceptance is
+unchanged: oracle green at every commit, every branch linked to a quirk ID.
 
 ### Phase C — matrix and compose-fuzz
 `tools/matrix.ts` generates systematic cases; `tools/compose-fuzz.ts` generates
@@ -213,8 +214,8 @@ in the campaign engine. This program is how the campaign engine earns the word
 
 1. ~~`tools/surface-audit.ts` + report~~ — done, strict CI gate.
 2. ~~CI native-Vim oracle job~~ — done (`oracle` job: 356 cases + fuzz smoke).
-3. **Phase B pilot (next):** extract **delete normalization** (Q02, Q10) into
-   `normalize.ts`, with the 356 oracle cases as the safety net.
+3. ~~Phase B pilot: delete normalization (Q02/Q10) into `normalize.ts`~~ — done;
+   next is the cursor policy (Q04/Q09) and Q03/Q06 in the same module.
 
 ## 9. One sentence
 

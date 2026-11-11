@@ -37,6 +37,7 @@ npm run lint:levels -- 4   # just chapter 4
 npm test               # unit tests (engine + goals + progress)
 npm run doc-check      # doc numbers/links must match the code (CI gate)
 npm run invariants     # cross-layer command/stage/unlock consistency (CI gate)
+npm run surface        # engine surface audit; --strict is a CI gate
 npm run verify         # unit + lint + tsc + docs + invariants
 npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
@@ -49,7 +50,7 @@ won on the last keystroke in exactly `par` keys. **Never commit red levels.**
 ## Where things live
 
 ```
-src/core/vim/       the emulator (buffer, motions, objects, ex, search, engine)
+src/core/vim/       the emulator (buffer, motions, objects, ex, normalize, engine)
 src/core/game/      session (hearts, keys, coins), goals, progress types
 src/content/        commands.ts (the Grimoire) + chapters/cNN.ts (the game)
 src/ui/             canvas renderer, screens, WebAudio sfx

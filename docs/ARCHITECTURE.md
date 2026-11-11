@@ -69,6 +69,7 @@ curriculum needs, diff-tested against real Vim (`tools/oracle-diff.ts`,
 | `objects.ts` | text objects (`iw aw i" a" i( a( ip ap …`) |
 | `search.ts` | regex compile/match/`pickMatch` for `/ ? n N * #` |
 | `ex.ts` | `executeEx()` — `:s :g :v :d :m :t :sort :normal :set` |
+| `normalize.ts` | operator range normalization (`flatRange`, Q02/Q10) + quirk registry |
 | `wordindex.ts` | word-class tokens shared by word motions and objects |
 | `engine.ts` | `Vim` — the mode/operator state machine that binds it all |
 
@@ -122,6 +123,7 @@ particles (see AGENTS.md, "Renderer notes").
 | `level-lint.ts` | replay every stage solution, assert par and gating |
 | `doctor.ts` | one-command environment check for a brand-new agent |
 | `doc-check.ts` | CI-safe gate: doc numbers/links must match the code |
+| `surface-audit.ts` | map the Grimoire/chapters/oracle/tests/TRIALS to engine evidence; strict CI gate |
 | `gen-docs.ts` | regenerate `docs/LEVELS.md` |
 | `inline.mjs` | fold the Vite build into the single `dist/vimlore.html` |
 | `extract_books.py` | pull text from the source books into `books-text/` (not committed) |
