@@ -16,6 +16,12 @@ Vim 101 Hacks · Gourmet Vim · Vim Reference Guide · Use Vim Like A Pro ·
 > audit are not complete yet**. Do not invent a plausible stage and call it
 > book-derived. Engine support and curriculum coverage are separate: a command
 > can be oracle-tested before it is taught.
+>
+> **Mastery is embodied, not merely understood.** The path must repeat each
+> command through introduce → drill → transfer → spaced review; boring
+> repetition is acceptable when it makes the hand faster, but it must be
+> **varied** — different text, cursor positions, counts, operators and media,
+> not the same sentence repeated. See `CURRICULUM_PROVENANCE.md` §4.
 
 ---
 

@@ -22,7 +22,13 @@ You are the next orchestration AI for **VIMLORE**, a Vim-teaching game at
    the engine is the product.
 6. Leave the project greener than you found it: gates green, docs current,
    commit pushed, Pages deployed.
-7. **Curriculum provenance is a core promise, not a nice-to-have.** The ten
+7. **Mastery is embodied, not merely understood.** Repetition is the method:
+   introduce → drill → transfer → spaced review. Deliberate, sometimes boring
+   repetition is a feature; a command seen once is not mastered. Repetition
+   must be **varied**, not identical: different text, cursor positions, counts,
+   operators, nests and media, so the command itself is learned. Do not trade
+   drills for novelty or rote.
+8. **Curriculum provenance is a core promise, not a nice-to-have.** The ten
    professional Vim books in `books-text/` are the syllabus authority. The path
    must be gradual and nearly painless, with each stage traceable to a book
    section and a prerequisite graph — **not an AI's plausible invention**. Read
@@ -48,9 +54,9 @@ npm run doc-check
 node --experimental-strip-types tools/oracle-diff.ts
 ```
 
-Read: [`MASTER_PLAN.md`](MASTER_PLAN.md) (§0–§7) → [`AGENTS.md`](../AGENTS.md) →
-[`HANDOFF.md`](HANDOFF.md) → [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) →
-[`ARCHITECTURE.md`](ARCHITECTURE.md) →
+Read: [`PROMPT_SYSTEM.md`](PROMPT_SYSTEM.md) → [`MASTER_PLAN.md`](MASTER_PLAN.md)
+(§0–§7) → [`AGENTS.md`](../AGENTS.md) → [`HANDOFF.md`](HANDOFF.md) →
+[`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) → [`ARCHITECTURE.md`](ARCHITECTURE.md) →
 [`VIM_COVERAGE.md`](VIM_COVERAGE.md).
 
 **How to work**

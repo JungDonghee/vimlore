@@ -13,8 +13,8 @@
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **248 oracle cases**, all matching real Vim |
-| gates | oracle 248/248 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK |
-| build | JS 227,092 B · single `dist/vimlore.html` 250,765 B · gzip 79,937 B |
+| gates | oracle 248/248 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK · invariants 0 errors |
+| build | JS 228,810 B · single `dist/vimlore.html` 252,483 B · gzip 80,435 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -77,11 +77,21 @@ this file.
 - c04s3's goal was corrected to Vim's real multi-line `di(` result
   (`connect(` and `)` on separate lines); the old goal only passed because
   `di{`/`di(` joined the closing bracket.
+- **Strict engine invariants + cross-layer invariants are new.** `Vim` has
+  `strict: true` post-key checks (used by oracle/fuzz), and `npm run invariants`
+  checks the Grimoire/chapters/stages graph (0 errors, coverage warnings).
+  `npm run verify` bundles the static gates; CI runs `invariants`.
+- **Prompt/handoff protocol** is now [`PROMPT_SYSTEM.md`](PROMPT_SYSTEM.md); read
+  it before the next task. It standardizes the task packet, evidence, gates,
+  definition of done and handoff schema.
 - **Curriculum provenance audit is incomplete.** All 51 stages declare
   `teaches` and the chapter themes align with the ten books, but per-stage
   section citations, a machine-readable prerequisite graph and pacing metrics do
   not exist yet. See `CURRICULUM_PROVENANCE.md`; do not claim the curriculum is
   fully book-derived.
+- **Per-command repetition/exposure is not measured.** The curriculum principle
+  is embodied mastery via introduce → drill → transfer → spaced review; TRIALS
+  provides drills, but no per-command exposure metric exists yet.
 - Curriculum metadata: every one of the 51 stages now declares `teaches`
   (c08s5 uses `0/j/f` as its maze tools; c01s2 `count`, c09s1 `:d` are grimoire
   entries). 18 older grimoire commands still have no stage that declares them;

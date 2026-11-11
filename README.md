@@ -11,7 +11,7 @@
 **The most complete Vim training terminal ever attempted — a Vim adventure that
 runs on a dead terminal.** That is the destination, not a claim about today: the
 coverage ledger is public. No install, no account, no tracking, no third-party
-requests — one 250 kB page. A keyboard is required; on a phone, turn it sideways.
+requests — one 252 kB page. A keyboard is required; on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
@@ -44,6 +44,10 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 - **The levels are the curriculum.** 10 floors, 51 chambers: motion → tokens →
   operators → objects → visual → search → registers → marks → ex → mastery.
   Each stage exists to make one command feel *necessary*.
+- **Bug-resistant by construction.** Seven rings: real-Vim oracle, strict
+  post-key state invariants, seeded differential fuzzing, per-stage simulation,
+  cross-layer registry invariants, docs/CI/build checks, and a regulated prompt/
+  handoff contract. A red ring stops the release.
 - **Breadth is the product.** 86 grimoire commands today, 51 chambers, 248
   oracle cases — and **no artificial cap**: motions, operators, text objects,
   registers, macros, marks, search, `:s`/`:g`, undo/jumps, visual/block, ex, and

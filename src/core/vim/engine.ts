@@ -54,6 +54,8 @@ export interface VimOptions {
   textwidth?: number;
   tabstop?: number;
   shiftwidth?: number;
+  /** Throw after any feed that leaves the editor in an impossible state. */
+  strict?: boolean;
   onEvent?: (e: VimEvent) => void;
 }
 
@@ -121,6 +123,7 @@ export class Vim {
   relativenumber = false;
   onEvent?: (e: VimEvent) => void;
   gate?: (key: string) => string | null;
+  strict = false;
   jumps: Pos[] = [];
   jumpIndex = -1;
   lastSubstitute: { pat: string; rep: string; flags: string } | null = null;
@@ -137,6 +140,7 @@ export class Vim {
     this.tabstop = opts.tabstop ?? 4;
     this.shiftwidth = opts.shiftwidth ?? 2;
     this.onEvent = opts.onEvent;
+    this.strict = opts.strict ?? false;
     this.bufferStart = this.buf.clone();
     this.clampCursor();
   }
@@ -237,6 +241,14 @@ export class Vim {
   // ------------------------------------------------------------------- input
 
   feed(key: string): void {
+    try {
+      this.feedKey(key);
+    } finally {
+      if (this.strict) this.assertInvariants();
+    }
+  }
+
+  private feedKey(key: string): void {
     if (this.recording && !(this.mode === 'normal' && key === 'q' && this.pending === null)) {
       this.recording.keys.push(key);
     }
@@ -282,6 +294,49 @@ export class Vim {
 
   feedString(keys: string): void {
     for (const k of tokenize(keys)) this.feed(k);
+  }
+
+  /** Structural checks that must hold after every key. Cheap; strict mode only. */
+  checkInvariants(): string[] {
+    const errors: string[] = [];
+    const modes = ['normal', 'insert', 'replace', 'visual', 'visual-line', 'visual-block', 'cmdline', 'search'];
+    if (!modes.includes(this.mode)) errors.push(`bad mode ${String(this.mode)}`);
+    if (!this.buf || !Array.isArray(this.buf.lines) || this.buf.lines.length === 0) {
+      errors.push('empty buffer list');
+      return errors;
+    }
+    for (let i = 0; i < this.buf.lines.length; i++) {
+      if (typeof this.buf.lines[i] !== 'string') {
+        errors.push(`line ${i} is not a string`);
+        break;
+      }
+    }
+    const line = this.buf.line(this.cursor.line);
+    if (this.cursor.line < 0 || this.cursor.line >= this.buf.lineCount) errors.push(`cursor line ${this.cursor.line}/${this.buf.lineCount}`);
+    if (this.cursor.col < 0 || this.cursor.col > line.length) errors.push(`cursor col ${this.cursor.col}/${line.length} on line ${this.cursor.line}`);
+    if (this.visualAnchor) {
+      if (this.visualAnchor.line < 0 || this.visualAnchor.line >= this.buf.lineCount) errors.push('visual anchor line out of range');
+      const al = this.buf.line(this.visualAnchor.line);
+      if (this.visualAnchor.col < 0 || this.visualAnchor.col > al.length) errors.push('visual anchor col out of range');
+    }
+    if (this.count !== '' && !/^[0-9]+$/.test(this.count)) errors.push(`bad count ${this.count}`);
+    if (this.subConfirm) {
+      const c = this.subConfirm;
+      if (c.index < 0 || c.index > c.matches.length) errors.push(`confirm index ${c.index}/${c.matches.length}`);
+      for (const m of c.matches) {
+        if (m.line < 0 || m.line >= c.lines.length || m.col < 0 || m.col + m.len > c.lines[m.line].length) {
+          errors.push('confirm match out of range');
+          break;
+        }
+      }
+    }
+    if (this.jumpIndex < -1 || this.jumpIndex >= this.jumps.length) errors.push(`jump index ${this.jumpIndex}/${this.jumps.length}`);
+    return errors;
+  }
+
+  assertInvariants(): void {
+    const errors = this.checkInvariants();
+    if (errors.length) throw new Error(`Vim invariant violation: ${errors.join('; ')}`);
   }
 
   // -------------------------------------------------------------- normal mode

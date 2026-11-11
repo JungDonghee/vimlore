@@ -23,6 +23,37 @@ Dependencies point **downward only**: `ui` → `game`/`vim`, `game` → `vim`,
 `content` → `game` types. `core/vim` is pure and knows nothing about the game;
 you can run it headless (the tests do).
 
+## Bug-resistant rings
+
+Correctness is layered so a single plausible mistake cannot reach production
+unnoticed. Each ring must pass before the next is trusted:
+
+1. **Real-Vim oracle** (`tools/oracle-diff.ts`, 248 cases): every engine
+   behavior that can be automated is diffed against `vim -u NONE`.
+2. **Strict post-key invariants** (`Vim({ strict: true })`): after every single
+   key, `Vim.assertInvariants()` checks mode, cursor bounds, visual anchor,
+   pending count, confirm matches and jump index. The oracle and fuzzer run with
+   strict mode on; an impossible state throws immediately instead of surfacing
+   later as a weird cursor.
+3. **Seeded differential fuzzing** (`tools/fuzz.ts`): random ASCII buffers ×
+   random key sequences, sentinel-based Vim-error detection. The six regression
+   seeds are content-clean; the remaining cursor-only edges are documented, not
+   hidden.
+4. **Level simulation** (`npm run lint:levels`): every one of the 51 stages is
+   replayed through the real `Session` with its chapter gate; it must win on the
+   last keystroke in exactly `par`.
+5. **Cross-layer invariants** (`npm run invariants`): the Grimoire, chapter
+   unlocks, stage `teaches`, duplicate ids, par/solution and bilingual metadata
+   are checked as one graph; coverage gaps are warnings, inconsistencies are
+   errors.
+6. **Docs/build/CI**: `tsc`, `doc-check`, `npm run build`, CI upload and the
+   Pages asset-hash check. No absolute asset paths, no secrets, no server.
+7. **Prompt/handoff contract**: [`PROMPT_SYSTEM.md`](PROMPT_SYSTEM.md) standardizes
+   the task packet, evidence, definition of done and handoff schema so the next
+   AI cannot mistake prose for proof.
+
+A red ring stops the line. Fix or revert; never commit a “mostly green” state.
+
 ## core/vim — the engine
 
 The heart of the project. A faithful re-implementation of the Vim commands the

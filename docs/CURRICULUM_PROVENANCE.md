@@ -120,7 +120,70 @@ For each stage record:
 - why `par` is the elegant count;
 - what the player should transfer to real Vim.
 
-### Step 4 — measure “painless”
+### Step 4 — overlearning is mandatory (even when it is boring)
+
+“I understand it” is not the target. The target is **embodied recall**: the hand
+reaches for `ciw`, `da{` or `gUap` without consciously translating it. This
+requires repetition, including repetition that is not novel or exciting.
+
+Every concept must go through all four:
+
+1. **introduce** — one stage, one insight, visible LEARN/GOAL/PAR;
+2. **drill** — short repeated execution (stage restart, TRIALS, par chase);
+3. **transfer** — use it inside a different problem, not the same sentence;
+4. **spaced review** — encounter it again after other concepts, as a review
+   beat, not only at the moment it was taught.
+
+Rules:
+
+- A command taught once and never used again is **not mastered**. It is a
+  coverage claim, not a curriculum claim.
+- Prefer boring, correct repetition over a clever new puzzle that does not make
+  the hand faster.
+- Repetition must be **deliberate**: clear target, immediate feedback, and
+  variation in context; not random flailing.
+- The 3-star `par` is the natural drill loop: replay the elegant solution until
+  it is automatic.
+- TRIALS and WEAKNESS are the current drills; they must keep every generator
+  verified and must not replace the authored curriculum.
+
+#### Varied repetition, not rote repetition
+
+Repeating the exact same sentence is memorizing an answer, not learning a
+command. A command must be **adapted to**, not pattern-matched from one layout.
+Every drill should vary at least two of these axes:
+
+| axis | examples for `ciw` / `da{` |
+|---|---|
+| target shape | 1-char word, long word, punctuation, underscores, digits |
+| cursor position | start / middle / end of the word, on whitespace |
+| operator | `d`, `c`, `y`, `gu`, `gU`, `g~`, visual, count |
+| direction / range | one word, `2iw`, across a line, at BOF/EOF |
+| nest | plain word, inside quotes, inside brackets, inside a tag |
+| medium | prose, code, log, JSON, table, shell command |
+| mode | normal, visual, visual-line, visual-block, insert boundary |
+| session | same drill again later, after other concepts (spacing) |
+
+Drill rules:
+
+- change the **text and cursor position**, not just the instruction;
+- keep the target command constant inside a drill set, but make the player
+  *choose* it against distractors;
+- never let a single fixed sentence be the only evidence of mastery;
+- after success, revisit in a different medium and at a different length;
+- a drill may be boring; it may not be identical every time.
+
+**Mastery evidence** is therefore: chooses the command in an unfamiliar but
+structurally similar situation, executes it without translating, and can use it
+with a count/operator/visual variant — not “cleared the same stage five times”.
+
+The current 51 stages + TRIALS provide some variation, but **per-command
+context coverage is not measured**. A future audit should record, per command:
+distinct contexts, operators, counts, media and spaced reviews, with a target
+such as ≥3 distinct contexts across ≥2 sessions before “mastered”. Until then,
+do not claim the game guarantees muscle memory.
+
+### Step 5 — measure “painless”
 
 Proposed acceptance metrics (tune after baseline):
 
@@ -136,7 +199,7 @@ Proposed acceptance metrics (tune after baseline):
 These are curriculum metrics, not engine metrics. They belong in the audit
 report, not in `lint:levels`.
 
-### Step 5 — close gaps
+### Step 6 — close gaps
 
 List book topics not covered by the 51 (see §6), rank by teaching value, and add
 them only in a later curriculum program. Do not silently treat “not covered” as

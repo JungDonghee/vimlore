@@ -232,7 +232,7 @@ if (expected.length !== cases.length) {
 // ---- engine ---------------------------------------------------------------
 
 function runEngine(c: Case): { lines: string[]; cursor: [number, number] } {
-  const v = new Vim({ text: c.text, cursor: { line: c.cursor[0] - 1, col: c.cursor[1] } });
+  const v = new Vim({ text: c.text, cursor: { line: c.cursor[0] - 1, col: c.cursor[1] }, strict: true });
   v.feedString(c.keys);
   return { lines: v.buf.lines.slice(), cursor: [v.cursor.line + 1, v.cursor.col] };
 }

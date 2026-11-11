@@ -13,7 +13,10 @@
     "oracle": "node --experimental-strip-types tools/oracle-diff.ts",
     "fuzz": "node --experimental-strip-types tools/fuzz.ts",
     "doc-check": "node --experimental-strip-types tools/doc-check.ts",
-    "doctor": "node --experimental-strip-types tools/doctor.ts"
+    "doctor": "node --experimental-strip-types tools/doctor.ts",
+    "invariants": "node --experimental-strip-types tools/invariants.ts",
+    "verify": "npm test && npm run lint:levels && npx tsc --noEmit && npm run doc-check && npm run invariants",
+    "verify:full": "npm run verify && npm run oracle && node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

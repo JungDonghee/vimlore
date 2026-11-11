@@ -1,7 +1,8 @@
 # AGENTS.md — read this first
 
-> **진행 중인 작업을 이어받는 중이라면** [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md)를
-> 가장 먼저 읽어라. **우선순위·5시간 슬라이스·태스크 보드·인수인계 규칙은 그 파일이
+> **진행 중인 작업을 이어받는 중이라면** [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md),
+> [`docs/PROMPT_SYSTEM.md`](docs/PROMPT_SYSTEM.md), [`docs/CURRICULUM_PROVENANCE.md`](docs/CURRICULUM_PROVENANCE.md)를
+> 먼저 읽어라. **우선순위·5시간 슬라이스·태스크 보드·인수인계 규칙은 그 파일이
 > 소유한다.** 그다음 [`docs/HANDOFF.md`](docs/HANDOFF.md)(현재 상태·열린 버그)와
 > [`docs/EVALUATION.md`](docs/EVALUATION.md)(리스크·완성 전략)를 읽어라.
 > 이 파일은 영속 불변식이다.
@@ -35,6 +36,8 @@ npm run lint:levels    # validate EVERY stage (par, solution, gating, win)
 npm run lint:levels -- 4   # just chapter 4
 npm test               # unit tests (engine + goals + progress)
 npm run doc-check      # doc numbers/links must match the code (CI gate)
+npm run invariants     # cross-layer command/stage/unlock consistency (CI gate)
+npm run verify         # unit + lint + tsc + docs + invariants
 npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
 ```
@@ -79,6 +82,10 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 8. **The ten books are the syllabus.** Curriculum order and content must be
    traceable to `books-text/` (see `docs/CURRICULUM_PROVENANCE.md`); do not
    substitute an AI-invented lesson for book analysis.
+9. **Mastery is embodied.** Introduce → drill → transfer → spaced review.
+   Deliberate, sometimes boring repetition is a feature; a command seen once is
+   not mastered. Repetition must be **varied** (text, cursor position, count,
+   operator, nest, medium), never the same sentence over and over.
 
 ## Performance budget
 
@@ -137,9 +144,9 @@ introduce per-frame allocation in `render()`.
 The authoritative matrix of what the engine does and does not do is
 [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **248/248**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
-`<C-r>`/`<C-o>`). Missing on purpose: windows/buffers, folds, completion,
-`:!`, quickfix/LSP, Vimscript/Lua, and viewport motions (`zz`, `zt`, exact
-`H/M/L`). `gn` / `g*` / `g#`, `\zs`/`\ze` and interactive `:s///c` are
+`<C-r>`/`<C-o>`). Not in the current single-buffer slice: multi-buffer/files/
+windows/tabs (deferred by design, `FUTURE_EDITOR.md`), folds, completion, `:!`,
+quickfix/LSP, Vimscript/Lua, and viewport motions (`zz`, `zt`, exact `H/M/L`). `gn` / `g*` / `g#`, `\zs`/`\ze` and interactive `:s///c` are
 implemented. Next Tier 2: `g;`/`g,`, `=` indent.
 
 **Buffers, files, splits and tabs are deliberately deferred, not rejected.**

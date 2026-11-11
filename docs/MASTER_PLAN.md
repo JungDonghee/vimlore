@@ -1,7 +1,7 @@
 # MASTER PLAN — VIMLORE completion program
 
 > **Status: ACTIVE** · Orchestrator: the AI that wrote this file (2026-11-11)
-> **Read order for the next AI:** this file → [`AGENTS.md`](../AGENTS.md) →
+> **Read order for the next AI:** [`PROMPT_SYSTEM.md`](PROMPT_SYSTEM.md) → this file → [`AGENTS.md`](../AGENTS.md) →
 > [`ARCHITECTURE.md`](ARCHITECTURE.md) → [`VIM_COVERAGE.md`](VIM_COVERAGE.md) →
 > [`HANDOFF.md`](HANDOFF.md) → [`CURRICULUM_PROVENANCE.md`](CURRICULUM_PROVENANCE.md) →
 > [`EVALUATION.md`](EVALUATION.md).
@@ -37,7 +37,13 @@
    no drift, no "I think this was fixed". This file is that handoff.
 7. This program starts with a **5-hour slice** (§5). Everything else is queued,
    not forgotten.
-8. **The curriculum must be book-derived, not AI-plausible.** The ten
+8. **Overlearning is the method.** Mental understanding is not enough; commands
+   must be repeated through introduce → drill → transfer → spaced review until
+   they are embodied. Boring-but-deliberate repetition is acceptable, but it
+   must be **varied repetition**: different text, cursor positions, counts,
+   operators, nests and media, so the player adapts to the command itself — not
+   rote memorization of one sentence. Do not remove drills in favor of novelty.
+9. **The curriculum must be book-derived, not AI-plausible.** The ten
    professional Vim books in `books-text/` are the syllabus authority; every
    stage must trace to a book section and the prerequisite graph must support a
    gradual, nearly painless path. Read
@@ -71,7 +77,7 @@
 | engine oracle | **248/248** vs `vim -u NONE` (142 at session start, +106 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 227,092 B · single `dist/vimlore.html` 250,765 B · gzip 79,937 B |
+| build | JS 228,810 B · single `dist/vimlore.html` 252,483 B · gzip 80,435 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -264,6 +270,9 @@ rest to the task board. Never commit a red level or a failing oracle.
 - **Curriculum drift**: a plausible level is not a book-derived level. Every
   curriculum change needs a section citation and a prerequisite check; see
   `CURRICULUM_PROVENANCE.md`. Do not “fix” a gap by inventing a lesson.
+- **Novelty drift**: a new puzzle is not progress if it replaces deliberate
+  repetition. Commands must be drilled and revisited; see §4 of the provenance
+  doc.
 - **Deploy**: Pages builds from `main`; a broken build blocks the live site.
   Build locally before pushing.
 
