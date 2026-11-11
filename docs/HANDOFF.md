@@ -26,18 +26,18 @@ this file.
 ### Engine correctness (the big win)
 - `tools/fuzz.ts` added: seeded differential fuzzer, one shared `vim -es`
   process, sentinel-based detection of Vim aborts. `npm run fuzz`.
-- **91 new oracle cases** (142 → 233): operator ranges with `gg`/`G`/`{`/`}`,
+- **111 new oracle cases** (142 → 253): operator ranges with `gg`/`G`/`{`/`}`,
   counts on doubled operators, visual-block `~`/`>`/`<`, `cw`/`cW`/text-object
   edges, `vlB<` visual-EOL, `2daW`/`2daw`, sentence/paragraph boundaries,
   `gn`/`g*`/`g#`, `gI`/`gi`, and `\zs`/`\ze`.
 - Fuzz seed 7: **71 → 0**, seed 11: **4 → 0**, seed 23: **8 → 0**.
   **Seeds 7/11/23 are fully clean: 0 divergences, buffer and cursor.**
-  Extended seeds 31/47/101 also have **0 buffer-content divergences**; only 11
-  cursor-only edges remain (`3g~gg`, `2gUG`, `>ap`, `gUgg`, `2gu(`, `yk`,
-  `yi(`, `di{`, `<C-v>b(`/`w>`). Fixed this pass: counted `iW` across lines,
-  counted around-word from whitespace (`2daw`/`3gUaw`), `d$`, `di{` content,
-  `gU{`, `gUaW`, backward `dFa`/`gUF`. The harness sets `expandtab` to match
-  the game's space indent.
+  Seeds 31/47/101 have **0 buffer-content divergences** (11 cursor-only edges).
+  Seeds 131/173/211 expose a new content frontier: `2diw`/`2diW`, `2caw`,
+  `g~0`, `d)`, `3ciw`, `3gUh`. Fixed in recent passes: counted `iW` across
+  lines, counted around-word from whitespace, `2ciw`, `d$`, `di{` content,
+  `gU{`, `gUaW`, backward `dFa`/`gUF`, simple `=`/`gg=G`. The harness sets
+  `expandtab` to match the game's space indent.
 
 ### UI / renderer
 - `Renderer` now bakes one **opaque composite frame** (background, highlights,
@@ -67,11 +67,12 @@ this file.
 ### Advanced coverage delivered
 - `gn` (visual selection, operator-pending `dgn`/`cgn`, counts, dot repeat),
   `g*`/`g#` (word under cursor without boundaries), `2*` counts.
-- `gI` / `gi`, `\zs` / `\ze` in search and `:s`, and interactive `:s///c`
-  (y/n/a/q/l, g+c, Esc abort; prompt + CONFIRM statusline).
+- `gI` / `gi`, `\zs` / `\ze` in search and `:s`, interactive `:s///c`
+  (y/n/a/q/l, g+c, Esc abort; prompt + CONFIRM statusline), and simple
+  brace-depth `=`/`gg=G` (oracle 253).
 
 ### Not done (queued, do not pretend otherwise)
-- Change list (`g;`/`g,`), `=` indent.
+- Change list (`g;`/`g,`).
 - Keep seeds 7/11/23 clean; extended seeds 31/47/101 are the next correctness
   frontier (11 cursor-only edges listed in `MASTER_PLAN.md` §2.1).
 - c04s3's goal was corrected to Vim's real multi-line `di(` result

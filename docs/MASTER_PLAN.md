@@ -83,11 +83,12 @@
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
 **What changed in slice 1:** a seeded differential fuzzer (`tools/fuzz.ts`),
-91 new oracle cases and a large engine-correctness pass (operator ranges with
+111 new oracle cases and a large engine-correctness pass (operator ranges with
 `gg`/`G`/`{`/`}`, counts on doubled operators, visual-block `~`/`>`/`<`,
 word/sentence/paragraph edges, visual find `f/F/t/T`, `vlB<`, `2daW`); a
 composite-frame renderer (**23.5 → 52–57 fps** desktop); `gn`/`g*`/`g#`,
-`gI`/`gi` and `\zs`/`\ze`; a Vim-like top-left window with `~` fill,
+`gI`/`gi`, `\zs`/`\ze`, interactive `:s///c` and simple brace-depth `=`; a
+Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
 an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing; Vim-style horizontal/
 vertical viewport scrolling; an **F1 primer**
@@ -103,19 +104,27 @@ so a Vim error (which aborts `normal!`) is skipped rather than reported as a bug
 | 7 | 683 | 317 | **0** | **0** |
 | 11 | 662 | 338 | **0** | **0** |
 | 23 | 651 | 349 | **0** | **0** |
+| 31 | 644 | 351 | **5** | **0** |
+| 47 | 681 | 318 | **1** | **0** |
+| 101 | 634 | 361 | **5** | **0** |
+| 131 | 670 | 325 | **5** | **4** |
+| 173 | 629 | 370 | **1** | **1** |
+| 211 | 665 | 329 | **6** | **2** |
 
-**Seeds 7/11/23 are completely clean: 0 divergences (buffer and cursor).**
-Extended seeds 31/47/101 also have 0 content edges; only cursor-only edges remain (see below). Treat the clean set
-as a regression corpus, not proof of total coverage.
+**Seeds 7/11/23 are completely clean; seeds 31/47/101 have 0 content edges.**
+Seeds 131/173/211 expose a new content frontier: `2diw`/`2diW`, `2caw`, `g~0`,
+`d)`, `3ciw`, `3gUh` (expected/actual in the fuzz repro files). Treat the clean
+set as a regression corpus, not proof of total coverage.
 Also fixed: backward sentence motion at blank lines (`V(y`), `2yaW`, `<i(`
 empty-object shift, `vlB<`, `Vku`, `gUap`, `dt(`, `2cw`/`cw`, `3cW`, visual
 `$`, case-change cursors, block virtual column, `2daW`/`2daw`, `d$` on an
 empty line.
 
-Extended-seed repros (next session) are cursor-only: `3g~gg`, `2gUG`, `>ap`,
-`gUgg`, `2gu(`, `yk`, `yi(`, `di{`, `<C-v>b(`/`w>`. Fixed this pass: counted
+Remaining cursor-only repros (seeds 31/47/101): `3g~gg`, `2gUG`, `>ap`,
+`gUgg`, `2gu(`, `yk`, `yi(`, `di{`, `<C-v>b(`/`w>`. New-seed content repros:
+`2diw`/`2diW`, `2caw`, `g~0`, `d)`, `3ciw`, `3gUh`. Fixed this pass: counted
 `iW` across lines, counted around-word from whitespace (`2daw`/`3gUaw`), `2ciw`,
-`d$`,
+`d$`, `=`/`gg=G`,
 `di{` content, `gU{`, `gUaW`, backward `dFa`/`gUF`. The oracle/fuzz harness uses
 `expandtab`, matching the game's space indent; c04s3 now expects Vim's real
 multi-line `di(` result.
