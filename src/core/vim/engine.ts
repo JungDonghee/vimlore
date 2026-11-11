@@ -672,6 +672,8 @@ export class Vim {
   }
 
   private applyOp(op: Op, r: SelRange): void {
+    const fromTextObject = this.fromTextObject;
+    this.fromTextObject = false;
     const inclusive = this.rangeInclusive;
     if (op.key === 'd') this.deleteRange(r, inclusive, op.reg, false);
     else if (op.key === 'c') this.deleteRange(r, inclusive, op.reg, true);
@@ -679,9 +681,9 @@ export class Vim {
     else if (op.key === '>') this.shiftRange(r, 1);
     else if (op.key === '<') this.shiftRange(r, -1);
     else if (op.key === '=') this.say('no indent rules here', 'info');
-    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle', false, op.doubled);
-    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower', false, op.doubled);
-    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper', false, op.doubled);
+    else if (op.key === 'g~') this.caseRange(r, inclusive, 'toggle', false, op.doubled, fromTextObject);
+    else if (op.key === 'gu') this.caseRange(r, inclusive, 'lower', false, op.doubled, fromTextObject);
+    else if (op.key === 'gU') this.caseRange(r, inclusive, 'upper', false, op.doubled, fromTextObject);
     else if (op.key === 'gq' || op.key === 'gw') this.formatRange(r);
     this.resetPending(false);
     this.afterUnit();
@@ -1189,7 +1191,9 @@ export class Vim {
     this.afterUnit();
   }
 
-  private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper', visual = false, doubled = false): void {
+  private fromTextObject = false;
+
+  private caseRange(r: SelRange, inclusive: boolean, mode: 'toggle' | 'lower' | 'upper', visual = false, doubled = false, fromTextObject = false): void {
     const before = this.snapshot();
     const fn0 = mode === 'upper' ? (c: string) => c.toUpperCase() : mode === 'lower' ? (c: string) => c.toLowerCase() : (c: string) => (c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase());
     if (r.block) {
@@ -1234,7 +1238,8 @@ export class Vim {
         if (l1 === l2) this.cursor = { line: l1, col: 0 };
         else if (this.cursor.line === l1) this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
         else this.cursor = { line: l1, col: 0 };
-      } else if (doubled) this.cursor = l1 === l2 ? { line: l1, col: M.firstNonBlank(this.buf, l1) } : M.moveTo(this.buf, this.cursor);
+      } else if (fromTextObject) this.cursor = { line: l1, col: 0 };
+      else if (doubled) this.cursor = l1 === l2 ? { line: l1, col: M.firstNonBlank(this.buf, l1) } : M.moveTo(this.buf, this.cursor);
       else if (l1 === l2) this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
       else this.cursor = M.moveTo(this.buf, { line: l1, col: this.cursor.col });
     } else {
@@ -2243,10 +2248,12 @@ export class Vim {
           }
         }
         if (obj.linewise && op.key !== 'c' && op.key !== 'y' && op.key !== 'd') {
+          this.fromTextObject = true;
           this.applyOp(op, { start, end, linewise: true });
           return;
         }
         this.rangeInclusive = true;
+        this.fromTextObject = true;
         this.applyOp(op, { start, end, linewise: obj.linewise === true });
         return;
       }

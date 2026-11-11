@@ -303,5 +303,7 @@ export const CASES: VimCase[] = [
 
   { name: 'Vku cursor', text: 'one two\nthree four', cursor: [2, 9], keys: 'Vku' },
 
+  { name: 'gUap cursor', text: 'one two\nthree four', cursor: [1, 5], keys: 'gUap' },
+
   // (ex commands are covered by tests/vim.test.ts; they cannot run through :normal in -es)
 ];
