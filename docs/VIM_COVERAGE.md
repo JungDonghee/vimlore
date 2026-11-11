@@ -69,7 +69,8 @@ ranges `% . $ N 'a , ; + -`. Command-line editing has `<BS>`, `<C-w>`, `<C-u>`,
 | filters | `!{motion}`, `:!` | no shell |
 | tooling | quickfix, `:vimgrep`, ctags, LSP, treesitter | Neovim-only, out of scope |
 | scripting | Vimscript/Lua, `:map`, autocmds, plugins | the game *is* the plugin |
-| misc | `:s///c`, `zz/zt/zb`, `H/M/L` exact semantics, `ZZ/ZQ`, mouse | viewport/mouse do not exist |
+| interactive substitute | `:s///c` with y/n/a/q/l, `g`+`c`, Esc abort | prompt/status integrated; oracle cannot automate the confirmation keys |
+| misc | `zz/zt/zb`, `H/M/L` exact semantics, `ZZ/ZQ`, mouse | viewport/mouse do not exist |
 
 ## If you need a missing feature
 

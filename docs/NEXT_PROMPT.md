@@ -71,7 +71,7 @@ Read: [`MASTER_PLAN.md`](MASTER_PLAN.md) (§0–§7) → [`AGENTS.md`](../AGENTS
 
 ```
 DONE:    <task ids>
-GATES:   oracle N/N · unit tests 23 · lint 51 stages · tsc 0 · doc-check OK · build OK
+GATES:   oracle N/N · unit tests 24 · lint 51 stages · tsc 0 · doc-check OK · build OK
 PERF:    desktop x1 __ fps (before __) · phone x4 __ fps (before __)
 UI:      screenshots <paths> · audit <result>
 FIXED:   <bugs + oracle case names>
@@ -80,7 +80,8 @@ NOTES:   <surprises, decisions, next step>
 ```
 
 **Current state** (update this from `MASTER_PLAN.md` §2, never trust this copy):
-slice 1 + Tier 1 + the fuzz-fix pass are landed: oracle 243/243, 51 stages, 84
-commands, desktop 53–56 fps, live and deployed. `gn`/`g*`/`g#` shipped; slice 2
-starts with the remaining fuzz edges, `g;`/`g,`, `:s///c`, and curriculum
-metadata. The board is authoritative.
+slice 1 + Tier 1 + the fuzz-fix pass are landed: oracle 243/243, 51 stages, 86
+commands, desktop 52–57 fps, live and deployed. `gn`/`g*`/`g#`, `\zs`/`\ze`,
+`gi`/`gI` and interactive `:s///c` shipped. Slice 2 starts with the remaining
+fuzz edges, `g;`/`g,`, `=` indent and the bundle/60fps budget. The board is
+authoritative.

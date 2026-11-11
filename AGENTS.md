@@ -133,9 +133,9 @@ The authoritative matrix of what the engine does and does not do is
 [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md). The oracle is **243/243**
 against a real vim (jumplist, `(`/`)`, `<C-a>`/`<C-x>` with octal/hex, insert
 `<C-r>`/`<C-o>`). Missing on purpose: windows/buffers, folds, completion,
-`:!`, quickfix/LSP, Vimscript/Lua, `:s///c`, and viewport motions (`zz`, `zt`,
-exact `H/M/L`). `gn` / `g*` / `g#` and `\zs`/`\ze` are implemented. Next Tier 2:
-`g;`/`g,`, interactive `:s///c`, `gi`, `=` indent.
+`:!`, quickfix/LSP, Vimscript/Lua, and viewport motions (`zz`, `zt`, exact
+`H/M/L`). `gn` / `g*` / `g#`, `\zs`/`\ze` and interactive `:s///c` are
+implemented. Next Tier 2: `g;`/`g,`, `gi`, `=` indent.
 
 ## Shipping
 

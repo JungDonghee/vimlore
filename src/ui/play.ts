@@ -206,7 +206,8 @@ export class PlayScreen {
     const vim = this.session.vim;
     const m = vim.mode;
     const label =
-      m === 'insert' ? '-- INSERT --'
+      vim.confirming ? '-- CONFIRM --'
+      : m === 'insert' ? '-- INSERT --'
       : m === 'replace' ? '-- REPLACE --'
       : m === 'visual' ? '-- VISUAL --'
       : m === 'visual-line' ? '-- V-LINE --'
@@ -214,7 +215,7 @@ export class PlayScreen {
       : m === 'cmdline' ? ':'
       : m === 'search' ? '/'
       : '-- NORMAL --';
-    const kind = m === 'insert' || m === 'replace' ? 'insert' : m === 'normal' ? 'normal' : 'visual';
+    const kind = vim.confirming ? 'visual' : m === 'insert' || m === 'replace' ? 'insert' : m === 'normal' ? 'normal' : 'visual';
     this.modeEl.textContent = label;
     this.modeEl.className = `mode ${kind}`;
     this.posEl.textContent = `${vim.cursor.line + 1},${vim.cursor.col + 1}`;
@@ -447,6 +448,11 @@ export class PlayScreen {
 
   private showEcho(key: string): void {
     const vim = this.session.vim;
+    if (vim.confirming && vim.confirmPrompt) {
+      this.echo.textContent = vim.confirmPrompt;
+      this.echo.classList.add('on');
+      return;
+    }
     if (vim.mode === 'insert' || vim.mode === 'replace') {
       // The statusline already says INSERT; do not echo the whole insert text.
       this.echo.classList.remove('on');

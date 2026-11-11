@@ -138,7 +138,9 @@ export class Session {
   /** Returns false when the key was swallowed by the command gate. */
   feed(key: string): boolean {
     if (this.status !== 'playing') return false;
-    if (!this.keyAllowed(key)) {
+    // Interactive :s///c owns y/n/a/q/l even when those letters are not
+    // unlocked as normal-mode skills.
+    if (!this.vim.confirming && !this.keyAllowed(key)) {
       this.emit({ type: 'locked', key, message: this.lockedMessage(key) });
       return false;
     }

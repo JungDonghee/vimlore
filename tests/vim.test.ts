@@ -200,3 +200,45 @@ test('the space bar types a space in insert and command-line modes', () => {
   for (const k of [':', 's', '/', 'a', 'a', 'a', '<Space>', 'b', 'b', 'b', '/', 'o', 'k', '/', '<CR>']) w.feed(k);
   assert.equal(w.text, 'ok');
 });
+
+test('interactive :s///c confirms each match', () => {
+  const v = new Vim({ text: 'foo foo' });
+  v.feedString(':s/foo/bar/gc<CR>');
+  assert.equal(v.confirming, true);
+  assert.equal(v.text, 'foo foo');
+  assert.match(v.confirmPrompt ?? '', /bar/);
+  v.feed('y');
+  assert.equal(v.text, 'bar foo');
+  assert.equal(v.confirming, true);
+  v.feed('n');
+  assert.equal(v.text, 'bar foo');
+  assert.equal(v.confirming, false);
+  v.feedString('u');
+  assert.equal(v.text, 'foo foo');
+
+  const all = new Vim({ text: 'foo foo' });
+  all.feedString(':s/foo/bar/gc<CR>a');
+  assert.equal(all.text, 'bar bar');
+
+  const abort = new Vim({ text: 'foo' });
+  abort.feedString(':s/foo/bar/c<CR><Esc>');
+  assert.equal(abort.text, 'foo');
+  assert.equal(abort.confirming, false);
+
+  // Confirm keys bypass the skill gate: `a` need not be an unlocked motion.
+  const st: Stage = {
+    id: 'sc',
+    name: { en: 's', ko: 's' },
+    brief: { en: 's', ko: 's' },
+    text: 'foo foo',
+    goal: { type: 'exact', text: 'bar bar' },
+    par: 20,
+    solution: ':s/foo/bar/gc<CR>a',
+  };
+  const s = new Session({ stage: st, chapterIndex: 0, allowed: new Set([':']) });
+  for (const k of [':', 's', '/', 'f', 'o', 'o', '/', 'b', 'a', 'r', '/', 'g', 'c', '<CR>']) s.feed(k);
+  assert.equal(s.vim.confirming, true);
+  s.feed('a');
+  assert.equal(s.vim.text, 'bar bar');
+  assert.equal(s.status, 'won');
+});

@@ -58,8 +58,8 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine oracle | **243/243** vs `vim -u NONE` (142 at session start, +101 cases) |
 | level lint | **51 stages valid** |
-| unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 223,570 B · single `dist/vimlore.html` 247,243 B · gzip 79,010 B |
+| unit tests | **24 pass**; `tsc --noEmit` clean; `doc-check` OK |
+| build | JS 226,478 B · single `dist/vimlore.html` 250,151 B · gzip 79,750 B |
 | perf (headless) | desktop 1280×800: **52–57 fps** (x1), 51–53 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -118,9 +118,9 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 - Both must work with counts, operators, visual mode and `.` repeat.
 
 **Tier 2 — next slice:**
-`g;` / `g,` change list · `:s///c` interactive confirm (needs UI prompt) ·
-`\zs` / `\ze` · `gi` / `gI` · `=` simple indent (`gg=G`, no filetype rules) ·
-`:earlier` / `:later` (linear undo is enough for now).
+`g;` / `g,` change list · `=` simple indent (`gg=G`, no filetype rules) ·
+`:earlier` / `:later` (linear undo is enough for now). `\zs`/`\ze`, `gi`/`gI`
+and interactive `:s///c` are already implemented.
 
 **Tier 3 — later, only if a stage needs it:**
 `zz`/`zt`/`zb` and exact `H/M/L` (needs a viewport model) · folds · completion ·

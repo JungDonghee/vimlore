@@ -70,6 +70,20 @@ const LINE_MOTIONS = new Set(['j', 'k', '+', '-', '_', CR, ESC]);
  *   representation of a change.
  * - Motions return a destination + kind; operators convert that to a range.
  */
+interface SubMatch { line: number; col: number; len: number; }
+
+interface SubConfirm {
+  before: BufferSnapshot;
+  lines: string[];
+  matches: SubMatch[];
+  index: number;
+  replacement: string;
+  jsRep: string;
+  source: string;
+  flags: string;
+  applied: number;
+}
+
 export class Vim {
   buf: Buffer;
   cursor: Pos;
@@ -110,6 +124,7 @@ export class Vim {
   jumps: Pos[] = [];
   jumpIndex = -1;
   lastSubstitute: { pat: string; rep: string; flags: string } | null = null;
+  private subConfirm: SubConfirm | null = null;
   readonly bufferStart: Buffer;
   /** Set by the game layer when a level needs a specific notion of "word". */
   version = 0;
@@ -202,6 +217,19 @@ export class Vim {
     return this.cmdKeys.join('');
   }
 
+  /** Prompt for an interactive `:s///c`, or null. */
+  get confirmPrompt(): string | null {
+    const c = this.subConfirm;
+    if (!c) return null;
+    const m = c.matches[c.index];
+    if (!m) return null;
+    return `replace with ${c.replacement}? (y/n/a/q/l)`;
+  }
+
+  get confirming(): boolean {
+    return this.subConfirm !== null;
+  }
+
   get awaitingKey(): boolean {
     return this.pending !== null || this.op !== null || this.count !== '' || this.pendingReg !== null;
   }
@@ -213,6 +241,12 @@ export class Vim {
       this.recording.keys.push(key);
     }
     if (!this.replaying) this.cmdKeys.push(key);
+
+    // `:s///c` owns the keyboard until y/n/a/q/l/Esc.
+    if (this.subConfirm) {
+      this.confirmKey(key);
+      return;
+    }
 
     // Gate every key in normal/visual modes so a not-yet-unlocked skill cannot
     // be reached through `:normal`, macros or dot-repeat either. Insert, replace
@@ -2470,6 +2504,109 @@ export class Vim {
     return out;
   }
 
+  private subReplacement(c: SubConfirm, line: string, m: SubMatch): string {
+    const re = new RegExp(c.source, c.flags + 'y');
+    const rest = line.slice(m.col);
+    const out = rest.replace(re, c.jsRep);
+    return out.slice(0, out.length - rest.slice(m.len).length);
+  }
+
+  private applySubMatch(): void {
+    const c = this.subConfirm;
+    if (!c) return;
+    const m = c.matches[c.index];
+    if (!m) return;
+    const line = c.lines[m.line];
+    const text = this.subReplacement(c, line, m);
+    c.lines[m.line] = line.slice(0, m.col) + text + line.slice(m.col + m.len);
+    const delta = text.length - m.len;
+    if (delta !== 0) {
+      for (let i = c.index + 1; i < c.matches.length; i++) {
+        const later = c.matches[i];
+        if (later.line === m.line && later.col > m.col) later.col += delta;
+      }
+    }
+    c.applied++;
+    this.buf.setLines(c.lines);
+    this.cursor = { line: m.line, col: m.col };
+    this.wantColValue = this.cursor.col;
+  }
+
+  private nextSubMatch(): void {
+    const c = this.subConfirm;
+    if (!c) return;
+    c.index++;
+    if (c.index >= c.matches.length) {
+      this.finishSubConfirm();
+      return;
+    }
+    const m = c.matches[c.index];
+    this.cursor = { line: m.line, col: m.col };
+    this.wantColValue = this.cursor.col;
+    this.echo(this.confirmPrompt ?? '', 'info');
+  }
+
+  private finishSubConfirm(): void {
+    const c = this.subConfirm;
+    if (!c) return;
+    this.subConfirm = null;
+    if (c.applied > 0) {
+      this.buf.setLines(c.lines);
+      this.commit(c.before, 'substitute');
+      this.echo(`${c.applied} substitution${c.applied === 1 ? '' : 's'}`, 'good');
+    } else {
+      this.buf.setLines(c.before.lines);
+      this.cursor = { ...c.before.cursor };
+      this.echo('0 substitutions', 'info');
+    }
+    this.afterUnit();
+  }
+
+  private abortSubConfirm(): void {
+    const c = this.subConfirm;
+    if (!c) return;
+    this.subConfirm = null;
+    this.buf.setLines(c.before.lines);
+    this.cursor = { ...c.before.cursor };
+    this.wantColValue = this.cursor.col;
+    this.echo('', 'info');
+    this.afterUnit();
+  }
+
+  private confirmKey(key: string): void {
+    if (key === ESC) {
+      this.abortSubConfirm();
+      return;
+    }
+    if (key === 'y') {
+      this.applySubMatch();
+      this.nextSubMatch();
+      return;
+    }
+    if (key === 'n') {
+      this.nextSubMatch();
+      return;
+    }
+    if (key === 'a') {
+      while (this.subConfirm && this.subConfirm.index < this.subConfirm.matches.length) {
+        this.applySubMatch();
+        if (this.subConfirm) this.subConfirm.index++;
+      }
+      this.finishSubConfirm();
+      return;
+    }
+    if (key === 'l') {
+      this.applySubMatch();
+      this.finishSubConfirm();
+      return;
+    }
+    if (key === 'q') {
+      this.finishSubConfirm();
+      return;
+    }
+    this.bell();
+  }
+
   exSubstitute(l1: number, l2: number, pat: string, rep: string, flags: string): void {
     let pattern = pat;
     let replacement = rep;
@@ -2497,6 +2634,45 @@ export class Vim {
     const lines = this.buf.lines.slice();
     const jsRep = this.translateReplacement(replacement);
     const before = this.snapshot();
+
+    if (f.includes('c')) {
+      const confirmLines = lines.slice();
+      const matches: SubMatch[] = [];
+      const scan = new RegExp(base.source, base.flags);
+      for (let l = Math.max(0, l1); l <= Math.min(confirmLines.length - 1, l2); l++) {
+        scan.lastIndex = 0;
+        let m: RegExpExecArray | null;
+        while ((m = scan.exec(confirmLines[l]))) {
+          if (m[0].length === 0) {
+            scan.lastIndex++;
+            continue;
+          }
+          matches.push({ line: l, col: m.index, len: m[0].length });
+          if (!f.includes('g')) break;
+        }
+      }
+      if (!matches.length) {
+        this.echo(`E486: pattern not found: ${pattern}`, 'error');
+        return;
+      }
+      this.subConfirm = {
+        before,
+        lines: confirmLines,
+        matches,
+        index: 0,
+        replacement,
+        jsRep,
+        source: base.source,
+        flags: base.flags.replace('g', ''),
+        applied: 0,
+      };
+      const first = matches[0];
+      this.cursor = { line: first.line, col: first.col };
+      this.wantColValue = this.cursor.col;
+      this.echo(this.confirmPrompt ?? '', 'info');
+      return;
+    }
+
     let total = 0;
     let lastLine = -1;
     let delta = 0;

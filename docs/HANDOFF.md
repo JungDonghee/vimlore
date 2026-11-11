@@ -13,8 +13,8 @@
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 2,532 lines; **243 oracle cases**, all matching real Vim |
-| gates | oracle 243/243 · level lint 51 stages valid · unit tests 23 pass · tsc 0 · doc-check OK |
-| build | JS 223,570 B · single `dist/vimlore.html` 247,243 B · gzip 79,010 B |
+| gates | oracle 243/243 · level lint 51 stages valid · unit tests 24 pass · tsc 0 · doc-check OK |
+| build | JS 226,478 B · single `dist/vimlore.html` 250,151 B · gzip 79,750 B |
 | perf (headless) | desktop 1280×800 **52–57 fps** (x1), 51–53 (x4) · phone 844×390 59–60 (x4), 57–60 (x6) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
@@ -66,10 +66,11 @@ this file.
 ### Advanced coverage delivered
 - `gn` (visual selection, operator-pending `dgn`/`cgn`, counts, dot repeat),
   `g*`/`g#` (word under cursor without boundaries), `2*` counts.
-- `gI` / `gi`, and `\zs` / `\ze` in search and `:s`.
+- `gI` / `gi`, `\zs` / `\ze` in search and `:s`, and interactive `:s///c`
+  (y/n/a/q/l, g+c, Esc abort; prompt + CONFIRM statusline).
 
 ### Not done (queued, do not pretend otherwise)
-- Change list (`g;`/`g,`), interactive `:s///c`, `=` indent.
+- Change list (`g;`/`g,`), `=` indent.
 - Keep seeds 7/11/23 clean; extended seeds 31/47/101 are the next correctness
   frontier (16 edges listed in `MASTER_PLAN.md` §2.1).
 - c04s3's goal was corrected to Vim's real multi-line `di(` result
@@ -86,7 +87,7 @@ this file.
 ## 2. Open product gaps
 
 - **Coverage** is a chosen subset: no windows/splits/buffers/tabs, folds,
-  completion, `:!`/filesystem, quickfix/LSP, Vimscript/Lua, `:s///c`, undo tree,
+  completion, `:!`/filesystem, quickfix/LSP, Vimscript/Lua, undo tree,
   change list, viewport motions (`zz/zt`, exact `H/M/L`), filters.
 - **Curriculum truth**: `level-lint` checks par/gating/win but not
   teaches↔solution↔unlocks coherence. `c02s5` is named CONFIG and should either
