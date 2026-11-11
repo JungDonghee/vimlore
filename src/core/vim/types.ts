@@ -35,6 +35,8 @@ export const MODE_NAMES: Record<Mode, string> = {
 export type MotionKind = 'exclusive' | 'inclusive' | 'linewise';
 
 export interface MotionResult {
+  /** The motion could not move the requested count (Vim beeps); operators cancel. */
+  failed?: boolean;
   /** Destination position (where the cursor lands when the motion is used alone). */
   to: Pos;
   kind: MotionKind;

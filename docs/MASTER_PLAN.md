@@ -72,13 +72,14 @@
 
 | item | value |
 |---|---|
-| src | 10,622 lines; `engine.ts` 3,196 · `normalize.ts` 100 |
+| src | 10,704 lines; `engine.ts` 3,261 · `normalize.ts` 100 |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine oracle | **356/356** vs `vim -u NONE` (266 at pass-2 start, +77 cases) |
 | level lint | **51/51 stages valid** |
 | surface | **86 of 86 commands with engine evidence**, 9 engine-only features, 0 orphan cases (`npm run surface -- --strict`, CI gate) |
+| matrix | 21,712 grammar cases: **20,901 matched, 811 divergences** (local; families in `docs/MATRIX_REPORT.md`) |
 | unit tests | **28 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 235,313 B · single `dist/vimlore.html` 259,523 B · gzip 82,029 B · budget gate 260k/83k (raised this pass) |
+| build | JS 235,313 B · single `dist/vimlore.html` 260,620 B · gzip 82,305 B · budget gate 262k/83k (raised this pass) |
 | fuzz | **12 seeds, 0 divergences at n=1200**; 9 documented seeds also 0 at n=1000 |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -103,8 +104,9 @@
 - **Curriculum correction:** `c04s3` was only passing because the old charwise
   `di(` left the cursor at the end of the opening line. Real Vim parks it on
   the closing-paren line, so the stage now uses `di(kkdi(` (par 8, same goal).
-- Budget gate raised deliberately 258k/82k → **260k/83k** in the same commit
-  (+2.9 kB for 30 pinned behaviours); gzip is 82,029 B. See HANDOFF §3.
+- Budget gate raised deliberately twice: 258k/82k → 260k → **262k/83k**
+  (engine correctness + matrix failure semantics); gzip is 82,305 B. See
+  HANDOFF §3.
 
 ### 2.1 Fuzz results
 
@@ -253,11 +255,13 @@ rest to the task board. Never commit a red level or a failing oracle.
 | E9 | delete/shift/`$`/case-operator cursor semantics | W1 | **done** | `engine.ts` |
 | E10 | visual-block outdent, counted WORD failure | W1 | **done** — 12 seeds 0 @ n=1200 | `engine.ts` |
 | D4 | fix c04s3 to a Vim-valid solution (par 8) | W5 | **done** | `src/content/chapters/c04.ts` |
-| D5 | deliberate budget raise 260k/83k | W5 | **done** | `tools/bundle-budget.ts`, docs |
+| D5 | deliberate budget raises (258→260→262k) | W5 | **done** | `tools/bundle-budget.ts`, docs |
 | A1 | surface manifest + `surface-audit.ts` | W0 | **done** — strict CI gate | `tools/surface-audit.ts`, `docs/ENGINE_SURFACE.md` |
 | A2 | CI native-Vim oracle job | W0 | **done** — oracle + fuzz smoke | `.github/workflows/ci.yml` |
 | A3 | extract delete normalization (Q02/Q10) | W0 | **done** — Phase B pilot | `src/core/vim/normalize.ts`, `engine.ts` |
 | A4 | extract cursor policy (Q04/Q09) | W0 | **next** | `src/core/vim/cursor.ts`, `engine.ts` |
+| C1 | grammar matrix harness (feedkeys semantics) | W0 | **done** — 20,901/21,712 | `tools/matrix.ts`, `docs/MATRIX_REPORT.md` |
+| C2 | close matrix divergences by family | W0 | **in progress** — `)`/`(`/`%`, `$`, block `c` | `engine.ts`, `motions.ts`, `objects.ts` |
 | ED0 | deferred buffer/file/window architecture | later | **design done** | `docs/FUTURE_EDITOR.md` |
 
 ## 7. Handoff protocol (for the next AI)
@@ -298,8 +302,8 @@ rest to the task board. Never commit a red level or a failing oracle.
 - **Deploy**: Pages builds from `main`; a broken build blocks the live site.
   Build locally before pushing.
 - **Budget (pass 2 decision)**: the raw/gzip ceiling was raised 258k/82k →
-  260k/83k in the same commit as the engine work (+2.9 kB for 30 pinned
-  behaviours; gzip 82,029 B). Headroom is ~900 B raw. The next feature must
+  262k/83k in the same commit as the engine work (+2.9 kB for 30 pinned
+  behaviours; gzip 82,305 B). Headroom is ~900 B raw. The next feature must
   reduce bytes or justify another measured raise; do not raise it silently.
 
 ## 9. Deferred editor program

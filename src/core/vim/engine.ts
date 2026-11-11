@@ -670,8 +670,18 @@ export class Vim {
       // dd, yy, cc, >>, <<, == and the two-key g operators: guu, gUU, g~~, gqq, gww
       const n = (this.countNum || 1) * (op.count || 1);
       const last = this.buf.lineCount - 1;
+      const remaining = this.buf.lineCount - this.cursor.line;
+      // Doubled operators clamp a count to EOF, except when only one line is
+      // left and the count is > 1: Vim refuses that (`2dd` on the last line).
+      if (n > 1 && remaining < 2) {
+        this.bell();
+        this.resetPending();
+        this.afterUnit();
+        return;
+      }
+      const lines = Math.min(n, remaining);
       op.doubled = true;
-      this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: Math.min(last, this.cursor.line + n - 1), col: 0 }, linewise: true });
+      this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: Math.min(last, this.cursor.line + lines - 1), col: 0 }, linewise: true });
       return;
     }
     if (key === 'i' || key === 'a') {
@@ -722,15 +732,27 @@ export class Vim {
     }
     const motion = this.motionFor(key, (this.countNum || 1) * (op.count || 1), this.countNum > 0 || op.count > 0);
     if (!motion) {
-      // At BOF Vim still applies gU/gu/g~ with `{` to the current line, while
-      // d/c/y with `{` are a no-op.
-      if ((op.key === 'gU' || op.key === 'gu' || op.key === 'g~') && key === '{' && this.cursor.line === 0) {
-        this.applyOp(op, {
-          start: { line: 0, col: 0 },
-          end: { line: 0, col: Math.max(0, this.buf.line(0).length - 1) },
-          linewise: true,
-        });
-        return;
+      // `{` at BOF is a zero-length motion: case operators touch the character
+      // under the cursor, `>`/`<` shift the current line, `c` inserts without
+      // deleting, and d/y are no-ops.
+      const failedCount = (this.countNum || 1) * (op.count || 1);
+      if (failedCount === 1 && key === '{' && this.cursor.line === 0 && this.cursor.col === 0) {
+        if (op.key === 'gU' || op.key === 'gu' || op.key === 'g~') {
+          this.finishOpWithMotion(op, { to: { ...this.cursor }, kind: 'exclusive' });
+          return;
+        }
+        if (op.key === '>' || op.key === '<') {
+          this.applyOp(op, {
+            start: { line: 0, col: 0 },
+            end: { line: 0, col: 0 },
+            linewise: true,
+          });
+          return;
+        }
+        if (op.key === 'c') {
+          this.openInsertAt(this.cursor);
+          return;
+        }
       }
       this.bell();
       this.resetPending();
@@ -810,6 +832,14 @@ export class Vim {
         end: { line: to.line, col: 0 },
         linewise: true,
       });
+      return;
+    }
+    // A failed motion cancels the operator (`dj` on the last line, `cj` at
+    // BOF): Vim beeps and leaves the buffer untouched.
+    if (motion.failed) {
+      this.bell();
+      this.resetPending(false);
+      this.afterUnit();
       return;
     }
     let range: SelRange;
@@ -1952,15 +1982,26 @@ export class Vim {
       case 'x':
       case 'y':
       case 'c':
-      case 's':
+      case 's': {
         if (!sel) return;
-        if (key === 'y') this.yankRange(sel, true, this.pendingRegSet, true);
-        else this.deleteRange(sel, true, this.pendingRegSet, key === 'c' || key === 's');
+        const reg = this.pendingRegSet;
         this.pendingRegSet = null;
         this.visualAnchor = null;
-        this.setMode('normal');
         this.cmdKeys = [];
+        if (key === 'y') {
+          this.yankRange(sel, true, reg, true);
+          this.setMode('normal');
+          return;
+        }
+        // c/s must stay in insert mode: deleteRange(change) calls openInsertAt.
+        if (key === 'c' || key === 's') {
+          this.deleteRange(sel, true, reg, true);
+          return;
+        }
+        this.deleteRange(sel, true, reg, false);
+        this.setMode('normal');
         return;
+      }
       case '>':
         if (sel) this.shiftRange(sel, 1);
         this.visualAnchor = null;
@@ -2490,14 +2531,9 @@ export class Vim {
         this.pending = null;
         const obj = textObject(this.buf, this.cursor, p.around, key);
         if (!obj) {
-          // Vim's shift operators still act on the current line when the
-          // object is an empty pair (`<i(` on `f()`), landing on the first
-          // non-blank; delete/change/yank stay a no-op.
-          if (this.op && (this.op.key === '<' || this.op.key === '>')) {
-            const op = this.op;
-            this.applyOp(op, { start: { line: this.cursor.line, col: 0 }, end: { line: this.cursor.line, col: 0 }, linewise: true });
-            return;
-          }
+          // A *missing* object is an error/no-op for every operator. An empty
+          // pair is different: textObject returns `empty`, handled below, and
+          // shift operators still act on the line there.
           this.bell();
           this.say(`no ${p.around ? 'a' : 'i'}${key} here`, 'error');
           this.resetPending();
@@ -2620,7 +2656,36 @@ export class Vim {
                 end = this.buf.pos(e);
               }
             }
+          } else if (!p.around && key === 'p' && obj.linewise && count === 2) {
+            // `2ip` = the paragraph plus its following blank run; it fails when
+            // the paragraph is the last one (Vim has no second unit to take).
+            if (end.line + 1 >= this.buf.lineCount || this.buf.line(end.line + 1).trim() !== '') {
+              this.bell();
+              this.resetPending();
+              return;
+            }
+            while (end.line + 1 < this.buf.lineCount && this.buf.line(end.line + 1).trim() === '') {
+              end = { line: end.line + 1, col: Math.max(0, this.buf.line(end.line + 1).length - 1) };
+            }
           } else if (p.around && key === 'p' && obj.linewise) {
+            // Counted `ap` needs `count` paragraphs from the cursor; otherwise
+            // Vim refuses (`2dap` in the last paragraph is a no-op).
+            const blankAt = (l: number) => this.buf.line(l).trim() === '';
+            let paraStart = this.cursor.line;
+            while (paraStart > 0 && !blankAt(paraStart - 1)) paraStart--;
+            let avail = 0;
+            let probe = paraStart;
+            while (probe < this.buf.lineCount) {
+              while (probe < this.buf.lineCount && blankAt(probe)) probe++;
+              if (probe >= this.buf.lineCount) break;
+              avail++;
+              while (probe < this.buf.lineCount && !blankAt(probe)) probe++;
+            }
+            if (avail < count) {
+              this.bell();
+              this.resetPending();
+              return;
+            }
             // Counted `ap` repeats the paragraph: cross the blank separator and
             // the next paragraph `count - 1` times, including the blanks that
             // surround the result (Vim counts the separator inside the range).

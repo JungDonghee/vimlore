@@ -54,15 +54,24 @@ export function lineEnd(buf: Buffer, line: number): number {
 }
 
 export function vertical(env: MotionEnv, delta: number): MotionResult {
-  const target = Math.max(0, Math.min(env.buf.lineCount - 1, env.cursor.line + delta));
+  const raw = env.cursor.line + delta;
+  const target = Math.max(0, Math.min(env.buf.lineCount - 1, raw));
   const len = env.buf.line(target).length;
   const col = Math.max(0, Math.min(env.wantCol, Math.max(0, len - 1)));
+  // A count that crosses BOF/EOF clamps when at least one line of movement is
+  // possible (`3k` from line 3 lands on line 1), but fails when the cursor is
+  // already at the boundary (`j` on the last line cancels `dj`).
+  const atBoundary = delta > 0 ? env.cursor.line >= env.buf.lineCount - 1 : env.cursor.line <= 0;
+  if ((raw < 0 || raw > env.buf.lineCount - 1) && atBoundary) {
+    return { to: { ...env.cursor }, kind: 'linewise', lineRange: [env.cursor.line, env.cursor.line], failed: true };
+  }
   return { to: { line: target, col }, kind: 'linewise', lineRange: [env.cursor.line, target] };
 }
 
 export function wordMotion(env: MotionEnv, count: number, opts: { big?: boolean; dir: 1 | -1; end?: boolean }): MotionResult | null {
   const list = tokens(env.buf, opts.big);
   let off = env.buf.idx(env.cursor);
+  const startOff = off;
   const flat = env.buf.flat;
   if (list.length === 0) return { to: env.cursor, kind: 'exclusive' };
   for (let n = 0; n < count; n++) {
@@ -96,7 +105,13 @@ export function wordMotion(env: MotionEnv, count: number, opts: { big?: boolean;
             }
           }
         }
-        if (!prev) return { to: { line: 0, col: 0 }, kind: 'exclusive' };
+        if (!prev) {
+          // `b`/`B` past the first word lands on column 0. If the cursor was
+          // already at 0,0 nothing moved and an operator is cancelled; a count
+          // that runs out after a step keeps the progress.
+          const atBof = env.cursor.line === 0 && env.cursor.col === 0;
+          return { to: { line: 0, col: 0 }, kind: 'exclusive', failed: off === startOff && atBof };
+        }
         off = prev.start;
       }
     } else {

@@ -22,7 +22,9 @@
     "provenance": "node --experimental-strip-types tools/stage-provenance.ts",
     "kickoff": "node --experimental-strip-types tools/kickoff.ts",
     "surface": "node --experimental-strip-types tools/surface-audit.ts",
-    "surface:write": "node --experimental-strip-types tools/surface-audit.ts --write"
+    "surface:write": "node --experimental-strip-types tools/surface-audit.ts --write",
+    "matrix": "node --experimental-strip-types tools/matrix.ts",
+    "matrix:write": "node --experimental-strip-types tools/matrix.ts --write"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

@@ -124,6 +124,7 @@ particles (see AGENTS.md, "Renderer notes").
 | `doctor.ts` | one-command environment check for a brand-new agent |
 | `doc-check.ts` | CI-safe gate: doc numbers/links must match the code |
 | `surface-audit.ts` | map the Grimoire/chapters/oracle/tests/TRIALS to engine evidence; strict CI gate |
+| `matrix.ts` | systematic grammar matrix (motion/object × operator × mode × count) diffed with real Vim via `feedkeys` |
 | `gen-docs.ts` | regenerate `docs/LEVELS.md` |
 | `inline.mjs` | fold the Vite build into the single `dist/vimlore.html` |
 | `extract_books.py` | pull text from the source books into `books-text/` (not committed) |

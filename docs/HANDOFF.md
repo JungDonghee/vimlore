@@ -14,10 +14,11 @@
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
-| engine | 3,196 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
+| engine | 3,261 lines + `normalize.ts` 100; **356 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 356/356 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 28 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 235,313 B · single `dist/vimlore.html` 259,523 B · gzip 82,029 B · budget gate 260k/83k (raised deliberately this pass, §3) |
+| build | JS 235,313 B · single `dist/vimlore.html` 260,620 B · gzip 82,305 B · budget gate 262k/83k (raised deliberately this pass, §3) |
 | fuzz | **12 seeds, 0 divergences at n=1200** (and 9 seeds 0 at n=1000), buffer and cursor |
+| matrix | 21,712 grammar cases: **20,901 matched, 811 open** (local; `docs/MATRIX_REPORT.md`) |
 | deploy | `main` deployed; CI + Pages green; verify with `git ls-remote origin refs/heads/main` |
 
 If any number here disagrees with a fresh gate run, **the gate wins** — update
@@ -61,6 +62,26 @@ run the gates.
 - **`ap` at the last paragraph** now takes the preceding blank run; counted
   `ap` crosses separators and includes surrounding blanks (`2cip`, `2dap`,
   `2yap`, `2g~ap`).
+
+### Grammar matrix (Phase C, first run)
+`tools/matrix.ts` generates valid command trees (motion/object × operator ×
+mode × count over boundary-rich texts) and diffs them with `feedkeys('xt')`, so
+Vim errors do not swallow later keys — the comparison is the user-observable
+final buffer + cursor. Current run: 20,901 / 21,712 matched, 811 divergences. The bring-up fixed
+visual `c` mode, missing-object shift, counted `j/k` failure-vs-clamp,
+doubled-count clamping, failed-motion cancel, case-op EOF clamp, counted
+`ip`/`ap` validation, `b`/`B` at BOF and `{` at BOF. The remaining families are
+listed in [`MATRIX_REPORT.md`](MATRIX_REPORT.md); matrix is **not** a CI gate
+until it reaches 0.
+
+**How to continue the matrix (no explanation needed):**
+1. `npm run matrix -- --filter="normal/d/motion/)" --show=5` — inspect one family.
+2. Decide whether Vim clamps, fails or acts; encode it in the motion/operator
+   contract, not in a one-off branch.
+3. Re-run that filter to 0, then the full `npm run matrix` to 0.
+4. Turn one representative matrix case into an oracle case (`tools/cases.ts`)
+   so the snapshot protects it after the fix.
+5. Only then add `matrix` to CI as a gate; until then it is a local instrument.
 
 ### Normalization extraction (Phase B pilot)
 `src/core/vim/normalize.ts` now owns `flatRange` and the first two named quirks:
@@ -115,7 +136,7 @@ before changing `shiftRange`, `selection()` or `block_prep`-equivalent code.
 
 Pass 2 added ~2.9 kB raw for 30 new pinned behaviours (356 cases, up from 266).
 The bundle gate was raised **in the same commit** from 258,000/82,000 to
-**260,000/83,000**; current build is 259,523 B raw / 82,029 B gzip. This is the
+**262,000/83,000**; current build is 260,620 B raw / 82,305 B gzip. This is the
 documented "pay for itself or raise deliberately" path. Headroom is still
 small (~900 B raw, ~1.1 kB gzip): the next feature must reduce bytes first or
 justify another measured raise.
@@ -179,6 +200,7 @@ npx tsc --noEmit
 npm run doc-check
 npm run invariants
 npm run surface -- --strict
+npm run matrix                                            # 1,301 open (local)
 node --experimental-strip-types tools/oracle-diff.ts        # 356/356
 node --experimental-strip-types tools/oracle-diff.ts --emit # snapshot
 node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7

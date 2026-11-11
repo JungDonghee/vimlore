@@ -166,10 +166,20 @@ two ad-hoc range branches from `engine.ts` with the 356-case oracle green.
 Remaining: Q03/Q04/Q06/Q09 and the cursor policy (`cursor.ts`). Acceptance is
 unchanged: oracle green at every commit, every branch linked to a quirk ID.
 
-### Phase C — matrix and compose-fuzz
-`tools/matrix.ts` generates systematic cases; `tools/compose-fuzz.ts` generates
-valid command trees. Acceptance: 0 divergences in the generated set for the
-taught surface; coverage thresholds recorded; failures become oracle cases.
+### Phase C — matrix and compose-fuzz (matrix v1 live)
+`tools/matrix.ts` generates **21,712** valid command trees (8 texts, 2-3 cursor
+positions, 20 motions, 20 objects, 8 operators, counts {none, 2}, normal +
+visual/visual-line/visual-block + doubled) and diffs them with
+`feedkeys('xt')` — user-observable final state, not `normal!` abort state.
+Current run: **20,901 matched / 811 divergences**. Bring-up fixed eight
+systemic classes: visual `c` mode, missing-object shift, counted `j/k`
+failure-vs-clamp, doubled count clamping, failed-motion cancel, case-op EOF
+clamp, counted `ip`/`ap` validation, `b`/`B` at BOF, and `{` at BOF per
+operator. The remaining 811 are catalogued in
+[`MATRIX_REPORT.md`](MATRIX_REPORT.md); top families: `)`/`(`/`%`/`$` with
+operators and visual-block `c`.
+Matrix is local-only until it reaches 0; then it joins CI as a gate.
+`tools/compose-fuzz.ts` (random command trees) is still to come.
 
 ### Phase D — closed world
 `Vim.supports(key)` / capability events; out-of-scope input refuses
@@ -216,6 +226,10 @@ in the campaign engine. This program is how the campaign engine earns the word
 2. ~~CI native-Vim oracle job~~ — done (`oracle` job: 356 cases + fuzz smoke).
 3. ~~Phase B pilot: delete normalization (Q02/Q10) into `normalize.ts`~~ — done;
    next is the cursor policy (Q04/Q09) and Q03/Q06 in the same module.
+4. **Phase C next:** close the 811 matrix divergences by family (`)`/`(`/`%`,
+   `$`, visual-block `c`), one rule at a time, with a matrix case turning into
+   an oracle case for each fix. Then extend the matrix comparison from
+   buffer+cursor to registers/mode/undo — still user-observable state.
 
 ## 9. One sentence
 
