@@ -15,8 +15,8 @@
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 3,560 lines + `normalize.ts` 100; **373 oracle cases**, all matching real Vim (strict) |
-| gates | oracle 373/373 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 37 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 242,140 B · single `dist/vimlore.html` 269,248 B · gzip 84,588 B · budget gate 270k/86k (raised deliberately this pass, §3) |
+| gates | oracle 373/373 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 38 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
+| build | JS 242,140 B · single `dist/vimlore.html` 269,411 B · gzip 84,621 B · budget gate 270k/86k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | state matrix | 21,712 command trees with register/undo: **21,503 matched, 209 open** (local DM1; `docs/STATE_REPORT.md`) |
@@ -135,7 +135,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **270,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 269,248 B raw / 84,588 B gzip, so headroom is
+that needed it. Current build is 269,411 B raw / 84,621 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -174,6 +174,15 @@ fix in a level.
 keys can expose a skill before a stage teaches it, and 12 unlock keys have no
 Grimoire row. Book-derived curriculum/provenance will fix the ordering; do not
 paper over it with ad-hoc locks now.
+
+### Relative line numbers by default (2026-11-11)
+
+The gutter now defaults to Vim `relativenumber`: cursor line absolute, every
+other line the distance to the cursor (the visual aid for `5j`/`5k`). Settings
+toggles `rel` ↔ `abs`; `progress` is version 2, and a v1 save whose old default
+was `abs` (or a legacy `off`/`both`) migrates to `rel`. `:set rnu/nornu/nu/nonu`
+still overrides the chamber. Renderer fixed to show the cursor line absolute
+under `rel`.
 
 ### Counts before simple commands (2026-11-11)
 

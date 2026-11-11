@@ -28,7 +28,13 @@ function loadProgress(): Progress {
     if (!raw) return emptyProgress();
     const p = JSON.parse(raw) as Progress;
     if (typeof p !== 'object' || !p.stages) return emptyProgress();
-    return { ...emptyProgress(), ...p };
+    const merged = { ...emptyProgress(), ...p };
+    // v1 defaulted to absolute numbers. Treat that old default as the new
+    // relative default once; a v2 save keeps whatever the player chose.
+    if ((p.version ?? 1) < 2 && merged.lineNumbers === 'abs') merged.lineNumbers = 'rel';
+    if (merged.lineNumbers !== 'rel' && merged.lineNumbers !== 'abs') merged.lineNumbers = 'rel';
+    merged.version = 2;
+    return merged;
   } catch {
     return emptyProgress();
   }
@@ -653,12 +659,11 @@ export class App {
         h('button', {
           class: 'btn',
           onclick: () => {
-            const order: Progress['lineNumbers'][] = ['abs', 'rel', 'both', 'off'];
-            this.progress.lineNumbers = order[(order.indexOf(this.progress.lineNumbers) + 1) % order.length];
+            this.progress.lineNumbers = this.progress.lineNumbers === 'rel' ? 'abs' : 'rel';
             this.save();
             this.goAbout();
           },
-        }, `${this.t('line numbers', '줄번호')}: ${this.progress.lineNumbers}`),
+        }, this.progress.lineNumbers === 'rel' ? this.t('line numbers: relative', '줄번호: 상대') : this.t('line numbers: absolute', '줄번호: 절대')),
       ),
       h(
         'div',

@@ -256,10 +256,13 @@ Three rules keep it correct:
 - **Tab is the hint key outside insert/replace.** In insert/replace it must
   reach the engine, which expands it to spaces to the next tabstop (4); never
   intercept it globally.
-- The gutter supports `off | abs | rel | both` (`progress.lineNumbers`), and
-  `:set number / relativenumber / nonumber / nornu` overrides it for the
-  current chamber. Numbers are drawn on the FX pass because they depend on the
-  cursor line; the glyph layer itself must stay cursor-free.
+- **The gutter defaults to Vim relative numbers (`rel`)**: the cursor line
+  shows its absolute number, every other line shows its distance from the
+  cursor (so `5j` reads as the line labelled 5). Settings toggles `rel` ↔
+  `abs`; new saves are version 2 and a v1 `abs` default migrates to `rel`.
+  `:set number / relativenumber / nonumber / nornu` still overrides the current
+  chamber. Numbers are drawn on the FX pass because they depend on the cursor
+  line; the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
 - **Esc is Vim's Esc, never an exit shortcut.** It cancels insert/visual/

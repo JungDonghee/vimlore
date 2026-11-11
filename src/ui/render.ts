@@ -488,7 +488,10 @@ export class Renderer {
       for (let li = nFirst; li < nLast; li++) {
         const isCur = li === curLine;
         let label: string;
-        if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
+        // Vim's relativenumber keeps the cursor line absolute; every other
+        // line is its distance from the cursor. That is what makes `5j` read
+        // as the line labelled 5.
+        if (view.numbers === 'rel') label = String(isCur ? li + 1 : Math.abs(li - curLine));
         else if (view.numbers === 'both') label = String(isCur ? li + 1 : Math.abs(li - curLine));
         else label = String(li + 1);
         g.fillStyle = isCur ? 'rgba(190,255,214,0.92)' : 'rgba(66,168,108,0.42)';

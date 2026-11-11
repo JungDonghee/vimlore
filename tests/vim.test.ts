@@ -7,7 +7,7 @@ import { CASES } from '../tools/cases.ts';
 import { checkGoal, goalLabel, collectPositions } from '../src/core/game/goals.ts';
 import { Session, parseStart } from '../src/core/game/session.ts';
 import { Buffer } from '../src/core/vim/buffer.ts';
-import type { Stage } from '../src/core/game/types.ts';
+import { emptyProgress, type Stage } from '../src/core/game/types.ts';
 
 interface Expected {
   lines: string[];
@@ -227,6 +227,11 @@ test('goals: collect needs every coin', () => {
 test('goal labels are bilingual', () => {
   assert.match(goalLabel({ type: 'reach', char: '*' }, 'ko'), /\*/);
   assert.match(goalLabel({ type: 'reach', char: '*' }, 'en'), /Reach/);
+});
+
+test('new saves default to relative line numbers', () => {
+  assert.equal(emptyProgress().lineNumbers, 'rel');
+  assert.equal(emptyProgress().version, 2);
 });
 
 const stage: Stage = {

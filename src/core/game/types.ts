@@ -121,7 +121,7 @@ export interface Progress {
 }
 
 export const emptyProgress = (): Progress => ({
-  version: 1,
+  version: 2,
   currentChapter: 0,
   stages: {},
   seen: [],
@@ -131,7 +131,7 @@ export const emptyProgress = (): Progress => ({
   sound: true,
   ghost: true,
   crt: true,
-  lineNumbers: 'abs',
+  lineNumbers: 'rel',
   profile: { name: 'operator', since: Date.now() },
   stats: {},
   saved: [],
