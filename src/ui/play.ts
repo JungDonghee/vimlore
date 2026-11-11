@@ -436,6 +436,16 @@ export class PlayScreen {
     }
     if (this.ghosting) return true;
 
+    // Esc leaves an idle play screen. While an insert/visual/pending command is
+    // in flight it must reach the engine to cancel that command first.
+    if (e.key === 'Escape') {
+      const vim = this.session.vim;
+      if (vim.mode === 'normal' && !vim.awaitingKey) {
+        this.host.onExit();
+        return true;
+      }
+    }
+
     const key = fromKeyboardEvent(e);
     if (!key) return false;
     if (/[\uac00-\ud7af\u3131-\u318e]/.test(key)) {

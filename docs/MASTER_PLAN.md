@@ -79,7 +79,7 @@
 | surface | **86 of 86 commands with engine evidence**, 9 engine-only features, 0 orphan cases (`npm run surface -- --strict`, CI gate) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 divergences** (CI gate; `docs/MATRIX_REPORT.md`) |
 | unit tests | **28 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 242,076 B · single `dist/vimlore.html` 265,866 B · gzip 83,782 B · budget gate 266k/85k (raised this pass) |
+| build | JS 242,140 B · single `dist/vimlore.html` 265,978 B · gzip 83,811 B · budget gate 266k/85k (raised this pass) |
 | fuzz | 12 seeds at n=1000: **0 divergences** |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
@@ -105,7 +105,7 @@
   `di(` left the cursor at the end of the opening line. Real Vim parks it on
   the closing-paren line, so the stage now uses `di(kkdi(` (par 8, same goal).
 - Budget gate raised deliberately twice: 258k/82k → 260k → **266k/85k**
-  (engine correctness + matrix failure semantics); gzip is 83,782 B. See
+  (engine correctness + matrix failure semantics); gzip is 83,811 B. See
   HANDOFF §3.
 
 ### 2.1 Fuzz results
@@ -316,7 +316,7 @@ acceptance criteria:
   Build locally before pushing.
 - **Budget (pass 2 decision)**: the raw/gzip ceiling was raised 258k/82k →
   266k/85k in the same commit as the engine work (+2.9 kB for 30 pinned
-  behaviours; gzip 83,782 B). Headroom is ~900 B raw. The next feature must
+  behaviours; gzip 83,811 B). Headroom is ~900 B raw. The next feature must
   reduce bytes or justify another measured raise; do not raise it silently.
 
 ## 9. Deferred editor program

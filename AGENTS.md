@@ -259,6 +259,9 @@ Three rules keep it correct:
   cursor line; the glyph layer itself must stay cursor-free.
 - Focused buttons are scrolled into view (`focusIndex`), so a long settings or
   results card never traps the keyboard user off-screen.
+- **Esc leaves an idle play screen**, but only when Vim is in normal mode with
+  no pending operator/count. While insert/visual/operator-pending is active,
+  Esc must reach the engine to cancel that command first. F10 always exits.
 - **Ghost playback never wins.** F3 replays the solution through a demo session
   that must not count keys, check hazards, pick up coins, or set `won`; the next
   overlay must never appear from a ghost run. Enter during the ghost is ignored.

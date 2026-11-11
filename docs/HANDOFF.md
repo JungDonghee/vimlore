@@ -16,7 +16,7 @@
 | content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
 | engine | 3,501 lines + `normalize.ts` 100; **363 oracle cases**, all matching real Vim (strict) |
 | gates | oracle 363/363 · surface 86 of 86 evidence, 0 orphans (`--strict`) · level lint 51 stages valid · unit tests 34 pass · tsc 0 · doc-check OK · invariants 0 errors / 15 warnings |
-| build | JS 242,076 B · single `dist/vimlore.html` 265,866 B · gzip 83,782 B · budget gate 266k/85k (raised deliberately this pass, §3) |
+| build | JS 242,140 B · single `dist/vimlore.html` 265,978 B · gzip 83,811 B · budget gate 266k/85k (raised deliberately this pass, §3) |
 | fuzz | 12 seeds at n=1000: **0 divergences**; n=3000: 10/12 clean, 2 seeds hit visual-block/`dW`-blank edges (below) |
 | matrix | 21,712 grammar cases: **21,712 matched, 0 open** (CI gate; `docs/MATRIX_REPORT.md`) |
 | state matrix | 21,712 command trees with register/undo: **21,429 matched, 283 open** (local DM1; `docs/STATE_REPORT.md`) |
@@ -135,7 +135,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
 264,000 → **266,000/85,000**. Each was measured and committed with the feature
-that needed it. Current build is 265,866 B raw / 83,782 B gzip, so headroom is
+that needed it. Current build is 265,978 B raw / 83,811 B gzip, so headroom is
 ~700 B raw / ~800 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
@@ -157,6 +157,13 @@ Known edge divergences (not taught, recorded but not fixed): `<C-v>)` block
 geometry on multi-line/short lines, `dW` on a blank line, and a one-column block
 `<` cursor after `j`. They are outside the current curriculum; do not fake a
 fix in a level.
+
+### Esc leaves idle play (2026-11-11)
+
+Esc did nothing on the play screen. It now exits to the map when Vim is in
+normal mode with no pending operator/count; if an insert/visual/pending command
+is in flight, Esc is sent to the engine first so it cancels that command. F10
+still exits unconditionally. Enter during ghost remains ignored.
 
 ### Ghost mode must not win (2026-11-11)
 
