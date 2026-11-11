@@ -58,6 +58,7 @@ elastic.
 | 10 books extracted | yes (`books-text/`, 78,492 lines) |
 | chapter themes (movement → words → operators → objects → visual → search → registers → marks → ex → mastery) | broadly aligned |
 | per-stage `teaches` command ids | present for 51/51 |
+| section index of the corpus | generated in `BOOKS_INDEX.md` (3 books need manual scan) |
 | per-stage **book + section citation** | **missing / unaudited** |
 | prerequisite graph | informal; not machine-readable |
 | pacing metrics (new commands/stage, review ratio, par ramp) | not measured |
@@ -78,7 +79,7 @@ For each book, extract a heading-level table of contents and tag sections with:
 - prerequisites implied by the text;
 - a short quote or line range for the citation.
 
-Store as `BOOKS_INDEX.md` (human) and, when useful,
+Store as [`BOOKS_INDEX.md`](BOOKS_INDEX.md) (human) and, when useful,
 `docs/books-index.json` (machine). Keep the raw books gitignored; the derived
 index may be committed if it contains only our summaries and short citations.
 

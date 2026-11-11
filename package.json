@@ -17,7 +17,8 @@
     "invariants": "node --experimental-strip-types tools/invariants.ts",
     "verify": "npm test && npm run lint:levels && npx tsc --noEmit && npm run doc-check && npm run invariants && npm run build && npm run budget",
     "verify:full": "npm run verify && npm run oracle && node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7",
-    "budget": "node --experimental-strip-types tools/bundle-budget.ts"
+    "budget": "node --experimental-strip-types tools/bundle-budget.ts",
+    "books:index": "node --experimental-strip-types tools/book-index.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
