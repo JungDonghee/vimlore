@@ -1239,6 +1239,7 @@ export class Vim {
       return;
     }
     const before = this.snapshot();
+    before.undoCursor = { line: this.cursor.line, col: s };
     const text = line.slice(s, e);
     this.buf.setLine(this.cursor.line, line.slice(0, s) + line.slice(e));
     this.cursor = M.moveTo(this.buf, { line: this.cursor.line, col: s });
@@ -1356,6 +1357,10 @@ export class Vim {
         this.buf.replaceFlat(s, e, '');
         this.storeRegister(reg, text, false, false, text.length < 40 && !text.includes('\n'));
         const p = this.buf.pos(Math.min(s, this.buf.flat.length));
+        // Undo of a charwise delete/change lands where the range started, not
+        // at the operator's original cursor (which may be after a backward
+        // motion) and not at the first differing byte after the deletion.
+        before.undoCursor = { ...p };
         if (change) {
           this.openInsertAt(p, before);
           return;

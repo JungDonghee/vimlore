@@ -43,7 +43,7 @@ matrix/oracle gates while bringing it up.
 
 First run (2026-11-11): `tools/state-matrix.ts` built; 15,289/21,712 matched,
 6,423 open. Fixed a real operator leak (`c{` then `u` swallowed keys) and the
-undo cursor policy for common cases; now 21,429/21,712, 283 open (undo cursor
+undo cursor policy for common cases; now 21,485/21,712, 227 open (undo cursor
 941, register 32). 4 oracle cases added (363 → 363). Mode is not comparable in
 `vim -es`; it needs a pty/Nvim probe before it can be asserted. Report:
 `docs/STATE_REPORT.md`.
