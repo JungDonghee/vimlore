@@ -644,6 +644,10 @@ h2,
 }
 
 .cmdline .echo {
+  max-width: calc(100vw - 40px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 13px;
   color: var(--ph-bright);
   background: rgb(3 10 6 / 0.88);

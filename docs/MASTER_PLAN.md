@@ -59,8 +59,8 @@
 | engine oracle | **226/226** vs `vim -u NONE` (142 at session start, +84 cases) |
 | level lint | **51 stages valid** |
 | unit tests | **23 pass**; `tsc --noEmit` clean; `doc-check` OK |
-| build | JS 217,507 B · single `dist/vimlore.html` 240,672 B · gzip 77,296 B |
-| perf (headless) | desktop 1280×800: **53–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
+| build | JS 218,854 B · single `dist/vimlore.html` 242,106 B · gzip 77,679 B |
+| perf (headless) | desktop 1280×800: **50–56 fps** (x1), 47–50 (x4) · phone 844×390: 59–60 (x4), 57–60 (x6) |
 | live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green · verify with `git ls-remote origin refs/heads/main` |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
@@ -70,7 +70,8 @@
 word/sentence/paragraph edges, visual find `f/F/t/T`); a composite-frame
 renderer (**23.5 → 55–56 fps** desktop); `gn`/`g*`/`g#`; a Vim-like top-left window with `~` fill,
 mode-specific cursor (block/bar/underline), crisp overlays, command-line echo,
-an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing; an **F1 primer**
+an explicit **LEARN / GOAL / CLEAR / PAR / WHY** briefing; Vim-style horizontal/
+vertical viewport scrolling; an **F1 primer**
 on every screen and an auto-**coach** after idle/locked/damage.
 
 ### 2.1 Fuzz results and remaining divergences
@@ -182,7 +183,7 @@ visual/visual-line/visual-block, search, ex (`:s :g :v :d :m :t :sort :normal
 | S1 | fuzz harness + triage | **done** — `tools/fuzz.ts`; seed 7: 0 content diffs |
 | S2 | fixed engine bugs | **done** — +84 cases, oracle 226/226, gates green; `gn`/`g*`/`g#` shipped |
 | S3 | `gn` / `g*` / `g#` | **done** — 8 cases incl. cgn-dot, visual gn, 2* |
-| S4 | renderer composite + fps pass | **done** — desktop 53–56 fps x1, phone 59–60 |
+| S4 | renderer composite + fps pass | **done** — desktop 50–56 fps x1, phone 59–60 |
 | S5 | Vim-like window + cursor + lesson card | **done** — screenshots + audit green |
 | S6 | handoff | **done** — commit `224175d` pushed; CI + Pages green |
 

@@ -447,6 +447,11 @@ export class PlayScreen {
 
   private showEcho(key: string): void {
     const vim = this.session.vim;
+    if (vim.mode === 'insert' || vim.mode === 'replace') {
+      // The statusline already says INSERT; do not echo the whole insert text.
+      this.echo.classList.remove('on');
+      return;
+    }
     if (vim.mode === 'cmdline' || vim.mode === 'search') {
       const kind = vim.cmdKind ?? (vim.mode === 'search' ? '/' : ':');
       this.echo.textContent = `${kind}${vim.cmdline}`;

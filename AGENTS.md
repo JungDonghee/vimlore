@@ -120,7 +120,7 @@ VIMLORE is a **CRT terminal from a machine that should be dead**.
 `src/ui/render.ts` keeps a cached glyph layer and a single opaque composite
 frame: background, selection/search highlights, cursorline, numbers, glyphs and
 bloom are baked together, then blitted once per frame. The frame key is
-`version|hue|coins|cursor.line|numbers|selection|matches` — if you add a pixel
+`version|hue|coins|cursor.line|numbers|selection|matches|scroll` — if you add a pixel
 that depends on something else, add it to the key or draw it on the FX pass.
 Bloom is baked, never a per-frame additive blit. If you add an effect, measure
 it on a 2019 phone: the budget is one 60fps frame at 390×844. Never introduce
@@ -189,14 +189,18 @@ The chamber is rendered as a **Vim window**: `tabline` (buffer path) → canvas
 buffer (top-left text, line-number gutter, `~` to the statusline, cursorline) →
 `statusline` (mode · line,col · par · hearts) → objective/command bar.
 
-Two rules keep it correct:
+Three rules keep it correct:
 
 1. The **composite frame** is rebuilt only when its key changes (buffer
-   version, hue, coins, cursor line, numbers, selection, matches). The cursor
-   is drawn on the FX pass; the command line (`:`/`/`) replaces the buffer
-   cursor with a DOM cursor. Briefing overlays sit above the CRT scanlines
-   (`z-index: 70`) so text stays crisp.
-2. Key auto-repeat is implemented by the game, not the OS (`startRepeat` in
+   version, hue, coins, cursor line, numbers, selection, matches, scroll).
+   The cursor is drawn on the FX pass; the command line (`:`/`/`) replaces the
+   buffer cursor with a DOM cursor. Briefing overlays sit above the CRT
+   scanlines (`z-index: 70`) so text stays crisp.
+2. **The view follows the cursor, Vim-style.** Lines never wrap: a long insert
+   scrolls horizontally, and more lines than fit scroll vertically
+   (`ensureCursor` + `scrollX/scrollY` in `render.ts`). The frame key includes
+   the scroll origin; only visible lines/columns are painted.
+3. Key auto-repeat is implemented by the game, not the OS (`startRepeat` in
    `PlayScreen`): 320 ms delay, 50 ms cadence, OS `repeat` events swallowed,
    stopped on keyup / blur / visibilitychange / win / restart. Repeats are
    silent and never start for a key the session rejected.

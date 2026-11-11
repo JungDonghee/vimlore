@@ -77,6 +77,11 @@ export class Renderer {
   textX = 0;
   digits = 2;
   gutterCols = 4;
+  /** Viewport origin in buffer coordinates (Vim scrolls, it does not wrap). */
+  scrollX = 0;
+  scrollY = 0;
+  visibleCols = 1;
+  visibleRows = 1;
 
   private layerKey = -1;
   private particles: Particle[] = [];
@@ -132,10 +137,12 @@ export class Renderer {
     const availH = this.h - padY * 2;
     this.digits = Math.max(2, String(Math.max(1, lines.length)).length);
     this.gutterCols = this.digits + 2; // number, gap, rule
-    const totalCols = cols + this.gutterCols;
-    // Cap the glyph size: Vim density, not a poster. The height term only
-    // matters when the buffer is taller than the window.
-    const size = Math.min(availW / (totalCols * 0.62), availH / (Math.max(1, lines.length) * 1.32), 34);
+    // Size for the game's normal width (56 columns), not for a line that has
+    // grown past the window: a long insert scrolls, it does not shrink the font.
+    const layoutCols = Math.min(cols, 56);
+    const totalCols = layoutCols + this.gutterCols;
+    const layoutRows = Math.min(Math.max(1, lines.length), 14);
+    const size = Math.min(availW / (totalCols * 0.62), availH / (layoutRows * 1.32), 34);
     this.fontSize = Math.max(9, Math.floor(size));
     this.ctx.font = `${this.fontSize}px ${MONO}`;
     const m = this.ctx.measureText('M').width || this.fontSize * 0.62;
@@ -143,19 +150,38 @@ export class Renderer {
     this.cellH = Math.round(this.fontSize * 1.3);
     this.cols = cols;
     this.rows = Math.max(lines.length, Math.floor(availH / this.cellH));
-    // Top-left, like a real Vim window — the game is inside the terminal, not
-    // a card floating in the middle of the screen.
     this.ox = padX;
     this.textX = this.ox + this.gutterCols * this.cellW;
     this.oy = padY;
+    this.visibleCols = Math.max(1, Math.floor((this.w - this.textX - 6) / this.cellW));
+    this.visibleRows = Math.max(1, Math.floor((this.h - this.oy - 6) / this.cellH));
+    this.scrollX = Math.max(0, Math.min(this.scrollX, Math.max(0, cols - this.visibleCols)));
+    this.scrollY = Math.max(0, Math.min(this.scrollY, Math.max(0, lines.length - this.visibleRows)));
+  }
+
+  /** Keep the cursor inside the viewport, exactly like a Vim window. */
+  private ensureCursor(view: View): void {
+    let sx = this.scrollX;
+    let sy = this.scrollY;
+    if (view.cursor.col < sx) sx = view.cursor.col;
+    else if (view.cursor.col >= sx + this.visibleCols) sx = view.cursor.col - this.visibleCols + 1;
+    if (view.cursor.line < sy) sy = view.cursor.line;
+    else if (view.cursor.line >= sy + this.visibleRows) sy = view.cursor.line - this.visibleRows + 1;
+    sx = Math.max(0, sx);
+    sy = Math.max(0, Math.min(sy, Math.max(0, view.lines.length - this.visibleRows)));
+    if (sx !== this.scrollX || sy !== this.scrollY) {
+      this.scrollX = sx;
+      this.scrollY = sy;
+      this.layerKey = -1; // viewport moved: rebuild the composite
+    }
   }
 
   private xOf(col: number): number {
-    return this.textX + col * this.cellW;
+    return this.textX + (col - this.scrollX) * this.cellW;
   }
 
   private yOf(line: number): number {
-    return this.oy + line * this.cellH;
+    return this.oy + (line - this.scrollY) * this.cellH;
   }
 
   private glyphColor(ch: string): string {
@@ -200,14 +226,19 @@ export class Renderer {
     // the classic `~` for empty space below the buffer, all the way down
     g.font = `${this.fontSize}px ${MONO}`;
     g.fillStyle = 'rgba(52,140,90,0.35)';
-    for (let li = view.lines.length; li < this.rows; li++) {
+    const eofRow = this.scrollY + this.visibleRows;
+    for (let li = Math.max(view.lines.length, this.scrollY); li < eofRow; li++) {
       g.fillText('~', this.textX, this.yOf(li) + cy / 2);
     }
 
-    for (let li = 0; li < view.lines.length; li++) {
+    const firstLine = Math.max(0, this.scrollY);
+    const lastLine = Math.min(view.lines.length, this.scrollY + this.visibleRows);
+    for (let li = firstLine; li < lastLine; li++) {
       const line = view.lines[li];
       const y = this.yOf(li) + cy / 2;
-      for (let ci = 0; ci < line.length; ci++) {
+      const firstCol = Math.max(0, this.scrollX);
+      const lastCol = Math.min(line.length, this.scrollX + this.visibleCols);
+      for (let ci = firstCol; ci < lastCol; ci++) {
         const ch = line[ci];
         const x = this.xOf(ci);
         if (ch === ' ') continue;
@@ -355,7 +386,7 @@ export class Renderer {
 
   /** Cheap numeric hash of everything baked into the composite frame. */
   private frameKeyFor(view: View): number {
-    let k = (view.version * 131 + this.hue * 17 + view.collected.size * 7 + view.cursor.line * 3 + (this.bloom ? 1 : 0)) | 0;
+    let k = (view.version * 131 + this.hue * 17 + view.collected.size * 7 + view.cursor.line * 3 + this.scrollX * 11 + this.scrollY * 13 + (this.bloom ? 1 : 0)) | 0;
     k = (k * 31 + (view.numbers === 'off' ? 0 : view.numbers === 'abs' ? 1 : view.numbers === 'rel' ? 2 : 3)) | 0;
     const s = view.sel;
     k = (k * 31 + (s ? 1 : 0)) | 0;
@@ -407,20 +438,24 @@ export class Renderer {
 
     // gutter rule
     f.fillStyle = 'rgba(66,168,108,0.22)';
-    f.fillRect(this.ox + (this.digits + 1.15) * this.cellW, this.oy, 1, Math.max(this.rows, view.lines.length) * this.cellH);
+    f.fillRect(this.ox + (this.digits + 1.15) * this.cellW, this.oy, 1, this.visibleRows * this.cellH);
 
     this.paintHighlights(f, view);
 
     // cursorline spans the window, like 'cursorline'
     const curLine = view.cursor.line;
-    f.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.06)`;
-    f.fillRect(0, this.yOf(curLine) + 1, this.w, this.cellH - 2);
+    if (curLine >= this.scrollY && curLine < this.scrollY + this.visibleRows) {
+      f.fillStyle = `hsla(${this.hue}, 90%, 60%, 0.06)`;
+      f.fillRect(0, this.yOf(curLine) + 1, this.w, this.cellH - 2);
+    }
 
     if (view.numbers !== 'off') {
       f.font = `${Math.max(8, Math.round(this.fontSize * 0.82))}px ${MONO}`;
       f.textAlign = 'right';
       f.textBaseline = 'middle';
-      for (let li = 0; li < view.lines.length; li++) {
+      const nFirst = Math.max(0, this.scrollY);
+      const nLast = Math.min(view.lines.length, this.scrollY + this.visibleRows);
+      for (let li = nFirst; li < nLast; li++) {
         const isCur = li === curLine;
         let label: string;
         if (view.numbers === 'rel') label = String(isCur ? 0 : Math.abs(li - curLine));
@@ -444,6 +479,7 @@ export class Renderer {
   }
 
   render(view: View, now: number): void {
+    this.ensureCursor(view);
     const key = this.frameKeyFor(view);
     if (key !== this.layerKey) {
       this.layerKey = key;
