@@ -565,8 +565,8 @@ h2,
   inset: 0;
   z-index: 1;
   background:
-    repeating-linear-gradient(90deg, transparent 0 47px, rgb(102 255 158 / 0.035) 47px 48px),
-    repeating-linear-gradient(0deg, transparent 0 47px, rgb(102 255 158 / 0.035) 47px 48px),
+    repeating-linear-gradient(90deg, transparent 0 47px, rgb(102 255 158 / 0.045) 47px 48px),
+    repeating-linear-gradient(0deg, transparent 0 47px, rgb(102 255 158 / 0.045) 47px 48px),
     radial-gradient(90% 80% at 50% 40%, hsl(var(--hue) 80% 55% / 0.025), transparent 72%);
   pointer-events: none;
 }
@@ -1460,10 +1460,10 @@ body.crt-off .board::after { display: none; }
   inset: 5px;
   z-index: 3;
   pointer-events: none;
-  border: 1px solid rgb(102 255 158 / 0.12);
+  border: 1px solid rgb(102 255 158 / 0.18);
   background:
-    linear-gradient(var(--line) 0 0) left top / 26px 2px no-repeat,
-    linear-gradient(var(--line) 0 0) left top / 2px 26px no-repeat,
-    linear-gradient(var(--line) 0 0) right bottom / 26px 2px no-repeat,
-    linear-gradient(var(--line) 0 0) right bottom / 2px 26px no-repeat;
+    linear-gradient(var(--line) 0 0) left top / 36px 2px no-repeat,
+    linear-gradient(var(--line) 0 0) left top / 2px 36px no-repeat,
+    linear-gradient(var(--line) 0 0) right bottom / 36px 2px no-repeat,
+    linear-gradient(var(--line) 0 0) right bottom / 2px 36px no-repeat;
 }

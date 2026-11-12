@@ -101,7 +101,7 @@ only finalize by 23:50; the machine shuts down at 00:00.
   `books-index/curriculum-map/stages.json`; no source bloat in the bundle.
 - P2 visual increments shipped: static vector instrument frame + corner rules
   and a low-opacity vector grid around the play buffer (zero per-frame JS);
-  QA ~57 FPS.
+  QA ~57 FPS; frame/grid strengthened without bundle growth.
 - Results screen now frames the key gap as **GOLF** (par / +N over par / best);
   over-par clears make **GOLF RETRY** the primary/focused action;
   mastery loop design is in `docs/MASTERY_VIM_GOLF.md`.

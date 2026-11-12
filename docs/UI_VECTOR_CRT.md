@@ -14,7 +14,8 @@ Hacker-terminal, not cyberpunk neon.
 - Static instrument frame + exposed corner rules around the play buffer
   (`.board::after`), no JS and no per-frame work.
 - Low-opacity vector grid in the buffer field (`.board::before`), static CSS.
-  Browser QA ~57 FPS; audit 38 screens clean; bundle stayed under 277k.
+  Browser QA ~57 FPS; audit 38 screens clean; bundle stayed under 277k. The
+  frame/grid opacity and corner lengths were strengthened without adding bytes.
 
 ## Cheap, measurable ideas
 
