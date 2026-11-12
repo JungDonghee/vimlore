@@ -1,0 +1,96 @@
+{
+  "chapter": 6,
+  "stages": [
+    {
+      "stage": "c06s1",
+      "tips": [
+        {
+          "tip": 51,
+          "line": 5169,
+          "evidence": "Tip 51Search to Navigate"
+        },
+        {
+          "tip": 80,
+          "line": 8181,
+          "evidence": "Tip 80Meet the Search Command"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`/dust<CR>` names the literal and `n` walks to the next match, so the 'dusty' decoy is skipped. Tip 80 is the anchor: it covers executing a search, repeating with `n`/`N`, and wrap-around; Tip 51 backs search-as-navigation with `n`/`N`. Both precede the substitution tips, so the chapter's first stage starts Practical's search block in order."
+    },
+    {
+      "stage": "c06s2",
+      "tips": [
+        {
+          "tip": 5,
+          "line": 1395,
+          "evidence": "Tip 5Find and Replace by Hand"
+        },
+        {
+          "tip": 77,
+          "line": 7978,
+          "evidence": "Tip 77Stake the Boundaries of a Word"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "`*` searches the whole word under the cursor and `n` advances. Tip 5 is the anchor (press `*`, then `n`; `*nn` cycles the matches); Tip 77 supplies the word-delimiter insight -- `*` wraps the pattern in `\\<...\\>` -- which is exactly why 'mothball' and 'mothlight' are not matches. Order concern: Practical teaches `*` at Tip 5 (ch 1), long before the `/` command of Tip 80, but the chapter deliberately teaches explicit `/` first and the `*` shorthand second, so this stage runs out of Practical order."
+    },
+    {
+      "stage": "c06s3",
+      "tips": [
+        {
+          "tip": 88,
+          "line": 8818,
+          "evidence": "Tip 88Meet the Substitute Command"
+        },
+        {
+          "tip": 89,
+          "line": 8890,
+          "evidence": "Tip 89Find and Replace Every Match in a File"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`:s/ash/ashen/` uses the default range (current line) with no `g`: one line, one match. Tip 88 is the anchor for the `:[range]s/{pattern}/{string}/[flags]` anatomy; Tip 89 states the default scope outright and shows that `%` plus `g` is the flood that would turn the already-correct 'ashen' lines into 'ashenen'. Tips 88-89 follow the search tips, so the stage is in Practical order."
+    },
+    {
+      "stage": "c06s4",
+      "tips": [
+        {
+          "tip": 89,
+          "line": 8890,
+          "evidence": "Tip 89Find and Replace Every Match in a File"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`%` is the vertical axis (whole file) and `g` the horizontal axis (every match on each line); Tip 89 is the canonical both-axes lesson and warns that dropping either half leaves matches behind. It follows Tip 88 directly, so the stage is in Practical order."
+    },
+    {
+      "stage": "c06s5",
+      "tips": [
+        {
+          "tip": 5,
+          "line": 1395,
+          "evidence": "Tip 5Find and Replace by Hand"
+        },
+        {
+          "tip": 33,
+          "line": 3358,
+          "evidence": "Tip 33Insert the Current Word at the Command Prompt"
+        },
+        {
+          "tip": 91,
+          "line": 9018,
+          "evidence": "Tip 91Reuse the Last Search Pattern"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`*` fills the search register (Tip 5), `n` walks the faces, and `:%s//moon/g` leaves the pattern field empty so the substitute reuses the last search -- the rule of Tip 91; Tip 33 shows the same `*` + `:%s//<C-r><C-w>/g` workflow end to end. The word-bounded `*` that keeps 'mothball' intact is Tip 77, cited at s2. The new insight (Tip 91) follows Tip 89, so the stage is in Practical order even though it revisits the early Tip 5. Engine note: the mixed-case goal ('moth' and 'Moth') only works because the engine compiles `*` with smartcase; stock Vim would need 'ignorecase'/'smartcase' or `\\c` (cf. Tip 73)."
+    }
+  ],
+  "chapterNote": "All five stages cite Practical Vim body tips, so every supplement is [] and no other book (including Modern Vim) is needed: search is Tips 80 (anchor) and 51, substitution is Tips 88, 89 and 91, and the `*` shorthand is Tip 5, with its word-delimiter mechanics in Tip 77 and its `*` + `:%s//` workflow in Tip 33. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 80, s2's `*` material peaks at Tip 77 -- below the frontier because Practical introduces `*` in ch 1 (Tip 5) -- so s2 is the only out-of-order stage, while s3 (89), s4 (89) and s5 (91, reusing Tip 5 for `*`) stay at or above it. The chapter is otherwise monotonic 80 -> 88 -> 89 -> 91 across Practical's search (ch 13) then substitution (ch 14) blocks. Modern Vim's search material is project-wide grep/quickfix (engine-deferred, outside the single buffer), so it cannot improve these stages; the one integration caveat is case: s5's mixed-case goal depends on the engine's smartcase `*`, and Tip 73 is the book's case-tuning tip but is not part of the stage's lesson."
+}

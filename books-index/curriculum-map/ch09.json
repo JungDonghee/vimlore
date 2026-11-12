@@ -1,0 +1,93 @@
+{
+  "chapter": 9,
+  "stages": [
+    {
+      "stage": "c09s1",
+      "tips": [
+        {
+          "tip": 27,
+          "line": 2753,
+          "evidence": "Tip 27Meet Vim’s Command Line"
+        },
+        {
+          "tip": 28,
+          "line": 2815,
+          "evidence": "Tip 28Execute a Command on One or More Consecutive Lines"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Two deletes by address. Tip 28 is the range lesson: the form is '{start},{end}', ':%' means the whole file, and the tip tells you to swap its :print examples for :delete ('If we had issued the command :3d...'). Tip 27, the ch-5 opener, lists ':[range]delete [x]' in Table 7 and explicitly defers the range mechanics to Tip 28. So stage 1 opens the chapter on the book's own opening pair (27 -> 28); ':1,3d' then the re-counted ':2,4d' is exactly the address arithmetic those tips set up. Practical covers it, so no supplement."
+    },
+    {
+      "stage": "c09s2",
+      "tips": [
+        {
+          "tip": 29,
+          "line": 3031,
+          "evidence": "Tip 29Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 29 is the exact source: ':[range]copy {address}' and ':[range]move {address}', a table row for ':t6' ('Copy the current line to just below line 6'), and a 'Move Lines with the :m Command' section. ':1t6' and ':2m11' are that pair with numeric addresses, and the brief's rule that both commands file the line after the addressed one follows from the ':[range]copy {address}' form (\"put it below the current line\" in its :6copy. example). Tip 29 does not warn that the :t shifts the numbering the following :m must use, so the stage's own line-11 count is its difficulty, not a book claim. Fully covered: no supplement."
+    },
+    {
+      "stage": "c09s3",
+      "tips": [
+        {
+          "tip": 101,
+          "line": 9811,
+          "evidence": "Tip 101Alphabetize the Properties of Each Rule in a CSS File"
+        }
+      ],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 1519,
+          "evidence": ":sort u Remove duplicate lines.",
+          "note": "Practical Vim never documents any :sort flag, so the 'u' that makes this stage reach 'one of each' is uncovered. Hack 40 'Sort File Content' (line 1504) is the dedicated sort section: its option table gives ':sort' ascending (1516), ':sort! Sort in descending order' (1517), ':sort i' (1518) and 'U stands for unique.' (1520), and line 1519 is the exact command plus effect. It also backs the stage's descending hint (:sort!)."
+        }
+      ],
+      "order": "practical-order-ok",
+      "note": "Practical's only body tip that teaches Vim's :sort is Tip 101, and it shows :sort solely as a ranged command inside a :global CSS workflow (:'<,'>sort, :g/{/ .+1,/}/-1 sort) - alphabetical ordering, never a flag. So the command is covered but the dedupe insight is not, hence the single supplement. (Tip 35's ':2,$!sort -t',' -k2' at 3620 is the external shell sort filter, not Vim's :sort.) This is a front-load of ch-15 material: Tip 101 is ~70 tips past the ch-5 block, and it is the forward jump that makes s4/s5 read backwards."
+    },
+    {
+      "stage": "c09s4",
+      "tips": [
+        {
+          "tip": 30,
+          "line": 3189,
+          "evidence": "Tip 30Run Normal Mode Commands Across a Range"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 30 prints the solution verbatim - '=> :%normal A;' - and explains both halves: '%' is the whole-file range (Tip 28 defines that shorthand) and 'Vim automatically reverts to Normal mode afterward', so A; appends on every line in one command without leaving Insert mode stuck. This is the stage's exact command; no supplement. Order: as a step it is a clean 28 -> 29 -> 30, but because s3 has already cited Tip 101 it reads as a backward move below that frontier (out-of-order). Sequencing :sort after this stage would make the chapter ascend 28, 29, 30."
+    },
+    {
+      "stage": "c09s5",
+      "tips": [
+        {
+          "tip": 30,
+          "line": 3189,
+          "evidence": "Tip 30Run Normal Mode Commands Across a Range"
+        },
+        {
+          "tip": 101,
+          "line": 9811,
+          "evidence": "Tip 101Alphabetize the Properties of Each Rule in a CSS File"
+        },
+        {
+          "tip": 89,
+          "line": 8890,
+          "evidence": "Tip 89Find and Replace Every Match in a File"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "The boss is three passes, each with a body tip: ':%normal 3x' (Tip 30), ':sort' (Tip 101 - plain, no u/! flag here, so Practical covers this stage's sort exactly) and ':%s/ - / : /' (Tip 89: the '%' address applies :s to every line; no g flag is needed because each line holds one ' - '). It introduces no new command, only recombination, and its :%s is spaced review of c06's Tips 88-89. Order: Tip 89 sits below the Tip 101 frontier set by s3, so this review stage reads backwards (out-of-order). No supplement."
+    }
+  ],
+  "chapterNote": "Chapter 9 is Practical Vim ch 5 (Command-Line Mode) plus two escapes from it. The spine stages map onto the opening of that chapter: s1 -> Tips 27-28 (ranges, :[range]delete), s2 -> Tip 29 (:t/:m), s4 -> Tip 30 (:%normal A;), i.e. exactly Tips 27, 28, 29, 30 in book order. The exception is :sort: Practical gives it no ch-5 home; its only body tip is Tip 101 (ch 15, 'Alphabetize the Properties of Each Rule in a CSS File'), which sorts a range inside a :global workflow and never documents a flag, so c09s3 takes the chapter's single supplement - Vim 101 Hacks Hack 40, line 1519 ':sort u Remove duplicate lines.' (with ':sort!' at 1517 for the stage's descending hint). s5's plain :sort is fully covered by Tip 101. Because s3 front-loads Tip 101, s4 (Tip 30) and s5 (Tip 89) fall below that frontier and are the chapter's only out-of-order stages; re-sequencing :sort last would make the chapter run 27-28 -> 29 -> 30 -> 101. At chapter level the whole block is a backward jump in the game spine: it is played after c06 (Tips 80-91) and c07 (60-68, 98-99), so Practical's Ex chapter arrives at the game's chapter 9, and s5's :%s doubles as deliberate review of c06. Modern Vim contributes nothing: no tip teaches these Ex commands, and its only :normal mentions (':normal G' at 3554, in Tip 14's test/quickfix workflow) are engine-deferred. Level-level caveat: the chapter header comment lists :sort! as taught, but ! appears only in s3's last hint, never in a stage solution."
+}

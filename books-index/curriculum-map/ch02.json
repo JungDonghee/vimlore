@@ -1,0 +1,87 @@
+{
+  "chapter": 2,
+  "stages": [
+    {
+      "stage": "c02s1",
+      "tips": [
+        {
+          "tip": 3,
+          "line": 1255,
+          "evidence": "Tip 3Take One Step Back, Then Three Forward"
+        },
+        {
+          "tip": 49,
+          "line": 4897,
+          "evidence": "Tip 49Move Word-Wise"
+        },
+        {
+          "tip": 50,
+          "line": 5009,
+          "evidence": "Tip 50Find by Character"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Brief claims w/e/b plus f/;, and the solution is pure f/;: f$ then ; four times per line. Tip 49 is the word-motion half (w/b/e and the WORD variants W/B/E), Tip 50 the f/;/, mechanics, and Tip 3 is where Practical first makes the motion repeatable (f+ once, then ; ; ;). The tip numbers ascend 3 -> 49 -> 50, but 49/50 are book ch 8 tips borrowed far ahead of the game's second chapter (see chapterNote)."
+    },
+    {
+      "stage": "c02s2",
+      "tips": [
+        {
+          "tip": 49,
+          "line": 4897,
+          "evidence": "Tip 49Move Word-Wise"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Every claimed command (b, e, W, E) is in Tip 49; the 'Know Your Words from Your WORDS' section explicitly adds W, B, E as the WORD-wise equivalents, and Practical has no finer-grained WORD tip. Mismatch to fix in the level: the stored solution jf$;;;; never presses b/e/W/E, so the chamber as built drills f/; (Tip 50) and the advertised word motions are unearned. Order is fine — it re-drills Tip 49 after s1 instead of jumping ahead."
+    },
+    {
+      "stage": "c02s3",
+      "tips": [
+        {
+          "tip": 19,
+          "line": 2105,
+          "evidence": "Tip 19Overwrite Existing Text with Replace Mode"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Practical has no r-dedicated tip; the only body description is Tip 19's closing paragraph (book ch 3): r{char}/gr{char} 'overwrite a single character before switching straight back to Normal mode' — exactly this stage's insight. Order concern: Tip 19 is earlier in Practical than the ch 8 tips (49/50) used by s1/s2, so s3 walks the curriculum backwards in the book's spine; it would only be consistent if s3 preceded s1. Separately, the hints describe the wrong edit ('1 should be an l', '0 should be an o') while the buffer has 1O/2O to become 10/20 (O -> 0)."
+    },
+    {
+      "stage": "c02s4",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 1822,
+          "evidence": "Hack 52. Change Case",
+          "note": "Hack 52 gives ~ in Normal mode ('Change the case of the character under the cursor and moves the cursor to next character'), the private count form '5~ Change the case of the next 5 characters', and the fact that repeated ~ keeps flipping to end of line — precisely the 99~ idiom this stage uses on a 20-character line."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "Practical never teaches ~ as a command: the body mentions it only as a recorded macro step inside Tip 72 ('we used the ~ command, which toggles the case of the letter under the cursor') and as the g~ operator row in Tip 12's table; neither teaches the single-character count form used here. Hence no Practical tip and a supplement from another book."
+    },
+    {
+      "stage": "c02s5",
+      "tips": [
+        {
+          "tip": 3,
+          "line": 1255,
+          "evidence": "Tip 3Take One Step Back, Then Three Forward"
+        },
+        {
+          "tip": 50,
+          "line": 5009,
+          "evidence": "Tip 50Find by Character"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Stage teaches only f and ;, and fGiA<Esc>jj0f$;; is 'find G, insert the A, then ; to walk the rest of the line'. Tip 50 is the canonical f/; reference; Tip 3 is Practical's first worked example of pairing an f{char} with a change and then repeating the motion with ; (its dot-repeat half is not used by this stage). No new tip beyond s1's set, so no further order inversion."
+    }
+  ],
+  "chapterNote": "c02 is the first chapter that reaches into Practical Vim ch 8: word motions (Tip 49) and find-by-character (Tip 50) are book tips 49-50, i.e. after Tips 7-48 (repeatable changes, insert/visual/command-line modes, buffers, files, jumps, paste), so the chapter sits ahead of the book's spine — a front-load rather than an inversion. The one genuine inversion is s3: its only Practical source (Tip 19, book ch 3) is cited after the ch 8 tips of s1/s2, so the chapter moves backwards in Practical's order. s4 (~) is the only stage with no Practical body tip at all and is supplemented from Vim 101 Hacks. Level-level mismatches found while reading, not fixable in this map: s1 and s2 claim w/e/b/W/E but their par solutions use only f/;/j/0, so b/e/W/E are never exercised; t/T/,/B appear in the chapter header comment and unlock list but in no stage's teaches, and the 't is safer than f' design note is unfulfilled; s3's hints describe a different typo (l/o) than the buffer's O->0."
+}

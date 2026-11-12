@@ -1,0 +1,104 @@
+{
+  "chapter": 5,
+  "stages": [
+    {
+      "stage": "c05s1",
+      "tips": [
+        {
+          "tip": 20,
+          "line": 2170,
+          "evidence": "Tip 20Grok Visual Mode"
+        },
+        {
+          "tip": 21,
+          "line": 2196,
+          "evidence": "Tip 21Define a Visual Selection"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 20 supplies the insight (Visual mode is select-then-operate); Tip 21 supplies v and the three Visual submodes, and 6wv$d is exactly that shape. As the chapter's first stage it cannot regress (frontier 21). Concern: Tip 23 (line 2368) states the general rule to prefer the operator form over the Visual one (gUit over vitU), so it would prefer d$ to this stage's v$d; the inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction."
+    },
+    {
+      "stage": "c05s2",
+      "tips": [
+        {
+          "tip": 21,
+          "line": 2196,
+          "evidence": "Tip 21Define a Visual Selection"
+        },
+        {
+          "tip": 22,
+          "line": 2280,
+          "evidence": "Tip 22Repeat Line-Wise Visual Commands"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 22 is Practical Vim's own Vj> indent demo (it also shows 2>); Tip 21 supplies V. The stage's new insight (Tip 22) is above s1's frontier of 21, so order advances. No mismatch; par 5 matches jV2j>."
+    },
+    {
+      "stage": "c05s3",
+      "tips": [
+        {
+          "tip": 24,
+          "line": 2476,
+          "evidence": "Tip 24Edit Tabular Data with Visual-Block Mode"
+        },
+        {
+          "tip": 25,
+          "line": 2582,
+          "evidence": "Tip 25Change Columns of Text"
+        },
+        {
+          "tip": 26,
+          "line": 2660,
+          "evidence": "Tip 26Append After a Ragged Visual Block"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 24 defines block-wise Visual mode, Tip 25 inserts text into several lines at once, and Tip 26's sidebar is the only Practical passage that states the Visual-Block I/A convention. Max tip 26 is above s2's 22, so order advances. Mismatch: Practical's block-insert demo uses c where the stage uses I, but the insight (write once, every marked row answers) is the same; par 8 covers <C-v>3jI// <Esc>."
+    },
+    {
+      "stage": "c05s4",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "learning-vi-vim",
+          "line": 22854,
+          "evidence": "Same as J, but without inserting a space. {Vim}",
+          "note": "No Practical Vim body tip teaches J or gJ; the only mention is a Caps Lock aside in Tip 14 (practical-vim line 1966). This book states both: the gJ entry (line 22854) is 'same as J, without inserting a space', J's entry is line 22850, and the body demo is line 2620."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "The stage teaches the basic J join and its space-free gJ variant; Practical Vim never covers either in the body, so it is a genuine basic supplied from another book and flagged not-in-practical-ok. The solution JJjgJ exercises both halves."
+    },
+    {
+      "stage": "c05s5",
+      "tips": [
+        {
+          "tip": 24,
+          "line": 2476,
+          "evidence": "Tip 24Edit Tabular Data with Visual-Block Mode"
+        },
+        {
+          "tip": 26,
+          "line": 2660,
+          "evidence": "Tip 26Append After a Ragged Visual Block"
+        }
+      ],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 1837,
+          "evidence": "5~ Change the case of the next 5 characters",
+          "note": "Practical Vim never teaches ~ in the body (Tip 72, line 7553, names it only to replace it with vU), so the case toggle is supplemented; Hack 52 (line 1822) documents ~ and line 1837 gives the count form, exactly the stage's 13~. J is the command already supplemented under c05s4."
+        }
+      ],
+      "order": "practical-order-ok",
+      "note": "C-v + A is Tip 26's append-at-the-end-of-every-line move, with Tip 24 as review from s3; the stage's new insight (Tip 26's A half) sits at the s3 frontier of 26, so nothing regresses. J and ~ are the uncovered halves (see supplement). The | column echoes Tip 24's r| table builder."
+    }
+  ],
+  "chapterNote": "Chapter 5 maps to Practical Vim Ch 4, Visual Mode: Tips 20-26 in ascending first use (s1 v: 20-21; s2 V and >: 21-22; s3 C-v and I: 24-26; s5 C-v and A: 24 and 26). c05s4 (J/gJ) is a genuine basic with no Practical Vim body coverage and is supplemented from learning-vi-vim, hence not-in-practical-ok; c05s5 keeps Practical tips for the block append (Tip 26, with Tip 24 as review) and supplements only its J/~ halves (vim-101-hacks Hack 52 for ~). Order is judged per stage on its new insight against the highest tip already used in the chapter: 21 -> 22 -> 26 -> (supplement) -> 26, so only s4 steps outside Practical. Concern: s1's v$d is the habit Tip 23 argues against (prefer d$); that inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction. Modern Vim is unused: no tip teaches Visual mode, J/gJ or ~ (its Visual mentions are incidental - terminal Normal-mode use at line 3855, gs on a selection at 3330, fzf's <C-v> vertical split), and its subject matter is engine-deferred."
+}

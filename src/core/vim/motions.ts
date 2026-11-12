@@ -365,18 +365,26 @@ function lineFirstNonBlank(buf: Buffer, line: number): number {
 
 /** Greedy wrapping used by gq/gw; returns the reformatted block lines. */
 export function wrapLines(lines: string[], width: number): string[] {
-  const words = lines.join(' ').split(/\s+/).filter(Boolean);
-  if (words.length === 0) return [''];
+  // Vim's formatter preserves runs of spaces (including the two spaces after
+  // sentence punctuation) rather than collapsing them. Join source line breaks
+  // with one space, but keep in-line whitespace exactly.
+  const text = lines.join(' ').replace(/^[ \t]+|[ \t]+$/g, '');
+  if (!text) return [''];
+  const tokens = text.match(/\S+| +/g) ?? [];
   const out: string[] = [];
   let cur = '';
-  for (const w of words) {
-    if (cur === '') cur = w;
-    else if (cur.length + 1 + w.length <= width) cur += ' ' + w;
+  for (const tok of tokens) {
+    if (/^ +$/.test(tok)) {
+      cur += tok;
+      continue;
+    }
+    if (cur === '') cur = tok;
+    else if (cur.length + tok.length <= width) cur += tok;
     else {
-      out.push(cur);
-      cur = w;
+      out.push(cur.replace(/ +$/, ''));
+      cur = tok;
     }
   }
-  if (cur !== '') out.push(cur);
+  if (cur !== '') out.push(cur.replace(/ +$/, ''));
   return out;
 }

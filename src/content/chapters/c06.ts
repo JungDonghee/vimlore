@@ -229,15 +229,15 @@ Moth, says the lantern, Moth
 the moth is a name that moves`,
       goal: {
         type: 'exact',
-        text: `moon at the lantern, moon on the stair
+        text: `moon at the lantern, Moth on the stair
 the moon's wing is a page
 a mothball sleeps in the drawer
 moon, moon, the lantern calls
-the moon has worn a hundred faces
-moon in the ash and moon in the glass
+the Moth has worn a hundred faces
+moon in the ash and Moth in the glass
 a mothball keeps its old name
 the moon keeps the lantern awake
-moon, says the lantern, moon
+Moth, says the lantern, Moth
 the moon is a name that moves`,
       },
       par: 14,

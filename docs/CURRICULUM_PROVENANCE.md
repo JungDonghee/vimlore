@@ -7,10 +7,15 @@
 > The engine is tested against real Vim; the curriculum must be traceable to the
 > books the same way.
 >
-> **Current status: the chapter-level themes align with the books, but a
-> section-level provenance audit has NOT been completed.** Do not claim that all
-> 51 stages are already book-derived. This file defines the audit and is the
-> handoff contract for doing it honestly.
+> **Status 2026-11-12: section-level citations are complete for all 51 stages**
+> via the priority-book mapping overlay (Practical Vim first; supplements where
+> Practical assumes basics; Modern Vim deferred). The citations are evidence-
+> checked by subagents and merged into `books-index/curriculum-map/stages.json`.
+> **Order is not the literal Tip order**: 19 explicit inversions remain because
+> Practical Vim assumes basics and opens at the dot command. See
+> [`CURRICULUM_SPINE.md`](CURRICULUM_SPINE.md) and
+> [`../books-index/curriculum-map/STAGE_MAP.md`](../books-index/curriculum-map/STAGE_MAP.md).
+> Do not describe the game as a literal 1:1 reading of the book.
 
 ## 1. Source corpus
 
@@ -55,19 +60,19 @@ elastic.
 
 | thing | status |
 |---|---|
-| 10 books extracted | yes (`books-text/`, 78,492 lines) |
+| 10 books extracted | yes (`books-text/`, 78,502 lines) |
 | chapter themes (movement → words → operators → objects → visual → search → registers → marks → ex → mastery) | broadly aligned |
 | per-stage `teaches` command ids | present for 51/51 |
-| section index of the corpus | generated in `BOOKS_INDEX.md` (3 books need manual scan) |
-| per-stage **book + section citation** | **5/51 cited; 46 unmapped** |
+| section index of the corpus | generated in `books-index/` (priority two + full audit) |
+| per-stage **book + section citation** | **51/51 cited** (overlay; evidence-checked) |
 | prerequisite graph | informal; not machine-readable |
 | pacing metrics (new commands/stage, review ratio, par ramp) | not measured |
 | gap list of book topics outside the 51 | partial (see §6) |
 
-This table is intentionally embarrassing: it prevents the next AI from
-mistaking “the chapters feel right” for provenance. The actionable per-stage
-worksheet is [`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md); five rows are
-cited so far and 46 remain unmapped.
+The citations are now complete, but the **order** and **drill/transfer plan**
+are not: 19 tip-order inversions are recorded, and the mastery layer is a
+design/incremental task. The generated per-stage report is
+[`STAGE_PROVENANCE.md`](STAGE_PROVENANCE.md).
 
 ## 4. Audit method (the next curriculum program)
 

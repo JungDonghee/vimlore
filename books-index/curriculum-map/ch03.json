@@ -1,0 +1,106 @@
+{
+  "chapter": 3,
+  "stages": [
+    {
+      "stage": "c03s1",
+      "tips": [
+        {
+          "tip": 12,
+          "line": 1794,
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "tip": 49,
+          "line": 4897,
+          "evidence": "Tip 49Move Word-Wise"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 12 is the operator+motion grammar behind dw/de; Tip 49 supplies the w/e word-motion targets (already met in ch 2). This is the chapter's natural entry point at Tip 12, after the book's opening tips."
+    },
+    {
+      "stage": "c03s2",
+      "tips": [
+        {
+          "tip": 11,
+          "line": 1742,
+          "evidence": "Tip 11Don’t Count If You Can Repeat"
+        },
+        {
+          "tip": 12,
+          "line": 1794,
+          "evidence": "Tip 12Combine and Conquer"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 12's doubled-operator rule is exactly dd; Tip 11 (counts vs repeat) is earlier review that supports the 3dd count, while dd is the new command. The new insight sits at Tip 12."
+    },
+    {
+      "stage": "c03s3",
+      "tips": [
+        {
+          "tip": 2,
+          "line": 1139,
+          "evidence": "Tip 2Don’t Repeat Yourself"
+        },
+        {
+          "tip": 5,
+          "line": 1395,
+          "evidence": "Tip 5Find and Replace by Hand"
+        },
+        {
+          "tip": 12,
+          "line": 1794,
+          "evidence": "Tip 12Combine and Conquer"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 2's compound-command table defines s=cl and S=cc; Tip 5 is the book's cw word-change example; Tip 12 supplies c as an operator. Practical teaches s/S (Tip 2) and cw (Tip 5) before operator grammar (Tip 12), so this stage runs backwards in the spine."
+    },
+    {
+      "stage": "c03s4",
+      "tips": [
+        {
+          "tip": 60,
+          "line": 5993,
+          "evidence": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register"
+        },
+        {
+          "tip": 63,
+          "line": 6435,
+          "evidence": "Tip 63Paste from a Register"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 60 demonstrates yyp as line duplication and P as a put; Tip 63 explains line-wise p (below) vs P (above) for a yy register. Both are Ch 10 material (Tips 60/63), a large forward leap from Tip 12 that preempts the register chapter."
+    },
+    {
+      "stage": "c03s5",
+      "tips": [
+        {
+          "tip": 1,
+          "line": 980,
+          "evidence": "Tip 1Meet the Dot Command"
+        },
+        {
+          "tip": 6,
+          "line": 1487,
+          "evidence": "Tip 6Meet the Dot Formula"
+        },
+        {
+          "tip": 9,
+          "line": 1580,
+          "evidence": "Tip 9Compose Repeatable Changes"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 1 defines dot as repeat-last-change; Tip 6 names the one-key-move/one-key-execute Dot Formula that this j. solution uses; Tip 9 explains why dw is the repeatable unit. All three are Ch 1 (Tips 1/6/9), so the book's very first lesson is played last here — the clearest inversion in the chapter."
+    }
+  ],
+  "chapterNote": "Chapter 3's operator spine aligns with Practical Vim Tip 12 (d/c/y and dd), and s1-s2 sit at that point, but the book order is inverted: the dot command (Tip 1), s/S (Tip 2) and cw (Tip 5) all precede Tip 12, yet s3/s5 play them after it; s4 additionally jumps to Tip 60 for yy/p. All five stages are covered by Practical Vim, so no supplements are needed. To follow the spine, dot should open the chapter (Tip 1), then s/S and cw, then d/dd (Tip 12), with yy/p held for the register chapter (Tips 60/63)."
+}

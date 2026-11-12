@@ -1,0 +1,1235 @@
+{
+  "generatedBy": "tools/books/merge_stage_map.py",
+  "stages": [
+    {
+      "stage": "c01s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 47,
+          "line": 4757,
+          "title": "Keep Your Fingers on the Home Row",
+          "evidence": "Tip 47Keep Your Fingers on the Home Row"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 47 is the only Practical Vim body tip that teaches h/j/k/l: it defines each key (h one column left, l right, j one line down, k up). It is the chapter's first citation, so it inverts nothing and is marked ok — but it starts the chapter 46 tips into the book. Friction: the par solution 'llllllljj' never presses h or k, and Tip 47 itself warns that pressing h more than twice in a row is wasted keystrokes (line 4795), steering readers to word/character search (Tips 49-50).",
+      "chapterNote": "Chapter 1 is a fundamentals prelude stitched together from across Practical Vim, not a run through its tip sequence. It cites Tips 1-2 (x, $, a/A/Esc), 8 (u), 10-11 (counts), 14 (Esc), 26 (i/a conventions) and 47 (h/j/k/l): the first stage jumps to Tip 47 and every later stage then reads backwards. Practical covers all five stages, so no supplement is needed and the LTVE citations currently in c01.ts are redundant. Only c01s1 is forward-only within the chapter (practical-order-ok); c01s2-c01s5 are out of order against the 1..123 spine. To play the spine, the basics would need re-sequencing roughly 1-2 -> 8 -> 10-11 -> 14/26 -> 47, or chapter 1 must be accepted as outside Practical Vim's order."
+    },
+    {
+      "stage": "c01s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 10,
+          "line": 1670,
+          "title": "Use Counts to Do Simple Arithmetic",
+          "evidence": "Tip 10Use Counts to Do Simple Arithmetic"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 11,
+          "line": 1742,
+          "title": "Don’t Count If You Can Repeat",
+          "evidence": "Tip 11Don’t Count If You Can Repeat"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 10 states the count-prefix rule (many Normal commands accept {count}) and Tip 11 weighs count vs dot-repeat, including the d2w / 2dw placement. Neither demonstrates a bare count on a motion like 13l or 5j: Tip 10's worked examples are <C-a>/<C-x> arithmetic, so the match is the count mechanism, not the motion use. Both tips sit far behind the Tip 47 already consumed by c01s1, so the stage reads backwards through the spine.",
+      "chapterNote": "Chapter 1 is a fundamentals prelude stitched together from across Practical Vim, not a run through its tip sequence. It cites Tips 1-2 (x, $, a/A/Esc), 8 (u), 10-11 (counts), 14 (Esc), 26 (i/a conventions) and 47 (h/j/k/l): the first stage jumps to Tip 47 and every later stage then reads backwards. Practical covers all five stages, so no supplement is needed and the LTVE citations currently in c01.ts are redundant. Only c01s1 is forward-only within the chapter (practical-order-ok); c01s2-c01s5 are out of order against the 1..123 spine. To play the spine, the basics would need re-sequencing roughly 1-2 -> 8 -> 10-11 -> 14/26 -> 47, or chapter 1 must be accepted as outside Practical Vim's order."
+    },
+    {
+      "stage": "c01s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 1,
+          "line": 980,
+          "title": "Meet the Dot Command",
+          "evidence": "Tip 1Meet the Dot Command"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 2,
+          "line": 1139,
+          "title": "Don’t Repeat Yourself",
+          "evidence": "Tip 2Don’t Repeat Yourself"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "x is introduced in Tip 1 only as the demonstration of what 'a change' is (line 1000), and $ in Tip 2 as the motion that a/A exist to squash ($a -> A, line 1161). Practical has no dedicated basics tip for either command — plain character deletion and end-of-line motion are assumed — and the 7x count comes from Tip 10, not from a tip of its own. Tips 1-2 are the start of the book, so citing them at stage 3, after Tip 47, is out of order.",
+      "chapterNote": "Chapter 1 is a fundamentals prelude stitched together from across Practical Vim, not a run through its tip sequence. It cites Tips 1-2 (x, $, a/A/Esc), 8 (u), 10-11 (counts), 14 (Esc), 26 (i/a conventions) and 47 (h/j/k/l): the first stage jumps to Tip 47 and every later stage then reads backwards. Practical covers all five stages, so no supplement is needed and the LTVE citations currently in c01.ts are redundant. Only c01s1 is forward-only within the chapter (practical-order-ok); c01s2-c01s5 are out of order against the 1..123 spine. To play the spine, the basics would need re-sequencing roughly 1-2 -> 8 -> 10-11 -> 14/26 -> 47, or chapter 1 must be accepted as outside Practical Vim's order."
+    },
+    {
+      "stage": "c01s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 2,
+          "line": 1139,
+          "title": "Don’t Repeat Yourself",
+          "evidence": "Tip 2Don’t Repeat Yourself"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 14,
+          "line": 1939,
+          "title": "Get Back to Normal Mode",
+          "evidence": "Tip 14Get Back to Normal Mode"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 26,
+          "line": 2660,
+          "title": "Append After a Ragged Visual Block",
+          "evidence": "Tip 26Append After a Ragged Visual Block"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 2 teaches a, A and <Esc> head-on (a appends after the cursor, A is $a, the change closes with <Esc>); Tip 14 is the dedicated Esc tip (Get Back to Normal Mode). Plain i is never given its own tip — the only body passage that defines i and contrasts i/a/I/A is the subsection of Tip 26 at line 2722, 'Vim's Conventions for “i” and “a” Keys', so Tip 26 is cited for that content even though its main subject is Visual-Block appending. All three tips predate Tip 47, so the stage is out of order.",
+      "chapterNote": "Chapter 1 is a fundamentals prelude stitched together from across Practical Vim, not a run through its tip sequence. It cites Tips 1-2 (x, $, a/A/Esc), 8 (u), 10-11 (counts), 14 (Esc), 26 (i/a conventions) and 47 (h/j/k/l): the first stage jumps to Tip 47 and every later stage then reads backwards. Practical covers all five stages, so no supplement is needed and the LTVE citations currently in c01.ts are redundant. Only c01s1 is forward-only within the chapter (practical-order-ok); c01s2-c01s5 are out of order against the 1..123 spine. To play the spine, the basics would need re-sequencing roughly 1-2 -> 8 -> 10-11 -> 14/26 -> 47, or chapter 1 must be accepted as outside Practical Vim's order."
+    },
+    {
+      "stage": "c01s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 8,
+          "line": 1556,
+          "title": "Chunk Your Undos",
+          "evidence": "Tip 8Chunk Your Undos"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "u is covered by Tip 8 'Chunk Your Undos': one trip into Insert mode counts as one change, so u reverts it as a unit (Tip 11 and Tip 1 only mention u in passing). Mismatch worth flagging: c01s5 lists u as taught, but its par solution '7l4xi3000<Esc>j' never presses u — undo is neither required nor tested; only the i3000<Esc> chunk would be one undo step. Tip 8 lies before the Tip 47 already used, so the stage is out of order.",
+      "chapterNote": "Chapter 1 is a fundamentals prelude stitched together from across Practical Vim, not a run through its tip sequence. It cites Tips 1-2 (x, $, a/A/Esc), 8 (u), 10-11 (counts), 14 (Esc), 26 (i/a conventions) and 47 (h/j/k/l): the first stage jumps to Tip 47 and every later stage then reads backwards. Practical covers all five stages, so no supplement is needed and the LTVE citations currently in c01.ts are redundant. Only c01s1 is forward-only within the chapter (practical-order-ok); c01s2-c01s5 are out of order against the 1..123 spine. To play the spine, the basics would need re-sequencing roughly 1-2 -> 8 -> 10-11 -> 14/26 -> 47, or chapter 1 must be accepted as outside Practical Vim's order."
+    },
+    {
+      "stage": "c02s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 3,
+          "line": 1255,
+          "title": "Take One Step Back, Then Three Forward",
+          "evidence": "Tip 3Take One Step Back, Then Three Forward"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 49,
+          "line": 4897,
+          "title": "Move Word-Wise",
+          "evidence": "Tip 49Move Word-Wise"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 50,
+          "line": 5009,
+          "title": "Find by Character",
+          "evidence": "Tip 50Find by Character"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Brief claims w/e/b plus f/;, and the solution is pure f/;: f$ then ; four times per line. Tip 49 is the word-motion half (w/b/e and the WORD variants W/B/E), Tip 50 the f/;/, mechanics, and Tip 3 is where Practical first makes the motion repeatable (f+ once, then ; ; ;). The tip numbers ascend 3 -> 49 -> 50, but 49/50 are book ch 8 tips borrowed far ahead of the game's second chapter (see chapterNote).",
+      "chapterNote": "c02 is the first chapter that reaches into Practical Vim ch 8: word motions (Tip 49) and find-by-character (Tip 50) are book tips 49-50, i.e. after Tips 7-48 (repeatable changes, insert/visual/command-line modes, buffers, files, jumps, paste), so the chapter sits ahead of the book's spine — a front-load rather than an inversion. The one genuine inversion is s3: its only Practical source (Tip 19, book ch 3) is cited after the ch 8 tips of s1/s2, so the chapter moves backwards in Practical's order. s4 (~) is the only stage with no Practical body tip at all and is supplemented from Vim 101 Hacks. Level-level mismatches found while reading, not fixable in this map: s1 and s2 claim w/e/b/W/E but their par solutions use only f/;/j/0, so b/e/W/E are never exercised; t/T/,/B appear in the chapter header comment and unlock list but in no stage's teaches, and the 't is safer than f' design note is unfulfilled; s3's hints describe a different typo (l/o) than the buffer's O->0."
+    },
+    {
+      "stage": "c02s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 49,
+          "line": 4897,
+          "title": "Move Word-Wise",
+          "evidence": "Tip 49Move Word-Wise"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Every claimed command (b, e, W, E) is in Tip 49; the 'Know Your Words from Your WORDS' section explicitly adds W, B, E as the WORD-wise equivalents, and Practical has no finer-grained WORD tip. Mismatch to fix in the level: the stored solution jf$;;;; never presses b/e/W/E, so the chamber as built drills f/; (Tip 50) and the advertised word motions are unearned. Order is fine — it re-drills Tip 49 after s1 instead of jumping ahead.",
+      "chapterNote": "c02 is the first chapter that reaches into Practical Vim ch 8: word motions (Tip 49) and find-by-character (Tip 50) are book tips 49-50, i.e. after Tips 7-48 (repeatable changes, insert/visual/command-line modes, buffers, files, jumps, paste), so the chapter sits ahead of the book's spine — a front-load rather than an inversion. The one genuine inversion is s3: its only Practical source (Tip 19, book ch 3) is cited after the ch 8 tips of s1/s2, so the chapter moves backwards in Practical's order. s4 (~) is the only stage with no Practical body tip at all and is supplemented from Vim 101 Hacks. Level-level mismatches found while reading, not fixable in this map: s1 and s2 claim w/e/b/W/E but their par solutions use only f/;/j/0, so b/e/W/E are never exercised; t/T/,/B appear in the chapter header comment and unlock list but in no stage's teaches, and the 't is safer than f' design note is unfulfilled; s3's hints describe a different typo (l/o) than the buffer's O->0."
+    },
+    {
+      "stage": "c02s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 19,
+          "line": 2105,
+          "title": "Overwrite Existing Text with Replace Mode",
+          "evidence": "Tip 19Overwrite Existing Text with Replace Mode"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Practical has no r-dedicated tip; the only body description is Tip 19's closing paragraph (book ch 3): r{char}/gr{char} 'overwrite a single character before switching straight back to Normal mode' — exactly this stage's insight. Order concern: Tip 19 is earlier in Practical than the ch 8 tips (49/50) used by s1/s2, so s3 walks the curriculum backwards in the book's spine; it would only be consistent if s3 preceded s1. Separately, the hints describe the wrong edit ('1 should be an l', '0 should be an o') while the buffer has 1O/2O to become 10/20 (O -> 0).",
+      "chapterNote": "c02 is the first chapter that reaches into Practical Vim ch 8: word motions (Tip 49) and find-by-character (Tip 50) are book tips 49-50, i.e. after Tips 7-48 (repeatable changes, insert/visual/command-line modes, buffers, files, jumps, paste), so the chapter sits ahead of the book's spine — a front-load rather than an inversion. The one genuine inversion is s3: its only Practical source (Tip 19, book ch 3) is cited after the ch 8 tips of s1/s2, so the chapter moves backwards in Practical's order. s4 (~) is the only stage with no Practical body tip at all and is supplemented from Vim 101 Hacks. Level-level mismatches found while reading, not fixable in this map: s1 and s2 claim w/e/b/W/E but their par solutions use only f/;/j/0, so b/e/W/E are never exercised; t/T/,/B appear in the chapter header comment and unlock list but in no stage's teaches, and the 't is safer than f' design note is unfulfilled; s3's hints describe a different typo (l/o) than the buffer's O->0."
+    },
+    {
+      "stage": "c02s4",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 1822,
+          "evidence": "Hack 52. Change Case",
+          "note": "Hack 52 gives ~ in Normal mode ('Change the case of the character under the cursor and moves the cursor to next character'), the private count form '5~ Change the case of the next 5 characters', and the fact that repeated ~ keeps flipping to end of line — precisely the 99~ idiom this stage uses on a 20-character line."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "Practical never teaches ~ as a command: the body mentions it only as a recorded macro step inside Tip 72 ('we used the ~ command, which toggles the case of the letter under the cursor') and as the g~ operator row in Tip 12's table; neither teaches the single-character count form used here. Hence no Practical tip and a supplement from another book.",
+      "chapterNote": "c02 is the first chapter that reaches into Practical Vim ch 8: word motions (Tip 49) and find-by-character (Tip 50) are book tips 49-50, i.e. after Tips 7-48 (repeatable changes, insert/visual/command-line modes, buffers, files, jumps, paste), so the chapter sits ahead of the book's spine — a front-load rather than an inversion. The one genuine inversion is s3: its only Practical source (Tip 19, book ch 3) is cited after the ch 8 tips of s1/s2, so the chapter moves backwards in Practical's order. s4 (~) is the only stage with no Practical body tip at all and is supplemented from Vim 101 Hacks. Level-level mismatches found while reading, not fixable in this map: s1 and s2 claim w/e/b/W/E but their par solutions use only f/;/j/0, so b/e/W/E are never exercised; t/T/,/B appear in the chapter header comment and unlock list but in no stage's teaches, and the 't is safer than f' design note is unfulfilled; s3's hints describe a different typo (l/o) than the buffer's O->0."
+    },
+    {
+      "stage": "c02s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 3,
+          "line": 1255,
+          "title": "Take One Step Back, Then Three Forward",
+          "evidence": "Tip 3Take One Step Back, Then Three Forward"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 50,
+          "line": 5009,
+          "title": "Find by Character",
+          "evidence": "Tip 50Find by Character"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Stage teaches only f and ;, and fGiA<Esc>jj0f$;; is 'find G, insert the A, then ; to walk the rest of the line'. Tip 50 is the canonical f/; reference; Tip 3 is Practical's first worked example of pairing an f{char} with a change and then repeating the motion with ; (its dot-repeat half is not used by this stage). No new tip beyond s1's set, so no further order inversion.",
+      "chapterNote": "c02 is the first chapter that reaches into Practical Vim ch 8: word motions (Tip 49) and find-by-character (Tip 50) are book tips 49-50, i.e. after Tips 7-48 (repeatable changes, insert/visual/command-line modes, buffers, files, jumps, paste), so the chapter sits ahead of the book's spine — a front-load rather than an inversion. The one genuine inversion is s3: its only Practical source (Tip 19, book ch 3) is cited after the ch 8 tips of s1/s2, so the chapter moves backwards in Practical's order. s4 (~) is the only stage with no Practical body tip at all and is supplemented from Vim 101 Hacks. Level-level mismatches found while reading, not fixable in this map: s1 and s2 claim w/e/b/W/E but their par solutions use only f/;/j/0, so b/e/W/E are never exercised; t/T/,/B appear in the chapter header comment and unlock list but in no stage's teaches, and the 't is safer than f' design note is unfulfilled; s3's hints describe a different typo (l/o) than the buffer's O->0."
+    },
+    {
+      "stage": "c03s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 12,
+          "line": 1794,
+          "title": "Combine and Conquer",
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 49,
+          "line": 4897,
+          "title": "Move Word-Wise",
+          "evidence": "Tip 49Move Word-Wise"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 12 is the operator+motion grammar behind dw/de; Tip 49 supplies the w/e word-motion targets (already met in ch 2). This is the chapter's natural entry point at Tip 12, after the book's opening tips.",
+      "chapterNote": "Chapter 3's operator spine aligns with Practical Vim Tip 12 (d/c/y and dd), and s1-s2 sit at that point, but the book order is inverted: the dot command (Tip 1), s/S (Tip 2) and cw (Tip 5) all precede Tip 12, yet s3/s5 play them after it; s4 additionally jumps to Tip 60 for yy/p. All five stages are covered by Practical Vim, so no supplements are needed. To follow the spine, dot should open the chapter (Tip 1), then s/S and cw, then d/dd (Tip 12), with yy/p held for the register chapter (Tips 60/63)."
+    },
+    {
+      "stage": "c03s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 11,
+          "line": 1742,
+          "title": "Don’t Count If You Can Repeat",
+          "evidence": "Tip 11Don’t Count If You Can Repeat"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 12,
+          "line": 1794,
+          "title": "Combine and Conquer",
+          "evidence": "Tip 12Combine and Conquer"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 12's doubled-operator rule is exactly dd; Tip 11 (counts vs repeat) is earlier review that supports the 3dd count, while dd is the new command. The new insight sits at Tip 12.",
+      "chapterNote": "Chapter 3's operator spine aligns with Practical Vim Tip 12 (d/c/y and dd), and s1-s2 sit at that point, but the book order is inverted: the dot command (Tip 1), s/S (Tip 2) and cw (Tip 5) all precede Tip 12, yet s3/s5 play them after it; s4 additionally jumps to Tip 60 for yy/p. All five stages are covered by Practical Vim, so no supplements are needed. To follow the spine, dot should open the chapter (Tip 1), then s/S and cw, then d/dd (Tip 12), with yy/p held for the register chapter (Tips 60/63)."
+    },
+    {
+      "stage": "c03s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 2,
+          "line": 1139,
+          "title": "Don’t Repeat Yourself",
+          "evidence": "Tip 2Don’t Repeat Yourself"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 5,
+          "line": 1395,
+          "title": "Find and Replace by Hand",
+          "evidence": "Tip 5Find and Replace by Hand"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 12,
+          "line": 1794,
+          "title": "Combine and Conquer",
+          "evidence": "Tip 12Combine and Conquer"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 2's compound-command table defines s=cl and S=cc; Tip 5 is the book's cw word-change example; Tip 12 supplies c as an operator. Practical teaches s/S (Tip 2) and cw (Tip 5) before operator grammar (Tip 12), so this stage runs backwards in the spine.",
+      "chapterNote": "Chapter 3's operator spine aligns with Practical Vim Tip 12 (d/c/y and dd), and s1-s2 sit at that point, but the book order is inverted: the dot command (Tip 1), s/S (Tip 2) and cw (Tip 5) all precede Tip 12, yet s3/s5 play them after it; s4 additionally jumps to Tip 60 for yy/p. All five stages are covered by Practical Vim, so no supplements are needed. To follow the spine, dot should open the chapter (Tip 1), then s/S and cw, then d/dd (Tip 12), with yy/p held for the register chapter (Tips 60/63)."
+    },
+    {
+      "stage": "c03s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 60,
+          "line": 5993,
+          "title": "Delete, Yank, and Put with Vim’s Unnamed Register",
+          "evidence": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 63,
+          "line": 6435,
+          "title": "Paste from a Register",
+          "evidence": "Tip 63Paste from a Register"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 60 demonstrates yyp as line duplication and P as a put; Tip 63 explains line-wise p (below) vs P (above) for a yy register. Both are Ch 10 material (Tips 60/63), a large forward leap from Tip 12 that preempts the register chapter.",
+      "chapterNote": "Chapter 3's operator spine aligns with Practical Vim Tip 12 (d/c/y and dd), and s1-s2 sit at that point, but the book order is inverted: the dot command (Tip 1), s/S (Tip 2) and cw (Tip 5) all precede Tip 12, yet s3/s5 play them after it; s4 additionally jumps to Tip 60 for yy/p. All five stages are covered by Practical Vim, so no supplements are needed. To follow the spine, dot should open the chapter (Tip 1), then s/S and cw, then d/dd (Tip 12), with yy/p held for the register chapter (Tips 60/63)."
+    },
+    {
+      "stage": "c03s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 1,
+          "line": 980,
+          "title": "Meet the Dot Command",
+          "evidence": "Tip 1Meet the Dot Command"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 6,
+          "line": 1487,
+          "title": "Meet the Dot Formula",
+          "evidence": "Tip 6Meet the Dot Formula"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 9,
+          "line": 1580,
+          "title": "Compose Repeatable Changes",
+          "evidence": "Tip 9Compose Repeatable Changes"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 1 defines dot as repeat-last-change; Tip 6 names the one-key-move/one-key-execute Dot Formula that this j. solution uses; Tip 9 explains why dw is the repeatable unit. All three are Ch 1 (Tips 1/6/9), so the book's very first lesson is played last here — the clearest inversion in the chapter.",
+      "chapterNote": "Chapter 3's operator spine aligns with Practical Vim Tip 12 (d/c/y and dd), and s1-s2 sit at that point, but the book order is inverted: the dot command (Tip 1), s/S (Tip 2) and cw (Tip 5) all precede Tip 12, yet s3/s5 play them after it; s4 additionally jumps to Tip 60 for yy/p. All five stages are covered by Practical Vim, so no supplements are needed. To follow the spine, dot should open the chapter (Tip 1), then s/S and cw, then d/dd (Tip 12), with yy/p held for the register chapter (Tips 60/63)."
+    },
+    {
+      "stage": "c04s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 53,
+          "line": 5462,
+          "title": "Delete Around, or Change Inside",
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Solution is daw then jciwwaits: Tip 53 is Practical Vim's own worked example of exactly this pair. daw deletes the word plus one space ('Improve your writing by deleting excellent adjectives.'), diw would leave two adjacent spaces, ciw changes the word without trimming whitespace, and caw would read 'mostadjectives'. Tip 52 never mentions word objects (its table has no iw/aw), so this stage's only authority is Tip 53. As the first stage it breaks no earlier tip, but it sets the frontier at 53, which is the root of this chapter's order inversion: Practical Vim introduces general/delimited objects (Tip 52) before bounded word/paragraph objects (Tip 53).",
+      "chapterNote": "No supplement is used: Practical Vim covers every object in c04 - iw/aw and ip/ap in Tip 53 'Delete Around, or Change Inside' (body line 5462), and i\"/a\", ib/ab, iB/i{ and it/at in Tip 52 'Trace Your Selection with Precision Text Objects' (body line 5271), so no other book is admitted. The chapter's stage order runs 53 (words), 52 (quotes), 52 (parens), 53+52 (paragraph + tag), 52 (nest): it teaches the bounded word objects before the general text-object tip, while Practical Vim's sequence is 52 then 53 (delimited/general first, bounded words and paragraphs second), and Practical first shows daw as a repeatable change even earlier, in Tip 9 (body line 1580). order is judged per stage against the highest tip already used in this chapter: stage 1 sets the frontier at 53, so stages 2-5, which all need Tip 52 again, are marked out-of-order; teaching Tip 52 first (or moving the word stage after the quote/paren stages) would make the chapter practical-order-ok. One further sequencing note: Practical Vim puts text objects in Chapter 8, Navigate Inside Files with Motions, so this game chapter reaches that material earlier than the book does."
+    },
+    {
+      "stage": "c04s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 52,
+          "line": 5271,
+          "title": "Trace Your Selection with Precision Text Objects",
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 53,
+          "line": 5462,
+          "title": "Delete Around, or Change Inside",
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "ci\" is Tip 52's own worked example ('ci\"#<Esc>', read as 'change inside the double quotes') and a\" is that page's next expansion ('a\" selects a range of characters delimited by double quotes'). Tip 53 adds the pairing principle (i inside / a around, with i\" named among the paired delimited objects) and its rule that d works well with the around forms while c works with the inside forms - exactly the di\" vs da\" knife-edge in this stage. Both tips are 52-level material, so the chapter falls back from stage 1's 53 to 52.",
+      "chapterNote": "No supplement is used: Practical Vim covers every object in c04 - iw/aw and ip/ap in Tip 53 'Delete Around, or Change Inside' (body line 5462), and i\"/a\", ib/ab, iB/i{ and it/at in Tip 52 'Trace Your Selection with Precision Text Objects' (body line 5271), so no other book is admitted. The chapter's stage order runs 53 (words), 52 (quotes), 52 (parens), 53+52 (paragraph + tag), 52 (nest): it teaches the bounded word objects before the general text-object tip, while Practical Vim's sequence is 52 then 53 (delimited/general first, bounded words and paragraphs second), and Practical first shows daw as a repeatable change even earlier, in Tip 9 (body line 1580). order is judged per stage against the highest tip already used in this chapter: stage 1 sets the frontier at 53, so stages 2-5, which all need Tip 52 again, are marked out-of-order; teaching Tip 52 first (or moving the word stage after the quote/paren stages) would make the chapter practical-order-ok. One further sequencing note: Practical Vim puts text objects in Chapter 8, Navigate Inside Files with Motions, so this game chapter reaches that material earlier than the book does."
+    },
+    {
+      "stage": "c04s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 52,
+          "line": 5271,
+          "title": "Trace Your Selection with Precision Text Objects",
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "i( / a( are the ib / ab family on Tip 52's text-object table ('A pair of (parentheses)' and 'Inside of (parentheses)'), and the tip explicitly says i( and i) are equivalent and that cursor position does not matter 'so long as it's located somewhere inside' the delimited region - which is what lets di( wipe a multi-line argument list from anywhere inside it. Tip 52 also notes a] expanding to span multiple lines. No body tip demonstrates di( itself, and Tip 55 'Jump Between Matching Parentheses' is the % motion, not a text object, so it was not used. Practical has the commands, so no supplement is needed, but the stage again uses 52 after stage 1 used 53.",
+      "chapterNote": "No supplement is used: Practical Vim covers every object in c04 - iw/aw and ip/ap in Tip 53 'Delete Around, or Change Inside' (body line 5462), and i\"/a\", ib/ab, iB/i{ and it/at in Tip 52 'Trace Your Selection with Precision Text Objects' (body line 5271), so no other book is admitted. The chapter's stage order runs 53 (words), 52 (quotes), 52 (parens), 53+52 (paragraph + tag), 52 (nest): it teaches the bounded word objects before the general text-object tip, while Practical Vim's sequence is 52 then 53 (delimited/general first, bounded words and paragraphs second), and Practical first shows daw as a repeatable change even earlier, in Tip 9 (body line 1580). order is judged per stage against the highest tip already used in this chapter: stage 1 sets the frontier at 53, so stages 2-5, which all need Tip 52 again, are marked out-of-order; teaching Tip 52 first (or moving the word stage after the quote/paren stages) would make the chapter practical-order-ok. One further sequencing note: Practical Vim puts text objects in Chapter 8, Navigate Inside Files with Motions, so this game chapter reaches that material earlier than the book does."
+    },
+    {
+      "stage": "c04s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 52,
+          "line": 5271,
+          "title": "Trace Your Selection with Precision Text Objects",
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 53,
+          "line": 5462,
+          "title": "Delete Around, or Change Inside",
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Split across the two tips: it / at is Tip 52's own tag example (cit, with 'We could just as easily use the yit command ... or dit to delete it'), while ip / ap comes from Tip 53's bounded-object table ('paragraph' and 'paragraph plus blank line(s)') and its explicit rule that d{motion} tends to work well with ap. dap then dit is therefore a 53 -> 52 span, and the paragraph half belongs with stage 1's word objects, not four stages later. Practical covers both halves, so no supplement is needed.",
+      "chapterNote": "No supplement is used: Practical Vim covers every object in c04 - iw/aw and ip/ap in Tip 53 'Delete Around, or Change Inside' (body line 5462), and i\"/a\", ib/ab, iB/i{ and it/at in Tip 52 'Trace Your Selection with Precision Text Objects' (body line 5271), so no other book is admitted. The chapter's stage order runs 53 (words), 52 (quotes), 52 (parens), 53+52 (paragraph + tag), 52 (nest): it teaches the bounded word objects before the general text-object tip, while Practical Vim's sequence is 52 then 53 (delimited/general first, bounded words and paragraphs second), and Practical first shows daw as a repeatable change even earlier, in Tip 9 (body line 1580). order is judged per stage against the highest tip already used in this chapter: stage 1 sets the frontier at 53, so stages 2-5, which all need Tip 52 again, are marked out-of-order; teaching Tip 52 first (or moving the word stage after the quote/paren stages) would make the chapter practical-order-ok. One further sequencing note: Practical Vim puts text objects in Chapter 8, Navigate Inside Files with Motions, so this game chapter reaches that material earlier than the book does."
+    },
+    {
+      "stage": "c04s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 52,
+          "line": 5271,
+          "title": "Trace Your Selection with Precision Text Objects",
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Only Tip 52 covers i\" and i{ (the table's i} or iB, 'Inside of {braces}'), and its demonstration that a second text object can be invoked at the same cursor to reshape the region is the same choice this stage forces between ci\" and ci{ when a string sits inside braces. Tip 52 does not spell out a nesting precedence (innermost vs outermost), so that 'choose the shape you mean' framing is the stage's own design, not a quoted rule - no supplement is needed because Practical does have both commands. Stage 5 still needs 52, which Practical places before 53.",
+      "chapterNote": "No supplement is used: Practical Vim covers every object in c04 - iw/aw and ip/ap in Tip 53 'Delete Around, or Change Inside' (body line 5462), and i\"/a\", ib/ab, iB/i{ and it/at in Tip 52 'Trace Your Selection with Precision Text Objects' (body line 5271), so no other book is admitted. The chapter's stage order runs 53 (words), 52 (quotes), 52 (parens), 53+52 (paragraph + tag), 52 (nest): it teaches the bounded word objects before the general text-object tip, while Practical Vim's sequence is 52 then 53 (delimited/general first, bounded words and paragraphs second), and Practical first shows daw as a repeatable change even earlier, in Tip 9 (body line 1580). order is judged per stage against the highest tip already used in this chapter: stage 1 sets the frontier at 53, so stages 2-5, which all need Tip 52 again, are marked out-of-order; teaching Tip 52 first (or moving the word stage after the quote/paren stages) would make the chapter practical-order-ok. One further sequencing note: Practical Vim puts text objects in Chapter 8, Navigate Inside Files with Motions, so this game chapter reaches that material earlier than the book does."
+    },
+    {
+      "stage": "c05s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 20,
+          "line": 2170,
+          "title": "Grok Visual Mode",
+          "evidence": "Tip 20Grok Visual Mode"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 21,
+          "line": 2196,
+          "title": "Define a Visual Selection",
+          "evidence": "Tip 21Define a Visual Selection"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 20 supplies the insight (Visual mode is select-then-operate); Tip 21 supplies v and the three Visual submodes, and 6wv$d is exactly that shape. As the chapter's first stage it cannot regress (frontier 21). Concern: Tip 23 (line 2368) states the general rule to prefer the operator form over the Visual one (gUit over vitU), so it would prefer d$ to this stage's v$d; the inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction.",
+      "chapterNote": "Chapter 5 maps to Practical Vim Ch 4, Visual Mode: Tips 20-26 in ascending first use (s1 v: 20-21; s2 V and >: 21-22; s3 C-v and I: 24-26; s5 C-v and A: 24 and 26). c05s4 (J/gJ) is a genuine basic with no Practical Vim body coverage and is supplemented from learning-vi-vim, hence not-in-practical-ok; c05s5 keeps Practical tips for the block append (Tip 26, with Tip 24 as review) and supplements only its J/~ halves (vim-101-hacks Hack 52 for ~). Order is judged per stage on its new insight against the highest tip already used in the chapter: 21 -> 22 -> 26 -> (supplement) -> 26, so only s4 steps outside Practical. Concern: s1's v$d is the habit Tip 23 argues against (prefer d$); that inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction. Modern Vim is unused: no tip teaches Visual mode, J/gJ or ~ (its Visual mentions are incidental - terminal Normal-mode use at line 3855, gs on a selection at 3330, fzf's <C-v> vertical split), and its subject matter is engine-deferred."
+    },
+    {
+      "stage": "c05s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 21,
+          "line": 2196,
+          "title": "Define a Visual Selection",
+          "evidence": "Tip 21Define a Visual Selection"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 22,
+          "line": 2280,
+          "title": "Repeat Line-Wise Visual Commands",
+          "evidence": "Tip 22Repeat Line-Wise Visual Commands"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 22 is Practical Vim's own Vj> indent demo (it also shows 2>); Tip 21 supplies V. The stage's new insight (Tip 22) is above s1's frontier of 21, so order advances. No mismatch; par 5 matches jV2j>.",
+      "chapterNote": "Chapter 5 maps to Practical Vim Ch 4, Visual Mode: Tips 20-26 in ascending first use (s1 v: 20-21; s2 V and >: 21-22; s3 C-v and I: 24-26; s5 C-v and A: 24 and 26). c05s4 (J/gJ) is a genuine basic with no Practical Vim body coverage and is supplemented from learning-vi-vim, hence not-in-practical-ok; c05s5 keeps Practical tips for the block append (Tip 26, with Tip 24 as review) and supplements only its J/~ halves (vim-101-hacks Hack 52 for ~). Order is judged per stage on its new insight against the highest tip already used in the chapter: 21 -> 22 -> 26 -> (supplement) -> 26, so only s4 steps outside Practical. Concern: s1's v$d is the habit Tip 23 argues against (prefer d$); that inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction. Modern Vim is unused: no tip teaches Visual mode, J/gJ or ~ (its Visual mentions are incidental - terminal Normal-mode use at line 3855, gs on a selection at 3330, fzf's <C-v> vertical split), and its subject matter is engine-deferred."
+    },
+    {
+      "stage": "c05s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 24,
+          "line": 2476,
+          "title": "Edit Tabular Data with Visual-Block Mode",
+          "evidence": "Tip 24Edit Tabular Data with Visual-Block Mode"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 25,
+          "line": 2582,
+          "title": "Change Columns of Text",
+          "evidence": "Tip 25Change Columns of Text"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 26,
+          "line": 2660,
+          "title": "Append After a Ragged Visual Block",
+          "evidence": "Tip 26Append After a Ragged Visual Block"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 24 defines block-wise Visual mode, Tip 25 inserts text into several lines at once, and Tip 26's sidebar is the only Practical passage that states the Visual-Block I/A convention. Max tip 26 is above s2's 22, so order advances. Mismatch: Practical's block-insert demo uses c where the stage uses I, but the insight (write once, every marked row answers) is the same; par 8 covers <C-v>3jI// <Esc>.",
+      "chapterNote": "Chapter 5 maps to Practical Vim Ch 4, Visual Mode: Tips 20-26 in ascending first use (s1 v: 20-21; s2 V and >: 21-22; s3 C-v and I: 24-26; s5 C-v and A: 24 and 26). c05s4 (J/gJ) is a genuine basic with no Practical Vim body coverage and is supplemented from learning-vi-vim, hence not-in-practical-ok; c05s5 keeps Practical tips for the block append (Tip 26, with Tip 24 as review) and supplements only its J/~ halves (vim-101-hacks Hack 52 for ~). Order is judged per stage on its new insight against the highest tip already used in the chapter: 21 -> 22 -> 26 -> (supplement) -> 26, so only s4 steps outside Practical. Concern: s1's v$d is the habit Tip 23 argues against (prefer d$); that inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction. Modern Vim is unused: no tip teaches Visual mode, J/gJ or ~ (its Visual mentions are incidental - terminal Normal-mode use at line 3855, gs on a selection at 3330, fzf's <C-v> vertical split), and its subject matter is engine-deferred."
+    },
+    {
+      "stage": "c05s4",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "learning-vi-vim",
+          "line": 22854,
+          "evidence": "Same as J, but without inserting a space. {Vim}",
+          "note": "No Practical Vim body tip teaches J or gJ; the only mention is a Caps Lock aside in Tip 14 (practical-vim line 1966). This book states both: the gJ entry (line 22854) is 'same as J, without inserting a space', J's entry is line 22850, and the body demo is line 2620."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "The stage teaches the basic J join and its space-free gJ variant; Practical Vim never covers either in the body, so it is a genuine basic supplied from another book and flagged not-in-practical-ok. The solution JJjgJ exercises both halves.",
+      "chapterNote": "Chapter 5 maps to Practical Vim Ch 4, Visual Mode: Tips 20-26 in ascending first use (s1 v: 20-21; s2 V and >: 21-22; s3 C-v and I: 24-26; s5 C-v and A: 24 and 26). c05s4 (J/gJ) is a genuine basic with no Practical Vim body coverage and is supplemented from learning-vi-vim, hence not-in-practical-ok; c05s5 keeps Practical tips for the block append (Tip 26, with Tip 24 as review) and supplements only its J/~ halves (vim-101-hacks Hack 52 for ~). Order is judged per stage on its new insight against the highest tip already used in the chapter: 21 -> 22 -> 26 -> (supplement) -> 26, so only s4 steps outside Practical. Concern: s1's v$d is the habit Tip 23 argues against (prefer d$); that inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction. Modern Vim is unused: no tip teaches Visual mode, J/gJ or ~ (its Visual mentions are incidental - terminal Normal-mode use at line 3855, gs on a selection at 3330, fzf's <C-v> vertical split), and its subject matter is engine-deferred."
+    },
+    {
+      "stage": "c05s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 24,
+          "line": 2476,
+          "title": "Edit Tabular Data with Visual-Block Mode",
+          "evidence": "Tip 24Edit Tabular Data with Visual-Block Mode"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 26,
+          "line": 2660,
+          "title": "Append After a Ragged Visual Block",
+          "evidence": "Tip 26Append After a Ragged Visual Block"
+        }
+      ],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 1837,
+          "evidence": "5~ Change the case of the next 5 characters",
+          "note": "Practical Vim never teaches ~ in the body (Tip 72, line 7553, names it only to replace it with vU), so the case toggle is supplemented; Hack 52 (line 1822) documents ~ and line 1837 gives the count form, exactly the stage's 13~. J is the command already supplemented under c05s4."
+        }
+      ],
+      "order": "practical-order-ok",
+      "note": "C-v + A is Tip 26's append-at-the-end-of-every-line move, with Tip 24 as review from s3; the stage's new insight (Tip 26's A half) sits at the s3 frontier of 26, so nothing regresses. J and ~ are the uncovered halves (see supplement). The | column echoes Tip 24's r| table builder.",
+      "chapterNote": "Chapter 5 maps to Practical Vim Ch 4, Visual Mode: Tips 20-26 in ascending first use (s1 v: 20-21; s2 V and >: 21-22; s3 C-v and I: 24-26; s5 C-v and A: 24 and 26). c05s4 (J/gJ) is a genuine basic with no Practical Vim body coverage and is supplemented from learning-vi-vim, hence not-in-practical-ok; c05s5 keeps Practical tips for the block append (Tip 26, with Tip 24 as review) and supplements only its J/~ halves (vim-101-hacks Hack 52 for ~). Order is judged per stage on its new insight against the highest tip already used in the chapter: 21 -> 22 -> 26 -> (supplement) -> 26, so only s4 steps outside Practical. Concern: s1's v$d is the habit Tip 23 argues against (prefer d$); that inversion is deliberate see-the-range-first teaching, and Tip 23 is the later correction. Modern Vim is unused: no tip teaches Visual mode, J/gJ or ~ (its Visual mentions are incidental - terminal Normal-mode use at line 3855, gs on a selection at 3330, fzf's <C-v> vertical split), and its subject matter is engine-deferred."
+    },
+    {
+      "stage": "c06s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 51,
+          "line": 5169,
+          "title": "Search to Navigate",
+          "evidence": "Tip 51Search to Navigate"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 80,
+          "line": 8181,
+          "title": "Meet the Search Command",
+          "evidence": "Tip 80Meet the Search Command"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`/dust<CR>` names the literal and `n` walks to the next match, so the 'dusty' decoy is skipped. Tip 80 is the anchor: it covers executing a search, repeating with `n`/`N`, and wrap-around; Tip 51 backs search-as-navigation with `n`/`N`. Both precede the substitution tips, so the chapter's first stage starts Practical's search block in order.",
+      "chapterNote": "All five stages cite Practical Vim body tips, so every supplement is [] and no other book (including Modern Vim) is needed: search is Tips 80 (anchor) and 51, substitution is Tips 88, 89 and 91, and the `*` shorthand is Tip 5, with its word-delimiter mechanics in Tip 77 and its `*` + `:%s//` workflow in Tip 33. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 80, s2's `*` material peaks at Tip 77 -- below the frontier because Practical introduces `*` in ch 1 (Tip 5) -- so s2 is the only out-of-order stage, while s3 (89), s4 (89) and s5 (91, reusing Tip 5 for `*`) stay at or above it. The chapter is otherwise monotonic 80 -> 88 -> 89 -> 91 across Practical's search (ch 13) then substitution (ch 14) blocks. Modern Vim's search material is project-wide grep/quickfix (engine-deferred, outside the single buffer), so it cannot improve these stages; the one integration caveat is case: s5's mixed-case goal depends on the engine's smartcase `*`, and Tip 73 is the book's case-tuning tip but is not part of the stage's lesson."
+    },
+    {
+      "stage": "c06s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 5,
+          "line": 1395,
+          "title": "Find and Replace by Hand",
+          "evidence": "Tip 5Find and Replace by Hand"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 77,
+          "line": 7978,
+          "title": "Stake the Boundaries of a Word",
+          "evidence": "Tip 77Stake the Boundaries of a Word"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "`*` searches the whole word under the cursor and `n` advances. Tip 5 is the anchor (press `*`, then `n`; `*nn` cycles the matches); Tip 77 supplies the word-delimiter insight -- `*` wraps the pattern in `\\<...\\>` -- which is exactly why 'mothball' and 'mothlight' are not matches. Order concern: Practical teaches `*` at Tip 5 (ch 1), long before the `/` command of Tip 80, but the chapter deliberately teaches explicit `/` first and the `*` shorthand second, so this stage runs out of Practical order.",
+      "chapterNote": "All five stages cite Practical Vim body tips, so every supplement is [] and no other book (including Modern Vim) is needed: search is Tips 80 (anchor) and 51, substitution is Tips 88, 89 and 91, and the `*` shorthand is Tip 5, with its word-delimiter mechanics in Tip 77 and its `*` + `:%s//` workflow in Tip 33. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 80, s2's `*` material peaks at Tip 77 -- below the frontier because Practical introduces `*` in ch 1 (Tip 5) -- so s2 is the only out-of-order stage, while s3 (89), s4 (89) and s5 (91, reusing Tip 5 for `*`) stay at or above it. The chapter is otherwise monotonic 80 -> 88 -> 89 -> 91 across Practical's search (ch 13) then substitution (ch 14) blocks. Modern Vim's search material is project-wide grep/quickfix (engine-deferred, outside the single buffer), so it cannot improve these stages; the one integration caveat is case: s5's mixed-case goal depends on the engine's smartcase `*`, and Tip 73 is the book's case-tuning tip but is not part of the stage's lesson."
+    },
+    {
+      "stage": "c06s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 88,
+          "line": 8818,
+          "title": "Meet the Substitute Command",
+          "evidence": "Tip 88Meet the Substitute Command"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 89,
+          "line": 8890,
+          "title": "Find and Replace Every Match in a File",
+          "evidence": "Tip 89Find and Replace Every Match in a File"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`:s/ash/ashen/` uses the default range (current line) with no `g`: one line, one match. Tip 88 is the anchor for the `:[range]s/{pattern}/{string}/[flags]` anatomy; Tip 89 states the default scope outright and shows that `%` plus `g` is the flood that would turn the already-correct 'ashen' lines into 'ashenen'. Tips 88-89 follow the search tips, so the stage is in Practical order.",
+      "chapterNote": "All five stages cite Practical Vim body tips, so every supplement is [] and no other book (including Modern Vim) is needed: search is Tips 80 (anchor) and 51, substitution is Tips 88, 89 and 91, and the `*` shorthand is Tip 5, with its word-delimiter mechanics in Tip 77 and its `*` + `:%s//` workflow in Tip 33. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 80, s2's `*` material peaks at Tip 77 -- below the frontier because Practical introduces `*` in ch 1 (Tip 5) -- so s2 is the only out-of-order stage, while s3 (89), s4 (89) and s5 (91, reusing Tip 5 for `*`) stay at or above it. The chapter is otherwise monotonic 80 -> 88 -> 89 -> 91 across Practical's search (ch 13) then substitution (ch 14) blocks. Modern Vim's search material is project-wide grep/quickfix (engine-deferred, outside the single buffer), so it cannot improve these stages; the one integration caveat is case: s5's mixed-case goal depends on the engine's smartcase `*`, and Tip 73 is the book's case-tuning tip but is not part of the stage's lesson."
+    },
+    {
+      "stage": "c06s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 89,
+          "line": 8890,
+          "title": "Find and Replace Every Match in a File",
+          "evidence": "Tip 89Find and Replace Every Match in a File"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`%` is the vertical axis (whole file) and `g` the horizontal axis (every match on each line); Tip 89 is the canonical both-axes lesson and warns that dropping either half leaves matches behind. It follows Tip 88 directly, so the stage is in Practical order.",
+      "chapterNote": "All five stages cite Practical Vim body tips, so every supplement is [] and no other book (including Modern Vim) is needed: search is Tips 80 (anchor) and 51, substitution is Tips 88, 89 and 91, and the `*` shorthand is Tip 5, with its word-delimiter mechanics in Tip 77 and its `*` + `:%s//` workflow in Tip 33. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 80, s2's `*` material peaks at Tip 77 -- below the frontier because Practical introduces `*` in ch 1 (Tip 5) -- so s2 is the only out-of-order stage, while s3 (89), s4 (89) and s5 (91, reusing Tip 5 for `*`) stay at or above it. The chapter is otherwise monotonic 80 -> 88 -> 89 -> 91 across Practical's search (ch 13) then substitution (ch 14) blocks. Modern Vim's search material is project-wide grep/quickfix (engine-deferred, outside the single buffer), so it cannot improve these stages; the one integration caveat is case: s5's mixed-case goal depends on the engine's smartcase `*`, and Tip 73 is the book's case-tuning tip but is not part of the stage's lesson."
+    },
+    {
+      "stage": "c06s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 5,
+          "line": 1395,
+          "title": "Find and Replace by Hand",
+          "evidence": "Tip 5Find and Replace by Hand"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 33,
+          "line": 3358,
+          "title": "Insert the Current Word at the Command Prompt",
+          "evidence": "Tip 33Insert the Current Word at the Command Prompt"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 91,
+          "line": 9018,
+          "title": "Reuse the Last Search Pattern",
+          "evidence": "Tip 91Reuse the Last Search Pattern"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "`*` fills the search register (Tip 5), `n` walks the faces, and `:%s//moon/g` leaves the pattern field empty so the substitute reuses the last search -- the rule of Tip 91; Tip 33 shows the same `*` + `:%s//<C-r><C-w>/g` workflow end to end. The word-bounded `*` that keeps 'mothball' intact is Tip 77, cited at s2. The new insight (Tip 91) follows Tip 89, so the stage is in Practical order even though it revisits the early Tip 5. Engine note: the mixed-case goal ('moth' and 'Moth') only works because the engine compiles `*` with smartcase; stock Vim would need 'ignorecase'/'smartcase' or `\\c` (cf. Tip 73).",
+      "chapterNote": "All five stages cite Practical Vim body tips, so every supplement is [] and no other book (including Modern Vim) is needed: search is Tips 80 (anchor) and 51, substitution is Tips 88, 89 and 91, and the `*` shorthand is Tip 5, with its word-delimiter mechanics in Tip 77 and its `*` + `:%s//` workflow in Tip 33. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 80, s2's `*` material peaks at Tip 77 -- below the frontier because Practical introduces `*` in ch 1 (Tip 5) -- so s2 is the only out-of-order stage, while s3 (89), s4 (89) and s5 (91, reusing Tip 5 for `*`) stay at or above it. The chapter is otherwise monotonic 80 -> 88 -> 89 -> 91 across Practical's search (ch 13) then substitution (ch 14) blocks. Modern Vim's search material is project-wide grep/quickfix (engine-deferred, outside the single buffer), so it cannot improve these stages; the one integration caveat is case: s5's mixed-case goal depends on the engine's smartcase `*`, and Tip 73 is the book's case-tuning tip but is not part of the stage's lesson."
+    },
+    {
+      "stage": "c07s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 60,
+          "line": 5993,
+          "title": "Delete, Yank, and Put with Vim’s Unnamed Register",
+          "evidence": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 61,
+          "line": 6147,
+          "title": "Grok Vim’s Registers",
+          "evidence": "Tip 61Grok Vim’s Registers"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 60 shows yy/p going through the unnamed register, including yyp duplication and the fact that the next yank/delete overwrites it; Tip 61's named-register section is the fix the stage drills: \"ayy stashes line 1 in drawer a, plain yyp duplicates line 2 from the unnamed register, and \"ap reaches back into a. The stage's keys map one-for-one to Tip 61's \"ayiw / \"ap examples, so no supplement is needed.",
+      "chapterNote": "All five stages are Practical Vim-only: registers (Tip 60 -> 61), macros (65 -> 66/67/68), and the global command (98 -> 99). Every stage's keys and insight are taught by a body tip, so every supplement is [] and no other book (including Modern Vim) is needed; the engine's single-buffer q/@ and :g support is enough. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 61, s2 at 66, s3 at 67, s4 at 99, so s5 - which needs Tips 67-68 again - is the only out-of-order stage; it is the boss, reviewing the macro beat as deliberate spaced practice rather than introducing anything new. A chapter-level caveat the per-stage values do not capture: the game runs this register/macro block after c06's search-and-substitute block (Practical Tips 80-97), while Practical Vim prints registers and macros (chs 10-11) before search and substitution (chs 13-14), so the game spine is not globally monotonic even though the chapter's internal pairing is."
+    },
+    {
+      "stage": "c07s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 65,
+          "line": 6648,
+          "title": "Record and Execute a Macro",
+          "evidence": "Tip 65Record and Execute a Macro"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 66,
+          "line": 6774,
+          "title": "Normalize, Strike, Abort",
+          "evidence": "Tip 66Normalize, Strike, Abort"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 65 is close to a transcript of the stage: qa begins recording into register a, A;<Esc> is captured, q stops, and @a replays it on the next line (its own example even records A;<Esc>). Tip 66 explains why the recording is repeatable: A strikes the end of the line regardless of length, and a failing j on the last line aborts the macro only after the change has landed.",
+      "chapterNote": "All five stages are Practical Vim-only: registers (Tip 60 -> 61), macros (65 -> 66/67/68), and the global command (98 -> 99). Every stage's keys and insight are taught by a body tip, so every supplement is [] and no other book (including Modern Vim) is needed; the engine's single-buffer q/@ and :g support is enough. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 61, s2 at 66, s3 at 67, s4 at 99, so s5 - which needs Tips 67-68 again - is the only out-of-order stage; it is the boss, reviewing the macro beat as deliberate spaced practice rather than introducing anything new. A chapter-level caveat the per-stage values do not capture: the game runs this register/macro block after c06's search-and-substitute block (Practical Tips 80-97), while Practical Vim prints registers and macros (chs 10-11) before search and substitution (chs 13-14), so the game spine is not globally monotonic even though the chapter's internal pairing is."
+    },
+    {
+      "stage": "c07s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 65,
+          "line": 6648,
+          "title": "Record and Execute a Macro",
+          "evidence": "Tip 65Record and Execute a Macro"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 67,
+          "line": 6812,
+          "title": "Play Back with a Count",
+          "evidence": "Tip 67Play Back with a Count"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 65 supplies the record/replay mechanics (qa ... q, then @a); Tip 67 is the exact insight: record one cheap unit of work (yyp plus the j that advances the conveyor belt) and prefix @a with a count instead of repeating it. The stage's 3@a is Tip 67's 11@q technique with the queue sized to the three remaining calls.",
+      "chapterNote": "All five stages are Practical Vim-only: registers (Tip 60 -> 61), macros (65 -> 66/67/68), and the global command (98 -> 99). Every stage's keys and insight are taught by a body tip, so every supplement is [] and no other book (including Modern Vim) is needed; the engine's single-buffer q/@ and :g support is enough. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 61, s2 at 66, s3 at 67, s4 at 99, so s5 - which needs Tips 67-68 again - is the only out-of-order stage; it is the boss, reviewing the macro beat as deliberate spaced practice rather than introducing anything new. A chapter-level caveat the per-stage values do not capture: the game runs this register/macro block after c06's search-and-substitute block (Practical Tips 80-97), while Practical Vim prints registers and macros (chs 10-11) before search and substitution (chs 13-14), so the game spine is not globally monotonic even though the chapter's internal pairing is."
+    },
+    {
+      "stage": "c07s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 98,
+          "line": 9611,
+          "title": "Meet the Global Command",
+          "evidence": "Tip 98Meet the Global Command"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 99,
+          "line": 9639,
+          "title": "Delete Lines Containing a Pattern",
+          "evidence": "Tip 99Delete Lines Containing a Pattern"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 99 is the precise source: it demonstrates both :g/re/d to delete matching lines and :v/re/d to keep only matching lines, and the stage needs exactly those two rules (:v/KEEP/d keeps the stamped keepers, :g/rust/d then drops the rotten ones). Tip 98 supplies the :global syntax, the whole-file default range, and the :global! / :vglobal inversion that the first command relies on. The frontier jumps from 67 to 99 here, so this stage is forward, not a reorder.",
+      "chapterNote": "All five stages are Practical Vim-only: registers (Tip 60 -> 61), macros (65 -> 66/67/68), and the global command (98 -> 99). Every stage's keys and insight are taught by a body tip, so every supplement is [] and no other book (including Modern Vim) is needed; the engine's single-buffer q/@ and :g support is enough. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 61, s2 at 66, s3 at 67, s4 at 99, so s5 - which needs Tips 67-68 again - is the only out-of-order stage; it is the boss, reviewing the macro beat as deliberate spaced practice rather than introducing anything new. A chapter-level caveat the per-stage values do not capture: the game runs this register/macro block after c06's search-and-substitute block (Practical Tips 80-97), while Practical Vim prints registers and macros (chs 10-11) before search and substitution (chs 13-14), so the game spine is not globally monotonic even though the chapter's internal pairing is."
+    },
+    {
+      "stage": "c07s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 67,
+          "line": 6812,
+          "title": "Play Back with a Count",
+          "evidence": "Tip 67Play Back with a Count"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 68,
+          "line": 6868,
+          "title": "Repeat a Change on Contiguous Lines",
+          "evidence": "Tip 68Repeat a Change on Contiguous Lines"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 68 is the structural match: record one unit of work that starts with 0 to normalize the cursor position and ends by advancing a line, then replay it with a count (3@a there, 8@a here: qa02xjq8@a); Tip 67 is the count-on-@ insight itself. Order concern: this boss drills macro-plus-count (Tips 67-68) after the chapter's :global stage (Tips 98-99), so it steps backward in Practical Vim's 1..123 sequence. It introduces no new command family and reads as deliberate spaced review of the macro beat, not a mis-ordered lesson.",
+      "chapterNote": "All five stages are Practical Vim-only: registers (Tip 60 -> 61), macros (65 -> 66/67/68), and the global command (98 -> 99). Every stage's keys and insight are taught by a body tip, so every supplement is [] and no other book (including Modern Vim) is needed; the engine's single-buffer q/@ and :g support is enough. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 61, s2 at 66, s3 at 67, s4 at 99, so s5 - which needs Tips 67-68 again - is the only out-of-order stage; it is the boss, reviewing the macro beat as deliberate spaced practice rather than introducing anything new. A chapter-level caveat the per-stage values do not capture: the game runs this register/macro block after c06's search-and-substitute block (Practical Tips 80-97), while Practical Vim prints registers and macros (chs 10-11) before search and substitution (chs 13-14), so the game spine is not globally monotonic even though the chapter's internal pairing is."
+    },
+    {
+      "stage": "c08s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 54,
+          "line": 5544,
+          "title": "Mark Your Place and Snap Back to It",
+          "evidence": "Tip 54Mark Your Place and Snap Back to It"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 54 is the marks lesson: m{a-z} drops the pin, '{mark} returns to the marked line's first non-whitespace character, `{mark} restores the exact column. The stage forces 'a (solution ma13j$'a) while its second hint contrasts `a, which mirrors the tip's own advice that ` is the stronger of the two. It is the first tip of the chapter's Practical spine.",
+      "chapterNote": "Chapter 8 maps onto Practical Vim's marks-then-jumps spine in order: c08s1 -> Tip 54, c08s2 -> Tip 55, c08s4 -> Tip 56. c08s3 (sentence/paragraph motions) has no Practical tip - Tip 56 only mentions (/){/} as jump-table rows - so it is supplemented from Vim 101 Hacks Hack 4 and flagged not-in-practical-ok. c08s5 is a closing 0/j/f synthesis drawn from Tips 47 and 50, which precede 54-56 (out-of-order), and its authored pin+%+{ narrative does not match its actual solution; 0 itself is never given a Practical motion tip. Modern Vim adds nothing here (its only <C-o> mention, line 1154, is incidental), so the sole supplement correctly comes from another book."
+    },
+    {
+      "stage": "c08s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 55,
+          "line": 5600,
+          "title": "Jump Between Matching Parentheses",
+          "evidence": "Tip 55Jump Between Matching Parentheses"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 55 teaches % between matching (), {}, [] and warns it only works on well-formed pairs, which is exactly the stage's far-brace jump. The trailing $ (solution %$) is a trivial width grab, not a Practical lesson. Follows Tip 54 directly, so the order is clean.",
+      "chapterNote": "Chapter 8 maps onto Practical Vim's marks-then-jumps spine in order: c08s1 -> Tip 54, c08s2 -> Tip 55, c08s4 -> Tip 56. c08s3 (sentence/paragraph motions) has no Practical tip - Tip 56 only mentions (/){/} as jump-table rows - so it is supplemented from Vim 101 Hacks Hack 4 and flagged not-in-practical-ok. c08s5 is a closing 0/j/f synthesis drawn from Tips 47 and 50, which precede 54-56 (out-of-order), and its authored pin+%+{ narrative does not match its actual solution; 0 itself is never given a Practical motion tip. Modern Vim adds nothing here (its only <C-o> mention, line 1154, is incidental), so the sole supplement correctly comes from another book."
+    },
+    {
+      "stage": "c08s3",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 532,
+          "evidence": "Hack 4. Paragraph, Section, Sentence Navigations",
+          "note": "Hack 4's table (lines 535-540) is the four-key lesson: { and } move to the current/next paragraph, ( and ) to the previous/next sentence. Practical Vim has no tip for these motions; Tip 56 only lists (/){/} as jump-table rows (lines 5778, 5782)."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "A genuine supplement: no Practical Vim tip teaches sentence/paragraph motions. The ghost (solution )))))}}{j) presses only ) } {; the teaches list also names (, but no solution key presses it, and the engine note says ( only recognizes a sentence end when the punctuation is preceded by a space. Marked not-in-practical-ok rather than out-of-order.",
+      "chapterNote": "Chapter 8 maps onto Practical Vim's marks-then-jumps spine in order: c08s1 -> Tip 54, c08s2 -> Tip 55, c08s4 -> Tip 56. c08s3 (sentence/paragraph motions) has no Practical tip - Tip 56 only mentions (/){/} as jump-table rows - so it is supplemented from Vim 101 Hacks Hack 4 and flagged not-in-practical-ok. c08s5 is a closing 0/j/f synthesis drawn from Tips 47 and 50, which precede 54-56 (out-of-order), and its authored pin+%+{ narrative does not match its actual solution; 0 itself is never given a Practical motion tip. Modern Vim adds nothing here (its only <C-o> mention, line 1154, is incidental), so the sole supplement correctly comes from another book."
+    },
+    {
+      "stage": "c08s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 56,
+          "line": 5732,
+          "title": "Traverse the Jump List",
+          "evidence": "Tip 56Traverse the Jump List"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 56 introduces <C-o>/<C-i> as the jump list's back/forward buttons and states that j is not a jump (line 5758), which is why the stage's mid-route j (solution }}j<C-o><C-o>) does not add a jump-list entry and the second <C-o> still lands on the start light. <C-i> is named in the whisper but no ghost uses it (engine jumpForward is unreachable). Directly follows Tip 55.",
+      "chapterNote": "Chapter 8 maps onto Practical Vim's marks-then-jumps spine in order: c08s1 -> Tip 54, c08s2 -> Tip 55, c08s4 -> Tip 56. c08s3 (sentence/paragraph motions) has no Practical tip - Tip 56 only mentions (/){/} as jump-table rows - so it is supplemented from Vim 101 Hacks Hack 4 and flagged not-in-practical-ok. c08s5 is a closing 0/j/f synthesis drawn from Tips 47 and 50, which precede 54-56 (out-of-order), and its authored pin+%+{ narrative does not match its actual solution; 0 itself is never given a Practical motion tip. Modern Vim adds nothing here (its only <C-o> mention, line 1154, is incidental), so the sole supplement correctly comes from another book."
+    },
+    {
+      "stage": "c08s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 47,
+          "line": 4757,
+          "title": "Keep Your Fingers on the Home Row",
+          "evidence": "Tip 47Keep Your Fingers on the Home Row"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 50,
+          "line": 5009,
+          "title": "Find by Character",
+          "evidence": "Tip 50Find by Character"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "The solution 06l3j04jf$ is a pure 0/j/f route (0, 6l, 3j, 0, 4j, f$): Tip 47 supplies j, Tip 50 supplies f{char}. Both are earlier tips than 54-56, so placing this synthesis last is out of Practical order. 0 has no tip of its own - only a table row in Tip 48 (line 4851) and a normalization step inside Tip 68's macro (line 6938) - so it arrives here without a Practical lesson. Mismatch: the brief, hints and the c08.ts design comment describe a pin + % + { route that the actual solution never plays.",
+      "chapterNote": "Chapter 8 maps onto Practical Vim's marks-then-jumps spine in order: c08s1 -> Tip 54, c08s2 -> Tip 55, c08s4 -> Tip 56. c08s3 (sentence/paragraph motions) has no Practical tip - Tip 56 only mentions (/){/} as jump-table rows - so it is supplemented from Vim 101 Hacks Hack 4 and flagged not-in-practical-ok. c08s5 is a closing 0/j/f synthesis drawn from Tips 47 and 50, which precede 54-56 (out-of-order), and its authored pin+%+{ narrative does not match its actual solution; 0 itself is never given a Practical motion tip. Modern Vim adds nothing here (its only <C-o> mention, line 1154, is incidental), so the sole supplement correctly comes from another book."
+    },
+    {
+      "stage": "c09s1",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 27,
+          "line": 2753,
+          "title": "Meet Vim’s Command Line",
+          "evidence": "Tip 27Meet Vim’s Command Line"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 28,
+          "line": 2815,
+          "title": "Execute a Command on One or More Consecutive Lines",
+          "evidence": "Tip 28Execute a Command on One or More Consecutive Lines"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Two deletes by address. Tip 28 is the range lesson: the form is '{start},{end}', ':%' means the whole file, and the tip tells you to swap its :print examples for :delete ('If we had issued the command :3d...'). Tip 27, the ch-5 opener, lists ':[range]delete [x]' in Table 7 and explicitly defers the range mechanics to Tip 28. So stage 1 opens the chapter on the book's own opening pair (27 -> 28); ':1,3d' then the re-counted ':2,4d' is exactly the address arithmetic those tips set up. Practical covers it, so no supplement.",
+      "chapterNote": "Chapter 9 is Practical Vim ch 5 (Command-Line Mode) plus two escapes from it. The spine stages map onto the opening of that chapter: s1 -> Tips 27-28 (ranges, :[range]delete), s2 -> Tip 29 (:t/:m), s4 -> Tip 30 (:%normal A;), i.e. exactly Tips 27, 28, 29, 30 in book order. The exception is :sort: Practical gives it no ch-5 home; its only body tip is Tip 101 (ch 15, 'Alphabetize the Properties of Each Rule in a CSS File'), which sorts a range inside a :global workflow and never documents a flag, so c09s3 takes the chapter's single supplement - Vim 101 Hacks Hack 40, line 1519 ':sort u Remove duplicate lines.' (with ':sort!' at 1517 for the stage's descending hint). s5's plain :sort is fully covered by Tip 101. Because s3 front-loads Tip 101, s4 (Tip 30) and s5 (Tip 89) fall below that frontier and are the chapter's only out-of-order stages; re-sequencing :sort last would make the chapter run 27-28 -> 29 -> 30 -> 101. At chapter level the whole block is a backward jump in the game spine: it is played after c06 (Tips 80-91) and c07 (60-68, 98-99), so Practical's Ex chapter arrives at the game's chapter 9, and s5's :%s doubles as deliberate review of c06. Modern Vim contributes nothing: no tip teaches these Ex commands, and its only :normal mentions (':normal G' at 3554, in Tip 14's test/quickfix workflow) are engine-deferred. Level-level caveat: the chapter header comment lists :sort! as taught, but ! appears only in s3's last hint, never in a stage solution."
+    },
+    {
+      "stage": "c09s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 29,
+          "line": 3031,
+          "title": "Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands",
+          "evidence": "Tip 29Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 29 is the exact source: ':[range]copy {address}' and ':[range]move {address}', a table row for ':t6' ('Copy the current line to just below line 6'), and a 'Move Lines with the :m Command' section. ':1t6' and ':2m11' are that pair with numeric addresses, and the brief's rule that both commands file the line after the addressed one follows from the ':[range]copy {address}' form (\"put it below the current line\" in its :6copy. example). Tip 29 does not warn that the :t shifts the numbering the following :m must use, so the stage's own line-11 count is its difficulty, not a book claim. Fully covered: no supplement.",
+      "chapterNote": "Chapter 9 is Practical Vim ch 5 (Command-Line Mode) plus two escapes from it. The spine stages map onto the opening of that chapter: s1 -> Tips 27-28 (ranges, :[range]delete), s2 -> Tip 29 (:t/:m), s4 -> Tip 30 (:%normal A;), i.e. exactly Tips 27, 28, 29, 30 in book order. The exception is :sort: Practical gives it no ch-5 home; its only body tip is Tip 101 (ch 15, 'Alphabetize the Properties of Each Rule in a CSS File'), which sorts a range inside a :global workflow and never documents a flag, so c09s3 takes the chapter's single supplement - Vim 101 Hacks Hack 40, line 1519 ':sort u Remove duplicate lines.' (with ':sort!' at 1517 for the stage's descending hint). s5's plain :sort is fully covered by Tip 101. Because s3 front-loads Tip 101, s4 (Tip 30) and s5 (Tip 89) fall below that frontier and are the chapter's only out-of-order stages; re-sequencing :sort last would make the chapter run 27-28 -> 29 -> 30 -> 101. At chapter level the whole block is a backward jump in the game spine: it is played after c06 (Tips 80-91) and c07 (60-68, 98-99), so Practical's Ex chapter arrives at the game's chapter 9, and s5's :%s doubles as deliberate review of c06. Modern Vim contributes nothing: no tip teaches these Ex commands, and its only :normal mentions (':normal G' at 3554, in Tip 14's test/quickfix workflow) are engine-deferred. Level-level caveat: the chapter header comment lists :sort! as taught, but ! appears only in s3's last hint, never in a stage solution."
+    },
+    {
+      "stage": "c09s3",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 101,
+          "line": 9811,
+          "title": "Alphabetize the Properties of Each Rule in a CSS File",
+          "evidence": "Tip 101Alphabetize the Properties of Each Rule in a CSS File"
+        }
+      ],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 1519,
+          "evidence": ":sort u Remove duplicate lines.",
+          "note": "Practical Vim never documents any :sort flag, so the 'u' that makes this stage reach 'one of each' is uncovered. Hack 40 'Sort File Content' (line 1504) is the dedicated sort section: its option table gives ':sort' ascending (1516), ':sort! Sort in descending order' (1517), ':sort i' (1518) and 'U stands for unique.' (1520), and line 1519 is the exact command plus effect. It also backs the stage's descending hint (:sort!)."
+        }
+      ],
+      "order": "practical-order-ok",
+      "note": "Practical's only body tip that teaches Vim's :sort is Tip 101, and it shows :sort solely as a ranged command inside a :global CSS workflow (:'<,'>sort, :g/{/ .+1,/}/-1 sort) - alphabetical ordering, never a flag. So the command is covered but the dedupe insight is not, hence the single supplement. (Tip 35's ':2,$!sort -t',' -k2' at 3620 is the external shell sort filter, not Vim's :sort.) This is a front-load of ch-15 material: Tip 101 is ~70 tips past the ch-5 block, and it is the forward jump that makes s4/s5 read backwards.",
+      "chapterNote": "Chapter 9 is Practical Vim ch 5 (Command-Line Mode) plus two escapes from it. The spine stages map onto the opening of that chapter: s1 -> Tips 27-28 (ranges, :[range]delete), s2 -> Tip 29 (:t/:m), s4 -> Tip 30 (:%normal A;), i.e. exactly Tips 27, 28, 29, 30 in book order. The exception is :sort: Practical gives it no ch-5 home; its only body tip is Tip 101 (ch 15, 'Alphabetize the Properties of Each Rule in a CSS File'), which sorts a range inside a :global workflow and never documents a flag, so c09s3 takes the chapter's single supplement - Vim 101 Hacks Hack 40, line 1519 ':sort u Remove duplicate lines.' (with ':sort!' at 1517 for the stage's descending hint). s5's plain :sort is fully covered by Tip 101. Because s3 front-loads Tip 101, s4 (Tip 30) and s5 (Tip 89) fall below that frontier and are the chapter's only out-of-order stages; re-sequencing :sort last would make the chapter run 27-28 -> 29 -> 30 -> 101. At chapter level the whole block is a backward jump in the game spine: it is played after c06 (Tips 80-91) and c07 (60-68, 98-99), so Practical's Ex chapter arrives at the game's chapter 9, and s5's :%s doubles as deliberate review of c06. Modern Vim contributes nothing: no tip teaches these Ex commands, and its only :normal mentions (':normal G' at 3554, in Tip 14's test/quickfix workflow) are engine-deferred. Level-level caveat: the chapter header comment lists :sort! as taught, but ! appears only in s3's last hint, never in a stage solution."
+    },
+    {
+      "stage": "c09s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 30,
+          "line": 3189,
+          "title": "Run Normal Mode Commands Across a Range",
+          "evidence": "Tip 30Run Normal Mode Commands Across a Range"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 30 prints the solution verbatim - '=> :%normal A;' - and explains both halves: '%' is the whole-file range (Tip 28 defines that shorthand) and 'Vim automatically reverts to Normal mode afterward', so A; appends on every line in one command without leaving Insert mode stuck. This is the stage's exact command; no supplement. Order: as a step it is a clean 28 -> 29 -> 30, but because s3 has already cited Tip 101 it reads as a backward move below that frontier (out-of-order). Sequencing :sort after this stage would make the chapter ascend 28, 29, 30.",
+      "chapterNote": "Chapter 9 is Practical Vim ch 5 (Command-Line Mode) plus two escapes from it. The spine stages map onto the opening of that chapter: s1 -> Tips 27-28 (ranges, :[range]delete), s2 -> Tip 29 (:t/:m), s4 -> Tip 30 (:%normal A;), i.e. exactly Tips 27, 28, 29, 30 in book order. The exception is :sort: Practical gives it no ch-5 home; its only body tip is Tip 101 (ch 15, 'Alphabetize the Properties of Each Rule in a CSS File'), which sorts a range inside a :global workflow and never documents a flag, so c09s3 takes the chapter's single supplement - Vim 101 Hacks Hack 40, line 1519 ':sort u Remove duplicate lines.' (with ':sort!' at 1517 for the stage's descending hint). s5's plain :sort is fully covered by Tip 101. Because s3 front-loads Tip 101, s4 (Tip 30) and s5 (Tip 89) fall below that frontier and are the chapter's only out-of-order stages; re-sequencing :sort last would make the chapter run 27-28 -> 29 -> 30 -> 101. At chapter level the whole block is a backward jump in the game spine: it is played after c06 (Tips 80-91) and c07 (60-68, 98-99), so Practical's Ex chapter arrives at the game's chapter 9, and s5's :%s doubles as deliberate review of c06. Modern Vim contributes nothing: no tip teaches these Ex commands, and its only :normal mentions (':normal G' at 3554, in Tip 14's test/quickfix workflow) are engine-deferred. Level-level caveat: the chapter header comment lists :sort! as taught, but ! appears only in s3's last hint, never in a stage solution."
+    },
+    {
+      "stage": "c09s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 30,
+          "line": 3189,
+          "title": "Run Normal Mode Commands Across a Range",
+          "evidence": "Tip 30Run Normal Mode Commands Across a Range"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 101,
+          "line": 9811,
+          "title": "Alphabetize the Properties of Each Rule in a CSS File",
+          "evidence": "Tip 101Alphabetize the Properties of Each Rule in a CSS File"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 89,
+          "line": 8890,
+          "title": "Find and Replace Every Match in a File",
+          "evidence": "Tip 89Find and Replace Every Match in a File"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "The boss is three passes, each with a body tip: ':%normal 3x' (Tip 30), ':sort' (Tip 101 - plain, no u/! flag here, so Practical covers this stage's sort exactly) and ':%s/ - / : /' (Tip 89: the '%' address applies :s to every line; no g flag is needed because each line holds one ' - '). It introduces no new command, only recombination, and its :%s is spaced review of c06's Tips 88-89. Order: Tip 89 sits below the Tip 101 frontier set by s3, so this review stage reads backwards (out-of-order). No supplement.",
+      "chapterNote": "Chapter 9 is Practical Vim ch 5 (Command-Line Mode) plus two escapes from it. The spine stages map onto the opening of that chapter: s1 -> Tips 27-28 (ranges, :[range]delete), s2 -> Tip 29 (:t/:m), s4 -> Tip 30 (:%normal A;), i.e. exactly Tips 27, 28, 29, 30 in book order. The exception is :sort: Practical gives it no ch-5 home; its only body tip is Tip 101 (ch 15, 'Alphabetize the Properties of Each Rule in a CSS File'), which sorts a range inside a :global workflow and never documents a flag, so c09s3 takes the chapter's single supplement - Vim 101 Hacks Hack 40, line 1519 ':sort u Remove duplicate lines.' (with ':sort!' at 1517 for the stage's descending hint). s5's plain :sort is fully covered by Tip 101. Because s3 front-loads Tip 101, s4 (Tip 30) and s5 (Tip 89) fall below that frontier and are the chapter's only out-of-order stages; re-sequencing :sort last would make the chapter run 27-28 -> 29 -> 30 -> 101. At chapter level the whole block is a backward jump in the game spine: it is played after c06 (Tips 80-91) and c07 (60-68, 98-99), so Practical's Ex chapter arrives at the game's chapter 9, and s5's :%s doubles as deliberate review of c06. Modern Vim contributes nothing: no tip teaches these Ex commands, and its only :normal mentions (':normal G' at 3554, in Tip 14's test/quickfix workflow) are engine-deferred. Level-level caveat: the chapter header comment lists :sort! as taught, but ! appears only in s3's last hint, never in a stage solution."
+    },
+    {
+      "stage": "c10s1",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 3197,
+          "evidence": "Bonus Hack 4. Format a Paragraph",
+          "note": "Practical Vim never teaches gq in the body, so the stage's only verb is supplemented here. Bonus Hack 4 is a direct paragraph-format lesson and line 3199 is 'gqap'; the stage's gqip swaps ap for ip. Practical's Tip 53 documents the ip text object (line 5462, ip row), but a text object is not the reflow operator."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "gq is the only command the stage teaches and Practical Vim has no tip for it: the cleaned body contains gq 0 times, so no gqq/gqap/gqip lesson exists anywhere in the Practical spine. The stage is therefore a genuine supplement, taken from Vim 101 Hacks Bonus Hack 4 (gqap), and flagged not-in-practical-ok rather than given a misleading Practical text-object tip. Tip 53 does document ip, which explains the stage's choice of gqip, but that is the noun and not the reflow insight. The solution is exactly gqip and par 4.",
+      "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+    },
+    {
+      "stage": "c10s2",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 12,
+          "line": 1794,
+          "title": "Combine and Conquer",
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 23,
+          "line": 2368,
+          "title": "Prefer Operators to Visual Commands Where Possible",
+          "evidence": "Tip 23Prefer Operators to Visual Commands Where Possible"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 12 is the case lesson: its operator table lists g~, gu and gU, the body explains that they are operators waiting for a motion (gUaw, gUap), and the duplicate-operator rule explains gUgU. Tip 23 supplies gU{motion} as the Normal-mode counterpart of visual U and the reason to prefer it: the operator form is one change that sets up the dot command. gU$ / j gu$ / j g~$ is operator-plus-$ exactly, and the pair ascends 12 -> 23, so the first Practical-mapped stage of the chapter is in order.",
+      "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+    },
+    {
+      "stage": "c10s3",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "learning-vi-vim",
+          "line": 22854,
+          "evidence": "Same as J, but without inserting a space. {Vim}",
+          "note": "Reuses the source that already supplied J/gJ at c05s4. Line 22852 is the gJ entry, line 22854 reads 'Same as J, but without inserting a space', and line 22850 defines J; line 22862 adds that :j matches J and :j! matches gJ. The stage's gJ on the URL (no space) and J on 'every letter' (space) is exactly this contrast."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "Practical Vim never teaches J or gJ in the body: the only mention is the Caps Lock aside in Tip 14 (line 1966), which names J but not gJ or the space difference. This is a review of the basic first supplemented at c05s4 from learning-vi-vim, so it is a genuine supplement and flagged not-in-practical-ok. The solution gJ2jgJ2jJ presses both halves: gJ closes up the split URL, J keeps the space in 'every letter'.",
+      "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+    },
+    {
+      "stage": "c10s4",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 65,
+          "line": 6648,
+          "title": "Record and Execute a Macro",
+          "evidence": "Tip 65Record and Execute a Macro"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 66,
+          "line": 6774,
+          "title": "Normalize, Strike, Abort",
+          "evidence": "Tip 66Normalize, Strike, Abort"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 67,
+          "line": 6812,
+          "title": "Play Back with a Count",
+          "evidence": "Tip 67Play Back with a Count"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 65 is the q/@ mechanics: qa starts recording into register a, q stops, @a replays, @@ repeats the last macro. Tip 66 explains the trailing j (normalize the cursor so the next replay starts where the recorded gesture expects) and why an approximate count is safe; Tip 67 is the count form itself, 2@a, the remedy it gives because the Dot Formula cannot take a count. The final dot is Tip 23's operator-repeatability - gUiw is one operator change, so the fourth line needs only '.' - and Tip 68 (line 6868) is Practical's full contiguous-line demo of the same qa...j / 3@a shape. 65 -> 66 -> 67 ascends after s2's 23.",
+      "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+    },
+    {
+      "stage": "c10s5",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 12,
+          "line": 1794,
+          "title": "Combine and Conquer",
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 53,
+          "line": 5462,
+          "title": "Delete Around, or Change Inside",
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Freeform repair of four wounds: Tip 12 supplies the operators behind << (the Shift left row) and guiw (gu); Tip 53 supplies iw/aw/ip plus the daw and ciw demos, which is why daw is the clean delete for the doubled word. The fourth wound, gqip, has no Practical tip at all (Practical never mentions gq); it is the same supplement already declared at c10s1, so it is not re-cited here and supplement stays empty for the covered stitches. Tips 12 and 53 sit below s4's 65-67 frontier, so this deliberate recombination is flagged out-of-order.",
+      "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+    },
+    {
+      "stage": "c10s6",
+      "tips": [
+        {
+          "book": "practical-vim",
+          "tip": 12,
+          "line": 1794,
+          "title": "Combine and Conquer",
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 23,
+          "line": 2368,
+          "title": "Prefer Operators to Visual Commands Where Possible",
+          "evidence": "Tip 23Prefer Operators to Visual Commands Where Possible"
+        },
+        {
+          "book": "practical-vim",
+          "tip": 53,
+          "line": 5462,
+          "title": "Delete Around, or Change Inside",
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "The boss is a synthesis, not a new lesson: gU$ and g~$ are Tip 12's case operators, dd and << follow Tip 12's duplicate-operator and shift-left rules, ciw plus the ip/iw/aw vocabulary is Tip 53, and the closing dot is Tip 23's operator-repeatability (ciw is one change, so '.' re-runs it nine lines up). gqip is again the uncovered gq stitch declared at c10s1, so supplement stays empty rather than duplicating the source. All three tips precede s4's 65-67, so the exam is out-of-order by design; 'words before lines, dot last' is the level's ordering constraint, not a separate Practical tip.",
+      "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+    }
+  ],
+  "missing": [],
+  "rejected": [],
+  "inversions": [
+    [
+      "c01s1",
+      "c01s2",
+      47,
+      10
+    ],
+    [
+      "c01s2",
+      "c01s3",
+      10,
+      1
+    ],
+    [
+      "c01s5",
+      "c02s1",
+      8,
+      3
+    ],
+    [
+      "c02s2",
+      "c02s3",
+      49,
+      19
+    ],
+    [
+      "c02s3",
+      "c02s5",
+      19,
+      3
+    ],
+    [
+      "c03s1",
+      "c03s2",
+      12,
+      11
+    ],
+    [
+      "c03s2",
+      "c03s3",
+      11,
+      2
+    ],
+    [
+      "c03s4",
+      "c03s5",
+      60,
+      1
+    ],
+    [
+      "c04s1",
+      "c04s2",
+      53,
+      52
+    ],
+    [
+      "c04s5",
+      "c05s1",
+      52,
+      20
+    ],
+    [
+      "c06s1",
+      "c06s2",
+      51,
+      5
+    ],
+    [
+      "c06s4",
+      "c06s5",
+      89,
+      5
+    ],
+    [
+      "c07s4",
+      "c07s5",
+      98,
+      67
+    ],
+    [
+      "c07s5",
+      "c08s1",
+      67,
+      54
+    ],
+    [
+      "c08s4",
+      "c08s5",
+      56,
+      47
+    ],
+    [
+      "c08s5",
+      "c09s1",
+      47,
+      27
+    ],
+    [
+      "c09s3",
+      "c09s4",
+      101,
+      30
+    ],
+    [
+      "c09s5",
+      "c10s2",
+      30,
+      12
+    ],
+    [
+      "c10s4",
+      "c10s5",
+      65,
+      12
+    ]
+  ]
+}

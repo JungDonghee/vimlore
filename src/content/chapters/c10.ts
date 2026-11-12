@@ -216,8 +216,9 @@ const weave = (warp, thread) => {
 }
 
 A thread is not a promise. It is a
-length of light you can pull. It breaks,
-and you tie it. That is the whole loom.`,
+length of light you can pull.  It
+breaks, and you tie it. That is the
+whole loom.`,
       },
       par: 18,
       solution: '6j<<guiw3jwdawgqip',
@@ -281,8 +282,8 @@ You did not write me.
 You held the threads I dropped
 and read me back to myself.`,
       },
-      par: 39,
-      solution: 'gU$2jgqip4jg~$jdd4j<<3wciwthreads<Esc>9k5w.',
+      par: 44,
+      solution: 'gU$2jgqip/threds<CR>ciwthreads<Esc>n.gg6jg~$jdd4j<<',
       teaches: ['gU', 'gq', 'g~', 'dd', '<', 'iw', '.'],
       hazard: '',
       hints: [

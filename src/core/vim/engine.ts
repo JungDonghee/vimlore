@@ -1330,7 +1330,7 @@ export class Vim {
         // the shortened line; do not clamp to the last character. Typed text
         // is replicated on every block line when insert mode closes.
         this.openInsertAt({ line: l1, col: Math.min(c1, this.buf.line(l1).length) }, before);
-        if (l2 > l1) this.blockInsertState = { snap: before, l1, l2, col: c1, curLine: l1, text: '' };
+        if (l2 > l1) this.blockInsertState = { snap: before, l1, l2, col: c1, curLine: l1, text: '', append: false };
         return;
       }
       this.cursor = M.moveTo(this.buf, { line: l1, col: c1 });
@@ -1720,7 +1720,7 @@ export class Vim {
     const wrapped = M.wrapLines(this.buf.lines.slice(l1, l2 + 1), this.textwidth);
     this.buf.lines.splice(l1, l2 - l1 + 1, ...wrapped);
     this.buf.setLines(this.buf.lines);
-    this.cursor = { line: l1, col: 0 };
+    this.cursor = { line: Math.min(this.buf.lineCount - 1, l1 + wrapped.length - 1), col: 0 };
     this.commit(before, 'format');
     this.afterUnit();
   }
@@ -2150,7 +2150,7 @@ export class Vim {
         this.buf.setLine(l, line.slice(0, col) + text + line.slice(col));
       }
       this.buf.setLines(this.buf.lines);
-      this.cursor = M.moveTo(this.buf, { line: block.l1, col: Math.max(0, block.col + text.length - 1) });
+      this.cursor = M.moveTo(this.buf, { line: block.l1, col: block.append ? Math.max(0, block.col - 1) : block.col });
       this.commit(block.snap, 'insert');
       this.wantColValue = this.cursor.col;
       this.takeCount();
@@ -2439,16 +2439,16 @@ export class Vim {
     const block = sel.block!;
     const l1 = Math.min(sel.start.line, sel.end.line);
     const l2 = Math.max(sel.start.line, sel.end.line);
-    const col = before ? block.c1 : block.c2 + 1;
+    const col = before ? block.c1 : Math.min(block.c2 + 1, this.buf.line(l1).length);
     const snap = this.snapshot();
     this.cursor = { line: l1, col };
     this.insertStart = { ...this.cursor };
-    this.blockInsertState = { snap, l1, l2, col, curLine: l1, text: '' };
+    this.blockInsertState = { snap, l1, l2, col, curLine: l1, text: '', append: !before };
     this.mode = 'insert';
     this.emit({ type: 'mode', mode: 'insert' });
   }
 
-  blockInsertState: { snap: BufferSnapshot; l1: number; l2: number; col: number; curLine: number; text: string } | null = null;
+  blockInsertState: { snap: BufferSnapshot; l1: number; l2: number; col: number; curLine: number; text: string; append: boolean } | null = null;
 
   // ------------------------------------------------------------------ cmdline
 
@@ -2634,7 +2634,7 @@ export class Vim {
 
   searchMatches(pattern = this.lastSearch): Match[] {
     if (!pattern) return [];
-    const re = compilePattern(pattern, { smartcase: true });
+    const re = compilePattern(pattern, { smartcase: false });
     if (!re) return [];
     return allMatches(this.buf.flat, re);
   }
@@ -3356,7 +3356,7 @@ export class Vim {
       if (pattern === '' && this.lastSearch) pattern = this.lastSearch;
       this.lastSubstitute = { pat: pattern, rep: replacement, flags: f };
     }
-    const base = compilePattern(pattern, { smartcase: true });
+    const base = compilePattern(pattern, { smartcase: false });
     if (!base) {
       this.echo(`E486: pattern not found: ${pattern}`, 'error');
       return;
@@ -3475,7 +3475,7 @@ export class Vim {
   }
 
   exGlobal(pat: string, cmd: string, invert: boolean): void {
-    const re = compilePattern(pat, { smartcase: true });
+    const re = compilePattern(pat, { smartcase: false });
     if (!re) {
       this.echo(`E486: pattern not found: ${pat}`, 'error');
       return;
@@ -3492,10 +3492,17 @@ export class Vim {
     }
     if (cmd === 'd' || cmd === 'delete') {
       const before = this.snapshot();
+      const last = lines[lines.length - 1];
+      const deletedText = this.buf.line(last);
       for (let i = lines.length - 1; i >= 0; i--) this.buf.lines.splice(lines[i], 1);
       if (this.buf.lines.length === 0) this.buf.setLines(['']);
       else this.buf.setLines(this.buf.lines);
-      this.cursor = { line: Math.min(lines[0], this.buf.lineCount - 1), col: 0 };
+      // Vim lands on the line after the last deleted line (shifted by the
+      // number of deleted lines) and leaves the last deleted line in the
+      // unnamed register as linewise text.
+      const target = Math.max(0, Math.min(last + 1 - lines.length, this.buf.lineCount - 1));
+      this.cursor = { line: target, col: 0 };
+      this.storeRegister(null, deletedText + '\n', true, false);
       this.commit(before, 'delete');
       this.echo(`${lines.length} line(s) deleted`, 'good');
       return;
@@ -3510,7 +3517,7 @@ export class Vim {
       let total = 0;
       for (const l of lines) {
         const line = this.buf.line(l);
-        const reSrc = compilePattern(args?.[2] ?? '', { smartcase: true });
+        const reSrc = compilePattern(args?.[2] ?? '', { smartcase: false });
         if (!reSrc) continue;
         const g = new RegExp(reSrc.source, args?.[5]?.includes('g') ? 'g' : '');
         const next = line.replace(g, this.translateReplacement(args?.[3] ?? ''));

@@ -1,0 +1,116 @@
+{
+  "chapter": 10,
+  "stages": [
+    {
+      "stage": "c10s1",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 3197,
+          "evidence": "Bonus Hack 4. Format a Paragraph",
+          "note": "Practical Vim never teaches gq in the body, so the stage's only verb is supplemented here. Bonus Hack 4 is a direct paragraph-format lesson and line 3199 is 'gqap'; the stage's gqip swaps ap for ip. Practical's Tip 53 documents the ip text object (line 5462, ip row), but a text object is not the reflow operator."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "gq is the only command the stage teaches and Practical Vim has no tip for it: the cleaned body contains gq 0 times, so no gqq/gqap/gqip lesson exists anywhere in the Practical spine. The stage is therefore a genuine supplement, taken from Vim 101 Hacks Bonus Hack 4 (gqap), and flagged not-in-practical-ok rather than given a misleading Practical text-object tip. Tip 53 does document ip, which explains the stage's choice of gqip, but that is the noun and not the reflow insight. The solution is exactly gqip and par 4."
+    },
+    {
+      "stage": "c10s2",
+      "tips": [
+        {
+          "tip": 12,
+          "line": 1794,
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "tip": 23,
+          "line": 2368,
+          "evidence": "Tip 23Prefer Operators to Visual Commands Where Possible"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 12 is the case lesson: its operator table lists g~, gu and gU, the body explains that they are operators waiting for a motion (gUaw, gUap), and the duplicate-operator rule explains gUgU. Tip 23 supplies gU{motion} as the Normal-mode counterpart of visual U and the reason to prefer it: the operator form is one change that sets up the dot command. gU$ / j gu$ / j g~$ is operator-plus-$ exactly, and the pair ascends 12 -> 23, so the first Practical-mapped stage of the chapter is in order."
+    },
+    {
+      "stage": "c10s3",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "learning-vi-vim",
+          "line": 22854,
+          "evidence": "Same as J, but without inserting a space. {Vim}",
+          "note": "Reuses the source that already supplied J/gJ at c05s4. Line 22852 is the gJ entry, line 22854 reads 'Same as J, but without inserting a space', and line 22850 defines J; line 22862 adds that :j matches J and :j! matches gJ. The stage's gJ on the URL (no space) and J on 'every letter' (space) is exactly this contrast."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "Practical Vim never teaches J or gJ in the body: the only mention is the Caps Lock aside in Tip 14 (line 1966), which names J but not gJ or the space difference. This is a review of the basic first supplemented at c05s4 from learning-vi-vim, so it is a genuine supplement and flagged not-in-practical-ok. The solution gJ2jgJ2jJ presses both halves: gJ closes up the split URL, J keeps the space in 'every letter'."
+    },
+    {
+      "stage": "c10s4",
+      "tips": [
+        {
+          "tip": 65,
+          "line": 6648,
+          "evidence": "Tip 65Record and Execute a Macro"
+        },
+        {
+          "tip": 66,
+          "line": 6774,
+          "evidence": "Tip 66Normalize, Strike, Abort"
+        },
+        {
+          "tip": 67,
+          "line": 6812,
+          "evidence": "Tip 67Play Back with a Count"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 65 is the q/@ mechanics: qa starts recording into register a, q stops, @a replays, @@ repeats the last macro. Tip 66 explains the trailing j (normalize the cursor so the next replay starts where the recorded gesture expects) and why an approximate count is safe; Tip 67 is the count form itself, 2@a, the remedy it gives because the Dot Formula cannot take a count. The final dot is Tip 23's operator-repeatability - gUiw is one operator change, so the fourth line needs only '.' - and Tip 68 (line 6868) is Practical's full contiguous-line demo of the same qa...j / 3@a shape. 65 -> 66 -> 67 ascends after s2's 23."
+    },
+    {
+      "stage": "c10s5",
+      "tips": [
+        {
+          "tip": 12,
+          "line": 1794,
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "tip": 53,
+          "line": 5462,
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Freeform repair of four wounds: Tip 12 supplies the operators behind << (the Shift left row) and guiw (gu); Tip 53 supplies iw/aw/ip plus the daw and ciw demos, which is why daw is the clean delete for the doubled word. The fourth wound, gqip, has no Practical tip at all (Practical never mentions gq); it is the same supplement already declared at c10s1, so it is not re-cited here and supplement stays empty for the covered stitches. Tips 12 and 53 sit below s4's 65-67 frontier, so this deliberate recombination is flagged out-of-order."
+    },
+    {
+      "stage": "c10s6",
+      "tips": [
+        {
+          "tip": 12,
+          "line": 1794,
+          "evidence": "Tip 12Combine and Conquer"
+        },
+        {
+          "tip": 23,
+          "line": 2368,
+          "evidence": "Tip 23Prefer Operators to Visual Commands Where Possible"
+        },
+        {
+          "tip": 53,
+          "line": 5462,
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "The boss is a synthesis, not a new lesson: gU$ and g~$ are Tip 12's case operators, dd and << follow Tip 12's duplicate-operator and shift-left rules, ciw plus the ip/iw/aw vocabulary is Tip 53, and the closing dot is Tip 23's operator-repeatability (ciw is one change, so '.' re-runs it nine lines up). gqip is again the uncovered gq stitch declared at c10s1, so supplement stays empty rather than duplicating the source. All three tips precede s4's 65-67, so the exam is out-of-order by design; 'words before lines, dot last' is the level's ordering constraint, not a separate Practical tip."
+    }
+  ],
+  "chapterNote": "Chapter 10 is the exam, so Practical matters less by adding new tips than by being applied: only c10s2 (Tips 12, 23) and c10s4 (Tips 65, 66, 67) are clean ascending Practical mappings. gq has no Practical tip at all - the cleaned practical-vim.txt contains zero gq - so c10s1 is supplemented from Vim 101 Hacks Bonus Hack 4 (gqap) and flagged not-in-practical-ok; the same gap is reviewed, but not re-cited, at c10s5 and c10s6. J/gJ likewise has no Practical body tip (only the Tip 14 Caps Lock aside, line 1966), so c10s3 reuses the learning-vi-vim entry already cited at c05s4 and is also not-in-practical-ok. c10s5 and c10s6 then recombine Tips 12/53/23 after s4's 65-67, so both are out-of-order by design (spiral review), not a curriculum error. Modern Vim is unused: it is engine-deferred and has no gq or gJ tip. One mismatch worth naming: the 101 Hacks lesson is gqap while the game uses gqip, and these sources explain line wrapping, not the stage's textwidth 40."
+}

@@ -44,7 +44,9 @@
     "books:priority": "python3 tools/books/priority_structure.py",
     "books:priority:merge": "python3 tools/books/priority_merge.py",
     "books:priority:read": "python3 tools/books/priority.py",
-    "books:priority:map": "node --experimental-strip-types tools/books/priority_map.ts"
+    "books:priority:map": "node --experimental-strip-types tools/books/priority_map.ts",
+    "level-oracle": "node --experimental-strip-types tools/level-oracle.ts",
+    "books:stage-map": "python3 tools/books/merge_stage_map.py"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

@@ -1,0 +1,55 @@
+{
+  "chapter": 1,
+  "stages": [
+    {
+      "stage": "c01s1",
+      "tips": [
+        { "tip": 47, "line": 4757, "evidence": "Tip 47Keep Your Fingers on the Home Row" }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 47 is the only Practical Vim body tip that teaches h/j/k/l: it defines each key (h one column left, l right, j one line down, k up). It is the chapter's first citation, so it inverts nothing and is marked ok — but it starts the chapter 46 tips into the book. Friction: the par solution 'llllllljj' never presses h or k, and Tip 47 itself warns that pressing h more than twice in a row is wasted keystrokes (line 4795), steering readers to word/character search (Tips 49-50)."
+    },
+    {
+      "stage": "c01s2",
+      "tips": [
+        { "tip": 10, "line": 1670, "evidence": "Tip 10Use Counts to Do Simple Arithmetic" },
+        { "tip": 11, "line": 1742, "evidence": "Tip 11Don’t Count If You Can Repeat" }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 10 states the count-prefix rule (many Normal commands accept {count}) and Tip 11 weighs count vs dot-repeat, including the d2w / 2dw placement. Neither demonstrates a bare count on a motion like 13l or 5j: Tip 10's worked examples are <C-a>/<C-x> arithmetic, so the match is the count mechanism, not the motion use. Both tips sit far behind the Tip 47 already consumed by c01s1, so the stage reads backwards through the spine."
+    },
+    {
+      "stage": "c01s3",
+      "tips": [
+        { "tip": 1, "line": 980, "evidence": "Tip 1Meet the Dot Command" },
+        { "tip": 2, "line": 1139, "evidence": "Tip 2Don’t Repeat Yourself" }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "x is introduced in Tip 1 only as the demonstration of what 'a change' is (line 1000), and $ in Tip 2 as the motion that a/A exist to squash ($a -> A, line 1161). Practical has no dedicated basics tip for either command — plain character deletion and end-of-line motion are assumed — and the 7x count comes from Tip 10, not from a tip of its own. Tips 1-2 are the start of the book, so citing them at stage 3, after Tip 47, is out of order."
+    },
+    {
+      "stage": "c01s4",
+      "tips": [
+        { "tip": 2, "line": 1139, "evidence": "Tip 2Don’t Repeat Yourself" },
+        { "tip": 14, "line": 1939, "evidence": "Tip 14Get Back to Normal Mode" },
+        { "tip": 26, "line": 2660, "evidence": "Tip 26Append After a Ragged Visual Block" }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 2 teaches a, A and <Esc> head-on (a appends after the cursor, A is $a, the change closes with <Esc>); Tip 14 is the dedicated Esc tip (Get Back to Normal Mode). Plain i is never given its own tip — the only body passage that defines i and contrasts i/a/I/A is the subsection of Tip 26 at line 2722, 'Vim's Conventions for “i” and “a” Keys', so Tip 26 is cited for that content even though its main subject is Visual-Block appending. All three tips predate Tip 47, so the stage is out of order."
+    },
+    {
+      "stage": "c01s5",
+      "tips": [
+        { "tip": 8, "line": 1556, "evidence": "Tip 8Chunk Your Undos" }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "u is covered by Tip 8 'Chunk Your Undos': one trip into Insert mode counts as one change, so u reverts it as a unit (Tip 11 and Tip 1 only mention u in passing). Mismatch worth flagging: c01s5 lists u as taught, but its par solution '7l4xi3000<Esc>j' never presses u — undo is neither required nor tested; only the i3000<Esc> chunk would be one undo step. Tip 8 lies before the Tip 47 already used, so the stage is out of order."
+    }
+  ],
+  "chapterNote": "Chapter 1 is a fundamentals prelude stitched together from across Practical Vim, not a run through its tip sequence. It cites Tips 1-2 (x, $, a/A/Esc), 8 (u), 10-11 (counts), 14 (Esc), 26 (i/a conventions) and 47 (h/j/k/l): the first stage jumps to Tip 47 and every later stage then reads backwards. Practical covers all five stages, so no supplement is needed and the LTVE citations currently in c01.ts are redundant. Only c01s1 is forward-only within the chapter (practical-order-ok); c01s2-c01s5 are out of order against the 1..123 spine. To play the spine, the basics would need re-sequencing roughly 1-2 -> 8 -> 10-11 -> 14/26 -> 47, or chapter 1 must be accepted as outside Practical Vim's order."
+}

@@ -44,6 +44,8 @@ jobs:
         run: node --experimental-strip-types tools/oracle-diff.ts
       - name: seeded differential fuzz (smoke)
         run: node --experimental-strip-types tools/fuzz.ts --n=500 --seed=7
+      - name: level oracle (every shipped stage solution vs real Vim)
+        run: npm run level-oracle
       - name: grammar matrix (21,712 command trees vs real Vim)
         run: npm run matrix
       - name: count matrix (manifest commands at counts 1-3)

@@ -1,0 +1,81 @@
+{
+  "chapter": 4,
+  "stages": [
+    {
+      "stage": "c04s1",
+      "tips": [
+        {
+          "tip": 53,
+          "line": 5462,
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Solution is daw then jciwwaits: Tip 53 is Practical Vim's own worked example of exactly this pair. daw deletes the word plus one space ('Improve your writing by deleting excellent adjectives.'), diw would leave two adjacent spaces, ciw changes the word without trimming whitespace, and caw would read 'mostadjectives'. Tip 52 never mentions word objects (its table has no iw/aw), so this stage's only authority is Tip 53. As the first stage it breaks no earlier tip, but it sets the frontier at 53, which is the root of this chapter's order inversion: Practical Vim introduces general/delimited objects (Tip 52) before bounded word/paragraph objects (Tip 53)."
+    },
+    {
+      "stage": "c04s2",
+      "tips": [
+        {
+          "tip": 52,
+          "line": 5271,
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        },
+        {
+          "tip": 53,
+          "line": 5462,
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "ci\" is Tip 52's own worked example ('ci\"#<Esc>', read as 'change inside the double quotes') and a\" is that page's next expansion ('a\" selects a range of characters delimited by double quotes'). Tip 53 adds the pairing principle (i inside / a around, with i\" named among the paired delimited objects) and its rule that d works well with the around forms while c works with the inside forms - exactly the di\" vs da\" knife-edge in this stage. Both tips are 52-level material, so the chapter falls back from stage 1's 53 to 52."
+    },
+    {
+      "stage": "c04s3",
+      "tips": [
+        {
+          "tip": 52,
+          "line": 5271,
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "i( / a( are the ib / ab family on Tip 52's text-object table ('A pair of (parentheses)' and 'Inside of (parentheses)'), and the tip explicitly says i( and i) are equivalent and that cursor position does not matter 'so long as it's located somewhere inside' the delimited region - which is what lets di( wipe a multi-line argument list from anywhere inside it. Tip 52 also notes a] expanding to span multiple lines. No body tip demonstrates di( itself, and Tip 55 'Jump Between Matching Parentheses' is the % motion, not a text object, so it was not used. Practical has the commands, so no supplement is needed, but the stage again uses 52 after stage 1 used 53."
+    },
+    {
+      "stage": "c04s4",
+      "tips": [
+        {
+          "tip": 52,
+          "line": 5271,
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        },
+        {
+          "tip": 53,
+          "line": 5462,
+          "evidence": "Tip 53Delete Around, or Change Inside"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Split across the two tips: it / at is Tip 52's own tag example (cit, with 'We could just as easily use the yit command ... or dit to delete it'), while ip / ap comes from Tip 53's bounded-object table ('paragraph' and 'paragraph plus blank line(s)') and its explicit rule that d{motion} tends to work well with ap. dap then dit is therefore a 53 -> 52 span, and the paragraph half belongs with stage 1's word objects, not four stages later. Practical covers both halves, so no supplement is needed."
+    },
+    {
+      "stage": "c04s5",
+      "tips": [
+        {
+          "tip": 52,
+          "line": 5271,
+          "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Only Tip 52 covers i\" and i{ (the table's i} or iB, 'Inside of {braces}'), and its demonstration that a second text object can be invoked at the same cursor to reshape the region is the same choice this stage forces between ci\" and ci{ when a string sits inside braces. Tip 52 does not spell out a nesting precedence (innermost vs outermost), so that 'choose the shape you mean' framing is the stage's own design, not a quoted rule - no supplement is needed because Practical does have both commands. Stage 5 still needs 52, which Practical places before 53."
+    }
+  ],
+  "chapterNote": "No supplement is used: Practical Vim covers every object in c04 - iw/aw and ip/ap in Tip 53 'Delete Around, or Change Inside' (body line 5462), and i\"/a\", ib/ab, iB/i{ and it/at in Tip 52 'Trace Your Selection with Precision Text Objects' (body line 5271), so no other book is admitted. The chapter's stage order runs 53 (words), 52 (quotes), 52 (parens), 53+52 (paragraph + tag), 52 (nest): it teaches the bounded word objects before the general text-object tip, while Practical Vim's sequence is 52 then 53 (delimited/general first, bounded words and paragraphs second), and Practical first shows daw as a repeatable change even earlier, in Tip 9 (body line 1580). order is judged per stage against the highest tip already used in this chapter: stage 1 sets the frontier at 53, so stages 2-5, which all need Tip 52 again, are marked out-of-order; teaching Tip 52 first (or moving the word stage after the quote/paren stages) would make the chapter practical-order-ok. One further sequencing note: Practical Vim puts text objects in Chapter 8, Navigate Inside Files with Motions, so this game chapter reaches that material earlier than the book does."
+}

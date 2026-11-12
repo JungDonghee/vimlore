@@ -1,0 +1,77 @@
+{
+  "chapter": 8,
+  "stages": [
+    {
+      "stage": "c08s1",
+      "tips": [
+        {
+          "tip": 54,
+          "line": 5544,
+          "evidence": "Tip 54Mark Your Place and Snap Back to It"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 54 is the marks lesson: m{a-z} drops the pin, '{mark} returns to the marked line's first non-whitespace character, `{mark} restores the exact column. The stage forces 'a (solution ma13j$'a) while its second hint contrasts `a, which mirrors the tip's own advice that ` is the stronger of the two. It is the first tip of the chapter's Practical spine."
+    },
+    {
+      "stage": "c08s2",
+      "tips": [
+        {
+          "tip": 55,
+          "line": 5600,
+          "evidence": "Tip 55Jump Between Matching Parentheses"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 55 teaches % between matching (), {}, [] and warns it only works on well-formed pairs, which is exactly the stage's far-brace jump. The trailing $ (solution %$) is a trivial width grab, not a Practical lesson. Follows Tip 54 directly, so the order is clean."
+    },
+    {
+      "stage": "c08s3",
+      "tips": [],
+      "supplement": [
+        {
+          "book": "vim-101-hacks",
+          "line": 532,
+          "evidence": "Hack 4. Paragraph, Section, Sentence Navigations",
+          "note": "Hack 4's table (lines 535-540) is the four-key lesson: { and } move to the current/next paragraph, ( and ) to the previous/next sentence. Practical Vim has no tip for these motions; Tip 56 only lists (/){/} as jump-table rows (lines 5778, 5782)."
+        }
+      ],
+      "order": "not-in-practical-ok",
+      "note": "A genuine supplement: no Practical Vim tip teaches sentence/paragraph motions. The ghost (solution )))))}}{j) presses only ) } {; the teaches list also names (, but no solution key presses it, and the engine note says ( only recognizes a sentence end when the punctuation is preceded by a space. Marked not-in-practical-ok rather than out-of-order."
+    },
+    {
+      "stage": "c08s4",
+      "tips": [
+        {
+          "tip": 56,
+          "line": 5732,
+          "evidence": "Tip 56Traverse the Jump List"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 56 introduces <C-o>/<C-i> as the jump list's back/forward buttons and states that j is not a jump (line 5758), which is why the stage's mid-route j (solution }}j<C-o><C-o>) does not add a jump-list entry and the second <C-o> still lands on the start light. <C-i> is named in the whisper but no ghost uses it (engine jumpForward is unreachable). Directly follows Tip 55."
+    },
+    {
+      "stage": "c08s5",
+      "tips": [
+        {
+          "tip": 47,
+          "line": 4757,
+          "evidence": "Tip 47Keep Your Fingers on the Home Row"
+        },
+        {
+          "tip": 50,
+          "line": 5009,
+          "evidence": "Tip 50Find by Character"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "The solution 06l3j04jf$ is a pure 0/j/f route (0, 6l, 3j, 0, 4j, f$): Tip 47 supplies j, Tip 50 supplies f{char}. Both are earlier tips than 54-56, so placing this synthesis last is out of Practical order. 0 has no tip of its own - only a table row in Tip 48 (line 4851) and a normalization step inside Tip 68's macro (line 6938) - so it arrives here without a Practical lesson. Mismatch: the brief, hints and the c08.ts design comment describe a pin + % + { route that the actual solution never plays."
+    }
+  ],
+  "chapterNote": "Chapter 8 maps onto Practical Vim's marks-then-jumps spine in order: c08s1 -> Tip 54, c08s2 -> Tip 55, c08s4 -> Tip 56. c08s3 (sentence/paragraph motions) has no Practical tip - Tip 56 only mentions (/){/} as jump-table rows - so it is supplemented from Vim 101 Hacks Hack 4 and flagged not-in-practical-ok. c08s5 is a closing 0/j/f synthesis drawn from Tips 47 and 50, which precede 54-56 (out-of-order), and its authored pin+%+{ narrative does not match its actual solution; 0 itself is never given a Practical motion tip. Modern Vim adds nothing here (its only <C-o> mention, line 1154, is incidental), so the sole supplement correctly comes from another book."
+}

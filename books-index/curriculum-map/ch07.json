@@ -1,0 +1,96 @@
+{
+  "chapter": 7,
+  "stages": [
+    {
+      "stage": "c07s1",
+      "tips": [
+        {
+          "tip": 60,
+          "line": 5993,
+          "evidence": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register"
+        },
+        {
+          "tip": 61,
+          "line": 6147,
+          "evidence": "Tip 61Grok Vim’s Registers"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 60 shows yy/p going through the unnamed register, including yyp duplication and the fact that the next yank/delete overwrites it; Tip 61's named-register section is the fix the stage drills: \"ayy stashes line 1 in drawer a, plain yyp duplicates line 2 from the unnamed register, and \"ap reaches back into a. The stage's keys map one-for-one to Tip 61's \"ayiw / \"ap examples, so no supplement is needed."
+    },
+    {
+      "stage": "c07s2",
+      "tips": [
+        {
+          "tip": 65,
+          "line": 6648,
+          "evidence": "Tip 65Record and Execute a Macro"
+        },
+        {
+          "tip": 66,
+          "line": 6774,
+          "evidence": "Tip 66Normalize, Strike, Abort"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 65 is close to a transcript of the stage: qa begins recording into register a, A;<Esc> is captured, q stops, and @a replays it on the next line (its own example even records A;<Esc>). Tip 66 explains why the recording is repeatable: A strikes the end of the line regardless of length, and a failing j on the last line aborts the macro only after the change has landed."
+    },
+    {
+      "stage": "c07s3",
+      "tips": [
+        {
+          "tip": 65,
+          "line": 6648,
+          "evidence": "Tip 65Record and Execute a Macro"
+        },
+        {
+          "tip": 67,
+          "line": 6812,
+          "evidence": "Tip 67Play Back with a Count"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 65 supplies the record/replay mechanics (qa ... q, then @a); Tip 67 is the exact insight: record one cheap unit of work (yyp plus the j that advances the conveyor belt) and prefix @a with a count instead of repeating it. The stage's 3@a is Tip 67's 11@q technique with the queue sized to the three remaining calls."
+    },
+    {
+      "stage": "c07s4",
+      "tips": [
+        {
+          "tip": 98,
+          "line": 9611,
+          "evidence": "Tip 98Meet the Global Command"
+        },
+        {
+          "tip": 99,
+          "line": 9639,
+          "evidence": "Tip 99Delete Lines Containing a Pattern"
+        }
+      ],
+      "supplement": [],
+      "order": "practical-order-ok",
+      "note": "Tip 99 is the precise source: it demonstrates both :g/re/d to delete matching lines and :v/re/d to keep only matching lines, and the stage needs exactly those two rules (:v/KEEP/d keeps the stamped keepers, :g/rust/d then drops the rotten ones). Tip 98 supplies the :global syntax, the whole-file default range, and the :global! / :vglobal inversion that the first command relies on. The frontier jumps from 67 to 99 here, so this stage is forward, not a reorder."
+    },
+    {
+      "stage": "c07s5",
+      "tips": [
+        {
+          "tip": 67,
+          "line": 6812,
+          "evidence": "Tip 67Play Back with a Count"
+        },
+        {
+          "tip": 68,
+          "line": 6868,
+          "evidence": "Tip 68Repeat a Change on Contiguous Lines"
+        }
+      ],
+      "supplement": [],
+      "order": "out-of-order",
+      "note": "Tip 68 is the structural match: record one unit of work that starts with 0 to normalize the cursor position and ends by advancing a line, then replay it with a count (3@a there, 8@a here: qa02xjq8@a); Tip 67 is the count-on-@ insight itself. Order concern: this boss drills macro-plus-count (Tips 67-68) after the chapter's :global stage (Tips 98-99), so it steps backward in Practical Vim's 1..123 sequence. It introduces no new command family and reads as deliberate spaced review of the macro beat, not a mis-ordered lesson."
+    }
+  ],
+  "chapterNote": "All five stages are Practical Vim-only: registers (Tip 60 -> 61), macros (65 -> 66/67/68), and the global command (98 -> 99). Every stage's keys and insight are taught by a body tip, so every supplement is [] and no other book (including Modern Vim) is needed; the engine's single-buffer q/@ and :g support is enough. order is judged per stage against the highest tip already used in this chapter: s1 sets the frontier at 61, s2 at 66, s3 at 67, s4 at 99, so s5 - which needs Tips 67-68 again - is the only out-of-order stage; it is the boss, reviewing the macro beat as deliberate spaced practice rather than introducing anything new. A chapter-level caveat the per-stage values do not capture: the game runs this register/macro block after c06's search-and-substitute block (Practical Tips 80-97), while Practical Vim prints registers and macros (chs 10-11) before search and substitution (chs 13-14), so the game spine is not globally monotonic even though the chapter's internal pairing is."
+}
