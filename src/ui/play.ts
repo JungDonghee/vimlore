@@ -735,9 +735,15 @@ export class PlayScreen {
       h(
         'div',
         { class: 'actions' },
-        h('button', { class: 'btn primary', onclick: () => this.host.onNext() }, lang === 'ko' ? '다음' : 'NEXT', h('kbd', {}, '↵')),
+        // Over-par clears put GOLF/RETRY first: the next repetition should be
+        // the obvious action, not a victory lap.
+        keys > par
+          ? h('button', { class: 'btn primary', onclick: () => this.restart() }, lang === 'ko' ? 'GOLF RETRY' : 'GOLF RETRY')
+          : h('button', { class: 'btn primary', onclick: () => this.host.onNext() }, lang === 'ko' ? '다음' : 'NEXT', h('kbd', {}, '↵')),
+        keys > par
+          ? h('button', { class: 'btn', onclick: () => this.host.onNext() }, lang === 'ko' ? '다음' : 'NEXT', h('kbd', {}, '↵'))
+          : h('button', { class: 'btn', onclick: () => this.restart() }, lang === 'ko' ? '다시' : 'RETRY'),
         this.host.canPrev ? h('button', { class: 'btn', onclick: () => this.host.onPrev?.() }, lang === 'ko' ? '이전' : 'PREV') : null,
-        h('button', { class: 'btn', onclick: () => this.restart() }, lang === 'ko' ? '다시' : 'RETRY'),
         this.host.canSave ? h('button', { class: 'btn', onclick: () => { this.host.onSave?.(); this.host.sfx.play('yank'); } }, lang === 'ko' ? '저장' : 'SAVE') : null,
         h('button', { class: 'btn', onclick: () => this.host.onExit() }, `${lang === 'ko' ? '챕터' : 'CHAPTER'} ${String(chapter.index).padStart(2, '0')}`),
       ),

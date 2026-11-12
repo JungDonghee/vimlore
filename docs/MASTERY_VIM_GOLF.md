@@ -14,7 +14,8 @@
 The game already ships par/3-star, `bestKeys`, retry, F3 ghost, the DRILL cue,
 TRIALS with weakness/daily selection, and the coach. The results screen now
 frames the key gap as **GOLF** (par / +N over par / best) instead of a generic
-"keys" line. This is deliberate: the score is the lesson, not decoration.
+"keys" line. When the clear is over par, **GOLF RETRY is the primary action**
+and the focused button: the next repetition is the obvious next step. This is deliberate: the score is the lesson, not decoration.
 
 ## Why this forces thought
 
