@@ -76,6 +76,15 @@ Existing mechanisms already support this: par/3-star, F3 ghost, restart,
 increment is a **GOLF/drill layer** that makes the player optimise and revisit,
 not a new story chapter. Every generated challenge must be simulation-verified.
 
+## Coverage gaps
+
+The generated gap table is
+[`../books-index/curriculum-map/GAPS.md`](../books-index/curriculum-map/GAPS.md):
+48 of 123 Practical tips are represented by a current stage; 75 are a drill or
+engine backlog, explicitly not claimed as levels. Deferred surfaces
+(files/buffers/windows/quickfix/tags) are Modern-Vim/engine work, not fake
+stories.
+
 ## Gap policy
 
 Practical has 123 tips but the game has 51 stages; many tips are variations of
