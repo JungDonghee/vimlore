@@ -188,8 +188,10 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
-264,000 → **273,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 272,261 B raw / 85,220 B gzip, so headroom is
+264,000 → **273,000/87,000**. Each was measured and committed with the feature
+that needed it. CI stock zlib gzip is ~833 B larger than local zlib-ng; the ceiling is now
+87,000 B to absorb that measured variance. Current local build is
+272,261 B raw / 85,220 B gzip, so headroom is
 ~739 B raw / ~780 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.

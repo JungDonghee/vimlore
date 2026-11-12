@@ -2,7 +2,7 @@
 > **Do not edit by hand.** Run `npm run status:write` after regenerating the
 > oracle/matrix/count/state reports and the build. `npm run status:check` is a
 > CI gate. Gzip is intentionally omitted: local zlib-ng and CI stock zlib
-> differ; the bundle budget owns that (gzip ceiling 86,000 B).
+> differ; the bundle budget owns that (gzip ceiling 87,000 B).
 | metric | value |
 |---|---:|
 | oracle cases | 373 |
