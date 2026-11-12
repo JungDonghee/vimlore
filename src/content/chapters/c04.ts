@@ -200,7 +200,7 @@ It took the road with it.
       },
       par: 17,
       solution: 'ci"loud<Esc>jci{open<Esc>',
-      teaches: ['i"', 'i('],
+      teaches: ['i"', 'i(', 'i{'],
       hints: [
         {
           en: 'The first line only changes the string: ci"loud. The braces and quotes never move.',

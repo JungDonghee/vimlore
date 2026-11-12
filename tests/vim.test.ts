@@ -8,6 +8,8 @@ import { checkGoal, goalLabel, collectPositions } from '../src/core/game/goals.t
 import { Session, parseStart } from '../src/core/game/session.ts';
 import { Buffer } from '../src/core/vim/buffer.ts';
 import { emptyProgress, type Stage } from '../src/core/game/types.ts';
+import { CHAPTERS } from '../src/content/chapters/index.ts';
+import { stageUnlockKeys } from '../src/content/commands.ts';
 
 interface Expected {
   lines: string[];
@@ -227,6 +229,17 @@ test('goals: collect needs every coin', () => {
 test('goal labels are bilingual', () => {
   assert.match(goalLabel({ type: 'reach', char: '*' }, 'ko'), /\*/);
   assert.match(goalLabel({ type: 'reach', char: '*' }, 'en'), /Reach/);
+});
+
+test('stage gating does not expose a chapter\'s later skills', () => {
+  const first = stageUnlockKeys(CHAPTERS, 0, 0);
+  assert.equal(first.has('h'), true);
+  assert.equal(first.has('x'), false);
+  assert.equal(first.has('i'), false);
+  const operators = stageUnlockKeys(CHAPTERS, 2, 0);
+  assert.equal(operators.has('d'), true);
+  assert.equal(operators.has('c'), false);
+  assert.equal(operators.has('yy'), false);
 });
 
 test('new saves default to relative line numbers', () => {

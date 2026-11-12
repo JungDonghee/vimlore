@@ -18,7 +18,7 @@ status:check` is a CI gate.
 |---|---|
 | repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
 | live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
-| content | 10 floors · 51 stages · 86 grimoire commands · 12 TRIALS skills |
+| content | 10 floors · 51 stages · 88 grimoire commands · 12 TRIALS skills |
 | current metrics | **[`STATUS.md`](STATUS.md)** (oracle, matrix, count matrix, state, build raw) |
 | known gaps | [`VIM_ADVENTURES_COVERAGE.md`](VIM_ADVENTURES_COVERAGE.md), [§4](#4-not-done-queued-do-not-pretend-otherwise) |
 
@@ -69,6 +69,22 @@ Next safe slices, in order:
 
 The scheduled automation is set to stop issuing new work at 23:30 KST and to
 only finalize by 23:50; the machine shuts down at 00:00.
+
+## 0b. A+B+C sprint (2026-11-12)
+
+- **Stage-level gating** is now enforced by `stageUnlockKeys`: a stage may use
+  only commands taught by earlier stages/chapters plus its own `teaches`.
+  `tools/level-lint.ts` replays every solution under that gate; **51/51 pass**.
+  The old chapter-wide unlock leak is gone.
+- **Chapter/stage picker** added between floor map and play: cleared stages are
+  replayable, future stages sealed; `F10/×` returns to the stage list.
+- **Browser audit**: `npm run browser:audit` covers 1920×1080/390×844/320×568,
+  38 screen/viewports, 0 horizontal overflow, 0 page errors.
+- Content fixes required by gating: c04s5 teaches `i{`; c05s3 teaches `I`;
+  c08s3 teaches `(`/`)`; c10s2 teaches `g~`; Grimoire grew to 88 commands.
+- Desktop default is a centered 1150×720 CRT tube; phone layout is unchanged.
+  `browser:qa` measures **55.5 rAF/draw FPS** headless at 1920×1080; 144fps is
+  not measurable here and is a display/GPU target, not a headless-CPU claim.
 
 ## 0c. Browser QA (2026-11-12)
 
@@ -140,7 +156,7 @@ Q04 (zero-range `0`/`^`/`h` case motions) and Q09 (case-operator landing) policy
 ### Surface program (Phase A)
 `tools/surface-audit.ts` maps the Grimoire, chapters, oracle cases, unit tests
 and TRIALS into one evidence report, now a **strict CI gate**
-(`npm run surface -- --strict`). 86 of 86 commands have oracle or unit evidence
+(`npm run surface -- --strict`). 86 of 88 commands have oracle or unit evidence
 (8 ex/macro/mark/format commands are unit-only because `normal!` cannot drive
 them), 9 engine-only features are explicit, and 0 of the 373 oracle cases are
 orphans. The generated view is [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md); the
@@ -188,10 +204,10 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
-264,000 → **273,000/87,000**. Each was measured and committed with the feature
+264,000 → **277,000/87,000**. Each was measured and committed with the feature
 that needed it. CI stock zlib gzip is ~833 B larger than local zlib-ng; the ceiling is now
 87,000 B to absorb that measured variance. Current local build is
-272,261 B raw / 85,220 B gzip, so headroom is
+276,101 B raw / 85,991 B gzip, so headroom is
 ~739 B raw / ~780 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.

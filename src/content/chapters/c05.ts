@@ -96,7 +96,7 @@ mirror 8`,
       },
       par: 8,
       solution: '<C-v>3jI// <Esc>',
-      teaches: ['C-v'],
+      teaches: ['C-v', 'I'],
       hints: [
         { en: 'Ctrl-V starts a rectangular selection: one column wide, as many lines as you pull.', ko: 'Ctrl-V는 사각형 선택을 연다. 한 칸 폭으로, 당기는 만큼 여러 줄.' },
         { en: 'From the first column of mirror 2, Ctrl-V 3j takes all four unmarked rows. I writes at the left edge of every line: type // then a space, and Esc.', ko: 'mirror 2의 첫 칸에서 Ctrl-V 3j면 표식 없는 네 줄이 모두 블록에 들어온다. I는 모든 줄의 왼쪽 끝에서 입력을 연다. //와 공백을 쓰고 Esc.' },

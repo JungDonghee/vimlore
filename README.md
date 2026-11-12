@@ -48,7 +48,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   post-key state invariants, seeded differential fuzzing, per-stage simulation,
   cross-layer registry invariants, docs/CI/build checks, and a regulated prompt/
   handoff contract. A red ring stops the release.
-- **Breadth is the product.** 86 grimoire commands today, 51 chambers, 248
+- **Breadth is the product.** 88 grimoire commands today, 51 chambers, 248
   oracle cases — and **no artificial cap**: motions, operators, text objects,
   registers, macros, marks, search, `:s`/`:g`, undo/jumps, visual/block, ex, and
   eventually buffers/files/splits/tabs are all in scope. Deferred is not

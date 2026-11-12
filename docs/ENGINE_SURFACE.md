@@ -9,11 +9,11 @@
 
 | metric | value |
 |---|---|
-| commands | 86 |
-| taught by a stage | 71 (83%) |
-| oracle-touched | 78 (91%) |
-| unit-touched | 47 (55%) |
-| any engine evidence | 86 (100%) |
+| commands | 88 |
+| taught by a stage | 75 (85%) |
+| oracle-touched | 80 (91%) |
+| unit-touched | 48 (55%) |
+| any engine evidence | 88 (100%) |
 | trial-used (informational) | 20 (23%) |
 | oracle cases | 373 |
 | engine-only features | 9 |
@@ -22,11 +22,11 @@
 
 ## Gaps
 
-- **Grimoire-only** (no stage teaches): `X`, `I`, `o`, `O`, `B`, `t`, `,`, `cc`, `D`, `C`, `i{`, `a{`, `gv`, `?`, `N`
+- **Grimoire-only** (no stage teaches): `X`, `o`, `O`, `B`, `t`, `,`, `cc`, `D`, `C`, `a{`, `gv`, `?`, `N`
 - **No oracle case**: `q`, `@`, `:g`, `'`, `:d`, `:sort`, `:normal`, `gq`
 - **Unit-only (no oracle):** `q`, `@`, `:g`, `'`, `:d`, `:sort`, `:normal`, `gq`
 - **No engine evidence at all**: —
-- **No TRIALS skill** (informational): `h`, `j`, `k`, `l`, `count`, `0`, `$`, `X`, `S`, `x`, `I`, `a`, `A`, `o`, `O`, `u`, `esc`, `b`, `e`, `W`, `B`, `E`, `~`, `t`, `;`, `,`, `P`, `cc`, `D`, `C`, +36
+- **No TRIALS skill** (informational): `h`, `j`, `k`, `l`, `count`, `0`, `$`, `X`, `S`, `x`, `I`, `a`, `A`, `o`, `O`, `u`, `esc`, `b`, `e`, `W`, `B`, `E`, `~`, `t`, `;`, `,`, `P`, `cc`, `D`, `C`, +38
 - **No stage solution uses it** (curriculum): `X`, `W`, `B`, `cc`, `D`, `C`, `a(`, `a{`, `gv`, `?`, `N`
 - **Orphan oracle cases**: —
 
@@ -60,7 +60,7 @@
 | `S` | `S` | 3 | 1 | 2 | 0 | 0 |
 | `x` | `x` | 1 | 1 | 25 | 2 | 0 |
 | `i` | `i` | 1 | 1 | 58 | 7 | 3 |
-| `I` | `I` | 1 | 0 | 3 | 1 | 0 |
+| `I` | `I` | 1 | 1 | 3 | 1 | 0 |
 | `a` | `a` | 1 | 1 | 36 | 13 | 0 |
 | `A` | `A` | 1 | 2 | 5 | 2 | 0 |
 | `o` | `o` | 1 | 0 | 19 | 11 | 0 |
@@ -98,7 +98,7 @@
 | `a(` | `a(` | 4 | 1 | 1 | 0 | 0 |
 | `it` | `it` | 4 | 1 | 2 | 0 | 0 |
 | `ip` | `ip` | 4 | 1 | 3 | 0 | 0 |
-| `i{` | `i{` | 4 | 0 | 7 | 0 | 0 |
+| `i{` | `i{` | 4 | 1 | 7 | 0 | 0 |
 | `a{` | `a{` | 4 | 0 | 1 | 0 | 0 |
 | `v` | `v` | 5 | 1 | 10 | 2 | 0 |
 | `V` | `V` | 5 | 1 | 11 | 2 | 1 |
@@ -124,6 +124,8 @@
 | `%` | `%` | 8 | 1 | 3 | 2 | 0 |
 | `{` | `{` | 8 | 1 | 18 | 1 | 0 |
 | `}` | `}` | 8 | 1 | 12 | 0 | 0 |
+| `(` | `(` | 8 | 1 | 32 | 0 | 0 |
+| `)` | `)` | 8 | 1 | 11 | 1 | 0 |
 | `C-o` | `<C-o>` | 8 | 1 | 4 | 1 | 0 |
 | `:d` | `:1,3d` | 9 | 1 | 0 | 2 | 0 |
 | `:m` | `:m` | 9 | 1 | 1 | 4 | 0 |
@@ -133,4 +135,4 @@
 | `gq` | `gq` | 10 | 3 | 0 | 1 | 0 |
 | `gu` | `gu` | 10 | 2 | 8 | 0 | 0 |
 | `gU` | `gU` | 10 | 2 | 26 | 0 | 1 |
-| `g~` | `g~` | 10 | 1 | 20 | 0 | 0 |
+| `g~` | `g~` | 10 | 2 | 20 | 0 | 0 |

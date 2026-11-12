@@ -495,9 +495,11 @@ h2,
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--line);
-  padding-top: 12px;
+  padding: 12px 14px 0;
   font-size: 9.5px;
   color: var(--ph-dim);
+  flex-wrap: wrap;
+  row-gap: 8px;
 }
 
 /* ------------------------------------------------------------------ stage */
@@ -1106,6 +1108,12 @@ h2,
 
 @media (max-width: 640px) {
   .screen { padding: 12px 12px 10px; }
+  .topbar { min-width: 0; gap: 8px; }
+  .topbar h1 { letter-spacing: 0.28em; }
+  .topbar .meta { font-size: 9px; min-width: 0; white-space: normal; text-align: right; line-height: 1.4; }
+  .map-foot { flex-wrap: wrap; row-gap: 8px; }
+  .map-foot > span { min-width: 0; }
+  .map-foot > span:last-child { flex-wrap: wrap; justify-content: flex-end; }
   .card { padding: 20px 18px; }
   .floor { grid-template-columns: 46px 1fr auto; padding: 12px 10px; gap: 10px; }
   .sig { width: 42px; height: 42px; font-size: 15px; }
@@ -1136,7 +1144,7 @@ h2,
   .screen { padding: 8px 14px 6px; }
   .topbar { padding-bottom: 6px; }
   .topbar h1 { font-size: 12px; letter-spacing: 0.34em; }
-  .topbar .meta { font-size: 9px; }
+  .topbar .meta { font-size: 9px; min-width: 0; white-space: normal; text-align: right; line-height: 1.4; }
   .stage-hud { padding: 0 2px 6px; font-size: 9px; }
   .objective { min-height: 30px; padding: 4px 10px; }
   .objective .goal { font-size: 11px; }
@@ -1171,7 +1179,7 @@ h2,
 /* The play screen is meant to read as a *Vim window*, not a game board:
    tabline on top, buffer in the middle, statusline at the bottom. */
 
-.screen.play { padding: 10px 14px 8px; gap: 0; }
+.screen.play { padding: 10px 14px 8px; gap: 0; width: 100%; max-width: 1100px; margin-inline: auto; }
 .screen.play .board { margin: 0; }
 
 .tabline {
@@ -1421,3 +1429,23 @@ body.crt-off .board::after { display: none; }
 .ghost-hud .ghost-ticker { color: var(--ph-bright); font-family: var(--mono); overflow: hidden; text-overflow: ellipsis; }
 .ghost-hud .ghost-progress { color: var(--amber); font-family: var(--mono); }
 .ghost-hud .chip { pointer-events: auto; white-space: nowrap; }
+
+/* Desktop: keep the CRT as a centered 1200x760 tube. A full 1920x1080
+   software paint cannot sustain 50fps in headless Chromium, and the smaller
+   tube looks like a deliberate terminal rather than a stretched mobile app. */
+@media (min-width: 1400px) {
+  #app {
+    inset: 0;
+    margin: auto;
+    width: min(1150px, calc(100vw - 40px));
+    height: min(720px, calc(100vh - 40px));
+  }
+  #app::after,
+  .overlay {
+    position: absolute;
+  }
+  /* The moving beam is the expensive part of the tube on software rasterizers;
+     scanlines/vignette stay. */
+  #app::before { display: none; }
+  .card { max-height: min(680px, 92%); }
+}

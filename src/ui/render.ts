@@ -116,6 +116,13 @@ export class Renderer {
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
     this.w = Math.max(1, Math.floor(cssW));
     this.h = Math.max(1, Math.floor(cssH));
+    // A 1920x1080 desktop gives the play window ~1M CSS pixels. Rendering the
+    // bloom/composite at full backing resolution drops headless Chromium below
+    // 50fps; cap the backing store and let the CRT upscale. Mobile never hits
+    // this cap.
+    const maxPixels = 700_000;
+    const pixels = this.w * this.h * this.dpr * this.dpr;
+    if (pixels > maxPixels) this.dpr *= Math.sqrt(maxPixels / pixels);
     this.canvas.width = Math.floor(this.w * this.dpr);
     this.canvas.height = Math.floor(this.h * this.dpr);
     this.layer.width = this.canvas.width;

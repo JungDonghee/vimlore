@@ -91,7 +91,7 @@ The Page Is Whole`,
       },
       par: 11,
       solution: 'gU$jgu$jg~$',
-      teaches: ['gU', 'gu'],
+      teaches: ['gU', 'gu', 'g~'],
       hazard: '',
       hints: [
         {

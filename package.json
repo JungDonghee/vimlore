@@ -32,7 +32,8 @@
     "status:write": "node --experimental-strip-types tools/status.ts",
     "status:check": "node --experimental-strip-types tools/status.ts --check",
     "browser:qa": "node tools/browser-qa.mjs",
-    "browser:setup": "bash tools/browser-setup.sh"
+    "browser:setup": "bash tools/browser-setup.sh",
+    "browser:audit": "node tools/browser-audit.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

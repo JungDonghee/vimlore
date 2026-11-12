@@ -136,7 +136,7 @@ interface SurfaceEntry {
 The audit is a **CI gate**. Prose coverage stops being the source of truth.
 **Phase A is live.** `npm run surface -- --strict` runs in CI. Current numbers:
 
-- 86 of 86 Grimoire commands have engine evidence (78 oracle-touched + 8 unit-only:
+- 88 of 88 Grimoire commands have engine evidence (78 oracle-touched + 8 unit-only:
   `q`, `@`, `:g`, `'`, `:d`, `:sort`, `:normal`, `gq` — ex/macro/mark/format
   commands the `normal!` oracle harness cannot drive);
 - 9 engine-only features without a Grimoire row (`^`, `gg`, `G`, `(`, `)`,
@@ -168,7 +168,7 @@ allowed to be absent; it is not allowed to be mysterious.
 
 ### Phase A — manifest and audit (done, first cut)
 Built `tools/surface-audit.ts` + generated [`ENGINE_SURFACE.md`](ENGINE_SURFACE.md);
-`--strict` is a CI gate. Evidence went from 86/91 to **86 of 86 commands**, with 9
+`--strict` is a CI gate. Evidence went from 86/91 to **86 of 88 commands**, with 9
 engine-only features and 0 orphan cases. Out-of-scope refusal (Phase D) is the
 remaining half of the closed-world contract.
 

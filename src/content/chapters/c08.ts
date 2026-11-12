@@ -133,7 +133,7 @@ moved it. the wall is where it hung.`,
       goal: { type: 'collect', char: '*' },
       par: 9,
       solution: ')))))}}{j',
-      teaches: ['{', '}'],
+      teaches: ['{', '}', '(', ')'],
       hints: [
         {
           en: ') steps to the first letter of the next sentence, even across a blank line.',

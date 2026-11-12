@@ -19,15 +19,16 @@ missing, `browser:qa` prints the launch error and the setup command.
 
 ```bash
 npm run build
-npm run browser:qa
+npm run browser:qa          # 1920x1080 desktop tube (default)
+npm run browser:qa -- --mobile  # 390x844 phone
 ```
 
 It starts an ephemeral static server for `dist/`, drives
-title → map → intro → play → ghost, writes screenshots to `docs/browser/`,
+title → map → chapter → intro → play → ghost, writes screenshots to `docs/browser/`,
 and measures the ghost:
 
 ```
-ghost perf: {"frames":118,"spanMs":1950,"rafFps":60.5,"drawFps":60.5}
+ghost perf: {"frames":113,"spanMs":2016,"rafFps":56.0,"drawFps":56.0}
 ```
 
 `browser:qa` fails if requestAnimationFrame or canvas draw FPS is below 50, or
@@ -46,6 +47,6 @@ before shipping UI changes.
 ## Limitations
 
 - Headless Chromium on CPU; not a phone GPU, not a full visual review.
-- The emulated viewport is 390×844, DPR 1.
+- Default viewport is 1920×1080 (desktop); `--mobile` uses 390×844. DPR 1.
 - No automated screenshot diff yet; screenshots are artifacts for a human or
   vision-capable reviewer.

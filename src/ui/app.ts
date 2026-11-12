@@ -1,5 +1,5 @@
 import { CHAPTERS } from '../content/chapters/index.ts';
-import { COMMANDS, chapterUnlockKeys, chapterForKey } from '../content/commands.ts';
+import { COMMANDS, stageUnlockKeys, chapterForKey } from '../content/commands.ts';
 import { emptyProgress, type Chapter, type Progress, type StageRecord, type Stars } from '../core/game/types.ts';
 import { generateTrial, dailySeed, skillLabel, TRIAL_SKILLS, type Trial } from '../core/game/trials.ts';
 import { weakestSkills, recordStat, encodeSave, decodeSave, weaknessScore } from '../core/game/stats.ts';
@@ -10,7 +10,7 @@ import { PlayScreen } from './play.ts';
 
 const SAVE_KEY = 'vimlore.save.v2';
 
-type Screen = 'title' | 'map' | 'play' | 'codex' | 'about' | 'trials' | 'progress';
+type Screen = 'title' | 'map' | 'chapter' | 'play' | 'codex' | 'about' | 'trials' | 'progress';
 
 const clamp = (n: number, a: number, b: number): number => Math.max(a, Math.min(b, n));
 
@@ -56,6 +56,8 @@ export class App {
   screen: Screen = 'title';
   chapterIndex = 0;
   stageIndex = 0;
+  chapterSel = 0;
+  private chapterStages: HTMLElement[] = [];
   play: PlayScreen | null = null;
   mapSel = 0;
   private mapFloors: HTMLElement[] = [];
@@ -300,20 +302,102 @@ export class App {
       return;
     }
     this.paintMap();
-    if (enter) this.enterChapter(this.mapSel);
+    if (enter) this.goChapter(this.mapSel);
   }
 
-  enterChapter(i: number): void {
+  /** Stage picker: cleared stages are replayable; future stages stay sealed. */
+  goChapter(i: number): void {
+    this.killPlay();
     this.chapterIndex = i;
     const ch = CHAPTERS[i];
     if (!ch || ch.stages.length === 0) {
       this.sfx.play('locked');
       return;
     }
-    this.stageIndex = 0;
-    // resume at the first uncleared stage
+    this.screen = 'chapter';
+    this.hue(this.phosphorHue(i));
     const firstOpen = ch.stages.findIndex((s) => !this.progress.stages[s.id]?.cleared);
-    this.stageIndex = firstOpen === -1 ? 0 : firstOpen;
+    this.chapterSel = firstOpen === -1 ? 0 : firstOpen;
+    this.chapterStages = ch.stages.map((st, idx) => {
+      const rec = this.progress.stages[st.id];
+      const unlocked = this.stageUnlocked(idx);
+      const stars = rec?.stars ?? 0;
+      const el = h(
+        'div',
+        {
+          class: `floor chapter-stage${unlocked ? '' : ' locked'}`,
+          onclick: () => {
+            this.selectChapterStage(idx);
+            if (unlocked) this.startStageAt(idx);
+            else this.sfx.play('locked');
+          },
+        },
+        h('div', { class: 'sig' }, String(idx + 1).padStart(2, '0')),
+        h(
+          'div',
+          {},
+          h('div', { class: 'name' }, this.lang === 'ko' ? st.name.ko : st.name.en),
+          h('div', { class: 'sub ko' }, `${this.t('par', '기준')} ${st.par}${(st.teaches ?? []).length ? ' · ' + (st.teaches ?? []).join(' ') : ''}`),
+          unlocked ? h('div', { class: 'story ko' }, this.lang === 'ko' ? st.brief.ko : st.brief.en) : h('div', { class: 'sub' }, this.t('sealed — clear the previous chamber', '봉인됨 — 이전 챔버를 먼저')),
+        ),
+        unlocked ? h('div', { class: 'stars' }, `${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}`) : h('div', { class: 'stars' }, '⊘'),
+      );
+      return el;
+    });
+    const chStars = ch.stages.reduce((n, st) => n + (this.progress.stages[st.id]?.stars ?? 0), 0);
+    mount(
+      this.root,
+      h(
+        'div',
+        { class: 'screen fade-in' },
+        h(
+          'div',
+          { class: 'topbar' },
+          h('h1', {}, 'VIMLORE'),
+          h('div', { class: 'meta' }, `${this.lang === 'ko' ? ch.title.ko : ch.title.en} · ★ ${chStars}/${ch.stages.length * 3}`),
+        ),
+        h('div', { class: 'map-wrap' }, h('div', { class: 'map' }, ...this.chapterStages)),
+        h(
+          'div',
+          { class: 'map-foot' },
+          h('span', { class: 'ko' }, this.t('↑↓ select · ↵ play · ESC floor map', '↑↓ 선택 · ↵ 플레이 · ESC 층 지도')),
+          h('button', { class: 'chip', onclick: () => this.goMap() }, this.t('MAP', '지도')),
+        ),
+      ),
+    );
+    this.paintChapter();
+  }
+
+  private stageUnlocked(i: number): boolean {
+    if (i <= 0) return true;
+    const ch = CHAPTERS[this.chapterIndex];
+    return !!this.progress.stages[ch.stages[i - 1].id]?.cleared;
+  }
+
+  private selectChapterStage(i: number): void {
+    this.chapterSel = clamp(i, 0, CHAPTERS[this.chapterIndex].stages.length - 1);
+    this.paintChapter();
+  }
+
+  private paintChapter(): void {
+    this.chapterStages.forEach((el, i) => {
+      el.classList.toggle('sel', i === this.chapterSel);
+    });
+    const el = this.chapterStages[this.chapterSel];
+    if (el) {
+      const wrap = el.closest('.map-wrap') as HTMLElement | null;
+      const r = el.getBoundingClientRect();
+      const top = wrap?.getBoundingClientRect();
+      if (top && (r.top < top.top + 8 || r.bottom > top.bottom - 8)) el.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  private startStageAt(i: number): void {
+    if (!this.stageUnlocked(i)) {
+      this.sfx.play('locked');
+      return;
+    }
+    this.stageIndex = i;
     this.startStage();
   }
 
@@ -324,7 +408,7 @@ export class App {
     this.killPlay();
     this.screen = 'play';
     this.hue(this.phosphorHue(this.chapterIndex));
-    const allowed = chapterUnlockKeys(CHAPTERS, this.chapterIndex);
+    const allowed = stageUnlockKeys(CHAPTERS, this.chapterIndex, this.stageIndex);
     const rec = this.progress.stages[stage.id];
     const play = new PlayScreen(this.root, {
       sfx: this.sfx,
@@ -345,7 +429,7 @@ export class App {
       onNext: () => this.nextStage(),
       onPrev: () => this.prevStage(),
       canPrev: this.stageIndex > 0,
-      onExit: () => this.goMap(),
+      onExit: () => this.goChapter(this.chapterIndex),
     });
     this.play = play;
     play.mount();
@@ -906,6 +990,28 @@ export class App {
       }
       return;
     }
+    if (this.screen === 'chapter') {
+      if (e.key === 'ArrowUp' || e.key === 'k') {
+        e.preventDefault();
+        this.selectChapterStage(this.chapterSel - 1);
+      } else if (e.key === 'ArrowDown' || e.key === 'j') {
+        e.preventDefault();
+        this.selectChapterStage(this.chapterSel + 1);
+      } else if (e.key === 'g' || e.key === 'Home') {
+        e.preventDefault();
+        this.selectChapterStage(0);
+      } else if (e.key === 'G' || e.key === 'End') {
+        e.preventDefault();
+        this.selectChapterStage(CHAPTERS[this.chapterIndex].stages.length - 1);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        this.startStageAt(this.chapterSel);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        this.goMap();
+      }
+      return;
+    }
     if (this.screen === 'map') {
       if (e.key === 'ArrowUp' || e.key === 'k') {
         e.preventDefault();
@@ -927,7 +1033,7 @@ export class App {
         this.selectFloor(CHAPTERS.length - 1, false);
       } else if (e.key === 'Enter') {
         e.preventDefault();
-        if (chapterUnlocked(this.progress, this.mapSel)) this.enterChapter(this.mapSel);
+        if (chapterUnlocked(this.progress, this.mapSel)) this.goChapter(this.mapSel);
         else this.sfx.play('locked');
       } else if (e.key === 'Escape') {
         this.goTitle();

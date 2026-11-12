@@ -114,6 +114,8 @@ export const COMMANDS: CommandInfo[] = [
   c('%', '%', 'match bracket', '괄호 짝', 8, 'Jump to the matching bracket.', '짝이 맞는 괄호로.'),
   c('{', '{', 'paragraph up', '문단 위', 8, 'Jump to the previous blank line.', '이전 빈 줄로.'),
   c('}', '}', 'paragraph down', '문단 아래', 8, 'Jump to the next blank line.', '다음 빈 줄로.'),
+  c('(', '(', 'sentence back', '문장 위', 8, 'Jump to the start of the previous sentence.', '이전 문장 시작으로.'),
+  c(')', ')', 'sentence forward', '문장 아래', 8, 'Jump to the start of the next sentence.', '다음 문장 시작으로.'),
   c('C-o', '<C-o>', 'jump back', '점프 뒤로', 8, 'Go back in the jumplist.', '점프 목록에서 뒤로.'),
 
   // Chapter 9 — command line
@@ -133,6 +135,31 @@ export const COMMANDS: CommandInfo[] = [
 export const COMMAND_BY_ID = new Map(COMMANDS.map((x) => [x.id, x]));
 
 /** First keys a chapter unlocks (used by the gate). */
+/**
+ * The commands a stage may use: everything taught by earlier stages in this
+ * chapter and previous chapters, plus the current stage's own teaches. This is
+ * deliberately narrower than the chapter unlock list: a chapter's later skills
+ * must not be available in its first stage.
+ */
+export const stageUnlockKeys = (
+  chapters: { stages: { teaches?: string[] }[] }[],
+  chapterIndex: number,
+  stageIndex: number,
+): Set<string> => {
+  const set = new Set<string>();
+  const add = (id: string): void => {
+    if (id === 'count' || id === 'esc') return;
+    if (id.startsWith('C-')) set.add(`<${id}>`);
+    else set.add(id);
+    if (id.startsWith(':')) set.add(':');
+  };
+  for (let i = 0; i <= chapterIndex && i < chapters.length; i++) {
+    const last = i === chapterIndex ? stageIndex : chapters[i].stages.length - 1;
+    for (let j = 0; j <= last; j++) for (const id of chapters[i].stages[j].teaches ?? []) add(id);
+  }
+  return set;
+};
+
 export const chapterUnlockKeys = (chapters: { unlocks: string[] }[], upTo: number): Set<string> => {
   const set = new Set<string>();
   for (let i = 0; i <= upTo && i < chapters.length; i++) for (const k of chapters[i].unlocks) set.add(k);

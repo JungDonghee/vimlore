@@ -13,7 +13,7 @@
 import { CHAPTERS } from '../src/content/chapters/index.ts';
 import { tokenize } from '../src/core/vim/keys.ts';
 import { Session } from '../src/core/game/session.ts';
-import { chapterUnlockKeys, COMMAND_BY_ID } from '../src/content/commands.ts';
+import { stageUnlockKeys, COMMAND_BY_ID } from '../src/content/commands.ts';
 import { parseStart } from '../src/core/game/session.ts';
 import type { Stage, Goal } from '../src/core/game/types.ts';
 
@@ -66,7 +66,7 @@ function checkStage(ch: (typeof CHAPTERS)[number], stage: Stage): Row {
   for (const t of stage.teaches ?? []) if (!COMMAND_BY_ID.has(t)) problems.push(`unknown command id in teaches: ${t}`);
 
   const keys = stage.solution ? tokenize(stage.solution) : [];
-  const allowed = chapterUnlockKeys(CHAPTERS, ch.index - 1);
+  const allowed = stageUnlockKeys(CHAPTERS, ch.index - 1, ch.stages.indexOf(stage));
 
   if (!keys.length) {
     problems.push('empty solution');

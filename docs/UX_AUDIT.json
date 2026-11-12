@@ -1,0 +1,195 @@
+{
+  "report": [
+    {
+      "viewport": "1920x1080",
+      "screen": "title",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "map",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "chapter",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "intro",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "play",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "hint",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "exit",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "results",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "trials",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "codex",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "progress",
+      "overflow": []
+    },
+    {
+      "viewport": "1920x1080",
+      "screen": "settings",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "title",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "map",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "chapter",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "intro",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "play",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "hint",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "exit",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "ghost-hud",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "ghost-result",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "results",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "trials",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "codex",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "progress",
+      "overflow": []
+    },
+    {
+      "viewport": "390x844",
+      "screen": "settings",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "title",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "map",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "chapter",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "intro",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "play",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "hint",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "exit",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "results",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "trials",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "codex",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "progress",
+      "overflow": []
+    },
+    {
+      "viewport": "320x568",
+      "screen": "settings",
+      "overflow": []
+    }
+  ],
+  "errors": []
+}
