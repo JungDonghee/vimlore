@@ -1,3 +1,9 @@
+> **SUPERSEDED 2026-11-12.** This file is a historical planning snapshot. Its
+> metrics and baseline commit are out of date. For the current green candidate,
+> read [`FINAL_CHECKPOINT.md`](FINAL_CHECKPOINT.md), [`FINAL_REPORT.md`](FINAL_REPORT.md),
+> [`STATE_DEBT.md`](STATE_DEBT.md), [`FUZZ_DEBT.md`](FUZZ_DEBT.md) and
+> [`NEXT_STEPS.md`](NEXT_STEPS.md) before trusting any number below.
+
 # MASTER PLAN — VIMLORE completion program
 
 > **Status: ACTIVE** · Orchestrator: the AI that wrote this file (2026-11-11)
