@@ -1,0 +1,1425 @@
+{
+ "id": "practical-vim-audit-02",
+ "book": "practical-vim",
+ "start": 6001,
+ "end": 11976,
+ "headings": [
+  {
+   "line": 6026,
+   "title": "Transposing Lines",
+   "evidence": "Transposing Lines"
+  },
+  {
+   "line": 6058,
+   "title": "Duplicating Lines",
+   "evidence": "Duplicating Lines"
+  },
+  {
+   "line": 6080,
+   "title": "Oops! I Clobbered My Yank",
+   "evidence": "Oops! I Clobbered My Yank"
+  },
+  {
+   "line": 6133,
+   "title": "Vim's Terminology Versus the World",
+   "evidence": "Vim's Terminology Versus the World"
+  },
+  {
+   "line": 6147,
+   "title": "Tip 61Grok Vim’s Registers",
+   "evidence": "Tip 61Grok Vim’s Registers"
+  },
+  {
+   "line": 6151,
+   "title": "Addressing a Register",
+   "evidence": "Addressing a Register"
+  },
+  {
+   "line": 6159,
+   "title": "The Unnamed Register (\"\")",
+   "evidence": "The Unnamed Register (\"\")"
+  },
+  {
+   "line": 6169,
+   "title": "The Yank Register (\"0)",
+   "evidence": "The Yank Register (\"0)"
+  },
+  {
+   "line": 6215,
+   "title": "The Named Registers (\"a--\"z)",
+   "evidence": "The Named Registers (\"a--\"z)"
+  },
+  {
+   "line": 6251,
+   "title": "The Black Hole Register (\"_)",
+   "evidence": "The Black Hole Register (\"_)"
+  },
+  {
+   "line": 6283,
+   "title": "The System Clipboard (\"+) and Selection (\"*) Registers",
+   "evidence": "The System Clipboard (\"+) and Selection (\"*) Registers"
+  },
+  {
+   "line": 6307,
+   "title": "The Expression Register (\"=)",
+   "evidence": "The Expression Register (\"=)"
+  },
+  {
+   "line": 6313,
+   "title": "More Registers",
+   "evidence": "More Registers"
+  },
+  {
+   "line": 6343,
+   "title": "Tip 62Replace a Visual Selection with a Register",
+   "evidence": "Tip 62Replace a Visual Selection with a Register"
+  },
+  {
+   "line": 6385,
+   "title": "Swap Two Words",
+   "evidence": "Swap Two Words"
+  },
+  {
+   "line": 6435,
+   "title": "Tip 63Paste from a Register",
+   "evidence": "Tip 63Paste from a Register"
+  },
+  {
+   "line": 6449,
+   "title": "Pasting Character-wise Regions",
+   "evidence": "Pasting Character-wise Regions"
+  },
+  {
+   "line": 6491,
+   "title": "Pasting Line-Wise Regions",
+   "evidence": "Pasting Line-Wise Regions"
+  },
+  {
+   "line": 6547,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 6553,
+   "title": "Tip 64Interact with the System Clipboard",
+   "evidence": "Tip 64Interact with the System Clipboard"
+  },
+  {
+   "line": 6557,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 6585,
+   "title": "Locating the System Paste Command",
+   "evidence": "Locating the System Paste Command"
+  },
+  {
+   "line": 6593,
+   "title": "Using the System Paste Command in Insert Mode",
+   "evidence": "Using the System Paste Command in Insert Mode"
+  },
+  {
+   "line": 6623,
+   "title": "Avoid Toggling ‘paste’ by Putting from the Plus Register",
+   "evidence": "Avoid Toggling ‘paste’ by Putting from the Plus Register"
+  },
+  {
+   "line": 6634,
+   "title": "Macros",
+   "evidence": "Macros"
+  },
+  {
+   "line": 6648,
+   "title": "Tip 65Record and Execute a Macro",
+   "evidence": "Tip 65Record and Execute a Macro"
+  },
+  {
+   "line": 6654,
+   "title": "Capture a Sequence of Commands by Recording a Macro",
+   "evidence": "Capture a Sequence of Commands by Recording a Macro"
+  },
+  {
+   "line": 6706,
+   "title": "Play Back a Sequence of Commands by Executing a Macro",
+   "evidence": "Play Back a Sequence of Commands by Executing a Macro"
+  },
+  {
+   "line": 6756,
+   "title": "Execute the Macro in Series",
+   "evidence": "Execute the Macro in Series"
+  },
+  {
+   "line": 6764,
+   "title": "Execute the Macro in Parallel",
+   "evidence": "Execute the Macro in Parallel"
+  },
+  {
+   "line": 6774,
+   "title": "Tip 66Normalize, Strike, Abort",
+   "evidence": "Tip 66Normalize, Strike, Abort"
+  },
+  {
+   "line": 6782,
+   "title": "Normalize the Cursor Position",
+   "evidence": "Normalize the Cursor Position"
+  },
+  {
+   "line": 6788,
+   "title": "Strike Your Target with a Repeatable Motion",
+   "evidence": "Strike Your Target with a Repeatable Motion"
+  },
+  {
+   "line": 6798,
+   "title": "Abort When a Motion Fails",
+   "evidence": "Abort When a Motion Fails"
+  },
+  {
+   "line": 6812,
+   "title": "Tip 67Play Back with a Count",
+   "evidence": "Tip 67Play Back with a Count"
+  },
+  {
+   "line": 6868,
+   "title": "Tip 68Repeat a Change on Contiguous Lines",
+   "evidence": "Tip 68Repeat a Change on Contiguous Lines"
+  },
+  {
+   "line": 6896,
+   "title": "Record One Unit of Work",
+   "evidence": "Record One Unit of Work"
+  },
+  {
+   "line": 6958,
+   "title": "Execute Macro in Series",
+   "evidence": "Execute Macro in Series"
+  },
+  {
+   "line": 7032,
+   "title": "Execute Macro in Parallel",
+   "evidence": "Execute Macro in Parallel"
+  },
+  {
+   "line": 7080,
+   "title": "Deciding: Series or Parallel",
+   "evidence": "Deciding: Series or Parallel"
+  },
+  {
+   "line": 7090,
+   "title": "Tip 69Append Commands to a Macro",
+   "evidence": "Tip 69Append Commands to a Macro"
+  },
+  {
+   "line": 7154,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 7160,
+   "title": "Tip 70Act Upon a Collection of Files",
+   "evidence": "Tip 70Act Upon a Collection of Files"
+  },
+  {
+   "line": 7190,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 7213,
+   "title": "Build a List of Target Files",
+   "evidence": "Build a List of Target Files"
+  },
+  {
+   "line": 7229,
+   "title": "Record a Unit of Work",
+   "evidence": "Record a Unit of Work"
+  },
+  {
+   "line": 7317,
+   "title": "Execute the Macro in Parallel",
+   "evidence": "Execute the Macro in Parallel"
+  },
+  {
+   "line": 7335,
+   "title": "Execute the Macro in Series",
+   "evidence": "Execute the Macro in Series"
+  },
+  {
+   "line": 7385,
+   "title": "Save Changes to All Files",
+   "evidence": "Save Changes to All Files"
+  },
+  {
+   "line": 7395,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 7407,
+   "title": "Tip 71Evaluate an Iterator to Number Items in a List",
+   "evidence": "Tip 71Evaluate an Iterator to Number Items in a List"
+  },
+  {
+   "line": 7439,
+   "title": "Rudimentary Vim Script",
+   "evidence": "Rudimentary Vim Script"
+  },
+  {
+   "line": 7459,
+   "title": "Record the Macro",
+   "evidence": "Record the Macro"
+  },
+  {
+   "line": 7487,
+   "title": "Execute the Macro",
+   "evidence": "Execute the Macro"
+  },
+  {
+   "line": 7535,
+   "title": "Tip 72Edit the Contents of a Macro",
+   "evidence": "Tip 72Edit the Contents of a Macro"
+  },
+  {
+   "line": 7539,
+   "title": "The Problem: Nonstandard Formatting",
+   "evidence": "The Problem: Nonstandard Formatting"
+  },
+  {
+   "line": 7555,
+   "title": "Keyboard Codes in Macros",
+   "evidence": "Keyboard Codes in Macros"
+  },
+  {
+   "line": 7571,
+   "title": "Paste the Macro into a Document",
+   "evidence": "Paste the Macro into a Document"
+  },
+  {
+   "line": 7581,
+   "title": "Edit the Text",
+   "evidence": "Edit the Text"
+  },
+  {
+   "line": 7601,
+   "title": "Yank the Macro from the Document Back into a Register",
+   "evidence": "Yank the Macro from the Document Back into a Register"
+  },
+  {
+   "line": 7639,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 7649,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 7661,
+   "title": "Part 5",
+   "evidence": "Part 5"
+  },
+  {
+   "line": 7663,
+   "title": "Patterns",
+   "evidence": "Patterns"
+  },
+  {
+   "line": 7681,
+   "title": "Matching Patterns and Literals",
+   "evidence": "Matching Patterns and Literals"
+  },
+  {
+   "line": 7691,
+   "title": "Tip 73Tune the Case Sensitivity of Search Patterns",
+   "evidence": "Tip 73Tune the Case Sensitivity of Search Patterns"
+  },
+  {
+   "line": 7695,
+   "title": "Setting Case Sensitivity Globally",
+   "evidence": "Setting Case Sensitivity Globally"
+  },
+  {
+   "line": 7703,
+   "title": "Setting Case Sensitivity per Search",
+   "evidence": "Setting Case Sensitivity per Search"
+  },
+  {
+   "line": 7709,
+   "title": "Enabling Smarter Default Case Sensitivity",
+   "evidence": "Enabling Smarter Default Case Sensitivity"
+  },
+  {
+   "line": 7779,
+   "title": "Two Regular Expression Engines",
+   "evidence": "Two Regular Expression Engines"
+  },
+  {
+   "line": 7792,
+   "title": "Tip 74Use the \\v Pattern Switch for Regex Searches",
+   "evidence": "Tip 74Use the \\v Pattern Switch for Regex Searches"
+  },
+  {
+   "line": 7808,
+   "title": "Find Hex Colors with Magic Search",
+   "evidence": "Find Hex Colors with Magic Search"
+  },
+  {
+   "line": 7820,
+   "title": "Find Hex Colors with Very Magic Search",
+   "evidence": "Find Hex Colors with Very Magic Search"
+  },
+  {
+   "line": 7832,
+   "title": "Use the Hex Character Class to Further Refine the Pattern",
+   "evidence": "Use the Hex Character Class to Further Refine the Pattern"
+  },
+  {
+   "line": 7838,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 7860,
+   "title": "History Lesson: On the Heritage of Vim's Pattern Syntax",
+   "evidence": "History Lesson: On the Heritage of Vim's Pattern Syntax"
+  },
+  {
+   "line": 7872,
+   "title": "Tip 75Use the \\V Literal Switch for Verbatim Searches",
+   "evidence": "Tip 75Use the \\V Literal Switch for Verbatim Searches"
+  },
+  {
+   "line": 7932,
+   "title": "Tip 76Use Parentheses to Capture Submatches",
+   "evidence": "Tip 76Use Parentheses to Capture Submatches"
+  },
+  {
+   "line": 7958,
+   "title": "Use Parentheses Without Capturing Their Contents",
+   "evidence": "Use Parentheses Without Capturing Their Contents"
+  },
+  {
+   "line": 7978,
+   "title": "Tip 77Stake the Boundaries of a Word",
+   "evidence": "Tip 77Stake the Boundaries of a Word"
+  },
+  {
+   "line": 8000,
+   "title": "Tip 78Stake the Boundaries of a Match",
+   "evidence": "Tip 78Stake the Boundaries of a Match"
+  },
+  {
+   "line": 8010,
+   "title": "Lookaround Expressions",
+   "evidence": "Lookaround Expressions"
+  },
+  {
+   "line": 8042,
+   "title": "Tip 79Escape Problem Characters",
+   "evidence": "Tip 79Escape Problem Characters"
+  },
+  {
+   "line": 8046,
+   "title": "Escape / Characters When Searching Forward",
+   "evidence": "Escape / Characters When Searching Forward"
+  },
+  {
+   "line": 8088,
+   "title": "Escape ? Characters When Searching Backward",
+   "evidence": "Escape ? Characters When Searching Backward"
+  },
+  {
+   "line": 8114,
+   "title": "Escape \\ Characters Every Time",
+   "evidence": "Escape \\ Characters Every Time"
+  },
+  {
+   "line": 8132,
+   "title": "Escape Characters Programmatically",
+   "evidence": "Escape Characters Programmatically"
+  },
+  {
+   "line": 8146,
+   "title": "Search Field Terminators",
+   "evidence": "Search Field Terminators"
+  },
+  {
+   "line": 8152,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 8169,
+   "title": "Search",
+   "evidence": "Search"
+  },
+  {
+   "line": 8181,
+   "title": "Tip 80Meet the Search Command",
+   "evidence": "Tip 80Meet the Search Command"
+  },
+  {
+   "line": 8185,
+   "title": "Execute a Search",
+   "evidence": "Execute a Search"
+  },
+  {
+   "line": 8193,
+   "title": "Specify the Search Direction",
+   "evidence": "Specify the Search Direction"
+  },
+  {
+   "line": 8197,
+   "title": "Repeat the Last Search",
+   "evidence": "Repeat the Last Search"
+  },
+  {
+   "line": 8238,
+   "title": "Recall Historical Searches",
+   "evidence": "Recall Historical Searches"
+  },
+  {
+   "line": 8244,
+   "title": "Tip 81Highlight Search Matches",
+   "evidence": "Tip 81Highlight Search Matches"
+  },
+  {
+   "line": 8250,
+   "title": "Mute Search Highlighting",
+   "evidence": "Mute Search Highlighting"
+  },
+  {
+   "line": 8258,
+   "title": "Create a Shortcut to Mute Highlighting",
+   "evidence": "Create a Shortcut to Mute Highlighting"
+  },
+  {
+   "line": 8268,
+   "title": "Tip 82Preview the First Match Before Execution",
+   "evidence": "Tip 82Preview the First Match Before Execution"
+  },
+  {
+   "line": 8296,
+   "title": "Check for the Existence of a Match",
+   "evidence": "Check for the Existence of a Match"
+  },
+  {
+   "line": 8302,
+   "title": "Autocomplete the Search Field Based on Preview Match",
+   "evidence": "Autocomplete the Search Field Based on Preview Match"
+  },
+  {
+   "line": 8312,
+   "title": "Tip 83Offset the Cursor to the End of a Search Match",
+   "evidence": "Tip 83Offset the Cursor to the End of a Search Match"
+  },
+  {
+   "line": 8396,
+   "title": "Tip 84Operate on a Complete Search Match",
+   "evidence": "Tip 84Operate on a Complete Search Match"
+  },
+  {
+   "line": 8477,
+   "title": "Improving Upon the Dot Formula",
+   "evidence": "Improving Upon the Dot Formula"
+  },
+  {
+   "line": 8515,
+   "title": "Tip 85Create Complex Patterns by Iterating upon Search History",
+   "evidence": "Tip 85Create Complex Patterns by Iterating upon Search History"
+  },
+  {
+   "line": 8537,
+   "title": "Draft 1: A Broad Match",
+   "evidence": "Draft 1: A Broad Match"
+  },
+  {
+   "line": 8553,
+   "title": "Draft 2: Refinement",
+   "evidence": "Draft 2: Refinement"
+  },
+  {
+   "line": 8569,
+   "title": "Draft 3: Another Iteration",
+   "evidence": "Draft 3: Another Iteration"
+  },
+  {
+   "line": 8609,
+   "title": "Draft 4: One Final Tweak",
+   "evidence": "Draft 4: One Final Tweak"
+  },
+  {
+   "line": 8629,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 8643,
+   "title": "Tip 86Count the Matches for the Current Pattern",
+   "evidence": "Tip 86Count the Matches for the Current Pattern"
+  },
+  {
+   "line": 8666,
+   "title": "Count Matches with the ‘:substitute’ Command",
+   "evidence": "Count Matches with the ‘:substitute’ Command"
+  },
+  {
+   "line": 8686,
+   "title": "Count Matches with the ‘:vimgrep’ Command",
+   "evidence": "Count Matches with the ‘:vimgrep’ Command"
+  },
+  {
+   "line": 8726,
+   "title": "Tip 87Search for the Current Visual Selection",
+   "evidence": "Tip 87Search for the Current Visual Selection"
+  },
+  {
+   "line": 8730,
+   "title": "Search for the Current Word in Visual Mode",
+   "evidence": "Search for the Current Word in Visual Mode"
+  },
+  {
+   "line": 8749,
+   "title": "Search for the Current Selection (Prior Art)",
+   "evidence": "Search for the Current Selection (Prior Art)"
+  },
+  {
+   "line": 8765,
+   "title": "Search for the Current Selection (Redux)",
+   "evidence": "Search for the Current Selection (Redux)"
+  },
+  {
+   "line": 8793,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 8806,
+   "title": "Substitution",
+   "evidence": "Substitution"
+  },
+  {
+   "line": 8818,
+   "title": "Tip 88Meet the Substitute Command",
+   "evidence": "Tip 88Meet the Substitute Command"
+  },
+  {
+   "line": 8828,
+   "title": "Tweak the Substitute Command Using Flags",
+   "evidence": "Tweak the Substitute Command Using Flags"
+  },
+  {
+   "line": 8842,
+   "title": "Special Characters for the Replacement String",
+   "evidence": "Special Characters for the Replacement String"
+  },
+  {
+   "line": 8890,
+   "title": "Tip 89Find and Replace Every Match in a File",
+   "evidence": "Tip 89Find and Replace Every Match in a File"
+  },
+  {
+   "line": 8952,
+   "title": "Tip 90Eyeball Each Substitution",
+   "evidence": "Tip 90Eyeball Each Substitution"
+  },
+  {
+   "line": 9008,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 9018,
+   "title": "Tip 91Reuse the Last Search Pattern",
+   "evidence": "Tip 91Reuse the Last Search Pattern"
+  },
+  {
+   "line": 9042,
+   "title": "It’s Not Always Appropriate",
+   "evidence": "It’s Not Always Appropriate"
+  },
+  {
+   "line": 9050,
+   "title": "Implications for Command History",
+   "evidence": "Implications for Command History"
+  },
+  {
+   "line": 9062,
+   "title": "Tip 92Replace with the Contents of a Register",
+   "evidence": "Tip 92Replace with the Contents of a Register"
+  },
+  {
+   "line": 9068,
+   "title": "Pass by Value",
+   "evidence": "Pass by Value"
+  },
+  {
+   "line": 9080,
+   "title": "Pass by Reference",
+   "evidence": "Pass by Reference"
+  },
+  {
+   "line": 9088,
+   "title": "Comparison",
+   "evidence": "Comparison"
+  },
+  {
+   "line": 9120,
+   "title": "Tip 93Repeat the Previous Substitute Command",
+   "evidence": "Tip 93Repeat the Previous Substitute Command"
+  },
+  {
+   "line": 9124,
+   "title": "Repeat a Line-Wise Substitution Across the Entire File",
+   "evidence": "Repeat a Line-Wise Substitution Across the Entire File"
+  },
+  {
+   "line": 9138,
+   "title": "Amend the Range of a Substitute Command",
+   "evidence": "Amend the Range of a Substitute Command"
+  },
+  {
+   "line": 9300,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 9304,
+   "title": "Fixing the & Command",
+   "evidence": "Fixing the & Command"
+  },
+  {
+   "line": 9316,
+   "title": "Tip 94Rearrange CSV Fields Using Submatches",
+   "evidence": "Tip 94Rearrange CSV Fields Using Submatches"
+  },
+  {
+   "line": 9350,
+   "title": "Tip 95Perform Arithmetic on the Replacement",
+   "evidence": "Tip 95Perform Arithmetic on the Replacement"
+  },
+  {
+   "line": 9368,
+   "title": "The Search Pattern",
+   "evidence": "The Search Pattern"
+  },
+  {
+   "line": 9378,
+   "title": "The Substitute Command",
+   "evidence": "The Substitute Command"
+  },
+  {
+   "line": 9398,
+   "title": "Tip 96Swap Two or More Words",
+   "evidence": "Tip 96Swap Two or More Words"
+  },
+  {
+   "line": 9420,
+   "title": "Return the Other Word",
+   "evidence": "Return the Other Word"
+  },
+  {
+   "line": 9436,
+   "title": "Match Both Words",
+   "evidence": "Match Both Words"
+  },
+  {
+   "line": 9444,
+   "title": "All Together Now",
+   "evidence": "All Together Now"
+  },
+  {
+   "line": 9458,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 9464,
+   "title": "Abolish.vim: A Supercharged Substitute Command",
+   "evidence": "Abolish.vim: A Supercharged Substitute Command"
+  },
+  {
+   "line": 9474,
+   "title": "Tip 97Find and Replace Across Multiple Files",
+   "evidence": "Tip 97Find and Replace Across Multiple Files"
+  },
+  {
+   "line": 9519,
+   "title": "The Substitute Command",
+   "evidence": "The Substitute Command"
+  },
+  {
+   "line": 9534,
+   "title": "Execute a Project-Wide Search Using ‘:vimgrep’",
+   "evidence": "Execute a Project-Wide Search Using ‘:vimgrep’"
+  },
+  {
+   "line": 9546,
+   "title": "Execute a Project-Wide Substitute Command Using ‘:cfdo’",
+   "evidence": "Execute a Project-Wide Substitute Command Using ‘:cfdo’"
+  },
+  {
+   "line": 9576,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 9592,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 9605,
+   "title": "Global Commands",
+   "evidence": "Global Commands"
+  },
+  {
+   "line": 9611,
+   "title": "Tip 98Meet the Global Command",
+   "evidence": "Tip 98Meet the Global Command"
+  },
+  {
+   "line": 9629,
+   "title": "On the Etymology of Grep",
+   "evidence": "On the Etymology of Grep"
+  },
+  {
+   "line": 9639,
+   "title": "Tip 99Delete Lines Containing a Pattern",
+   "evidence": "Tip 99Delete Lines Containing a Pattern"
+  },
+  {
+   "line": 9683,
+   "title": "Delete Matching Lines with ‘:g/re/d’",
+   "evidence": "Delete Matching Lines with ‘:g/re/d’"
+  },
+  {
+   "line": 9705,
+   "title": "Keep Only Matching Lines with ‘:v/re/d’",
+   "evidence": "Keep Only Matching Lines with ‘:v/re/d’"
+  },
+  {
+   "line": 9725,
+   "title": "Tip 100Collect TODO Items in a Register",
+   "evidence": "Tip 100Collect TODO Items in a Register"
+  },
+  {
+   "line": 9797,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 9811,
+   "title": "Tip 101Alphabetize the Properties of Each Rule in a CSS File",
+   "evidence": "Tip 101Alphabetize the Properties of Each Rule in a CSS File"
+  },
+  {
+   "line": 9847,
+   "title": "Sort Properties for a Single Block of Rules",
+   "evidence": "Sort Properties for a Single Block of Rules"
+  },
+  {
+   "line": 9911,
+   "title": "Sort Properties for Every Block of Rules",
+   "evidence": "Sort Properties for Every Block of Rules"
+  },
+  {
+   "line": 9977,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 10005,
+   "title": "Part 6",
+   "evidence": "Part 6"
+  },
+  {
+   "line": 10007,
+   "title": "Tools",
+   "evidence": "Tools"
+  },
+  {
+   "line": 10025,
+   "title": "Index and Navigate",
+   "evidence": "Index and Navigate"
+  },
+  {
+   "line": 10039,
+   "title": "Tip 102Meet ctags",
+   "evidence": "Tip 102Meet ctags"
+  },
+  {
+   "line": 10043,
+   "title": "Installing Exuberant Ctags",
+   "evidence": "Installing Exuberant Ctags"
+  },
+  {
+   "line": 10065,
+   "title": "Indexing a Codebase with ctags",
+   "evidence": "Indexing a Codebase with ctags"
+  },
+  {
+   "line": 10083,
+   "title": "The Anatomy of a tags File",
+   "evidence": "The Anatomy of a tags File"
+  },
+  {
+   "line": 10117,
+   "title": "Keywords Are Addressed by Pattern, Not by Line Number",
+   "evidence": "Keywords Are Addressed by Pattern, Not by Line Number"
+  },
+  {
+   "line": 10125,
+   "title": "Keywords Are Tagged with Metadata",
+   "evidence": "Keywords Are Tagged with Metadata"
+  },
+  {
+   "line": 10129,
+   "title": "Extending ctags or Using a Compatible Tag Generator",
+   "evidence": "Extending ctags or Using a Compatible Tag Generator"
+  },
+  {
+   "line": 10144,
+   "title": "Tip 103Configure Vim to Work with ctags",
+   "evidence": "Tip 103Configure Vim to Work with ctags"
+  },
+  {
+   "line": 10148,
+   "title": "Tell Vim Where to Find the Tags File",
+   "evidence": "Tell Vim Where to Find the Tags File"
+  },
+  {
+   "line": 10162,
+   "title": "Generate the tags File",
+   "evidence": "Generate the tags File"
+  },
+  {
+   "line": 10166,
+   "title": "Simple Case: Execute ctags Manually",
+   "evidence": "Simple Case: Execute ctags Manually"
+  },
+  {
+   "line": 10180,
+   "title": "Automatically Execute ctags Each Time a File is Saved",
+   "evidence": "Automatically Execute ctags Each Time a File is Saved"
+  },
+  {
+   "line": 10188,
+   "title": "Automatically Execute ctags with Version Control Hooks",
+   "evidence": "Automatically Execute ctags with Version Control Hooks"
+  },
+  {
+   "line": 10194,
+   "title": "Discussion",
+   "evidence": "Discussion"
+  },
+  {
+   "line": 10204,
+   "title": "Tip 104Navigate Keyword Definitions with Vim’s Tag Navigation Commands",
+   "evidence": "Tip 104Navigate Keyword Definitions with Vim’s Tag Navigation Commands"
+  },
+  {
+   "line": 10208,
+   "title": "Jump to a Keyword Definition",
+   "evidence": "Jump to a Keyword Definition"
+  },
+  {
+   "line": 10286,
+   "title": "Specify Where to Jump to When a Keyword Has Multiple Matches",
+   "evidence": "Specify Where to Jump to When a Keyword Has Multiple Matches"
+  },
+  {
+   "line": 10324,
+   "title": "Use Ex Commands",
+   "evidence": "Use Ex Commands"
+  },
+  {
+   "line": 10394,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 10411,
+   "title": "Compile Code and Navigate Errors",
+   "evidence": "Compile Code and Navigate Errors"
+  },
+  {
+   "line": 10425,
+   "title": "Tip 105Compile Code Without Leaving Vim",
+   "evidence": "Tip 105Compile Code Without Leaving Vim"
+  },
+  {
+   "line": 10429,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 10437,
+   "title": "Compile the Project in the Shell",
+   "evidence": "Compile the Project in the Shell"
+  },
+  {
+   "line": 10453,
+   "title": "Compile the Project from Inside Vim",
+   "evidence": "Compile the Project from Inside Vim"
+  },
+  {
+   "line": 10530,
+   "title": "Don't Lose the Place",
+   "evidence": "Don't Lose the Place"
+  },
+  {
+   "line": 10540,
+   "title": "Tip 106Browse the Quickfix List",
+   "evidence": "Tip 106Browse the Quickfix List"
+  },
+  {
+   "line": 10598,
+   "title": "Meet the Location List",
+   "evidence": "Meet the Location List"
+  },
+  {
+   "line": 10606,
+   "title": "Basic Quickfix Motions",
+   "evidence": "Basic Quickfix Motions"
+  },
+  {
+   "line": 10610,
+   "title": "Quickfix Fast Forward/Rewind",
+   "evidence": "Quickfix Fast Forward/Rewind"
+  },
+  {
+   "line": 10618,
+   "title": "Use the Quickfix Window",
+   "evidence": "Use the Quickfix Window"
+  },
+  {
+   "line": 10630,
+   "title": "Tip 107Recall Results from a Previous Quickfix List",
+   "evidence": "Tip 107Recall Results from a Previous Quickfix List"
+  },
+  {
+   "line": 10642,
+   "title": "Tip 108Customize the External Compiler",
+   "evidence": "Tip 108Customize the External Compiler"
+  },
+  {
+   "line": 10678,
+   "title": "Configure ‘:make’ to Invoke Nodelint",
+   "evidence": "Configure ‘:make’ to Invoke Nodelint"
+  },
+  {
+   "line": 10716,
+   "title": "Populate the Quickfix List Using Nodelint’s Output",
+   "evidence": "Populate the Quickfix List Using Nodelint’s Output"
+  },
+  {
+   "line": 10732,
+   "title": "Set Up ‘makeprg’ and ‘errorformat’ with a Single Command",
+   "evidence": "Set Up ‘makeprg’ and ‘errorformat’ with a Single Command"
+  },
+  {
+   "line": 10766,
+   "title": "‘:compiler’ and ‘:make’ Are Not Just for Compiled Languages",
+   "evidence": "‘:compiler’ and ‘:make’ Are Not Just for Compiled Languages"
+  },
+  {
+   "line": 10774,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 10799,
+   "title": "Search Project-Wide",
+   "evidence": "Search Project-Wide"
+  },
+  {
+   "line": 10811,
+   "title": "Tip 109Call grep Without Leaving Vim",
+   "evidence": "Tip 109Call grep Without Leaving Vim"
+  },
+  {
+   "line": 10817,
+   "title": "Using grep from the Command Line",
+   "evidence": "Using grep from the Command Line"
+  },
+  {
+   "line": 10837,
+   "title": "Calling grep from Inside Vim",
+   "evidence": "Calling grep from Inside Vim"
+  },
+  {
+   "line": 10859,
+   "title": "Tip 110Customize the grep Program",
+   "evidence": "Tip 110Customize the grep Program"
+  },
+  {
+   "line": 10863,
+   "title": "Vim’s Default grep Settings",
+   "evidence": "Vim’s Default grep Settings"
+  },
+  {
+   "line": 10887,
+   "title": "Make ‘:grep’ Call ack",
+   "evidence": "Make ‘:grep’ Call ack"
+  },
+  {
+   "line": 10934,
+   "title": "Alternative grep Plugins",
+   "evidence": "Alternative grep Plugins"
+  },
+  {
+   "line": 10942,
+   "title": "Make ack Jump to Line and Column",
+   "evidence": "Make ack Jump to Line and Column"
+  },
+  {
+   "line": 10964,
+   "title": "Tip 111Grep with Vim’s Internal Search Engine",
+   "evidence": "Tip 111Grep with Vim’s Internal Search Engine"
+  },
+  {
+   "line": 11019,
+   "title": "Specifying Which Files to Look Inside",
+   "evidence": "Specifying Which Files to Look Inside"
+  },
+  {
+   "line": 11053,
+   "title": "Search in File, Then Search in Project",
+   "evidence": "Search in File, Then Search in Project"
+  },
+  {
+   "line": 11072,
+   "title": "Search History and :vimgrep",
+   "evidence": "Search History and :vimgrep"
+  },
+  {
+   "line": 11090,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 11103,
+   "title": "Dial X for Autocompletion",
+   "evidence": "Dial X for Autocompletion"
+  },
+  {
+   "line": 11113,
+   "title": "Autocompletion and Case Sensitivity",
+   "evidence": "Autocompletion and Case Sensitivity"
+  },
+  {
+   "line": 11123,
+   "title": "Tip 112Meet Vim’s Keyword Autocompletion",
+   "evidence": "Tip 112Meet Vim’s Keyword Autocompletion"
+  },
+  {
+   "line": 11133,
+   "title": "Trigger Autocompletion",
+   "evidence": "Trigger Autocompletion"
+  },
+  {
+   "line": 11181,
+   "title": "Tip 113Work with the Autocomplete Pop-Up Menu",
+   "evidence": "Tip 113Work with the Autocomplete Pop-Up Menu"
+  },
+  {
+   "line": 11233,
+   "title": "Browse the Word List Without Changing the Document",
+   "evidence": "Browse the Word List Without Changing the Document"
+  },
+  {
+   "line": 11237,
+   "title": "Update the Document As You Scroll Through the Word List",
+   "evidence": "Update the Document As You Scroll Through the Word List"
+  },
+  {
+   "line": 11243,
+   "title": "Dismiss All Selections",
+   "evidence": "Dismiss All Selections"
+  },
+  {
+   "line": 11247,
+   "title": "Refine the Word List as You Type",
+   "evidence": "Refine the Word List as You Type"
+  },
+  {
+   "line": 11257,
+   "title": "Tip 114Understand the Source of Keywords",
+   "evidence": "Tip 114Understand the Source of Keywords"
+  },
+  {
+   "line": 11263,
+   "title": "The Buffer List",
+   "evidence": "The Buffer List"
+  },
+  {
+   "line": 11273,
+   "title": "Included Files",
+   "evidence": "Included Files"
+  },
+  {
+   "line": 11279,
+   "title": "Tag Files",
+   "evidence": "Tag Files"
+  },
+  {
+   "line": 11289,
+   "title": "Put It All Together",
+   "evidence": "Put It All Together"
+  },
+  {
+   "line": 11293,
+   "title": "Customizing the Generic Autocompletion",
+   "evidence": "Customizing the Generic Autocompletion"
+  },
+  {
+   "line": 11307,
+   "title": "Tip 115Autocomplete Words from the Dictionary",
+   "evidence": "Tip 115Autocomplete Words from the Dictionary"
+  },
+  {
+   "line": 11323,
+   "title": "Tip 116Autocomplete Entire Lines",
+   "evidence": "Tip 116Autocomplete Entire Lines"
+  },
+  {
+   "line": 11377,
+   "title": "Tip 117Autocomplete Sequences of Words",
+   "evidence": "Tip 117Autocomplete Sequences of Words"
+  },
+  {
+   "line": 11460,
+   "title": "Tip 118Autocomplete Filenames",
+   "evidence": "Tip 118Autocomplete Filenames"
+  },
+  {
+   "line": 11536,
+   "title": "Tip 119Autocomplete with Context Awareness",
+   "evidence": "Tip 119Autocomplete with Context Awareness"
+  },
+  {
+   "line": 11563,
+   "title": "Find and Fix Typos with Vim’s Spell Checker",
+   "evidence": "Find and Fix Typos with Vim’s Spell Checker"
+  },
+  {
+   "line": 11571,
+   "title": "Tip 120Spell Check Your Work",
+   "evidence": "Tip 120Spell Check Your Work"
+  },
+  {
+   "line": 11589,
+   "title": "Operate Vim’s Spell Checker",
+   "evidence": "Operate Vim’s Spell Checker"
+  },
+  {
+   "line": 11633,
+   "title": "Tip 121Use Alternate Spelling Dictionaries",
+   "evidence": "Tip 121Use Alternate Spelling Dictionaries"
+  },
+  {
+   "line": 11639,
+   "title": "Specify a Regional Variant of a Language",
+   "evidence": "Specify a Regional Variant of a Language"
+  },
+  {
+   "line": 11651,
+   "title": "Obtain Spell Files for Other Languages",
+   "evidence": "Obtain Spell Files for Other Languages"
+  },
+  {
+   "line": 11687,
+   "title": "Tip 122Add Words to the Spell File",
+   "evidence": "Tip 122Add Words to the Spell File"
+  },
+  {
+   "line": 11699,
+   "title": "Create a Spell File for Specialist Jargon",
+   "evidence": "Create a Spell File for Specialist Jargon"
+  },
+  {
+   "line": 11721,
+   "title": "Tip 123Fix Spelling Errors from Insert Mode",
+   "evidence": "Tip 123Fix Spelling Errors from Insert Mode"
+  },
+  {
+   "line": 11727,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 11733,
+   "title": "The Usual Way: Switch to Normal Mode",
+   "evidence": "The Usual Way: Switch to Normal Mode"
+  },
+  {
+   "line": 11737,
+   "title": "The Fast Way: Use Spelling Autocompletion",
+   "evidence": "The Fast Way: Use Spelling Autocompletion"
+  },
+  {
+   "line": 11756,
+   "title": "Now What?",
+   "evidence": "Now What?"
+  },
+  {
+   "line": 11762,
+   "title": "Keep Practicing!",
+   "evidence": "Keep Practicing!"
+  },
+  {
+   "line": 11770,
+   "title": "Make Vim Your Own",
+   "evidence": "Make Vim Your Own"
+  },
+  {
+   "line": 11778,
+   "title": "Know the Saw, Then Sharpen It",
+   "evidence": "Know the Saw, Then Sharpen It"
+  },
+  {
+   "line": 11800,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 11825,
+   "title": "Customize Vim to Suit Your Preferences",
+   "evidence": "Customize Vim to Suit Your Preferences"
+  },
+  {
+   "line": 11831,
+   "title": "Change Vim’s Settings on the Fly",
+   "evidence": "Change Vim’s Settings on the Fly"
+  },
+  {
+   "line": 11886,
+   "title": "Save Your Configuration in a vimrc File",
+   "evidence": "Save Your Configuration in a vimrc File"
+  },
+  {
+   "line": 11926,
+   "title": "Apply Customizations to Certain Types of Files",
+   "evidence": "Apply Customizations to Certain Types of Files"
+  },
+  {
+   "line": 11964,
+   "title": "Footnotes",
+   "evidence": "Footnotes"
+  },
+  {
+   "line": 11974,
+   "title": "You May Be Interested In…",
+   "evidence": "You May Be Interested In…"
+  }
+ ],
+ "problems": [
+  {
+   "line": 6005,
+   "kind": "garbled",
+   "evidence": "KeystrokesBuffer Contents"
+  },
+  {
+   "line": 6147,
+   "kind": "garbled",
+   "evidence": "Tip 61Grok Vim’s Registers"
+  },
+  {
+   "line": 6317,
+   "kind": "garbled",
+   "evidence": "RegisterContents"
+  },
+  {
+   "line": 6838,
+   "kind": "garbled",
+   "evidence": "KeystrokesBuffer Contents{start}"
+  },
+  {
+   "line": 7659,
+   "kind": "duplicated",
+   "evidence": "Practical Vim, 2nd Edition"
+  },
+  {
+   "line": 7842,
+   "kind": "garbled",
+   "evidence": "PatternRemarks"
+  },
+  {
+   "line": 8205,
+   "kind": "garbled",
+   "evidence": "CommandEffect"
+  },
+  {
+   "line": 8722,
+   "kind": "garbled",
+   "evidence": "with the Quickfix List."
+  },
+  {
+   "line": 8846,
+   "kind": "garbled",
+   "evidence": "SymbolRepresents"
+  },
+  {
+   "line": 8976,
+   "kind": "garbled",
+   "evidence": "TriggerEffect"
+  },
+  {
+   "line": 9550,
+   "kind": "garbled",
+   "evidence": "with the Quickfix List). We can browse the results by running :copen, which opens the quickfix window. But instead of stepping through the results one at a time, we want to run the substitute command on every file that appears in the quickfix list. We can do so using the :cfdo command (see :cfdoⓘ)."
+  },
+  {
+   "line": 10003,
+   "kind": "duplicated",
+   "evidence": "Practical Vim, 2nd Edition"
+  },
+  {
+   "line": 10550,
+   "kind": "garbled",
+   "evidence": "CommandAction"
+  },
+  {
+   "line": 10847,
+   "kind": "garbled",
+   "evidence": "with the Quickfix List."
+  },
+  {
+   "line": 11141,
+   "kind": "garbled",
+   "evidence": "CommandType of Completion"
+  },
+  {
+   "line": 11189,
+   "kind": "garbled",
+   "evidence": "KeystrokesEffect"
+  },
+  {
+   "line": 11283,
+   "kind": "garbled",
+   "evidence": "Source Code with ctags, we met Exuberant Ctags, which is an external program that scans source code for keywords such as function names, class names, and any other constructs that are significant in the given language. When ctags is run on a codebase, it generates an index of keywords, which are addressed and sorted alphabetically. By convention, the index is saved in a file called tags."
+  },
+  {
+   "line": 11751,
+   "kind": "duplicated",
+   "evidence": "Practical Vim, 2nd Edition"
+  }
+ ],
+ "summary": "This slice begins inside Chapter 10 (registers and the system clipboard), covers Chapters 11-21 (macros, matching patterns and literals, search, substitution, global commands, ctags, the quickfix list, project-wide grep/vimgrep, autocompletion, and spell checking), and ends with Appendix 1's vimrc primer. It is organized as Tips 61-123 with keystroke/buffer tables, code excerpts, and cross-references.",
+ "concepts": [
+  "macro recording and playback",
+  "registers and put commands",
+  "\\v and \\V pattern switches",
+  "word boundaries and \\zs/\\ze",
+  "search offsets and the gn command",
+  ":substitute flags and submatches",
+  ":global with dynamic ranges",
+  "ctags and tag navigation",
+  "quickfix list",
+  ":grep and :vimgrep",
+  "keyword and omni autocompletion",
+  "spell checking and vimrc configuration"
+ ]
+}

@@ -1,0 +1,690 @@
+{
+  "id": "learning-vi-vim-audit-01",
+  "book": "learning-vi-vim",
+  "start": 1,
+  "end": 6000,
+  "headings": [
+    {
+      "line": 98,
+      "title": "Dedication",
+      "evidence": "Dedication"
+    },
+    {
+      "line": 110,
+      "title": "Preface",
+      "evidence": "Preface"
+    },
+    {
+      "line": 135,
+      "title": "Scope of This Book",
+      "evidence": "Scope of This Book"
+    },
+    {
+      "line": 247,
+      "title": "How the Material Is Presented",
+      "evidence": "How the Material Is Presented"
+    },
+    {
+      "line": 259,
+      "title": "Discussion of vi Commands",
+      "evidence": "Discussion of vi Commands"
+    },
+    {
+      "line": 267,
+      "title": "Conventions",
+      "evidence": "Conventions"
+    },
+    {
+      "line": 299,
+      "title": "Keystrokes",
+      "evidence": "Keystrokes"
+    },
+    {
+      "line": 360,
+      "title": "Cautions, Notes, and Tips",
+      "evidence": "Cautions, Notes, and Tips"
+    },
+    {
+      "line": 377,
+      "title": "Problem Checklists",
+      "evidence": "Problem Checklists"
+    },
+    {
+      "line": 383,
+      "title": "What You Need to Know Before Starting",
+      "evidence": "What You Need to Know Before Starting"
+    },
+    {
+      "line": 408,
+      "title": "Using Code Examples",
+      "evidence": "Using Code Examples"
+    },
+    {
+      "line": 420,
+      "title": "O’Reilly Online Learning",
+      "evidence": "O’Reilly Online Learning"
+    },
+    {
+      "line": 428,
+      "title": "How to Contact Us",
+      "evidence": "How to Contact Us"
+    },
+    {
+      "line": 456,
+      "title": "About the Previous Editions",
+      "evidence": "About the Previous Editions"
+    },
+    {
+      "line": 488,
+      "title": "About the Eighth Edition",
+      "evidence": "About the Eighth Edition"
+    },
+    {
+      "line": 500,
+      "title": "What’s New",
+      "evidence": "What’s New"
+    },
+    {
+      "line": 521,
+      "title": "Versions",
+      "evidence": "Versions"
+    },
+    {
+      "line": 537,
+      "title": "Acknowledgments from the Sixth Edition",
+      "evidence": "Acknowledgments from the Sixth Edition"
+    },
+    {
+      "line": 575,
+      "title": "Acknowledgments from the Seventh Edition",
+      "evidence": "Acknowledgments from the Seventh Edition"
+    },
+    {
+      "line": 614,
+      "title": "Acknowledgments for the Eighth Edition",
+      "evidence": "Acknowledgments for the Eighth Edition"
+    },
+    {
+      "line": 701,
+      "title": "Part I. vi and Vim Fundamentals",
+      "evidence": "Part I. vi and Vim Fundamentals"
+    },
+    {
+      "line": 727,
+      "title": "Chapter 1. Introducing vi and Vim",
+      "evidence": "Chapter 1. Introducing vi and Vim"
+    },
+    {
+      "line": 745,
+      "title": "Text Editors and Text Editing",
+      "evidence": "Text Editors and Text Editing"
+    },
+    {
+      "line": 749,
+      "title": "Text Editors",
+      "evidence": "Text Editors"
+    },
+    {
+      "line": 864,
+      "title": "Text Editing",
+      "evidence": "Text Editing"
+    },
+    {
+      "line": 921,
+      "title": "A Brief Historical Perspective",
+      "evidence": "A Brief Historical Perspective"
+    },
+    {
+      "line": 982,
+      "title": "Opening and Closing Files",
+      "evidence": "Opening and Closing Files"
+    },
+    {
+      "line": 995,
+      "title": "Opening a File from the Command Line",
+      "evidence": "Opening a File from the Command Line"
+    },
+    {
+      "line": 1065,
+      "title": "Opening a File from the GUI",
+      "evidence": "Opening a File from the GUI"
+    },
+    {
+      "line": 1079,
+      "title": "Problems Opening Files",
+      "evidence": "Problems Opening Files"
+    },
+    {
+      "line": 1144,
+      "title": "Modus Operandi",
+      "evidence": "Modus Operandi"
+    },
+    {
+      "line": 1169,
+      "title": "Saving and Quitting a File",
+      "evidence": "Saving and Quitting a File"
+    },
+    {
+      "line": 1203,
+      "title": "Quitting Without Saving Edits",
+      "evidence": "Quitting Without Saving Edits"
+    },
+    {
+      "line": 1232,
+      "title": "Problems Saving Files",
+      "evidence": "Problems Saving Files"
+    },
+    {
+      "line": 1295,
+      "title": "Exercises",
+      "evidence": "Exercises"
+    },
+    {
+      "line": 1341,
+      "title": "Chapter 2. Simple Editing",
+      "evidence": "Chapter 2. Simple Editing"
+    },
+    {
+      "line": 1377,
+      "title": "vi Commands",
+      "evidence": "vi Commands"
+    },
+    {
+      "line": 1437,
+      "title": "Moving the Cursor in Command Mode",
+      "evidence": "Moving the Cursor in Command Mode"
+    },
+    {
+      "line": 1463,
+      "title": "Single Movements",
+      "evidence": "Single Movements"
+    },
+    {
+      "line": 1511,
+      "title": "Why h, j, k, and l?",
+      "evidence": "Why h, j, k, and l?"
+    },
+    {
+      "line": 1600,
+      "title": "Numeric Arguments",
+      "evidence": "Numeric Arguments"
+    },
+    {
+      "line": 1619,
+      "title": "Movement Within a Line",
+      "evidence": "Movement Within a Line"
+    },
+    {
+      "line": 1690,
+      "title": "Movement by Text Blocks",
+      "evidence": "Movement by Text Blocks"
+    },
+    {
+      "line": 1747,
+      "title": "Simple Edits",
+      "evidence": "Simple Edits"
+    },
+    {
+      "line": 1783,
+      "title": "Inserting New Text",
+      "evidence": "Inserting New Text"
+    },
+    {
+      "line": 1827,
+      "title": "Appending Text",
+      "evidence": "Appending Text"
+    },
+    {
+      "line": 1837,
+      "title": "Changing Text",
+      "evidence": "Changing Text"
+    },
+    {
+      "line": 1873,
+      "title": "Words",
+      "evidence": "Words"
+    },
+    {
+      "line": 1914,
+      "title": "General Form of vi Commands",
+      "evidence": "General Form of vi Commands"
+    },
+    {
+      "line": 1946,
+      "title": "Lines",
+      "evidence": "Lines"
+    },
+    {
+      "line": 1978,
+      "title": "Characters",
+      "evidence": "Characters"
+    },
+    {
+      "line": 2000,
+      "title": "Substituting text",
+      "evidence": "Substituting text"
+    },
+    {
+      "line": 2033,
+      "title": "Changing Case",
+      "evidence": "Changing Case"
+    },
+    {
+      "line": 2047,
+      "title": "Deleting Text",
+      "evidence": "Deleting Text"
+    },
+    {
+      "line": 2059,
+      "title": "Words",
+      "evidence": "Words"
+    },
+    {
+      "line": 2151,
+      "title": "Lines",
+      "evidence": "Lines"
+    },
+    {
+      "line": 2197,
+      "title": "Characters",
+      "evidence": "Characters"
+    },
+    {
+      "line": 2213,
+      "title": "Problems with deletions",
+      "evidence": "Problems with deletions"
+    },
+    {
+      "line": 2250,
+      "title": "Moving Text",
+      "evidence": "Moving Text"
+    },
+    {
+      "line": 2317,
+      "title": "Transposing two letters",
+      "evidence": "Transposing two letters"
+    },
+    {
+      "line": 2329,
+      "title": "Copying Text",
+      "evidence": "Copying Text"
+    },
+    {
+      "line": 2414,
+      "title": "Repeating or Undoing Your Last Command",
+      "evidence": "Repeating or Undoing Your Last Command"
+    },
+    {
+      "line": 2421,
+      "title": "Repeat",
+      "evidence": "Repeat"
+    },
+    {
+      "line": 2456,
+      "title": "Undo",
+      "evidence": "Undo"
+    },
+    {
+      "line": 2499,
+      "title": "More Ways to Insert Text",
+      "evidence": "More Ways to Insert Text"
+    },
+    {
+      "line": 2563,
+      "title": "Numeric Arguments for Insert Commands",
+      "evidence": "Numeric Arguments for Insert Commands"
+    },
+    {
+      "line": 2595,
+      "title": "Joining Two Lines with J",
+      "evidence": "Joining Two Lines with J"
+    },
+    {
+      "line": 2637,
+      "title": "Problems with vi Commands",
+      "evidence": "Problems with vi Commands"
+    },
+    {
+      "line": 2657,
+      "title": "Mode Indicators",
+      "evidence": "Mode Indicators"
+    },
+    {
+      "line": 2692,
+      "title": "Review of Basic vi Commands",
+      "evidence": "Review of Basic vi Commands"
+    },
+    {
+      "line": 2947,
+      "title": "Chapter 3. Moving Around in a Hurry",
+      "evidence": "Chapter 3. Moving Around in a Hurry"
+    },
+    {
+      "line": 2973,
+      "title": "Movement by Screens",
+      "evidence": "Movement by Screens"
+    },
+    {
+      "line": 2995,
+      "title": "Scrolling the Screen",
+      "evidence": "Scrolling the Screen"
+    },
+    {
+      "line": 3029,
+      "title": "Repositioning the Screen with z",
+      "evidence": "Repositioning the Screen with z"
+    },
+    {
+      "line": 3077,
+      "title": "Redrawing the Screen",
+      "evidence": "Redrawing the Screen"
+    },
+    {
+      "line": 3092,
+      "title": "Movement Within a Screen",
+      "evidence": "Movement Within a Screen"
+    },
+    {
+      "line": 3151,
+      "title": "Movement by Line",
+      "evidence": "Movement by Line"
+    },
+    {
+      "line": 3174,
+      "title": "Movement on the current line",
+      "evidence": "Movement on the current line"
+    },
+    {
+      "line": 3194,
+      "title": "Movement by Text Blocks",
+      "evidence": "Movement by Text Blocks"
+    },
+    {
+      "line": 3261,
+      "title": "Movement by Searches",
+      "evidence": "Movement by Searches"
+    },
+    {
+      "line": 3335,
+      "title": "Repeating Searches",
+      "evidence": "Repeating Searches"
+    },
+    {
+      "line": 3422,
+      "title": "Changing through searching",
+      "evidence": "Changing through searching"
+    },
+    {
+      "line": 3445,
+      "title": "Current Line Searches",
+      "evidence": "Current Line Searches"
+    },
+    {
+      "line": 3519,
+      "title": "Movement by Line Number",
+      "evidence": "Movement by Line Number"
+    },
+    {
+      "line": 3559,
+      "title": "The G (Go To) Command",
+      "evidence": "The G (Go To) Command"
+    },
+    {
+      "line": 3590,
+      "title": "Review of vi Motion Commands",
+      "evidence": "Review of vi Motion Commands"
+    },
+    {
+      "line": 3783,
+      "title": "Chapter 4. Beyond the Basics",
+      "evidence": "Chapter 4. Beyond the Basics"
+    },
+    {
+      "line": 3801,
+      "title": "More Command Combinations",
+      "evidence": "More Command Combinations"
+    },
+    {
+      "line": 3914,
+      "title": "Options When Starting vi and Vim",
+      "evidence": "Options When Starting vi and Vim"
+    },
+    {
+      "line": 3932,
+      "title": "Advancing to a Specific Place",
+      "evidence": "Advancing to a Specific Place"
+    },
+    {
+      "line": 4013,
+      "title": "Read-Only Mode",
+      "evidence": "Read-Only Mode"
+    },
+    {
+      "line": 4051,
+      "title": "Recovering a Buffer",
+      "evidence": "Recovering a Buffer"
+    },
+    {
+      "line": 4058,
+      "title": "Recovery in vi",
+      "evidence": "Recovery in vi"
+    },
+    {
+      "line": 4091,
+      "title": "Recovery in Vim",
+      "evidence": "Recovery in Vim"
+    },
+    {
+      "line": 4108,
+      "title": "Making Use of Registers",
+      "evidence": "Making Use of Registers"
+    },
+    {
+      "line": 4127,
+      "title": "Recovering Deletions",
+      "evidence": "Recovering Deletions"
+    },
+    {
+      "line": 4160,
+      "title": "Yanking to Named Registers",
+      "evidence": "Yanking to Named Registers"
+    },
+    {
+      "line": 4226,
+      "title": "Marking Your Place",
+      "evidence": "Marking Your Place"
+    },
+    {
+      "line": 4274,
+      "title": "Other Advanced Edits",
+      "evidence": "Other Advanced Edits"
+    },
+    {
+      "line": 4280,
+      "title": "Review of Register and Marking Commands",
+      "evidence": "Review of Register and Marking Commands"
+    },
+    {
+      "line": 4371,
+      "title": "Chapter 5. Introducing the ex Editor",
+      "evidence": "Chapter 5. Introducing the ex Editor"
+    },
+    {
+      "line": 4417,
+      "title": "ex Commands",
+      "evidence": "ex Commands"
+    },
+    {
+      "line": 4525,
+      "title": "Exercise: The ex Editor",
+      "evidence": "Exercise: The ex Editor"
+    },
+    {
+      "line": 4558,
+      "title": "Problem Getting to Visual Mode",
+      "evidence": "Problem Getting to Visual Mode"
+    },
+    {
+      "line": 4566,
+      "title": "Editing with ex",
+      "evidence": "Editing with ex"
+    },
+    {
+      "line": 4613,
+      "title": "Line Addresses",
+      "evidence": "Line Addresses"
+    },
+    {
+      "line": 4630,
+      "title": "Defining a Range of Lines",
+      "evidence": "Defining a Range of Lines"
+    },
+    {
+      "line": 4716,
+      "title": "Line-Addressing Symbols",
+      "evidence": "Line-Addressing Symbols"
+    },
+    {
+      "line": 4781,
+      "title": "Search Patterns",
+      "evidence": "Search Patterns"
+    },
+    {
+      "line": 4844,
+      "title": "Redefining the Current Line Position",
+      "evidence": "Redefining the Current Line Position"
+    },
+    {
+      "line": 4877,
+      "title": "Global Searches",
+      "evidence": "Global Searches"
+    },
+    {
+      "line": 4914,
+      "title": "Combining ex Commands",
+      "evidence": "Combining ex Commands"
+    },
+    {
+      "line": 4937,
+      "title": "Saving and Exiting Files",
+      "evidence": "Saving and Exiting Files"
+    },
+    {
+      "line": 4998,
+      "title": "Renaming the Buffer",
+      "evidence": "Renaming the Buffer"
+    },
+    {
+      "line": 5014,
+      "title": "Saving Part of a File",
+      "evidence": "Saving Part of a File"
+    },
+    {
+      "line": 5033,
+      "title": "Appending to a Saved File",
+      "evidence": "Appending to a Saved File"
+    },
+    {
+      "line": 5048,
+      "title": "Copying a File into Another File",
+      "evidence": "Copying a File into Another File"
+    },
+    {
+      "line": 5094,
+      "title": "Editing Multiple Files",
+      "evidence": "Editing Multiple Files"
+    },
+    {
+      "line": 5105,
+      "title": "Invoking Vim on Multiple Files",
+      "evidence": "Invoking Vim on Multiple Files"
+    },
+    {
+      "line": 5151,
+      "title": "Using the Argument List",
+      "evidence": "Using the Argument List"
+    },
+    {
+      "line": 5183,
+      "title": "Calling in New Files",
+      "evidence": "Calling in New Files"
+    },
+    {
+      "line": 5212,
+      "title": "Filename Shortcuts",
+      "evidence": "Filename Shortcuts"
+    },
+    {
+      "line": 5246,
+      "title": "Switching Files from Command Mode",
+      "evidence": "Switching Files from Command Mode"
+    },
+    {
+      "line": 5256,
+      "title": "Edits Between Files",
+      "evidence": "Edits Between Files"
+    },
+    {
+      "line": 5327,
+      "title": "ex Command Summaries",
+      "evidence": "ex Command Summaries"
+    },
+    {
+      "line": 5571,
+      "title": "Chapter 6. Global Replacement",
+      "evidence": "Chapter 6. Global Replacement"
+    },
+    {
+      "line": 5595,
+      "title": "The Substitute Command",
+      "evidence": "The Substitute Command"
+    },
+    {
+      "line": 5641,
+      "title": "Confirming Substitutions",
+      "evidence": "Confirming Substitutions"
+    },
+    {
+      "line": 5744,
+      "title": "Doing Things Globally Across the File",
+      "evidence": "Doing Things Globally Across the File"
+    },
+    {
+      "line": 5768,
+      "title": "Context-Sensitive Replacement",
+      "evidence": "Context-Sensitive Replacement"
+    },
+    {
+      "line": 5828,
+      "title": "Pattern-Matching Rules",
+      "evidence": "Pattern-Matching Rules"
+    },
+    {
+      "line": 5853,
+      "title": "Metacharacters Used in Search Patterns",
+      "evidence": "Metacharacters Used in Search Patterns"
+    }
+  ],
+  "problems": [
+    {
+      "line": 484,
+      "kind": "garbled",
+      "evidence": "to be relevant for as many users as possible, it retained and"
+    }
+  ],
+  "summary": "This slice covers the front matter and Part I through most of Chapter 6: vi/Vim basics, cursor movement, simple editing, the ex line editor, and global replacement with regular expressions. It is largely tutorial prose interspersed with keystroke demos, command tables, exercises, and cross-references.",
+  "concepts": [
+    "vi",
+    "Vim",
+    "command mode",
+    "insert mode",
+    "ex editor",
+    "line addressing",
+    "registers",
+    "global replacement",
+    "regular expressions",
+    "substitute command",
+    "yank and put",
+    "cursor motion"
+  ]
+}

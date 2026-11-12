@@ -1,0 +1,1170 @@
+{
+ "id": "modern-vim-audit-01",
+ "book": "modern-vim",
+ "start": 1,
+ "end": 6000,
+ "headings": [
+  {
+   "line": 227,
+   "title": "Acknowledgments",
+   "evidence": "Acknowledgments"
+  },
+  {
+   "line": 263,
+   "title": "Introduction",
+   "evidence": "Introduction"
+  },
+  {
+   "line": 269,
+   "title": "How This Book Is Structured",
+   "evidence": "How This Book Is Structured"
+  },
+  {
+   "line": 279,
+   "title": "A Note on Vim Versions",
+   "evidence": "A Note on Vim Versions"
+  },
+  {
+   "line": 285,
+   "title": "Vim Version 8",
+   "evidence": "Vim Version 8"
+  },
+  {
+   "line": 294,
+   "title": "Neovim",
+   "evidence": "Neovim"
+  },
+  {
+   "line": 302,
+   "title": "Terminology",
+   "evidence": "Terminology"
+  },
+  {
+   "line": 315,
+   "title": "Contextual Instructions Using $VIMCONFIG",
+   "evidence": "Contextual Instructions Using $VIMCONFIG"
+  },
+  {
+   "line": 327,
+   "title": "Other Software Requirements",
+   "evidence": "Other Software Requirements"
+  },
+  {
+   "line": 332,
+   "title": "JavaScript, Node.js, and npm",
+   "evidence": "JavaScript, Node.js, and npm"
+  },
+  {
+   "line": 341,
+   "title": "Bash Shell (Or Any Shell)",
+   "evidence": "Bash Shell (Or Any Shell)"
+  },
+  {
+   "line": 351,
+   "title": "Git",
+   "evidence": "Git"
+  },
+  {
+   "line": 357,
+   "title": "Ripgrep",
+   "evidence": "Ripgrep"
+  },
+  {
+   "line": 373,
+   "title": "Notation for Simulating Vim on the Page",
+   "evidence": "Notation for Simulating Vim on the Page"
+  },
+  {
+   "line": 377,
+   "title": "Playing Melodies",
+   "evidence": "Playing Melodies"
+  },
+  {
+   "line": 397,
+   "title": "Playing Chords",
+   "evidence": "Playing Chords"
+  },
+  {
+   "line": 421,
+   "title": "Placeholders",
+   "evidence": "Placeholders"
+  },
+  {
+   "line": 451,
+   "title": "Showing Special Keys",
+   "evidence": "Showing Special Keys"
+  },
+  {
+   "line": 495,
+   "title": "The Leader Key",
+   "evidence": "The Leader Key"
+  },
+  {
+   "line": 505,
+   "title": "Interacting with the Command Line",
+   "evidence": "Interacting with the Command Line"
+  },
+  {
+   "line": 551,
+   "title": "Minimal Configuration",
+   "evidence": "Minimal Configuration"
+  },
+  {
+   "line": 572,
+   "title": "Using Factory Settings",
+   "evidence": "Using Factory Settings"
+  },
+  {
+   "line": 606,
+   "title": "Downloading the Examples",
+   "evidence": "Downloading the Examples"
+  },
+  {
+   "line": 657,
+   "title": "Get Modern Vim",
+   "evidence": "Get Modern Vim"
+  },
+  {
+   "line": 663,
+   "title": "Upgrade to Vim 8",
+   "evidence": "Upgrade to Vim 8"
+  },
+  {
+   "line": 675,
+   "title": "Switch to Neovim",
+   "evidence": "Switch to Neovim"
+  },
+  {
+   "line": 690,
+   "title": "Use Both",
+   "evidence": "Use Both"
+  },
+  {
+   "line": 701,
+   "title": "Installing Vim 8",
+   "evidence": "Tip 1Installing Vim 8"
+  },
+  {
+   "line": 733,
+   "title": "Installing Vim 8 on Linux",
+   "evidence": "Installing Vim 8 on Linux"
+  },
+  {
+   "line": 748,
+   "title": "Installing Vim 8 on macOS",
+   "evidence": "Installing Vim 8 on macOS"
+  },
+  {
+   "line": 758,
+   "title": "Contextual Instructions for Vim",
+   "evidence": "Contextual Instructions for Vim"
+  },
+  {
+   "line": 784,
+   "title": "What’s Next?",
+   "evidence": "What’s Next?"
+  },
+  {
+   "line": 792,
+   "title": "Switching to Neovim",
+   "evidence": "Tip 2Switching to Neovim"
+  },
+  {
+   "line": 797,
+   "title": "The Origins of Neovim",
+   "evidence": "The Origins of Neovim"
+  },
+  {
+   "line": 810,
+   "title": "Installing Neovim on Linux",
+   "evidence": "Installing Neovim on Linux"
+  },
+  {
+   "line": 837,
+   "title": "Installing Neovim on macOS",
+   "evidence": "Installing Neovim on macOS"
+  },
+  {
+   "line": 843,
+   "title": "Launching Neovim",
+   "evidence": "Launching Neovim"
+  },
+  {
+   "line": 871,
+   "title": "Reusing Your Vim Configuration",
+   "evidence": "Reusing Your Vim Configuration"
+  },
+  {
+   "line": 896,
+   "title": "Vim Script Compatibility",
+   "evidence": "Vim Script Compatibility"
+  },
+  {
+   "line": 902,
+   "title": "Contextual Instructions for Neovim",
+   "evidence": "Contextual Instructions for Neovim"
+  },
+  {
+   "line": 927,
+   "title": "Enabling Python Support in Neovim",
+   "evidence": "Tip 3Enabling Python Support in Neovim"
+  },
+  {
+   "line": 947,
+   "title": "Meet Neovim's Providers",
+   "evidence": "Meet Neovim's Providers"
+  },
+  {
+   "line": 967,
+   "title": "Enabling the Python 3 Provider",
+   "evidence": "Enabling the Python 3 Provider"
+  },
+  {
+   "line": 982,
+   "title": "Installing neovim-remote",
+   "evidence": "Installing neovim-remote"
+  },
+  {
+   "line": 1043,
+   "title": "Installing Plugins",
+   "evidence": "Installing Plugins"
+  },
+  {
+   "line": 1052,
+   "title": "Understanding Scripts, Plugins, and Packages",
+   "evidence": "Tip 4Understanding Scripts, Plugins, and Packages"
+  },
+  {
+   "line": 1061,
+   "title": "Scripts Add Functionality to Vim",
+   "evidence": "Scripts Add Functionality to Vim"
+  },
+  {
+   "line": 1097,
+   "title": "Plugins Make It Easy to Organize and Share Scripts",
+   "evidence": "Plugins Make It Easy to Organize and Share Scripts"
+  },
+  {
+   "line": 1127,
+   "title": "Packages Organize and Load Your Plugins",
+   "evidence": "Packages Organize and Load Your Plugins"
+  },
+  {
+   "line": 1140,
+   "title": "Indexing the Documentation for Installed Plugins",
+   "evidence": "Indexing the Documentation for Installed Plugins"
+  },
+  {
+   "line": 1163,
+   "title": "Installing Plugins to Your Package",
+   "evidence": "Tip 5Installing Plugins to Your Package"
+  },
+  {
+   "line": 1168,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 1174,
+   "title": "Installing Your First Plugin",
+   "evidence": "Installing Your First Plugin"
+  },
+  {
+   "line": 1226,
+   "title": "Indexing the Documentation",
+   "evidence": "Indexing the Documentation"
+  },
+  {
+   "line": 1246,
+   "title": "Installing an Optional Plugin",
+   "evidence": "Installing an Optional Plugin"
+  },
+  {
+   "line": 1290,
+   "title": "Updating Plugins in Your Package",
+   "evidence": "Updating Plugins in Your Package"
+  },
+  {
+   "line": 1310,
+   "title": "Migrating to Vim Packages",
+   "evidence": "Migrating to Vim Packages"
+  },
+  {
+   "line": 1333,
+   "title": "Managing Plugins with minpac",
+   "evidence": "Tip 6Managing Plugins with minpac"
+  },
+  {
+   "line": 1338,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 1343,
+   "title": "Installing minpac",
+   "evidence": "Installing minpac"
+  },
+  {
+   "line": 1377,
+   "title": "Adding and Updating Plugins with minpac",
+   "evidence": "Adding and Updating Plugins with minpac"
+  },
+  {
+   "line": 1430,
+   "title": "Removing Plugins with minpac",
+   "evidence": "Removing Plugins with minpac"
+  },
+  {
+   "line": 1454,
+   "title": "Creating Commands",
+   "evidence": "Creating Commands"
+  },
+  {
+   "line": 1474,
+   "title": "A Modern and Minimal Plugin Manager",
+   "evidence": "A Modern and Minimal Plugin Manager"
+  },
+  {
+   "line": 1506,
+   "title": "Opening Files",
+   "evidence": "Opening Files"
+  },
+  {
+   "line": 1515,
+   "title": "Finding Files Using Fuzzy Path Matching",
+   "evidence": "Tip 7Finding Files Using Fuzzy Path Matching"
+  },
+  {
+   "line": 1520,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 1526,
+   "title": "Installing and Configuring fzf",
+   "evidence": "Installing and Configuring fzf"
+  },
+  {
+   "line": 1563,
+   "title": "Exploring the Demo Project",
+   "evidence": "Exploring the Demo Project"
+  },
+  {
+   "line": 1598,
+   "title": "Opening Files by Specifying Their Filepath",
+   "evidence": "Opening Files by Specifying Their Filepath"
+  },
+  {
+   "line": 1623,
+   "title": "Opening Files by Fuzzy-Matching Their Filepath",
+   "evidence": "Opening Files by Fuzzy-Matching Their Filepath"
+  },
+  {
+   "line": 1646,
+   "title": "How Does Fuzzy Matching Work?",
+   "evidence": "How Does Fuzzy Matching Work?"
+  },
+  {
+   "line": 1712,
+   "title": "Operating the fzf Interface",
+   "evidence": "Operating the fzf Interface"
+  },
+  {
+   "line": 1763,
+   "title": "Filtering Out Files",
+   "evidence": "Filtering Out Files"
+  },
+  {
+   "line": 1830,
+   "title": "Fuzzy Finding Other Sources",
+   "evidence": "Fuzzy Finding Other Sources"
+  },
+  {
+   "line": 1854,
+   "title": "Finding Files Semantically",
+   "evidence": "Tip 8Finding Files Semantically"
+  },
+  {
+   "line": 1860,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 1869,
+   "title": "Exploring the Demo Projects",
+   "evidence": "Exploring the Demo Projects"
+  },
+  {
+   "line": 1952,
+   "title": "Defining Navigation Commands",
+   "evidence": "Defining Navigation Commands"
+  },
+  {
+   "line": 2026,
+   "title": "Validate Your Projections",
+   "evidence": "Validate Your Projections"
+  },
+  {
+   "line": 2036,
+   "title": "Navigation Command Variations",
+   "evidence": "Navigation Command Variations"
+  },
+  {
+   "line": 2068,
+   "title": "Smart Tab Completion",
+   "evidence": "Smart Tab Completion"
+  },
+  {
+   "line": 2092,
+   "title": "When to Use Navigation Commands",
+   "evidence": "When to Use Navigation Commands"
+  },
+  {
+   "line": 2106,
+   "title": "Jumping to an Alternate File",
+   "evidence": "Tip 9Jumping to an Alternate File"
+  },
+  {
+   "line": 2114,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 2120,
+   "title": "Exploring the Demo Projects",
+   "evidence": "Exploring the Demo Projects"
+  },
+  {
+   "line": 2184,
+   "title": "Defining Alternate Files",
+   "evidence": "Defining Alternate Files"
+  },
+  {
+   "line": 2271,
+   "title": "Other Uses for Alternate Files",
+   "evidence": "Other Uses for Alternate Files"
+  },
+  {
+   "line": 2303,
+   "title": "Working with the Quickfix List",
+   "evidence": "Working with the Quickfix List"
+  },
+  {
+   "line": 2312,
+   "title": "Running a Build and Navigating Failures",
+   "evidence": "Tip 10Running a Build and Navigating Failures"
+  },
+  {
+   "line": 2321,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 2338,
+   "title": "Enabling the tmux Adapter",
+   "evidence": "Enabling the tmux Adapter"
+  },
+  {
+   "line": 2350,
+   "title": "Enabling the Neovim Adapter",
+   "evidence": "Enabling the Neovim Adapter"
+  },
+  {
+   "line": 2365,
+   "title": "Vim 8 Job Adapter for the Dispatch Plugin",
+   "evidence": "Vim 8 Job Adapter for the Dispatch Plugin"
+  },
+  {
+   "line": 2380,
+   "title": "Setting Up the Demo Project",
+   "evidence": "Setting Up the Demo Project"
+  },
+  {
+   "line": 2419,
+   "title": "Making Vim Call the Compiler (a Naive Approach)",
+   "evidence": "Making Vim Call the Compiler (a Naive Approach)"
+  },
+  {
+   "line": 2462,
+   "title": "Capturing Compiler Output with :make",
+   "evidence": "Capturing Compiler Output with :make"
+  },
+  {
+   "line": 2511,
+   "title": "TypeScript Support for Vim",
+   "evidence": "TypeScript Support for Vim"
+  },
+  {
+   "line": 2518,
+   "title": "Running :make Asynchronously",
+   "evidence": "Running :make Asynchronously"
+  },
+  {
+   "line": 2571,
+   "title": "Incorporating Compiler Plugins to Your Workflow",
+   "evidence": "Incorporating Compiler Plugins to Your Workflow"
+  },
+  {
+   "line": 2580,
+   "title": "Switching Compilers",
+   "evidence": "Tip 11Switching Compilers"
+  },
+  {
+   "line": 2588,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 2600,
+   "title": "Switching Build Tools",
+   "evidence": "Switching Build Tools"
+  },
+  {
+   "line": 2627,
+   "title": "Making :Dispatch Infer the Compiler",
+   "evidence": "Making :Dispatch Infer the Compiler"
+  },
+  {
+   "line": 2711,
+   "title": "Helping Dispatch Choose a Compiler",
+   "evidence": "Helping Dispatch Choose a Compiler"
+  },
+  {
+   "line": 2740,
+   "title": "Specifying a Default :Dispatch Command",
+   "evidence": "Specifying a Default :Dispatch Command"
+  },
+  {
+   "line": 2762,
+   "title": "Linting the Current File",
+   "evidence": "Tip 12Linting the Current File"
+  },
+  {
+   "line": 2769,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 2809,
+   "title": "Setting Up the Demo Project",
+   "evidence": "Setting Up the Demo Project"
+  },
+  {
+   "line": 2826,
+   "title": "Running eslint from the Command Line",
+   "evidence": "Running eslint from the Command Line"
+  },
+  {
+   "line": 2891,
+   "title": "Meet the Asynchronous Linting Engine",
+   "evidence": "Meet the Asynchronous Linting Engine"
+  },
+  {
+   "line": 2920,
+   "title": "Using the Location List",
+   "evidence": "Using the Location List"
+  },
+  {
+   "line": 2933,
+   "title": "Specifying Which Linters to Run",
+   "evidence": "Specifying Which Linters to Run"
+  },
+  {
+   "line": 2973,
+   "title": "Using Local or Global npm Executables",
+   "evidence": "Using Local or Global npm Executables"
+  },
+  {
+   "line": 2983,
+   "title": "Specifying When to Run Linters",
+   "evidence": "Specifying When to Run Linters"
+  },
+  {
+   "line": 3038,
+   "title": "Alternatives to ALE",
+   "evidence": "Alternatives to ALE"
+  },
+  {
+   "line": 3052,
+   "title": "Searching Files with Grep-Alikes",
+   "evidence": "Tip 13Searching Files with Grep-Alikes"
+  },
+  {
+   "line": 3059,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 3097,
+   "title": "Using grep",
+   "evidence": "Using grep"
+  },
+  {
+   "line": 3112,
+   "title": "Setting Up git-grep",
+   "evidence": "Setting Up git-grep"
+  },
+  {
+   "line": 3135,
+   "title": "Setting Up Ripgrep",
+   "evidence": "Setting Up Ripgrep"
+  },
+  {
+   "line": 3150,
+   "title": "Populating the Quickfix List with Grep Results",
+   "evidence": "Populating the Quickfix List with Grep Results"
+  },
+  {
+   "line": 3181,
+   "title": "Define an Abbreviation to Expand :grep to :GrepperGrep",
+   "evidence": "Define an Abbreviation to Expand :grep to :GrepperGrep"
+  },
+  {
+   "line": 3208,
+   "title": "Using Grepper as a Common Interface to Multiple Grep-Alikes",
+   "evidence": "Using Grepper as a Common Interface to Multiple Grep-Alikes"
+  },
+  {
+   "line": 3222,
+   "title": "Using Grepper Convenience Commands",
+   "evidence": "Using Grepper Convenience Commands"
+  },
+  {
+   "line": 3250,
+   "title": "Using the Grepper Prompt",
+   "evidence": "Using the Grepper Prompt"
+  },
+  {
+   "line": 3296,
+   "title": "Searching for the Current Word",
+   "evidence": "Searching for the Current Word"
+  },
+  {
+   "line": 3320,
+   "title": "Searching for the Current Selection",
+   "evidence": "Searching for the Current Selection"
+  },
+  {
+   "line": 3358,
+   "title": "Adding Tool Support",
+   "evidence": "Adding Tool Support"
+  },
+  {
+   "line": 3384,
+   "title": "Running Tests and Browsing Failures",
+   "evidence": "Tip 14Running Tests and Browsing Failures"
+  },
+  {
+   "line": 3391,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 3404,
+   "title": "Setting Up the testing-jasmine Project",
+   "evidence": "Setting Up the testing-jasmine Project"
+  },
+  {
+   "line": 3421,
+   "title": "Setting Up the testing-rb Project",
+   "evidence": "Setting Up the testing-rb Project"
+  },
+  {
+   "line": 3438,
+   "title": "Opening Both Projects in Separate Tab Pages",
+   "evidence": "Opening Both Projects in Separate Tab Pages"
+  },
+  {
+   "line": 3479,
+   "title": "Test-Runner Commands",
+   "evidence": "Test-Runner Commands"
+  },
+  {
+   "line": 3484,
+   "title": "Running the Whole Test Suite",
+   "evidence": "Running the Whole Test Suite"
+  },
+  {
+   "line": 3514,
+   "title": "Running the Current Test File",
+   "evidence": "Running the Current Test File"
+  },
+  {
+   "line": 3544,
+   "title": "Running a Single Test",
+   "evidence": "Running a Single Test"
+  },
+  {
+   "line": 3581,
+   "title": "Re-Running the Most Recent Test Runner",
+   "evidence": "Re-Running the Most Recent Test Runner"
+  },
+  {
+   "line": 3618,
+   "title": "Loading Test-Runner Output into the Quickfix List",
+   "evidence": "Loading Test-Runner Output into the Quickfix List"
+  },
+  {
+   "line": 3640,
+   "title": "Test-Runner Support",
+   "evidence": "Test-Runner Support"
+  },
+  {
+   "line": 3777,
+   "title": "Neovim’s Built-In Terminal Emulator",
+   "evidence": "Neovim’s Built-In Terminal Emulator"
+  },
+  {
+   "line": 3790,
+   "title": "Use Normal Mode Commands to Interact with the Shell",
+   "evidence": "Use Normal Mode Commands to Interact with the Shell"
+  },
+  {
+   "line": 3804,
+   "title": "Use Neovim as a Window Manager",
+   "evidence": "Use Neovim as a Window Manager"
+  },
+  {
+   "line": 3819,
+   "title": "Control Processes Remotely with Vim Script",
+   "evidence": "Control Processes Remotely with Vim Script"
+  },
+  {
+   "line": 3832,
+   "title": "Terminal Terminology",
+   "evidence": "Terminal Terminology"
+  },
+  {
+   "line": 3850,
+   "title": "Grokking Terminal Mode",
+   "evidence": "Tip 15Grokking Terminal Mode"
+  },
+  {
+   "line": 3861,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 3868,
+   "title": "Launching a Shell",
+   "evidence": "Launching a Shell"
+  },
+  {
+   "line": 3885,
+   "title": "Using Terminal Mode",
+   "evidence": "Using Terminal Mode"
+  },
+  {
+   "line": 3928,
+   "title": "Switching Between Terminal Mode and Normal Mode",
+   "evidence": "Switching Between Terminal Mode and Normal Mode"
+  },
+  {
+   "line": 3959,
+   "title": "Distinguishing the Terminal Cursor from the Normal Cursor",
+   "evidence": "Distinguishing the Terminal Cursor from the Normal Cursor"
+  },
+  {
+   "line": 4005,
+   "title": "Running Programs in a Terminal Buffer",
+   "evidence": "Tip 16Running Programs in a Terminal Buffer"
+  },
+  {
+   "line": 4011,
+   "title": "Starting Programs in a Terminal Buffer",
+   "evidence": "Starting Programs in a Terminal Buffer"
+  },
+  {
+   "line": 4103,
+   "title": "Hiding a Terminal Buffer",
+   "evidence": "Hiding a Terminal Buffer"
+  },
+  {
+   "line": 4130,
+   "title": "Stopping Terminal Buffer Processes",
+   "evidence": "Stopping Terminal Buffer Processes"
+  },
+  {
+   "line": 4135,
+   "title": "Stop the Process by Interacting with It Directly",
+   "evidence": "Stop the Process by Interacting with It Directly"
+  },
+  {
+   "line": 4164,
+   "title": "Stop the Process by Deleting the Terminal Buffer",
+   "evidence": "Stop the Process by Deleting the Terminal Buffer"
+  },
+  {
+   "line": 4200,
+   "title": "Stop All Terminal Processes by Shutting Neovim Down",
+   "evidence": "Stop All Terminal Processes by Shutting Neovim Down"
+  },
+  {
+   "line": 4213,
+   "title": "What’s Next?",
+   "evidence": "What’s Next?"
+  },
+  {
+   "line": 4220,
+   "title": "Managing Windows That Contain Terminal Buffers",
+   "evidence": "Tip 17Managing Windows That Contain Terminal Buffers"
+  },
+  {
+   "line": 4238,
+   "title": "Opening Terminal Buffers in a New Window",
+   "evidence": "Opening Terminal Buffers in a New Window"
+  },
+  {
+   "line": 4275,
+   "title": "Easy Window Switching",
+   "evidence": "Easy Window Switching"
+  },
+  {
+   "line": 4321,
+   "title": "Seamlessly Navigating tmux Panes and Vim Windows",
+   "evidence": "Seamlessly Navigating tmux Panes and Vim Windows"
+  },
+  {
+   "line": 4335,
+   "title": "Using Normal Mode Commands in a Terminal Buffer",
+   "evidence": "Tip 18Using Normal Mode Commands in a Terminal Buffer"
+  },
+  {
+   "line": 4340,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 4352,
+   "title": "Copying and Pasting",
+   "evidence": "Copying and Pasting"
+  },
+  {
+   "line": 4387,
+   "title": "Scrolling",
+   "evidence": "Scrolling"
+  },
+  {
+   "line": 4451,
+   "title": "Jumping to a Filepath",
+   "evidence": "Jumping to a Filepath"
+  },
+  {
+   "line": 4481,
+   "title": "Using Normal Mode Operations to Edit a Command Line in the Shell",
+   "evidence": "Using Normal Mode Operations to Edit a Command Line in the Shell"
+  },
+  {
+   "line": 4491,
+   "title": "Sending Commands to a Terminal Buffer",
+   "evidence": "Tip 19Sending Commands to a Terminal Buffer"
+  },
+  {
+   "line": 4498,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 4538,
+   "title": "Sending Keys to a Terminal Buffer",
+   "evidence": "Sending Keys to a Terminal Buffer"
+  },
+  {
+   "line": 4562,
+   "title": "Creating an Ad-Hoc Command to Restart the Server",
+   "evidence": "Creating an Ad-Hoc Command to Restart the Server"
+  },
+  {
+   "line": 4595,
+   "title": "Applying Customizations to Your Shell in a Terminal Buffer",
+   "evidence": "Tip 20Applying Customizations to Your Shell in a Terminal Buffer"
+  },
+  {
+   "line": 4609,
+   "title": "Detecting That a Shell Is Running Inside a Terminal Buffer",
+   "evidence": "Detecting That a Shell Is Running Inside a Terminal Buffer"
+  },
+  {
+   "line": 4637,
+   "title": "Avoiding Nested Neovim Instances",
+   "evidence": "Tip 21Avoiding Nested Neovim Instances"
+  },
+  {
+   "line": 4645,
+   "title": "How Can Neovim Run Inside of Neovim?",
+   "evidence": "How Can Neovim Run Inside of Neovim?"
+  },
+  {
+   "line": 4668,
+   "title": "Using neovim-remote to Open a File in the Current Neovim Instance",
+   "evidence": "Using neovim-remote to Open a File in the Current Neovim Instance"
+  },
+  {
+   "line": 4710,
+   "title": "Using a Shell Alias to Prevent Accidental Nesting",
+   "evidence": "Using a Shell Alias to Prevent Accidental Nesting"
+  },
+  {
+   "line": 4764,
+   "title": "Using an Existing nvim Instance as the Preferred Editor",
+   "evidence": "Tip 22Using an Existing nvim Instance as the Preferred Editor"
+  },
+  {
+   "line": 4772,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 4788,
+   "title": "Editing a Command Line with Your Preferred Text Editor",
+   "evidence": "Editing a Command Line with Your Preferred Text Editor"
+  },
+  {
+   "line": 4806,
+   "title": "Mapping edit-command-line in zsh",
+   "evidence": "Mapping edit-command-line in zsh"
+  },
+  {
+   "line": 4818,
+   "title": "Editing a Commit Message with Your Preferred Text Editor",
+   "evidence": "Editing a Commit Message with Your Preferred Text Editor"
+  },
+  {
+   "line": 4838,
+   "title": "Unset git's core.editor Setting",
+   "evidence": "Unset git's core.editor Setting"
+  },
+  {
+   "line": 4862,
+   "title": "Using the Current Neovim Instance as Your Preferred Text Editor",
+   "evidence": "Using the Current Neovim Instance as Your Preferred Text Editor"
+  },
+  {
+   "line": 4911,
+   "title": "Sessions",
+   "evidence": "Sessions"
+  },
+  {
+   "line": 4918,
+   "title": "Make Restarting Vim Frictionless",
+   "evidence": "Make Restarting Vim Frictionless"
+  },
+  {
+   "line": 4939,
+   "title": "Make Switching Projects Frictionless",
+   "evidence": "Make Switching Projects Frictionless"
+  },
+  {
+   "line": 4955,
+   "title": "Saving and Restoring Sessions",
+   "evidence": "Tip 23Saving and Restoring Sessions"
+  },
+  {
+   "line": 4961,
+   "title": "Saving and Loading Sessions Manually",
+   "evidence": "Saving and Loading Sessions Manually"
+  },
+  {
+   "line": 5002,
+   "title": "Saving Sessions Automatically",
+   "evidence": "Saving Sessions Automatically"
+  },
+  {
+   "line": 5046,
+   "title": "What Does a Session Record?",
+   "evidence": "What Does a Session Record?"
+  },
+  {
+   "line": 5066,
+   "title": "Making Undo Persist Between Sessions",
+   "evidence": "Tip 24Making Undo Persist Between Sessions"
+  },
+  {
+   "line": 5094,
+   "title": "Saving Undo Files in a Designated Directory",
+   "evidence": "Saving Undo Files in a Designated Directory"
+  },
+  {
+   "line": 5113,
+   "title": "Disabling Persistent Undo for Temporary Files",
+   "evidence": "Disabling Persistent Undo for Temporary Files"
+  },
+  {
+   "line": 5135,
+   "title": "Putting It All Together",
+   "evidence": "Putting It All Together"
+  },
+  {
+   "line": 5161,
+   "title": "Restarting Terminal Processes When Resuming a Session",
+   "evidence": "Tip 25Restarting Terminal Processes When Resuming a Session"
+  },
+  {
+   "line": 5166,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 5185,
+   "title": "Saving a Session Captures Terminal Buffers by Name",
+   "evidence": "Saving a Session Captures Terminal Buffers by Name"
+  },
+  {
+   "line": 5246,
+   "title": "Renaming a Terminal Buffer",
+   "evidence": "Renaming a Terminal Buffer"
+  },
+  {
+   "line": 5333,
+   "title": "Configuring Vim",
+   "evidence": "Configuring Vim"
+  },
+  {
+   "line": 5345,
+   "title": "Using Autocommands to Respond to Events",
+   "evidence": "Tip 26Using Autocommands to Respond to Events"
+  },
+  {
+   "line": 5351,
+   "title": "Understanding Autocommands",
+   "evidence": "Understanding Autocommands"
+  },
+  {
+   "line": 5534,
+   "title": "Browsing Events",
+   "evidence": "Browsing Events"
+  },
+  {
+   "line": 5552,
+   "title": "Tearing Down Autocommands",
+   "evidence": "Tearing Down Autocommands"
+  },
+  {
+   "line": 5641,
+   "title": "Autocommands in Use",
+   "evidence": "Autocommands in Use"
+  },
+  {
+   "line": 5646,
+   "title": "Using BufWritePre to Selectively Disable Persistent Undo",
+   "evidence": "Using BufWritePre to Selectively Disable Persistent Undo"
+  },
+  {
+   "line": 5655,
+   "title": "Responding to User-Defined Events",
+   "evidence": "Responding to User-Defined Events"
+  },
+  {
+   "line": 5676,
+   "title": "Respecting Project Conventions",
+   "evidence": "Tip 27Respecting Project Conventions"
+  },
+  {
+   "line": 5682,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 5691,
+   "title": "Which EditorConfig Plugin to Use?",
+   "evidence": "Which EditorConfig Plugin to Use?"
+  },
+  {
+   "line": 5702,
+   "title": "Specifying Your Personal Preferences",
+   "evidence": "Specifying Your Personal Preferences"
+  },
+  {
+   "line": 5791,
+   "title": "Specifying Your Project Preferences",
+   "evidence": "Specifying Your Project Preferences"
+  },
+  {
+   "line": 5842,
+   "title": "Editorconfig Precedence",
+   "evidence": "Editorconfig Precedence"
+  },
+  {
+   "line": 5865,
+   "title": "Supported Properties",
+   "evidence": "Supported Properties"
+  },
+  {
+   "line": 5911,
+   "title": "Setting Buffer-Local Configuration Per Project",
+   "evidence": "Tip 28Setting Buffer-Local Configuration Per Project"
+  },
+  {
+   "line": 5917,
+   "title": "Preparation",
+   "evidence": "Preparation"
+  },
+  {
+   "line": 5933,
+   "title": "Setting Up the Demo Projects",
+   "evidence": "Setting Up the Demo Projects"
+  },
+  {
+   "line": 5995,
+   "title": "Configuring ALE Globally and Locally",
+   "evidence": "Configuring ALE Globally and Locally"
+  }
+ ],
+ "problems": [
+  {
+   "line": 93,
+   "kind": "garbled",
+   "evidence": "The team that produced this book includes: Andy Hunt (Publisher)Janet Furlow (VP of Operations)Brian MacDonald (Managing Editor)Jacquelyn Carter (Supervising Editor)Katharine Dvorak (Development Editor)Jasmine Kwityn (Copy Editor)Potomac Indexing, LLC (Indexing)Gilson Graphics (Layout)"
+  },
+  {
+   "line": 95,
+   "kind": "missing",
+   "evidence": "For customer support, please contact"
+  },
+  {
+   "line": 98,
+   "kind": "missing",
+   "evidence": "For international rights, please contact"
+  },
+  {
+   "line": 381,
+   "kind": "garbled",
+   "evidence": "NotationMeaning"
+  },
+  {
+   "line": 701,
+   "kind": "garbled",
+   "evidence": "Tip 1Installing Vim 8"
+  },
+  {
+   "line": 1592,
+   "kind": "garbled",
+   "evidence": "└── components"
+  },
+  {
+   "line": 2899,
+   "kind": "missing",
+   "evidence": "If you’ve correctly installed ALE and eslint, you should see something like the following screenshot:"
+  },
+  {
+   "line": 5662,
+   "kind": "garbled",
+   "evidence": "The User event is special in the sense that Vim never fires it auto-matically, but you can trigger an event like this one yourself:"
+  }
+ ],
+ "summary": "This slice covers the front matter, introduction, and Chapters 1-6 plus the opening of Chapter 7 (Tips 1-28, ending inside Tip 28): installing Vim 8 and Neovim, Vim packages and minpac, fuzzy/semantic file opening with fzf and Projectionist, the quickfix list with Dispatch, ALE, Grepper and vim-test, Neovim's terminal emulator, sessions and persistent undo, and context-sensitive configuration with autocommands and EditorConfig.",
+ "concepts": [
+  "Vim 8",
+  "Neovim",
+  "packages",
+  "runtimepath",
+  "minpac",
+  "fzf",
+  "Projectionist",
+  "quickfix list",
+  "compiler plugins",
+  "terminal buffer",
+  "persistent undo",
+  "autocommands"
+ ]
+}

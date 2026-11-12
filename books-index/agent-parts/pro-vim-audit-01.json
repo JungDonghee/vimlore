@@ -1,0 +1,970 @@
+{
+  "id": "pro-vim-audit-01",
+  "book": "pro-vim",
+  "start": 1,
+  "end": 6000,
+  "headings": [
+    {
+      "line": 61,
+      "title": "Contents at a Glance",
+      "evidence": "Contents at a Glance"
+    },
+    {
+      "line": 135,
+      "title": "Contents",
+      "evidence": "Contents"
+    },
+    {
+      "line": 1059,
+      "title": "About the Author",
+      "evidence": "About the Author"
+    },
+    {
+      "line": 1065,
+      "title": "About the Technical Reviewers",
+      "evidence": "About the Technical Reviewers"
+    },
+    {
+      "line": 1077,
+      "title": "Acknowledgments",
+      "evidence": "Acknowledgments"
+    },
+    {
+      "line": 1097,
+      "title": "Introduction",
+      "evidence": "Introduction"
+    },
+    {
+      "line": 1117,
+      "title": "CHAPTER 1",
+      "evidence": "CHAPTER 1"
+    },
+    {
+      "line": 1119,
+      "title": "Vim Primer",
+      "evidence": "Vim Primer"
+    },
+    {
+      "line": 1149,
+      "title": "What Is Vim?",
+      "evidence": "What Is Vim?"
+    },
+    {
+      "line": 1163,
+      "title": "Modern Editors?",
+      "evidence": "Modern Editors?"
+    },
+    {
+      "line": 1173,
+      "title": "Emacs?",
+      "evidence": "Emacs?"
+    },
+    {
+      "line": 1193,
+      "title": "How Do You Become Good at Vim?",
+      "evidence": "How Do You Become Good at Vim?"
+    },
+    {
+      "line": 1239,
+      "title": "Mac, Linux, Windows?",
+      "evidence": "Mac, Linux, Windows?"
+    },
+    {
+      "line": 1251,
+      "title": "Visualizing the Outcome",
+      "evidence": "Visualizing the Outcome"
+    },
+    {
+      "line": 1271,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 1287,
+      "title": "CHAPTER 2",
+      "evidence": "CHAPTER 2"
+    },
+    {
+      "line": 1289,
+      "title": "Installation and Configuration",
+      "evidence": "Installation and Configuration"
+    },
+    {
+      "line": 1297,
+      "title": "What We’ll Cover",
+      "evidence": "What We’ll Cover"
+    },
+    {
+      "line": 1335,
+      "title": "Terminal Emulators and Shell Environments",
+      "evidence": "Terminal Emulators and Shell Environments"
+    },
+    {
+      "line": 1359,
+      "title": "Shell Commands",
+      "evidence": "Shell Commands"
+    },
+    {
+      "line": 1393,
+      "title": "Configuring Your Terminal",
+      "evidence": "Configuring Your Terminal"
+    },
+    {
+      "line": 1403,
+      "title": "Changing Shells",
+      "evidence": "Changing Shells"
+    },
+    {
+      "line": 1437,
+      "title": "Dotfiles",
+      "evidence": "Dotfiles"
+    },
+    {
+      "line": 1489,
+      "title": "Editing .zshrc",
+      "evidence": "Editing .zshrc"
+    },
+    {
+      "line": 2053,
+      "title": "Restart Your Engines!",
+      "evidence": "Restart Your Engines!"
+    },
+    {
+      "line": 2059,
+      "title": "Choosing a New Theme for Your Terminal",
+      "evidence": "Choosing a New Theme for Your Terminal"
+    },
+    {
+      "line": 2075,
+      "title": "Two Types of Themes",
+      "evidence": "Two Types of Themes"
+    },
+    {
+      "line": 2085,
+      "title": "Installing Vim",
+      "evidence": "Installing Vim"
+    },
+    {
+      "line": 2091,
+      "title": "Mac",
+      "evidence": "Mac"
+    },
+    {
+      "line": 2105,
+      "title": "Using Homebrew",
+      "evidence": "Using Homebrew"
+    },
+    {
+      "line": 2199,
+      "title": "Linux",
+      "evidence": "Linux"
+    },
+    {
+      "line": 2209,
+      "title": "Windows",
+      "evidence": "Windows"
+    },
+    {
+      "line": 2215,
+      "title": "Installing Git",
+      "evidence": "Installing Git"
+    },
+    {
+      "line": 2221,
+      "title": "Mac",
+      "evidence": "Mac"
+    },
+    {
+      "line": 2227,
+      "title": "Linux",
+      "evidence": "Linux"
+    },
+    {
+      "line": 2235,
+      "title": "Windows",
+      "evidence": "Windows"
+    },
+    {
+      "line": 2243,
+      "title": "Configuring Vim",
+      "evidence": "Configuring Vim"
+    },
+    {
+      "line": 2249,
+      "title": "Copying the .vim Folder",
+      "evidence": "Copying the .vim Folder"
+    },
+    {
+      "line": 2269,
+      "title": "Copying the .vimrc File",
+      "evidence": "Copying the .vimrc File"
+    },
+    {
+      "line": 2345,
+      "title": "Dynamic Loading",
+      "evidence": "Dynamic Loading"
+    },
+    {
+      "line": 2359,
+      "title": "Runtime Path",
+      "evidence": "Runtime Path"
+    },
+    {
+      "line": 2497,
+      "title": "Sourcing Files",
+      "evidence": "Sourcing Files"
+    },
+    {
+      "line": 2521,
+      "title": "Opening Vim",
+      "evidence": "Opening Vim"
+    },
+    {
+      "line": 2535,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 2549,
+      "title": "CHAPTER 3",
+      "evidence": "CHAPTER 3"
+    },
+    {
+      "line": 2551,
+      "title": "Fundamentals",
+      "evidence": "Fundamentals"
+    },
+    {
+      "line": 2555,
+      "title": "How Vim Works",
+      "evidence": "How Vim Works"
+    },
+    {
+      "line": 2581,
+      "title": "Commands",
+      "evidence": "Commands"
+    },
+    {
+      "line": 2585,
+      "title": "Single-Line Commands",
+      "evidence": "Single-Line Commands"
+    },
+    {
+      "line": 2593,
+      "title": "Mapping Commands",
+      "evidence": "Mapping Commands"
+    },
+    {
+      "line": 2601,
+      "title": "Editing Commands",
+      "evidence": "Editing Commands"
+    },
+    {
+      "line": 2611,
+      "title": "Terminology",
+      "evidence": "Terminology"
+    },
+    {
+      "line": 2651,
+      "title": "Buffers",
+      "evidence": "Buffers"
+    },
+    {
+      "line": 2663,
+      "title": "[No Name] Buffers",
+      "evidence": "[No Name] Buffers"
+    },
+    {
+      "line": 2669,
+      "title": "Scratch Buffers",
+      "evidence": "Scratch Buffers"
+    },
+    {
+      "line": 2677,
+      "title": "Windows",
+      "evidence": "Windows"
+    },
+    {
+      "line": 2689,
+      "title": "Tabs",
+      "evidence": "Tabs"
+    },
+    {
+      "line": 2701,
+      "title": "Modes",
+      "evidence": "Modes"
+    },
+    {
+      "line": 2813,
+      "title": "Getting Help",
+      "evidence": "Getting Help"
+    },
+    {
+      "line": 2819,
+      "title": "Documentation",
+      "evidence": "Documentation"
+    },
+    {
+      "line": 2835,
+      "title": "Vim’s Wiki",
+      "evidence": "Vim’s Wiki"
+    },
+    {
+      "line": 2841,
+      "title": "IRC",
+      "evidence": "IRC"
+    },
+    {
+      "line": 2845,
+      "title": "Mailing Lists",
+      "evidence": "Mailing Lists"
+    },
+    {
+      "line": 2855,
+      "title": "Online Communities",
+      "evidence": "Online Communities"
+    },
+    {
+      "line": 2861,
+      "title": "Key Bindings (Revisited)",
+      "evidence": "Key Bindings (Revisited)"
+    },
+    {
+      "line": 2895,
+      "title": "What About All the Default Vim Bindings?",
+      "evidence": "What About All the Default Vim Bindings?"
+    },
+    {
+      "line": 2929,
+      "title": "Key Binding Debug Example",
+      "evidence": "Key Binding Debug Example"
+    },
+    {
+      "line": 2953,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 2979,
+      "title": "CHAPTER 4",
+      "evidence": "CHAPTER 4"
+    },
+    {
+      "line": 2981,
+      "title": "Files",
+      "evidence": "Files"
+    },
+    {
+      "line": 2999,
+      "title": "Opening Files",
+      "evidence": "Opening Files"
+    },
+    {
+      "line": 3019,
+      "title": "File Formats",
+      "evidence": "File Formats"
+    },
+    {
+      "line": 3049,
+      "title": "Inserting Files",
+      "evidence": "Inserting Files"
+    },
+    {
+      "line": 3085,
+      "title": "Moving Between Files",
+      "evidence": "Moving Between Files"
+    },
+    {
+      "line": 3105,
+      "title": "Saving Files",
+      "evidence": "Saving Files"
+    },
+    {
+      "line": 3137,
+      "title": "Creating New Files",
+      "evidence": "Creating New Files"
+    },
+    {
+      "line": 3153,
+      "title": "new",
+      "evidence": "new"
+    },
+    {
+      "line": 3159,
+      "title": "enew",
+      "evidence": "enew"
+    },
+    {
+      "line": 3163,
+      "title": "vnew",
+      "evidence": "vnew"
+    },
+    {
+      "line": 3169,
+      "title": "tabnew",
+      "evidence": "tabnew"
+    },
+    {
+      "line": 3175,
+      "title": "Creating New Files from a Template",
+      "evidence": "Creating New Files from a Template"
+    },
+    {
+      "line": 3193,
+      "title": "Creating a Scratch Buffer",
+      "evidence": "Creating a Scratch Buffer"
+    },
+    {
+      "line": 3221,
+      "title": "File Name Modifiers",
+      "evidence": "File Name Modifiers"
+    },
+    {
+      "line": 3225,
+      "title": "Previewing Files",
+      "evidence": "Previewing Files"
+    },
+    {
+      "line": 3267,
+      "title": "Switching Working Directories",
+      "evidence": "Switching Working Directories"
+    },
+    {
+      "line": 3289,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 3309,
+      "title": "CHAPTER 5",
+      "evidence": "CHAPTER 5"
+    },
+    {
+      "line": 3311,
+      "title": "Commands",
+      "evidence": "Commands"
+    },
+    {
+      "line": 3321,
+      "title": "Editing Commands",
+      "evidence": "Editing Commands"
+    },
+    {
+      "line": 3383,
+      "title": "Operators",
+      "evidence": "Operators"
+    },
+    {
+      "line": 3479,
+      "title": "Examples: Operators",
+      "evidence": "Examples: Operators"
+    },
+    {
+      "line": 3523,
+      "title": "Motions",
+      "evidence": "Motions"
+    },
+    {
+      "line": 3605,
+      "title": "Examples: Motions",
+      "evidence": "Examples: Motions"
+    },
+    {
+      "line": 3665,
+      "title": "Examples: Operators That Require Motions or Other Commands",
+      "evidence": "Examples: Operators That Require Motions or Other Commands"
+    },
+    {
+      "line": 3725,
+      "title": "Examples: Operators Combined with Motions",
+      "evidence": "Examples: Operators Combined with Motions"
+    },
+    {
+      "line": 3765,
+      "title": "There’s More Than One Way to Skin a Cat",
+      "evidence": "There’s More Than One Way to Skin a Cat"
+    },
+    {
+      "line": 3811,
+      "title": "Command Inversion",
+      "evidence": "Command Inversion"
+    },
+    {
+      "line": 3829,
+      "title": "Cursor Movement",
+      "evidence": "Cursor Movement"
+    },
+    {
+      "line": 3869,
+      "title": "Page Movement",
+      "evidence": "Page Movement"
+    },
+    {
+      "line": 3927,
+      "title": "Text Objects",
+      "evidence": "Text Objects"
+    },
+    {
+      "line": 3999,
+      "title": "Examples: Text Objects",
+      "evidence": "Examples: Text Objects"
+    },
+    {
+      "line": 4081,
+      "title": "Programming Constructs",
+      "evidence": "Programming Constructs"
+    },
+    {
+      "line": 4101,
+      "title": "Plug-ins",
+      "evidence": "Plug-ins"
+    },
+    {
+      "line": 4115,
+      "title": "Executing Commands Within INSERT Mode",
+      "evidence": "Executing Commands Within INSERT Mode"
+    },
+    {
+      "line": 4123,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 4145,
+      "title": "CHAPTER 6",
+      "evidence": "CHAPTER 6"
+    },
+    {
+      "line": 4147,
+      "title": "Registers",
+      "evidence": "Registers"
+    },
+    {
+      "line": 4181,
+      "title": "Accessing a Specific Register",
+      "evidence": "Accessing a Specific Register"
+    },
+    {
+      "line": 4193,
+      "title": "Unnamed Register",
+      "evidence": "Unnamed Register"
+    },
+    {
+      "line": 4201,
+      "title": "Numbered Register",
+      "evidence": "Numbered Register"
+    },
+    {
+      "line": 4213,
+      "title": "Small Delete Register",
+      "evidence": "Small Delete Register"
+    },
+    {
+      "line": 4217,
+      "title": "Named Register",
+      "evidence": "Named Register"
+    },
+    {
+      "line": 4235,
+      "title": "Read-Only Register",
+      "evidence": "Read-Only Register"
+    },
+    {
+      "line": 4251,
+      "title": "Expression Register",
+      "evidence": "Expression Register"
+    },
+    {
+      "line": 4257,
+      "title": "Basic Example",
+      "evidence": "Basic Example"
+    },
+    {
+      "line": 4275,
+      "title": "Advanced Example",
+      "evidence": "Advanced Example"
+    },
+    {
+      "line": 4333,
+      "title": "Selection/Drop Register",
+      "evidence": "Selection/Drop Register"
+    },
+    {
+      "line": 4347,
+      "title": "Blackhole Register",
+      "evidence": "Blackhole Register"
+    },
+    {
+      "line": 4359,
+      "title": "Last Search Register",
+      "evidence": "Last Search Register"
+    },
+    {
+      "line": 4365,
+      "title": "Clearing Your Registers",
+      "evidence": "Clearing Your Registers"
+    },
+    {
+      "line": 4397,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 4413,
+      "title": "CHAPTER 7",
+      "evidence": "CHAPTER 7"
+    },
+    {
+      "line": 4415,
+      "title": "Folding",
+      "evidence": "Folding"
+    },
+    {
+      "line": 4427,
+      "title": "Fold Options",
+      "evidence": "Fold Options"
+    },
+    {
+      "line": 4447,
+      "title": "Manual",
+      "evidence": "Manual"
+    },
+    {
+      "line": 4453,
+      "title": "Creating Folds",
+      "evidence": "Creating Folds"
+    },
+    {
+      "line": 4483,
+      "title": "Opening/Closing/Toggling Folds",
+      "evidence": "Opening/Closing/Toggling Folds"
+    },
+    {
+      "line": 4493,
+      "title": "Open/Close All Folds",
+      "evidence": "Open/Close All Folds"
+    },
+    {
+      "line": 4501,
+      "title": "Marker",
+      "evidence": "Marker"
+    },
+    {
+      "line": 4525,
+      "title": "Automatically Closing Folds",
+      "evidence": "Automatically Closing Folds"
+    },
+    {
+      "line": 4539,
+      "title": "Folding by Indentation",
+      "evidence": "Folding by Indentation"
+    },
+    {
+      "line": 4611,
+      "title": "Nested Folds",
+      "evidence": "Nested Folds"
+    },
+    {
+      "line": 4677,
+      "title": "Folding by Syntax",
+      "evidence": "Folding by Syntax"
+    },
+    {
+      "line": 4815,
+      "title": "Folding Content Dynamically",
+      "evidence": "Folding Content Dynamically"
+    },
+    {
+      "line": 4881,
+      "title": "Folding Unchanged Lines",
+      "evidence": "Folding Unchanged Lines"
+    },
+    {
+      "line": 4891,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 4903,
+      "title": "CHAPTER 8",
+      "evidence": "CHAPTER 8"
+    },
+    {
+      "line": 4905,
+      "title": "VISUAL-BLOCK Mode",
+      "evidence": "VISUAL-BLOCK Mode"
+    },
+    {
+      "line": 4911,
+      "title": "Simple Example",
+      "evidence": "Simple Example"
+    },
+    {
+      "line": 4945,
+      "title": "Entering VISUAL-BLOCK Mode",
+      "evidence": "Entering VISUAL-BLOCK Mode"
+    },
+    {
+      "line": 4953,
+      "title": "Canceling",
+      "evidence": "Canceling"
+    },
+    {
+      "line": 4959,
+      "title": "Adding Additional Content in Block Format",
+      "evidence": "Adding Additional Content in Block Format"
+    },
+    {
+      "line": 5005,
+      "title": "Complex Example",
+      "evidence": "Complex Example"
+    },
+    {
+      "line": 5077,
+      "title": "End-of-Line Concerns",
+      "evidence": "End-of-Line Concerns"
+    },
+    {
+      "line": 5123,
+      "title": "Better Selection Capabilities",
+      "evidence": "Better Selection Capabilities"
+    },
+    {
+      "line": 5139,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 5159,
+      "title": "CHAPTER 9",
+      "evidence": "CHAPTER 9"
+    },
+    {
+      "line": 5161,
+      "title": "Bulk Command Processing",
+      "evidence": "Bulk Command Processing"
+    },
+    {
+      "line": 5175,
+      "title": "bufdo",
+      "evidence": "bufdo"
+    },
+    {
+      "line": 5195,
+      "title": "Simple Example",
+      "evidence": "Simple Example"
+    },
+    {
+      "line": 5207,
+      "title": "Complex Example",
+      "evidence": "Complex Example"
+    },
+    {
+      "line": 5225,
+      "title": "windo",
+      "evidence": "windo"
+    },
+    {
+      "line": 5249,
+      "title": "tabdo",
+      "evidence": "tabdo"
+    },
+    {
+      "line": 5271,
+      "title": "argdo",
+      "evidence": "argdo"
+    },
+    {
+      "line": 5285,
+      "title": "Modifying the Arguments List",
+      "evidence": "Modifying the Arguments List"
+    },
+    {
+      "line": 5293,
+      "title": "Simple Example",
+      "evidence": "Simple Example"
+    },
+    {
+      "line": 5301,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 5323,
+      "title": "CHAPTER 10",
+      "evidence": "CHAPTER 10"
+    },
+    {
+      "line": 5325,
+      "title": "Editing Workflow",
+      "evidence": "Editing Workflow"
+    },
+    {
+      "line": 5343,
+      "title": "Practical Examples",
+      "evidence": "Practical Examples"
+    },
+    {
+      "line": 5361,
+      "title": "Moving Around a Single File",
+      "evidence": "Moving Around a Single File"
+    },
+    {
+      "line": 5367,
+      "title": "Moving Around on a Single Line",
+      "evidence": "Moving Around on a Single Line"
+    },
+    {
+      "line": 5407,
+      "title": "Moving Around Long Files",
+      "evidence": "Moving Around Long Files"
+    },
+    {
+      "line": 5593,
+      "title": "Moving Between Blocks",
+      "evidence": "Moving Between Blocks"
+    },
+    {
+      "line": 5617,
+      "title": "Complex Syntax",
+      "evidence": "Complex Syntax"
+    },
+    {
+      "line": 5647,
+      "title": "Text Objects",
+      "evidence": "Text Objects"
+    },
+    {
+      "line": 5651,
+      "title": "Find and Replace",
+      "evidence": "Find and Replace"
+    },
+    {
+      "line": 5675,
+      "title": "Workflow Management",
+      "evidence": "Workflow Management"
+    },
+    {
+      "line": 5681,
+      "title": "Vim’s Multiverse",
+      "evidence": "Vim’s Multiverse"
+    },
+    {
+      "line": 5821,
+      "title": "Moving Through Branches",
+      "evidence": "Moving Through Branches"
+    },
+    {
+      "line": 5853,
+      "title": "Saving State",
+      "evidence": "Saving State"
+    },
+    {
+      "line": 5865,
+      "title": "Sorting Out How to Paste",
+      "evidence": "Sorting Out How to Paste"
+    },
+    {
+      "line": 5881,
+      "title": "Alternative Options for Vim Self-Improvement",
+      "evidence": "Alternative Options for Vim Self-Improvement"
+    },
+    {
+      "line": 5891,
+      "title": "Vim Adventures",
+      "evidence": "Vim Adventures"
+    },
+    {
+      "line": 5901,
+      "title": "VimGolf",
+      "evidence": "VimGolf"
+    },
+    {
+      "line": 5911,
+      "title": "Vim Tutor",
+      "evidence": "Vim Tutor"
+    },
+    {
+      "line": 5919,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 5941,
+      "title": "CHAPTER 11",
+      "evidence": "CHAPTER 11"
+    },
+    {
+      "line": 5943,
+      "title": "Search and Replace",
+      "evidence": "Search and Replace"
+    },
+    {
+      "line": 5953,
+      "title": "Finding Files",
+      "evidence": "Finding Files"
+    },
+    {
+      "line": 5965,
+      "title": "Paths",
+      "evidence": "Paths"
+    },
+    {
+      "line": 5987,
+      "title": "Searching for Content",
+      "evidence": "Searching for Content"
+    },
+    {
+      "line": 5995,
+      "title": "Searching Within the Current Buffer",
+      "evidence": "Searching Within the Current Buffer"
+    }
+  ],
+  "problems": [
+    {
+      "line": 1199,
+      "kind": "garbled",
+      "evidence": "Look at these amazingly cryptic ways you can manipulate a document of text. Just run3wce to edit the fourth word in that sentence. Look at how productive we are!"
+    },
+    {
+      "line": 1257,
+      "kind": "missing",
+      "evidence": "If we were in your computer’s home directory, we would want to end up with the following files and folders:"
+    },
+    {
+      "line": 2255,
+      "kind": "missing",
+      "evidence": "Let’s quickly recap how the preceding command works. First, the Git repository is copied (git clone) to your HOME directory into a “ProVim” folder (~/ProVim) and, finally, we copy the  .vim folder (cp -r) over to the correct location within your home directory. After running the preceding command, we should end up with the following folder structure:"
+    },
+    {
+      "line": 2725,
+      "kind": "order",
+      "evidence": "<Esc>"
+    },
+    {
+      "line": 2850,
+      "kind": "missing",
+      "evidence": ", for help on Vim and Vim usage"
+    },
+    {
+      "line": 4419,
+      "kind": "garbled",
+      "evidence": "You don’t have to look too far before you encounter a real-world example of folding. If you took my advice from Chapter 2, you are already using my configuration files from the ProVim repository, specifically the .vimrc file. In ;that file, we’re using folding to help manage the different configuration sections that otherwise would be long and dense (see Figure 7-1)."
+    }
+  ],
+  "summary": "This slice covers Pro Vim's front matter, Introduction, Chapters 1-10, and the opening of Chapter 11: terminal/Vim setup, Vim fundamentals (commands, buffers, windows, tabs, modes), files, editing commands, registers, folding, VISUAL-BLOCK mode, bulk command processing, and editing workflow. It is mostly tutorial prose with shell/VimL configuration listings, command tables, and worked examples, and it ends as Chapter 11 starts its search-and-replace material.",
+  "concepts": [
+    "Vim",
+    "modal editing",
+    "buffers",
+    "windows and tabs",
+    "registers",
+    "code folding",
+    "VISUAL-BLOCK mode",
+    "operators and motions",
+    "text objects",
+    "command-line mode",
+    "bulk commands (bufdo/windo/tabdo/argdo)",
+    "editing workflow"
+  ]
+}

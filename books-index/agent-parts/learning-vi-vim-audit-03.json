@@ -1,0 +1,595 @@
+{
+  "id": "learning-vi-vim-audit-03",
+  "book": "learning-vi-vim",
+  "start": 12001,
+  "end": 18000,
+  "headings": [
+    {
+      "line": 12060,
+      "title": "GUI Options and Command Synopsis",
+      "evidence": "GUI Options and Command Synopsis"
+    },
+    {
+      "line": 12221,
+      "title": "Chapter 10. Multiple Windows in Vim",
+      "evidence": "Chapter 10. Multiple Windows in Vim"
+    },
+    {
+      "line": 12307,
+      "title": "Initiating Multiwindow Editing",
+      "evidence": "Initiating Multiwindow Editing"
+    },
+    {
+      "line": 12314,
+      "title": "Multiwindow Initiation from the Command Line",
+      "evidence": "Multiwindow Initiation from the Command Line"
+    },
+    {
+      "line": 12366,
+      "title": "Multiwindow Editing Inside Vim",
+      "evidence": "Multiwindow Editing Inside Vim"
+    },
+    {
+      "line": 12419,
+      "title": "Opening Windows",
+      "evidence": "Opening Windows"
+    },
+    {
+      "line": 12424,
+      "title": "New Windows",
+      "evidence": "New Windows"
+    },
+    {
+      "line": 12431,
+      "title": "Options During Splits",
+      "evidence": "Options During Splits"
+    },
+    {
+      "line": 12513,
+      "title": "Conditional Split Commands",
+      "evidence": "Conditional Split Commands"
+    },
+    {
+      "line": 12534,
+      "title": "Window Command Summary",
+      "evidence": "Window Command Summary"
+    },
+    {
+      "line": 12587,
+      "title": "Moving Around Windows (Getting Your Cursor from Here to There)",
+      "evidence": "Moving Around Windows (Getting Your Cursor from Here to There)"
+    },
+    {
+      "line": 12704,
+      "title": "Mnemonic Tips",
+      "evidence": "Mnemonic Tips"
+    },
+    {
+      "line": 12719,
+      "title": "Moving Windows Around",
+      "evidence": "Moving Windows Around"
+    },
+    {
+      "line": 12727,
+      "title": "Moving Windows (Rotate or Exchange)",
+      "evidence": "Moving Windows (Rotate or Exchange)"
+    },
+    {
+      "line": 12772,
+      "title": "Moving Windows and Changing Their Layout",
+      "evidence": "Moving Windows and Changing Their Layout"
+    },
+    {
+      "line": 12821,
+      "title": "Window Move Commands: Synopsis",
+      "evidence": "Window Move Commands: Synopsis"
+    },
+    {
+      "line": 12880,
+      "title": "Resizing Windows",
+      "evidence": "Resizing Windows"
+    },
+    {
+      "line": 12895,
+      "title": "Window Resize Commands",
+      "evidence": "Window Resize Commands"
+    },
+    {
+      "line": 12961,
+      "title": "Window Sizing Options",
+      "evidence": "Window Sizing Options"
+    },
+    {
+      "line": 13005,
+      "title": "Resizing Command Synopsis",
+      "evidence": "Resizing Command Synopsis"
+    },
+    {
+      "line": 13139,
+      "title": "Buffers and Their Interaction with Windows",
+      "evidence": "Buffers and Their Interaction with Windows"
+    },
+    {
+      "line": 13215,
+      "title": "Vim’s Special Buffers",
+      "evidence": "Vim’s Special Buffers"
+    },
+    {
+      "line": 13249,
+      "title": "Hidden Buffers",
+      "evidence": "Hidden Buffers"
+    },
+    {
+      "line": 13263,
+      "title": "Buffer Commands",
+      "evidence": "Buffer Commands"
+    },
+    {
+      "line": 13320,
+      "title": "Buffer Command Synopsis",
+      "evidence": "Buffer Command Synopsis"
+    },
+    {
+      "line": 13396,
+      "title": "Playing Tag with Windows",
+      "evidence": "Playing Tag with Windows"
+    },
+    {
+      "line": 13469,
+      "title": "Tabbed Editing",
+      "evidence": "Tabbed Editing"
+    },
+    {
+      "line": 13528,
+      "title": "Closing and Quitting Windows",
+      "evidence": "Closing and Quitting Windows"
+    },
+    {
+      "line": 13624,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 13645,
+      "title": "Chapter 11. Vim Enhancements for Programmers",
+      "evidence": "Chapter 11. Vim Enhancements for Programmers"
+    },
+    {
+      "line": 13697,
+      "title": "Folding and Outlining (Outline Mode)",
+      "evidence": "Folding and Outlining (Outline Mode)"
+    },
+    {
+      "line": 13775,
+      "title": "The Fold Commands",
+      "evidence": "The Fold Commands"
+    },
+    {
+      "line": 13867,
+      "title": "Manual Folding",
+      "evidence": "Manual Folding"
+    },
+    {
+      "line": 14035,
+      "title": "Outlining",
+      "evidence": "Outlining"
+    },
+    {
+      "line": 14090,
+      "title": "A Few Words About the Other Fold Methods",
+      "evidence": "A Few Words About the Other Fold Methods"
+    },
+    {
+      "line": 14136,
+      "title": "Auto and Smart Indenting",
+      "evidence": "Auto and Smart Indenting"
+    },
+    {
+      "line": 14182,
+      "title": "Vim autoindent Extensions to vi’s autoindent",
+      "evidence": "Vim autoindent Extensions to vi’s autoindent"
+    },
+    {
+      "line": 14203,
+      "title": "smartindent",
+      "evidence": "smartindent"
+    },
+    {
+      "line": 14229,
+      "title": "cindent",
+      "evidence": "cindent"
+    },
+    {
+      "line": 14262,
+      "title": "The cinkeys option",
+      "evidence": "The cinkeys option"
+    },
+    {
+      "line": 14349,
+      "title": "cinkeys syntax rules",
+      "evidence": "cinkeys syntax rules"
+    },
+    {
+      "line": 14425,
+      "title": "The cinwords option",
+      "evidence": "The cinwords option"
+    },
+    {
+      "line": 14441,
+      "title": "The cinoptions option",
+      "evidence": "The cinoptions option"
+    },
+    {
+      "line": 14558,
+      "title": "indentexpr",
+      "evidence": "indentexpr"
+    },
+    {
+      "line": 14596,
+      "title": "A Final Word on Indentation",
+      "evidence": "A Final Word on Indentation"
+    },
+    {
+      "line": 14623,
+      "title": "Keyword and Dictionary Word Completion",
+      "evidence": "Keyword and Dictionary Word Completion"
+    },
+    {
+      "line": 14688,
+      "title": "Insertion Completion Commands",
+      "evidence": "Insertion Completion Commands"
+    },
+    {
+      "line": 14717,
+      "title": "Completing whole lines",
+      "evidence": "Completing whole lines"
+    },
+    {
+      "line": 14774,
+      "title": "Completion by keyword in file",
+      "evidence": "Completion by keyword in file"
+    },
+    {
+      "line": 14801,
+      "title": "Completion by dictionary",
+      "evidence": "Completion by dictionary"
+    },
+    {
+      "line": 14818,
+      "title": "Completion by thesaurus",
+      "evidence": "Completion by thesaurus"
+    },
+    {
+      "line": 14898,
+      "title": "Completion by keyword in the current file and in included files",
+      "evidence": "Completion by keyword in the current file and in included files"
+    },
+    {
+      "line": 14921,
+      "title": "Completion by tag",
+      "evidence": "Completion by tag"
+    },
+    {
+      "line": 14928,
+      "title": "Completion by filename",
+      "evidence": "Completion by filename"
+    },
+    {
+      "line": 14944,
+      "title": "Completion by macro and definition names",
+      "evidence": "Completion by macro and definition names"
+    },
+    {
+      "line": 14950,
+      "title": "Completion method with Vim commands",
+      "evidence": "Completion method with Vim commands"
+    },
+    {
+      "line": 14958,
+      "title": "Completion by user functions",
+      "evidence": "Completion by user functions"
+    },
+    {
+      "line": 14968,
+      "title": "Completion by omni function",
+      "evidence": "Completion by omni function"
+    },
+    {
+      "line": 14979,
+      "title": "Completion for spelling correction",
+      "evidence": "Completion for spelling correction"
+    },
+    {
+      "line": 14988,
+      "title": "Completion with the complete option",
+      "evidence": "Completion with the complete option"
+    },
+    {
+      "line": 15047,
+      "title": "Some Final Comments on Vim Autocompletion",
+      "evidence": "Some Final Comments on Vim Autocompletion"
+    },
+    {
+      "line": 15082,
+      "title": "Tag Stacking",
+      "evidence": "Tag Stacking"
+    },
+    {
+      "line": 15252,
+      "title": "Syntax Highlighting",
+      "evidence": "Syntax Highlighting"
+    },
+    {
+      "line": 15271,
+      "title": "Getting Started",
+      "evidence": "Getting Started"
+    },
+    {
+      "line": 15285,
+      "title": "When syntax on Isn’t Enough",
+      "evidence": "When syntax on Isn’t Enough"
+    },
+    {
+      "line": 15333,
+      "title": "Customization",
+      "evidence": "Customization"
+    },
+    {
+      "line": 15361,
+      "title": "Syntax groups",
+      "evidence": "Syntax groups"
+    },
+    {
+      "line": 15413,
+      "title": "The colorscheme command",
+      "evidence": "The colorscheme command"
+    },
+    {
+      "line": 15473,
+      "title": "Setting the background option",
+      "evidence": "Setting the background option"
+    },
+    {
+      "line": 15499,
+      "title": "The highlight command",
+      "evidence": "The highlight command"
+    },
+    {
+      "line": 15574,
+      "title": "Overriding syntax files",
+      "evidence": "Overriding syntax files"
+    },
+    {
+      "line": 15610,
+      "title": "Rolling Your Own",
+      "evidence": "Rolling Your Own"
+    },
+    {
+      "line": 15738,
+      "title": "Compiling and Checking Errors with Vim",
+      "evidence": "Compiling and Checking Errors with Vim"
+    },
+    {
+      "line": 15926,
+      "title": "More Uses for the Quickfix List Window",
+      "evidence": "More Uses for the Quickfix List Window"
+    },
+    {
+      "line": 16014,
+      "title": "Some Final Thoughts on Vim for Writing Programs",
+      "evidence": "Some Final Thoughts on Vim for Writing Programs"
+    },
+    {
+      "line": 16051,
+      "title": "Chapter 12. Vim Scripts",
+      "evidence": "Chapter 12. Vim Scripts"
+    },
+    {
+      "line": 16074,
+      "title": "What’s Your Favorite Color (Scheme)?",
+      "evidence": "What’s Your Favorite Color (Scheme)?"
+    },
+    {
+      "line": 16101,
+      "title": "Conditional Execution",
+      "evidence": "Conditional Execution"
+    },
+    {
+      "line": 16145,
+      "title": "Using the strftime() function",
+      "evidence": "Using the strftime() function"
+    },
+    {
+      "line": 16203,
+      "title": "Variables",
+      "evidence": "Variables"
+    },
+    {
+      "line": 16286,
+      "title": "The execute Command",
+      "evidence": "The execute Command"
+    },
+    {
+      "line": 16341,
+      "title": "Defining Functions",
+      "evidence": "Defining Functions"
+    },
+    {
+      "line": 16396,
+      "title": "A Nice Vim Piggybacking Trick",
+      "evidence": "A Nice Vim Piggybacking Trick"
+    },
+    {
+      "line": 16469,
+      "title": "Tuning a Vim Script with Global Variables",
+      "evidence": "Tuning a Vim Script with Global Variables"
+    },
+    {
+      "line": 16474,
+      "title": "Variable scopes",
+      "evidence": "Variable scopes"
+    },
+    {
+      "line": 16519,
+      "title": "Global variables",
+      "evidence": "Global variables"
+    },
+    {
+      "line": 16572,
+      "title": "Arrays",
+      "evidence": "Arrays"
+    },
+    {
+      "line": 16616,
+      "title": "Dynamic File Type Configuration Through Scripting",
+      "evidence": "Dynamic File Type Configuration Through Scripting"
+    },
+    {
+      "line": 16635,
+      "title": "Autocommands",
+      "evidence": "Autocommands"
+    },
+    {
+      "line": 16730,
+      "title": "Checking Options",
+      "evidence": "Checking Options"
+    },
+    {
+      "line": 16800,
+      "title": "Buffer Variables",
+      "evidence": "Buffer Variables"
+    },
+    {
+      "line": 16832,
+      "title": "The exists() Function",
+      "evidence": "The exists() Function"
+    },
+    {
+      "line": 16912,
+      "title": "Autocommands and Groups",
+      "evidence": "Autocommands and Groups"
+    },
+    {
+      "line": 16946,
+      "title": "Deleting Autocommands",
+      "evidence": "Deleting Autocommands"
+    },
+    {
+      "line": 17034,
+      "title": "Some Additional Thoughts About Vim Scripting",
+      "evidence": "Some Additional Thoughts About Vim Scripting"
+    },
+    {
+      "line": 17044,
+      "title": "A Useful Vim Script Example",
+      "evidence": "A Useful Vim Script Example"
+    },
+    {
+      "line": 17120,
+      "title": "More About Variables",
+      "evidence": "More About Variables"
+    },
+    {
+      "line": 17156,
+      "title": "Expressions",
+      "evidence": "Expressions"
+    },
+    {
+      "line": 17166,
+      "title": "Extensions",
+      "evidence": "Extensions"
+    },
+    {
+      "line": 17173,
+      "title": "A Few More Comments About autocmd",
+      "evidence": "A Few More Comments About autocmd"
+    },
+    {
+      "line": 17192,
+      "title": "Internal Functions",
+      "evidence": "Internal Functions"
+    },
+    {
+      "line": 17323,
+      "title": "Resources",
+      "evidence": "Resources"
+    },
+    {
+      "line": 17358,
+      "title": "Chapter 13. Other Cool Stuff in Vim",
+      "evidence": "Chapter 13. Other Cool Stuff in Vim"
+    },
+    {
+      "line": 17369,
+      "title": "Spell It! (i-t)",
+      "evidence": "Spell It! (i-t)"
+    },
+    {
+      "line": 17533,
+      "title": "For a Different Take on Words, Try Thesaurus",
+      "evidence": "For a Different Take on Words, Try Thesaurus"
+    },
+    {
+      "line": 17543,
+      "title": "Editing Binary Files",
+      "evidence": "Editing Binary Files"
+    },
+    {
+      "line": 17584,
+      "title": "Binary Editing to the Rescue",
+      "evidence": "Binary Editing to the Rescue"
+    },
+    {
+      "line": 17629,
+      "title": "Digraphs: Non-ASCII Characters",
+      "evidence": "Digraphs: Non-ASCII Characters"
+    },
+    {
+      "line": 17785,
+      "title": "Editing Files in Other Places",
+      "evidence": "Editing Files in Other Places"
+    },
+    {
+      "line": 17889,
+      "title": "Navigating and Changing Directories",
+      "evidence": "Navigating and Changing Directories"
+    },
+    {
+      "line": 17972,
+      "title": "Backups with Vim",
+      "evidence": "Backups with Vim"
+    }
+  ],
+  "problems": [
+    {
+      "line": 15602,
+      "kind": "garbled",
+      "evidence": ":set runtimepath+=~/.vim/after/syntax In our .vimrc file"
+    },
+    {
+      "line": 16843,
+      "kind": "garbled",
+      "evidence": "if exists(“b:countCheck”) == 0"
+    },
+    {
+      "line": 17371,
+      "kind": "garbled",
+      "evidence": "Vim’s spellchecking excels in speed and flexibility. Per Vim’s ownspellchecker"
+    }
+  ],
+  "summary": "This slice moves from gvim GUI options under WSL/X Windows into Vim’s multiwindow and buffer model, then surveys programmer features such as folding, indenting, completion, tags, syntax highlighting, and QuickFix. It closes with Vim scripting and autocommands, followed by Chapter 13’s tour of spellchecking, binary editing, digraphs, remote file editing, directory browsing, and backups.",
+  "concepts": [
+    "multiwindow editing",
+    "buffers",
+    "code folding",
+    "cindent",
+    "keyword completion",
+    "tags",
+    "syntax highlighting",
+    "QuickFix",
+    "Vim script",
+    "autocommands",
+    "spellchecking",
+    "binary file editing"
+  ]
+}

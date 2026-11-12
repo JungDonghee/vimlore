@@ -1,0 +1,764 @@
+{
+ "id": "vim-101-hacks-audit-01",
+ "book": "vim-101-hacks",
+ "start": 1,
+ "end": 3362,
+ "headings": [
+  {
+   "line": 3,
+   "title": "Table of Contents",
+   "evidence": "Table of Contents"
+  },
+  {
+   "line": 170,
+   "title": "Introduction",
+   "evidence": "Introduction"
+  },
+  {
+   "line": 194,
+   "title": "About the Author",
+   "evidence": "About the Author"
+  },
+  {
+   "line": 211,
+   "title": "Copyright & Disclaimer",
+   "evidence": "Copyright & Disclaimer"
+  },
+  {
+   "line": 220,
+   "title": "Foreword",
+   "evidence": "Foreword"
+  },
+  {
+   "line": 248,
+   "title": "Version",
+   "evidence": "Version"
+  },
+  {
+   "line": 254,
+   "title": "Chapter 1: Vim Basics",
+   "evidence": "Chapter 1: Vim Basics"
+  },
+  {
+   "line": 257,
+   "title": "Opening a File",
+   "evidence": "Opening a File"
+  },
+  {
+   "line": 265,
+   "title": "Saving a File",
+   "evidence": "Saving a File"
+  },
+  {
+   "line": 277,
+   "title": "Closing a File",
+   "evidence": "Closing a File"
+  },
+  {
+   "line": 286,
+   "title": "Types of Vim Modes",
+   "evidence": "Types of Vim Modes"
+  },
+  {
+   "line": 332,
+   "title": "Moving around a File",
+   "evidence": "Moving around a File"
+  },
+  {
+   "line": 350,
+   "title": "Vim Configuration File (~/.vimrc)",
+   "evidence": "Vim Configuration File (~/.vimrc)"
+  },
+  {
+   "line": 386,
+   "title": "Vim Version",
+   "evidence": "Vim Version"
+  },
+  {
+   "line": 410,
+   "title": "Vim Installation",
+   "evidence": "Vim Installation"
+  },
+  {
+   "line": 422,
+   "title": "All About Vim Help",
+   "evidence": "All About Vim Help"
+  },
+  {
+   "line": 453,
+   "title": "Use Vimtutor for Practice",
+   "evidence": "Use Vimtutor for Practice"
+  },
+  {
+   "line": 466,
+   "title": "Chapter 2: Basic Navigation",
+   "evidence": "Chapter 2: Basic Navigation"
+  },
+  {
+   "line": 473,
+   "title": "Hack 1. Scroll Full Page or Half Page",
+   "evidence": "Hack 1. Scroll Full Page or Half Page"
+  },
+  {
+   "line": 491,
+   "title": "Hack 2. Word Navigation",
+   "evidence": "Hack 2. Word Navigation"
+  },
+  {
+   "line": 517,
+   "title": "Hack 3. Position cursor at specific location within a line",
+   "evidence": "Hack 3. Position cursor at specific location within a"
+  },
+  {
+   "line": 532,
+   "title": "Hack 4. Paragraph, Section, Sentence Navigations",
+   "evidence": "Hack 4. Paragraph, Section, Sentence Navigations"
+  },
+  {
+   "line": 544,
+   "title": "Chapter 3: Advanced Navigation",
+   "evidence": "Chapter 3: Advanced Navigation"
+  },
+  {
+   "line": 545,
+   "title": "Hack 5. Screen Navigation",
+   "evidence": "Hack 5. Screen Navigation"
+  },
+  {
+   "line": 553,
+   "title": "Hack 6. Redraw Screen with Current Line on Top, Bottom or Middle",
+   "evidence": "Hack 6. Redraw Screen with Current Line on Top,"
+  },
+  {
+   "line": 572,
+   "title": "Hack 7. Navigate to Top and Bottom of the File",
+   "evidence": "Hack 7. Navigate to Top and Bottom of the File"
+  },
+  {
+   "line": 580,
+   "title": "Hack 8. Navigate to Nth Character, Nth Percentage of a File",
+   "evidence": "Hack 8. Navigate to Nth Character, Nth Percentage of"
+  },
+  {
+   "line": 599,
+   "title": "Hack 9. Line Number Navigation",
+   "evidence": "Hack 9. Line Number Navigation"
+  },
+  {
+   "line": 619,
+   "title": "Hack 10. Source Code Navigation",
+   "evidence": "Hack 10. Source Code Navigation"
+  },
+  {
+   "line": 638,
+   "title": "Hack 11. Navigate From Insert Mode",
+   "evidence": "Hack 11. Navigate From Insert Mode"
+  },
+  {
+   "line": 652,
+   "title": "Chapter 4: Expert Navigation",
+   "evidence": "Chapter 4: Expert Navigation"
+  },
+  {
+   "line": 653,
+   "title": "Hack 12. Jump Using CTRL-O and CTRL-I",
+   "evidence": "Hack 12. Jump Using CTRL-O and CTRL-I"
+  },
+  {
+   "line": 689,
+   "title": "Hack 13. Navigate Within a Very Long Line",
+   "evidence": "Hack 13. Navigate Within a Very Long Line"
+  },
+  {
+   "line": 707,
+   "title": "Hack 14. Vim Command Line Navigation",
+   "evidence": "Hack 14. Vim Command Line Navigation"
+  },
+  {
+   "line": 728,
+   "title": "Hack 15. Create Local Bookmarks inside file using Marks",
+   "evidence": "Hack 15. Create Local Bookmarks inside file using"
+  },
+  {
+   "line": 774,
+   "title": "Hack 16. Create Global Bookmarks inside Vim File",
+   "evidence": "Hack 16. Create Global Bookmarks inside Vim File"
+  },
+  {
+   "line": 797,
+   "title": "Hack 17. How to Display all Bookmarks",
+   "evidence": "Hack 17. How to Display all Bookmarks"
+  },
+  {
+   "line": 860,
+   "title": "Hack 18. Navigate any Source Code effectively using Ctags",
+   "evidence": "Hack 18. Navigate any Source Code effectively using"
+  },
+  {
+   "line": 934,
+   "title": "Hack 19. Convert Vim Editor to Beautiful Source Code Browser for Any Programming Language",
+   "evidence": "Hack 19. Convert Vim Editor to Beautiful Source"
+  },
+  {
+   "line": 1018,
+   "title": "Chapter 5: Basic Text Manipulation",
+   "evidence": "Chapter 5: Basic Text Manipulation"
+  },
+  {
+   "line": 1019,
+   "title": "Hack 20. Insert or Append Text",
+   "evidence": "Hack 20. Insert or Append Text"
+  },
+  {
+   "line": 1047,
+   "title": "Hack 21. Replace Text",
+   "evidence": "Hack 21. Replace Text"
+  },
+  {
+   "line": 1059,
+   "title": "Hack 22. Substitute Text",
+   "evidence": "Hack 22. Substitute Text"
+  },
+  {
+   "line": 1082,
+   "title": "Hack 23. Change Text",
+   "evidence": "Hack 23. Change Text"
+  },
+  {
+   "line": 1093,
+   "title": "Hack 24. Join Lines Using nojoinspaces Option",
+   "evidence": "Hack 24. Join Lines Using nojoinspaces Option"
+  },
+  {
+   "line": 1110,
+   "title": "Chapter 6: Advanced Text Manipulation",
+   "evidence": "Chapter 6: Advanced Text Manipulation"
+  },
+  {
+   "line": 1111,
+   "title": "Hack 25. Copy One Character, or Word, or Line, or up to a Position",
+   "evidence": "Hack 25. Copy One Character, or Word, or Line, or"
+  },
+  {
+   "line": 1131,
+   "title": "Hack 26. Paste before or after the copied Line / Word / Others",
+   "evidence": "Hack 26. Paste before or after the copied Line /"
+  },
+  {
+   "line": 1168,
+   "title": "Hack 27. Delete Single Char, or Word, or Line",
+   "evidence": "Hack 27. Delete Single Char, or Word, or Line"
+  },
+  {
+   "line": 1177,
+   "title": "Hack 28. Inserting Content from Clipboard Buffer",
+   "evidence": "Hack 28. Inserting Content from Clipboard Buffer"
+  },
+  {
+   "line": 1185,
+   "title": "Hack 29. Insert Content to Clipboard from File",
+   "evidence": "Hack 29. Insert Content to Clipboard from File"
+  },
+  {
+   "line": 1200,
+   "title": "Hack 30. Write Part of File to another File",
+   "evidence": "Hack 30. Write Part of File to another File"
+  },
+  {
+   "line": 1209,
+   "title": "Hack 31. Swap Adjacent Characters",
+   "evidence": "Hack 31. Swap Adjacent Characters"
+  },
+  {
+   "line": 1223,
+   "title": "Hack 32. The power of the . (dot) Command",
+   "evidence": "Hack 32. The power of the . (dot) Command"
+  },
+  {
+   "line": 1237,
+   "title": "Hack 33. Visual Mode Commands",
+   "evidence": "Hack 33. Visual Mode Commands"
+  },
+  {
+   "line": 1281,
+   "title": "Hack 34. Editing with :g",
+   "evidence": "Hack 34. Editing with :g"
+  },
+  {
+   "line": 1323,
+   "title": "Chapter 7: Expert Text Manipulation",
+   "evidence": "Chapter 7: Expert Text Manipulation"
+  },
+  {
+   "line": 1324,
+   "title": "Hack 35. Copy Lines to Named Buffer for Later Use",
+   "evidence": "Hack 35. Copy Lines to Named Buffer for Later Use"
+  },
+  {
+   "line": 1334,
+   "title": "Hack 36. Convert Inserted Text to Normal Mode Commands",
+   "evidence": "Hack 36. Convert Inserted Text to Normal Mode"
+  },
+  {
+   "line": 1352,
+   "title": "Hack 37. Abbreviation and Unabbreviation",
+   "evidence": "Hack 37. Abbreviation and Unabbreviation"
+  },
+  {
+   "line": 1380,
+   "title": "Hack 38. Automatic Spelling Correction",
+   "evidence": "Hack 38. Automatic Spelling Correction"
+  },
+  {
+   "line": 1422,
+   "title": "Hack 39. Record and Play Using Macros",
+   "evidence": "Hack 39. Record and Play Using Macros"
+  },
+  {
+   "line": 1504,
+   "title": "Hack 40. Sort File Content",
+   "evidence": "Hack 40. Sort File Content"
+  },
+  {
+   "line": 1526,
+   "title": "Hack 41. Recover Deleted Text",
+   "evidence": "Hack 41. Recover Deleted Text"
+  },
+  {
+   "line": 1543,
+   "title": "Hack 42. Add Automatic Headers to Files Using",
+   "evidence": "Hack 42. Add Automatic Headers to Files Using"
+  },
+  {
+   "line": 1673,
+   "title": "Chapter 8: Vim as a Programmers Editor",
+   "evidence": "Chapter 8: Vim as a Programmers Editor"
+  },
+  {
+   "line": 1676,
+   "title": "Hack 43. Make Vim Highlight Your Code Smartly",
+   "evidence": "Hack 43. Make Vim Highlight Your Code Smartly"
+  },
+  {
+   "line": 1685,
+   "title": "Hack 44. Smart Indentation",
+   "evidence": "Hack 44. Smart Indentation"
+  },
+  {
+   "line": 1708,
+   "title": "Hack 45. Access Unix Man page for Functions from Vim",
+   "evidence": "Hack 45. Access Unix Man page for Functions from"
+  },
+  {
+   "line": 1729,
+   "title": "Hack 46. Jump to Variable Declaration",
+   "evidence": "Hack 46. Jump to Variable Declaration"
+  },
+  {
+   "line": 1734,
+   "title": "Hack 47. Align the Variable Assignment",
+   "evidence": "Hack 47. Align the Variable Assignment"
+  },
+  {
+   "line": 1759,
+   "title": "Hack 48. Increment and Decrement Number Using CTRL Keys",
+   "evidence": "Hack 48. Increment and Decrement Number Using"
+  },
+  {
+   "line": 1771,
+   "title": "Hack 49. Execute One Vim Command in Insert Mode",
+   "evidence": "Hack 49. Execute One Vim Command in Insert Mode"
+  },
+  {
+   "line": 1782,
+   "title": "Hack 50. View Current File Details",
+   "evidence": "Hack 50. View Current File Details"
+  },
+  {
+   "line": 1794,
+   "title": "Hack 51. Take Control of the Vim Status Bar",
+   "evidence": "Hack 51. Take Control of the Vim Status Bar"
+  },
+  {
+   "line": 1822,
+   "title": "Hack 52. Change Case",
+   "evidence": "Hack 52. Change Case"
+  },
+  {
+   "line": 1858,
+   "title": "Hack 53. Spell Check",
+   "evidence": "Hack 53. Spell Check"
+  },
+  {
+   "line": 1879,
+   "title": "Hack 54. Setup Quit Confirmation",
+   "evidence": "Hack 54. Setup Quit Confirmation"
+  },
+  {
+   "line": 1890,
+   "title": "Hack 55. Use :up and Avoid :w",
+   "evidence": "Hack 55. Use :up and Avoid :w"
+  },
+  {
+   "line": 1902,
+   "title": "Hack 56. Edit Current Buffer Content",
+   "evidence": "Hack 56. Edit Current Buffer Content"
+  },
+  {
+   "line": 1911,
+   "title": "Hack 57. Tabs and Spaces",
+   "evidence": "Hack 57. Tabs and Spaces"
+  },
+  {
+   "line": 1934,
+   "title": "Chapter 9: Vim Command Line Hacks",
+   "evidence": "Chapter 9: Vim Command Line Hacks"
+  },
+  {
+   "line": 1938,
+   "title": "Hack 58. Open File in Read Only Mode",
+   "evidence": "Hack 58. Open File in Read Only Mode"
+  },
+  {
+   "line": 1946,
+   "title": "Hack 59. Recover Swap File Explicitly",
+   "evidence": "Hack 59. Recover Swap File Explicitly"
+  },
+  {
+   "line": 2016,
+   "title": "Hack 60. Execute any Vim Command when opening a file",
+   "evidence": "Hack 60. Execute any Vim Command when opening a"
+  },
+  {
+   "line": 2024,
+   "title": "Hack 61. Execute Commands Stored in a File",
+   "evidence": "Hack 61. Execute Commands Stored in a File"
+  },
+  {
+   "line": 2031,
+   "title": "Hack 62. Skip Loading Plugins Temporarily",
+   "evidence": "Hack 62. Skip Loading Plugins Temporarily"
+  },
+  {
+   "line": 2035,
+   "title": "Hack 63. Enter Restricted Mode in Vim",
+   "evidence": "Hack 63. Enter Restricted Mode in Vim"
+  },
+  {
+   "line": 2047,
+   "title": "Chapter 10: gVim Hacks",
+   "evidence": "Chapter 10: gVim Hacks"
+  },
+  {
+   "line": 2049,
+   "title": "Hack 64. Display and Hide gVim Menu and Toolbar",
+   "evidence": "Hack 64. Display and Hide gVim Menu and Toolbar"
+  },
+  {
+   "line": 2074,
+   "title": "Hack 65. Adding a Custom Menu or Menu Items to gVim",
+   "evidence": "Hack 65. Adding a Custom Menu or Menu Items to"
+  },
+  {
+   "line": 2108,
+   "title": "Hack 66. Change Font in gVim",
+   "evidence": "Hack 66. Change Font in gVim"
+  },
+  {
+   "line": 2123,
+   "title": "Chapter 11: Vim Look and Feel, Tabs, and Windows",
+   "evidence": "Chapter 11: Vim Look and Feel, Tabs, and"
+  },
+  {
+   "line": 2125,
+   "title": "Hack 67. Split Windows Horizontally and Vertically",
+   "evidence": "Hack 67. Split Windows Horizontally and Vertically"
+  },
+  {
+   "line": 2164,
+   "title": "Hack 68. Change Window Title",
+   "evidence": "Hack 68. Change Window Title"
+  },
+  {
+   "line": 2180,
+   "title": "Hack 69. Change Vim Colors",
+   "evidence": "Hack 69. Change Vim Colors"
+  },
+  {
+   "line": 2203,
+   "title": "Hack 70. Edit Multiple Files in Tabs",
+   "evidence": "Hack 70. Edit Multiple Files in Tabs"
+  },
+  {
+   "line": 2232,
+   "title": "Chapter 12: Additional Features in Vim Editor",
+   "evidence": "Chapter 12: Additional Features in Vim"
+  },
+  {
+   "line": 2234,
+   "title": "Hack 71. Repeat an Operation N number of times",
+   "evidence": "Hack 71. Repeat an Operation N number of times"
+  },
+  {
+   "line": 2245,
+   "title": "Hack 72. Undo and Redo Action",
+   "evidence": "Hack 72. Undo and Redo Action"
+  },
+  {
+   "line": 2265,
+   "title": "Hack 73. Open the File whose Name is under the Cursor",
+   "evidence": "Hack 73. Open the File whose Name is under the"
+  },
+  {
+   "line": 2292,
+   "title": "Hack 74. Edit Multiple Files Using the Traditional Method",
+   "evidence": "Hack 74. Edit Multiple Files Using the Traditional"
+  },
+  {
+   "line": 2316,
+   "title": "Hack 75. Saving Files Automatically",
+   "evidence": "Hack 75. Saving Files Automatically"
+  },
+  {
+   "line": 2327,
+   "title": "Hack 76. Encrypt File in Vim",
+   "evidence": "Hack 76. Encrypt File in Vim"
+  },
+  {
+   "line": 2334,
+   "title": "Hack 77. Save and Resume Vim Sessions",
+   "evidence": "Hack 77. Save and Resume Vim Sessions"
+  },
+  {
+   "line": 2373,
+   "title": "Hack 78. Execute Unix Shell Command Inside Vim",
+   "evidence": "Hack 78. Execute Unix Shell Command Inside Vim"
+  },
+  {
+   "line": 2401,
+   "title": "Hack 79. Review the Differences between Files using Vimdiff",
+   "evidence": "Hack 79. Review the Differences between Files using"
+  },
+  {
+   "line": 2441,
+   "title": "Hack 80. Vim Map Command",
+   "evidence": "Hack 80. Vim Map Command"
+  },
+  {
+   "line": 2487,
+   "title": "Hack 81. Make Bash Shell work like Vim Editor",
+   "evidence": "Hack 81. Make Bash Shell work like Vim Editor"
+  },
+  {
+   "line": 2504,
+   "title": "Hack 82. Set Vim Options",
+   "evidence": "Hack 82. Set Vim Options"
+  },
+  {
+   "line": 2519,
+   "title": "Hack 83. Unset Vim Options",
+   "evidence": "Hack 83. Unset Vim Options"
+  },
+  {
+   "line": 2530,
+   "title": "Hack 84. Default registers and their uses",
+   "evidence": "Hack 84. Default registers and their uses"
+  },
+  {
+   "line": 2548,
+   "title": "Hack 85. Numeric Registers and Recovering Deletes",
+   "evidence": "Hack 85. Numeric Registers and Recovering Deletes"
+  },
+  {
+   "line": 2555,
+   "title": "Hack 86. Vim Directory Operation",
+   "evidence": "Hack 86. Vim Directory Operation"
+  },
+  {
+   "line": 2609,
+   "title": "Chapter 13: Power of Search",
+   "evidence": "Chapter 13: Power of Search"
+  },
+  {
+   "line": 2610,
+   "title": "Hack 87. Navigation by Search",
+   "evidence": "Hack 87. Navigation by Search"
+  },
+  {
+   "line": 2626,
+   "title": "Hack 88. Go to Next / Previous Occurrence of the Current Word",
+   "evidence": "Hack 88. Go to Next / Previous Occurrence of the"
+  },
+  {
+   "line": 2652,
+   "title": "Hack 89. Search for a Character within a Line",
+   "evidence": "Hack 89. Search for a Character within a Line"
+  },
+  {
+   "line": 2664,
+   "title": "Hack 90. 12 Powerful Find and Replace Examples",
+   "evidence": "Hack 90. 12 Powerful Find and Replace Examples"
+  },
+  {
+   "line": 2871,
+   "title": "Hack 91. Search across Multiple Files using vimgrep",
+   "evidence": "Hack 91. Search across Multiple Files using vimgrep"
+  },
+  {
+   "line": 2896,
+   "title": "Hack 92. Highlight Search Results with Color",
+   "evidence": "Hack 92. Highlight Search Results with Color"
+  },
+  {
+   "line": 2911,
+   "title": "Hack 93. Vim Incremental Search",
+   "evidence": "Hack 93. Vim Incremental Search"
+  },
+  {
+   "line": 2923,
+   "title": "Hack 94. The Power of :match",
+   "evidence": "Hack 94. The Power of :match"
+  },
+  {
+   "line": 2948,
+   "title": "Chapter 14: Automatic Completion",
+   "evidence": "Chapter 14: Automatic Completion"
+  },
+  {
+   "line": 2949,
+   "title": "Hack 95. Automatic Word Completion",
+   "evidence": "Hack 95. Automatic Word Completion"
+  },
+  {
+   "line": 2963,
+   "title": "Hack 96. Automatic Line Completion",
+   "evidence": "Hack 96. Automatic Line Completion"
+  },
+  {
+   "line": 2972,
+   "title": "Hack 97. Automatic Filename Completion",
+   "evidence": "Hack 97. Automatic Filename Completion"
+  },
+  {
+   "line": 2980,
+   "title": "Hack 98. Dictionary Completion",
+   "evidence": "Hack 98. Dictionary Completion"
+  },
+  {
+   "line": 2992,
+   "title": "Hack 99. Thesaurus Word Completion",
+   "evidence": "Hack 99. Thesaurus Word Completion"
+  },
+  {
+   "line": 3057,
+   "title": "Hack 100. Automatically open a Pop-up menu for Completion",
+   "evidence": "Hack 100. Automatically open a Pop-up menu for"
+  },
+  {
+   "line": 3094,
+   "title": "Hack 101. Automatically offers Word Completion as you type",
+   "evidence": "Hack 101. Automatically offers Word Completion as"
+  },
+  {
+   "line": 3140,
+   "title": "Chapter 15: Bonus Hacks",
+   "evidence": "Chapter 15: Bonus Hacks"
+  },
+  {
+   "line": 3141,
+   "title": "Bonus Hack 1. Add Bullet Point Style to List of Items",
+   "evidence": "Bonus Hack 1. Add Bullet Point Style to List of Items"
+  },
+  {
+   "line": 3182,
+   "title": "Bonus Hack 2. Set Vim as Universal Default Editor using update-alternatives",
+   "evidence": "Bonus Hack 2. Set Vim as Universal Default Editor"
+  },
+  {
+   "line": 3188,
+   "title": "Bonus Hack 3. Make Vim as Default Editor",
+   "evidence": "Bonus Hack 3. Make Vim as Default Editor"
+  },
+  {
+   "line": 3197,
+   "title": "Bonus Hack 4. Format a Paragraph",
+   "evidence": "Bonus Hack 4. Format a Paragraph"
+  },
+  {
+   "line": 3200,
+   "title": "Bonus Hack 5. Edit Macros for Reuse",
+   "evidence": "Bonus Hack 5. Edit Macros for Reuse"
+  },
+  {
+   "line": 3218,
+   "title": "Bonus Hack 6. Indent Code Block",
+   "evidence": "Bonus Hack 6. Indent Code Block"
+  },
+  {
+   "line": 3242,
+   "title": "Bonus Hack 7. Power of Combination",
+   "evidence": "Bonus Hack 7. Power of Combination"
+  },
+  {
+   "line": 3264,
+   "title": "Bonus Hack 8. Identify the changes done to a file",
+   "evidence": "Bonus Hack 8. Identify the changes done to a file"
+  },
+  {
+   "line": 3268,
+   "title": "Bonus Hack 9. Refresh the Screen",
+   "evidence": "Bonus Hack 9. Refresh the Screen"
+  },
+  {
+   "line": 3272,
+   "title": "Bonus Hack 10. Insert Non Keyboard Characters",
+   "evidence": "Bonus Hack 10. Insert Non Keyboard Characters"
+  },
+  {
+   "line": 3285,
+   "title": "Bonus Hack 11. Vim ex Mode",
+   "evidence": "Bonus Hack 11. Vim ex Mode"
+  },
+  {
+   "line": 3298,
+   "title": "Bonus Hack 12. Place the cursor at the end of the match",
+   "evidence": "Bonus Hack 12. Place the cursor at the end of the"
+  },
+  {
+   "line": 3308,
+   "title": "Bonus Hack 13. View ASCII value of a character",
+   "evidence": "Bonus Hack 13. View ASCII value of a character"
+  },
+  {
+   "line": 3318,
+   "title": "Bonus Hack 14. Edit Binary files in Vim Editor",
+   "evidence": "Bonus Hack 14. Edit Binary files in Vim Editor"
+  },
+  {
+   "line": 3322,
+   "title": "Bonus Hack 15. Folding - View Only Required Part of Code",
+   "evidence": "Bonus Hack 15. Folding - View Only Required Part of"
+  },
+  {
+   "line": 3356,
+   "title": "Your Feedback and Support",
+   "evidence": "Your Feedback and Support"
+  }
+ ],
+ "problems": [],
+ "summary": "This slice is the complete Vim 101 Hacks text: front matter, 15 chapters, 101 numbered hacks, and 15 bonus hacks covering Vim basics, navigation, text manipulation, programmer features, command-line and gVim options, search, completion, and folding. Each hack is a short, example-driven recipe built from normal-mode commands, ex commands, and .vimrc settings.",
+ "concepts": [
+  "Vim modes",
+  "navigation motions",
+  "marks and jumps",
+  "registers",
+  "macros",
+  "substitute (:s)",
+  "global command (:g)",
+  "visual mode",
+  "ctags and taglist",
+  "split windows and tabs",
+  "search highlighting",
+  "insert-mode completion"
+ ]
+}

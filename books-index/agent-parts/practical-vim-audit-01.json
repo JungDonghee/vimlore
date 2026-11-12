@@ -1,0 +1,1240 @@
+{
+  "id": "practical-vim-audit-01",
+  "book": "practical-vim",
+  "start": 1,
+  "end": 6000,
+  "headings": [
+    {
+      "line": 41,
+      "title": "About the Pragmatic Bookshelf",
+      "evidence": "About the Pragmatic Bookshelf"
+    },
+    {
+      "line": 62,
+      "title": "New Book Announcements",
+      "evidence": "New Book Announcements"
+    },
+    {
+      "line": 70,
+      "title": "About Ebook Formats",
+      "evidence": "About Ebook Formats"
+    },
+    {
+      "line": 103,
+      "title": "Table of Contents",
+      "evidence": "Table of Contents"
+    },
+    {
+      "line": 484,
+      "title": "Acknowledgments",
+      "evidence": "Acknowledgments"
+    },
+    {
+      "line": 532,
+      "title": "Foreword to the First Edition",
+      "evidence": "Foreword to the First Edition"
+    },
+    {
+      "line": 552,
+      "title": "Read Me",
+      "evidence": "Read Me"
+    },
+    {
+      "line": 562,
+      "title": "How This Book Is Structured",
+      "evidence": "How This Book Is Structured"
+    },
+    {
+      "line": 572,
+      "title": "A Note on the Examples",
+      "evidence": "A Note on the Examples"
+    },
+    {
+      "line": 580,
+      "title": "Learn to Touch Type, Then Learn Vim",
+      "evidence": "Learn to Touch Type, Then Learn Vim"
+    },
+    {
+      "line": 590,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 600,
+      "title": "Read the Forgotten Manual",
+      "evidence": "Read the Forgotten Manual"
+    },
+    {
+      "line": 608,
+      "title": "Get to Know Vim’s Built-in Documentation",
+      "evidence": "Get to Know Vim’s Built-in Documentation"
+    },
+    {
+      "line": 620,
+      "title": "Notation for Simulating Vim on the Page",
+      "evidence": "Notation for Simulating Vim on the Page"
+    },
+    {
+      "line": 628,
+      "title": "Playing Melodies",
+      "evidence": "Playing Melodies"
+    },
+    {
+      "line": 649,
+      "title": "Playing Chords",
+      "evidence": "Playing Chords"
+    },
+    {
+      "line": 673,
+      "title": "Placeholders",
+      "evidence": "Placeholders"
+    },
+    {
+      "line": 699,
+      "title": "Showing Special Keys",
+      "evidence": "Showing Special Keys"
+    },
+    {
+      "line": 741,
+      "title": "Switching Modes Midcommand",
+      "evidence": "Switching Modes Midcommand"
+    },
+    {
+      "line": 752,
+      "title": "Interacting with the Command Line",
+      "evidence": "Interacting with the Command Line"
+    },
+    {
+      "line": 793,
+      "title": "Showing the Cursor Position in a Buffer",
+      "evidence": "Showing the Cursor Position in a Buffer"
+    },
+    {
+      "line": 813,
+      "title": "Highlighting Search Matches",
+      "evidence": "Highlighting Search Matches"
+    },
+    {
+      "line": 833,
+      "title": "Selecting Text in Visual Mode",
+      "evidence": "Selecting Text in Visual Mode"
+    },
+    {
+      "line": 853,
+      "title": "Downloading the Examples",
+      "evidence": "Downloading the Examples"
+    },
+    {
+      "line": 875,
+      "title": "Use Vim’s Factory Settings",
+      "evidence": "Use Vim’s Factory Settings"
+    },
+    {
+      "line": 905,
+      "title": "On the Role of Vim Script",
+      "evidence": "On the Role of Vim Script"
+    },
+    {
+      "line": 917,
+      "title": "On Vim Versions",
+      "evidence": "On Vim Versions"
+    },
+    {
+      "line": 921,
+      "title": "What’s New in Vim 8",
+      "evidence": "What’s New in Vim 8"
+    },
+    {
+      "line": 927,
+      "title": "Optional Features",
+      "evidence": "Optional Features"
+    },
+    {
+      "line": 949,
+      "title": "Vim in the Terminal or Vim with a GUI? You Choose!",
+      "evidence": "Vim in the Terminal or Vim with a GUI? You Choose!"
+    },
+    {
+      "line": 957,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 970,
+      "title": "The Vim Way",
+      "evidence": "The Vim Way"
+    },
+    {
+      "line": 980,
+      "title": "Tip 1Meet the Dot Command",
+      "evidence": "Tip 1Meet the Dot Command"
+    },
+    {
+      "line": 1131,
+      "title": "The Dot Command Is a Micro Macro",
+      "evidence": "The Dot Command Is a Micro Macro"
+    },
+    {
+      "line": 1139,
+      "title": "Tip 2Don’t Repeat Yourself",
+      "evidence": "Tip 2Don’t Repeat Yourself"
+    },
+    {
+      "line": 1159,
+      "title": "Reduce Extraneous Movement",
+      "evidence": "Reduce Extraneous Movement"
+    },
+    {
+      "line": 1163,
+      "title": "Two for the Price of One",
+      "evidence": "Two for the Price of One"
+    },
+    {
+      "line": 1255,
+      "title": "Tip 3Take One Step Back, Then Three Forward",
+      "evidence": "Tip 3Take One Step Back, Then Three Forward"
+    },
+    {
+      "line": 1269,
+      "title": "Make the Change Repeatable",
+      "evidence": "Make the Change Repeatable"
+    },
+    {
+      "line": 1305,
+      "title": "Make the Motion Repeatable",
+      "evidence": "Make the Motion Repeatable"
+    },
+    {
+      "line": 1311,
+      "title": "All Together Now",
+      "evidence": "All Together Now"
+    },
+    {
+      "line": 1319,
+      "title": "Tip 4Act, Repeat, Reverse",
+      "evidence": "Tip 4Act, Repeat, Reverse"
+    },
+    {
+      "line": 1395,
+      "title": "Tip 5Find and Replace by Hand",
+      "evidence": "Tip 5Find and Replace by Hand"
+    },
+    {
+      "line": 1419,
+      "title": "Be Lazy: Search Without Typing",
+      "evidence": "Be Lazy: Search Without Typing"
+    },
+    {
+      "line": 1475,
+      "title": "Make the Change Repeatable",
+      "evidence": "Make the Change Repeatable"
+    },
+    {
+      "line": 1479,
+      "title": "All Together Now",
+      "evidence": "All Together Now"
+    },
+    {
+      "line": 1487,
+      "title": "Tip 6Meet the Dot Formula",
+      "evidence": "Tip 6Meet the Dot Formula"
+    },
+    {
+      "line": 1491,
+      "title": "Reviewing Three Dot-Command Editing Tasks",
+      "evidence": "Reviewing Three Dot-Command Editing Tasks"
+    },
+    {
+      "line": 1499,
+      "title": "The Ideal: One Keystroke to Move, One Keystroke to Execute",
+      "evidence": "The Ideal: One Keystroke to Move, One Keystroke to Execute"
+    },
+    {
+      "line": 1510,
+      "title": "Part 1",
+      "evidence": "Part 1"
+    },
+    {
+      "line": 1512,
+      "title": "Modes",
+      "evidence": "Modes"
+    },
+    {
+      "line": 1526,
+      "title": "Normal Mode",
+      "evidence": "Normal Mode"
+    },
+    {
+      "line": 1542,
+      "title": "Tip 7Pause with Your Brush Off the Page",
+      "evidence": "Tip 7Pause with Your Brush Off the Page"
+    },
+    {
+      "line": 1556,
+      "title": "Tip 8Chunk Your Undos",
+      "evidence": "Tip 8Chunk Your Undos"
+    },
+    {
+      "line": 1574,
+      "title": "Moving Around in Insert Mode Resets the Change",
+      "evidence": "Moving Around in Insert Mode Resets the Change"
+    },
+    {
+      "line": 1580,
+      "title": "Tip 9Compose Repeatable Changes",
+      "evidence": "Tip 9Compose Repeatable Changes"
+    },
+    {
+      "line": 1592,
+      "title": "Delete Backward",
+      "evidence": "Delete Backward"
+    },
+    {
+      "line": 1612,
+      "title": "Delete Forward",
+      "evidence": "Delete Forward"
+    },
+    {
+      "line": 1632,
+      "title": "Delete an Entire Word",
+      "evidence": "Delete an Entire Word"
+    },
+    {
+      "line": 1648,
+      "title": "Tie-Breaker: Which Is Most Repeatable?",
+      "evidence": "Tie-Breaker: Which Is Most Repeatable?"
+    },
+    {
+      "line": 1660,
+      "title": "Discussion",
+      "evidence": "Discussion"
+    },
+    {
+      "line": 1670,
+      "title": "Tip 10Use Counts to Do Simple Arithmetic",
+      "evidence": "Tip 10Use Counts to Do Simple Arithmetic"
+    },
+    {
+      "line": 1726,
+      "title": "Number Formats",
+      "evidence": "Number Formats"
+    },
+    {
+      "line": 1742,
+      "title": "Tip 11Don’t Count If You Can Repeat",
+      "evidence": "Tip 11Don’t Count If You Can Repeat"
+    },
+    {
+      "line": 1772,
+      "title": "Use a Count When It Matters",
+      "evidence": "Use a Count When It Matters"
+    },
+    {
+      "line": 1794,
+      "title": "Tip 12Combine and Conquer",
+      "evidence": "Tip 12Combine and Conquer"
+    },
+    {
+      "line": 1798,
+      "title": "Operator + Motion = Action",
+      "evidence": "Operator + Motion = Action"
+    },
+    {
+      "line": 1844,
+      "title": "Extending Vim’s Combinatorial Powers",
+      "evidence": "Extending Vim’s Combinatorial Powers"
+    },
+    {
+      "line": 1848,
+      "title": "Custom Operators Work with Existing Motions",
+      "evidence": "Custom Operators Work with Existing Motions"
+    },
+    {
+      "line": 1856,
+      "title": "Custom Motions Work with Existing Operators",
+      "evidence": "Custom Motions Work with Existing Operators"
+    },
+    {
+      "line": 1869,
+      "title": "Meet Operator-Pending Mode",
+      "evidence": "Meet Operator-Pending Mode"
+    },
+    {
+      "line": 1879,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 1900,
+      "title": "Insert Mode",
+      "evidence": "Insert Mode"
+    },
+    {
+      "line": 1910,
+      "title": "Tip 13Make Corrections Instantly from Insert Mode",
+      "evidence": "Tip 13Make Corrections Instantly from Insert Mode"
+    },
+    {
+      "line": 1939,
+      "title": "Tip 14Get Back to Normal Mode",
+      "evidence": "Tip 14Get Back to Normal Mode"
+    },
+    {
+      "line": 1958,
+      "title": "Meet Insert Normal Mode",
+      "evidence": "Meet Insert Normal Mode"
+    },
+    {
+      "line": 1964,
+      "title": "Remap the Caps Lock Key",
+      "evidence": "Remap the Caps Lock Key"
+    },
+    {
+      "line": 1974,
+      "title": "Tip 15Paste from a Register Without Leaving Insert Mode",
+      "evidence": "Tip 15Paste from a Register Without Leaving Insert Mode"
+    },
+    {
+      "line": 2018,
+      "title": "Use <C-r>{register} for Character-wise Registers",
+      "evidence": "Use <C-r>{register} for Character-wise Registers"
+    },
+    {
+      "line": 2026,
+      "title": "Tip 16Do Back-of-the-Envelope Calculations in Place",
+      "evidence": "Tip 16Do Back-of-the-Envelope Calculations in Place"
+    },
+    {
+      "line": 2058,
+      "title": "Tip 17Insert Unusual Characters by Character Code",
+      "evidence": "Tip 17Insert Unusual Characters by Character Code"
+    },
+    {
+      "line": 2093,
+      "title": "Tip 18Insert Unusual Characters by Digraph",
+      "evidence": "Tip 18Insert Unusual Characters by Digraph"
+    },
+    {
+      "line": 2105,
+      "title": "Tip 19Overwrite Existing Text with Replace Mode",
+      "evidence": "Tip 19Overwrite Existing Text with Replace Mode"
+    },
+    {
+      "line": 2141,
+      "title": "Overwrite Tab Characters with Virtual Replace Mode",
+      "evidence": "Overwrite Tab Characters with Virtual Replace Mode"
+    },
+    {
+      "line": 2158,
+      "title": "Visual Mode",
+      "evidence": "Visual Mode"
+    },
+    {
+      "line": 2170,
+      "title": "Tip 20Grok Visual Mode",
+      "evidence": "Tip 20Grok Visual Mode"
+    },
+    {
+      "line": 2186,
+      "title": "Meet Select Mode",
+      "evidence": "Meet Select Mode"
+    },
+    {
+      "line": 2196,
+      "title": "Tip 21Define a Visual Selection",
+      "evidence": "Tip 21Define a Visual Selection"
+    },
+    {
+      "line": 2202,
+      "title": "Enabling Visual Modes",
+      "evidence": "Enabling Visual Modes"
+    },
+    {
+      "line": 2226,
+      "title": "Switching Between Visual Modes",
+      "evidence": "Switching Between Visual Modes"
+    },
+    {
+      "line": 2256,
+      "title": "Toggling the Free End of a Selection",
+      "evidence": "Toggling the Free End of a Selection"
+    },
+    {
+      "line": 2280,
+      "title": "Tip 22Repeat Line-Wise Visual Commands",
+      "evidence": "Tip 22Repeat Line-Wise Visual Commands"
+    },
+    {
+      "line": 2304,
+      "title": "Preparation",
+      "evidence": "Preparation"
+    },
+    {
+      "line": 2310,
+      "title": "Indent Once, Then Repeat",
+      "evidence": "Indent Once, Then Repeat"
+    },
+    {
+      "line": 2368,
+      "title": "Tip 23Prefer Operators to Visual Commands Where Possible",
+      "evidence": "Tip 23Prefer Operators to Visual Commands Where Possible"
+    },
+    {
+      "line": 2384,
+      "title": "Using a Visual Operator",
+      "evidence": "Using a Visual Operator"
+    },
+    {
+      "line": 2428,
+      "title": "Using a Normal Operator",
+      "evidence": "Using a Normal Operator"
+    },
+    {
+      "line": 2466,
+      "title": "Discussion",
+      "evidence": "Discussion"
+    },
+    {
+      "line": 2476,
+      "title": "Tip 24Edit Tabular Data with Visual-Block Mode",
+      "evidence": "Tip 24Edit Tabular Data with Visual-Block Mode"
+    },
+    {
+      "line": 2582,
+      "title": "Tip 25Change Columns of Text",
+      "evidence": "Tip 25Change Columns of Text"
+    },
+    {
+      "line": 2660,
+      "title": "Tip 26Append After a Ragged Visual Block",
+      "evidence": "Tip 26Append After a Ragged Visual Block"
+    },
+    {
+      "line": 2722,
+      "title": "Vim's Conventions for “i” and “a” Keys",
+      "evidence": "Vim's Conventions for “i” and “a” Keys"
+    },
+    {
+      "line": 2730,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 2747,
+      "title": "Command-Line Mode",
+      "evidence": "Command-Line Mode"
+    },
+    {
+      "line": 2753,
+      "title": "Tip 27Meet Vim’s Command Line",
+      "evidence": "Tip 27Meet Vim’s Command Line"
+    },
+    {
+      "line": 2791,
+      "title": "On the Etymology of Vim (and Family)",
+      "evidence": "On the Etymology of Vim (and Family)"
+    },
+    {
+      "line": 2799,
+      "title": "Special Keys in Vim’s Command-Line Mode",
+      "evidence": "Special Keys in Vim’s Command-Line Mode"
+    },
+    {
+      "line": 2807,
+      "title": "Ex Commands Strike Far and Wide",
+      "evidence": "Ex Commands Strike Far and Wide"
+    },
+    {
+      "line": 2815,
+      "title": "Tip 28Execute a Command on One or More Consecutive Lines",
+      "evidence": "Tip 28Execute a Command on One or More Consecutive Lines"
+    },
+    {
+      "line": 2835,
+      "title": "Use Line Numbers as an Address",
+      "evidence": "Use Line Numbers as an Address"
+    },
+    {
+      "line": 2861,
+      "title": "Specify a Range of Lines by Address",
+      "evidence": "Specify a Range of Lines by Address"
+    },
+    {
+      "line": 2915,
+      "title": "Specify a Range of Lines by Visual Selection",
+      "evidence": "Specify a Range of Lines by Visual Selection"
+    },
+    {
+      "line": 2945,
+      "title": "Specify a Range of Lines by Patterns",
+      "evidence": "Specify a Range of Lines by Patterns"
+    },
+    {
+      "line": 2963,
+      "title": "Modify an Address Using an Offset",
+      "evidence": "Modify an Address Using an Offset"
+    },
+    {
+      "line": 2987,
+      "title": "Discussion",
+      "evidence": "Discussion"
+    },
+    {
+      "line": 3031,
+      "title": "Tip 29Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands",
+      "evidence": "Tip 29Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands"
+    },
+    {
+      "line": 3051,
+      "title": "Duplicate Lines with the ‘:t’ Command",
+      "evidence": "Duplicate Lines with the ‘:t’ Command"
+    },
+    {
+      "line": 3123,
+      "title": "Move Lines with the ‘:m’ Command",
+      "evidence": "Move Lines with the ‘:m’ Command"
+    },
+    {
+      "line": 3189,
+      "title": "Tip 30Run Normal Mode Commands Across a Range",
+      "evidence": "Tip 30Run Normal Mode Commands Across a Range"
+    },
+    {
+      "line": 3285,
+      "title": "Tip 31Repeat the Last Ex Command",
+      "evidence": "Tip 31Repeat the Last Ex Command"
+    },
+    {
+      "line": 3307,
+      "title": "Tip 32Tab-Complete Your Ex Commands",
+      "evidence": "Tip 32Tab-Complete Your Ex Commands"
+    },
+    {
+      "line": 3340,
+      "title": "Choosing from Multiple Matches",
+      "evidence": "Choosing from Multiple Matches"
+    },
+    {
+      "line": 3358,
+      "title": "Tip 33Insert the Current Word at the Command Prompt",
+      "evidence": "Tip 33Insert the Current Word at the Command Prompt"
+    },
+    {
+      "line": 3428,
+      "title": "Tip 34Recall Commands from History",
+      "evidence": "Tip 34Recall Commands from History"
+    },
+    {
+      "line": 3446,
+      "title": "Meet the Command-Line Window",
+      "evidence": "Meet the Command-Line Window"
+    },
+    {
+      "line": 3516,
+      "title": "Tip 35Run Commands in the Shell",
+      "evidence": "Tip 35Run Commands in the Shell"
+    },
+    {
+      "line": 3522,
+      "title": "Executing Programs in the Shell",
+      "evidence": "Executing Programs in the Shell"
+    },
+    {
+      "line": 3570,
+      "title": "Putting Vim in the Background",
+      "evidence": "Putting Vim in the Background"
+    },
+    {
+      "line": 3582,
+      "title": "Using the Contents of a Buffer for Standard Input or Output",
+      "evidence": "Using the Contents of a Buffer for Standard Input or Output"
+    },
+    {
+      "line": 3600,
+      "title": "Filtering the Contents of a Buffer Through an External Command",
+      "evidence": "Filtering the Contents of a Buffer Through an External Command"
+    },
+    {
+      "line": 3634,
+      "title": "Discussion",
+      "evidence": "Discussion"
+    },
+    {
+      "line": 3668,
+      "title": "Tip 36Run Multiple Ex Commands as a Batch",
+      "evidence": "Tip 36Run Multiple Ex Commands as a Batch"
+    },
+    {
+      "line": 3712,
+      "title": "Run Ex Commands One by One",
+      "evidence": "Run Ex Commands One by One"
+    },
+    {
+      "line": 3735,
+      "title": "Write Ex Commands to a Script and Source It",
+      "evidence": "Write Ex Commands to a Script and Source It"
+    },
+    {
+      "line": 3781,
+      "title": "Source the Script to Change Multiple Files",
+      "evidence": "Source the Script to Change Multiple Files"
+    },
+    {
+      "line": 3826,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 3842,
+      "title": "Part 2",
+      "evidence": "Part 2"
+    },
+    {
+      "line": 3844,
+      "title": "Files",
+      "evidence": "Files"
+    },
+    {
+      "line": 3860,
+      "title": "Manage Multiple Files",
+      "evidence": "Manage Multiple Files"
+    },
+    {
+      "line": 3870,
+      "title": "Tip 37Track Open Files with the Buffer List",
+      "evidence": "Tip 37Track Open Files with the Buffer List"
+    },
+    {
+      "line": 3874,
+      "title": "Understand the Distinction Between Files and Buffers",
+      "evidence": "Understand the Distinction Between Files and Buffers"
+    },
+    {
+      "line": 3880,
+      "title": "Meet the Buffer List",
+      "evidence": "Meet the Buffer List"
+    },
+    {
+      "line": 3910,
+      "title": "Use the Buffer List",
+      "evidence": "Use the Buffer List"
+    },
+    {
+      "line": 3928,
+      "title": "Deleting Buffers",
+      "evidence": "Deleting Buffers"
+    },
+    {
+      "line": 3944,
+      "title": "Tip 38Group Buffers into a Collection with the Argument List",
+      "evidence": "Tip 38Group Buffers into a Collection with the Argument List"
+    },
+    {
+      "line": 3968,
+      "title": "Populate the Argument List",
+      "evidence": "Populate the Argument List"
+    },
+    {
+      "line": 3982,
+      "title": "Specify Files by Name",
+      "evidence": "Specify Files by Name"
+    },
+    {
+      "line": 3994,
+      "title": "Specify Files by Glob",
+      "evidence": "Specify Files by Glob"
+    },
+    {
+      "line": 4036,
+      "title": "Specify Files by Backtick Expansion",
+      "evidence": "Specify Files by Backtick Expansion"
+    },
+    {
+      "line": 4056,
+      "title": "Use the Argument List",
+      "evidence": "Use the Argument List"
+    },
+    {
+      "line": 4065,
+      "title": "Tip 39Manage Hidden Files",
+      "evidence": "Tip 39Manage Hidden Files"
+    },
+    {
+      "line": 4107,
+      "title": "Handle Hidden Buffers on Quit",
+      "evidence": "Handle Hidden Buffers on Quit"
+    },
+    {
+      "line": 4143,
+      "title": "Enable the ‘hidden’ Setting Before Running ‘:*do’ Commands",
+      "evidence": "Enable the ‘hidden’ Setting Before Running ‘:*do’ Commands"
+    },
+    {
+      "line": 4168,
+      "title": "Tip 40Divide Your Workspace into Split Windows",
+      "evidence": "Tip 40Divide Your Workspace into Split Windows"
+    },
+    {
+      "line": 4174,
+      "title": "Creating Split Windows",
+      "evidence": "Creating Split Windows"
+    },
+    {
+      "line": 4202,
+      "title": "Changing the Focus Between Windows",
+      "evidence": "Changing the Focus Between Windows"
+    },
+    {
+      "line": 4232,
+      "title": "Closing Windows",
+      "evidence": "Closing Windows"
+    },
+    {
+      "line": 4250,
+      "title": "Resizing and Rearranging Windows",
+      "evidence": "Resizing and Rearranging Windows"
+    },
+    {
+      "line": 4282,
+      "title": "Tip 41Organize Your Window Layouts with Tab Pages",
+      "evidence": "Tip 41Organize Your Window Layouts with Tab Pages"
+    },
+    {
+      "line": 4296,
+      "title": "How to Use Tabs",
+      "evidence": "How to Use Tabs"
+    },
+    {
+      "line": 4304,
+      "title": "Opening and Closing Tabs",
+      "evidence": "Opening and Closing Tabs"
+    },
+    {
+      "line": 4330,
+      "title": "Switching Between Tabs",
+      "evidence": "Switching Between Tabs"
+    },
+    {
+      "line": 4354,
+      "title": "Rearranging Tabs",
+      "evidence": "Rearranging Tabs"
+    },
+    {
+      "line": 4358,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 4379,
+      "title": "Open Files and Save Them to Disk",
+      "evidence": "Open Files and Save Them to Disk"
+    },
+    {
+      "line": 4391,
+      "title": "Tip 42Open a File by Its Filepath Using ‘:edit’",
+      "evidence": "Tip 42Open a File by Its Filepath Using ‘:edit’"
+    },
+    {
+      "line": 4435,
+      "title": "Open a File Relative to the Current Working Directory",
+      "evidence": "Open a File Relative to the Current Working Directory"
+    },
+    {
+      "line": 4453,
+      "title": "Open a File Relative to the Active File Directory",
+      "evidence": "Open a File Relative to the Active File Directory"
+    },
+    {
+      "line": 4475,
+      "title": "Easy Expansion of the Active File Directory",
+      "evidence": "Easy Expansion of the Active File Directory"
+    },
+    {
+      "line": 4487,
+      "title": "Tip 43Open a File by Its Filename Using ‘:find’",
+      "evidence": "Tip 43Open a File by Its Filename Using ‘:find’"
+    },
+    {
+      "line": 4493,
+      "title": "Preparation",
+      "evidence": "Preparation"
+    },
+    {
+      "line": 4509,
+      "title": "Configure the ‘path’",
+      "evidence": "Configure the ‘path’"
+    },
+    {
+      "line": 4517,
+      "title": "Smart Path Management with rails.vim",
+      "evidence": "Smart Path Management with rails.vim"
+    },
+    {
+      "line": 4523,
+      "title": "Use ‘:find’ to Look up Files by Name",
+      "evidence": "Use ‘:find’ to Look up Files by Name"
+    },
+    {
+      "line": 4541,
+      "title": "Tip 44Explore the File System with netrw",
+      "evidence": "Tip 44Explore the File System with netrw"
+    },
+    {
+      "line": 4545,
+      "title": "Preparation",
+      "evidence": "Preparation"
+    },
+    {
+      "line": 4555,
+      "title": "Meet netrw—Vim’s Native File Explorer",
+      "evidence": "Meet netrw—Vim’s Native File Explorer"
+    },
+    {
+      "line": 4573,
+      "title": "Opening the File Explorer",
+      "evidence": "Opening the File Explorer"
+    },
+    {
+      "line": 4597,
+      "title": "Working with Split Windows",
+      "evidence": "Working with Split Windows"
+    },
+    {
+      "line": 4613,
+      "title": "Doing More with netrw",
+      "evidence": "Doing More with netrw"
+    },
+    {
+      "line": 4621,
+      "title": "Tip 45Save Files to Nonexistent Directories",
+      "evidence": "Tip 45Save Files to Nonexistent Directories"
+    },
+    {
+      "line": 4645,
+      "title": "Tip 46Save a File as the Super User",
+      "evidence": "Tip 46Save a File as the Super User"
+    },
+    {
+      "line": 4701,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 4721,
+      "title": "Part 3",
+      "evidence": "Part 3"
+    },
+    {
+      "line": 4723,
+      "title": "Getting Around Faster",
+      "evidence": "Getting Around Faster"
+    },
+    {
+      "line": 4738,
+      "title": "Navigate Inside Files with Motions",
+      "evidence": "Navigate Inside Files with Motions"
+    },
+    {
+      "line": 4757,
+      "title": "Tip 47Keep Your Fingers on the Home Row",
+      "evidence": "Tip 47Keep Your Fingers on the Home Row"
+    },
+    {
+      "line": 4791,
+      "title": "Leave Your Right Hand Where It Belongs",
+      "evidence": "Leave Your Right Hand Where It Belongs"
+    },
+    {
+      "line": 4799,
+      "title": "Break the Habit of Reaching for the Arrow Keys",
+      "evidence": "Break the Habit of Reaching for the Arrow Keys"
+    },
+    {
+      "line": 4819,
+      "title": "Tip 48Distinguish Between Real Lines and Display Lines",
+      "evidence": "Tip 48Distinguish Between Real Lines and Display Lines"
+    },
+    {
+      "line": 4879,
+      "title": "Remap Line Motion Commands",
+      "evidence": "Remap Line Motion Commands"
+    },
+    {
+      "line": 4897,
+      "title": "Tip 49Move Word-Wise",
+      "evidence": "Tip 49Move Word-Wise"
+    },
+    {
+      "line": 4939,
+      "title": "Know Your Words from Your WORDS",
+      "evidence": "Know Your Words from Your WORDS"
+    },
+    {
+      "line": 5009,
+      "title": "Tip 50Find by Character",
+      "evidence": "Tip 50Find by Character"
+    },
+    {
+      "line": 5083,
+      "title": "Don't Throw Away the Reverse Character Search Command",
+      "evidence": "Don't Throw Away the Reverse Character Search Command"
+    },
+    {
+      "line": 5101,
+      "title": "Character Searches Can Include or Exclude the Target",
+      "evidence": "Character Searches Can Include or Exclude the Target"
+    },
+    {
+      "line": 5155,
+      "title": "Think Like a Scrabble® Player",
+      "evidence": "Think Like a Scrabble® Player"
+    },
+    {
+      "line": 5169,
+      "title": "Tip 51Search to Navigate",
+      "evidence": "Tip 51Search to Navigate"
+    },
+    {
+      "line": 5221,
+      "title": "Operate with a Search Motion",
+      "evidence": "Operate with a Search Motion"
+    },
+    {
+      "line": 5271,
+      "title": "Tip 52Trace Your Selection with Precision Text Objects",
+      "evidence": "Tip 52Trace Your Selection with Precision Text Objects"
+    },
+    {
+      "line": 5427,
+      "title": "Performing Operations with Text Objects",
+      "evidence": "Performing Operations with Text Objects"
+    },
+    {
+      "line": 5451,
+      "title": "Discussion",
+      "evidence": "Discussion"
+    },
+    {
+      "line": 5462,
+      "title": "Tip 53Delete Around, or Change Inside",
+      "evidence": "Tip 53Delete Around, or Change Inside"
+    },
+    {
+      "line": 5544,
+      "title": "Tip 54Mark Your Place and Snap Back to It",
+      "evidence": "Tip 54Mark Your Place and Snap Back to It"
+    },
+    {
+      "line": 5556,
+      "title": "Automatic Marks",
+      "evidence": "Automatic Marks"
+    },
+    {
+      "line": 5600,
+      "title": "Tip 55Jump Between Matching Parentheses",
+      "evidence": "Tip 55Jump Between Matching Parentheses"
+    },
+    {
+      "line": 5673,
+      "title": "Jump Between Matching Keywords",
+      "evidence": "Jump Between Matching Keywords"
+    },
+    {
+      "line": 5687,
+      "title": "Surround.vim",
+      "evidence": "Surround.vim"
+    },
+    {
+      "line": 5709,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 5726,
+      "title": "Navigate Between Files with Jumps",
+      "evidence": "Navigate Between Files with Jumps"
+    },
+    {
+      "line": 5732,
+      "title": "Tip 56Traverse the Jump List",
+      "evidence": "Tip 56Traverse the Jump List"
+    },
+    {
+      "line": 5804,
+      "title": "Beware of Mapping the Tab Key",
+      "evidence": "Beware of Mapping the Tab Key"
+    },
+    {
+      "line": 5812,
+      "title": "Tip 57Traverse the Change List",
+      "evidence": "Tip 57Traverse the Change List"
+    },
+    {
+      "line": 5838,
+      "title": "Marks for the Last Change",
+      "evidence": "Marks for the Last Change"
+    },
+    {
+      "line": 5850,
+      "title": "Tip 58Jump to the Filename Under the Cursor",
+      "evidence": "Tip 58Jump to the Filename Under the Cursor"
+    },
+    {
+      "line": 5888,
+      "title": "Specify a File Extension",
+      "evidence": "Specify a File Extension"
+    },
+    {
+      "line": 5898,
+      "title": "Specify the Directories to Look Inside",
+      "evidence": "Specify the Directories to Look Inside"
+    },
+    {
+      "line": 5914,
+      "title": "Discussion",
+      "evidence": "Discussion"
+    },
+    {
+      "line": 5926,
+      "title": "Tip 59Snap Between Files Using Global Marks",
+      "evidence": "Tip 59Snap Between Files Using Global Marks"
+    },
+    {
+      "line": 5934,
+      "title": "Set a Global Mark Before Going Code Diving",
+      "evidence": "Set a Global Mark Before Going Code Diving"
+    },
+    {
+      "line": 5952,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 5968,
+      "title": "Part 4",
+      "evidence": "Part 4"
+    },
+    {
+      "line": 5970,
+      "title": "Registers",
+      "evidence": "Registers"
+    },
+    {
+      "line": 5983,
+      "title": "Copy and Paste",
+      "evidence": "Copy and Paste"
+    },
+    {
+      "line": 5993,
+      "title": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register",
+      "evidence": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register"
+    },
+    {
+      "line": 5999,
+      "title": "Transposing Characters",
+      "evidence": "Transposing Characters"
+    }
+  ],
+  "problems": [
+    {
+      "line": 632,
+      "kind": "garbled",
+      "evidence": "NotationMeaning"
+    },
+    {
+      "line": 980,
+      "kind": "garbled",
+      "evidence": "Tip 1Meet the Dot Command"
+    },
+    {
+      "line": 1002,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents"
+    },
+    {
+      "line": 1325,
+      "kind": "garbled",
+      "evidence": "IntentActRepeatReverse"
+    },
+    {
+      "line": 1804,
+      "kind": "garbled",
+      "evidence": "TriggerEffect"
+    },
+    {
+      "line": 2758,
+      "kind": "garbled",
+      "evidence": "CommandEffect"
+    },
+    {
+      "line": 3840,
+      "kind": "duplicated",
+      "evidence": "Practical Vim, 2nd Edition"
+    },
+    {
+      "line": 4000,
+      "kind": "garbled",
+      "evidence": "GlobFiles Matching the Expansion"
+    },
+    {
+      "line": 4236,
+      "kind": "garbled",
+      "evidence": "Ex CommandNormal CommandEffect"
+    },
+    {
+      "line": 4254,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents"
+    },
+    {
+      "line": 4581,
+      "kind": "garbled",
+      "evidence": "Ex CommandShorthandEffect"
+    },
+    {
+      "line": 4719,
+      "kind": "duplicated",
+      "evidence": "Practical Vim, 2nd Edition"
+    },
+    {
+      "line": 5361,
+      "kind": "garbled",
+      "evidence": "Text ObjectSelectionText ObjectSelection"
+    },
+    {
+      "line": 5468,
+      "kind": "garbled",
+      "evidence": "KeystrokesCurrent…KeystrokesCurrent…"
+    },
+    {
+      "line": 5564,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents"
+    },
+    {
+      "line": 5566,
+      "kind": "garbled",
+      "evidence": "“"
+    },
+    {
+      "line": 5966,
+      "kind": "duplicated",
+      "evidence": "Practical Vim, 2nd Edition"
+    }
+  ],
+  "summary": "This slice covers the front matter (publisher notes, Read Me, notation conventions) and Parts 1-4 through the opening of Chapter 10: the Vim way and the dot command, Normal/Insert/Visual/Command-Line modes, buffers and files, motions and jumps, and the start of the registers chapter. It is instructional prose organized as 60 numbered tips, dense with keystroke/buffer tables and cross-references.",
+  "concepts": [
+    "dot command",
+    "Normal mode",
+    "Insert mode",
+    "Visual mode",
+    "Visual-Block mode",
+    "Command-Line mode",
+    "Ex commands",
+    "operator + motion",
+    "text objects",
+    "buffer list",
+    "argument list",
+    "jump list"
+  ]
+}

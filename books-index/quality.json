@@ -22,6 +22,9 @@
       }
     ],
     "headings": 293,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "gourmet-vim": {
@@ -63,6 +66,9 @@
       }
     ],
     "headings": 404,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "learning-vi-vim": {
@@ -116,6 +122,11 @@
       }
     ],
     "headings": 3455,
+    "chapter_labels": [
+      0
+    ],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "modern-vim": {
@@ -169,6 +180,9 @@
       }
     ],
     "headings": 439,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "neovim-for-beginners": {
@@ -222,6 +236,42 @@
       }
     ],
     "headings": 123,
+    "chapter_labels": [
+      0,
+      9,
+      27,
+      31,
+      95,
+      119,
+      130
+    ],
+    "chapter_label_gaps": [
+      [
+        0,
+        9
+      ],
+      [
+        9,
+        27
+      ],
+      [
+        27,
+        31
+      ],
+      [
+        31,
+        95
+      ],
+      [
+        95,
+        119
+      ],
+      [
+        119,
+        130
+      ]
+    ],
+    "partial_source": true,
     "needs_review": true
   },
   "practical-vim": {
@@ -275,6 +325,9 @@
       }
     ],
     "headings": 1330,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "pro-vim": {
@@ -328,6 +381,9 @@
       }
     ],
     "headings": 1587,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "use-vim-like-a-pro": {
@@ -353,6 +409,9 @@
       }
     ],
     "headings": 124,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "vim-101-hacks": {
@@ -402,6 +461,9 @@
       }
     ],
     "headings": 530,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   },
   "vim-reference-guide": {
@@ -435,6 +497,9 @@
       }
     ],
     "headings": 195,
+    "chapter_labels": [],
+    "chapter_label_gaps": [],
+    "partial_source": false,
     "needs_review": true
   }
 }

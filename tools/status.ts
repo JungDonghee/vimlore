@@ -28,7 +28,7 @@ const total = pick('cases'), matched = pick('matched'), open = pick('divergences
 const state = total && matched && open ? { matched: Number(matched), total: Number(total), open: Number(open) } : null;
 const fields = [...report.matchAll(/^\| (undo|reg|regtype) \| (\d+) \|$/gm)].map((x) => `${x[1]} ${x[2]}`);
 const raw = existsSync('dist/vimlore.html') ? statSync('dist/vimlore.html').size : null;
-const booksMeta = exists('books-index/books.json') ? JSON.parse(read('books-index/books.json', 'utf8')) as { lines: number; headings: number }[] : null;
+const booksMeta = exists('books-index/books.json') ? JSON.parse(read('books-index/books.json', 'utf8')) as { lines: number; headings: number; partial_source?: boolean; slug?: string }[] : null;
 const coverage = exists('books-index/coverage.json') ? JSON.parse(read('books-index/coverage.json', 'utf8')) as { complete: boolean; chunks: number } : null;
 const audit = exists('books-index/agent-audit.json') ? JSON.parse(read('books-index/agent-audit.json', 'utf8')) as { headings: unknown[]; problems: unknown[]; rejected: unknown[] } : null;
 
@@ -48,6 +48,7 @@ const lines = [
   `| manifest rows (counted) | ${MANIFEST.length} (${countedRows}) |`,
   `| chapters / stages | ${CHAPTERS.length} / ${stages} |`,
   booksMeta ? `| books / source lines | ${booksMeta.length} / ${booksMeta.reduce((n, b) => n + b.lines, 0).toLocaleString()} |` : '| books | corpus not built |',
+  booksMeta ? `| books with partial source | ${booksMeta.filter((b) => b.partial_source).map((b) => b.slug).join(', ') || 'none'} |` : '',
   coverage ? `| book chunks / coverage | ${coverage.chunks} / ${coverage.complete ? 'complete' : 'INCOMPLETE'} |` : '',
   audit ? `| audited book headings / problems / rejected | ${audit.headings.length} / ${audit.problems.length} / ${audit.rejected.length} |` : '| book audit | pending |',
   state ? `| state matrix matched / total / open | ${state.matched.toLocaleString()} / ${state.total.toLocaleString()} / ${state.open} |` : '| state matrix | report missing |',

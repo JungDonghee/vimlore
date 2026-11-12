@@ -1,0 +1,190 @@
+{
+  "id": "learning-vi-vim-audit-05",
+  "book": "learning-vi-vim",
+  "start": 24001,
+  "end": 30000,
+  "headings": [
+    {
+      "line": 24598,
+      "title": "Appendix B. Setting Options",
+      "evidence": "Appendix B. Setting Options"
+    },
+    {
+      "line": 24604,
+      "title": "Heirloom and Solaris vi Options",
+      "evidence": "Heirloom and Solaris vi Options"
+    },
+    {
+      "line": 24946,
+      "title": "Vim 8.2 Options",
+      "evidence": "Vim 8.2 Options"
+    },
+    {
+      "line": 25548,
+      "title": "Appendix C. The Lighter Side of vi",
+      "evidence": "Appendix C. The Lighter Side of vi"
+    },
+    {
+      "line": 25578,
+      "title": "Accessing the Files",
+      "evidence": "Accessing the Files"
+    },
+    {
+      "line": 25588,
+      "title": "Example Files",
+      "evidence": "Example Files"
+    },
+    {
+      "line": 25593,
+      "title": "Source for clewn",
+      "evidence": "Source for clewn"
+    },
+    {
+      "line": 25604,
+      "title": "Online vi Tutorial",
+      "evidence": "Online vi Tutorial"
+    },
+    {
+      "line": 25648,
+      "title": "vi Powered!",
+      "evidence": "vi Powered!"
+    },
+    {
+      "line": 25691,
+      "title": "vi for Java Lovers",
+      "evidence": "vi for Java Lovers"
+    },
+    {
+      "line": 25706,
+      "title": "The Vim Clutch",
+      "evidence": "The Vim Clutch"
+    },
+    {
+      "line": 25720,
+      "title": "Amaze Your Friends!",
+      "evidence": "Amaze Your Friends!"
+    },
+    {
+      "line": 25792,
+      "title": "The Towers of Hanoi, vi Version",
+      "evidence": "The Towers of Hanoi, vi Version"
+    },
+    {
+      "line": 25858,
+      "title": "The Vi Lovers Home Page",
+      "evidence": "The Vi Lovers Home Page"
+    },
+    {
+      "line": 25881,
+      "title": "A Different vi Clone",
+      "evidence": "A Different vi Clone"
+    },
+    {
+      "line": 25904,
+      "title": "Tastes Great, Less Filling",
+      "evidence": "Tastes Great, Less Filling"
+    },
+    {
+      "line": 25956,
+      "title": "vi Quotes",
+      "evidence": "vi Quotes"
+    },
+    {
+      "line": 25995,
+      "title": "Appendix D. vi and Vim: Source Code and Building",
+      "evidence": "Appendix D. vi and Vim: Source Code and Building"
+    },
+    {
+      "line": 26001,
+      "title": "Nothing Like the Original",
+      "evidence": "Nothing Like the Original"
+    },
+    {
+      "line": 26023,
+      "title": "Where to Get Vim",
+      "evidence": "Where to Get Vim"
+    },
+    {
+      "line": 26138,
+      "title": "Getting Vim for Unix and GNU/Linux",
+      "evidence": "Getting Vim for Unix and GNU/Linux"
+    },
+    {
+      "line": 26217,
+      "title": "Getting Vim for Windows Environments",
+      "evidence": "Getting Vim for Windows Environments"
+    },
+    {
+      "line": 26219,
+      "title": "MS Windows gvim",
+      "evidence": "MS Windows gvim"
+    },
+    {
+      "line": 26234,
+      "title": "Cygwin for Windows",
+      "evidence": "Cygwin for Windows"
+    },
+    {
+      "line": 26242,
+      "title": "Using Vim with Cygwin",
+      "evidence": "Using Vim with Cygwin"
+    },
+    {
+      "line": 26270,
+      "title": "Windows Subsystem for Linux and Vim",
+      "evidence": "Windows Subsystem for Linux and Vim"
+    },
+    {
+      "line": 26285,
+      "title": "Getting Vim for the Macintosh Environment",
+      "evidence": "Getting Vim for the Macintosh Environment"
+    },
+    {
+      "line": 26291,
+      "title": "Native macOS Vim",
+      "evidence": "Native macOS Vim"
+    },
+    {
+      "line": 26321,
+      "title": "Installing Vim with Homebrew",
+      "evidence": "Installing Vim with Homebrew"
+    },
+    {
+      "line": 26335,
+      "title": "Other Operating Systems",
+      "evidence": "Other Operating Systems"
+    },
+    {
+      "line": 26357,
+      "title": "Index",
+      "evidence": "Index"
+    },
+    {
+      "line": 26359,
+      "title": "Symbols",
+      "evidence": "Symbols"
+    }
+  ],
+  "problems": [
+    {
+      "line": 28650,
+      "kind": "duplicated",
+      "evidence": "indentexpr option, Auto and Smart Indenting, indentexpr"
+    }
+  ],
+  "summary": "This slice completes Appendix A's alphabetical ex command reference, then presents Appendix B's set-option tables for “Heirloom”/Solaris vi and Vim 8.2, Appendix C's vi miscellany (project files, logos, the Vim clutch, Towers of Hanoi macros, the vi-versus-Emacs debate, quotations), and Appendix D's guidance on obtaining and building vi and Vim on Unix, Windows, and macOS. It ends where the book's alphabetical Index begins.",
+  "concepts": [
+    "ex command summary",
+    "set options",
+    "Heirloom vi",
+    "Vim 8.2",
+    "vi clones",
+    "building Vim from source",
+    "MacVim",
+    "Homebrew",
+    "vi macros",
+    "Towers of Hanoi",
+    "vi vs Emacs",
+    "index"
+  ]
+}

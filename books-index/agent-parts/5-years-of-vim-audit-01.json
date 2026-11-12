@@ -1,0 +1,330 @@
+{
+  "id": "5-years-of-vim-audit-01",
+  "book": "5-years-of-vim",
+  "start": 1,
+  "end": 1418,
+  "headings": [
+    {
+      "line": 14,
+      "title": "Thank You",
+      "evidence": "Thank You"
+    },
+    {
+      "line": 34,
+      "title": "Contents",
+      "evidence": "Contents"
+    },
+    {
+      "line": 55,
+      "title": "Preface",
+      "evidence": "Preface"
+    },
+    {
+      "line": 118,
+      "title": "Vim for Writers (Jul 18, 2017)",
+      "evidence": "Vim for Writers (Jul 18, 2017)"
+    },
+    {
+      "line": 159,
+      "title": "Learning Vim",
+      "evidence": "Learning Vim"
+    },
+    {
+      "line": 200,
+      "title": "Search",
+      "evidence": "Search"
+    },
+    {
+      "line": 207,
+      "title": "Spell Checking",
+      "evidence": "Spell Checking"
+    },
+    {
+      "line": 214,
+      "title": "Thesaurus",
+      "evidence": "Thesaurus"
+    },
+    {
+      "line": 231,
+      "title": "Summing up",
+      "evidence": "Summing up"
+    },
+    {
+      "line": 241,
+      "title": "Vim in 3 Minutes (Aug 20, 2018)",
+      "evidence": "Vim in 3 Minutes (Aug 20, 2018)"
+    },
+    {
+      "line": 244,
+      "title": "What is Vim?",
+      "evidence": "What is Vim?"
+    },
+    {
+      "line": 246,
+      "title": "How do I get Vim?",
+      "evidence": "How do I get Vim?"
+    },
+    {
+      "line": 251,
+      "title": "How do I use Vim?",
+      "evidence": "How do I use Vim?"
+    },
+    {
+      "line": 288,
+      "title": "Summing up:",
+      "evidence": "Summing up:"
+    },
+    {
+      "line": 322,
+      "title": "Modern Day Vim (Sep 8, 2018)",
+      "evidence": "Modern Day Vim (Sep 8, 2018)"
+    },
+    {
+      "line": 331,
+      "title": "History",
+      "evidence": "History"
+    },
+    {
+      "line": 345,
+      "title": "New functionalities",
+      "evidence": "New functionalities"
+    },
+    {
+      "line": 352,
+      "title": "Asynchronous execution",
+      "evidence": "Asynchronous execution"
+    },
+    {
+      "line": 362,
+      "title": "Terminal",
+      "evidence": "Terminal"
+    },
+    {
+      "line": 373,
+      "title": "Conclusion",
+      "evidence": "Conclusion"
+    },
+    {
+      "line": 382,
+      "title": "Changing to Neovim (Sep 19, 2018)",
+      "evidence": "Changing to Neovim (Sep 19, 2018)"
+    },
+    {
+      "line": 388,
+      "title": "Modern Day Vim",
+      "evidence": "Modern Day Vim"
+    },
+    {
+      "line": 441,
+      "title": "Sessions: The Vim feature no one talks about (Oct 1, 2018)",
+      "evidence": "Sessions: The Vim feature no one"
+    },
+    {
+      "line": 490,
+      "title": "Using Neovim as a window manager (Nov 2, 2018)",
+      "evidence": "Using Neovim as a window manager"
+    },
+    {
+      "line": 543,
+      "title": "Using Neovim for Javascript development (Nov 7, 2018)",
+      "evidence": "Using Neovim for Javascript"
+    },
+    {
+      "line": 569,
+      "title": "Auto-Completion",
+      "evidence": "Auto-Completion"
+    },
+    {
+      "line": 640,
+      "title": "Linting",
+      "evidence": "Linting"
+    },
+    {
+      "line": 652,
+      "title": "File jumping",
+      "evidence": "File jumping"
+    },
+    {
+      "line": 666,
+      "title": "Conclusion",
+      "evidence": "Conclusion"
+    },
+    {
+      "line": 671,
+      "title": "Pros and Cons of Vim in 2018 (Nov 29, 2018)",
+      "evidence": "Pros and Cons of Vim in 2018 (Nov"
+    },
+    {
+      "line": 687,
+      "title": "Pros",
+      "evidence": "Pros"
+    },
+    {
+      "line": 714,
+      "title": "Cons",
+      "evidence": "Cons"
+    },
+    {
+      "line": 734,
+      "title": "Conclusion",
+      "evidence": "Conclusion"
+    },
+    {
+      "line": 742,
+      "title": "Useful Vim tricks for 2019",
+      "evidence": "Useful Vim tricks for 2019"
+    },
+    {
+      "line": 776,
+      "title": "Moving inside a file",
+      "evidence": "Moving inside a file"
+    },
+    {
+      "line": 863,
+      "title": "Done with Vimtutor, now what? (Jan 1, 2019)",
+      "evidence": "Done with Vimtutor, now what? (Jan"
+    },
+    {
+      "line": 876,
+      "title": "Read The Freackin User Manual!",
+      "evidence": "Read The Freackin User Manual!"
+    },
+    {
+      "line": 895,
+      "title": "Read a vim oriented book",
+      "evidence": "Read a vim oriented book"
+    },
+    {
+      "line": 913,
+      "title": "7 things you should know about Vim (Feb 26, 2019)",
+      "evidence": "7 things you should know about Vim"
+    },
+    {
+      "line": 985,
+      "title": "Hacking git and Vim together (Mar 21, 2019)",
+      "evidence": "Hacking git and Vim together (Mar"
+    },
+    {
+      "line": 1060,
+      "title": "My minimal .vimrc config (Apr 11, 2019)",
+      "evidence": "My minimal .vimrc config (Apr 11,"
+    },
+    {
+      "line": 1072,
+      "title": "What configurations do I really need when using Vim?",
+      "evidence": "What configurations do I really need when"
+    },
+    {
+      "line": 1085,
+      "title": "My minimal .vimrc configurations",
+      "evidence": "My minimal .vimrc configurations"
+    },
+    {
+      "line": 1152,
+      "title": "Conclusion",
+      "evidence": "Conclusion"
+    },
+    {
+      "line": 1160,
+      "title": "5 tips to speed up your Vim action (Nov 13, 2020)",
+      "evidence": "5 tips to speed up your Vim action"
+    },
+    {
+      "line": 1217,
+      "title": "Exclusive articles",
+      "evidence": "Exclusive articles"
+    },
+    {
+      "line": 1218,
+      "title": "File drawers, what?",
+      "evidence": "File drawers, what?"
+    },
+    {
+      "line": 1232,
+      "title": "But do we really need a plugin?",
+      "evidence": "But do we really need a plugin?"
+    },
+    {
+      "line": 1264,
+      "title": "What if we don’t need a file explorer but still want something more visual?",
+      "evidence": "What if we don’t need a file explorer but still want"
+    },
+    {
+      "line": 1285,
+      "title": "No Nerdtree? No problem!",
+      "evidence": "No Nerdtree? No problem!"
+    },
+    {
+      "line": 1324,
+      "title": "But I’m a vim-vinegar user!",
+      "evidence": "But I’m a vim-vinegar user!"
+    },
+    {
+      "line": 1350,
+      "title": "Falling in love with Vim… Again",
+      "evidence": "Falling in love with Vim… Again"
+    },
+    {
+      "line": 1399,
+      "title": "Conclusion and Bye Bye!",
+      "evidence": "Conclusion and Bye Bye!"
+    }
+  ],
+  "problems": [
+    {
+      "line": 308,
+      "kind": "garbled",
+      "evidence": "CONTENTS 10 y Yank"
+    },
+    {
+      "line": 311,
+      "kind": "garbled",
+      "evidence": "### Motions h Left (like left arrow) j Down (like down arrow) k Up (like up arrow) l Right (like right arrow) w Work forward/right b Work back/left W Whitespace work forward B Whitespace work back 0 Start of line $ End of line ^ Non-whitespace start of line"
+    },
+    {
+      "line": 575,
+      "kind": "garbled",
+      "evidence": "3 nstall -g tern’ }"
+    },
+    {
+      "line": 611,
+      "kind": "garbled",
+      "evidence": "3 ) }"
+    },
+    {
+      "line": 624,
+      "kind": "garbled",
+      "evidence": "16 i#input_patterns’,{})"
+    },
+    {
+      "line": 628,
+      "kind": "garbled",
+      "evidence": "20 let g:tern#arguments = [“ — persistent”]"
+    },
+    {
+      "line": 1048,
+      "kind": "garbled",
+      "evidence": "5 created with Vim” %"
+    },
+    {
+      "line": 1049,
+      "kind": "garbled",
+      "evidence": "6 map <F5> :! git log — oneline — abbrev-commit"
+    }
+  ],
+  "summary": "This slice contains the front matter, preface, and a run of dated blog-post chapters that move from Vim basics and writing workflows to Neovim, sessions, JavaScript tooling, git, a minimal .vimrc, and file-navigation alternatives, ending with the author's closing essay. It is a practical, opinionated collection of tips rather than a systematic Vim manual.",
+  "concepts": [
+    "modal editing",
+    "vimrc",
+    "vimtutor",
+    "Neovim",
+    "Vim sessions",
+    "terminal mode",
+    "netrw",
+    "NERDTree",
+    "vim-vinegar",
+    "ctags",
+    "vim-plug",
+    "git integration"
+  ]
+}

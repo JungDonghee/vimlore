@@ -1,0 +1,50 @@
+{
+  "id": "learning-vi-vim-audit-06",
+  "book": "learning-vi-vim",
+  "start": 30001,
+  "end": 30957,
+  "headings": [
+    {
+      "line": 30836,
+      "title": "About the Authors",
+      "evidence": "About the Authors"
+    },
+    {
+      "line": 30923,
+      "title": "Colophon",
+      "evidence": "Colophon"
+    }
+  ],
+  "problems": [
+    {
+      "line": 30040,
+      "kind": "garbled",
+      "evidence": "+-- fold placeholder, Manual Folding"
+    },
+    {
+      "line": 30068,
+      "kind": "duplicated",
+      "evidence": "source code sources"
+    },
+    {
+      "line": 30921,
+      "kind": "duplicated",
+      "evidence": "Learning the vi and Vim Editors, 8th Edition"
+    }
+  ],
+  "summary": "Summary: this slice contains no instructional prose. It is the tail of the book's alphabetical back-of-book index (headwords from 'bottom-line command overview' through 'ZZ to quit and save', covering letters S-Z), followed by two back-matter sections, 'About the Authors' (biographies of Arnold Robbins and Elbert Hannah) and the 'Colophon' describing the tarsier cover animal.",
+  "concepts": [
+    "back-of-book index",
+    "tags and ctags",
+    "code folding",
+    "syntax highlighting",
+    "multiple windows and tabs",
+    "command-line options",
+    "plug-ins",
+    "quickfix list",
+    "spellchecking",
+    "undo",
+    "gvim",
+    "startup configuration"
+  ]
+}

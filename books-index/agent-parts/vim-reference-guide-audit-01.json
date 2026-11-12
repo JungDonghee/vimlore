@@ -1,0 +1,910 @@
+{
+ "id": "vim-reference-guide-audit-01",
+ "book": "vim-reference-guide",
+ "start": 1,
+ "end": 2823,
+ "headings": [
+  {
+   "line": 1,
+   "title": "Table of contents",
+   "evidence": "Table of contents"
+  },
+  {
+   "line": 167,
+   "title": "Preface",
+   "evidence": "Preface"
+  },
+  {
+   "line": 178,
+   "title": "Prerequisites",
+   "evidence": "Prerequisites"
+  },
+  {
+   "line": 187,
+   "title": "Conventions",
+   "evidence": "Conventions"
+  },
+  {
+   "line": 197,
+   "title": "How to use this guide",
+   "evidence": "How to use this guide"
+  },
+  {
+   "line": 211,
+   "title": "Acknowledgements",
+   "evidence": "Acknowledgements"
+  },
+  {
+   "line": 220,
+   "title": "Feedback and Errata",
+   "evidence": "Feedback and Errata"
+  },
+  {
+   "line": 229,
+   "title": "Author info",
+   "evidence": "Author info"
+  },
+  {
+   "line": 241,
+   "title": "License",
+   "evidence": "License"
+  },
+  {
+   "line": 247,
+   "title": "Book version",
+   "evidence": "Book version"
+  },
+  {
+   "line": 252,
+   "title": "Introduction",
+   "evidence": "Introduction"
+  },
+  {
+   "line": 273,
+   "title": "Why Vim?",
+   "evidence": "Why Vim?"
+  },
+  {
+   "line": 305,
+   "title": "Installation",
+   "evidence": "Installation"
+  },
+  {
+   "line": 312,
+   "title": "Ice Breaker",
+   "evidence": "Ice Breaker"
+  },
+  {
+   "line": 351,
+   "title": "Built-in tutor",
+   "evidence": "Built-in tutor"
+  },
+  {
+   "line": 360,
+   "title": "Built-in help",
+   "evidence": "Built-in help"
+  },
+  {
+   "line": 394,
+   "title": "Vim learning resources",
+   "evidence": "Vim learning resources"
+  },
+  {
+   "line": 397,
+   "title": "Tutorials",
+   "evidence": "Tutorials"
+  },
+  {
+   "line": 402,
+   "title": "Books",
+   "evidence": "Books"
+  },
+  {
+   "line": 406,
+   "title": "Interactive",
+   "evidence": "Interactive"
+  },
+  {
+   "line": 415,
+   "title": "Modes of Operation",
+   "evidence": "Modes of Operation"
+  },
+  {
+   "line": 425,
+   "title": "Insert mode",
+   "evidence": "Insert mode"
+  },
+  {
+   "line": 429,
+   "title": "Normal mode",
+   "evidence": "Normal mode"
+  },
+  {
+   "line": 432,
+   "title": "Visual mode",
+   "evidence": "Visual mode"
+  },
+  {
+   "line": 436,
+   "title": "Command-line mode",
+   "evidence": "Command-line mode"
+  },
+  {
+   "line": 442,
+   "title": "Identifying the current mode",
+   "evidence": "Identifying the current mode"
+  },
+  {
+   "line": 452,
+   "title": "Vim philosophy and features",
+   "evidence": "Vim philosophy and features"
+  },
+  {
+   "line": 504,
+   "title": "Vim’s history",
+   "evidence": "Vim’s history"
+  },
+  {
+   "line": 507,
+   "title": "Chapters",
+   "evidence": "Chapters"
+  },
+  {
+   "line": 519,
+   "title": "Insert mode",
+   "evidence": "Insert mode"
+  },
+  {
+   "line": 527,
+   "title": "Motion keys and commands",
+   "evidence": "Motion keys and commands"
+  },
+  {
+   "line": 547,
+   "title": "Deleting",
+   "evidence": "Deleting"
+  },
+  {
+   "line": 559,
+   "title": "Autocomplete word",
+   "evidence": "Autocomplete word"
+  },
+  {
+   "line": 571,
+   "title": "Autocomplete line",
+   "evidence": "Autocomplete line"
+  },
+  {
+   "line": 576,
+   "title": "Autocomplete assist",
+   "evidence": "Autocomplete assist"
+  },
+  {
+   "line": 580,
+   "title": "Execute a Normal mode command",
+   "evidence": "Execute a Normal mode command"
+  },
+  {
+   "line": 585,
+   "title": "Indenting",
+   "evidence": "Indenting"
+  },
+  {
+   "line": 593,
+   "title": "Insert register contents",
+   "evidence": "Insert register contents"
+  },
+  {
+   "line": 608,
+   "title": "Insert special characters",
+   "evidence": "Insert special characters"
+  },
+  {
+   "line": 615,
+   "title": "Insert digraphs",
+   "evidence": "Insert digraphs"
+  },
+  {
+   "line": 624,
+   "title": "Normal mode",
+   "evidence": "Normal mode"
+  },
+  {
+   "line": 633,
+   "title": "Arrow motions",
+   "evidence": "Arrow motions"
+  },
+  {
+   "line": 645,
+   "title": "Cut",
+   "evidence": "Cut"
+  },
+  {
+   "line": 680,
+   "title": "Copy",
+   "evidence": "Copy"
+  },
+  {
+   "line": 693,
+   "title": "Paste",
+   "evidence": "Paste"
+  },
+  {
+   "line": 708,
+   "title": "Undo",
+   "evidence": "Undo"
+  },
+  {
+   "line": 714,
+   "title": "Redo",
+   "evidence": "Redo"
+  },
+  {
+   "line": 717,
+   "title": "Replace characters",
+   "evidence": "Replace characters"
+  },
+  {
+   "line": 735,
+   "title": "Repeat a change",
+   "evidence": "Repeat a change"
+  },
+  {
+   "line": 749,
+   "title": "Open new line",
+   "evidence": "Open new line"
+  },
+  {
+   "line": 754,
+   "title": "Moving within the current line",
+   "evidence": "Moving within the current line"
+  },
+  {
+   "line": 778,
+   "title": "Character motions",
+   "evidence": "Character motions"
+  },
+  {
+   "line": 795,
+   "title": "Word motions",
+   "evidence": "Word motions"
+  },
+  {
+   "line": 821,
+   "title": "Text object motions",
+   "evidence": "Text object motions"
+  },
+  {
+   "line": 828,
+   "title": "Moving within the current file",
+   "evidence": "Moving within the current file"
+  },
+  {
+   "line": 844,
+   "title": "Moving within the visible window",
+   "evidence": "Moving within the visible window"
+  },
+  {
+   "line": 848,
+   "title": "Scrolling",
+   "evidence": "Scrolling"
+  },
+  {
+   "line": 856,
+   "title": "Reposition the current line",
+   "evidence": "Reposition the current line"
+  },
+  {
+   "line": 865,
+   "title": "Indenting",
+   "evidence": "Indenting"
+  },
+  {
+   "line": 882,
+   "title": "Mark frequently used locations",
+   "evidence": "Mark frequently used locations"
+  },
+  {
+   "line": 901,
+   "title": "Jumping back and forth",
+   "evidence": "Jumping back and forth"
+  },
+  {
+   "line": 917,
+   "title": "Edit with motion",
+   "evidence": "Edit with motion"
+  },
+  {
+   "line": 941,
+   "title": "Context editing",
+   "evidence": "Context editing"
+  },
+  {
+   "line": 973,
+   "title": "Named registers",
+   "evidence": "Named registers"
+  },
+  {
+   "line": 987,
+   "title": "Special registers",
+   "evidence": "Special registers"
+  },
+  {
+   "line": 1005,
+   "title": "Further reading",
+   "evidence": "Further reading"
+  },
+  {
+   "line": 1012,
+   "title": "Search word nearest to the cursor",
+   "evidence": "Search word nearest to the cursor"
+  },
+  {
+   "line": 1025,
+   "title": "Join lines",
+   "evidence": "Join lines"
+  },
+  {
+   "line": 1036,
+   "title": "Changing case",
+   "evidence": "Changing case"
+  },
+  {
+   "line": 1048,
+   "title": "Increment and Decrement numbers",
+   "evidence": "Increment and Decrement numbers"
+  },
+  {
+   "line": 1060,
+   "title": "Miscellaneous",
+   "evidence": "Miscellaneous"
+  },
+  {
+   "line": 1075,
+   "title": "Switching modes",
+   "evidence": "Switching modes"
+  },
+  {
+   "line": 1076,
+   "title": "Normal to Insert mode",
+   "evidence": "Normal to Insert mode"
+  },
+  {
+   "line": 1093,
+   "title": "Normal to Command-line mode",
+   "evidence": "Normal to Command-line mode"
+  },
+  {
+   "line": 1097,
+   "title": "Normal to Visual mode",
+   "evidence": "Normal to Visual mode"
+  },
+  {
+   "line": 1106,
+   "title": "Command-line mode",
+   "evidence": "Command-line mode"
+  },
+  {
+   "line": 1121,
+   "title": "Save changes",
+   "evidence": "Save changes"
+  },
+  {
+   "line": 1131,
+   "title": "Quit Vim",
+   "evidence": "Quit Vim"
+  },
+  {
+   "line": 1141,
+   "title": "Combining Save and Quit",
+   "evidence": "Combining Save and Quit"
+  },
+  {
+   "line": 1146,
+   "title": "Working with buffers and tabs",
+   "evidence": "Working with buffers and tabs"
+  },
+  {
+   "line": 1152,
+   "title": "Buffers",
+   "evidence": "Buffers"
+  },
+  {
+   "line": 1177,
+   "title": "Tabs",
+   "evidence": "Tabs"
+  },
+  {
+   "line": 1202,
+   "title": "Splitting",
+   "evidence": "Splitting"
+  },
+  {
+   "line": 1226,
+   "title": "Edit all buffers",
+   "evidence": "Edit all buffers"
+  },
+  {
+   "line": 1237,
+   "title": "Further reading",
+   "evidence": "Further reading"
+  },
+  {
+   "line": 1242,
+   "title": "Setting options",
+   "evidence": "Setting options"
+  },
+  {
+   "line": 1271,
+   "title": "Search",
+   "evidence": "Search"
+  },
+  {
+   "line": 1317,
+   "title": "Range",
+   "evidence": "Range"
+  },
+  {
+   "line": 1356,
+   "title": "Search and Replace",
+   "evidence": "Search and Replace"
+  },
+  {
+   "line": 1378,
+   "title": "Editing lines filtered by a pattern",
+   "evidence": "Editing lines filtered by a pattern"
+  },
+  {
+   "line": 1404,
+   "title": "Shell commands",
+   "evidence": "Shell commands"
+  },
+  {
+   "line": 1427,
+   "title": "Terminal mode",
+   "evidence": "Terminal mode"
+  },
+  {
+   "line": 1449,
+   "title": "Line number settings",
+   "evidence": "Line number settings"
+  },
+  {
+   "line": 1464,
+   "title": "Sessions",
+   "evidence": "Sessions"
+  },
+  {
+   "line": 1477,
+   "title": "Viminfo",
+   "evidence": "Viminfo"
+  },
+  {
+   "line": 1500,
+   "title": "Motion, editing and completion commands",
+   "evidence": "Motion, editing and completion commands"
+  },
+  {
+   "line": 1527,
+   "title": "Command-line history",
+   "evidence": "Command-line history"
+  },
+  {
+   "line": 1537,
+   "title": "Command-line window",
+   "evidence": "Command-line window"
+  },
+  {
+   "line": 1553,
+   "title": "Visual mode",
+   "evidence": "Visual mode"
+  },
+  {
+   "line": 1563,
+   "title": "Selection",
+   "evidence": "Selection"
+  },
+  {
+   "line": 1579,
+   "title": "Editing",
+   "evidence": "Editing"
+  },
+  {
+   "line": 1608,
+   "title": "Search and Select",
+   "evidence": "Search and Select"
+  },
+  {
+   "line": 1622,
+   "title": "Indenting",
+   "evidence": "Indenting"
+  },
+  {
+   "line": 1650,
+   "title": "Changing Case",
+   "evidence": "Changing Case"
+  },
+  {
+   "line": 1655,
+   "title": "Increment and Decrement numbers",
+   "evidence": "Increment and Decrement numbers"
+  },
+  {
+   "line": 1698,
+   "title": "Regular Expressions",
+   "evidence": "Regular Expressions"
+  },
+  {
+   "line": 1712,
+   "title": "Flags",
+   "evidence": "Flags"
+  },
+  {
+   "line": 1724,
+   "title": "Anchors",
+   "evidence": "Anchors"
+  },
+  {
+   "line": 1748,
+   "title": "Dot metacharacter",
+   "evidence": "Dot metacharacter"
+  },
+  {
+   "line": 1757,
+   "title": "Greedy Quantifiers",
+   "evidence": "Greedy Quantifiers"
+  },
+  {
+   "line": 1792,
+   "title": "Non-greedy Quantifiers",
+   "evidence": "Non-greedy Quantifiers"
+  },
+  {
+   "line": 1805,
+   "title": "Character Classes",
+   "evidence": "Character Classes"
+  },
+  {
+   "line": 1854,
+   "title": "Alternation and Grouping",
+   "evidence": "Alternation and Grouping"
+  },
+  {
+   "line": 1881,
+   "title": "Backreference",
+   "evidence": "Backreference"
+  },
+  {
+   "line": 1917,
+   "title": "Lookarounds",
+   "evidence": "Lookarounds"
+  },
+  {
+   "line": 1954,
+   "title": "Atomic Grouping",
+   "evidence": "Atomic Grouping"
+  },
+  {
+   "line": 1969,
+   "title": "Set start and end of the match",
+   "evidence": "Set start and end of the match"
+  },
+  {
+   "line": 1982,
+   "title": "Magic modifiers",
+   "evidence": "Magic modifiers"
+  },
+  {
+   "line": 1986,
+   "title": "Magic and nomagic",
+   "evidence": "Magic and nomagic"
+  },
+  {
+   "line": 1994,
+   "title": "Very magic",
+   "evidence": "Very magic"
+  },
+  {
+   "line": 2012,
+   "title": "Very nomagic",
+   "evidence": "Very nomagic"
+  },
+  {
+   "line": 2023,
+   "title": "Case sensitivity",
+   "evidence": "Case sensitivity"
+  },
+  {
+   "line": 2034,
+   "title": "Changing Case",
+   "evidence": "Changing Case"
+  },
+  {
+   "line": 2052,
+   "title": "Alternate delimiters",
+   "evidence": "Alternate delimiters"
+  },
+  {
+   "line": 2062,
+   "title": "Escape sequences",
+   "evidence": "Escape sequences"
+  },
+  {
+   "line": 2083,
+   "title": "Escaping metacharacters",
+   "evidence": "Escaping metacharacters"
+  },
+  {
+   "line": 2108,
+   "title": "Replacement expressions",
+   "evidence": "Replacement expressions"
+  },
+  {
+   "line": 2140,
+   "title": "Miscellaneous",
+   "evidence": "Miscellaneous"
+  },
+  {
+   "line": 2157,
+   "title": "Further Reading",
+   "evidence": "Further Reading"
+  },
+  {
+   "line": 2165,
+   "title": "Macro",
+   "evidence": "Macro"
+  },
+  {
+   "line": 2179,
+   "title": "Macro usage steps",
+   "evidence": "Macro usage steps"
+  },
+  {
+   "line": 2201,
+   "title": "Example 1",
+   "evidence": "Example 1"
+  },
+  {
+   "line": 2215,
+   "title": "Modifying a macro",
+   "evidence": "Modifying a macro"
+  },
+  {
+   "line": 2237,
+   "title": "Example 2",
+   "evidence": "Example 2"
+  },
+  {
+   "line": 2262,
+   "title": "Example 3",
+   "evidence": "Example 3"
+  },
+  {
+   "line": 2279,
+   "title": "Motion and Filter",
+   "evidence": "Motion and Filter"
+  },
+  {
+   "line": 2319,
+   "title": "Recursive recording",
+   "evidence": "Recursive recording"
+  },
+  {
+   "line": 2353,
+   "title": "Exercise",
+   "evidence": "Exercise"
+  },
+  {
+   "line": 2366,
+   "title": "Further Reading",
+   "evidence": "Further Reading"
+  },
+  {
+   "line": 2372,
+   "title": "Customizing Vim",
+   "evidence": "Customizing Vim"
+  },
+  {
+   "line": 2386,
+   "title": "Editing vimrc",
+   "evidence": "Editing vimrc"
+  },
+  {
+   "line": 2401,
+   "title": "defaults.vim",
+   "evidence": "defaults.vim"
+  },
+  {
+   "line": 2412,
+   "title": "General Settings",
+   "evidence": "General Settings"
+  },
+  {
+   "line": 2434,
+   "title": "Further Reading",
+   "evidence": "Further Reading"
+  },
+  {
+   "line": 2438,
+   "title": "Text and Indent Settings",
+   "evidence": "Text and Indent Settings"
+  },
+  {
+   "line": 2460,
+   "title": "Search Settings",
+   "evidence": "Search Settings"
+  },
+  {
+   "line": 2468,
+   "title": "Custom mapping",
+   "evidence": "Custom mapping"
+  },
+  {
+   "line": 2490,
+   "title": "Normal mode",
+   "evidence": "Normal mode"
+  },
+  {
+   "line": 2513,
+   "title": "Map leader",
+   "evidence": "Map leader"
+  },
+  {
+   "line": 2523,
+   "title": "Insert mode",
+   "evidence": "Insert mode"
+  },
+  {
+   "line": 2542,
+   "title": "Visual mode",
+   "evidence": "Visual mode"
+  },
+  {
+   "line": 2550,
+   "title": "Abbreviations",
+   "evidence": "Abbreviations"
+  },
+  {
+   "line": 2580,
+   "title": "Matching Pairs",
+   "evidence": "Matching Pairs"
+  },
+  {
+   "line": 2586,
+   "title": "GUI options",
+   "evidence": "GUI options"
+  },
+  {
+   "line": 2590,
+   "title": "Third-party customizations",
+   "evidence": "Third-party customizations"
+  },
+  {
+   "line": 2597,
+   "title": "plugin",
+   "evidence": "plugin"
+  },
+  {
+   "line": 2616,
+   "title": "package",
+   "evidence": "package"
+  },
+  {
+   "line": 2652,
+   "title": "color scheme",
+   "evidence": "color scheme"
+  },
+  {
+   "line": 2664,
+   "title": "autocmd",
+   "evidence": "autocmd"
+  },
+  {
+   "line": 2703,
+   "title": "Further Reading",
+   "evidence": "Further Reading"
+  },
+  {
+   "line": 2723,
+   "title": "CLI options",
+   "evidence": "CLI options"
+  },
+  {
+   "line": 2730,
+   "title": "Default",
+   "evidence": "Default"
+  },
+  {
+   "line": 2739,
+   "title": "Help",
+   "evidence": "Help"
+  },
+  {
+   "line": 2742,
+   "title": "Tabs and Splits",
+   "evidence": "Tabs and Splits"
+  },
+  {
+   "line": 2752,
+   "title": "Easy mode",
+   "evidence": "Easy mode"
+  },
+  {
+   "line": 2760,
+   "title": "Readonly and Restricted modes",
+   "evidence": "Readonly and Restricted modes"
+  },
+  {
+   "line": 2770,
+   "title": "Cursor position",
+   "evidence": "Cursor position"
+  },
+  {
+   "line": 2780,
+   "title": "Execute command",
+   "evidence": "Execute command"
+  },
+  {
+   "line": 2789,
+   "title": "Quickfix",
+   "evidence": "Quickfix"
+  },
+  {
+   "line": 2803,
+   "title": "Vimrc and Plugins",
+   "evidence": "Vimrc and Plugins"
+  },
+  {
+   "line": 2817,
+   "title": "Session and Viminfo",
+   "evidence": "Session and Viminfo"
+  }
+ ],
+ "problems": [
+  {
+   "line": 182,
+   "kind": "garbled",
+   "evidence": "You are also expected to get comfortable with reading manuals, searching online, visiting exter nal links provided for further reading, tinkering with the illustrated examples, asking for help"
+  },
+  {
+   "line": 238,
+   "kind": "garbled",
+   "evidence": "materials for his ebooks and everyday social media usage drowned his bookmarks, so he main tains curated resource lists for sanity sake. He is thankful for free learning resources and open"
+  },
+  {
+   "line": 242,
+   "kind": "garbled",
+   "evidence": "This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 In ternational License."
+  },
+  {
+   "line": 534,
+   "kind": "garbled",
+   "evidence": "∘ From :h word ”A word consists of a sequence of letters, digits and underscores, or a"
+  },
+  {
+   "line": 1899,
+   "kind": "garbled",
+   "evidence": "• s/\\d\\+/(&)/g replaces 52 apples 31 mangoes with (52) apples (31) mangoes (sur round digits with parentheses)"
+  },
+  {
+   "line": 2064,
+   "kind": "garbled",
+   "evidence": "them. Additionally, any character can be represented using their codepoint value in decimal, oc tal and hexadecimal formats. Unlike character set escape sequences like \\w , these can be used"
+  }
+ ],
+ "summary": "This slice is a cheatsheet-style Vim reference covering the four main modes, motion and editing commands, text objects, registers, search and replace with Vim regular expressions, macros, vimrc customization, and command-line startup options.",
+ "concepts": [
+  "modal editing",
+  "Normal mode",
+  "Insert mode",
+  "Visual mode",
+  "Command-line mode",
+  "motion commands and operators",
+  "text objects",
+  "registers",
+  "macros",
+  "Vim regular expressions",
+  "vimrc customization",
+  "CLI options"
+ ]
+}

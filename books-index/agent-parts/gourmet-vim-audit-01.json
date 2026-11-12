@@ -1,0 +1,1255 @@
+{
+ "id": "gourmet-vim-audit-01",
+ "book": "gourmet-vim",
+ "start": 1,
+ "end": 3087,
+ "headings": [
+  {
+   "line": 12,
+   "title": "Contents",
+   "evidence": "Contents"
+  },
+  {
+   "line": 262,
+   "title": "First things",
+   "evidence": "First things"
+  },
+  {
+   "line": 263,
+   "title": "What is this book?",
+   "evidence": "What is this book?"
+  },
+  {
+   "line": 273,
+   "title": "Some naming conventions",
+   "evidence": "Some naming conventions"
+  },
+  {
+   "line": 279,
+   "title": "Where are the Vimscripts?",
+   "evidence": "Where are the Vimscripts?"
+  },
+  {
+   "line": 289,
+   "title": "Why did you organize this book this way?",
+   "evidence": "Why did you organize this book this way?"
+  },
+  {
+   "line": 293,
+   "title": "How to read this book?",
+   "evidence": "How to read this book?"
+  },
+  {
+   "line": 303,
+   "title": "Navigation",
+   "evidence": "Navigation"
+  },
+  {
+   "line": 304,
+   "title": "Basic Navigations",
+   "evidence": "Basic Navigations"
+  },
+  {
+   "line": 317,
+   "title": "Toggle Between Files",
+   "evidence": "Toggle Between Files"
+  },
+  {
+   "line": 334,
+   "title": "Navigating Parentheses, Brackets, and Braces",
+   "evidence": "Navigating Parentheses, Brackets, and Braces"
+  },
+  {
+   "line": 341,
+   "title": "Go to a Different Line",
+   "evidence": "Go to a Different Line"
+  },
+  {
+   "line": 349,
+   "title": "Same-Line Navigation",
+   "evidence": "Same-Line Navigation"
+  },
+  {
+   "line": 363,
+   "title": "Screen Adjust",
+   "evidence": "Screen Adjust"
+  },
+  {
+   "line": 369,
+   "title": "Scroll",
+   "evidence": "Scroll"
+  },
+  {
+   "line": 375,
+   "title": "Go to the Last…",
+   "evidence": "Go to the Last…"
+  },
+  {
+   "line": 404,
+   "title": "Go to the Filename Under the Cursor",
+   "evidence": "Go to the Filename Under the Cursor"
+  },
+  {
+   "line": 411,
+   "title": "Go to the Place Where a Text Was Inserted and Enter the Insert Mode",
+   "evidence": "Go to the Place Where a Text Was Inserted and Enter"
+  },
+  {
+   "line": 421,
+   "title": "Search",
+   "evidence": "Search"
+  },
+  {
+   "line": 422,
+   "title": "Basic Search",
+   "evidence": "Basic Search"
+  },
+  {
+   "line": 429,
+   "title": "Starting Regex",
+   "evidence": "Starting Regex"
+  },
+  {
+   "line": 446,
+   "title": "Stop Searching After the Last Match",
+   "evidence": "Stop Searching After the Last Match"
+  },
+  {
+   "line": 457,
+   "title": "Show the Search Count",
+   "evidence": "Show the Search Count"
+  },
+  {
+   "line": 464,
+   "title": "Moving the Cursor Below or Above the Match",
+   "evidence": "Moving the Cursor Below or Above the Match"
+  },
+  {
+   "line": 474,
+   "title": "Moving the Cursor to the End of the Match",
+   "evidence": "Moving the Cursor to the End of the Match"
+  },
+  {
+   "line": 486,
+   "title": "Search for a Character Enclosed in a Collection",
+   "evidence": "Search for a Character Enclosed in a Collection"
+  },
+  {
+   "line": 496,
+   "title": "Search for a Keyword at the Start or at the End of the Line",
+   "evidence": "Search for a Keyword at the Start or at the End of the"
+  },
+  {
+   "line": 505,
+   "title": "Search for a Line Containing a Starting, Middle, and Ending Keyword",
+   "evidence": "Search for a Line Containing a Starting, Middle, and"
+  },
+  {
+   "line": 516,
+   "title": "Greedy vs Non-Greedy Search Patterns",
+   "evidence": "Greedy vs Non-Greedy Search Patterns"
+  },
+  {
+   "line": 526,
+   "title": "Searching for a Keyword Separated by End-of-Line",
+   "evidence": "Searching for a Keyword Separated by End-of-Line"
+  },
+  {
+   "line": 543,
+   "title": "Search for Either Or",
+   "evidence": "Search for Either Or"
+  },
+  {
+   "line": 548,
+   "title": "Avoid Typing Forward-Slashes",
+   "evidence": "Avoid Typing Forward-Slashes"
+  },
+  {
+   "line": 557,
+   "title": "Marking the Start and End of a Match",
+   "evidence": "Marking the Start and End of a Match"
+  },
+  {
+   "line": 572,
+   "title": "Search for the Nth Occurrence in a Line",
+   "evidence": "Search for the Nth Occurrence in a Line"
+  },
+  {
+   "line": 579,
+   "title": "Search for Any Text Surrounded by a Particular Pattern",
+   "evidence": "Search for Any Text Surrounded by a Particular"
+  },
+  {
+   "line": 592,
+   "title": "Repeat the Last Search",
+   "evidence": "Repeat the Last Search"
+  },
+  {
+   "line": 598,
+   "title": "Force a Case-Sensitive Search",
+   "evidence": "Force a Case-Sensitive Search"
+  },
+  {
+   "line": 607,
+   "title": "Optional Search",
+   "evidence": "Optional Search"
+  },
+  {
+   "line": 614,
+   "title": "Search a Phrase in Multiple Files With Vimgrep",
+   "evidence": "Search a Phrase in Multiple Files With Vimgrep"
+  },
+  {
+   "line": 628,
+   "title": "Adding Matches to an Existing Quickfix List",
+   "evidence": "Adding Matches to an Existing Quickfix List"
+  },
+  {
+   "line": 637,
+   "title": "Alias for Digits and Words",
+   "evidence": "Alias for Digits and Words"
+  },
+  {
+   "line": 645,
+   "title": "More Predefined Characters",
+   "evidence": "More Predefined Characters"
+  },
+  {
+   "line": 658,
+   "title": "Quickly Search for the Word Under the Cursor",
+   "evidence": "Quickly Search for the Word Under the Cursor"
+  },
+  {
+   "line": 669,
+   "title": "Finding a File",
+   "evidence": "Finding a File"
+  },
+  {
+   "line": 702,
+   "title": "Search and Replace in Multiple Files",
+   "evidence": "Search and Replace in Multiple Files"
+  },
+  {
+   "line": 711,
+   "title": "Command-Line Mode",
+   "evidence": "Command-Line Mode"
+  },
+  {
+   "line": 712,
+   "title": "Command Suggestion",
+   "evidence": "Command Suggestion"
+  },
+  {
+   "line": 718,
+   "title": "Get the Word Under the Cursor",
+   "evidence": "Get the Word Under the Cursor"
+  },
+  {
+   "line": 727,
+   "title": "Faster Delete",
+   "evidence": "Faster Delete"
+  },
+  {
+   "line": 738,
+   "title": "Are There More Commands?",
+   "evidence": "Are There More Commands?"
+  },
+  {
+   "line": 744,
+   "title": "File",
+   "evidence": "File"
+  },
+  {
+   "line": 745,
+   "title": "Buffers, Windows, Tabs",
+   "evidence": "Buffers, Windows, Tabs"
+  },
+  {
+   "line": 772,
+   "title": "Two Different Write Commands With Similar Syntax",
+   "evidence": "Two Different Write Commands With Similar Syntax"
+  },
+  {
+   "line": 783,
+   "title": "Save a File That Requires a Root Permission",
+   "evidence": "Save a File That Requires a Root Permission"
+  },
+  {
+   "line": 791,
+   "title": "Time Travel",
+   "evidence": "Time Travel"
+  },
+  {
+   "line": 800,
+   "title": "Converting the Current File to an HTML",
+   "evidence": "Converting the Current File to an HTML"
+  },
+  {
+   "line": 808,
+   "title": "Open an URL Content",
+   "evidence": "Open an URL Content"
+  },
+  {
+   "line": 813,
+   "title": "Save a Partial File",
+   "evidence": "Save a Partial File"
+  },
+  {
+   "line": 819,
+   "title": "Show the Buffers List",
+   "evidence": "Show the Buffers List"
+  },
+  {
+   "line": 839,
+   "title": "Vim Tabs",
+   "evidence": "Vim Tabs"
+  },
+  {
+   "line": 853,
+   "title": "Save the Current File in a Different Directory",
+   "evidence": "Save the Current File in a Different Directory"
+  },
+  {
+   "line": 859,
+   "title": "Open the Man Page From Vim",
+   "evidence": "Open the Man Page From Vim"
+  },
+  {
+   "line": 866,
+   "title": "Quitting Vim",
+   "evidence": "Quitting Vim"
+  },
+  {
+   "line": 890,
+   "title": "Viewing Recent Files",
+   "evidence": "Viewing Recent Files"
+  },
+  {
+   "line": 898,
+   "title": "Changing Directory",
+   "evidence": "Changing Directory"
+  },
+  {
+   "line": 906,
+   "title": "Executing a Command When Opening a File",
+   "evidence": "Executing a Command When Opening a File"
+  },
+  {
+   "line": 913,
+   "title": "Get the Current File Info",
+   "evidence": "Get the Current File Info"
+  },
+  {
+   "line": 931,
+   "title": "Count Words",
+   "evidence": "Count Words"
+  },
+  {
+   "line": 945,
+   "title": "Delete a File",
+   "evidence": "Delete a File"
+  },
+  {
+   "line": 957,
+   "title": "More Concise Way to Save and Exit",
+   "evidence": "More Concise Way to Save and Exit"
+  },
+  {
+   "line": 965,
+   "title": "Suspend Vim",
+   "evidence": "Suspend Vim"
+  },
+  {
+   "line": 972,
+   "title": "Compiling",
+   "evidence": "Compiling"
+  },
+  {
+   "line": 990,
+   "title": "Persist Local Configuration",
+   "evidence": "Persist Local Configuration"
+  },
+  {
+   "line": 1013,
+   "title": "Saving a Session",
+   "evidence": "Saving a Session"
+  },
+  {
+   "line": 1031,
+   "title": "History",
+   "evidence": "History"
+  },
+  {
+   "line": 1032,
+   "title": "Jumping Around Files Quickly",
+   "evidence": "Jumping Around Files Quickly"
+  },
+  {
+   "line": 1064,
+   "title": "Trace Edited Texts",
+   "evidence": "Trace Edited Texts"
+  },
+  {
+   "line": 1070,
+   "title": "Search History",
+   "evidence": "Search History"
+  },
+  {
+   "line": 1078,
+   "title": "Command-Line History",
+   "evidence": "Command-Line History"
+  },
+  {
+   "line": 1097,
+   "title": "Vim Histories",
+   "evidence": "Vim Histories"
+  },
+  {
+   "line": 1108,
+   "title": "Insert Mode",
+   "evidence": "Insert Mode"
+  },
+  {
+   "line": 1109,
+   "title": "Entering Insert Mode",
+   "evidence": "Entering Insert Mode"
+  },
+  {
+   "line": 1122,
+   "title": "Different Ways to Exit Insert Mode",
+   "evidence": "Different Ways to Exit Insert Mode"
+  },
+  {
+   "line": 1137,
+   "title": "Paste a Recently Yanked Text",
+   "evidence": "Paste a Recently Yanked Text"
+  },
+  {
+   "line": 1147,
+   "title": "Performing a Quick Calculation",
+   "evidence": "Performing a Quick Calculation"
+  },
+  {
+   "line": 1154,
+   "title": "Autocompletion",
+   "evidence": "Autocompletion"
+  },
+  {
+   "line": 1172,
+   "title": "Executing a Normal Mode Command While in the Insert Mode",
+   "evidence": "Executing a Normal Mode Command While in the"
+  },
+  {
+   "line": 1181,
+   "title": "Larger Deletes",
+   "evidence": "Larger Deletes"
+  },
+  {
+   "line": 1192,
+   "title": "Scrolling While in the Insert Mode",
+   "evidence": "Scrolling While in the Insert Mode"
+  },
+  {
+   "line": 1199,
+   "title": "Insert Special Characters",
+   "evidence": "Insert Special Characters"
+  },
+  {
+   "line": 1207,
+   "title": "Layout",
+   "evidence": "Layout"
+  },
+  {
+   "line": 1208,
+   "title": "Indent and Un-indent Lines",
+   "evidence": "Indent and Un-indent Lines"
+  },
+  {
+   "line": 1216,
+   "title": "Fix the Indentation of the Entire File",
+   "evidence": "Fix the Indentation of the Entire File"
+  },
+  {
+   "line": 1225,
+   "title": "Redraw the Screen",
+   "evidence": "Redraw the Screen"
+  },
+  {
+   "line": 1233,
+   "title": "Folding Lines",
+   "evidence": "Folding Lines"
+  },
+  {
+   "line": 1300,
+   "title": "Cursor Visual Helper",
+   "evidence": "Cursor Visual Helper"
+  },
+  {
+   "line": 1308,
+   "title": "Macros And Registers",
+   "evidence": "Macros And Registers"
+  },
+  {
+   "line": 1309,
+   "title": "Macro Basics",
+   "evidence": "Macro Basics"
+  },
+  {
+   "line": 1323,
+   "title": "Register Basics",
+   "evidence": "Register Basics"
+  },
+  {
+   "line": 1351,
+   "title": "Closer Look At Vim Registers",
+   "evidence": "Closer Look At Vim Registers"
+  },
+  {
+   "line": 1394,
+   "title": "Clear Up a Register",
+   "evidence": "Clear Up a Register"
+  },
+  {
+   "line": 1400,
+   "title": "Output Content From Any Register",
+   "evidence": "Output Content From Any Register"
+  },
+  {
+   "line": 1409,
+   "title": "Edit an Existing Macro",
+   "evidence": "Edit an Existing Macro"
+  },
+  {
+   "line": 1428,
+   "title": "Use the Blackhole Register to Prevent Register Pollution",
+   "evidence": "Use the Blackhole Register to Prevent Register"
+  },
+  {
+   "line": 1442,
+   "title": "See the Content From All Registers",
+   "evidence": "See the Content From All Registers"
+  },
+  {
+   "line": 1448,
+   "title": "Execute a Macro Programmatically",
+   "evidence": "Execute a Macro Programmatically"
+  },
+  {
+   "line": 1458,
+   "title": "Quickly Append to an Existing Macro",
+   "evidence": "Quickly Append to an Existing Macro"
+  },
+  {
+   "line": 1470,
+   "title": "Quickly Paste From the Numbered Register",
+   "evidence": "Quickly Paste From the Numbered Register"
+  },
+  {
+   "line": 1478,
+   "title": "Macro Factory",
+   "evidence": "Macro Factory"
+  },
+  {
+   "line": 1488,
+   "title": "Recursive Macro",
+   "evidence": "Recursive Macro"
+  },
+  {
+   "line": 1511,
+   "title": "Multi-File Operations",
+   "evidence": "Multi-File Operations"
+  },
+  {
+   "line": 1512,
+   "title": "Different Ways to Execute a Command In Multiple Files",
+   "evidence": "Different Ways to Execute a Command In Multiple Files"
+  },
+  {
+   "line": 1536,
+   "title": "Substitute In Multiple Files",
+   "evidence": "Substitute In Multiple Files"
+  },
+  {
+   "line": 1544,
+   "title": "Execute a Macro in Multiple Files",
+   "evidence": "Execute a Macro in Multiple Files"
+  },
+  {
+   "line": 1550,
+   "title": "Limiting the Files to Operate On",
+   "evidence": "Limiting the Files to Operate On"
+  },
+  {
+   "line": 1557,
+   "title": "Creating an Argument List",
+   "evidence": "Creating an Argument List"
+  },
+  {
+   "line": 1565,
+   "title": "Adding to an Argument List",
+   "evidence": "Adding to an Argument List"
+  },
+  {
+   "line": 1578,
+   "title": "Numbers",
+   "evidence": "Numbers"
+  },
+  {
+   "line": 1579,
+   "title": "Quickly Increment or Decrement a Number on a Line",
+   "evidence": "Quickly Increment or Decrement a Number on a Line"
+  },
+  {
+   "line": 1592,
+   "title": "Incrementing Number By More Than One",
+   "evidence": "Incrementing Number By More Than One"
+  },
+  {
+   "line": 1600,
+   "title": "Sequentially Increment Multiple Numbers",
+   "evidence": "Sequentially Increment Multiple Numbers"
+  },
+  {
+   "line": 1618,
+   "title": "Substitute and Increment Number",
+   "evidence": "Substitute and Increment Number"
+  },
+  {
+   "line": 1642,
+   "title": "Quickly Generate Incrementing Numbers Anywhere",
+   "evidence": "Quickly Generate Incrementing Numbers Anywhere"
+  },
+  {
+   "line": 1668,
+   "title": "Get ASCII Value",
+   "evidence": "Get ASCII Value"
+  },
+  {
+   "line": 1675,
+   "title": "Repeat",
+   "evidence": "Repeat"
+  },
+  {
+   "line": 1676,
+   "title": "Repeat the Last Command-Line Command",
+   "evidence": "Repeat the Last Command-Line Command"
+  },
+  {
+   "line": 1682,
+   "title": "Repeat the Last Change",
+   "evidence": "Repeat the Last Change"
+  },
+  {
+   "line": 1688,
+   "title": "Repeat the Last Substitute",
+   "evidence": "Repeat the Last Substitute"
+  },
+  {
+   "line": 1705,
+   "title": "Repeat the Last Executed Macro",
+   "evidence": "Repeat the Last Executed Macro"
+  },
+  {
+   "line": 1711,
+   "title": "Repeat the Last External Command",
+   "evidence": "Repeat the Last External Command"
+  },
+  {
+   "line": 1718,
+   "title": "Sort",
+   "evidence": "Sort"
+  },
+  {
+   "line": 1719,
+   "title": "Sorting Lines",
+   "evidence": "Sorting Lines"
+  },
+  {
+   "line": 1755,
+   "title": "External Sort",
+   "evidence": "External Sort"
+  },
+  {
+   "line": 1764,
+   "title": "Reverse Sort",
+   "evidence": "Reverse Sort"
+  },
+  {
+   "line": 1771,
+   "title": "Substitute",
+   "evidence": "Substitute"
+  },
+  {
+   "line": 1772,
+   "title": "Basic Substitution",
+   "evidence": "Basic Substitution"
+  },
+  {
+   "line": 1785,
+   "title": "Case Insensitive Match",
+   "evidence": "Case Insensitive Match"
+  },
+  {
+   "line": 1792,
+   "title": "Asking For Confirmation Before Substituting",
+   "evidence": "Asking For Confirmation Before Substituting"
+  },
+  {
+   "line": 1808,
+   "title": "Group Match In Substitution",
+   "evidence": "Group Match In Substitution"
+  },
+  {
+   "line": 1822,
+   "title": "Use Very Magic to Avoid Escaping Special Characters",
+   "evidence": "Use Very Magic to Avoid Escaping Special Characters"
+  },
+  {
+   "line": 1835,
+   "title": "Representing the Entire Match",
+   "evidence": "Representing the Entire Match"
+  },
+  {
+   "line": 1847,
+   "title": "Using the Group Match to Remove Words",
+   "evidence": "Using the Group Match to Remove Words"
+  },
+  {
+   "line": 1867,
+   "title": "Reusing the Previous Search Pattern",
+   "evidence": "Reusing the Previous Search Pattern"
+  },
+  {
+   "line": 1875,
+   "title": "Deleting In Substitution Quicker",
+   "evidence": "Deleting In Substitution Quicker"
+  },
+  {
+   "line": 1882,
+   "title": "Using an Expression in a Substitution",
+   "evidence": "Using an Expression in a Substitution"
+  },
+  {
+   "line": 1891,
+   "title": "Removing Trailing Whitespaces",
+   "evidence": "Removing Trailing Whitespaces"
+  },
+  {
+   "line": 1901,
+   "title": "Add a New Line In Substitution",
+   "evidence": "Add a New Line In Substitution"
+  },
+  {
+   "line": 1908,
+   "title": "Repeat the Last Substitute Command",
+   "evidence": "Repeat the Last Substitute Command"
+  },
+  {
+   "line": 1918,
+   "title": "Capitalize the First Letter Of Each Word",
+   "evidence": "Capitalize the First Letter Of Each Word"
+  },
+  {
+   "line": 1926,
+   "title": "Perform a Chain of Substitutes",
+   "evidence": "Perform a Chain of Substitutes"
+  },
+  {
+   "line": 1933,
+   "title": "Repeat the Last Substitute String",
+   "evidence": "Repeat the Last Substitute String"
+  },
+  {
+   "line": 1941,
+   "title": "Repeat the Last Substitution With the Last Search Pattern and the Last Substitute String",
+   "evidence": "Repeat the Last Substitution With the Last Search"
+  },
+  {
+   "line": 1952,
+   "title": "Changing the Delimiter",
+   "evidence": "Changing the Delimiter"
+  },
+  {
+   "line": 1966,
+   "title": "Global Command",
+   "evidence": "Global Command"
+  },
+  {
+   "line": 1967,
+   "title": "Global Command Basics",
+   "evidence": "Global Command Basics"
+  },
+  {
+   "line": 1974,
+   "title": "Inverse Match",
+   "evidence": "Inverse Match"
+  },
+  {
+   "line": 1981,
+   "title": "Prepend or Append On Multiple Lines",
+   "evidence": "Prepend or Append On Multiple Lines"
+  },
+  {
+   "line": 1992,
+   "title": "Global Command Within a Range",
+   "evidence": "Global Command Within a Range"
+  },
+  {
+   "line": 2001,
+   "title": "Delete Blank and Empty Lines",
+   "evidence": "Delete Blank and Empty Lines"
+  },
+  {
+   "line": 2008,
+   "title": "Running Global Command Between Matching Patterns",
+   "evidence": "Running Global Command Between Matching Patterns"
+  },
+  {
+   "line": 2051,
+   "title": "Condense Multiple Empty Lines",
+   "evidence": "Condense Multiple Empty Lines"
+  },
+  {
+   "line": 2067,
+   "title": "Reuse the Global Command Search Pattern in the Substitute Command",
+   "evidence": "Reuse the Global Command Search Pattern in the"
+  },
+  {
+   "line": 2075,
+   "title": "The Default Command",
+   "evidence": "The Default Command"
+  },
+  {
+   "line": 2087,
+   "title": "Use Execute to Run Complex Expressions",
+   "evidence": "Use Execute to Run Complex Expressions"
+  },
+  {
+   "line": 2099,
+   "title": "Reverse All Lines",
+   "evidence": "Reverse All Lines"
+  },
+  {
+   "line": 2109,
+   "title": "Surround All Digits With Double Quotes",
+   "evidence": "Surround All Digits With Double Quotes"
+  },
+  {
+   "line": 2133,
+   "title": "Changing the Delimiter",
+   "evidence": "Changing the Delimiter"
+  },
+  {
+   "line": 2147,
+   "title": "Programmatic Global Command",
+   "evidence": "Programmatic Global Command"
+  },
+  {
+   "line": 2156,
+   "title": "Tags",
+   "evidence": "Tags"
+  },
+  {
+   "line": 2157,
+   "title": "What Are Tags?",
+   "evidence": "What Are Tags?"
+  },
+  {
+   "line": 2219,
+   "title": "Setting Up the Tag File",
+   "evidence": "Setting Up the Tag File"
+  },
+  {
+   "line": 2230,
+   "title": "Tags Navigation",
+   "evidence": "Tags Navigation"
+  },
+  {
+   "line": 2251,
+   "title": "Selective Jump",
+   "evidence": "Selective Jump"
+  },
+  {
+   "line": 2260,
+   "title": "Autocompletion",
+   "evidence": "Autocompletion"
+  },
+  {
+   "line": 2266,
+   "title": "Automatic Tag Generation",
+   "evidence": "Automatic Tag Generation"
+  },
+  {
+   "line": 2283,
+   "title": "Text Generation",
+   "evidence": "Text Generation"
+  },
+  {
+   "line": 2284,
+   "title": "Get a File Content",
+   "evidence": "Get a File Content"
+  },
+  {
+   "line": 2290,
+   "title": "Get the Current Date",
+   "evidence": "Get the Current Date"
+  },
+  {
+   "line": 2301,
+   "title": "Generate Numbers",
+   "evidence": "Generate Numbers"
+  },
+  {
+   "line": 2313,
+   "title": "Generate IP Addresses",
+   "evidence": "Generate IP Addresses"
+  },
+  {
+   "line": 2319,
+   "title": "Generate Random Dice Throw",
+   "evidence": "Generate Random Dice Throw"
+  },
+  {
+   "line": 2325,
+   "title": "Generate Numbers Horizontally",
+   "evidence": "Generate Numbers Horizontally"
+  },
+  {
+   "line": 2333,
+   "title": "Transform a Text Into a Numbered List Based On Line Numbers",
+   "evidence": "Transform a Text Into a Numbered List Based On Line"
+  },
+  {
+   "line": 2355,
+   "title": "Text Manipulation",
+   "evidence": "Text Manipulation"
+  },
+  {
+   "line": 2356,
+   "title": "How to Speak Vim",
+   "evidence": "How to Speak Vim"
+  },
+  {
+   "line": 2392,
+   "title": "Changing Cases",
+   "evidence": "Changing Cases"
+  },
+  {
+   "line": 2418,
+   "title": "Swap Two Characters",
+   "evidence": "Swap Two Characters"
+  },
+  {
+   "line": 2425,
+   "title": "Replace Mode",
+   "evidence": "Replace Mode"
+  },
+  {
+   "line": 2433,
+   "title": "Using a Command-Line Command As a Motion to an Operator",
+   "evidence": "Using a Command-Line Command As a Motion to an"
+  },
+  {
+   "line": 2450,
+   "title": "Force Motion",
+   "evidence": "Force Motion"
+  },
+  {
+   "line": 2461,
+   "title": "Persistent Undo",
+   "evidence": "Persistent Undo"
+  },
+  {
+   "line": 2471,
+   "title": "Undoing In Chunks",
+   "evidence": "Undoing In Chunks"
+  },
+  {
+   "line": 2485,
+   "title": "Join Lines",
+   "evidence": "Join Lines"
+  },
+  {
+   "line": 2494,
+   "title": "Using Terminal Commands",
+   "evidence": "Using Terminal Commands"
+  },
+  {
+   "line": 2513,
+   "title": "Terminal",
+   "evidence": "Terminal"
+  },
+  {
+   "line": 2514,
+   "title": "Vi Mode",
+   "evidence": "Vi Mode"
+  },
+  {
+   "line": 2526,
+   "title": "Opening Files",
+   "evidence": "Opening Files"
+  },
+  {
+   "line": 2534,
+   "title": "Diffing With Vim",
+   "evidence": "Diffing With Vim"
+  },
+  {
+   "line": 2542,
+   "title": "Running Vim Without Plugins or Vimrc",
+   "evidence": "Running Vim Without Plugins or Vimrc"
+  },
+  {
+   "line": 2550,
+   "title": "Open Files in Vim as a Result of Another Command",
+   "evidence": "Open Files in Vim as a Result of Another Command"
+  },
+  {
+   "line": 2558,
+   "title": "Open Files in Read-Only Mode",
+   "evidence": "Open Files in Read-Only Mode"
+  },
+  {
+   "line": 2564,
+   "title": "Open Vim With Vertical and Horizontal Splits",
+   "evidence": "Open Vim With Vertical and Horizontal Splits"
+  },
+  {
+   "line": 2576,
+   "title": "Generate New Files Programmatically",
+   "evidence": "Generate New Files Programmatically"
+  },
+  {
+   "line": 2581,
+   "title": "Passing Text as STDIN to a Command",
+   "evidence": "Passing Text as STDIN to a Command"
+  },
+  {
+   "line": 2598,
+   "title": "Using the Terminal From Vim",
+   "evidence": "Using the Terminal From Vim"
+  },
+  {
+   "line": 2604,
+   "title": "Check Available Vim Features",
+   "evidence": "Check Available Vim Features"
+  },
+  {
+   "line": 2611,
+   "title": "Visual Mode",
+   "evidence": "Visual Mode"
+  },
+  {
+   "line": 2612,
+   "title": "Visual Mode Basics",
+   "evidence": "Visual Mode Basics"
+  },
+  {
+   "line": 2626,
+   "title": "Insert Text on Multiple Lines",
+   "evidence": "Insert Text on Multiple Lines"
+  },
+  {
+   "line": 2643,
+   "title": "Quickly Reselect the Previous Visual Highlight",
+   "evidence": "Quickly Reselect the Previous Visual Highlight"
+  },
+  {
+   "line": 2651,
+   "title": "Expanding Visual Highlight Bidirectionally",
+   "evidence": "Expanding Visual Highlight Bidirectionally"
+  },
+  {
+   "line": 2661,
+   "title": "Switching to a Different Visual Mode While in a Visual Mode",
+   "evidence": "Switching to a Different Visual Mode While in a Visual"
+  },
+  {
+   "line": 2676,
+   "title": "Visually Highlight the Last Search Term",
+   "evidence": "Visually Highlight the Last Search Term"
+  },
+  {
+   "line": 2693,
+   "title": "Replace Multiple Characters With Visual Selection",
+   "evidence": "Replace Multiple Characters With Visual Selection"
+  },
+  {
+   "line": 2712,
+   "title": "Vimrc",
+   "evidence": "Vimrc"
+  },
+  {
+   "line": 2713,
+   "title": "Quick Access to Vimrc",
+   "evidence": "Quick Access to Vimrc"
+  },
+  {
+   "line": 2723,
+   "title": "Line Numbers",
+   "evidence": "Line Numbers"
+  },
+  {
+   "line": 2731,
+   "title": "More Helpful Search",
+   "evidence": "More Helpful Search"
+  },
+  {
+   "line": 2744,
+   "title": "Smarter Search Case",
+   "evidence": "Smarter Search Case"
+  },
+  {
+   "line": 2759,
+   "title": "Programmatic Options",
+   "evidence": "Programmatic Options"
+  },
+  {
+   "line": 2770,
+   "title": "Create a Custom Command",
+   "evidence": "Create a Custom Command"
+  },
+  {
+   "line": 2781,
+   "title": "Conditionally Run Vimrc Settings Based On Directory",
+   "evidence": "Conditionally Run Vimrc Settings Based On Directory"
+  },
+  {
+   "line": 2798,
+   "title": "Organize Vimrc With the Fold Syntax",
+   "evidence": "Organize Vimrc With the Fold Syntax"
+  },
+  {
+   "line": 2833,
+   "title": "Run a Specific Configuration Depending On File Type",
+   "evidence": "Run a Specific Configuration Depending On File Type"
+  },
+  {
+   "line": 2854,
+   "title": "Toggle a Boolean Option",
+   "evidence": "Toggle a Boolean Option"
+  },
+  {
+   "line": 2868,
+   "title": "Split Vimrc Into Multiple Files",
+   "evidence": "Split Vimrc Into Multiple Files"
+  },
+  {
+   "line": 2911,
+   "title": "Mapping a New Key",
+   "evidence": "Mapping a New Key"
+  },
+  {
+   "line": 2958,
+   "title": "Installing Plugins With Packages",
+   "evidence": "Installing Plugins With Packages"
+  },
+  {
+   "line": 2998,
+   "title": "Installing Plugins With Plugin Managers",
+   "evidence": "Installing Plugins With Plugin Managers"
+  },
+  {
+   "line": 3014,
+   "title": "Trigger Action On Certain Event",
+   "evidence": "Trigger Action On Certain Event"
+  },
+  {
+   "line": 3029,
+   "title": "Window",
+   "evidence": "Window"
+  },
+  {
+   "line": 3030,
+   "title": "Splitting Windows Horizontally and Vertically",
+   "evidence": "Splitting Windows Horizontally and Vertically"
+  },
+  {
+   "line": 3038,
+   "title": "Resizing Windows",
+   "evidence": "Resizing Windows"
+  },
+  {
+   "line": 3054,
+   "title": "Close or Zoom the Current Window",
+   "evidence": "Close or Zoom the Current Window"
+  },
+  {
+   "line": 3062,
+   "title": "Moving the Cursor to Another Windows",
+   "evidence": "Moving the Cursor to Another Windows"
+  },
+  {
+   "line": 3069,
+   "title": "Open a New Window",
+   "evidence": "Open a New Window"
+  },
+  {
+   "line": 3075,
+   "title": "Use Two Windows to Diff Files",
+   "evidence": "Use Two Windows to Diff Files"
+  }
+ ],
+ "problems": [
+  {
+   "line": 524,
+   "kind": "garbled",
+   "evidence": "If you have a string “chocolatedonutdonut”, running /ch.*donut matches the entire string “choco latedonutdonut” (longest match) while running /ch\\{-}donut matches “chocolatedonut” (shortest"
+  },
+  {
+   "line": 534,
+   "kind": "garbled",
+   "evidence": "Search 11"
+  },
+  {
+   "line": 541,
+   "kind": "garbled",
+   "evidence": "• /strawberry\\_.\\{-}pancakes matches (non-greedy) “strawberry”, followed by anything, in cluding newlines, then the first “pancakes” on line 4."
+  },
+  {
+   "line": 776,
+   "kind": "garbled",
+   "evidence": "File 20"
+  },
+  {
+   "line": 817,
+   "kind": "garbled",
+   "evidence": "You can save a partial file with :{range1},{range2}w filename. To save lines 5 and 10 as partial_-"
+  },
+  {
+   "line": 1358,
+   "kind": "garbled",
+   "evidence": "like a computer’s standard copy / paste operation. To get the text from the unnamed register, do ““p."
+  },
+  {
+   "line": 1645,
+   "kind": "garbled",
+   "evidence": "Solution"
+  },
+  {
+   "line": 2002,
+   "kind": "garbled",
+   "evidence": "Problem;"
+  },
+  {
+   "line": 2281,
+   "kind": "garbled",
+   "evidence": "Tags 76 • vim-tags⁶ • vim-easytags⁷ • vim-autotag⁸ ⁶https://github.com/szw/vim-tags ⁷https://github.com/xolox/vim-easytags ⁸https://github.com/craigemery/vim-autotag"
+  }
+ ],
+ "summary": "This slice contains the cookbook's front matter (title page and a 236-entry table of contents) and the full recipe body: the “First things” introduction plus 21 chapters of 209 short Problem/Solution recipes, from navigation and search through substitution, global commands, macros and registers, tags, text generation, terminal usage, visual mode, and vimrc/window configuration. Examples are command-focused and assume the reader types along.",
+ "concepts": [
+  "modal editing",
+  "regular expressions",
+  "search commands",
+  "substitute command",
+  "global (:g) command",
+  "macros and registers",
+  "buffers and windows",
+  "quickfix and :vimgrep",
+  "folding",
+  "tags and ctags",
+  "text objects and operators",
+  "vimrc mappings and options"
+ ]
+}

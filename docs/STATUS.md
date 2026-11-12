@@ -11,8 +11,9 @@
 | manifest rows (counted) | 64 (54) |
 | chapters / stages | 10 / 51 |
 | books / source lines | 10 / 78,502 |
+| books with partial source | neovim-for-beginners |
 | book chunks / coverage | 732 / complete |
-| book audit | pending |
+| audited book headings / problems / rejected | 2554 / 129 / 0 |
 | state matrix matched / total / open | 21,539 / 21,712 / 173 |
 | state open by field | undo 164, reg 10, regtype 8 |
 | built single file (raw) | 276,101 B |

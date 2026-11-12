@@ -1,0 +1,1680 @@
+{
+ "id": "pro-vim-audit-02",
+ "book": "pro-vim",
+ "start": 6001,
+ "end": 12000,
+ "headings": [
+  {
+   "line": 6033,
+   "title": "Don’t Waste Time Typing",
+   "evidence": "Don’t Waste Time Typing"
+  },
+  {
+   "line": 6045,
+   "title": "Moving Backward",
+   "evidence": "Moving Backward"
+  },
+  {
+   "line": 6049,
+   "title": "Change Pattern Matches More Quickly",
+   "evidence": "Change Pattern Matches More Quickly"
+  },
+  {
+   "line": 6093,
+   "title": "Searching Within Multiple Buffers",
+   "evidence": "Searching Within Multiple Buffers"
+  },
+  {
+   "line": 6131,
+   "title": "Lists",
+   "evidence": "Lists"
+  },
+  {
+   "line": 6145,
+   "title": "vimgrep vs. lvimgrep",
+   "evidence": "vimgrep vs. lvimgrep"
+  },
+  {
+   "line": 6219,
+   "title": "Multiple Search History",
+   "evidence": "Multiple Search History"
+  },
+  {
+   "line": 6235,
+   "title": "Search and Replace",
+   "evidence": "Search and Replace"
+  },
+  {
+   "line": 6245,
+   "title": "Search and Replace Within the Current Buffer",
+   "evidence": "Search and Replace Within the Current Buffer"
+  },
+  {
+   "line": 6259,
+   "title": "Simple Example",
+   "evidence": "Simple Example"
+  },
+  {
+   "line": 6343,
+   "title": "Complex Example",
+   "evidence": "Complex Example"
+  },
+  {
+   "line": 6361,
+   "title": "Regular Expressions",
+   "evidence": "Regular Expressions"
+  },
+  {
+   "line": 6397,
+   "title": "Differences in Regex Flavors",
+   "evidence": "Differences in Regex Flavors"
+  },
+  {
+   "line": 6401,
+   "title": "Avoiding Escaping Characters",
+   "evidence": "Avoiding Escaping Characters"
+  },
+  {
+   "line": 6407,
+   "title": "Tricks Specific to Vim’s Regex Flavor",
+   "evidence": "Tricks Specific to Vim’s Regex Flavor"
+  },
+  {
+   "line": 6429,
+   "title": "Validating Substitution Patterns",
+   "evidence": "Validating Substitution Patterns"
+  },
+  {
+   "line": 6443,
+   "title": "Reusing a Previous Search Pattern",
+   "evidence": "Reusing a Previous Search Pattern"
+  },
+  {
+   "line": 6459,
+   "title": "Search and Replace Within VISUAL-BLOCK Selection",
+   "evidence": "Search and Replace Within VISUAL-BLOCK Selection"
+  },
+  {
+   "line": 6473,
+   "title": "Search and Replace Within Multiple Buffers",
+   "evidence": "Search and Replace Within Multiple Buffers"
+  },
+  {
+   "line": 6487,
+   "title": "The Vim Way",
+   "evidence": "The Vim Way"
+  },
+  {
+   "line": 6505,
+   "title": "The Unix Way",
+   "evidence": "The Unix Way"
+  },
+  {
+   "line": 6525,
+   "title": "Global Command",
+   "evidence": "Global Command"
+  },
+  {
+   "line": 6617,
+   "title": "Expression Replacements",
+   "evidence": "Expression Replacements"
+  },
+  {
+   "line": 6641,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 6665,
+   "title": "CHAPTER 12",
+   "evidence": "CHAPTER 12"
+  },
+  {
+   "line": 6667,
+   "title": "Buffer/Window/Tab Management",
+   "evidence": "Buffer/Window/Tab Management"
+  },
+  {
+   "line": 6679,
+   "title": "Buffer Management",
+   "evidence": "Buffer Management"
+  },
+  {
+   "line": 6683,
+   "title": "Viewing All Buffers",
+   "evidence": "Viewing All Buffers"
+  },
+  {
+   "line": 6697,
+   "title": "Splitting Buffers into Windows",
+   "evidence": "Splitting Buffers into Windows"
+  },
+  {
+   "line": 6707,
+   "title": "Different Ways to Close Buffers",
+   "evidence": "Different Ways to Close Buffers"
+  },
+  {
+   "line": 6711,
+   "title": "To Close a Buffer Based on Its File Type",
+   "evidence": "To Close a Buffer Based on Its File Type"
+  },
+  {
+   "line": 6725,
+   "title": "To Close a Specific Numbered Buffer",
+   "evidence": "To Close a Specific Numbered Buffer"
+  },
+  {
+   "line": 6735,
+   "title": "To Close Multiple Buffers (Not Necessarily in Sequence)",
+   "evidence": "To Close Multiple Buffers (Not Necessarily in Sequence)"
+  },
+  {
+   "line": 6743,
+   "title": "To Close Multiple Buffers Using a Range",
+   "evidence": "To Close Multiple Buffers Using a Range"
+  },
+  {
+   "line": 6751,
+   "title": "To Close All Buffers at Once",
+   "evidence": "To Close All Buffers at Once"
+  },
+  {
+   "line": 6761,
+   "title": "Closing a Buffer but Keeping the Parent Window Open",
+   "evidence": "Closing a Buffer but Keeping the Parent Window Open"
+  },
+  {
+   "line": 6769,
+   "title": "Window Management",
+   "evidence": "Window Management"
+  },
+  {
+   "line": 6775,
+   "title": "Opening Split Windows",
+   "evidence": "Opening Split Windows"
+  },
+  {
+   "line": 6795,
+   "title": "Closing All Windows Except the Current One",
+   "evidence": "Closing All Windows Except the Current One"
+  },
+  {
+   "line": 6803,
+   "title": "Changing Window Layout",
+   "evidence": "Changing Window Layout"
+  },
+  {
+   "line": 6831,
+   "title": "Resizing Windows",
+   "evidence": "Resizing Windows"
+  },
+  {
+   "line": 6837,
+   "title": "Changing the Window Dimensions Incrementally",
+   "evidence": "Changing the Window Dimensions Incrementally"
+  },
+  {
+   "line": 6851,
+   "title": "Changing the Window Dimensions by a Set Amount",
+   "evidence": "Changing the Window Dimensions by a Set Amount"
+  },
+  {
+   "line": 6865,
+   "title": "Maximizing Windows",
+   "evidence": "Maximizing Windows"
+  },
+  {
+   "line": 6881,
+   "title": "Moving a Window to a Tab",
+   "evidence": "Moving a Window to a Tab"
+  },
+  {
+   "line": 6897,
+   "title": "Tab Management",
+   "evidence": "Tab Management"
+  },
+  {
+   "line": 6901,
+   "title": "Creating and Navigating Tabs",
+   "evidence": "Creating and Navigating Tabs"
+  },
+  {
+   "line": 6917,
+   "title": "Closing Tabs",
+   "evidence": "Closing Tabs"
+  },
+  {
+   "line": 6927,
+   "title": "Rearranging Tabs",
+   "evidence": "Rearranging Tabs"
+  },
+  {
+   "line": 6937,
+   "title": "Tabs As a Scratch Pad",
+   "evidence": "Tabs As a Scratch Pad"
+  },
+  {
+   "line": 6941,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 6955,
+   "title": "CHAPTER 13",
+   "evidence": "CHAPTER 13"
+  },
+  {
+   "line": 6957,
+   "title": "Automation",
+   "evidence": "Automation"
+  },
+  {
+   "line": 6973,
+   "title": "Automation Through Ex Mode",
+   "evidence": "Automation Through Ex Mode"
+  },
+  {
+   "line": 7007,
+   "title": "Automation Through Macros",
+   "evidence": "Automation Through Macros"
+  },
+  {
+   "line": 7033,
+   "title": "Recording Macros",
+   "evidence": "Recording Macros"
+  },
+  {
+   "line": 7081,
+   "title": "Executing Macros",
+   "evidence": "Executing Macros"
+  },
+  {
+   "line": 7105,
+   "title": "Real-World Example",
+   "evidence": "Real-World Example"
+  },
+  {
+   "line": 7147,
+   "title": "Applying Macros Across Multiple Files",
+   "evidence": "Applying Macros Across Multiple Files"
+  },
+  {
+   "line": 7163,
+   "title": "More Dynamic Macros Using the Expression Register",
+   "evidence": "More Dynamic Macros Using the Expression Register"
+  },
+  {
+   "line": 7227,
+   "title": "Editing Macros",
+   "evidence": "Editing Macros"
+  },
+  {
+   "line": 7237,
+   "title": "Appending",
+   "evidence": "Appending"
+  },
+  {
+   "line": 7245,
+   "title": "Editing",
+   "evidence": "Editing"
+  },
+  {
+   "line": 7263,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 7289,
+   "title": "CHAPTER 14",
+   "evidence": "CHAPTER 14"
+  },
+  {
+   "line": 7291,
+   "title": "Lists",
+   "evidence": "Lists"
+  },
+  {
+   "line": 7301,
+   "title": "Change Lists",
+   "evidence": "Change Lists"
+  },
+  {
+   "line": 7367,
+   "title": "Move Back Through Our Change Positions",
+   "evidence": "Move Back Through Our Change Positions"
+  },
+  {
+   "line": 7409,
+   "title": "Jump Lists",
+   "evidence": "Jump Lists"
+  },
+  {
+   "line": 7459,
+   "title": "Practical Example: Generating a Table of Contents",
+   "evidence": "Practical Example: Generating a Table of Contents"
+  },
+  {
+   "line": 7545,
+   "title": "Ignoring Jumps",
+   "evidence": "Ignoring Jumps"
+  },
+  {
+   "line": 7567,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 7589,
+   "title": "CHAPTER 15",
+   "evidence": "CHAPTER 15"
+  },
+  {
+   "line": 7591,
+   "title": "Marks",
+   "evidence": "Marks"
+  },
+  {
+   "line": 7603,
+   "title": "Creating Marks",
+   "evidence": "Creating Marks"
+  },
+  {
+   "line": 7613,
+   "title": "Viewing Marks",
+   "evidence": "Viewing Marks"
+  },
+  {
+   "line": 7675,
+   "title": "Local and Global Marks",
+   "evidence": "Local and Global Marks"
+  },
+  {
+   "line": 7695,
+   "title": "Navigating Marks",
+   "evidence": "Navigating Marks"
+  },
+  {
+   "line": 7725,
+   "title": "Moving to Specific Marks",
+   "evidence": "Moving to Specific Marks"
+  },
+  {
+   "line": 7739,
+   "title": "How to Avoid Modifying the Jump List",
+   "evidence": "How to Avoid Modifying the Jump List"
+  },
+  {
+   "line": 7743,
+   "title": "Deleting Marks",
+   "evidence": "Deleting Marks"
+  },
+  {
+   "line": 7759,
+   "title": "Manipulating Content with Marks",
+   "evidence": "Manipulating Content with Marks"
+  },
+  {
+   "line": 7769,
+   "title": "Example: Moving a Visual Selection",
+   "evidence": "Example: Moving a Visual Selection"
+  },
+  {
+   "line": 7823,
+   "title": "Plug-ins",
+   "evidence": "Plug-ins"
+  },
+  {
+   "line": 7835,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 7861,
+   "title": "CHAPTER 16",
+   "evidence": "CHAPTER 16"
+  },
+  {
+   "line": 7863,
+   "title": "Sessions",
+   "evidence": "Sessions"
+  },
+  {
+   "line": 7881,
+   "title": "Views and Sessions",
+   "evidence": "Views and Sessions"
+  },
+  {
+   "line": 7891,
+   "title": "Creating a View",
+   "evidence": "Creating a View"
+  },
+  {
+   "line": 7899,
+   "title": "File-Based Views",
+   "evidence": "File-Based Views"
+  },
+  {
+   "line": 8141,
+   "title": "Loading a View",
+   "evidence": "Loading a View"
+  },
+  {
+   "line": 8153,
+   "title": "Creating a Session",
+   "evidence": "Creating a Session"
+  },
+  {
+   "line": 8173,
+   "title": "Loading a Session",
+   "evidence": "Loading a Session"
+  },
+  {
+   "line": 8181,
+   "title": "Removing Sessions",
+   "evidence": "Removing Sessions"
+  },
+  {
+   "line": 8185,
+   "title": "Creating a Custom Session.vim",
+   "evidence": "Creating a Custom Session.vim"
+  },
+  {
+   "line": 8221,
+   "title": "Issues",
+   "evidence": "Issues"
+  },
+  {
+   "line": 8233,
+   "title": "Plug-ins",
+   "evidence": "Plug-ins"
+  },
+  {
+   "line": 8249,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 8267,
+   "title": "CHAPTER 17",
+   "evidence": "CHAPTER 17"
+  },
+  {
+   "line": 8269,
+   "title": "Plug-ins",
+   "evidence": "Plug-ins"
+  },
+  {
+   "line": 8319,
+   "title": "How Do Plug-ins Work?",
+   "evidence": "How Do Plug-ins Work?"
+  },
+  {
+   "line": 8335,
+   "title": "Vimball",
+   "evidence": "Vimball"
+  },
+  {
+   "line": 8355,
+   "title": "Pathogen: A Plug-in Manager",
+   "evidence": "Pathogen: A Plug-in Manager"
+  },
+  {
+   "line": 8363,
+   "title": "Installation",
+   "evidence": "Installation"
+  },
+  {
+   "line": 8385,
+   "title": "Vimball Support",
+   "evidence": "Vimball Support"
+  },
+  {
+   "line": 8405,
+   "title": "Writing Plug-ins",
+   "evidence": "Writing Plug-ins"
+  },
+  {
+   "line": 8417,
+   "title": "Generating Help Tags",
+   "evidence": "Generating Help Tags"
+  },
+  {
+   "line": 8425,
+   "title": "Exploring Useful Plug-ins",
+   "evidence": "Exploring Useful Plug-ins"
+  },
+  {
+   "line": 8429,
+   "title": "Ack/Ag (Silver Searcher)",
+   "evidence": "Ack/Ag (Silver Searcher)"
+  },
+  {
+   "line": 8509,
+   "title": "Ag (The Silver Searcher)",
+   "evidence": "Ag (The Silver Searcher)"
+  },
+  {
+   "line": 8517,
+   "title": "Commentary",
+   "evidence": "Commentary"
+  },
+  {
+   "line": 8545,
+   "title": "CtrlP",
+   "evidence": "CtrlP"
+  },
+  {
+   "line": 8549,
+   "title": "Basic Usage",
+   "evidence": "Basic Usage"
+  },
+  {
+   "line": 8561,
+   "title": "Opening Multiple Files",
+   "evidence": "Opening Multiple Files"
+  },
+  {
+   "line": 8573,
+   "title": "Refreshing the List of Files",
+   "evidence": "Refreshing the List of Files"
+  },
+  {
+   "line": 8579,
+   "title": "Pasting from Clipboard",
+   "evidence": "Pasting from Clipboard"
+  },
+  {
+   "line": 8609,
+   "title": "Modify Default Opening Behavior",
+   "evidence": "Modify Default Opening Behavior"
+  },
+  {
+   "line": 8629,
+   "title": "Creating Directories and Files",
+   "evidence": "Creating Directories and Files"
+  },
+  {
+   "line": 8635,
+   "title": "NERDTree",
+   "evidence": "NERDTree"
+  },
+  {
+   "line": 8643,
+   "title": "Opening/Closing",
+   "evidence": "Opening/Closing"
+  },
+  {
+   "line": 8671,
+   "title": "Bookmarks",
+   "evidence": "Bookmarks"
+  },
+  {
+   "line": 8681,
+   "title": "Modifying Files and Folders",
+   "evidence": "Modifying Files and Folders"
+  },
+  {
+   "line": 8695,
+   "title": "Searching",
+   "evidence": "Searching"
+  },
+  {
+   "line": 8699,
+   "title": "Surround",
+   "evidence": "Surround"
+  },
+  {
+   "line": 8713,
+   "title": "Change Surrounding . . .",
+   "evidence": "Change Surrounding . . ."
+  },
+  {
+   "line": 8721,
+   "title": "Delete Surrounding…",
+   "evidence": "Delete Surrounding…"
+  },
+  {
+   "line": 8729,
+   "title": "Add (Text Object) Surrounding…",
+   "evidence": "Add (Text Object) Surrounding…"
+  },
+  {
+   "line": 8737,
+   "title": "Add (Manually) Surrounding…",
+   "evidence": "Add (Manually) Surrounding…"
+  },
+  {
+   "line": 8747,
+   "title": "Right-Side or Left-Side Punctuation?",
+   "evidence": "Right-Side or Left-Side Punctuation?"
+  },
+  {
+   "line": 8761,
+   "title": "EndWise",
+   "evidence": "EndWise"
+  },
+  {
+   "line": 8777,
+   "title": "Tabular",
+   "evidence": "Tabular"
+  },
+  {
+   "line": 8801,
+   "title": "Syntastic",
+   "evidence": "Syntastic"
+  },
+  {
+   "line": 8805,
+   "title": "Supported Languages",
+   "evidence": "Supported Languages"
+  },
+  {
+   "line": 8815,
+   "title": "Example",
+   "evidence": "Example"
+  },
+  {
+   "line": 8839,
+   "title": "SuperTab",
+   "evidence": "SuperTab"
+  },
+  {
+   "line": 8849,
+   "title": "Gist",
+   "evidence": "Gist"
+  },
+  {
+   "line": 8879,
+   "title": "Fugative",
+   "evidence": "Fugative"
+  },
+  {
+   "line": 8903,
+   "title": "Dispatch",
+   "evidence": "Dispatch"
+  },
+  {
+   "line": 8913,
+   "title": "Others . . .",
+   "evidence": "Others . . ."
+  },
+  {
+   "line": 8917,
+   "title": "BufOnly.vim",
+   "evidence": "BufOnly.vim"
+  },
+  {
+   "line": 8929,
+   "title": "scratch.vim",
+   "evidence": "scratch.vim"
+  },
+  {
+   "line": 8941,
+   "title": "Camel Case Motion",
+   "evidence": "Camel Case Motion"
+  },
+  {
+   "line": 8987,
+   "title": "vim-choosewin",
+   "evidence": "vim-choosewin"
+  },
+  {
+   "line": 8999,
+   "title": "vim-bookmarks",
+   "evidence": "vim-bookmarks"
+  },
+  {
+   "line": 9017,
+   "title": "targets.vim",
+   "evidence": "targets.vim"
+  },
+  {
+   "line": 9039,
+   "title": "wildfire.vim",
+   "evidence": "wildfire.vim"
+  },
+  {
+   "line": 9053,
+   "title": "ZoomWin",
+   "evidence": "ZoomWin"
+  },
+  {
+   "line": 9069,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 9085,
+   "title": "CHAPTER 18",
+   "evidence": "CHAPTER 18"
+  },
+  {
+   "line": 9087,
+   "title": "Diffing",
+   "evidence": "Diffing"
+  },
+  {
+   "line": 9097,
+   "title": "Two-Way Diff",
+   "evidence": "Two-Way Diff"
+  },
+  {
+   "line": 9119,
+   "title": "Moving Between Changes",
+   "evidence": "Moving Between Changes"
+  },
+  {
+   "line": 9127,
+   "title": "diffget and diffput",
+   "evidence": "diffget and diffput"
+  },
+  {
+   "line": 9161,
+   "title": "Simple Example",
+   "evidence": "Simple Example"
+  },
+  {
+   "line": 9167,
+   "title": "Specifying a Range",
+   "evidence": "Specifying a Range"
+  },
+  {
+   "line": 9173,
+   "title": "Diff Highlighting Breaks After Making a Change?",
+   "evidence": "Diff Highlighting Breaks After Making a Change?"
+  },
+  {
+   "line": 9183,
+   "title": "Diff to HTML",
+   "evidence": "Diff to HTML"
+  },
+  {
+   "line": 9195,
+   "title": "Three-Way Diff (Resolving Git Merge Conflicts)",
+   "evidence": "Three-Way Diff (Resolving Git Merge Conflicts)"
+  },
+  {
+   "line": 9255,
+   "title": "Git mergetool",
+   "evidence": "Git mergetool"
+  },
+  {
+   "line": 9363,
+   "title": "Complex Conflicts?",
+   "evidence": "Complex Conflicts?"
+  },
+  {
+   "line": 9383,
+   "title": "Changing the Diff Theme",
+   "evidence": "Changing the Diff Theme"
+  },
+  {
+   "line": 9403,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 9435,
+   "title": "CHAPTER 19",
+   "evidence": "CHAPTER 19"
+  },
+  {
+   "line": 9437,
+   "title": "Custom Commands and Bindings",
+   "evidence": "Custom Commands and Bindings"
+  },
+  {
+   "line": 9459,
+   "title": "Creating Your Own Mappings",
+   "evidence": "Creating Your Own Mappings"
+  },
+  {
+   "line": 9473,
+   "title": "map vs. noremap",
+   "evidence": "map vs. noremap"
+  },
+  {
+   "line": 9495,
+   "title": "Mapping Keys in Specific Modes",
+   "evidence": "Mapping Keys in Specific Modes"
+  },
+  {
+   "line": 9517,
+   "title": "My Own Mappings",
+   "evidence": "My Own Mappings"
+  },
+  {
+   "line": 9523,
+   "title": "CtrlP",
+   "evidence": "CtrlP"
+  },
+  {
+   "line": 9533,
+   "title": "NERDTree",
+   "evidence": "NERDTree"
+  },
+  {
+   "line": 9539,
+   "title": "Tabularize",
+   "evidence": "Tabularize"
+  },
+  {
+   "line": 9551,
+   "title": "ChooseWin",
+   "evidence": "ChooseWin"
+  },
+  {
+   "line": 9557,
+   "title": "Turn Off Current Search Match Highlights",
+   "evidence": "Turn Off Current Search Match Highlights"
+  },
+  {
+   "line": 9563,
+   "title": "File System Explorer",
+   "evidence": "File System Explorer"
+  },
+  {
+   "line": 9571,
+   "title": "Buffers",
+   "evidence": "Buffers"
+  },
+  {
+   "line": 9583,
+   "title": "Windows",
+   "evidence": "Windows"
+  },
+  {
+   "line": 9603,
+   "title": "Tests",
+   "evidence": "Tests"
+  },
+  {
+   "line": 9637,
+   "title": "Custom Commands",
+   "evidence": "Custom Commands"
+  },
+  {
+   "line": 9663,
+   "title": "Practical Example",
+   "evidence": "Practical Example"
+  },
+  {
+   "line": 9687,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 9705,
+   "title": "CHAPTER 20",
+   "evidence": "CHAPTER 20"
+  },
+  {
+   "line": 9707,
+   "title": "Terminal Integration",
+   "evidence": "Terminal Integration"
+  },
+  {
+   "line": 9713,
+   "title": "Suspending Vim",
+   "evidence": "Suspending Vim"
+  },
+  {
+   "line": 9723,
+   "title": "Executing Terminal Commands",
+   "evidence": "Executing Terminal Commands"
+  },
+  {
+   "line": 9731,
+   "title": "Filtering Content via External Commands",
+   "evidence": "Filtering Content via External Commands"
+  },
+  {
+   "line": 9771,
+   "title": "Redirect the Shell into Vim",
+   "evidence": "Redirect the Shell into Vim"
+  },
+  {
+   "line": 9985,
+   "title": "CTags",
+   "evidence": "CTags"
+  },
+  {
+   "line": 9993,
+   "title": "Example",
+   "evidence": "Example"
+  },
+  {
+   "line": 10005,
+   "title": "Installation",
+   "evidence": "Installation"
+  },
+  {
+   "line": 10013,
+   "title": "Usage",
+   "evidence": "Usage"
+  },
+  {
+   "line": 10031,
+   "title": "Tag Stacks",
+   "evidence": "Tag Stacks"
+  },
+  {
+   "line": 10045,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 10061,
+   "title": "CHAPTER 21",
+   "evidence": "CHAPTER 21"
+  },
+  {
+   "line": 10063,
+   "title": "Working with Code",
+   "evidence": "Working with Code"
+  },
+  {
+   "line": 10073,
+   "title": "Auto-indenting",
+   "evidence": "Auto-indenting"
+  },
+  {
+   "line": 10111,
+   "title": "Indentation with =",
+   "evidence": "Indentation with ="
+  },
+  {
+   "line": 10189,
+   "title": "Single-Line Indentation",
+   "evidence": "Single-Line Indentation"
+  },
+  {
+   "line": 10193,
+   "title": "Text Object Indentation",
+   "evidence": "Text Object Indentation"
+  },
+  {
+   "line": 10197,
+   "title": "Motion Indentation",
+   "evidence": "Motion Indentation"
+  },
+  {
+   "line": 10205,
+   "title": "Syntax Formatting",
+   "evidence": "Syntax Formatting"
+  },
+  {
+   "line": 10215,
+   "title": "Forcing a Different Syntax Format",
+   "evidence": "Forcing a Different Syntax Format"
+  },
+  {
+   "line": 10233,
+   "title": "Ruby",
+   "evidence": "Ruby"
+  },
+  {
+   "line": 10247,
+   "title": "vim-endwise",
+   "evidence": "vim-endwise"
+  },
+  {
+   "line": 10253,
+   "title": "vim-ruby",
+   "evidence": "vim-ruby"
+  },
+  {
+   "line": 10261,
+   "title": "vim-cucumber",
+   "evidence": "vim-cucumber"
+  },
+  {
+   "line": 10275,
+   "title": "vim-ruby-refactoring",
+   "evidence": "vim-ruby-refactoring"
+  },
+  {
+   "line": 10283,
+   "title": ":RAddParameter",
+   "evidence": ":RAddParameter"
+  },
+  {
+   "line": 10311,
+   "title": ":RExtractConstant",
+   "evidence": ":RExtractConstant"
+  },
+  {
+   "line": 10343,
+   "title": ":RExtractMethod",
+   "evidence": ":RExtractMethod"
+  },
+  {
+   "line": 10379,
+   "title": "vim-vroom",
+   "evidence": "vim-vroom"
+  },
+  {
+   "line": 10399,
+   "title": "Clojure",
+   "evidence": "Clojure"
+  },
+  {
+   "line": 10417,
+   "title": "Rainbow Parentheses",
+   "evidence": "Rainbow Parentheses"
+  },
+  {
+   "line": 10423,
+   "title": "sexp",
+   "evidence": "sexp"
+  },
+  {
+   "line": 10429,
+   "title": "Automatic Parentheses Matching",
+   "evidence": "Automatic Parentheses Matching"
+  },
+  {
+   "line": 10451,
+   "title": "List Manipulation",
+   "evidence": "List Manipulation"
+  },
+  {
+   "line": 10465,
+   "title": "Fireplace",
+   "evidence": "Fireplace"
+  },
+  {
+   "line": 10505,
+   "title": "Connecting to the Leiningen REPL",
+   "evidence": "Connecting to the Leiningen REPL"
+  },
+  {
+   "line": 10531,
+   "title": "Viewing Clojure Documentation",
+   "evidence": "Viewing Clojure Documentation"
+  },
+  {
+   "line": 10551,
+   "title": "Source Code",
+   "evidence": "Source Code"
+  },
+  {
+   "line": 10573,
+   "title": "Evaluating Expressions",
+   "evidence": "Evaluating Expressions"
+  },
+  {
+   "line": 10599,
+   "title": "PHP",
+   "evidence": "PHP"
+  },
+  {
+   "line": 10603,
+   "title": "PIV",
+   "evidence": "PIV"
+  },
+  {
+   "line": 10611,
+   "title": "vim-phpqa",
+   "evidence": "vim-phpqa"
+  },
+  {
+   "line": 10615,
+   "title": "Vdebug",
+   "evidence": "Vdebug"
+  },
+  {
+   "line": 10623,
+   "title": "Node",
+   "evidence": "Node"
+  },
+  {
+   "line": 10631,
+   "title": "vim-node",
+   "evidence": "vim-node"
+  },
+  {
+   "line": 10645,
+   "title": "node-vim-debugger",
+   "evidence": "node-vim-debugger"
+  },
+  {
+   "line": 10669,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 10677,
+   "title": "CHAPTER 22",
+   "evidence": "CHAPTER 22"
+  },
+  {
+   "line": 10679,
+   "title": "Practical Tips and Tricks",
+   "evidence": "Practical Tips and Tricks"
+  },
+  {
+   "line": 10685,
+   "title": "Built-in File System Explorer",
+   "evidence": "Built-in File System Explorer"
+  },
+  {
+   "line": 10693,
+   "title": "Navigating",
+   "evidence": "Navigating"
+  },
+  {
+   "line": 10707,
+   "title": "Default Action for Opening a File",
+   "evidence": "Default Action for Opening a File"
+  },
+  {
+   "line": 10713,
+   "title": "Other Features",
+   "evidence": "Other Features"
+  },
+  {
+   "line": 10763,
+   "title": "Configuration",
+   "evidence": "Configuration"
+  },
+  {
+   "line": 10767,
+   "title": "Faster Browsing",
+   "evidence": "Faster Browsing"
+  },
+  {
+   "line": 10783,
+   "title": "Change the Default for Opening Files",
+   "evidence": "Change the Default for Opening Files"
+  },
+  {
+   "line": 10793,
+   "title": "Visual Layout",
+   "evidence": "Visual Layout"
+  },
+  {
+   "line": 10801,
+   "title": "Hiding Files",
+   "evidence": "Hiding Files"
+  },
+  {
+   "line": 10817,
+   "title": "Glob-Based Searching",
+   "evidence": "Glob-Based Searching"
+  },
+  {
+   "line": 10835,
+   "title": "Moving Around Code",
+   "evidence": "Moving Around Code"
+  },
+  {
+   "line": 10885,
+   "title": "Deleting via Search Patterns",
+   "evidence": "Deleting via Search Patterns"
+  },
+  {
+   "line": 10905,
+   "title": "Duplicating Lines",
+   "evidence": "Duplicating Lines"
+  },
+  {
+   "line": 10915,
+   "title": "Moving Lines",
+   "evidence": "Moving Lines"
+  },
+  {
+   "line": 10931,
+   "title": "Increment/Decrement Numerical Values",
+   "evidence": "Increment/Decrement Numerical Values"
+  },
+  {
+   "line": 10939,
+   "title": "Removing Line Breaks",
+   "evidence": "Removing Line Breaks"
+  },
+  {
+   "line": 10957,
+   "title": "Ranges",
+   "evidence": "Ranges"
+  },
+  {
+   "line": 10961,
+   "title": "Copy and Paste",
+   "evidence": "Copy and Paste"
+  },
+  {
+   "line": 10985,
+   "title": "Deleting",
+   "evidence": "Deleting"
+  },
+  {
+   "line": 11009,
+   "title": "Character-Level Edits",
+   "evidence": "Character-Level Edits"
+  },
+  {
+   "line": 11019,
+   "title": "Loading External Content",
+   "evidence": "Loading External Content"
+  },
+  {
+   "line": 11043,
+   "title": "Partial File Writing",
+   "evidence": "Partial File Writing"
+  },
+  {
+   "line": 11055,
+   "title": "Pasting from Within INSERT Mode",
+   "evidence": "Pasting from Within INSERT Mode"
+  },
+  {
+   "line": 11061,
+   "title": "Pasting Without Affecting the Register",
+   "evidence": "Pasting Without Affecting the Register"
+  },
+  {
+   "line": 11085,
+   "title": "Moving Between Found Items",
+   "evidence": "Moving Between Found Items"
+  },
+  {
+   "line": 11091,
+   "title": "Sorting",
+   "evidence": "Sorting"
+  },
+  {
+   "line": 11141,
+   "title": "NORMAL Mode Commands in the Command Prompt",
+   "evidence": "NORMAL Mode Commands in the Command Prompt"
+  },
+  {
+   "line": 11157,
+   "title": "Repeat NORMAL Commands",
+   "evidence": "Repeat NORMAL Commands"
+  },
+  {
+   "line": 11171,
+   "title": "Time-Based Undo",
+   "evidence": "Time-Based Undo"
+  },
+  {
+   "line": 11205,
+   "title": "Simultaneous Scrolling",
+   "evidence": "Simultaneous Scrolling"
+  },
+  {
+   "line": 11221,
+   "title": "Spell-Checking",
+   "evidence": "Spell-Checking"
+  },
+  {
+   "line": 11237,
+   "title": "Spelling Mistake Indicators",
+   "evidence": "Spelling Mistake Indicators"
+  },
+  {
+   "line": 11267,
+   "title": "Spelling Suggestions",
+   "evidence": "Spelling Suggestions"
+  },
+  {
+   "line": 11275,
+   "title": "Auto-complete Spelling Suggestions",
+   "evidence": "Auto-complete Spelling Suggestions"
+  },
+  {
+   "line": 11281,
+   "title": "Searching for Spelling Mistakes",
+   "evidence": "Searching for Spelling Mistakes"
+  },
+  {
+   "line": 11289,
+   "title": "Repeating Spelling Corrections",
+   "evidence": "Repeating Spelling Corrections"
+  },
+  {
+   "line": 11295,
+   "title": ". . . and the Rest?",
+   "evidence": ". . . and the Rest?"
+  },
+  {
+   "line": 11301,
+   "title": "Renaming Multiple Files Inside Vim",
+   "evidence": "Renaming Multiple Files Inside Vim"
+  },
+  {
+   "line": 11311,
+   "title": "Expressions Inside a Substitution",
+   "evidence": "Expressions Inside a Substitution"
+  },
+  {
+   "line": 11335,
+   "title": "Sample Process",
+   "evidence": "Sample Process"
+  },
+  {
+   "line": 11373,
+   "title": "First Half . . .",
+   "evidence": "First Half . . ."
+  },
+  {
+   "line": 11407,
+   "title": "Second Half . . .",
+   "evidence": "Second Half . . ."
+  },
+  {
+   "line": 11423,
+   "title": "Executing the Buffer As a Shell Script",
+   "evidence": "Executing the Buffer As a Shell Script"
+  },
+  {
+   "line": 11431,
+   "title": "Folder-Specific Custom Configuration",
+   "evidence": "Folder-Specific Custom Configuration"
+  },
+  {
+   "line": 11453,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 11497,
+   "title": "CHAPTER 23",
+   "evidence": "CHAPTER 23"
+  },
+  {
+   "line": 11499,
+   "title": "Terminal Multiplexer",
+   "evidence": "Terminal Multiplexer"
+  },
+  {
+   "line": 11525,
+   "title": "tmux",
+   "evidence": "tmux"
+  },
+  {
+   "line": 11545,
+   "title": "Terminology",
+   "evidence": "Terminology"
+  },
+  {
+   "line": 11549,
+   "title": "Prefix Command",
+   "evidence": "Prefix Command"
+  },
+  {
+   "line": 11569,
+   "title": "Help?",
+   "evidence": "Help?"
+  },
+  {
+   "line": 11573,
+   "title": "Command and Key Binding References",
+   "evidence": "Command and Key Binding References"
+  },
+  {
+   "line": 11583,
+   "title": "Manual",
+   "evidence": "Manual"
+  },
+  {
+   "line": 11589,
+   "title": "Message Feedback",
+   "evidence": "Message Feedback"
+  },
+  {
+   "line": 11595,
+   "title": "Installation and Configuration",
+   "evidence": "Installation and Configuration"
+  },
+  {
+   "line": 11599,
+   "title": "Mac",
+   "evidence": "Mac"
+  },
+  {
+   "line": 11605,
+   "title": "Linux",
+   "evidence": "Linux"
+  },
+  {
+   "line": 11613,
+   "title": "Windows",
+   "evidence": "Windows"
+  },
+  {
+   "line": 11619,
+   "title": "Configuring tmux",
+   "evidence": "Configuring tmux"
+  },
+  {
+   "line": 11717,
+   "title": "Change the Default Prefix",
+   "evidence": "Change the Default Prefix"
+  },
+  {
+   "line": 11729,
+   "title": "Quick Access to Last Window",
+   "evidence": "Quick Access to Last Window"
+  },
+  {
+   "line": 11737,
+   "title": "Vim Style Movements",
+   "evidence": "Vim Style Movements"
+  },
+  {
+   "line": 11757,
+   "title": "Arrow Movements",
+   "evidence": "Arrow Movements"
+  },
+  {
+   "line": 11769,
+   "title": "Simpler Pane Creation",
+   "evidence": "Simpler Pane Creation"
+  },
+  {
+   "line": 11777,
+   "title": "Source .tmux.conf",
+   "evidence": "Source .tmux.conf"
+  },
+  {
+   "line": 11783,
+   "title": "Clear Pane History",
+   "evidence": "Clear Pane History"
+  },
+  {
+   "line": 11789,
+   "title": "Easier Pane Management",
+   "evidence": "Easier Pane Management"
+  },
+  {
+   "line": 11827,
+   "title": "Color Correction",
+   "evidence": "Color Correction"
+  },
+  {
+   "line": 11835,
+   "title": "Enable utf8",
+   "evidence": "Enable utf8"
+  },
+  {
+   "line": 11845,
+   "title": "Command Prompt Movements",
+   "evidence": "Command Prompt Movements"
+  },
+  {
+   "line": 11853,
+   "title": "Cancel Immediately",
+   "evidence": "Cancel Immediately"
+  },
+  {
+   "line": 11859,
+   "title": "Prevent Program Window Renaming Trigger",
+   "evidence": "Prevent Program Window Renaming Trigger"
+  },
+  {
+   "line": 11869,
+   "title": "Change the Default Shell",
+   "evidence": "Change the Default Shell"
+  },
+  {
+   "line": 11875,
+   "title": "Human Numbering",
+   "evidence": "Human Numbering"
+  },
+  {
+   "line": 11881,
+   "title": "Increase Scroll-back",
+   "evidence": "Increase Scroll-back"
+  },
+  {
+   "line": 11887,
+   "title": "Automatic Window Renumbering",
+   "evidence": "Automatic Window Renumbering"
+  },
+  {
+   "line": 11895,
+   "title": "Change the Status Bar Appearing",
+   "evidence": "Change the Status Bar Appearing"
+  },
+  {
+   "line": 11935,
+   "title": "Summary",
+   "evidence": "Summary"
+  },
+  {
+   "line": 11951,
+   "title": "CHAPTER 24",
+   "evidence": "CHAPTER 24"
+  },
+  {
+   "line": 11953,
+   "title": "Fundamentals",
+   "evidence": "Fundamentals"
+  },
+  {
+   "line": 11967,
+   "title": "Sessions",
+   "evidence": "Sessions"
+  },
+  {
+   "line": 11977,
+   "title": "Creating a Session",
+   "evidence": "Creating a Session"
+  },
+  {
+   "line": 11993,
+   "title": "Listing Sessions",
+   "evidence": "Listing Sessions"
+  }
+ ],
+ "problems": [
+  {
+   "line": 7595,
+   "kind": "garbled",
+   "evidence": "Browsers solved this particular problem a long time ago; the solution is called bookmarks. Imagine you need to find some information on cars. You open up your web browser and go to a search engine and type in the word cars. The search engine returns thousands of results for this search term, and you find a site youarch engine returns thousands of results for this search term, and you find  go to a search have to refer to on a daily basis. You could go through the whole process again (go to a search engine in your browser; run a search, which may or may not use the same search term as last time; and sift through the results until you find the same site) or you could bookmark the site instead, which would allow you simply to open your web browser and click a single link, to be taken directly to the page of interest."
+  },
+  {
+   "line": 7619,
+   "kind": "truncation",
+   "evidence": "If you run that command with a fresh install of Vim (i.e., youou run that command with a fresh install of Vi, youn u run that command with a"
+  },
+  {
+   "line": 7627,
+   "kind": "garbled",
+   "evidence": "We can see from the result of running this command that we get a table matrix that highlights a specific mark and the line number associated with that mark. Wenum also shown the specific column for the mark. The file/text column in the preceding example is empty, as this is the result of running the :marks command on a fresh install of Vim that has no prior history. But this would typically show the path to the file where the mark was recorded, if it was a global mark, or, alternatively, the content of the line the mark points to, if it was a local mark. (Donf it was, I’ef it was a local marke the mark points toe f in the next section)."
+  },
+  {
+   "line": 7631,
+   "kind": "garbled",
+   "evidence": "I mentioned earlier that only a-z and A–Z marks were available for you to record into and that Vim automatically records into numbered marks, so you might be wondering what the marks ' and \", that you can see in the preceding sample output are for? Well, we already know that Vim automatically creates numbered marks 0–9, based on the position of the cursor when exiting the last file, but there are a few more marks that Vim automatically creates for us, so letat Vim automatically cre Table 15-1, following, to see what they are."
+  },
+  {
+   "line": 7679,
+   "kind": "garbled",
+   "evidence": "If, on the other hand, you have recorded a global mark, you will be able to access it from anywhere. What this means is that you don behave to be in the same file you recorded the global mark from. You can run the command to access the mark, and youcommand to access the markile you recorded thspecified mark inside the relevant file it was recorded."
+  },
+  {
+   "line": 7681,
+   "kind": "garbled",
+   "evidence": "Global marks are useful if you have specific parts of a file you know you refer back to a lot. Leta  have a brief demonstration of how global marks differ from local marks. Imagine that you have a file on your desktop called foo.txt and that it has the following content inside of it:"
+  },
+  {
+   "line": 7689,
+   "kind": "garbled",
+   "evidence": "If I moved my cursor to the t of the word But in the last line, my cursor position would be line 3, and the column position would also be 3 (as t is the third letter). From here, I’ll record a global mark using mD, and then Ia global mark using  also be 3 marks differ from local mark."
+  },
+  {
+   "line": 7747,
+   "kind": "garbled",
+   "evidence": "You could open up your .viminfo file and manually edit it to remove any global marks, but I would recommend against doing that, as it can cause corruptions in the file, and youan cause cohaving to delete the file altogether; otherwise, Vim might not start up properly. (It’s always best not to mess with the .viminfo file, as it is dynamically generated by Vim.)"
+  },
+  {
+   "line": 7765,
+   "kind": "garbled",
+   "evidence": "WeDve composed a new command, made up of the delete command (d) and the precision f the delete command (idcommand (`{mark}). What the preceding command will do is delete from the current cursor position 1,1 (line 1, column 1) up to the position of my mark (which was 3,3), leaving the content of the foo.txt buffer looking like the following:"
+  },
+  {
+   "line": 7777,
+   "kind": "garbled",
+   "evidence": "To begin with, letrickiny-piece-of-vimpieile with the following content and you have lines 4–6 visually selected (that being the lines J, K, and L through to P, Q, and R, which Ih to lected (that being the lines ile with the foll - - -):"
+  },
+  {
+   "line": 7803,
+   "kind": "garbled",
+   "evidence": "With the following command, youh the fothat we bind it to the <C-k> key combination, to make it easier (read: slicker) to move a visual selection up and down the buffer. Letls see what the command looks like, and then we can break it down to understand how exactly it works:"
+  },
+  {
+   "line": 7805,
+   "kind": "garbled",
+   "evidence": "xmap <C-k> :m '< -- <CR> gv xmap <C-k> :m '> +  <CR> gv"
+  },
+  {
+   "line": 7807,
+   "kind": "garbled",
+   "evidence": "OK, so let :m '> +  <CR> gvown er) to."
+  },
+  {
+   "line": 8327,
+   "kind": "missing",
+   "evidence": "Before we can understand how plug-ins are installed, we have to look at what a standard Vim directory looks like. By this, I mean, what is the default folder structure within the .vim directory when working with a fresh installation. The following tree visualizes this directory for us:"
+  },
+  {
+   "line": 8331,
+   "kind": "missing",
+   "evidence": "Let’s digress for a moment and consider a sample plug-in, such as NERDTree. (This is a popular plug-in that aims to reintroduce a more traditional navigation functionality back into Vim. I’ll review NERDTree later in this chapter.) NERDTree is a multi-file plug-in that has the following tree structure:"
+  },
+  {
+   "line": 10819,
+   "kind": "missing",
+   "evidence": "Back in Chapter 4, we looked at Vim’s :edit command, but we skipped one important detail, which is that the command will happily accept a file glob (also referred to as a “wildcard”). Imagine that you have Vim open with the following directory structure:"
+  },
+  {
+   "line": 11451,
+   "kind": "missing",
+   "evidence": "I personally use https://github.com/thinca/vim-localrc, which only requires me to add a .local.vimrc file, and the plug-in will intelligently figure out how to load it. The plug-in also works with multiple config files within different subdirectories and loads each of them sequentially. The following diagram illustrates this (files are loaded as indicated by their number):"
+  },
+  {
+   "line": 11715,
+   "kind": "missing",
+   "evidence": "Note  In the preceding code snippet you’ll notice some some symbols that we use to help improve the design of our tmux status bar, such as and . If you were to look at the .tmux.conf file on GitHub (https://github.com/Integralist/ProVim/blob/master/.tmux.conf) you’ll likely see a different symbol. This is because the display of the icon will depend on whether you have UTF-8 enabled and the relevant font installed. The font you need is Ubuntu Mono derivative Powerline.ttf and you can download this font from the ProVim GitHub configuration."
+  }
+ ],
+ "summary": "This slice runs from the end of Pro Vim's search-and-replace chapter through chapters on buffers/windows/tabs, automation and macros, change and jump lists, marks, sessions, plug-ins, diffing, custom commands, terminal integration, working with code, practical tips, and the opening of the tmux section. It is broadly usable for curriculum mapping, but the marks chapter (roughly lines 7595-7815) is badly corrupted and several promised directory trees/diagrams are absent.",
+ "concepts": [
+  "vimgrep",
+  "quickfix list",
+  "substitution",
+  "global command",
+  "macro recording",
+  "expression register",
+  "change list",
+  "jump list",
+  "marks",
+  "sessions",
+  "diff mode",
+  "custom mappings"
+ ]
+}

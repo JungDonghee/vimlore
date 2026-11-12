@@ -1,0 +1,490 @@
+{
+  "id": "pro-vim-audit-03",
+  "book": "pro-vim",
+  "start": 12001,
+  "end": 14641,
+  "headings": [
+    {
+      "line": 12005,
+      "title": "Selecting a Session",
+      "evidence": "Selecting a Session"
+    },
+    {
+      "line": 12023,
+      "title": "Renaming Sessions",
+      "evidence": "Renaming Sessions"
+    },
+    {
+      "line": 12031,
+      "title": "Closing vs. Detaching",
+      "evidence": "Closing vs. Detaching"
+    },
+    {
+      "line": 12041,
+      "title": "Application Bootstrap",
+      "evidence": "Application Bootstrap"
+    },
+    {
+      "line": 12049,
+      "title": "Buffers",
+      "evidence": "Buffers"
+    },
+    {
+      "line": 12053,
+      "title": "Scrolling the Buffer",
+      "evidence": "Scrolling the Buffer"
+    },
+    {
+      "line": 12069,
+      "title": "Navigating Copy Mode",
+      "evidence": "Navigating Copy Mode"
+    },
+    {
+      "line": 12087,
+      "title": "Panes",
+      "evidence": "Panes"
+    },
+    {
+      "line": 12107,
+      "title": "Differences Between Vim and tmux",
+      "evidence": "Differences Between Vim and tmux"
+    },
+    {
+      "line": 12119,
+      "title": "Closing",
+      "evidence": "Closing"
+    },
+    {
+      "line": 12125,
+      "title": "Navigating",
+      "evidence": "Navigating"
+    },
+    {
+      "line": 12169,
+      "title": "Resizing",
+      "evidence": "Resizing"
+    },
+    {
+      "line": 12201,
+      "title": "Balancing",
+      "evidence": "Balancing"
+    },
+    {
+      "line": 12215,
+      "title": "Windows",
+      "evidence": "Windows"
+    },
+    {
+      "line": 12225,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 12239,
+      "title": "CHAPTER 25",
+      "evidence": "CHAPTER 25"
+    },
+    {
+      "line": 12241,
+      "title": "Modifications",
+      "evidence": "Modifications"
+    },
+    {
+      "line": 12249,
+      "title": "Abstractions",
+      "evidence": "Abstractions"
+    },
+    {
+      "line": 12261,
+      "title": "Creating New Sessions",
+      "evidence": "Creating New Sessions"
+    },
+    {
+      "line": 12285,
+      "title": "Attaching to Sessions",
+      "evidence": "Attaching to Sessions"
+    },
+    {
+      "line": 12297,
+      "title": "Destroying Sessions",
+      "evidence": "Destroying Sessions"
+    },
+    {
+      "line": 12333,
+      "title": "Extending the Message Display Time",
+      "evidence": "Extending the Message Display Time"
+    },
+    {
+      "line": 12343,
+      "title": "Repeatable Keys",
+      "evidence": "Repeatable Keys"
+    },
+    {
+      "line": 12367,
+      "title": "Restoring Broken Commands",
+      "evidence": "Restoring Broken Commands"
+    },
+    {
+      "line": 12383,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 12399,
+      "title": "CHAPTER 26",
+      "evidence": "CHAPTER 26"
+    },
+    {
+      "line": 12401,
+      "title": "Copy and Paste",
+      "evidence": "Copy and Paste"
+    },
+    {
+      "line": 12409,
+      "title": "Copy Mode",
+      "evidence": "Copy Mode"
+    },
+    {
+      "line": 12423,
+      "title": "Paste Buffer",
+      "evidence": "Paste Buffer"
+    },
+    {
+      "line": 12443,
+      "title": "Pasting Between Programs",
+      "evidence": "Pasting Between Programs"
+    },
+    {
+      "line": 12447,
+      "title": "Plug-in Solution",
+      "evidence": "Plug-in Solution"
+    },
+    {
+      "line": 12451,
+      "title": "Mac OS X",
+      "evidence": "Mac OS X"
+    },
+    {
+      "line": 12475,
+      "title": "Linux",
+      "evidence": "Linux"
+    },
+    {
+      "line": 12487,
+      "title": "Working from a VM",
+      "evidence": "Working from a VM"
+    },
+    {
+      "line": 12503,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 12517,
+      "title": "CHAPTER 27",
+      "evidence": "CHAPTER 27"
+    },
+    {
+      "line": 12519,
+      "title": "Pane/Window Management",
+      "evidence": "Pane/Window Management"
+    },
+    {
+      "line": 12525,
+      "title": "Pane Management",
+      "evidence": "Pane Management"
+    },
+    {
+      "line": 12531,
+      "title": "Moving Between Two Commonly Used Panes",
+      "evidence": "Moving Between Two Commonly Used Panes"
+    },
+    {
+      "line": 12551,
+      "title": "Full-Screen Current Pane",
+      "evidence": "Full-Screen Current Pane"
+    },
+    {
+      "line": 12559,
+      "title": "Break a Pane Out into a Separate Window",
+      "evidence": "Break a Pane Out into a Separate Window"
+    },
+    {
+      "line": 12565,
+      "title": "Convert a Window into a Pane (Within Another Window)",
+      "evidence": "Convert a Window into a Pane (Within Another Window)"
+    },
+    {
+      "line": 12573,
+      "title": "Rotate Panes Within Current Window",
+      "evidence": "Rotate Panes Within Current Window"
+    },
+    {
+      "line": 12585,
+      "title": "Changing Pane Layouts",
+      "evidence": "Changing Pane Layouts"
+    },
+    {
+      "line": 12589,
+      "title": "Synchronizing Pane Input",
+      "evidence": "Synchronizing Pane Input"
+    },
+    {
+      "line": 12597,
+      "title": "Window Management",
+      "evidence": "Window Management"
+    },
+    {
+      "line": 12601,
+      "title": "Navigating Windows",
+      "evidence": "Navigating Windows"
+    },
+    {
+      "line": 12605,
+      "title": "Manually",
+      "evidence": "Manually"
+    },
+    {
+      "line": 12609,
+      "title": "Visual List",
+      "evidence": "Visual List"
+    },
+    {
+      "line": 12617,
+      "title": "Closing Windows",
+      "evidence": "Closing Windows"
+    },
+    {
+      "line": 12627,
+      "title": "Immediate",
+      "evidence": "Immediate"
+    },
+    {
+      "line": 12631,
+      "title": "Command-Line Mode",
+      "evidence": "Command-Line Mode"
+    },
+    {
+      "line": 12637,
+      "title": "Confirmation Prompt",
+      "evidence": "Confirmation Prompt"
+    },
+    {
+      "line": 12643,
+      "title": "Finding Windows by Search Phrase",
+      "evidence": "Finding Windows by Search Phrase"
+    },
+    {
+      "line": 12647,
+      "title": "Moving and Switching Windows Within the Current Session",
+      "evidence": "Moving and Switching Windows Within the Current Session"
+    },
+    {
+      "line": 12663,
+      "title": "Moving Windows Between Different Sessions",
+      "evidence": "Moving Windows Between Different Sessions"
+    },
+    {
+      "line": 12677,
+      "title": "Sharing Windows Between Sessions",
+      "evidence": "Sharing Windows Between Sessions"
+    },
+    {
+      "line": 12689,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 12699,
+      "title": "CHAPTER 28",
+      "evidence": "CHAPTER 28"
+    },
+    {
+      "line": 12701,
+      "title": "Scripting and Automation",
+      "evidence": "Scripting and Automation"
+    },
+    {
+      "line": 12711,
+      "title": "Example 1: Automation",
+      "evidence": "Example 1: Automation"
+    },
+    {
+      "line": 12715,
+      "title": "Simple Example",
+      "evidence": "Simple Example"
+    },
+    {
+      "line": 12735,
+      "title": "Targeting Specific Sessions",
+      "evidence": "Targeting Specific Sessions"
+    },
+    {
+      "line": 12743,
+      "title": "Advanced",
+      "evidence": "Advanced"
+    },
+    {
+      "line": 12767,
+      "title": "Example 2: Shell Commands",
+      "evidence": "Example 2: Shell Commands"
+    },
+    {
+      "line": 12787,
+      "title": "Conditional Key Bindings",
+      "evidence": "Conditional Key Bindings"
+    },
+    {
+      "line": 12797,
+      "title": "Example 3: tmuxinator",
+      "evidence": "Example 3: tmuxinator"
+    },
+    {
+      "line": 12841,
+      "title": "Restoration",
+      "evidence": "Restoration"
+    },
+    {
+      "line": 12849,
+      "title": "Attaching Processes",
+      "evidence": "Attaching Processes"
+    },
+    {
+      "line": 12867,
+      "title": "Restoring State",
+      "evidence": "Restoring State"
+    },
+    {
+      "line": 12893,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 12907,
+      "title": "CHAPTER 29",
+      "evidence": "CHAPTER 29"
+    },
+    {
+      "line": 12909,
+      "title": "Pair Programming",
+      "evidence": "Pair Programming"
+    },
+    {
+      "line": 12921,
+      "title": "The Simple Route",
+      "evidence": "The Simple Route"
+    },
+    {
+      "line": 12933,
+      "title": "The Custom Route",
+      "evidence": "The Custom Route"
+    },
+    {
+      "line": 12941,
+      "title": "Vagrant Setup",
+      "evidence": "Vagrant Setup"
+    },
+    {
+      "line": 12961,
+      "title": "Share Session via Single-User Account",
+      "evidence": "Share Session via Single-User Account"
+    },
+    {
+      "line": 13007,
+      "title": "Individual User Control",
+      "evidence": "Individual User Control"
+    },
+    {
+      "line": 13021,
+      "title": "Share Session with Multiple Users",
+      "evidence": "Share Session with Multiple Users"
+    },
+    {
+      "line": 13089,
+      "title": "Remotely Accessing a Local VM",
+      "evidence": "Remotely Accessing a Local VM"
+    },
+    {
+      "line": 13115,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 13125,
+      "title": "CHAPTER 30",
+      "evidence": "CHAPTER 30"
+    },
+    {
+      "line": 13127,
+      "title": "Workflow Management",
+      "evidence": "Workflow Management"
+    },
+    {
+      "line": 13147,
+      "title": "Example Repository",
+      "evidence": "Example Repository"
+    },
+    {
+      "line": 13159,
+      "title": "Reptyr",
+      "evidence": "Reptyr"
+    },
+    {
+      "line": 13187,
+      "title": "tmux-resurrect",
+      "evidence": "tmux-resurrect"
+    },
+    {
+      "line": 13197,
+      "title": "Installation",
+      "evidence": "Installation"
+    },
+    {
+      "line": 13211,
+      "title": "Sample Usage",
+      "evidence": "Sample Usage"
+    },
+    {
+      "line": 13217,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 13235,
+      "title": "Index",
+      "evidence": "Index"
+    }
+  ],
+  "problems": [
+    {
+      "line": 12527,
+      "kind": "garbled",
+      "evidence": "Much like when u"
+    },
+    {
+      "line": 13311,
+      "kind": "duplicated",
+      "evidence": "ls (list buffers) command"
+    },
+    {
+      "line": 13363,
+      "kind": "order",
+      "evidence": "pipe (|) operator"
+    }
+  ],
+  "summary": "This slice closes Pro Vim's tmux section (Chapters 24-30): it covers tmux sessions, buffers and copy mode, panes and windows, customization via shell wrappers and key bindings, copy/paste and clipboard workarounds, scripting with send-keys and tmuxinator, pair programming via tmate and Vagrant, and the workflow tools Reptyr and tmux-resurrect. The final ~400 lines are the book's back index.",
+  "concepts": [
+    "tmux sessions",
+    "tmux panes",
+    "tmux windows",
+    "copy mode",
+    "paste buffer",
+    "bind-key and key bindings",
+    "send-keys automation",
+    "tmuxinator",
+    "Vagrant",
+    "pair programming",
+    "reptyr",
+    "tmux-resurrect"
+  ]
+}

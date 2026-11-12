@@ -1,0 +1,310 @@
+{
+  "id": "use-vim-like-a-pro-audit-01",
+  "book": "use-vim-like-a-pro",
+  "start": 1,
+  "end": 1109,
+  "headings": [
+    {
+      "line": 12,
+      "title": "Tweet This Book!",
+      "evidence": "Tweet This Book!"
+    },
+    {
+      "line": 21,
+      "title": "Contents",
+      "evidence": "Contents"
+    },
+    {
+      "line": 75,
+      "title": "Why Bother? (reasons)",
+      "evidence": "Why Bother? (reasons)"
+    },
+    {
+      "line": 87,
+      "title": "Why Write This Tutorial (approach)",
+      "evidence": "Why Write This Tutorial (approach)"
+    },
+    {
+      "line": 112,
+      "title": "How should one use the tutorial? (usage)",
+      "evidence": "How should one use the tutorial? (usage)"
+    },
+    {
+      "line": 122,
+      "title": "What can I do with this tutorial? (license)",
+      "evidence": "What can I do with this tutorial? (license)"
+    },
+    {
+      "line": 130,
+      "title": "Master The Basics",
+      "evidence": "Master The Basics"
+    },
+    {
+      "line": 131,
+      "title": "A little reassurance first.",
+      "evidence": "A little reassurance first."
+    },
+    {
+      "line": 147,
+      "title": "What does it look like?",
+      "evidence": "What does it look like?"
+    },
+    {
+      "line": 164,
+      "title": "Modality",
+      "evidence": "Modality"
+    },
+    {
+      "line": 190,
+      "title": "Know the vim command pattern",
+      "evidence": "Know the vim command pattern"
+    },
+    {
+      "line": 227,
+      "title": "GET OUT!",
+      "evidence": "GET OUT!"
+    },
+    {
+      "line": 247,
+      "title": "Mnemonics",
+      "evidence": "Mnemonics"
+    },
+    {
+      "line": 257,
+      "title": "Invocation",
+      "evidence": "Invocation"
+    },
+    {
+      "line": 286,
+      "title": "Don’t panic. You have undo/redo",
+      "evidence": "Don’t panic. You have undo/redo"
+    },
+    {
+      "line": 311,
+      "title": "Move by context, not position",
+      "evidence": "Move by context, not position"
+    },
+    {
+      "line": 377,
+      "title": "Help is on its way.",
+      "evidence": "Help is on its way."
+    },
+    {
+      "line": 392,
+      "title": "Shifted letters and DEATH BY CAPS!",
+      "evidence": "Shifted letters and DEATH BY CAPS!"
+    },
+    {
+      "line": 409,
+      "title": "Quoting Your Regex Metacharacters",
+      "evidence": "Quoting Your Regex Metacharacters"
+    },
+    {
+      "line": 420,
+      "title": "Insert, Overwrite, Change",
+      "evidence": "Insert, Overwrite, Change"
+    },
+    {
+      "line": 462,
+      "title": "NEVER PARK IN INSERT MODE.",
+      "evidence": "NEVER PARK IN INSERT MODE."
+    },
+    {
+      "line": 471,
+      "title": "Gain Efficiency",
+      "evidence": "Gain Efficiency"
+    },
+    {
+      "line": 487,
+      "title": "The Double-Jump",
+      "evidence": "The Double-Jump"
+    },
+    {
+      "line": 501,
+      "title": "Happiness is a good .vimrc",
+      "evidence": "Happiness is a good .vimrc"
+    },
+    {
+      "line": 569,
+      "title": "Getting rid of things.",
+      "evidence": "Getting rid of things."
+    },
+    {
+      "line": 597,
+      "title": "Use the Dot.",
+      "evidence": "Use the Dot."
+    },
+    {
+      "line": 605,
+      "title": "Use the Star",
+      "evidence": "Use the Star"
+    },
+    {
+      "line": 612,
+      "title": "Keep text in front of your face",
+      "evidence": "Keep text in front of your face"
+    },
+    {
+      "line": 638,
+      "title": "Take cut-n-paste to the next level",
+      "evidence": "Take cut-n-paste to the next level"
+    },
+    {
+      "line": 639,
+      "title": "Registers",
+      "evidence": "Registers"
+    },
+    {
+      "line": 710,
+      "title": "Marking",
+      "evidence": "Marking"
+    },
+    {
+      "line": 750,
+      "title": "Completion",
+      "evidence": "Completion"
+    },
+    {
+      "line": 790,
+      "title": "The Explorer",
+      "evidence": "The Explorer"
+    },
+    {
+      "line": 806,
+      "title": "Indenting and unindenting",
+      "evidence": "Indenting and unindenting"
+    },
+    {
+      "line": 833,
+      "title": "Spelling",
+      "evidence": "Spelling"
+    },
+    {
+      "line": 843,
+      "title": "Little hints",
+      "evidence": "Little hints"
+    },
+    {
+      "line": 851,
+      "title": "Shell Filtering",
+      "evidence": "Shell Filtering"
+    },
+    {
+      "line": 871,
+      "title": "Code Reformatting",
+      "evidence": "Code Reformatting"
+    },
+    {
+      "line": 888,
+      "title": "QuickFix mode is your friend",
+      "evidence": "QuickFix mode is your friend"
+    },
+    {
+      "line": 905,
+      "title": "Manual page access",
+      "evidence": "Manual page access"
+    },
+    {
+      "line": 921,
+      "title": "Ctags lets you navigate like a pro.",
+      "evidence": "Ctags lets you navigate like a pro."
+    },
+    {
+      "line": 929,
+      "title": "Bookmarks.",
+      "evidence": "Bookmarks."
+    },
+    {
+      "line": 942,
+      "title": "Pasting in Insert Mode",
+      "evidence": "Pasting in Insert Mode"
+    },
+    {
+      "line": 964,
+      "title": "Abbreviate!",
+      "evidence": "Abbreviate!"
+    },
+    {
+      "line": 987,
+      "title": "Record and playback macros.",
+      "evidence": "Record and playback macros."
+    },
+    {
+      "line": 1018,
+      "title": "Mapping Keys",
+      "evidence": "Mapping Keys"
+    },
+    {
+      "line": 1024,
+      "title": "Colors and Stuff",
+      "evidence": "Colors and Stuff"
+    },
+    {
+      "line": 1054,
+      "title": "Exploiting the path.",
+      "evidence": "Exploiting the path."
+    },
+    {
+      "line": 1086,
+      "title": "The Alternate File",
+      "evidence": "The Alternate File"
+    },
+    {
+      "line": 1096,
+      "title": "Alternative Keystrokes",
+      "evidence": "Alternative Keystrokes"
+    },
+    {
+      "line": 1100,
+      "title": "Epilog",
+      "evidence": "Epilog"
+    }
+  ],
+  "problems": [
+    {
+      "line": 418,
+      "kind": "garbled",
+      "evidence": "As a result, all the metacharacters have to be quoted with the backslash (“”) character. It is sometimes"
+    },
+    {
+      "line": 469,
+      "kind": "truncation",
+      "evidence": "in command mode. If you are wanting to move up or down a line, or to some other place, hit"
+    },
+    {
+      "line": 769,
+      "kind": "garbled",
+      "evidence": "press xl to enter a special completion mode. You cycle through choices with n for next andp for previous,"
+    },
+    {
+      "line": 954,
+      "kind": "garbled",
+      "evidence": "<\\b> enters the text (we’re in insert mode). This text is the beginning of"
+    },
+    {
+      "line": 1004,
+      "kind": "missing",
+      "evidence": "enters the text (we’re in insert mode). This text is the beginning of the html"
+    },
+    {
+      "line": 1021,
+      "kind": "garbled",
+      "evidence": "1 \" Move between files in a long list map <F3> :prev<CR> map <F4>"
+    }
+  ],
+  "summary": "Summary: this opening slice runs from the Leanpub front matter through the first three major sections of the tutorial, arguing why Vim is worth learning and then teaching modality, the count–operator–motion command pattern, movement, undo/redo, .vimrc settings, registers, visual marking, insert-mode completion, macros, mappings, colors, quickfix, tags, marks, and alternate-file navigation. It ends with the Epilog's short list of habits.",
+  "concepts": [
+    "modal editing",
+    "command pattern (count + operator + motion)",
+    "motions",
+    "dot repeat",
+    "registers",
+    "visual mode",
+    "insert-mode completion",
+    "vimrc",
+    "macros",
+    "key mapping",
+    "quickfix",
+    "ctags"
+  ]
+}

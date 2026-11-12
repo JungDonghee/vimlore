@@ -94,10 +94,15 @@ never rewrites prose. Full text and FTS/sqlite/chunks live in gitignored
 `books-clean/` / `books-index/`; committed metadata is `books.json`,
 `quality.json`, `coverage.json`, `INDEX.md`, `parts.json`, and the subagent
 audit. **78,502 source lines map 1:1 to clean lines; chunks and audit parts
-cover 78,502/78,502.** Spelling candidates are triaged with hunspell, never
-auto-corrected. Read with `npm run books:search -- "..."` and
-`npm run books:read -- <book> <start> <end>`. See
-[`BOOKS_PIPELINE.md`](BOOKS_PIPELINE.md).
+cover 78,502/78,502.** The 19-part subagent audit produced 2,554
+evidence-validated headings and flagged 129 extraction defects (0 evidence
+mismatches rejected). **`neovim-for-beginners` is a partial source** (chapter
+labels jump c0→c119); the audit is not a repair log. Spelling candidates are
+triaged with hunspell, never auto-corrected. Read with
+`npm run books:search -- "..."` and `npm run books:read -- <book> <start> <end>`.
+See [`BOOKS_PIPELINE.md`](BOOKS_PIPELINE.md),
+[`BOOK_AUDIT_WORKFLOW.md`](BOOK_AUDIT_WORKFLOW.md) and
+[`BOOK_SOURCE_QUALITY.md`](BOOK_SOURCE_QUALITY.md).
 
 ## 0c. Browser QA (2026-11-12)
 

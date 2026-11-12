@@ -1,0 +1,550 @@
+{
+  "id": "learning-vi-vim-audit-02",
+  "book": "learning-vi-vim",
+  "start": 6001,
+  "end": 12000,
+  "headings": [
+    {
+      "line": 6005,
+      "title": "POSIX Bracket Expressions",
+      "evidence": "POSIX Bracket Expressions"
+    },
+    {
+      "line": 6106,
+      "title": "How Do I Choose My Locale?",
+      "evidence": "How Do I Choose My Locale?"
+    },
+    {
+      "line": 6130,
+      "title": "Metacharacters Used in Replacement Strings",
+      "evidence": "Metacharacters Used in Replacement Strings"
+    },
+    {
+      "line": 6249,
+      "title": "More Substitution Tricks",
+      "evidence": "More Substitution Tricks"
+    },
+    {
+      "line": 6305,
+      "title": "Pattern-Matching Examples",
+      "evidence": "Pattern-Matching Examples"
+    },
+    {
+      "line": 6371,
+      "title": "Search for General Class of Words",
+      "evidence": "Search for General Class of Words"
+    },
+    {
+      "line": 6406,
+      "title": "Block Move by Patterns",
+      "evidence": "Block Move by Patterns"
+    },
+    {
+      "line": 6473,
+      "title": "More Examples",
+      "evidence": "More Examples"
+    },
+    {
+      "line": 6480,
+      "title": "A Word About troff",
+      "evidence": "A Word About troff"
+    },
+    {
+      "line": 6812,
+      "title": "A Final Look at Pattern Matching",
+      "evidence": "A Final Look at Pattern Matching"
+    },
+    {
+      "line": 6818,
+      "title": "Deleting an Unknown Block of Text",
+      "evidence": "Deleting an Unknown Block of Text"
+    },
+    {
+      "line": 6873,
+      "title": "Switching Items in a Textual Database",
+      "evidence": "Switching Items in a Textual Database"
+    },
+    {
+      "line": 6982,
+      "title": "Using :g to Repeat a Command",
+      "evidence": "Using :g to Repeat a Command"
+    },
+    {
+      "line": 7009,
+      "title": "Collecting Lines",
+      "evidence": "Collecting Lines"
+    },
+    {
+      "line": 7124,
+      "title": "Chapter 7. Advanced Editing",
+      "evidence": "Chapter 7. Advanced Editing"
+    },
+    {
+      "line": 7159,
+      "title": "Customizing vi and Vim",
+      "evidence": "Customizing vi and Vim"
+    },
+    {
+      "line": 7188,
+      "title": "The :set Command",
+      "evidence": "The :set Command"
+    },
+    {
+      "line": 7268,
+      "title": "The .exrc File",
+      "evidence": "The .exrc File"
+    },
+    {
+      "line": 7291,
+      "title": "Alternate Environments",
+      "evidence": "Alternate Environments"
+    },
+    {
+      "line": 7346,
+      "title": "Some Useful Options",
+      "evidence": "Some Useful Options"
+    },
+    {
+      "line": 7387,
+      "title": "Executing Unix Commands",
+      "evidence": "Executing Unix Commands"
+    },
+    {
+      "line": 7491,
+      "title": "Filtering Text Through a Command",
+      "evidence": "Filtering Text Through a Command"
+    },
+    {
+      "line": 7500,
+      "title": "Filtering text with ex",
+      "evidence": "Filtering text with ex"
+    },
+    {
+      "line": 7514,
+      "title": "Filtering text with vi motion commands",
+      "evidence": "Filtering text with vi motion commands"
+    },
+    {
+      "line": 7622,
+      "title": "Saving Commands",
+      "evidence": "Saving Commands"
+    },
+    {
+      "line": 7631,
+      "title": "Word Abbreviation",
+      "evidence": "Word Abbreviation"
+    },
+    {
+      "line": 7707,
+      "title": "Using the map Command",
+      "evidence": "Using the map Command"
+    },
+    {
+      "line": 7780,
+      "title": "Mapping with a Leader",
+      "evidence": "Mapping with a Leader"
+    },
+    {
+      "line": 7810,
+      "title": "Protecting Keys from Interpretation by ex",
+      "evidence": "Protecting Keys from Interpretation by ex"
+    },
+    {
+      "line": 7880,
+      "title": "A Complex Mapping Example",
+      "evidence": "A Complex Mapping Example"
+    },
+    {
+      "line": 7944,
+      "title": "More Examples of Mapping Keys",
+      "evidence": "More Examples of Mapping Keys"
+    },
+    {
+      "line": 8063,
+      "title": "Mapping Keys for Insert Mode",
+      "evidence": "Mapping Keys for Insert Mode"
+    },
+    {
+      "line": 8120,
+      "title": "Mapping Function Keys",
+      "evidence": "Mapping Function Keys"
+    },
+    {
+      "line": 8175,
+      "title": "Seeing what function keys generate",
+      "evidence": "Seeing what function keys generate"
+    },
+    {
+      "line": 8193,
+      "title": "Mapping Other Special Keys",
+      "evidence": "Mapping Other Special Keys"
+    },
+    {
+      "line": 8291,
+      "title": "Mapping Multiple Input Keys",
+      "evidence": "Mapping Multiple Input Keys"
+    },
+    {
+      "line": 8337,
+      "title": "@-Functions",
+      "evidence": "@-Functions"
+    },
+    {
+      "line": 8385,
+      "title": "Executing Registers from ex",
+      "evidence": "Executing Registers from ex"
+    },
+    {
+      "line": 8411,
+      "title": "Using ex Scripts",
+      "evidence": "Using ex Scripts"
+    },
+    {
+      "line": 8477,
+      "title": "Looping in a Shell Script",
+      "evidence": "Looping in a Shell Script"
+    },
+    {
+      "line": 8587,
+      "title": "Here Documents",
+      "evidence": "Here Documents"
+    },
+    {
+      "line": 8624,
+      "title": "Sorting Text Blocks: A Sample ex Script",
+      "evidence": "Sorting Text Blocks: A Sample ex Script"
+    },
+    {
+      "line": 8708,
+      "title": "A subtle vi/Vim difference",
+      "evidence": "A subtle vi/Vim difference"
+    },
+    {
+      "line": 8724,
+      "title": "Comments in ex Scripts",
+      "evidence": "Comments in ex Scripts"
+    },
+    {
+      "line": 8769,
+      "title": "Beyond ex",
+      "evidence": "Beyond ex"
+    },
+    {
+      "line": 8778,
+      "title": "Editing Program Source Code",
+      "evidence": "Editing Program Source Code"
+    },
+    {
+      "line": 8791,
+      "title": "Indentation Control",
+      "evidence": "Indentation Control"
+    },
+    {
+      "line": 8944,
+      "title": "A Special Search Command",
+      "evidence": "A Special Search Command"
+    },
+    {
+      "line": 9003,
+      "title": "Using Tags",
+      "evidence": "Using Tags"
+    },
+    {
+      "line": 9067,
+      "title": "Enhanced Tags",
+      "evidence": "Enhanced Tags"
+    },
+    {
+      "line": 9088,
+      "title": "Universal ctags",
+      "evidence": "Universal ctags"
+    },
+    {
+      "line": 9123,
+      "title": "The new tags format",
+      "evidence": "The new tags format"
+    },
+    {
+      "line": 9255,
+      "title": "Tag stacks",
+      "evidence": "Tag stacks"
+    },
+    {
+      "line": 9270,
+      "title": "Solaris vi",
+      "evidence": "Solaris vi"
+    },
+    {
+      "line": 9332,
+      "title": "Universal ctags and Vim",
+      "evidence": "Universal ctags and Vim"
+    },
+    {
+      "line": 9477,
+      "title": "Part II. Vim",
+      "evidence": "Part II. Vim"
+    },
+    {
+      "line": 9499,
+      "title": "Chapter 8. Vim (vi Improved): Overview and Improvements over vi",
+      "evidence": "Chapter 8. Vim (vi Improved): Overview and Improvements over vi"
+    },
+    {
+      "line": 9558,
+      "title": "About Vim",
+      "evidence": "About Vim"
+    },
+    {
+      "line": 9602,
+      "title": "Overview",
+      "evidence": "Overview"
+    },
+    {
+      "line": 9608,
+      "title": "Author and History",
+      "evidence": "Author and History"
+    },
+    {
+      "line": 9646,
+      "title": "Why Vim?",
+      "evidence": "Why Vim?"
+    },
+    {
+      "line": 9659,
+      "title": "Compare and Contrast with vi",
+      "evidence": "Compare and Contrast with vi"
+    },
+    {
+      "line": 9696,
+      "title": "Categories of Features",
+      "evidence": "Categories of Features"
+    },
+    {
+      "line": 9874,
+      "title": "Philosophy",
+      "evidence": "Philosophy"
+    },
+    {
+      "line": 9895,
+      "title": "Aids and Easy Modes for New Users",
+      "evidence": "Aids and Easy Modes for New Users"
+    },
+    {
+      "line": 9928,
+      "title": "Built-In Help",
+      "evidence": "Built-In Help"
+    },
+    {
+      "line": 10038,
+      "title": "Startup and Initialization Options",
+      "evidence": "Startup and Initialization Options"
+    },
+    {
+      "line": 10062,
+      "title": "Command-Line Options",
+      "evidence": "Command-Line Options"
+    },
+    {
+      "line": 10198,
+      "title": "Behaviors Associated to Command Name",
+      "evidence": "Behaviors Associated to Command Name"
+    },
+    {
+      "line": 10269,
+      "title": "System and User Configuration Files",
+      "evidence": "System and User Configuration Files"
+    },
+    {
+      "line": 10355,
+      "title": "Environment Variables",
+      "evidence": "Environment Variables"
+    },
+    {
+      "line": 10361,
+      "title": "How to set environment variables",
+      "evidence": "How to set environment variables"
+    },
+    {
+      "line": 10409,
+      "title": "Environment variables relevant to Vim",
+      "evidence": "Environment variables relevant to Vim"
+    },
+    {
+      "line": 10476,
+      "title": "New Motion Commands",
+      "evidence": "New Motion Commands"
+    },
+    {
+      "line": 10536,
+      "title": "Visual Mode Motion",
+      "evidence": "Visual Mode Motion"
+    },
+    {
+      "line": 10609,
+      "title": "Extended Regular Expressions",
+      "evidence": "Extended Regular Expressions"
+    },
+    {
+      "line": 10879,
+      "title": "Extended Undo",
+      "evidence": "Extended Undo"
+    },
+    {
+      "line": 10934,
+      "title": "Incremental Searching",
+      "evidence": "Incremental Searching"
+    },
+    {
+      "line": 10951,
+      "title": "Left-Right Scrolling",
+      "evidence": "Left-Right Scrolling"
+    },
+    {
+      "line": 10968,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 11017,
+      "title": "Chapter 9. Graphical Vim (gvim)",
+      "evidence": "Chapter 9. Graphical Vim (gvim)"
+    },
+    {
+      "line": 11064,
+      "title": "General Introduction to gvim",
+      "evidence": "General Introduction to gvim"
+    },
+    {
+      "line": 11074,
+      "title": "Starting gvim",
+      "evidence": "Starting gvim"
+    },
+    {
+      "line": 11143,
+      "title": "Using the Mouse",
+      "evidence": "Using the Mouse"
+    },
+    {
+      "line": 11249,
+      "title": "Useful Menus",
+      "evidence": "Useful Menus"
+    },
+    {
+      "line": 11289,
+      "title": "Customizing Scrollbars, Menus, and Toolbars",
+      "evidence": "Customizing Scrollbars, Menus, and Toolbars"
+    },
+    {
+      "line": 11300,
+      "title": "Scrollbars",
+      "evidence": "Scrollbars"
+    },
+    {
+      "line": 11337,
+      "title": "Menus",
+      "evidence": "Menus"
+    },
+    {
+      "line": 11378,
+      "title": "Basic menu customization",
+      "evidence": "Basic menu customization"
+    },
+    {
+      "line": 11494,
+      "title": "More menu customization",
+      "evidence": "More menu customization"
+    },
+    {
+      "line": 11603,
+      "title": "Putting it all together",
+      "evidence": "Putting it all together"
+    },
+    {
+      "line": 11640,
+      "title": "Toolbars",
+      "evidence": "Toolbars"
+    },
+    {
+      "line": 11766,
+      "title": "Tooltips",
+      "evidence": "Tooltips"
+    },
+    {
+      "line": 11802,
+      "title": "gvim in Microsoft Windows",
+      "evidence": "gvim in Microsoft Windows"
+    },
+    {
+      "line": 11825,
+      "title": "gvim in the X Window System",
+      "evidence": "gvim in the X Window System"
+    },
+    {
+      "line": 11839,
+      "title": "Running gvim in Microsoft Windows WSL",
+      "evidence": "Running gvim in Microsoft Windows WSL"
+    },
+    {
+      "line": 11860,
+      "title": "Installing gvim in WSL 2",
+      "evidence": "Installing gvim in WSL 2"
+    },
+    {
+      "line": 11918,
+      "title": "Installing an X Server for Windows",
+      "evidence": "Installing an X Server for Windows"
+    },
+    {
+      "line": 11930,
+      "title": "Configuring the X Server for Windows",
+      "evidence": "Configuring the X Server for Windows"
+    }
+  ],
+  "problems": [
+    {
+      "line": 9770,
+      "kind": "garbled",
+      "evidence": "See the section “Syntax Highlighting” for more"
+    },
+    {
+      "line": 10522,
+      "kind": "duplicated",
+      "evidence": ":n go"
+    },
+    {
+      "line": 11080,
+      "kind": "garbled",
+      "evidence": "quick and easy access to gvim by integrating it into the Windows"
+    },
+    {
+      "line": 11620,
+      "kind": "missing",
+      "evidence": "The first command () uses the prefix 15, telling"
+    },
+    {
+      "line": 11624,
+      "kind": "missing",
+      "evidence": "The subsequent commands (, , and"
+    },
+    {
+      "line": 11628,
+      "kind": "missing",
+      "evidence": "We’ve used the submenu priority syntax (,"
+    }
+  ],
+  "summary": "This slice finishes Chapter 6's treatment of global replacement (POSIX bracket expressions, replacement metacharacters, and pattern-matching examples) and works through Chapter 7's advanced editing material: :set and .exrc configuration, Unix command filters, abbreviations, maps, @-functions, ex scripts, ctags, and indentation control. It then opens Part II with Chapter 8's overview of Vim's history and features (startup files, motions, visual mode, extended regular expressions, undo, incremental search) and Chapter 9's first half on gvim menus, toolbars, and running gvim under WSL.",
+  "concepts": [
+    "global replacement",
+    "POSIX bracket expressions",
+    "replacement metacharacters",
+    "abbreviations and key maps",
+    "ex scripts and here documents",
+    "ctags and tag stacks",
+    "@-functions and named registers",
+    "options and .exrc configuration",
+    "extended regular expressions",
+    "infinite undo and incremental search",
+    "gvim menus and toolbars",
+    "WSL and X server setup"
+  ]
+}

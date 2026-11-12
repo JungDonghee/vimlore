@@ -1,0 +1,155 @@
+{
+  "id": "modern-vim-audit-02",
+  "book": "modern-vim",
+  "start": 6001,
+  "end": 6882,
+  "headings": [
+    {
+      "line": 6050,
+      "title": "Setting Local Variables for Files in a Project",
+      "evidence": "Setting Local Variables for Files in a Project"
+    },
+    {
+      "line": 6187,
+      "title": "Projectionist Specificity",
+      "evidence": "Projectionist Specificity"
+    },
+    {
+      "line": 6303,
+      "title": "Designing Generalized Projections",
+      "evidence": "Designing Generalized Projections"
+    },
+    {
+      "line": 6324,
+      "title": "What About Local vimrc Files?",
+      "evidence": "What About Local vimrc Files?"
+    },
+    {
+      "line": 6338,
+      "title": "Built-in Projections",
+      "evidence": "Built-in Projections"
+    },
+    {
+      "line": 6381,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 6414,
+      "title": "What’s Next for Modern Vim?",
+      "evidence": "What’s Next for Modern Vim?"
+    },
+    {
+      "line": 6433,
+      "title": "Integrating with the Language Server Protocol",
+      "evidence": "Integrating with the Language Server Protocol"
+    },
+    {
+      "line": 6497,
+      "title": "What’s Next for Vim 8",
+      "evidence": "What’s Next for Vim 8"
+    },
+    {
+      "line": 6503,
+      "title": "Adding :terminal support",
+      "evidence": "Adding :terminal support"
+    },
+    {
+      "line": 6531,
+      "title": "What’s Next for Neovim",
+      "evidence": "What’s Next for Neovim"
+    },
+    {
+      "line": 6536,
+      "title": "Externalizing the User Interface",
+      "evidence": "Externalizing the User Interface"
+    },
+    {
+      "line": 6547,
+      "title": "The Tab Bar",
+      "evidence": "The Tab Bar"
+    },
+    {
+      "line": 6565,
+      "title": "The Pop-Up Menu",
+      "evidence": "The Pop-Up Menu"
+    },
+    {
+      "line": 6586,
+      "title": "Tiled Windows and Status Line",
+      "evidence": "Tiled Windows and Status Line"
+    },
+    {
+      "line": 6609,
+      "title": "GUIs for Neovim",
+      "evidence": "GUIs for Neovim"
+    },
+    {
+      "line": 6625,
+      "title": "Embedding Neovim in Other Editors",
+      "evidence": "Embedding Neovim in Other Editors"
+    },
+    {
+      "line": 6639,
+      "title": "ActualVim for Sublime Text 3",
+      "evidence": "ActualVim for Sublime Text 3"
+    },
+    {
+      "line": 6648,
+      "title": "VSCodeVim for VSCode",
+      "evidence": "VSCodeVim for VSCode"
+    },
+    {
+      "line": 6661,
+      "title": "Challenges of Embedding Neovim",
+      "evidence": "Challenges of Embedding Neovim"
+    },
+    {
+      "line": 6686,
+      "title": "Footnotes",
+      "evidence": "Footnotes"
+    },
+    {
+      "line": 6780,
+      "title": "Bibliography",
+      "evidence": "Bibliography"
+    },
+    {
+      "line": 6786,
+      "title": "Thank you!",
+      "evidence": "Thank you!"
+    },
+    {
+      "line": 6800,
+      "title": "You May Be Interested In…",
+      "evidence": "You May Be Interested In…"
+    }
+  ],
+  "problems": [
+    {
+      "line": 6343,
+      "kind": "garbled",
+      "evidence": "KeyPurpose"
+    },
+    {
+      "line": 6782,
+      "kind": "garbled",
+      "evidence": "[Hog16]Brian P. Hogan. tmux 2. The Pragmatic Bookshelf, Raleigh, NC, 2016.[Nei15]Drew Neil. Practical Vim, Second Edition. The Pragmatic Bookshelf, Raleigh, NC, 2015."
+    }
+  ],
+  "summary": "This slice finishes the chapter on configuring Vim per project: ALE linters and ‘textwidth’ are driven from .projections.json metadata via Projectionist queries and a User ProjectionistActivate autocommand, with notes on projection specificity, generic keys, local vimrc risks, and built-in projection keys. It then opens Appendix 1, which surveys future directions for Vim 8 and Neovim (LSP, :terminal, externalized tab bar/pop-up menu/status line GUIs, and embedding Neovim in Sublime Text and VSCode), and closes with footnotes, the bibliography, and back matter.",
+  "concepts": [
+    "ALE",
+    "Projectionist",
+    ".projections.json",
+    "b:ale_linters",
+    "projectionist#query()",
+    "autocmd User ProjectionistActivate",
+    "textwidth",
+    "exrc",
+    "Language Server Protocol",
+    ":terminal",
+    "Neovim GUI externalization",
+    "embedding Neovim"
+  ]
+}

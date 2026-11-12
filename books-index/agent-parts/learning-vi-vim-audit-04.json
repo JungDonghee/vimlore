@@ -1,0 +1,750 @@
+{
+  "id": "learning-vi-vim-audit-04",
+  "book": "learning-vi-vim",
+  "start": 18001,
+  "end": 24000,
+  "headings": [
+    {
+      "line": 18026,
+      "title": "HTML Your Text",
+      "evidence": "HTML Your Text"
+    },
+    {
+      "line": 18089,
+      "title": "What’s the Difference?",
+      "evidence": "What’s the Difference?"
+    },
+    {
+      "line": 18157,
+      "title": "viminfo: Now, Where Was I?",
+      "evidence": "viminfo: Now, Where Was I?"
+    },
+    {
+      "line": 18169,
+      "title": "The viminfo Option",
+      "evidence": "The viminfo Option"
+    },
+    {
+      "line": 18237,
+      "title": "The mksession Command",
+      "evidence": "The mksession Command"
+    },
+    {
+      "line": 18350,
+      "title": "What’s My Line (Size)?",
+      "evidence": "What’s My Line (Size)?"
+    },
+    {
+      "line": 18451,
+      "title": "Abbreviations of Vim Commands and Options",
+      "evidence": "Abbreviations of Vim Commands and Options"
+    },
+    {
+      "line": 18550,
+      "title": "A Few Quickies (Not Necessarily Vim-Specific)",
+      "evidence": "A Few Quickies (Not Necessarily Vim-Specific)"
+    },
+    {
+      "line": 18555,
+      "title": "A quick swap",
+      "evidence": "A quick swap"
+    },
+    {
+      "line": 18562,
+      "title": "Another quick swap",
+      "evidence": "Another quick swap"
+    },
+    {
+      "line": 18567,
+      "title": "Quick help",
+      "evidence": "Quick help"
+    },
+    {
+      "line": 18575,
+      "title": "What was that great command I used?",
+      "evidence": "What was that great command I used?"
+    },
+    {
+      "line": 18599,
+      "title": "A bit of humor",
+      "evidence": "A bit of humor"
+    },
+    {
+      "line": 18607,
+      "title": "More Resources",
+      "evidence": "More Resources"
+    },
+    {
+      "line": 18630,
+      "title": "Chapter 14. Some Vim Power Techniques",
+      "evidence": "Chapter 14. Some Vim Power Techniques"
+    },
+    {
+      "line": 18639,
+      "title": "Several Convenience Maps",
+      "evidence": "Several Convenience Maps"
+    },
+    {
+      "line": 18652,
+      "title": "Exiting Vim Simplified",
+      "evidence": "Exiting Vim Simplified"
+    },
+    {
+      "line": 18676,
+      "title": "Resize Your Window",
+      "evidence": "Resize Your Window"
+    },
+    {
+      "line": 18703,
+      "title": "Double Your Fun",
+      "evidence": "Double Your Fun"
+    },
+    {
+      "line": 18718,
+      "title": "Introducing the history windows",
+      "evidence": "Introducing the history windows"
+    },
+    {
+      "line": 18745,
+      "title": "Two colons are better than one",
+      "evidence": "Two colons are better than one"
+    },
+    {
+      "line": 18779,
+      "title": "And two slashes are better than one",
+      "evidence": "And two slashes are better than one"
+    },
+    {
+      "line": 18801,
+      "title": "How Tall Is Your Command Window?",
+      "evidence": "How Tall Is Your Command Window?"
+    },
+    {
+      "line": 18856,
+      "title": "Moving into the Fast Lane",
+      "evidence": "Moving into the Fast Lane"
+    },
+    {
+      "line": 18861,
+      "title": "Finding a Hard-to-Remember Command",
+      "evidence": "Finding a Hard-to-Remember Command"
+    },
+    {
+      "line": 18866,
+      "title": "Directly searching for the command",
+      "evidence": "Directly searching for the command"
+    },
+    {
+      "line": 18900,
+      "title": "Filtering the buffer",
+      "evidence": "Filtering the buffer"
+    },
+    {
+      "line": 18922,
+      "title": "Massaging the filter results",
+      "evidence": "Massaging the filter results"
+    },
+    {
+      "line": 18940,
+      "title": "Analyzing a Famous Speech",
+      "evidence": "Analyzing a Famous Speech"
+    },
+    {
+      "line": 19138,
+      "title": "Some More Use Cases",
+      "evidence": "Some More Use Cases"
+    },
+    {
+      "line": 19144,
+      "title": "Exported files",
+      "evidence": "Exported files"
+    },
+    {
+      "line": 19152,
+      "title": "System log files",
+      "evidence": "System log files"
+    },
+    {
+      "line": 19161,
+      "title": "Vendor log files",
+      "evidence": "Vendor log files"
+    },
+    {
+      "line": 19202,
+      "title": "Hitting the Speed Limit",
+      "evidence": "Hitting the Speed Limit"
+    },
+    {
+      "line": 19273,
+      "title": "Enhancing the Status Line",
+      "evidence": "Enhancing the Status Line"
+    },
+    {
+      "line": 19361,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 19378,
+      "title": "Part III. Vim in the Larger Milieu",
+      "evidence": "Part III. Vim in the Larger Milieu"
+    },
+    {
+      "line": 19393,
+      "title": "Chapter 15. Vim as IDE: Some Assembly Required",
+      "evidence": "Chapter 15. Vim as IDE: Some Assembly Required"
+    },
+    {
+      "line": 19422,
+      "title": "Plug-In Managers",
+      "evidence": "Plug-In Managers"
+    },
+    {
+      "line": 19498,
+      "title": "Finding Just the Right Plug-In",
+      "evidence": "Finding Just the Right Plug-In"
+    },
+    {
+      "line": 19518,
+      "title": "Why Do We Want an IDE?",
+      "evidence": "Why Do We Want an IDE?"
+    },
+    {
+      "line": 19554,
+      "title": "Doing It Yourself",
+      "evidence": "Doing It Yourself"
+    },
+    {
+      "line": 19577,
+      "title": "EditorConfig: Consistent Text Editing Setup",
+      "evidence": "EditorConfig: Consistent Text Editing Setup"
+    },
+    {
+      "line": 19594,
+      "title": "NERDTree: File Tree Traversal Within Vim",
+      "evidence": "NERDTree: File Tree Traversal Within Vim"
+    },
+    {
+      "line": 19642,
+      "title": "nerdtree-git-plug-in: NERDTree with Git Status Indicators",
+      "evidence": "nerdtree-git-plug-in: NERDTree with Git Status Indicators"
+    },
+    {
+      "line": 19664,
+      "title": "Fugitive: Running Git from Within Vim",
+      "evidence": "Fugitive: Running Git from Within Vim"
+    },
+    {
+      "line": 19734,
+      "title": "Completion",
+      "evidence": "Completion"
+    },
+    {
+      "line": 19745,
+      "title": "YouCompleteMe: Dynamic completion and semantic checking",
+      "evidence": "YouCompleteMe: Dynamic completion and semantic checking"
+    },
+    {
+      "line": 19856,
+      "title": "Other completion and checking engines",
+      "evidence": "Other completion and checking engines"
+    },
+    {
+      "line": 19886,
+      "title": "Termdebug: Use GDB Directly Within Vim",
+      "evidence": "Termdebug: Use GDB Directly Within Vim"
+    },
+    {
+      "line": 19923,
+      "title": "All-in-One IDEs",
+      "evidence": "All-in-One IDEs"
+    },
+    {
+      "line": 20044,
+      "title": "Coding Is Great, but What If I’m a Writer?",
+      "evidence": "Coding Is Great, but What If I’m a Writer?"
+    },
+    {
+      "line": 20112,
+      "title": "Conclusion",
+      "evidence": "Conclusion"
+    },
+    {
+      "line": 20127,
+      "title": "Chapter 16. vi Is Everywhere",
+      "evidence": "Chapter 16. vi Is Everywhere"
+    },
+    {
+      "line": 20129,
+      "title": "Introduction",
+      "evidence": "Introduction"
+    },
+    {
+      "line": 20143,
+      "title": "Improving the Command-Line Experience",
+      "evidence": "Improving the Command-Line Experience"
+    },
+    {
+      "line": 20162,
+      "title": "Sharing Multiple Shells",
+      "evidence": "Sharing Multiple Shells"
+    },
+    {
+      "line": 20220,
+      "title": "The readline Library",
+      "evidence": "The readline Library"
+    },
+    {
+      "line": 20227,
+      "title": "The Bash Shell",
+      "evidence": "The Bash Shell"
+    },
+    {
+      "line": 20280,
+      "title": "Command-line editing in Bash",
+      "evidence": "Command-line editing in Bash"
+    },
+    {
+      "line": 20331,
+      "title": "Multiline commands in Bash",
+      "evidence": "Multiline commands in Bash"
+    },
+    {
+      "line": 20361,
+      "title": "Using Vim to edit Bash commands",
+      "evidence": "Using Vim to edit Bash commands"
+    },
+    {
+      "line": 20390,
+      "title": "Other Programs",
+      "evidence": "Other Programs"
+    },
+    {
+      "line": 20404,
+      "title": "The .inputrc File",
+      "evidence": "The .inputrc File"
+    },
+    {
+      "line": 20476,
+      "title": "Other Unix Shells",
+      "evidence": "Other Unix Shells"
+    },
+    {
+      "line": 20493,
+      "title": "The Z Shell (zsh)",
+      "evidence": "The Z Shell (zsh)"
+    },
+    {
+      "line": 20538,
+      "title": "Keep As Much History As You Can",
+      "evidence": "Keep As Much History As You Can"
+    },
+    {
+      "line": 20576,
+      "title": "Command-Line Editing: Some Closing Thoughts",
+      "evidence": "Command-Line Editing: Some Closing Thoughts"
+    },
+    {
+      "line": 20599,
+      "title": "Windows PowerShell",
+      "evidence": "Windows PowerShell"
+    },
+    {
+      "line": 20619,
+      "title": "Developer Tools",
+      "evidence": "Developer Tools"
+    },
+    {
+      "line": 20629,
+      "title": "The Clewn GDB Driver",
+      "evidence": "The Clewn GDB Driver"
+    },
+    {
+      "line": 20662,
+      "title": "CGDB: Curses GDB",
+      "evidence": "CGDB: Curses GDB"
+    },
+    {
+      "line": 20695,
+      "title": "Vim Inside Visual Studio",
+      "evidence": "Vim Inside Visual Studio"
+    },
+    {
+      "line": 20709,
+      "title": "Vim for Visual Studio Code",
+      "evidence": "Vim for Visual Studio Code"
+    },
+    {
+      "line": 20717,
+      "title": "Visual Studio Code: A quick introduction",
+      "evidence": "Visual Studio Code: A quick introduction"
+    },
+    {
+      "line": 20730,
+      "title": "VS Code extensions",
+      "evidence": "VS Code extensions"
+    },
+    {
+      "line": 20767,
+      "title": "vscodevim settings",
+      "evidence": "vscodevim settings"
+    },
+    {
+      "line": 20820,
+      "title": "Vim is not just for VS Code",
+      "evidence": "Vim is not just for VS Code"
+    },
+    {
+      "line": 20832,
+      "title": "Unix Utilities",
+      "evidence": "Unix Utilities"
+    },
+    {
+      "line": 20838,
+      "title": "More or Less?",
+      "evidence": "More or Less?"
+    },
+    {
+      "line": 20904,
+      "title": "Configuring less’s display",
+      "evidence": "Configuring less’s display"
+    },
+    {
+      "line": 20939,
+      "title": "screen",
+      "evidence": "screen"
+    },
+    {
+      "line": 20969,
+      "title": "Getting started with screen",
+      "evidence": "Getting started with screen"
+    },
+    {
+      "line": 21025,
+      "title": "The screen menu",
+      "evidence": "The screen menu"
+    },
+    {
+      "line": 21043,
+      "title": "Navigating your session’s output",
+      "evidence": "Navigating your session’s output"
+    },
+    {
+      "line": 21077,
+      "title": "Take advantage of screen’s key bindings",
+      "evidence": "Take advantage of screen’s key bindings"
+    },
+    {
+      "line": 21142,
+      "title": "What makes screen great",
+      "evidence": "What makes screen great"
+    },
+    {
+      "line": 21174,
+      "title": "And …, Browsers!",
+      "evidence": "And …, Browsers!"
+    },
+    {
+      "line": 21203,
+      "title": "Wasavi",
+      "evidence": "Wasavi"
+    },
+    {
+      "line": 21242,
+      "title": "Vim + Chromium = Vimium",
+      "evidence": "Vim + Chromium = Vimium"
+    },
+    {
+      "line": 21259,
+      "title": "Keep the Vimium control handy",
+      "evidence": "Keep the Vimium control handy"
+    },
+    {
+      "line": 21274,
+      "title": "Finding links, and going to a link without clicking",
+      "evidence": "Finding links, and going to a link without clicking"
+    },
+    {
+      "line": 21308,
+      "title": "Text search",
+      "evidence": "Text search"
+    },
+    {
+      "line": 21335,
+      "title": "Browser navigation",
+      "evidence": "Browser navigation"
+    },
+    {
+      "line": 21386,
+      "title": "Useful key remappings",
+      "evidence": "Useful key remappings"
+    },
+    {
+      "line": 21408,
+      "title": "When you get lost and confused",
+      "evidence": "When you get lost and confused"
+    },
+    {
+      "line": 21420,
+      "title": "A use case",
+      "evidence": "A use case"
+    },
+    {
+      "line": 21442,
+      "title": "vi for MS Word and Outlook",
+      "evidence": "vi for MS Word and Outlook"
+    },
+    {
+      "line": 21568,
+      "title": "Honorable Mention: Tools with Some vi Features",
+      "evidence": "Honorable Mention: Tools with Some vi Features"
+    },
+    {
+      "line": 21577,
+      "title": "Google Mail",
+      "evidence": "Google Mail"
+    },
+    {
+      "line": 21592,
+      "title": "Microsoft PowerToys",
+      "evidence": "Microsoft PowerToys"
+    },
+    {
+      "line": 21610,
+      "title": "Summary",
+      "evidence": "Summary"
+    },
+    {
+      "line": 21637,
+      "title": "Chapter 17. Epilogue",
+      "evidence": "Chapter 17. Epilogue"
+    },
+    {
+      "line": 21665,
+      "title": "Part IV. Appendixes",
+      "evidence": "Part IV. Appendixes"
+    },
+    {
+      "line": 21680,
+      "title": "Appendix A. The vi, ex, and Vim Editors",
+      "evidence": "Appendix A. The vi, ex, and Vim Editors"
+    },
+    {
+      "line": 21701,
+      "title": "Command-Line Syntax",
+      "evidence": "Command-Line Syntax"
+    },
+    {
+      "line": 21713,
+      "title": "Command-Line Options",
+      "evidence": "Command-Line Options"
+    },
+    {
+      "line": 21928,
+      "title": "Review of vi Operations",
+      "evidence": "Review of vi Operations"
+    },
+    {
+      "line": 21938,
+      "title": "Command Mode",
+      "evidence": "Command Mode"
+    },
+    {
+      "line": 21956,
+      "title": "Insert Mode",
+      "evidence": "Insert Mode"
+    },
+    {
+      "line": 21964,
+      "title": "Syntax of vi Commands",
+      "evidence": "Syntax of vi Commands"
+    },
+    {
+      "line": 22049,
+      "title": "Visual mode (Vim only)",
+      "evidence": "Visual mode (Vim only)"
+    },
+    {
+      "line": 22069,
+      "title": "Status-Line Commands",
+      "evidence": "Status-Line Commands"
+    },
+    {
+      "line": 22099,
+      "title": "vi Commands",
+      "evidence": "vi Commands"
+    },
+    {
+      "line": 22104,
+      "title": "Movement Commands",
+      "evidence": "Movement Commands"
+    },
+    {
+      "line": 22114,
+      "title": "Character",
+      "evidence": "Character"
+    },
+    {
+      "line": 22140,
+      "title": "Text",
+      "evidence": "Text"
+    },
+    {
+      "line": 22182,
+      "title": "Lines",
+      "evidence": "Lines"
+    },
+    {
+      "line": 22248,
+      "title": "Screens",
+      "evidence": "Screens"
+    },
+    {
+      "line": 22286,
+      "title": "Within a Screen",
+      "evidence": "Within a Screen"
+    },
+    {
+      "line": 22308,
+      "title": "Searches",
+      "evidence": "Searches"
+    },
+    {
+      "line": 22404,
+      "title": "Line numbering",
+      "evidence": "Line numbering"
+    },
+    {
+      "line": 22426,
+      "title": "Marks",
+      "evidence": "Marks"
+    },
+    {
+      "line": 22478,
+      "title": "Insert Commands",
+      "evidence": "Insert Commands"
+    },
+    {
+      "line": 22617,
+      "title": "Edit Commands",
+      "evidence": "Edit Commands"
+    },
+    {
+      "line": 22621,
+      "title": "Changing and deleting text",
+      "evidence": "Changing and deleting text"
+    },
+    {
+      "line": 22803,
+      "title": "Copying and moving",
+      "evidence": "Copying and moving"
+    },
+    {
+      "line": 22864,
+      "title": "Saving and Exiting",
+      "evidence": "Saving and Exiting"
+    },
+    {
+      "line": 22933,
+      "title": "Accessing Multiple Files",
+      "evidence": "Accessing Multiple Files"
+    },
+    {
+      "line": 22991,
+      "title": "Window Commands (Vim)",
+      "evidence": "Window Commands (Vim)"
+    },
+    {
+      "line": 23112,
+      "title": "Interacting with the System",
+      "evidence": "Interacting with the System"
+    },
+    {
+      "line": 23158,
+      "title": "Macros",
+      "evidence": "Macros"
+    },
+    {
+      "line": 23240,
+      "title": "Miscellaneous Commands",
+      "evidence": "Miscellaneous Commands"
+    },
+    {
+      "line": 23303,
+      "title": "vi Configuration",
+      "evidence": "vi Configuration"
+    },
+    {
+      "line": 23311,
+      "title": "The :set Command",
+      "evidence": "The :set Command"
+    },
+    {
+      "line": 23349,
+      "title": "Example .exrc File",
+      "evidence": "Example .exrc File"
+    },
+    {
+      "line": 23368,
+      "title": "ex Basics",
+      "evidence": "ex Basics"
+    },
+    {
+      "line": 23380,
+      "title": "Syntax of ex Commands",
+      "evidence": "Syntax of ex Commands"
+    },
+    {
+      "line": 23407,
+      "title": "Addresses",
+      "evidence": "Addresses"
+    },
+    {
+      "line": 23421,
+      "title": "Address Symbols",
+      "evidence": "Address Symbols"
+    },
+    {
+      "line": 23490,
+      "title": "Options",
+      "evidence": "Options"
+    },
+    {
+      "line": 23511,
+      "title": "Alphabetical Summary of ex Commands",
+      "evidence": "Alphabetical Summary of ex Commands"
+    }
+  ],
+  "problems": [
+    {
+      "line": 19109,
+      "kind": "missing",
+      "evidence": "210"
+    },
+    {
+      "line": 21240,
+      "kind": "missing",
+      "evidence": "Saving the “file.”"
+    },
+    {
+      "line": 21486,
+      "kind": "missing",
+      "evidence": "Download the free trial from and"
+    }
+  ],
+  "summary": "This slice finishes Chapter 13’s survey of Vim enhancements (HTML conversion, vimdiff, viminfo and :mksession, long-line display, abbreviations, and quick tricks) and works through Chapter 14’s power techniques: convenience mappings, the command-line and search-history windows, awk-based buffer filtering and word-frequency analysis, and an enhanced status line. It then covers Vim as an IDE (plug-in managers, NERDTree, Fugitive, completion, Termdebug), vi’s presence in shells, screen, browsers, Word, and other tools, the epilogue, and the opening of Appendix A’s vi/ex command reference.",
+  "concepts": [
+    "vimdiff",
+    "viminfo",
+    "mksession",
+    "command-line window",
+    "key mappings",
+    "statusline",
+    "plug-in manager",
+    "NERDTree",
+    "Fugitive",
+    "YouCompleteMe",
+    "Termdebug",
+    "ex command reference"
+  ]
+}

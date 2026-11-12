@@ -9,7 +9,9 @@
     "chars": 67582,
     "sha256": "a367d4e9ae4bda57a790f319f8b1e7f6f6d8465615669b70b0a1ef7b9529851d",
     "headings": 293,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "gourmet-vim",
@@ -21,7 +23,9 @@
     "chars": 149197,
     "sha256": "91ce2d23dd4e64b61a0622d824241deb558413a2659b310051689d375a259bea",
     "headings": 404,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "learning-vi-vim",
@@ -33,7 +37,9 @@
     "chars": 962981,
     "sha256": "dea4a8512aa74da15a1d7d20ac03e93b442071b50f6f9c521f0bdc991fa92e06",
     "headings": 3455,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "modern-vim",
@@ -45,7 +51,9 @@
     "chars": 264109,
     "sha256": "e7c7f3e8db25315095446001e820a79aefc429ecbb0ef3076706a69a1c1b7c55",
     "headings": 439,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "neovim-for-beginners",
@@ -57,7 +65,34 @@
     "chars": 125793,
     "sha256": "ad289457163f186e26f43b5522cf35da1895c5c0a59b51cf18a1aaeb89618b95",
     "headings": 123,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": true,
+    "chapter_label_gaps": [
+      [
+        0,
+        9
+      ],
+      [
+        9,
+        27
+      ],
+      [
+        27,
+        31
+      ],
+      [
+        31,
+        95
+      ],
+      [
+        95,
+        119
+      ],
+      [
+        119,
+        130
+      ]
+    ]
   },
   {
     "slug": "practical-vim",
@@ -69,7 +104,9 @@
     "chars": 542331,
     "sha256": "fd002a8ab8ede824f5087c2f69ba8645a006d075582956dcac990913f6daa850",
     "headings": 1330,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "pro-vim",
@@ -81,7 +118,9 @@
     "chars": 822133,
     "sha256": "93b3424a48a427719d38ae5b4bc5a6bd1e86a4c50e92f60aa200cd5f0e86afdc",
     "headings": 1587,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "use-vim-like-a-pro",
@@ -93,7 +132,9 @@
     "chars": 69203,
     "sha256": "7ecbb87cea066012b241563b658960e1b4d651208a62dd6c7ba9ae1e674ba66e",
     "headings": 124,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "vim-101-hacks",
@@ -105,7 +146,9 @@
     "chars": 130220,
     "sha256": "f104d4155ff1148f87a717485f7c440ba54447beb3a010bc2df571f012bd933a",
     "headings": 530,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   },
   {
     "slug": "vim-reference-guide",
@@ -117,6 +160,8 @@
     "chars": 156740,
     "sha256": "519c154aadc759a29bd781f5eb8487e089a614274d058d6a52c130d7a5110198",
     "headings": 195,
-    "needs_review": true
+    "needs_review": true,
+    "partial_source": false,
+    "chapter_label_gaps": []
   }
 ]

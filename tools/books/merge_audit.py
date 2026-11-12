@@ -45,8 +45,16 @@ def main() -> None:
                 rejected.append({'file': p.name, 'kind': 'problem', 'entry': q})
         if d.get('summary'):
             summaries.append({'book': slug, 'start': start, 'end': end, 'summary': d['summary']})
-    headings.sort(key=lambda h: (h['book'], h['line']))
-    problems.sort(key=lambda h: (h['book'], h['line']))
+    # Overlapping audit units may report the same heading/problem. Dedupe by
+    # location+evidence, keeping one validated record.
+    uniq = {}
+    for h in headings:
+        uniq[(h['book'], h['line'], h['title'], h['evidence'])] = h
+    headings = sorted(uniq.values(), key=lambda h: (h['book'], h['line']))
+    uniq = {}
+    for q in problems:
+        uniq[(q['book'], q['line'], q['kind'], q['evidence'])] = q
+    problems = sorted(uniq.values(), key=lambda h: (h['book'], h['line']))
     out = {'generatedBy': 'tools/books/merge_audit.py', 'headings': headings, 'problems': problems, 'summaries': summaries, 'rejected': rejected}
     (INDEX / 'agent-audit.json').write_text(json.dumps(out, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(f'headings={len(headings)} problems={len(problems)} rejected={len(rejected)}')
