@@ -32,6 +32,8 @@ silent! %d _
 call setline(1, ${lines})
 set textwidth=${st.textwidth ?? 40}
 call cursor(${start.line + 1}, ${start.col + 1})
+let &undolevels = -1
+let &undolevels = 1000
 silent! call setreg('"', '')
 let @/ = ''
 try

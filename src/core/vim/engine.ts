@@ -3589,6 +3589,7 @@ export class Vim {
     const out = unique ? block.filter((x, i) => i === 0 || x !== block[i - 1]) : block;
     if (reverse) out.reverse();
     const before = this.snapshot();
+    before.undoCursor = { ...this.cursor };
     this.buf.lines.splice(a, b - a + 1, ...out);
     this.buf.setLines(this.buf.lines);
     this.cursor = { line: a, col: 0 };
