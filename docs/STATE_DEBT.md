@@ -5,6 +5,7 @@
 
 ## Current
 
+- Differential fuzz debt: **3 visual edge cases** in [`FUZZ_DEBT.md`](FUZZ_DEBT.md).
 - Full observable-state matrix: **21,593 / 21,712 matched, 119 open**
   (`undo 110`, `reg 10`, `regtype 8`). Local-only; report regenerated with
   `npm run state-matrix -- --write`.
