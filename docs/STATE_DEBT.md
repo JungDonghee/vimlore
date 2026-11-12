@@ -5,8 +5,8 @@
 
 ## Current
 
-- Full observable-state matrix: **21,539 / 21,712 matched, 173 open**
-  (`undo 164`, `reg 10`, `regtype 8`). Local-only; report regenerated with
+- Full observable-state matrix: **21,593 / 21,712 matched, 119 open**
+  (`undo 110`, `reg 10`, `regtype 8`). Local-only; report regenerated with
   `npm run state-matrix -- --write`.
 - Shipped stage solutions: **51 / 51** match real Vim (`npm run level-oracle`).
 - Solution + undo diagnostic (`npm run level-oracle -- --undo`): **49 / 51**;

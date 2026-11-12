@@ -901,6 +901,9 @@ export class Vim {
   }
 
   rangeInclusive = false;
+  /** True when the operator's range came from a text object. */
+  private opTextObject = false;
+
   /** Motion endpoints of the operator that is currently being applied. */
   private opMotionFrom: Pos | null = null;
   private opMotionTo: Pos | null = null;
@@ -915,6 +918,7 @@ export class Vim {
     const yankMotionKey = this.yankMotionKey;
     const motionFrom = this.opMotionFrom;
     const motionTo = this.opMotionTo;
+    this.opTextObject = fromTextObject;
     this.fromTextObject = false;
     this.yankMotionKey = '';
     this.opMotionFrom = null;
@@ -1353,11 +1357,11 @@ export class Vim {
       before.undoCursor = change
         ? {
             line: l1 === l2 ? l1 : l1 + 1,
-            col: wasVisual ? this.visualAnchor?.col ?? 0 : 0,
+            col: wasVisual ? this.visualAnchor?.col ?? 0 : this.opTextObject || l1 === l2 ? 0 : undoCol,
           }
         : becameEmpty
-          ? { line: l1, col: before.lines.length === 1 ? 0 : undoCol }
-          : { line: wasVisual ? l2 : l1, col: 0 };
+          ? { line: l1, col: this.opTextObject || wasVisual || (this.opMotionFrom?.line ?? 0) > l1 ? 0 : before.lines.length === 1 ? 0 : undoCol }
+          : { line: l1, col: 0 };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);
@@ -1535,9 +1539,11 @@ export class Vim {
       before.undoCursor = { line: undoLine, col: this.visualAnchor?.col ?? this.cursor.col };
     }
     const undoCol = r.linewise
-      ? Math.max(r.start.line, r.end.line) > undoLine && !this.op?.doubled && !this.mode.startsWith('visual')
-        ? this.cursor.col
-        : 0
+      ? this.opTextObject
+        ? 0
+        : Math.max(r.start.line, r.end.line) > undoLine && (!this.op?.doubled ? !this.mode.startsWith('visual') : true)
+          ? this.cursor.col
+          : 0
       : r.block
         ? r.block.c1
         : Math.min(r.start.col, r.end.col);
