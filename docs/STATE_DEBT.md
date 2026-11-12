@@ -9,8 +9,8 @@
   (`undo 110`, `reg 10`, `regtype 8`). Local-only; report regenerated with
   `npm run state-matrix -- --write`.
 - Shipped stage solutions: **51 / 51** match real Vim (`npm run level-oracle`).
-- Solution + undo diagnostic (`npm run level-oracle -- --undo`): **49 / 51**;
-  only cursor columns remain (c09s3 `:sort`, c10s5 `gq`).
+- Game-used solution + undo: **50 / 51** (`npm run level-oracle -- --undo`);
+  c10s5 is a cursor-only diagnostic edge. Solution is 51/51.
 - All 51 stages have evidence-checked book citations; the citations are a
   build-time overlay and do not affect bundle/state.
 
@@ -23,9 +23,9 @@ noise. They are not silently waived.
 
 ## Priorities
 
-1. Keep the **game-used** surface at zero: every shipped solution + every
-   command a stage can accept must be regression-tested. `level-oracle` is the
-   current gate; add a filtered game-used matrix if it can be made exact.
+1. Keep the **game-used** solution surface at zero (51/51). Undo is 50/51;
+   close the c10s5 cursor edge without stage-specific hacks. A filtered command
+   matrix can still be added if it remains exact.
 2. Shrink full-matrix **undo** cases with a Vim-faithful cursor model, not
    stage-specific hacks. Do not touch a level to hide an engine difference.
 3. Then register/regtype edge cases.
