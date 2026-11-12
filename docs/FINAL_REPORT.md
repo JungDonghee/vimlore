@@ -3,6 +3,7 @@
 **Date:** 2026-11-12 (Asia/Seoul)
 **Code freeze:** 21:20 KST (early; final verification still runs at 23:40)
 **Status:** green candidate, not a claim of full-engine perfection.
+**Tag:** `sprint-2026-11-12` (HEAD at ec18b6a; pushed).
 
 ## What was delivered
 
