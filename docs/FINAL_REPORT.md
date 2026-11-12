@@ -28,7 +28,7 @@
    - mastery loop and next drill/GOLF increments documented.
 5. **UI**
    - static vector instrument frame + corner rules + low-opacity phosphor grid;
-   - zero per-frame JS; desktop 57.6 FPS, mobile 60.5 FPS, audit clean;
+   - zero per-frame JS; desktop 55.5–57.6 FPS, mobile 60.5 FPS, audit clean;
    - full CRT vector HUD is future work, not claimed.
 6. **Automation**
    - recurring 15-min continuation task, 23:40 freeze task, 23:58 report;
@@ -45,7 +45,7 @@
 - count matrix **162 of 162**
 - full state **21,593 of 21,712**, 119 open (undo 110, reg 10, regtype 8)
 - stage provenance **51 of 51** cited
-- browser desktop **57.6 FPS**, mobile **60.5 FPS**
+- browser desktop **55.5–57.6 FPS**, mobile **60.5 FPS**
 - browser audit **38 screens**, 0 overflow, 0 errors
 - bundle **276,990 B raw / 86,091 B gzip** (gate 277,000/87,000)
 
