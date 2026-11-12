@@ -3,7 +3,10 @@
 > Durable snapshot for the 23:58 KST final report. Regenerate measurements at
 > freeze; do not hand-edit STATUS.md. If the tree is red, revert to this commit.
 >
-> HEAD: 4dac970 (verify with `git rev-parse HEAD`; later commits may be green)
+> **Code freeze effective 21:20 KST** (ahead of the 23:40 deadline). No further
+> feature/engine changes; only verification, documentation and green commits.
+>
+> HEAD: c73828d (verify with `git rev-parse HEAD`; later docs commits may be green)
 > Working tree at checkpoint: clean.
 
 ## Verified green
