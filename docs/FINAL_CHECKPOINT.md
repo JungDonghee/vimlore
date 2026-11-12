@@ -15,6 +15,10 @@
 >
 > **Live Pages verified 21:22 KST:** HTTP 200, title VIMLORE, 0 console/page
 > errors, served asset hashes match `dist/`.
+>
+> **Fuzz smoke 21:24 KST:** seed 7 / n=500 → 339 matched, 161 skipped
+> (vim error), 0 divergences. The broader seed 42 / n=2,000 found the three
+> visual edges in `FUZZ_DEBT.md`.
 > Working tree at checkpoint: clean.
 
 ## Verified green

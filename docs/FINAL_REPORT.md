@@ -61,6 +61,12 @@
    facts.
 5. **UI:** vector frame/grid only; full HUD/gridlayers need bundle optimisation.
 
+## Fuzz status
+
+- CI smoke seed 7 / n=500: 339 matched, 161 skipped (vim error), **0 divergences**.
+- Broader seed 42 / n=2,000: **3 visual edge cases**, recorded in
+  `FUZZ_DEBT.md`; not claimed fixed.
+
 ## Live deployment
 
 - `https://jungdonghee.github.io/vimlore/` — HTTP 200, title `VIMLORE`,
