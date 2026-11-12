@@ -9,6 +9,12 @@ phosphor geometry, thin luminous rules, calibrated crosshairs, angular
 instrument frames, a subtle grid that appears only where it helps reading.
 Hacker-terminal, not cyberpunk neon.
 
+## Shipped first increment
+
+- Static instrument frame + exposed corner rules around the play buffer
+  (`.board::after`), no JS and no per-frame work. Browser QA stayed ≥55 FPS;
+  audit 38 screens clean.
+
 ## Cheap, measurable ideas
 
 - Vector corner brackets / a thin instrument frame around the play buffer,

@@ -98,6 +98,8 @@ only finalize by 23:50; the machine shuts down at 00:00.
   cases), so the engine is **not** yet globally perfect.
 - 51 of 51 stages have validated book citations in the overlay
   `books-index/curriculum-map/stages.json`; no source bloat in the bundle.
+- First P2 visual increment shipped: static vector instrument frame + corner
+  rules around the play buffer (zero per-frame JS); QA 56 FPS.
 - Results screen now frames the key gap as **GOLF** (par / +N over par / best);
   over-par clears make **GOLF RETRY** the primary/focused action;
   mastery loop design is in `docs/MASTERY_VIM_GOLF.md`.

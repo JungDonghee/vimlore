@@ -17,7 +17,7 @@
 | priority chapters / commands / concepts / defects / rejected | 28 / 417 / 336 / 175 / 0 |
 | state matrix matched / total / open | 21,593 / 21,712 / 119 |
 | state open by field | undo 110, reg 10, regtype 8 |
-| built single file (raw) | 276,530 B |
+| built single file (raw) | 276,923 B |
 | raw ceiling | 277,000 B |
 ## Reports
 - Oracle: `tools/oracle-diff.ts` + `tests/vim-expected.json`
