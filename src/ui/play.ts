@@ -712,14 +712,14 @@ export class PlayScreen {
         { class: 'res-keys' },
         h('b', {}, String(keys)),
         lang === 'ko' ? ` 키  ·  3별 기준 ${par}` : ` keys  ·  par ${par}`,
-        this.host.bestKeys !== null && this.host.bestKeys <= keys ? (lang === 'ko' ? '  ·  최고 기록' : '  ·  best') : '',
+        this.host.bestKeys !== null ? (lang === 'ko' ? `  ·  최고 ${this.host.bestKeys}` : `  ·  best ${this.host.bestKeys}`) : '',
       ),
       h(
         'div',
         { class: 'res-drill' },
         keys <= par
-          ? this.t('DRILL — repeat it once more. The hand remembers what the head forgets.', 'DRILL — 한 번 더 반복하라. 머리가 잊은 것을 손이 기억한다.')
-          : this.t(`DRILL — RETRY and close the gap: ${keys - par} key${keys - par === 1 ? '' : 's'} to par.`, `DRILL — RETRY로 격차를 좁혀라. par까지 ${keys - par}키.`),
+          ? this.t('GOLF — par. DRILL it once more; the hand remembers what the head forgets.', 'GOLF — par. 한 번 더 반복하라. 머리가 잊은 것을 손이 기억한다.')
+          : this.t(`GOLF — +${keys - par} key${keys - par === 1 ? '' : 's'} over par. RETRY and close the gap.`, `GOLF — par보다 ${keys - par}키 많음. RETRY로 격차를 좁혀라.`),
       ),
       learned.length
         ? h(

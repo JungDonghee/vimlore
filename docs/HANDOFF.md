@@ -99,7 +99,10 @@ only finalize by 23:50; the machine shuts down at 00:00.
   cases), so the engine is **not** yet globally perfect.
 - 51 of 51 stages have validated book citations in the overlay
   `books-index/curriculum-map/stages.json`; no source bloat in the bundle.
-- Bundle 276,145/85,955; tests39, oracle373, matrix21,712, count162, lint51.
+- Results screen now frames the key gap as **GOLF** (par / +N over par / best);
+  mastery loop design is in `docs/MASTERY_VIM_GOLF.md`.
+- Bundle 276,174/85,967; browser QA 57.5 FPS, audit 38 screens 0 overflow/0
+  errors; tests39, oracle373, matrix21,712, count162, lint51.
 
 ## 0e. Priority books — Drew Neil (2026-11-12)
 
