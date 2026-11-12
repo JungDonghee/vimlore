@@ -28,7 +28,8 @@ title → map → chapter → intro → play → ghost, writes screenshots to `d
 and measures the ghost:
 
 ```
-ghost perf: {"frames":113,"spanMs":2016,"rafFps":56.0,"drawFps":56.0}
+ghost perf (desktop): {"frames":118,"spanMs":2050,"rafFps":57.6,"drawFps":57.6}
+ghost perf (mobile):  {"frames":113,"spanMs":1866,"rafFps":60.5,"drawFps":60.5}
 ```
 
 `browser:qa` fails if requestAnimationFrame or canvas draw FPS is below 50, or
@@ -48,5 +49,6 @@ before shipping UI changes.
 
 - Headless Chromium on CPU; not a phone GPU, not a full visual review.
 - Default viewport is 1920×1080 (desktop); `--mobile` uses 390×844. DPR 1.
+- Mobile screenshots are `docs/browser/mobile-*.jpg`; desktop `desktop-*.jpg`.
 - No automated screenshot diff yet; screenshots are artifacts for a human or
   vision-capable reviewer.
