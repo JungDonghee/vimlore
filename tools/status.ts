@@ -31,6 +31,9 @@ const raw = existsSync('dist/vimlore.html') ? statSync('dist/vimlore.html').size
 const booksMeta = exists('books-index/books.json') ? JSON.parse(read('books-index/books.json', 'utf8')) as { lines: number; headings: number; partial_source?: boolean; slug?: string }[] : null;
 const coverage = exists('books-index/coverage.json') ? JSON.parse(read('books-index/coverage.json', 'utf8')) as { complete: boolean; chunks: number } : null;
 const audit = exists('books-index/agent-audit.json') ? JSON.parse(read('books-index/agent-audit.json', 'utf8')) as { headings: unknown[]; problems: unknown[]; rejected: unknown[] } : null;
+const gameReport = exists('docs/GAME_USED_STATE.md') ? read('docs/GAME_USED_STATE.md', 'utf8') : '';
+const gameSolution = /solution matched: (\d+)\/(\d+)/.exec(gameReport);
+const gameUndo = /solution\+undo matched: (\d+)\/(\d+)/.exec(gameReport);
 const priority = exists('books-index/priority/audit.json') ? JSON.parse(read('books-index/priority/audit.json', 'utf8')) as { chapters: { commands: unknown[]; concepts: unknown[]; problems: unknown[] }[]; rejected: unknown[] } : null;
 
 const lines = [
@@ -53,6 +56,7 @@ const lines = [
   coverage ? `| book chunks / coverage | ${coverage.chunks} / ${coverage.complete ? 'complete' : 'INCOMPLETE'} |` : '',
   audit ? `| audited book headings / problems / rejected | ${audit.headings.length} / ${audit.problems.length} / ${audit.rejected.length} |` : '| book audit | pending |',
   priority ? `| priority chapters / commands / concepts / defects / rejected | ${priority.chapters.length} / ${priority.chapters.reduce((n, c) => n + c.commands.length, 0)} / ${priority.chapters.reduce((n, c) => n + c.concepts.length, 0)} / ${priority.chapters.reduce((n, c) => n + c.problems.length, 0)} / ${priority.rejected.length} |` : '| priority books | not audited |',
+  gameSolution ? `| game-used solutions / undo diagnostic | ${gameSolution[1]} of ${gameSolution[2]} / ${gameUndo?.[1] ?? '?'} of ${gameUndo?.[2] ?? '?'} |` : '',
   state ? `| state matrix matched / total / open | ${state.matched.toLocaleString()} / ${state.total.toLocaleString()} / ${state.open} |` : '| state matrix | report missing |',
   fields.length ? `| state open by field | ${fields.join(', ')} |` : '',
   raw === null ? '| built single file | not built |' : `| built single file (raw) | ${raw.toLocaleString()} B |`,

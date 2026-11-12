@@ -15,6 +15,7 @@
 | book chunks / coverage | 732 / complete |
 | audited book headings / problems / rejected | 2554 / 129 / 0 |
 | priority chapters / commands / concepts / defects / rejected | 28 / 417 / 336 / 175 / 0 |
+| game-used solutions / undo diagnostic | 51 of 51 / 50 of 51 |
 | state matrix matched / total / open | 21,593 / 21,712 / 119 |
 | state open by field | undo 110, reg 10, regtype 8 |
 | built single file (raw) | 276,923 B |
