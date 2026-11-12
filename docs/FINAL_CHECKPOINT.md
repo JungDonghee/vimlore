@@ -6,7 +6,11 @@
 > **Code freeze effective 21:20 KST** (ahead of the 23:40 deadline). No further
 > feature/engine changes; only verification, documentation and green commits.
 >
-> HEAD: c73828d (verify with `git rev-parse HEAD`; later docs commits may be green)
+> HEAD: 4f48b19 (code freeze commit; verify with `git rev-parse HEAD`)
+>
+> **Re-verified 2026-11-12 21:19 KST:** all gates below green; desktop browser
+> 57.6 rAF / 57.1 draw FPS, mobile 60.5 FPS (previous run), audit 38 screens
+> clean. No code changes since the freeze.
 > Working tree at checkpoint: clean.
 
 ## Verified green
