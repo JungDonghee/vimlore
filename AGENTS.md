@@ -1,6 +1,6 @@
 # AGENTS.md — read this first
 
-> **진행 중인 작업을 이어받는 중이라면** [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md),
+> **진행 중인 작업을 이어받는 중이라면** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md), [`docs/SPRINT_2026-11-12.md`](docs/SPRINT_2026-11-12.md), [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md),
 > [`docs/PROMPT_SYSTEM.md`](docs/PROMPT_SYSTEM.md), [`docs/CURRICULUM_PROVENANCE.md`](docs/CURRICULUM_PROVENANCE.md)를
 > 먼저 읽어라. **우선순위·5시간 슬라이스·태스크 보드·인수인계 규칙은 그 파일이
 > 소유한다.** 그다음 [`docs/HANDOFF.md`](docs/HANDOFF.md)(현재 상태·열린 버그)와
@@ -55,6 +55,8 @@ npm run books:read -- practical-vim 1200 1240
 npm run books:priority:read -- toc practical-vim
 npm run books:priority:read -- tip practical-vim 9
 npm run books:priority:merge       # validate deep chapter audit
+npm run books:priority:map         # key overlap, not semantic coverage
+npm run level-oracle               # every stage solution vs real Vim
 ```
 
 `npm run lint:levels` is the safety net: it replays each stage's `solution`

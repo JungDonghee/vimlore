@@ -3542,6 +3542,10 @@ export class Vim {
   exNormal(l1: number, l2: number, keys: string): void {
     if (!keys) return;
     const toks = tokenize(keys);
+    // `:normal` is one undo block in Vim; replaying suppresses per-command
+    // commits, so record the block explicitly.
+    const before = this.snapshot();
+    before.undoCursor = { line: Math.max(0, l1), col: Math.max(0, this.buf.line(Math.max(0, l1)).length - 1) };
     this.replaying = true;
     for (let l = Math.max(0, l1); l <= Math.min(this.buf.lineCount - 1, l2); l++) {
       this.cursor = { line: l, col: 0 };
@@ -3551,6 +3555,7 @@ export class Vim {
     }
     this.replaying = false;
     this.cmdKeys = [];
+    if (before.lines.join('\n') !== this.buf.lines.join('\n')) this.commit(before, 'normal');
     this.echo(`normal! on ${l2 - l1 + 1} line(s)`, 'good');
   }
 
