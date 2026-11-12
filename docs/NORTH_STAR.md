@@ -36,7 +36,7 @@ deliberate practice and VimGolf, without requiring a separate course.**
    that was not verified.
 8. **Context survives handoff.** Important decisions, invariants and repeated
    instructions live in durable docs (`NORTH_STAR`, `SPRINT`, `HANDOFF`,
-   `CURRICULUM_SPINE`, `MASTERY_VIM_GOLF`, `BOOK_SOURCE_QUALITY`), not in chat memory. Update them
+   `CURRICULUM_SPINE`, `MASTERY_VIM_GOLF`, `STATE_DEBT`, `UI_VECTOR_CRT`, `BOOK_SOURCE_QUALITY`), not in chat memory. Update them
    whenever a decision changes.
 
 ## Book order (not parallel)
