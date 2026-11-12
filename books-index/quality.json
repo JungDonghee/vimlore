@@ -1,0 +1,440 @@
+{
+  "5-years-of-vim": {
+    "source": "books-text/5-years-of-vim.txt",
+    "lines": 1418,
+    "chars": 67582,
+    "sha256": "a367d4e9ae4bda57a790f319f8b1e7f6f6d8465615669b70b0a1ef7b9529851d",
+    "nonempty_lines": 1368,
+    "blank_lines": 50,
+    "replacement_chars": 0,
+    "control_chars": 71,
+    "zero_width": 0,
+    "nbsp": 0,
+    "tabs": 0,
+    "crlf": 1317,
+    "very_long_lines": 0,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "—————————————",
+        "count": 17
+      }
+    ],
+    "headings": 293,
+    "needs_review": true
+  },
+  "gourmet-vim": {
+    "source": "books-text/gourmet-vim.txt",
+    "lines": 3087,
+    "chars": 149197,
+    "sha256": "91ce2d23dd4e64b61a0622d824241deb558413a2659b310051689d375a259bea",
+    "nonempty_lines": 2974,
+    "blank_lines": 113,
+    "replacement_chars": 0,
+    "control_chars": 116,
+    "zero_width": 0,
+    "nbsp": 0,
+    "tabs": 0,
+    "crlf": 2860,
+    "very_long_lines": 0,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Problem:",
+        "count": 208
+      },
+      {
+        "text": "Solution:",
+        "count": 208
+      },
+      {
+        "text": "CONTENTS",
+        "count": 6
+      },
+      {
+        "text": "Explanation:",
+        "count": 5
+      },
+      {
+        "text": "donut",
+        "count": 5
+      }
+    ],
+    "headings": 404,
+    "needs_review": true
+  },
+  "learning-vi-vim": {
+    "source": "books-text/learning-vi-vim.txt",
+    "lines": 30957,
+    "chars": 962981,
+    "sha256": "dea4a8512aa74da15a1d7d20ac03e93b442071b50f6f9c521f0bdc991fa92e06",
+    "nonempty_lines": 20738,
+    "blank_lines": 10219,
+    "replacement_chars": 0,
+    "control_chars": 0,
+    "zero_width": 23,
+    "nbsp": 708,
+    "tabs": 0,
+    "crlf": 0,
+    "very_long_lines": 6,
+    "hyphen_endings": 4,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Note",
+        "count": 78
+      },
+      {
+        "text": "Keystrokes",
+        "count": 34
+      },
+      {
+        "text": "Learning the vi and Vim Editors, 8th Edition",
+        "count": 33
+      },
+      {
+        "text": "Results",
+        "count": 32
+      },
+      {
+        "text": "Tip",
+        "count": 29
+      },
+      {
+        "text": "Command",
+        "count": 27
+      },
+      {
+        "text": "Option",
+        "count": 22
+      },
+      {
+        "text": "With a screen editor you can",
+        "count": 21
+      }
+    ],
+    "headings": 3455,
+    "needs_review": true
+  },
+  "modern-vim": {
+    "source": "books-text/modern-vim.txt",
+    "lines": 6882,
+    "chars": 264109,
+    "sha256": "e7c7f3e8db25315095446001e820a79aefc429ecbb0ef3076706a69a1c1b7c55",
+    "nonempty_lines": 4065,
+    "blank_lines": 2817,
+    "replacement_chars": 0,
+    "control_chars": 0,
+    "zero_width": 2814,
+    "nbsp": 1211,
+    "tabs": 0,
+    "crlf": 0,
+    "very_long_lines": 11,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Modern Vim",
+        "count": 64
+      },
+      {
+        "text": "...",
+        "count": 19
+      },
+      {
+        "text": "Preparation",
+        "count": 17
+      },
+      {
+        "text": "Copyright © 2018, The Pragmatic Bookshelf.",
+        "count": 12
+      },
+      {
+        "text": "=> $ cd $VIMCONFIG/pack/bundle/start",
+        "count": 12
+      },
+      {
+        "text": "Footnotes",
+        "count": 10
+      },
+      {
+        "text": "}",
+        "count": 10
+      },
+      {
+        "text": "augroup END",
+        "count": 10
+      }
+    ],
+    "headings": 439,
+    "needs_review": true
+  },
+  "neovim-for-beginners": {
+    "source": "books-text/neovim-for-beginners.txt",
+    "lines": 2247,
+    "chars": 125793,
+    "sha256": "ad289457163f186e26f43b5522cf35da1895c5c0a59b51cf18a1aaeb89618b95",
+    "nonempty_lines": 1124,
+    "blank_lines": 1123,
+    "replacement_chars": 0,
+    "control_chars": 0,
+    "zero_width": 1,
+    "nbsp": 937,
+    "tabs": 0,
+    "crlf": 0,
+    "very_long_lines": 74,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "|",
+        "count": 30
+      },
+      {
+        "text": "|   |",
+        "count": 18
+      },
+      {
+        "text": "end",
+        "count": 13
+      },
+      {
+        "text": "nvim",
+        "count": 12
+      },
+      {
+        "text": "|-- lua",
+        "count": 12
+      },
+      {
+        "text": "|   |-- user",
+        "count": 12
+      },
+      {
+        "text": "|-- init.lua",
+        "count": 12
+      },
+      {
+        "text": "|       |",
+        "count": 11
+      }
+    ],
+    "headings": 123,
+    "needs_review": true
+  },
+  "practical-vim": {
+    "source": "books-text/practical-vim.txt",
+    "lines": 11976,
+    "chars": 542331,
+    "sha256": "fd002a8ab8ede824f5087c2f69ba8645a006d075582956dcac990913f6daa850",
+    "nonempty_lines": 6162,
+    "blank_lines": 5814,
+    "replacement_chars": 0,
+    "control_chars": 0,
+    "zero_width": 3336,
+    "nbsp": 1963,
+    "tabs": 0,
+    "crlf": 0,
+    "very_long_lines": 160,
+    "hyphen_endings": 1,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Practical Vim, 2nd Edition",
+        "count": 182
+      },
+      {
+        "text": "KeystrokesBuffer Contents",
+        "count": 93
+      },
+      {
+        "text": "{start}",
+        "count": 66
+      },
+      {
+        "text": "end",
+        "count": 30
+      },
+      {
+        "text": "Copyright © 2017, The Pragmatic Bookshelf.",
+        "count": 27
+      },
+      {
+        "text": "collection = getCollection();",
+        "count": 26
+      },
+      {
+        "text": "Chapter",
+        "count": 21
+      },
+      {
+        "text": "}",
+        "count": 21
+      }
+    ],
+    "headings": 1330,
+    "needs_review": true
+  },
+  "pro-vim": {
+    "source": "books-text/pro-vim.txt",
+    "lines": 14641,
+    "chars": 822133,
+    "sha256": "93b3424a48a427719d38ae5b4bc5a6bd1e86a4c50e92f60aa200cd5f0e86afdc",
+    "nonempty_lines": 7323,
+    "blank_lines": 7318,
+    "replacement_chars": 0,
+    "control_chars": 0,
+    "zero_width": 0,
+    "nbsp": 7420,
+    "tabs": 0,
+    "crlf": 24,
+    "very_long_lines": 370,
+    "hyphen_endings": 1,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Summary",
+        "count": 60
+      },
+      {
+        "text": "This is a sentence.",
+        "count": 52
+      },
+      {
+        "text": "Pro Vim",
+        "count": 43
+      },
+      {
+        "text": "}",
+        "count": 42
+      },
+      {
+        "text": "end",
+        "count": 37
+      },
+      {
+        "text": "Windows",
+        "count": 20
+      },
+      {
+        "text": "Explanation",
+        "count": 18
+      },
+      {
+        "text": "Linux",
+        "count": 13
+      }
+    ],
+    "headings": 1587,
+    "needs_review": true
+  },
+  "use-vim-like-a-pro": {
+    "source": "books-text/use-vim-like-a-pro.txt",
+    "lines": 1109,
+    "chars": 69203,
+    "sha256": "7ecbb87cea066012b241563b658960e1b4d651208a62dd6c7ba9ae1e674ba66e",
+    "nonempty_lines": 1070,
+    "blank_lines": 39,
+    "replacement_chars": 0,
+    "control_chars": 42,
+    "zero_width": 0,
+    "nbsp": 0,
+    "tabs": 0,
+    "crlf": 1030,
+    "very_long_lines": 0,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "What to Type What it does",
+        "count": 23
+      }
+    ],
+    "headings": 124,
+    "needs_review": true
+  },
+  "vim-101-hacks": {
+    "source": "books-text/vim-101-hacks.txt",
+    "lines": 3362,
+    "chars": 130220,
+    "sha256": "f104d4155ff1148f87a717485f7c440ba54447beb3a010bc2df571f012bd933a",
+    "nonempty_lines": 3196,
+    "blank_lines": 166,
+    "replacement_chars": 0,
+    "control_chars": 178,
+    "zero_width": 0,
+    "nbsp": 0,
+    "tabs": 0,
+    "crlf": 3196,
+    "very_long_lines": 0,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Vim 101 Hacks www.thegeekstuff.com",
+        "count": 166
+      },
+      {
+        "text": "Navigation Key Description",
+        "count": 19
+      },
+      {
+        "text": "Key Description",
+        "count": 14
+      },
+      {
+        "text": "below.",
+        "count": 9
+      },
+      {
+        "text": "$ vim ~/.vimrc",
+        "count": 7
+      },
+      {
+        "text": "(or)",
+        "count": 7
+      },
+      {
+        "text": "Command Description",
+        "count": 6
+      }
+    ],
+    "headings": 530,
+    "needs_review": true
+  },
+  "vim-reference-guide": {
+    "source": "books-text/vim-reference-guide.txt",
+    "lines": 2823,
+    "chars": 156740,
+    "sha256": "519c154aadc759a29bd781f5eb8487e089a614274d058d6a52c130d7a5110198",
+    "nonempty_lines": 2747,
+    "blank_lines": 76,
+    "replacement_chars": 0,
+    "control_chars": 125,
+    "zero_width": 0,
+    "nbsp": 0,
+    "tabs": 0,
+    "crlf": 2670,
+    "very_long_lines": 0,
+    "hyphen_endings": 0,
+    "question_runs": 0,
+    "repeated_lines": [
+      {
+        "text": "Documentation links:",
+        "count": 8
+      },
+      {
+        "text": "{",
+        "count": 5
+      },
+      {
+        "text": "}",
+        "count": 5
+      }
+    ],
+    "headings": 195,
+    "needs_review": true
+  }
+}

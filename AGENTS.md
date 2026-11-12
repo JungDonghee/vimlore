@@ -47,7 +47,11 @@ npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
 npm run trace -- --case=m-1234   # per-prefix differential trace (local)
 npm run browser:setup            # one-time local Chromium install
-npm run browser:qa               # headless 390x844 ghost/FPS/screenshots
+npm run browser:qa               # headless desktop 1920x1080 ghost/FPS
+npm run browser:audit            # 1920/390/320 overflow+error audit
+npm run books:build              # normalize local books (gitignored text)
+npm run books:search -- "text object"
+npm run books:read -- practical-vim 1200 1240
 ```
 
 `npm run lint:levels` is the safety net: it replays each stage's `solution`

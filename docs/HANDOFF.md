@@ -86,6 +86,19 @@ only finalize by 23:50; the machine shuts down at 00:00.
   `browser:qa` measures **55.5 rAF/draw FPS** headless at 1920×1080; 144fps is
   not measurable here and is a display/GPU target, not a headless-CPU claim.
 
+## 0d. Book corpus pipeline (2026-11-12)
+
+The ten books are normalized line-for-line (`tools/books/build_corpus.py`);
+normalization only fixes encoding/line endings/Unicode spaces/control chars and
+never rewrites prose. Full text and FTS/sqlite/chunks live in gitignored
+`books-clean/` / `books-index/`; committed metadata is `books.json`,
+`quality.json`, `coverage.json`, `INDEX.md`, `parts.json`, and the subagent
+audit. **78,502 source lines map 1:1 to clean lines; chunks and audit parts
+cover 78,502/78,502.** Spelling candidates are triaged with hunspell, never
+auto-corrected. Read with `npm run books:search -- "..."` and
+`npm run books:read -- <book> <start> <end>`. See
+[`BOOKS_PIPELINE.md`](BOOKS_PIPELINE.md).
+
 ## 0c. Browser QA (2026-11-12)
 
 Playwright + Chromium 131 are installed as **dev-only** tooling. The persistent

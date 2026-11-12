@@ -1,0 +1,4780 @@
+{
+  "5-years-of-vim": {
+    "unknown_words": 228,
+    "candidates": [
+      {
+        "word": "deoplete",
+        "count": 16
+      },
+      {
+        "word": "vimtutor",
+        "count": 15
+      },
+      {
+        "word": "doesn",
+        "count": 9
+      },
+      {
+        "word": "incsearch",
+        "count": 7
+      },
+      {
+        "word": "leanpub",
+        "count": 7
+      },
+      {
+        "word": "sudo",
+        "count": 7
+      },
+      {
+        "word": "config",
+        "count": 6
+      },
+      {
+        "word": "hlsearch",
+        "count": 6
+      },
+      {
+        "word": "liststyle",
+        "count": 6
+      },
+      {
+        "word": "ternjs",
+        "count": 5
+      },
+      {
+        "word": "neomake",
+        "count": 5
+      },
+      {
+        "word": "ribeiro",
+        "count": 5
+      },
+      {
+        "word": "anidecalledvim",
+        "count": 4
+      },
+      {
+        "word": "behaviours",
+        "count": 4
+      },
+      {
+        "word": "https",
+        "count": 4
+      },
+      {
+        "word": "init",
+        "count": 4
+      },
+      {
+        "word": "claudio",
+        "count": 3
+      },
+      {
+        "word": "mksession",
+        "count": 3
+      },
+      {
+        "word": "pluginstall",
+        "count": 3
+      },
+      {
+        "word": "runtimepath",
+        "count": 3
+      },
+      {
+        "word": "tnoremap",
+        "count": 3
+      },
+      {
+        "word": "altv",
+        "count": 2
+      },
+      {
+        "word": "augroup",
+        "count": 2
+      },
+      {
+        "word": "configs",
+        "count": 2
+      },
+      {
+        "word": "eslint",
+        "count": 2
+      },
+      {
+        "word": "neil",
+        "count": 2
+      },
+      {
+        "word": "nnoremap",
+        "count": 2
+      },
+      {
+        "word": "nocompatible",
+        "count": 2
+      },
+      {
+        "word": "recom",
+        "count": 2
+      },
+      {
+        "word": "udio",
+        "count": 2
+      },
+      {
+        "word": "vinegars",
+        "count": 2
+      },
+      {
+        "word": "vsplit",
+        "count": 2
+      },
+      {
+        "word": "vundle",
+        "count": 2
+      },
+      {
+        "word": "winsize",
+        "count": 2
+      },
+      {
+        "word": "abbreviature",
+        "count": 1
+      },
+      {
+        "word": "asynchrounous",
+        "count": 1
+      },
+      {
+        "word": "autocompletion",
+        "count": 1
+      },
+      {
+        "word": "behaviour",
+        "count": 1
+      },
+      {
+        "word": "brainer",
+        "count": 1
+      },
+      {
+        "word": "bram",
+        "count": 1
+      },
+      {
+        "word": "bushcraft",
+        "count": 1
+      },
+      {
+        "word": "carlitux",
+        "count": 1
+      },
+      {
+        "word": "charac",
+        "count": 1
+      },
+      {
+        "word": "chown",
+        "count": 1
+      },
+      {
+        "word": "configu",
+        "count": 1
+      },
+      {
+        "word": "ctrl",
+        "count": 1
+      },
+      {
+        "word": "customizations",
+        "count": 1
+      },
+      {
+        "word": "didn",
+        "count": 1
+      },
+      {
+        "word": "direc",
+        "count": 1
+      },
+      {
+        "word": "discoverability",
+        "count": 1
+      },
+      {
+        "word": "doremote",
+        "count": 1
+      },
+      {
+        "word": "ebook",
+        "count": 1
+      },
+      {
+        "word": "european",
+        "count": 1
+      },
+      {
+        "word": "everytime",
+        "count": 1
+      },
+      {
+        "word": "excelent",
+        "count": 1
+      },
+      {
+        "word": "flipside",
+        "count": 1
+      },
+      {
+        "word": "foldcolumn",
+        "count": 1
+      },
+      {
+        "word": "formatoptions",
+        "count": 1
+      },
+      {
+        "word": "freackin",
+        "count": 1
+      },
+      {
+        "word": "gether",
+        "count": 1
+      },
+      {
+        "word": "gorman",
+        "count": 1
+      },
+      {
+        "word": "gvmrc",
+        "count": 1
+      },
+      {
+        "word": "hjkl",
+        "count": 1
+      },
+      {
+        "word": "http",
+        "count": 1
+      },
+      {
+        "word": "ipad",
+        "count": 1
+      },
+      {
+        "word": "isntruction",
+        "count": 1
+      },
+      {
+        "word": "jonathonf",
+        "count": 1
+      },
+      {
+        "word": "jumpt",
+        "count": 1
+      },
+      {
+        "word": "lems",
+        "count": 1
+      },
+      {
+        "word": "linters",
+        "count": 1
+      },
+      {
+        "word": "llllllll",
+        "count": 1
+      },
+      {
+        "word": "ludovicchabant",
+        "count": 1
+      },
+      {
+        "word": "mand",
+        "count": 1
+      },
+      {
+        "word": "manpage",
+        "count": 1
+      },
+      {
+        "word": "mmgg",
+        "count": 1
+      },
+      {
+        "word": "moolenar",
+        "count": 1
+      },
+      {
+        "word": "nipulating",
+        "count": 1
+      },
+      {
+        "word": "niques",
+        "count": 1
+      },
+      {
+        "word": "nospell",
+        "count": 1
+      },
+      {
+        "word": "nstall",
+        "count": 1
+      },
+      {
+        "word": "omni",
+        "count": 1
+      },
+      {
+        "word": "omnicom",
+        "count": 1
+      },
+      {
+        "word": "oneline",
+        "count": 1
+      },
+      {
+        "word": "packpath",
+        "count": 1
+      },
+      {
+        "word": "paul",
+        "count": 1
+      },
+      {
+        "word": "phpstorm",
+        "count": 1
+      },
+      {
+        "word": "pletion",
+        "count": 1
+      },
+      {
+        "word": "preconfigured",
+        "count": 1
+      },
+      {
+        "word": "projectdrawer",
+        "count": 1
+      },
+      {
+        "word": "provement",
+        "count": 1
+      },
+      {
+        "word": "purchas",
+        "count": 1
+      },
+      {
+        "word": "refac",
+        "count": 1
+      },
+      {
+        "word": "saurus",
+        "count": 1
+      },
+      {
+        "word": "shougo",
+        "count": 1
+      },
+      {
+        "word": "shouldn",
+        "count": 1
+      },
+      {
+        "word": "smarttab",
+        "count": 1
+      },
+      {
+        "word": "somestimes",
+        "count": 1
+      },
+      {
+        "word": "somethings",
+        "count": 1
+      },
+      {
+        "word": "stealer",
+        "count": 1
+      },
+      {
+        "word": "struct",
+        "count": 1
+      },
+      {
+        "word": "tabnew",
+        "count": 1
+      },
+      {
+        "word": "ters",
+        "count": 1
+      },
+      {
+        "word": "textwidth",
+        "count": 1
+      },
+      {
+        "word": "tion",
+        "count": 1
+      },
+      {
+        "word": "tored",
+        "count": 1
+      },
+      {
+        "word": "tory",
+        "count": 1
+      },
+      {
+        "word": "vexplore",
+        "count": 1
+      },
+      {
+        "word": "vimenter",
+        "count": 1
+      },
+      {
+        "word": "vims",
+        "count": 1
+      },
+      {
+        "word": "wrapmargin",
+        "count": 1
+      },
+      {
+        "word": "yearsofvim",
+        "count": 1
+      }
+    ]
+  },
+  "gourmet-vim": {
+    "unknown_words": 424,
+    "candidates": [
+      {
+        "word": "const",
+        "count": 23
+      },
+      {
+        "word": "https",
+        "count": 17
+      },
+      {
+        "word": "nnoremap",
+        "count": 12
+      },
+      {
+        "word": "autocompletion",
+        "count": 10
+      },
+      {
+        "word": "ctrl",
+        "count": 8
+      },
+      {
+        "word": "filetype",
+        "count": 8
+      },
+      {
+        "word": "doesn",
+        "count": 7
+      },
+      {
+        "word": "somefile",
+        "count": 7
+      },
+      {
+        "word": "argdo",
+        "count": 6
+      },
+      {
+        "word": "packdemo",
+        "count": 6
+      },
+      {
+        "word": "viewoptions",
+        "count": 6
+      },
+      {
+        "word": "args",
+        "count": 5
+      },
+      {
+        "word": "iggy",
+        "count": 5
+      },
+      {
+        "word": "inoremap",
+        "count": 5
+      },
+      {
+        "word": "qaguujq",
+        "count": 5
+      },
+      {
+        "word": "sessionoptions",
+        "count": 5
+      },
+      {
+        "word": "smartcase",
+        "count": 5
+      },
+      {
+        "word": "strftime",
+        "count": 5
+      },
+      {
+        "word": "autocomplete",
+        "count": 4
+      },
+      {
+        "word": "blackhole",
+        "count": 4
+      },
+      {
+        "word": "choco",
+        "count": 4
+      },
+      {
+        "word": "configs",
+        "count": 4
+      },
+      {
+        "word": "diffthis",
+        "count": 4
+      },
+      {
+        "word": "ignorecase",
+        "count": 4
+      },
+      {
+        "word": "navigations",
+        "count": 4
+      },
+      {
+        "word": "nowrapscan",
+        "count": 4
+      },
+      {
+        "word": "togglenumber",
+        "count": 4
+      },
+      {
+        "word": "whitespaces",
+        "count": 4
+      },
+      {
+        "word": "autocommand",
+        "count": 3
+      },
+      {
+        "word": "chocodonut",
+        "count": 3
+      },
+      {
+        "word": "foldexpr",
+        "count": 3
+      },
+      {
+        "word": "ftplugin",
+        "count": 3
+      },
+      {
+        "word": "getline",
+        "count": 3
+      },
+      {
+        "word": "gfiles",
+        "count": 3
+      },
+      {
+        "word": "gimmedate",
+        "count": 3
+      },
+      {
+        "word": "heros",
+        "count": 3
+      },
+      {
+        "word": "leanpub",
+        "count": 3
+      },
+      {
+        "word": "mydate",
+        "count": 3
+      },
+      {
+        "word": "printf",
+        "count": 3
+      },
+      {
+        "word": "testn",
+        "count": 3
+      },
+      {
+        "word": "vimdiff",
+        "count": 3
+      },
+      {
+        "word": "wrapscan",
+        "count": 3
+      },
+      {
+        "word": "zsdonut",
+        "count": 3
+      },
+      {
+        "word": "arga",
+        "count": 2
+      },
+      {
+        "word": "augroup",
+        "count": 2
+      },
+      {
+        "word": "awesomefile",
+        "count": 2
+      },
+      {
+        "word": "cfdo",
+        "count": 2
+      },
+      {
+        "word": "chocolatedonut",
+        "count": 2
+      },
+      {
+        "word": "dein",
+        "count": 2
+      },
+      {
+        "word": "echom",
+        "count": 2
+      },
+      {
+        "word": "endfunction",
+        "count": 2
+      },
+      {
+        "word": "endif",
+        "count": 2
+      },
+      {
+        "word": "expr",
+        "count": 2
+      },
+      {
+        "word": "firstfile",
+        "count": 2
+      },
+      {
+        "word": "foldmarker",
+        "count": 2
+      },
+      {
+        "word": "guuj",
+        "count": 2
+      },
+      {
+        "word": "http",
+        "count": 2
+      },
+      {
+        "word": "igor",
+        "count": 2
+      },
+      {
+        "word": "ipancake",
+        "count": 2
+      },
+      {
+        "word": "irianto",
+        "count": 2
+      },
+      {
+        "word": "killersheep",
+        "count": 2
+      },
+      {
+        "word": "loadview",
+        "count": 2
+      },
+      {
+        "word": "localoptions",
+        "count": 2
+      },
+      {
+        "word": "makeprg",
+        "count": 2
+      },
+      {
+        "word": "mkview",
+        "count": 2
+      },
+      {
+        "word": "mochi",
+        "count": 2
+      },
+      {
+        "word": "myfile",
+        "count": 2
+      },
+      {
+        "word": "mysite",
+        "count": 2
+      },
+      {
+        "word": "nmap",
+        "count": 2
+      },
+      {
+        "word": "nonumber",
+        "count": 2
+      },
+      {
+        "word": "nore",
+        "count": 2
+      },
+      {
+        "word": "norelativenumber",
+        "count": 2
+      },
+      {
+        "word": "oldfiles",
+        "count": 2
+      },
+      {
+        "word": "preservim",
+        "count": 2
+      },
+      {
+        "word": "reselect",
+        "count": 2
+      },
+      {
+        "word": "rundo",
+        "count": 2
+      },
+      {
+        "word": "searchkeyword",
+        "count": 2
+      },
+      {
+        "word": "secondfile",
+        "count": 2
+      },
+      {
+        "word": "sudo",
+        "count": 2
+      },
+      {
+        "word": "sugardonut",
+        "count": 2
+      },
+      {
+        "word": "viewdir",
+        "count": 2
+      },
+      {
+        "word": "viewport",
+        "count": 2
+      },
+      {
+        "word": "vimgrepa",
+        "count": 2
+      },
+      {
+        "word": "vimscripts",
+        "count": 2
+      },
+      {
+        "word": "vsplit",
+        "count": 2
+      },
+      {
+        "word": "vundle",
+        "count": 2
+      },
+      {
+        "word": "wundo",
+        "count": 2
+      },
+      {
+        "word": "aaaaa",
+        "count": 1
+      },
+      {
+        "word": "aaaaaaaaaa",
+        "count": 1
+      },
+      {
+        "word": "acaiberry",
+        "count": 1
+      },
+      {
+        "word": "adiw",
+        "count": 1
+      },
+      {
+        "word": "aren",
+        "count": 1
+      },
+      {
+        "word": "autocompletions",
+        "count": 1
+      },
+      {
+        "word": "ayiw",
+        "count": 1
+      },
+      {
+        "word": "backtick",
+        "count": 1
+      },
+      {
+        "word": "backticks",
+        "count": 1
+      },
+      {
+        "word": "bdelete",
+        "count": 1
+      },
+      {
+        "word": "bnext",
+        "count": 1
+      },
+      {
+        "word": "bprevious",
+        "count": 1
+      },
+      {
+        "word": "brewind",
+        "count": 1
+      },
+      {
+        "word": "bufnewfile",
+        "count": 1
+      },
+      {
+        "word": "bufread",
+        "count": 1
+      },
+      {
+        "word": "bufwinenter",
+        "count": 1
+      },
+      {
+        "word": "bufwinleave",
+        "count": 1
+      },
+      {
+        "word": "bufwritepost",
+        "count": 1
+      },
+      {
+        "word": "bzzt",
+        "count": 1
+      },
+      {
+        "word": "chocolatedonutdonut",
+        "count": 1
+      },
+      {
+        "word": "chokeberry",
+        "count": 1
+      },
+      {
+        "word": "cluding",
+        "count": 1
+      },
+      {
+        "word": "cmap",
+        "count": 1
+      },
+      {
+        "word": "copen",
+        "count": 1
+      },
+      {
+        "word": "cosnt",
+        "count": 1
+      },
+      {
+        "word": "craigemery",
+        "count": 1
+      },
+      {
+        "word": "ctlr",
+        "count": 1
+      },
+      {
+        "word": "dfoo",
+        "count": 1
+      },
+      {
+        "word": "diffoff",
+        "count": 1
+      },
+      {
+        "word": "donutman",
+        "count": 1
+      },
+      {
+        "word": "dosomething",
+        "count": 1
+      },
+      {
+        "word": "eakfast",
+        "count": 1
+      },
+      {
+        "word": "ebook",
+        "count": 1
+      }
+    ]
+  },
+  "learning-vi-vim": {
+    "unknown_words": 4037,
+    "candidates": [
+      {
+        "word": "metacharacters",
+        "count": 116
+      },
+      {
+        "word": "colorscheme",
+        "count": 80
+      },
+      {
+        "word": "exrc",
+        "count": 74
+      },
+      {
+        "word": "microsoft",
+        "count": 68
+      },
+      {
+        "word": "solaris",
+        "count": 53
+      },
+      {
+        "word": "doesn",
+        "count": 49
+      },
+      {
+        "word": "glossaryitem",
+        "count": 43
+      },
+      {
+        "word": "ubuntu",
+        "count": 43
+      },
+      {
+        "word": "https",
+        "count": 42
+      },
+      {
+        "word": "filetype",
+        "count": 41
+      },
+      {
+        "word": "vimium",
+        "count": 39
+      },
+      {
+        "word": "multiwindow",
+        "count": 38
+      },
+      {
+        "word": "getopt",
+        "count": 36
+      },
+      {
+        "word": "autocommands",
+        "count": 35
+      },
+      {
+        "word": "metacharacter",
+        "count": 34
+      },
+      {
+        "word": "zellner",
+        "count": 34
+      },
+      {
+        "word": "elbert",
+        "count": 30
+      },
+      {
+        "word": "currenthour",
+        "count": 29
+      },
+      {
+        "word": "gvimrc",
+        "count": 29
+      },
+      {
+        "word": "readline",
+        "count": 29
+      },
+      {
+        "word": "viminfo",
+        "count": 29
+      },
+      {
+        "word": "clewn",
+        "count": 28
+      },
+      {
+        "word": "cygwin",
+        "count": 26
+      },
+      {
+        "word": "troff",
+        "count": 26
+      },
+      {
+        "word": "autocompletion",
+        "count": 24
+      },
+      {
+        "word": "cinoptions",
+        "count": 24
+      },
+      {
+        "word": "strftime",
+        "count": 24
+      },
+      {
+        "word": "printf",
+        "count": 23
+      },
+      {
+        "word": "arnold",
+        "count": 22
+      },
+      {
+        "word": "reilly",
+        "count": 22
+      },
+      {
+        "word": "cindent",
+        "count": 21
+      },
+      {
+        "word": "countcheck",
+        "count": 21
+      },
+      {
+        "word": "tput",
+        "count": 21
+      },
+      {
+        "word": "wrapmargin",
+        "count": 21
+      },
+      {
+        "word": "youcompleteme",
+        "count": 20
+      },
+      {
+        "word": "latin",
+        "count": 20
+      },
+      {
+        "word": "vundle",
+        "count": 20
+      },
+      {
+        "word": "asciidoc",
+        "count": 19
+      },
+      {
+        "word": "xming",
+        "count": 19
+      },
+      {
+        "word": "endif",
+        "count": 18
+      },
+      {
+        "word": "viemu",
+        "count": 18
+      },
+      {
+        "word": "bram",
+        "count": 17
+      },
+      {
+        "word": "macvim",
+        "count": 17
+      },
+      {
+        "word": "nonblank",
+        "count": 17
+      },
+      {
+        "word": "robbins",
+        "count": 17
+      },
+      {
+        "word": "didn",
+        "count": 16
+      },
+      {
+        "word": "http",
+        "count": 16
+      },
+      {
+        "word": "indentexpr",
+        "count": 16
+      },
+      {
+        "word": "cinkeys",
+        "count": 15
+      },
+      {
+        "word": "scrollbars",
+        "count": 15
+      },
+      {
+        "word": "elseif",
+        "count": 14
+      },
+      {
+        "word": "wrapscan",
+        "count": 14
+      },
+      {
+        "word": "autocommand",
+        "count": 13
+      },
+      {
+        "word": "checkfiletype",
+        "count": 13
+      },
+      {
+        "word": "operandi",
+        "count": 13
+      },
+      {
+        "word": "termdebug",
+        "count": 13
+      },
+      {
+        "word": "wasavi",
+        "count": 13
+      },
+      {
+        "word": "cinwords",
+        "count": 12
+      },
+      {
+        "word": "hanoi",
+        "count": 12
+      },
+      {
+        "word": "ignorecase",
+        "count": 12
+      },
+      {
+        "word": "inputrc",
+        "count": 12
+      },
+      {
+        "word": "moolenaar",
+        "count": 12
+      },
+      {
+        "word": "powershell",
+        "count": 12
+      },
+      {
+        "word": "terminfo",
+        "count": 12
+      },
+      {
+        "word": "darkblue",
+        "count": 11
+      },
+      {
+        "word": "editorconfig",
+        "count": 11
+      },
+      {
+        "word": "feld",
+        "count": 11
+      },
+      {
+        "word": "guioptions",
+        "count": 11
+      },
+      {
+        "word": "mapleader",
+        "count": 11
+      },
+      {
+        "word": "multiline",
+        "count": 11
+      },
+      {
+        "word": "omni",
+        "count": 11
+      },
+      {
+        "word": "pathname",
+        "count": 11
+      },
+      {
+        "word": "perl",
+        "count": 11
+      },
+      {
+        "word": "powertoys",
+        "count": 11
+      },
+      {
+        "word": "struct",
+        "count": 11
+      },
+      {
+        "word": "sudo",
+        "count": 11
+      },
+      {
+        "word": "writebackup",
+        "count": 11
+      },
+      {
+        "word": "xlaunch",
+        "count": 11
+      },
+      {
+        "word": "argv",
+        "count": 10
+      },
+      {
+        "word": "augroup",
+        "count": 10
+      },
+      {
+        "word": "endfunction",
+        "count": 10
+      },
+      {
+        "word": "nminusone",
+        "count": 10
+      },
+      {
+        "word": "oreilly",
+        "count": 10
+      },
+      {
+        "word": "showmatch",
+        "count": 10
+      },
+      {
+        "word": "tooltip",
+        "count": 10
+      },
+      {
+        "word": "vimdiff",
+        "count": 10
+      },
+      {
+        "word": "aren",
+        "count": 9
+      },
+      {
+        "word": "argc",
+        "count": 9
+      },
+      {
+        "word": "bindkey",
+        "count": 9
+      },
+      {
+        "word": "cursormovedi",
+        "count": 9
+      },
+      {
+        "word": "docbook",
+        "count": 9
+      },
+      {
+        "word": "elhannah",
+        "count": 9
+      },
+      {
+        "word": "foldlevel",
+        "count": 9
+      },
+      {
+        "word": "hannah",
+        "count": 9
+      },
+      {
+        "word": "mymenu",
+        "count": 9
+      },
+      {
+        "word": "newfiledetection",
+        "count": 9
+      },
+      {
+        "word": "sidescroll",
+        "count": 9
+      },
+      {
+        "word": "unixworld",
+        "count": 9
+      },
+      {
+        "word": "winheight",
+        "count": 9
+      },
+      {
+        "word": "amiga",
+        "count": 8
+      },
+      {
+        "word": "args",
+        "count": 8
+      },
+      {
+        "word": "backupdir",
+        "count": 8
+      },
+      {
+        "word": "conf",
+        "count": 8
+      },
+      {
+        "word": "const",
+        "count": 8
+      },
+      {
+        "word": "expr",
+        "count": 8
+      },
+      {
+        "word": "homebrew",
+        "count": 8
+      },
+      {
+        "word": "incsearch",
+        "count": 8
+      },
+      {
+        "word": "listchars",
+        "count": 8
+      },
+      {
+        "word": "macintosh",
+        "count": 8
+      },
+      {
+        "word": "netbeans",
+        "count": 8
+      },
+      {
+        "word": "newfile",
+        "count": 8
+      },
+      {
+        "word": "nminustwo",
+        "count": 8
+      },
+      {
+        "word": "nowrapscan",
+        "count": 8
+      },
+      {
+        "word": "righthand",
+        "count": 8
+      },
+      {
+        "word": "settimeofdaycolors",
+        "count": 8
+      },
+      {
+        "word": "submenu",
+        "count": 8
+      },
+      {
+        "word": "tagstring",
+        "count": 8
+      },
+      {
+        "word": "textwidth",
+        "count": 8
+      },
+      {
+        "word": "tooltips",
+        "count": 8
+      },
+      {
+        "word": "winwidth",
+        "count": 8
+      }
+    ]
+  },
+  "modern-vim": {
+    "unknown_words": 1780,
+    "candidates": [
+      {
+        "word": "https",
+        "count": 91
+      },
+      {
+        "word": "linters",
+        "count": 68
+      },
+      {
+        "word": "minpac",
+        "count": 51
+      },
+      {
+        "word": "grepper",
+        "count": 44
+      },
+      {
+        "word": "eslint",
+        "count": 43
+      },
+      {
+        "word": "editorconfig",
+        "count": 38
+      },
+      {
+        "word": "filetype",
+        "count": 37
+      },
+      {
+        "word": "doesn",
+        "count": 35
+      },
+      {
+        "word": "autocommands",
+        "count": 34
+      },
+      {
+        "word": "runtimepath",
+        "count": 32
+      },
+      {
+        "word": "autocommand",
+        "count": 31
+      },
+      {
+        "word": "config",
+        "count": 27
+      },
+      {
+        "word": "tslint",
+        "count": 25
+      },
+      {
+        "word": "hardwrap",
+        "count": 24
+      },
+      {
+        "word": "mkdir",
+        "count": 24
+      },
+      {
+        "word": "augroup",
+        "count": 20
+      },
+      {
+        "word": "jshint",
+        "count": 20
+      },
+      {
+        "word": "webserver",
+        "count": 20
+      },
+      {
+        "word": "ripgrep",
+        "count": 19
+      },
+      {
+        "word": "modvim",
+        "count": 18
+      },
+      {
+        "word": "filepath",
+        "count": 17
+      },
+      {
+        "word": "makeprg",
+        "count": 17
+      },
+      {
+        "word": "tpope",
+        "count": 17
+      },
+      {
+        "word": "errorformat",
+        "count": 15
+      },
+      {
+        "word": "helptags",
+        "count": 15
+      },
+      {
+        "word": "rspec",
+        "count": 15
+      },
+      {
+        "word": "afile",
+        "count": 14
+      },
+      {
+        "word": "bufreadpost",
+        "count": 12
+      },
+      {
+        "word": "ctrl",
+        "count": 12
+      },
+      {
+        "word": "goldrush",
+        "count": 12
+      },
+      {
+        "word": "init",
+        "count": 12
+      },
+      {
+        "word": "wouldn",
+        "count": 12
+      },
+      {
+        "word": "nnoremap",
+        "count": 11
+      },
+      {
+        "word": "pragprog",
+        "count": 11
+      },
+      {
+        "word": "readme",
+        "count": 11
+      },
+      {
+        "word": "tnoremap",
+        "count": 11
+      },
+      {
+        "word": "tsconfig",
+        "count": 10
+      },
+      {
+        "word": "http",
+        "count": 9
+      },
+      {
+        "word": "ebooks",
+        "count": 8
+      },
+      {
+        "word": "fileencoding",
+        "count": 8
+      },
+      {
+        "word": "fileformat",
+        "count": 8
+      },
+      {
+        "word": "junegunn",
+        "count": 8
+      },
+      {
+        "word": "mksession",
+        "count": 8
+      },
+      {
+        "word": "tablast",
+        "count": 8
+      },
+      {
+        "word": "didn",
+        "count": 7
+      },
+      {
+        "word": "greppergrep",
+        "count": 7
+      },
+      {
+        "word": "homophoner",
+        "count": 7
+      },
+      {
+        "word": "jobsend",
+        "count": 7
+      },
+      {
+        "word": "projectionistactivate",
+        "count": 7
+      },
+      {
+        "word": "subdir",
+        "count": 7
+      },
+      {
+        "word": "sudo",
+        "count": 7
+      },
+      {
+        "word": "undofile",
+        "count": 7
+      },
+      {
+        "word": "aleinfo",
+        "count": 6
+      },
+      {
+        "word": "compilerset",
+        "count": 6
+      },
+      {
+        "word": "customizations",
+        "count": 6
+      },
+      {
+        "word": "emodel",
+        "count": 6
+      },
+      {
+        "word": "endif",
+        "count": 6
+      },
+      {
+        "word": "evilwaldo",
+        "count": 6
+      },
+      {
+        "word": "grepprg",
+        "count": 6
+      },
+      {
+        "word": "guis",
+        "count": 6
+      },
+      {
+        "word": "scrollback",
+        "count": 6
+      },
+      {
+        "word": "subdirectories",
+        "count": 6
+      },
+      {
+        "word": "tabfirst",
+        "count": 6
+      },
+      {
+        "word": "tardyscript",
+        "count": 6
+      },
+      {
+        "word": "testnearest",
+        "count": 6
+      },
+      {
+        "word": "textwidth",
+        "count": 6
+      },
+      {
+        "word": "undodir",
+        "count": 6
+      },
+      {
+        "word": "webapp",
+        "count": 6
+      },
+      {
+        "word": "actualvim",
+        "count": 5
+      },
+      {
+        "word": "appimage",
+        "count": 5
+      },
+      {
+        "word": "bufwritepre",
+        "count": 5
+      },
+      {
+        "word": "commandeffect",
+        "count": 5
+      },
+      {
+        "word": "const",
+        "count": 5
+      },
+      {
+        "word": "filepaths",
+        "count": 5
+      },
+      {
+        "word": "jscs",
+        "count": 5
+      },
+      {
+        "word": "nmap",
+        "count": 5
+      },
+      {
+        "word": "outdir",
+        "count": 5
+      },
+      {
+        "word": "packadd",
+        "count": 5
+      },
+      {
+        "word": "serializer",
+        "count": 5
+      },
+      {
+        "word": "subdirectory",
+        "count": 5
+      },
+      {
+        "word": "tabedit",
+        "count": 5
+      },
+      {
+        "word": "thiago",
+        "count": 5
+      },
+      {
+        "word": "vscodevim",
+        "count": 5
+      },
+      {
+        "word": "vsplit",
+        "count": 5
+      },
+      {
+        "word": "andrew",
+        "count": 4
+      },
+      {
+        "word": "andy",
+        "count": 4
+      },
+      {
+        "word": "bufnewfile",
+        "count": 4
+      },
+      {
+        "word": "burntsushi",
+        "count": 4
+      },
+      {
+        "word": "choi",
+        "count": 4
+      },
+      {
+        "word": "cword",
+        "count": 4
+      },
+      {
+        "word": "debian",
+        "count": 4
+      },
+      {
+        "word": "doublequote",
+        "count": 4
+      },
+      {
+        "word": "endfunction",
+        "count": 4
+      },
+      {
+        "word": "gonvim",
+        "count": 4
+      },
+      {
+        "word": "grepformat",
+        "count": 4
+      },
+      {
+        "word": "termcursor",
+        "count": 4
+      },
+      {
+        "word": "linter",
+        "count": 4
+      },
+      {
+        "word": "makefile",
+        "count": 4
+      },
+      {
+        "word": "neomake",
+        "count": 4
+      },
+      {
+        "word": "nondigit",
+        "count": 4
+      },
+      {
+        "word": "notationmeaning",
+        "count": 4
+      },
+      {
+        "word": "serializers",
+        "count": 4
+      },
+      {
+        "word": "sgur",
+        "count": 4
+      },
+      {
+        "word": "testfile",
+        "count": 4
+      },
+      {
+        "word": "toct",
+        "count": 4
+      },
+      {
+        "word": "vimfiles",
+        "count": 4
+      },
+      {
+        "word": "executables",
+        "count": 3
+      },
+      {
+        "word": "apis",
+        "count": 3
+      },
+      {
+        "word": "brian",
+        "count": 3
+      },
+      {
+        "word": "bufwritepost",
+        "count": 3
+      },
+      {
+        "word": "bwipeout",
+        "count": 3
+      },
+      {
+        "word": "charset",
+        "count": 3
+      },
+      {
+        "word": "commentmodel",
+        "count": 3
+      },
+      {
+        "word": "dayinms",
+        "count": 3
+      },
+      {
+        "word": "ebook",
+        "count": 3
+      },
+      {
+        "word": "eserializer",
+        "count": 3
+      },
+      {
+        "word": "exrc",
+        "count": 3
+      },
+      {
+        "word": "hinz",
+        "count": 3
+      },
+      {
+        "word": "homebrew",
+        "count": 3
+      },
+      {
+        "word": "maecenas",
+        "count": 3
+      }
+    ]
+  },
+  "neovim-for-beginners": {
+    "unknown_words": 500,
+    "candidates": [
+      {
+        "word": "keymap",
+        "count": 88
+      },
+      {
+        "word": "keymaps",
+        "count": 38
+      },
+      {
+        "word": "ctrl",
+        "count": 24
+      },
+      {
+        "word": "gitsigns",
+        "count": 22
+      },
+      {
+        "word": "init",
+        "count": 22
+      },
+      {
+        "word": "neovim's",
+        "count": 17
+      },
+      {
+        "word": "onedark",
+        "count": 14
+      },
+      {
+        "word": "autocomplete",
+        "count": 11
+      },
+      {
+        "word": "autocompletion",
+        "count": 7
+      },
+      {
+        "word": "customizations",
+        "count": 6
+      },
+      {
+        "word": "i've",
+        "count": 6
+      },
+      {
+        "word": "wbthomason",
+        "count": 6
+      },
+      {
+        "word": "exrc",
+        "count": 5
+      },
+      {
+        "word": "minimalistic",
+        "count": 5
+      },
+      {
+        "word": "navarasu",
+        "count": 5
+      },
+      {
+        "word": "omni",
+        "count": 5
+      },
+      {
+        "word": "packersync",
+        "count": 5
+      },
+      {
+        "word": "bufnr",
+        "count": 4
+      },
+      {
+        "word": "builtin",
+        "count": 4
+      },
+      {
+        "word": "clearjumps",
+        "count": 4
+      },
+      {
+        "word": "config",
+        "count": 4
+      },
+      {
+        "word": "cword",
+        "count": 4
+      },
+      {
+        "word": "pumheight",
+        "count": 4
+      },
+      {
+        "word": "undofile",
+        "count": 4
+      },
+      {
+        "word": "args",
+        "count": 3
+      },
+      {
+        "word": "breakpoint",
+        "count": 3
+      },
+      {
+        "word": "daplocals",
+        "count": 3
+      },
+      {
+        "word": "dapstart",
+        "count": 3
+      },
+      {
+        "word": "fileline",
+        "count": 3
+      },
+      {
+        "word": "hlsearch",
+        "count": 3
+      },
+      {
+        "word": "incsearch",
+        "count": 3
+      },
+      {
+        "word": "lgetexpr",
+        "count": 3
+      },
+      {
+        "word": "lopen",
+        "count": 3
+      },
+      {
+        "word": "lspattach",
+        "count": 3
+      },
+      {
+        "word": "lspconfig",
+        "count": 3
+      },
+      {
+        "word": "lua's",
+        "count": 3
+      },
+      {
+        "word": "makeprg",
+        "count": 3
+      },
+      {
+        "word": "menuone",
+        "count": 3
+      },
+      {
+        "word": "noinsert",
+        "count": 3
+      },
+      {
+        "word": "splitbelow",
+        "count": 3
+      },
+      {
+        "word": "splitright",
+        "count": 3
+      },
+      {
+        "word": "vim's",
+        "count": 3
+      },
+      {
+        "word": "alvaro",
+        "count": 2
+      },
+      {
+        "word": "autocommand",
+        "count": 2
+      },
+      {
+        "word": "autoload",
+        "count": 2
+      },
+      {
+        "word": "completeopt",
+        "count": 2
+      },
+      {
+        "word": "dapframedown",
+        "count": 2
+      },
+      {
+        "word": "dapframeup",
+        "count": 2
+      },
+      {
+        "word": "expr",
+        "count": 2
+      },
+      {
+        "word": "getcwd",
+        "count": 2
+      },
+      {
+        "word": "hjkl",
+        "count": 2
+      },
+      {
+        "word": "homebrew",
+        "count": 2
+      },
+      {
+        "word": "https",
+        "count": 2
+      },
+      {
+        "word": "insertcharpre",
+        "count": 2
+      },
+      {
+        "word": "leal",
+        "count": 2
+      },
+      {
+        "word": "lewis",
+        "count": 2
+      },
+      {
+        "word": "linenumber",
+        "count": 2
+      },
+      {
+        "word": "lnext",
+        "count": 2
+      },
+      {
+        "word": "lprev",
+        "count": 2
+      },
+      {
+        "word": "noselect",
+        "count": 2
+      },
+      {
+        "word": "nzzzv",
+        "count": 2
+      },
+      {
+        "word": "omnifunc",
+        "count": 2
+      },
+      {
+        "word": "openfile",
+        "count": 2
+      },
+      {
+        "word": "packadd",
+        "count": 2
+      },
+      {
+        "word": "setloclist",
+        "count": 2
+      },
+      {
+        "word": "subdirectories",
+        "count": 2
+      },
+      {
+        "word": "alexander",
+        "count": 1
+      },
+      {
+        "word": "apis",
+        "count": 1
+      },
+      {
+        "word": "appdata",
+        "count": 1
+      },
+      {
+        "word": "appimage",
+        "count": 1
+      },
+      {
+        "word": "arruda",
+        "count": 1
+      },
+      {
+        "word": "async",
+        "count": 1
+      },
+      {
+        "word": "augroup",
+        "count": 1
+      },
+      {
+        "word": "bdelete",
+        "count": 1
+      },
+      {
+        "word": "bnext",
+        "count": 1
+      },
+      {
+        "word": "bprevious",
+        "count": 1
+      },
+      {
+        "word": "bram",
+        "count": 1
+      },
+      {
+        "word": "bufenter",
+        "count": 1
+      },
+      {
+        "word": "bufname",
+        "count": 1
+      },
+      {
+        "word": "bufread",
+        "count": 1
+      },
+      {
+        "word": "bufwrite",
+        "count": 1
+      },
+      {
+        "word": "pagedown",
+        "count": 1
+      },
+      {
+        "word": "pageup",
+        "count": 1
+      },
+      {
+        "word": "colorschemes",
+        "count": 1
+      },
+      {
+        "word": "combinationdescription",
+        "count": 1
+      },
+      {
+        "word": "commit's",
+        "count": 1
+      },
+      {
+        "word": "completopt",
+        "count": 1
+      },
+      {
+        "word": "configurability",
+        "count": 1
+      },
+      {
+        "word": "cursor's",
+        "count": 1
+      },
+      {
+        "word": "daptogglerepl",
+        "count": 1
+      },
+      {
+        "word": "dauting",
+        "count": 1
+      },
+      {
+        "word": "debian",
+        "count": 1
+      },
+      {
+        "word": "dein",
+        "count": 1
+      },
+      {
+        "word": "differentiators",
+        "count": 1
+      },
+      {
+        "word": "diffthis",
+        "count": 1
+      },
+      {
+        "word": "everytime",
+        "count": 1
+      },
+      {
+        "word": "feedkeys",
+        "count": 1
+      },
+      {
+        "word": "filetype",
+        "count": 1
+      },
+      {
+        "word": "getid",
+        "count": 1
+      },
+      {
+        "word": "getloclist",
+        "count": 1
+      },
+      {
+        "word": "gmatch",
+        "count": 1
+      },
+      {
+        "word": "gsub",
+        "count": 1
+      },
+      {
+        "word": "initializations",
+        "count": 1
+      },
+      {
+        "word": "interdependencies",
+        "count": 1
+      },
+      {
+        "word": "iswitch",
+        "count": 1
+      },
+      {
+        "word": "justin",
+        "count": 1
+      },
+      {
+        "word": "keyes",
+        "count": 1
+      },
+      {
+        "word": "komarov",
+        "count": 1
+      },
+      {
+        "word": "lexplore",
+        "count": 1
+      },
+      {
+        "word": "lnum",
+        "count": 1
+      },
+      {
+        "word": "lspformat",
+        "count": 1
+      },
+      {
+        "word": "lsploclist",
+        "count": 1
+      },
+      {
+        "word": "lsprename",
+        "count": 1
+      },
+      {
+        "word": "mapleader",
+        "count": 1
+      },
+      {
+        "word": "mfussenegger",
+        "count": 1
+      },
+      {
+        "word": "modularity",
+        "count": 1
+      },
+      {
+        "word": "moolenaar",
+        "count": 1
+      },
+      {
+        "word": "nargs",
+        "count": 1
+      },
+      {
+        "word": "neoland",
+        "count": 1
+      },
+      {
+        "word": "nmake",
+        "count": 1
+      }
+    ]
+  },
+  "practical-vim": {
+    "unknown_words": 1900,
+    "candidates": [
+      {
+        "word": "keystrokesbuffer",
+        "count": 96
+      },
+      {
+        "word": "autocompletion",
+        "count": 67
+      },
+      {
+        "word": "href",
+        "count": 60
+      },
+      {
+        "word": "doesn",
+        "count": 57
+      },
+      {
+        "word": "http",
+        "count": 54
+      },
+      {
+        "word": "autocomplete",
+        "count": 44
+      },
+      {
+        "word": "config",
+        "count": 30
+      },
+      {
+        "word": "wakeup",
+        "count": 27
+      },
+      {
+        "word": "getcollection",
+        "count": 26
+      },
+      {
+        "word": "nodelint",
+        "count": 24
+      },
+      {
+        "word": "argdo",
+        "count": 23
+      },
+      {
+        "word": "filepath",
+        "count": 20
+      },
+      {
+        "word": "args",
+        "count": 19
+      },
+      {
+        "word": "somethingintheway",
+        "count": 19
+      },
+      {
+        "word": "vimdoc",
+        "count": 19
+      },
+      {
+        "word": "vimref",
+        "count": 18
+      },
+      {
+        "word": "neil",
+        "count": 17
+      },
+      {
+        "word": "berlin",
+        "count": 16
+      },
+      {
+        "word": "cnext",
+        "count": 16
+      },
+      {
+        "word": "commandeffect",
+        "count": 16
+      },
+      {
+        "word": "customizations",
+        "count": 16
+      },
+      {
+        "word": "ignorecase",
+        "count": 16
+      },
+      {
+        "word": "cfdo",
+        "count": 15
+      },
+      {
+        "word": "lang",
+        "count": 15
+      },
+      {
+        "word": "london",
+        "count": 15
+      },
+      {
+        "word": "setlocal",
+        "count": 15
+      },
+      {
+        "word": "ctrl",
+        "count": 14
+      },
+      {
+        "word": "https",
+        "count": 14
+      },
+      {
+        "word": "wouldn",
+        "count": 14
+      },
+      {
+        "word": "york",
+        "count": 14
+      },
+      {
+        "word": "cmdline",
+        "count": 13
+      },
+      {
+        "word": "filetype",
+        "count": 13
+      },
+      {
+        "word": "applyname",
+        "count": 12
+      },
+      {
+        "word": "bnext",
+        "count": 12
+      },
+      {
+        "word": "goldrush",
+        "count": 12
+      },
+      {
+        "word": "grepformat",
+        "count": 12
+      },
+      {
+        "word": "english",
+        "count": 11
+      },
+      {
+        "word": "errorformat",
+        "count": 11
+      },
+      {
+        "word": "getname",
+        "count": 11
+      },
+      {
+        "word": "nnoremap",
+        "count": 11
+      },
+      {
+        "word": "submatch",
+        "count": 11
+      },
+      {
+        "word": "fizzbuzz",
+        "count": 10
+      },
+      {
+        "word": "grepprg",
+        "count": 10
+      },
+      {
+        "word": "mixin",
+        "count": 10
+      },
+      {
+        "word": "perl",
+        "count": 10
+      },
+      {
+        "word": "pragprog",
+        "count": 10
+      },
+      {
+        "word": "xhtmldocument",
+        "count": 10
+      },
+      {
+        "word": "xhtmltag",
+        "count": 10
+      },
+      {
+        "word": "xmldocument",
+        "count": 10
+      },
+      {
+        "word": "xmltag",
+        "count": 10
+      },
+      {
+        "word": "spelllang",
+        "count": 9
+      },
+      {
+        "word": "submatches",
+        "count": 9
+      },
+      {
+        "word": "viewport",
+        "count": 9
+      },
+      {
+        "word": "generatepacket",
+        "count": 8
+      },
+      {
+        "word": "nocompatible",
+        "count": 8
+      },
+      {
+        "word": "nomagic",
+        "count": 8
+      },
+      {
+        "word": "bufdo",
+        "count": 7
+      },
+      {
+        "word": "didn",
+        "count": 7
+      },
+      {
+        "word": "hlsearch",
+        "count": 7
+      },
+      {
+        "word": "langs",
+        "count": 7
+      },
+      {
+        "word": "lookaround",
+        "count": 7
+      },
+      {
+        "word": "makeprg",
+        "count": 7
+      },
+      {
+        "word": "noremap",
+        "count": 7
+      },
+      {
+        "word": "shouldn",
+        "count": 7
+      },
+      {
+        "word": "spellfile",
+        "count": 7
+      },
+      {
+        "word": "sudo",
+        "count": 7
+      },
+      {
+        "word": "tpope",
+        "count": 7
+      },
+      {
+        "word": "april",
+        "count": 6
+      },
+      {
+        "word": "dnvim",
+        "count": 6
+      },
+      {
+        "word": "ebooks",
+        "count": 6
+      },
+      {
+        "word": "french",
+        "count": 6
+      },
+      {
+        "word": "ftplugin",
+        "count": 6
+      },
+      {
+        "word": "incsearch",
+        "count": 6
+      },
+      {
+        "word": "jslint",
+        "count": 6
+      },
+      {
+        "word": "suffixesadd",
+        "count": 6
+      },
+      {
+        "word": "applynumber",
+        "count": 5
+      },
+      {
+        "word": "autocommand",
+        "count": 5
+      },
+      {
+        "word": "carr",
+        "count": 5
+      },
+      {
+        "word": "cprev",
+        "count": 5
+      },
+      {
+        "word": "foobarbaz",
+        "count": 5
+      },
+      {
+        "word": "getcmdtype",
+        "count": 5
+      },
+      {
+        "word": "macvim",
+        "count": 5
+      },
+      {
+        "word": "matchit",
+        "count": 5
+      },
+      {
+        "word": "needn",
+        "count": 5
+      },
+      {
+        "word": "neil's",
+        "count": 5
+      },
+      {
+        "word": "nogroup",
+        "count": 5
+      },
+      {
+        "word": "todo",
+        "count": 5
+      },
+      {
+        "word": "uint",
+        "count": 5
+      },
+      {
+        "word": "vglobal",
+        "count": 5
+      },
+      {
+        "word": "vimtutor",
+        "count": 5
+      },
+      {
+        "word": "webapp",
+        "count": 5
+      },
+      {
+        "word": "wvuj",
+        "count": 5
+      },
+      {
+        "word": "aren",
+        "count": 4
+      },
+      {
+        "word": "arglist",
+        "count": 4
+      },
+      {
+        "word": "cnewer",
+        "count": 4
+      },
+      {
+        "word": "getnumber",
+        "count": 4
+      },
+      {
+        "word": "gugn",
+        "count": 4
+      },
+      {
+        "word": "invisibles",
+        "count": 4
+      },
+      {
+        "word": "jane",
+        "count": 4
+      },
+      {
+        "word": "keystrokeseffect",
+        "count": 4
+      },
+      {
+        "word": "moustache",
+        "count": 4
+      },
+      {
+        "word": "multiline",
+        "count": 4
+      },
+      {
+        "word": "nonblank",
+        "count": 4
+      },
+      {
+        "word": "notationmeaning",
+        "count": 4
+      },
+      {
+        "word": "readonly",
+        "count": 4
+      },
+      {
+        "word": "reselect",
+        "count": 4
+      },
+      {
+        "word": "swapper",
+        "count": 4
+      },
+      {
+        "word": "tjump",
+        "count": 4
+      },
+      {
+        "word": "vimhelp",
+        "count": 4
+      },
+      {
+        "word": "xnoremap",
+        "count": 4
+      },
+      {
+        "word": "american",
+        "count": 3
+      },
+      {
+        "word": "andrew",
+        "count": 3
+      },
+      {
+        "word": "appspot",
+        "count": 3
+      },
+      {
+        "word": "autocommands",
+        "count": 3
+      },
+      {
+        "word": "backtick",
+        "count": 3
+      },
+      {
+        "word": "begat",
+        "count": 3
+      },
+      {
+        "word": "colorscheme",
+        "count": 3
+      },
+      {
+        "word": "commandmove",
+        "count": 3
+      },
+      {
+        "word": "copen",
+        "count": 3
+      },
+      {
+        "word": "dave",
+        "count": 3
+      }
+    ]
+  },
+  "pro-vim": {
+    "unknown_words": 2802,
+    "candidates": [
+      {
+        "word": "markmcdonnell",
+        "count": 140
+      },
+      {
+        "word": "setlocal",
+        "count": 102
+      },
+      {
+        "word": "https",
+        "count": 86
+      },
+      {
+        "word": "doesn",
+        "count": 85
+      },
+      {
+        "word": "http",
+        "count": 55
+      },
+      {
+        "word": "provim",
+        "count": 52
+      },
+      {
+        "word": "viewport",
+        "count": 39
+      },
+      {
+        "word": "conf",
+        "count": 35
+      },
+      {
+        "word": "aren",
+        "count": 34
+      },
+      {
+        "word": "clojure",
+        "count": 34
+      },
+      {
+        "word": "zshrc",
+        "count": 32
+      },
+      {
+        "word": "sinderella",
+        "count": 29
+      },
+      {
+        "word": "didn",
+        "count": 27
+      },
+      {
+        "word": "colour",
+        "count": 26
+      },
+      {
+        "word": "bufdo",
+        "count": 25
+      },
+      {
+        "word": "setopt",
+        "count": 25
+      },
+      {
+        "word": "zstyle",
+        "count": 25
+      },
+      {
+        "word": "diffget",
+        "count": 22
+      },
+      {
+        "word": "integralist",
+        "count": 21
+      },
+      {
+        "word": "drwx",
+        "count": 20
+      },
+      {
+        "word": "vimball",
+        "count": 19
+      },
+      {
+        "word": "reptyr",
+        "count": 18
+      },
+      {
+        "word": "config",
+        "count": 17
+      },
+      {
+        "word": "filetype",
+        "count": 17
+      },
+      {
+        "word": "homebrew",
+        "count": 17
+      },
+      {
+        "word": "windo",
+        "count": 17
+      },
+      {
+        "word": "wasn",
+        "count": 16
+      },
+      {
+        "word": "dotfiles",
+        "count": 15
+      },
+      {
+        "word": "tmuxinator",
+        "count": 15
+      },
+      {
+        "word": "wouldn",
+        "count": 15
+      },
+      {
+        "word": "autoload",
+        "count": 14
+      },
+      {
+        "word": "tpope",
+        "count": 14
+      },
+      {
+        "word": "argdo",
+        "count": 13
+      },
+      {
+        "word": "lvimgrep",
+        "count": 13
+      },
+      {
+        "word": "println",
+        "count": 13
+      },
+      {
+        "word": "rspec",
+        "count": 13
+      },
+      {
+        "word": "datastore",
+        "count": 12
+      },
+      {
+        "word": "vimdiff",
+        "count": 12
+      },
+      {
+        "word": "xclip",
+        "count": 12
+      },
+      {
+        "word": "diffput",
+        "count": 11
+      },
+      {
+        "word": "leiningen",
+        "count": 11
+      },
+      {
+        "word": "projecta",
+        "count": 11
+      },
+      {
+        "word": "syntastic",
+        "count": 11
+      },
+      {
+        "word": "tabdo",
+        "count": 11
+      },
+      {
+        "word": "undolist",
+        "count": 11
+      },
+      {
+        "word": "viminfo",
+        "count": 11
+      },
+      {
+        "word": "virtualbox",
+        "count": 11
+      },
+      {
+        "word": "wikipedia",
+        "count": 11
+      },
+      {
+        "word": "bindkey",
+        "count": 10
+      },
+      {
+        "word": "cygwin",
+        "count": 10
+      },
+      {
+        "word": "eval",
+        "count": 10
+      },
+      {
+        "word": "regexes",
+        "count": 10
+      },
+      {
+        "word": "strftime",
+        "count": 10
+      },
+      {
+        "word": "tabularize",
+        "count": 10
+      },
+      {
+        "word": "apress",
+        "count": 9
+      },
+      {
+        "word": "choosewin",
+        "count": 9
+      },
+      {
+        "word": "mksession",
+        "count": 9
+      },
+      {
+        "word": "tmate",
+        "count": 9
+      },
+      {
+        "word": "vagrantfile",
+        "count": 9
+      },
+      {
+        "word": "vdebug",
+        "count": 9
+      },
+      {
+        "word": "basecontroller",
+        "count": 8
+      },
+      {
+        "word": "noremap",
+        "count": 8
+      },
+      {
+        "word": "regs",
+        "count": 8
+      },
+      {
+        "word": "args",
+        "count": 7
+      },
+      {
+        "word": "bufread",
+        "count": 7
+      },
+      {
+        "word": "dropbox",
+        "count": 7
+      },
+      {
+        "word": "keepjumps",
+        "count": 7
+      },
+      {
+        "word": "mergetool",
+        "count": 7
+      },
+      {
+        "word": "setw",
+        "count": 7
+      },
+      {
+        "word": "supertab",
+        "count": 7
+      },
+      {
+        "word": "textedit",
+        "count": 7
+      },
+      {
+        "word": "vimstore",
+        "count": 7
+      },
+      {
+        "word": "weren",
+        "count": 7
+      },
+      {
+        "word": "xargs",
+        "count": 7
+      },
+      {
+        "word": "blackhole",
+        "count": 6
+      },
+      {
+        "word": "bufonly",
+        "count": 6
+      },
+      {
+        "word": "catherine",
+        "count": 6
+      },
+      {
+        "word": "cterm",
+        "count": 6
+      },
+      {
+        "word": "ctermbg",
+        "count": 6
+      },
+      {
+        "word": "ctermfg",
+        "count": 6
+      },
+      {
+        "word": "ctrlpbuffer",
+        "count": 6
+      },
+      {
+        "word": "diffoff",
+        "count": 6
+      },
+      {
+        "word": "fugative",
+        "count": 6
+      },
+      {
+        "word": "gitignore",
+        "count": 6
+      },
+      {
+        "word": "grepprg",
+        "count": 6
+      },
+      {
+        "word": "macintosh",
+        "count": 6
+      },
+      {
+        "word": "macvim",
+        "count": 6
+      },
+      {
+        "word": "nobold",
+        "count": 6
+      },
+      {
+        "word": "noitalics",
+        "count": 6
+      },
+      {
+        "word": "nounderscore",
+        "count": 6
+      },
+      {
+        "word": "nrepl",
+        "count": 6
+      },
+      {
+        "word": "projectb",
+        "count": 6
+      },
+      {
+        "word": "setspellingcolors",
+        "count": 6
+      },
+      {
+        "word": "stdout",
+        "count": 6
+      },
+      {
+        "word": "ubuntu",
+        "count": 6
+      },
+      {
+        "word": "zoomwin",
+        "count": 6
+      },
+      {
+        "word": "backtick",
+        "count": 5
+      },
+      {
+        "word": "basename",
+        "count": 5
+      },
+      {
+        "word": "bufnewfile",
+        "count": 5
+      },
+      {
+        "word": "camelcasemotion",
+        "count": 5
+      },
+      {
+        "word": "nargs",
+        "count": 5
+      },
+      {
+        "word": "ctrl",
+        "count": 5
+      },
+      {
+        "word": "diffopt",
+        "count": 5
+      },
+      {
+        "word": "endwise",
+        "count": 5
+      },
+      {
+        "word": "getline",
+        "count": 5
+      },
+      {
+        "word": "hasn",
+        "count": 5
+      },
+      {
+        "word": "ignorecase",
+        "count": 5
+      },
+      {
+        "word": "mkdir",
+        "count": 5
+      },
+      {
+        "word": "nerdtreetoggle",
+        "count": 5
+      },
+      {
+        "word": "occurences",
+        "count": 5
+      },
+      {
+        "word": "offscreen",
+        "count": 5
+      },
+      {
+        "word": "sexplore",
+        "count": 5
+      },
+      {
+        "word": "shouldn",
+        "count": 5
+      },
+      {
+        "word": "siso",
+        "count": 5
+      },
+      {
+        "word": "solarizedlight",
+        "count": 5
+      },
+      {
+        "word": "sudo",
+        "count": 5
+      },
+      {
+        "word": "tabnew",
+        "count": 5
+      },
+      {
+        "word": "testthisobjectdoessomething",
+        "count": 5
+      },
+      {
+        "word": "timl",
+        "count": 5
+      },
+      {
+        "word": "tmuxkill",
+        "count": 5
+      }
+    ]
+  },
+  "use-vim-like-a-pro": {
+    "unknown_words": 174,
+    "candidates": [
+      {
+        "word": "overtype",
+        "count": 7
+      },
+      {
+        "word": "ctrl",
+        "count": 5
+      },
+      {
+        "word": "leanpub",
+        "count": 5
+      },
+      {
+        "word": "capslock",
+        "count": 4
+      },
+      {
+        "word": "guifg",
+        "count": 4
+      },
+      {
+        "word": "http",
+        "count": 4
+      },
+      {
+        "word": "noob",
+        "count": 4
+      },
+      {
+        "word": "vimtutor",
+        "count": 4
+      },
+      {
+        "word": "delek",
+        "count": 3
+      },
+      {
+        "word": "didn",
+        "count": 3
+      },
+      {
+        "word": "metacharacters",
+        "count": 3
+      },
+      {
+        "word": "noobs",
+        "count": 3
+      },
+      {
+        "word": "ottinger",
+        "count": 3
+      },
+      {
+        "word": "perl",
+        "count": 3
+      },
+      {
+        "word": "pymain",
+        "count": 3
+      },
+      {
+        "word": "retab",
+        "count": 3
+      },
+      {
+        "word": "vimdiff",
+        "count": 3
+      },
+      {
+        "word": "vimlikeapro",
+        "count": 3
+      },
+      {
+        "word": "aren",
+        "count": 2
+      },
+      {
+        "word": "astyle",
+        "count": 2
+      },
+      {
+        "word": "darkblue",
+        "count": 2
+      },
+      {
+        "word": "dedent",
+        "count": 2
+      },
+      {
+        "word": "doesn",
+        "count": 2
+      },
+      {
+        "word": "english",
+        "count": 2
+      },
+      {
+        "word": "epilog",
+        "count": 2
+      },
+      {
+        "word": "fror",
+        "count": 2
+      },
+      {
+        "word": "ggvg",
+        "count": 2
+      },
+      {
+        "word": "guibg",
+        "count": 2
+      },
+      {
+        "word": "hlsearch",
+        "count": 2
+      },
+      {
+        "word": "makefile",
+        "count": 2
+      },
+      {
+        "word": "nontext",
+        "count": 2
+      },
+      {
+        "word": "unindenting",
+        "count": 2
+      },
+      {
+        "word": "andp",
+        "count": 1
+      },
+      {
+        "word": "andt",
+        "count": 1
+      },
+      {
+        "word": "automagically",
+        "count": 1
+      },
+      {
+        "word": "availabe",
+        "count": 1
+      },
+      {
+        "word": "bing",
+        "count": 1
+      },
+      {
+        "word": "bram",
+        "count": 1
+      },
+      {
+        "word": "chris",
+        "count": 1
+      },
+      {
+        "word": "colorscheme",
+        "count": 1
+      },
+      {
+        "word": "colorschemes",
+        "count": 1
+      },
+      {
+        "word": "creativecommons",
+        "count": 1
+      },
+      {
+        "word": "cterm",
+        "count": 1
+      },
+      {
+        "word": "cthuang",
+        "count": 1
+      },
+      {
+        "word": "darkgray",
+        "count": 1
+      },
+      {
+        "word": "darkred",
+        "count": 1
+      },
+      {
+        "word": "dirs",
+        "count": 1
+      },
+      {
+        "word": "doublequote",
+        "count": 1
+      },
+      {
+        "word": "downarrow",
+        "count": 1
+      },
+      {
+        "word": "ebook",
+        "count": 1
+      },
+      {
+        "word": "elflord",
+        "count": 1
+      },
+      {
+        "word": "essencially",
+        "count": 1
+      },
+      {
+        "word": "ewww",
+        "count": 1
+      },
+      {
+        "word": "ftplugin",
+        "count": 1
+      },
+      {
+        "word": "geocities",
+        "count": 1
+      },
+      {
+        "word": "gmail",
+        "count": 1
+      },
+      {
+        "word": "goto",
+        "count": 1
+      },
+      {
+        "word": "groupname",
+        "count": 1
+      },
+      {
+        "word": "guis",
+        "count": 1
+      },
+      {
+        "word": "guruhood",
+        "count": 1
+      },
+      {
+        "word": "gvimrc",
+        "count": 1
+      },
+      {
+        "word": "https",
+        "count": 1
+      },
+      {
+        "word": "ignorecase",
+        "count": 1
+      },
+      {
+        "word": "intellisense",
+        "count": 1
+      },
+      {
+        "word": "keypresses",
+        "count": 1
+      },
+      {
+        "word": "koehler",
+        "count": 1
+      },
+      {
+        "word": "larc",
+        "count": 1
+      },
+      {
+        "word": "leftarrow",
+        "count": 1
+      },
+      {
+        "word": "lightgray",
+        "count": 1
+      },
+      {
+        "word": "linebreak",
+        "count": 1
+      },
+      {
+        "word": "linenr",
+        "count": 1
+      },
+      {
+        "word": "mailto",
+        "count": 1
+      },
+      {
+        "word": "manpage",
+        "count": 1
+      },
+      {
+        "word": "menues",
+        "count": 1
+      },
+      {
+        "word": "mistyped",
+        "count": 1
+      },
+      {
+        "word": "moolenaar",
+        "count": 1
+      },
+      {
+        "word": "mvim",
+        "count": 1
+      },
+      {
+        "word": "newfile",
+        "count": 1
+      },
+      {
+        "word": "nospell",
+        "count": 1
+      },
+      {
+        "word": "nowrap",
+        "count": 1
+      },
+      {
+        "word": "nthu",
+        "count": 1
+      },
+      {
+        "word": "oldfile",
+        "count": 1
+      },
+      {
+        "word": "paren",
+        "count": 1
+      },
+      {
+        "word": "parens",
+        "count": 1
+      },
+      {
+        "word": "peachpuff",
+        "count": 1
+      },
+      {
+        "word": "prev",
+        "count": 1
+      },
+      {
+        "word": "retabbing",
+        "count": 1
+      },
+      {
+        "word": "rightarrow",
+        "count": 1
+      },
+      {
+        "word": "shiftround",
+        "count": 1
+      },
+      {
+        "word": "showcmd",
+        "count": 1
+      },
+      {
+        "word": "showmatch",
+        "count": 1
+      },
+      {
+        "word": "showmode",
+        "count": 1
+      },
+      {
+        "word": "smartcase",
+        "count": 1
+      },
+      {
+        "word": "spelllang",
+        "count": 1
+      },
+      {
+        "word": "stil",
+        "count": 1
+      },
+      {
+        "word": "substitue",
+        "count": 1
+      },
+      {
+        "word": "tabstops",
+        "count": 1
+      },
+      {
+        "word": "textwidth",
+        "count": 1
+      },
+      {
+        "word": "theming",
+        "count": 1
+      },
+      {
+        "word": "todo",
+        "count": 1
+      },
+      {
+        "word": "tottinge",
+        "count": 1
+      },
+      {
+        "word": "unindent",
+        "count": 1
+      },
+      {
+        "word": "unshifted",
+        "count": 1
+      },
+      {
+        "word": "untl",
+        "count": 1
+      },
+      {
+        "word": "uparrow",
+        "count": 1
+      },
+      {
+        "word": "usevimlikeapro",
+        "count": 1
+      },
+      {
+        "word": "verion",
+        "count": 1
+      },
+      {
+        "word": "volontir",
+        "count": 1
+      },
+      {
+        "word": "wasn",
+        "count": 1
+      },
+      {
+        "word": "whatkeys",
+        "count": 1
+      },
+      {
+        "word": "wouldn",
+        "count": 1
+      }
+    ]
+  },
+  "vim-101-hacks": {
+    "unknown_words": 524,
+    "candidates": [
+      {
+        "word": "thegeekstuff",
+        "count": 173
+      },
+      {
+        "word": "ramesh",
+        "count": 17
+      },
+      {
+        "word": "passwd",
+        "count": 14
+      },
+      {
+        "word": "jsmith",
+        "count": 11
+      },
+      {
+        "word": "http",
+        "count": 10
+      },
+      {
+        "word": "taglist",
+        "count": 10
+      },
+      {
+        "word": "vimdiff",
+        "count": 9
+      },
+      {
+        "word": "conf",
+        "count": 8
+      },
+      {
+        "word": "bufnewfile",
+        "count": 7
+      },
+      {
+        "word": "jason",
+        "count": 7
+      },
+      {
+        "word": "bufwritepre",
+        "count": 5
+      },
+      {
+        "word": "filewritepre",
+        "count": 5
+      },
+      {
+        "word": "mthesaur",
+        "count": 5
+      },
+      {
+        "word": "printf",
+        "count": 5
+      },
+      {
+        "word": "vimtutor",
+        "count": 5
+      },
+      {
+        "word": "autocommand",
+        "count": 4
+      },
+      {
+        "word": "ebook",
+        "count": 4
+      },
+      {
+        "word": "filetype",
+        "count": 4
+      },
+      {
+        "word": "perl",
+        "count": 4
+      },
+      {
+        "word": "xcalloc",
+        "count": 4
+      },
+      {
+        "word": "backtick",
+        "count": 3
+      },
+      {
+        "word": "cwjason",
+        "count": 3
+      },
+      {
+        "word": "devserver",
+        "count": 3
+      },
+      {
+        "word": "myfile",
+        "count": 3
+      },
+      {
+        "word": "mythesaurus",
+        "count": 3
+      },
+      {
+        "word": "natarajan",
+        "count": 3
+      },
+      {
+        "word": "omni",
+        "count": 3
+      },
+      {
+        "word": "perldoc",
+        "count": 3
+      },
+      {
+        "word": "sysctl",
+        "count": 3
+      },
+      {
+        "word": "unabbreviation",
+        "count": 3
+      },
+      {
+        "word": "acceptible",
+        "count": 2
+      },
+      {
+        "word": "addacl",
+        "count": 2
+      },
+      {
+        "word": "anthony",
+        "count": 2
+      },
+      {
+        "word": "archiveentry",
+        "count": 2
+      },
+      {
+        "word": "assigndumpid",
+        "count": 2
+      },
+      {
+        "word": "atan",
+        "count": 2
+      },
+      {
+        "word": "bashrc",
+        "count": 2
+      },
+      {
+        "word": "bufwritepost",
+        "count": 2
+      },
+      {
+        "word": "buildd",
+        "count": 2
+      },
+      {
+        "word": "diffsplit",
+        "count": 2
+      },
+      {
+        "word": "english",
+        "count": 2
+      },
+      {
+        "word": "errormsg",
+        "count": 2
+      },
+      {
+        "word": "filewritepost",
+        "count": 2
+      },
+      {
+        "word": "guaw",
+        "count": 2
+      },
+      {
+        "word": "helloworld",
+        "count": 2
+      },
+      {
+        "word": "howto",
+        "count": 2
+      },
+      {
+        "word": "mthes",
+        "count": 2
+      },
+      {
+        "word": "mysql",
+        "count": 2
+      },
+      {
+        "word": "nagios",
+        "count": 2
+      },
+      {
+        "word": "navigations",
+        "count": 2
+      },
+      {
+        "word": "nojoinspaces",
+        "count": 2
+      },
+      {
+        "word": "postgresql",
+        "count": 2
+      },
+      {
+        "word": "strftime",
+        "count": 2
+      },
+      {
+        "word": "submatch",
+        "count": 2
+      },
+      {
+        "word": "ther",
+        "count": 2
+      },
+      {
+        "word": "thunderbird",
+        "count": 2
+      },
+      {
+        "word": "tlistopen",
+        "count": 2
+      },
+      {
+        "word": "ubuntu",
+        "count": 2
+      },
+      {
+        "word": "wywa",
+        "count": 2
+      },
+      {
+        "word": "aareadme",
+        "count": 1
+      },
+      {
+        "word": "accesories",
+        "count": 1
+      },
+      {
+        "word": "aclbuf",
+        "count": 1
+      },
+      {
+        "word": "acos",
+        "count": 1
+      },
+      {
+        "word": "acosh",
+        "count": 1
+      },
+      {
+        "word": "acpi",
+        "count": 1
+      },
+      {
+        "word": "alex",
+        "count": 1
+      },
+      {
+        "word": "alsa",
+        "count": 1
+      },
+      {
+        "word": "ancel",
+        "count": 1
+      },
+      {
+        "word": "annette",
+        "count": 1
+      },
+      {
+        "word": "archiver",
+        "count": 1
+      },
+      {
+        "word": "argc",
+        "count": 1
+      },
+      {
+        "word": "asin",
+        "count": 1
+      },
+      {
+        "word": "asinh",
+        "count": 1
+      },
+      {
+        "word": "atanh",
+        "count": 1
+      },
+      {
+        "word": "audisp",
+        "count": 1
+      },
+      {
+        "word": "autocomplpop",
+        "count": 1
+      },
+      {
+        "word": "autowrite",
+        "count": 1
+      },
+      {
+        "word": "bindec",
+        "count": 1
+      },
+      {
+        "word": "bort",
+        "count": 1
+      },
+      {
+        "word": "bram",
+        "count": 1
+      },
+      {
+        "word": "britain",
+        "count": 1
+      },
+      {
+        "word": "britian",
+        "count": 1
+      },
+      {
+        "word": "british",
+        "count": 1
+      },
+      {
+        "word": "brittish",
+        "count": 1
+      },
+      {
+        "word": "bufdelete",
+        "count": 1
+      },
+      {
+        "word": "bufdo",
+        "count": 1
+      },
+      {
+        "word": "bufenter",
+        "count": 1
+      },
+      {
+        "word": "bufleave",
+        "count": 1
+      },
+      {
+        "word": "bufnew",
+        "count": 1
+      },
+      {
+        "word": "bufwipeout",
+        "count": 1
+      },
+      {
+        "word": "ceil",
+        "count": 1
+      },
+      {
+        "word": "cindent",
+        "count": 1
+      },
+      {
+        "word": "clist",
+        "count": 1
+      },
+      {
+        "word": "const",
+        "count": 1
+      },
+      {
+        "word": "couldn",
+        "count": 1
+      },
+      {
+        "word": "crontab",
+        "count": 1
+      },
+      {
+        "word": "ctermfg",
+        "count": 1
+      },
+      {
+        "word": "customlog",
+        "count": 1
+      },
+      {
+        "word": "cwjasonjohn",
+        "count": 1
+      },
+      {
+        "word": "darkblue",
+        "count": 1
+      },
+      {
+        "word": "debian",
+        "count": 1
+      },
+      {
+        "word": "delek",
+        "count": 1
+      },
+      {
+        "word": "dennis",
+        "count": 1
+      },
+      {
+        "word": "diagraphs",
+        "count": 1
+      },
+      {
+        "word": "dirs",
+        "count": 1
+      },
+      {
+        "word": "dobj",
+        "count": 1
+      },
+      {
+        "word": "doesn",
+        "count": 1
+      },
+      {
+        "word": "dowordcomplete",
+        "count": 1
+      },
+      {
+        "word": "dumpableobject",
+        "count": 1
+      },
+      {
+        "word": "dumputils",
+        "count": 1
+      },
+      {
+        "word": "dwestfalen",
+        "count": 1
+      },
+      {
+        "word": "ecover",
+        "count": 1
+      },
+      {
+        "word": "elflord",
+        "count": 1
+      },
+      {
+        "word": "emma",
+        "count": 1
+      },
+      {
+        "word": "etext",
+        "count": 1
+      },
+      {
+        "word": "filereadpre",
+        "count": 1
+      },
+      {
+        "word": "franz",
+        "count": 1
+      },
+      {
+        "word": "germany",
+        "count": 1
+      },
+      {
+        "word": "gqap",
+        "count": 1
+      },
+      {
+        "word": "guioptions",
+        "count": 1
+      }
+    ]
+  },
+  "vim-reference-guide": {
+    "unknown_words": 771,
+    "candidates": [
+      {
+        "word": "ctrl",
+        "count": 125
+      },
+      {
+        "word": "searchpattern",
+        "count": 28
+      },
+      {
+        "word": "viminfo",
+        "count": 21
+      },
+      {
+        "word": "stackoverflow",
+        "count": 20
+      },
+      {
+        "word": "nnoremap",
+        "count": 17
+      },
+      {
+        "word": "stackexchange",
+        "count": 16
+      },
+      {
+        "word": "autocomplete",
+        "count": 15
+      },
+      {
+        "word": "metacharacters",
+        "count": 15
+      },
+      {
+        "word": "proj",
+        "count": 11
+      },
+      {
+        "word": "doesn",
+        "count": 10
+      },
+      {
+        "word": "perl",
+        "count": 10
+      },
+      {
+        "word": "cheatsheet",
+        "count": 9
+      },
+      {
+        "word": "inoremap",
+        "count": 8
+      },
+      {
+        "word": "replacestring",
+        "count": 8
+      },
+      {
+        "word": "backreference",
+        "count": 7
+      },
+      {
+        "word": "filetype",
+        "count": 7
+      },
+      {
+        "word": "learnbyexample",
+        "count": 7
+      },
+      {
+        "word": "hlsearch",
+        "count": 6
+      },
+      {
+        "word": "https",
+        "count": 6
+      },
+      {
+        "word": "inoreabbrev",
+        "count": 6
+      },
+      {
+        "word": "tabm",
+        "count": 6
+      },
+      {
+        "word": "unindent",
+        "count": 6
+      },
+      {
+        "word": "abbbbbc",
+        "count": 5
+      },
+      {
+        "word": "abbc",
+        "count": 5
+      },
+      {
+        "word": "aren",
+        "count": 5
+      },
+      {
+        "word": "autocommands",
+        "count": 5
+      },
+      {
+        "word": "didn",
+        "count": 5
+      },
+      {
+        "word": "matchit",
+        "count": 5
+      },
+      {
+        "word": "metacharacter",
+        "count": 5
+      },
+      {
+        "word": "nomagic",
+        "count": 5
+      },
+      {
+        "word": "tabe",
+        "count": 5
+      },
+      {
+        "word": "xabbbcz",
+        "count": 5
+      },
+      {
+        "word": "abccc",
+        "count": 4
+      },
+      {
+        "word": "augroup",
+        "count": 4
+      },
+      {
+        "word": "backreferences",
+        "count": 4
+      },
+      {
+        "word": "backtick",
+        "count": 4
+      },
+      {
+        "word": "colorscheme",
+        "count": 4
+      },
+      {
+        "word": "ebook",
+        "count": 4
+      },
+      {
+        "word": "ebooks",
+        "count": 4
+      },
+      {
+        "word": "isodd",
+        "count": 4
+      },
+      {
+        "word": "lookarounds",
+        "count": 4
+      },
+      {
+        "word": "lookbehind",
+        "count": 4
+      },
+      {
+        "word": "noplugin",
+        "count": 4
+      },
+      {
+        "word": "readonly",
+        "count": 4
+      },
+      {
+        "word": "submatch",
+        "count": 4
+      },
+      {
+        "word": "whichwrap",
+        "count": 4
+      },
+      {
+        "word": "wouldn",
+        "count": 4
+      },
+      {
+        "word": "xnoremap",
+        "count": 4
+      },
+      {
+        "word": "abcd",
+        "count": 3
+      },
+      {
+        "word": "acknowledgements",
+        "count": 3
+      },
+      {
+        "word": "aeiou",
+        "count": 3
+      },
+      {
+        "word": "autocompletion",
+        "count": 3
+      },
+      {
+        "word": "bufdo",
+        "count": 3
+      },
+      {
+        "word": "bufnewfile",
+        "count": 3
+      },
+      {
+        "word": "bufwritepre",
+        "count": 3
+      },
+      {
+        "word": "cheatsheets",
+        "count": 3
+      },
+      {
+        "word": "customizations",
+        "count": 3
+      },
+      {
+        "word": "guioptions",
+        "count": 3
+      },
+      {
+        "word": "hasn",
+        "count": 3
+      },
+      {
+        "word": "incsearch",
+        "count": 3
+      },
+      {
+        "word": "learnvimscriptthehardway",
+        "count": 3
+      },
+      {
+        "word": "lookahead",
+        "count": 3
+      },
+      {
+        "word": "mksession",
+        "count": 3
+      },
+      {
+        "word": "multiline",
+        "count": 3
+      },
+      {
+        "word": "nohlsearch",
+        "count": 3
+      },
+      {
+        "word": "packadd",
+        "count": 3
+      },
+      {
+        "word": "perldo",
+        "count": 3
+      },
+      {
+        "word": "sessionoptions",
+        "count": 3
+      },
+      {
+        "word": "strftime",
+        "count": 3
+      },
+      {
+        "word": "abcc",
+        "count": 2
+      },
+      {
+        "word": "abcccccc",
+        "count": 2
+      },
+      {
+        "word": "autocompleted",
+        "count": 2
+      },
+      {
+        "word": "ce'hello",
+        "count": 2
+      },
+      {
+        "word": "codepoint",
+        "count": 2
+      },
+      {
+        "word": "cpoptions",
+        "count": 2
+      },
+      {
+        "word": "cthis",
+        "count": 2
+      },
+      {
+        "word": "direc",
+        "count": 2
+      },
+      {
+        "word": "eval",
+        "count": 2
+      },
+      {
+        "word": "fabricaxle",
+        "count": 2
+      },
+      {
+        "word": "fileformat",
+        "count": 2
+      },
+      {
+        "word": "filetypes",
+        "count": 2
+      },
+      {
+        "word": "guiw",
+        "count": 2
+      },
+      {
+        "word": "icet",
+        "count": 2
+      },
+      {
+        "word": "imap",
+        "count": 2
+      },
+      {
+        "word": "lookback",
+        "count": 2
+      },
+      {
+        "word": "lowercases",
+        "count": 2
+      },
+      {
+        "word": "mand",
+        "count": 2
+      },
+      {
+        "word": "mands",
+        "count": 2
+      },
+      {
+        "word": "mapleader",
+        "count": 2
+      },
+      {
+        "word": "matchpairs",
+        "count": 2
+      },
+      {
+        "word": "ment",
+        "count": 2
+      },
+      {
+        "word": "murphy",
+        "count": 2
+      },
+      {
+        "word": "nmap",
+        "count": 2
+      },
+      {
+        "word": "noexpandtab",
+        "count": 2
+      },
+      {
+        "word": "nowrapscan",
+        "count": 2
+      },
+      {
+        "word": "splitbelow",
+        "count": 2
+      },
+      {
+        "word": "splitright",
+        "count": 2
+      },
+      {
+        "word": "tabl",
+        "count": 2
+      },
+      {
+        "word": "tabn",
+        "count": 2
+      },
+      {
+        "word": "tabp",
+        "count": 2
+      },
+      {
+        "word": "tabr",
+        "count": 2
+      },
+      {
+        "word": "textwidth",
+        "count": 2
+      },
+      {
+        "word": "uryyb",
+        "count": 2
+      },
+      {
+        "word": "vabc",
+        "count": 2
+      },
+      {
+        "word": "vimtutor",
+        "count": 2
+      },
+      {
+        "word": "vspa",
+        "count": 2
+      },
+      {
+        "word": "vsplit",
+        "count": 2
+      },
+      {
+        "word": "abbre",
+        "count": 1
+      },
+      {
+        "word": "abcabcabc",
+        "count": 1
+      },
+      {
+        "word": "acter",
+        "count": 1
+      },
+      {
+        "word": "acters",
+        "count": 1
+      },
+      {
+        "word": "agarwal",
+        "count": 1
+      },
+      {
+        "word": "alnum",
+        "count": 1
+      },
+      {
+        "word": "amada",
+        "count": 1
+      },
+      {
+        "word": "andy",
+        "count": 1
+      },
+      {
+        "word": "appl",
+        "count": 1
+      },
+      {
+        "word": "applica",
+        "count": 1
+      },
+      {
+        "word": "appro",
+        "count": 1
+      },
+      {
+        "word": "aptl",
+        "count": 1
+      },
+      {
+        "word": "argu",
+        "count": 1
+      }
+    ]
+  }
+}

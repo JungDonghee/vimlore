@@ -10,6 +10,9 @@
 | count-matrix cases | 162 |
 | manifest rows (counted) | 64 (54) |
 | chapters / stages | 10 / 51 |
+| books / source lines | 10 / 78,502 |
+| book chunks / coverage | 732 / complete |
+| book audit | pending |
 | state matrix matched / total / open | 21,539 / 21,712 / 173 |
 | state open by field | undo 164, reg 10, regtype 8 |
 | built single file (raw) | 276,101 B |
@@ -22,3 +25,4 @@
 - Command/feature audit: `docs/VIM_COVERAGE.md`, `docs/VIM_ADVENTURES_COVERAGE.md`
 - Debugging: `npm run trace -- --case=m-1234` → `docs/DEBUGGING.md`
 - Browser QA: `npm run browser:qa` → `docs/BROWSER_QA.md` + `docs/browser/`
+- Books: `npm run books:build` → `docs/BOOKS_PIPELINE.md`; `npm run books:search -- ...`

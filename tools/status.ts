@@ -14,6 +14,7 @@ import { MAX_GZIP, MAX_RAW } from './bundle-budget.ts';
 import { makeCases } from './matrix-cases.ts';
 import { MANIFEST, countCases } from './command-manifest.ts';
 import { CHAPTERS } from '../src/content/chapters/index.ts';
+import { existsSync as exists, readFileSync as read } from 'node:fs';
 
 const oracle = (JSON.parse(readFileSync('tests/vim-expected.json', 'utf8')) as unknown[]).length;
 const matrix = makeCases().length;
@@ -27,6 +28,9 @@ const total = pick('cases'), matched = pick('matched'), open = pick('divergences
 const state = total && matched && open ? { matched: Number(matched), total: Number(total), open: Number(open) } : null;
 const fields = [...report.matchAll(/^\| (undo|reg|regtype) \| (\d+) \|$/gm)].map((x) => `${x[1]} ${x[2]}`);
 const raw = existsSync('dist/vimlore.html') ? statSync('dist/vimlore.html').size : null;
+const booksMeta = exists('books-index/books.json') ? JSON.parse(read('books-index/books.json', 'utf8')) as { lines: number; headings: number }[] : null;
+const coverage = exists('books-index/coverage.json') ? JSON.parse(read('books-index/coverage.json', 'utf8')) as { complete: boolean; chunks: number } : null;
+const audit = exists('books-index/agent-audit.json') ? JSON.parse(read('books-index/agent-audit.json', 'utf8')) as { headings: unknown[]; problems: unknown[]; rejected: unknown[] } : null;
 
 const lines = [
   '# STATUS — generated',
@@ -43,6 +47,9 @@ const lines = [
   `| count-matrix cases | ${count} |`,
   `| manifest rows (counted) | ${MANIFEST.length} (${countedRows}) |`,
   `| chapters / stages | ${CHAPTERS.length} / ${stages} |`,
+  booksMeta ? `| books / source lines | ${booksMeta.length} / ${booksMeta.reduce((n, b) => n + b.lines, 0).toLocaleString()} |` : '| books | corpus not built |',
+  coverage ? `| book chunks / coverage | ${coverage.chunks} / ${coverage.complete ? 'complete' : 'INCOMPLETE'} |` : '',
+  audit ? `| audited book headings / problems / rejected | ${audit.headings.length} / ${audit.problems.length} / ${audit.rejected.length} |` : '| book audit | pending |',
   state ? `| state matrix matched / total / open | ${state.matched.toLocaleString()} / ${state.total.toLocaleString()} / ${state.open} |` : '| state matrix | report missing |',
   fields.length ? `| state open by field | ${fields.join(', ')} |` : '',
   raw === null ? '| built single file | not built |' : `| built single file (raw) | ${raw.toLocaleString()} B |`,
@@ -57,6 +64,7 @@ const lines = [
   '- Command/feature audit: `docs/VIM_COVERAGE.md`, `docs/VIM_ADVENTURES_COVERAGE.md`',
   '- Debugging: `npm run trace -- --case=m-1234` → `docs/DEBUGGING.md`',
   '- Browser QA: `npm run browser:qa` → `docs/BROWSER_QA.md` + `docs/browser/`',
+  '- Books: `npm run books:build` → `docs/BOOKS_PIPELINE.md`; `npm run books:search -- ...`',
   '',
 ].filter(Boolean).join('\n');
 

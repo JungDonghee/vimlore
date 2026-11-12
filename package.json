@@ -33,7 +33,14 @@
     "status:check": "node --experimental-strip-types tools/status.ts --check",
     "browser:qa": "node tools/browser-qa.mjs",
     "browser:setup": "bash tools/browser-setup.sh",
-    "browser:audit": "node tools/browser-audit.mjs"
+    "browser:audit": "node tools/browser-audit.mjs",
+    "books:build": "python3 tools/books/build_corpus.py",
+    "books:search": "python3 tools/books/context.py search",
+    "books:read": "python3 tools/books/context.py read",
+    "books:toc": "python3 tools/books/context.py toc",
+    "books:stats": "python3 tools/books/context.py stats",
+    "books:merge": "python3 tools/books/merge_audit.py",
+    "books:spellcheck": "python3 tools/books/spellcheck.py"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

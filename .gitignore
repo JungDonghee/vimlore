@@ -9,4 +9,9 @@ books-text/
 .secrets/
 *.pem
 .env
-books/
+/books/
+
+# derived book full text / search index (local; copyright)
+books-clean/
+books-index/chunks.jsonl
+books-index/index.sqlite

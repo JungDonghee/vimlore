@@ -1,0 +1,219 @@
+[
+  {
+    "id": "5-years-of-vim-part-01",
+    "book": "5-years-of-vim",
+    "start": 1,
+    "end": 1418,
+    "sha256": "a367d4e9ae4bda57a790f319f8b1e7f6f6d8465615669b70b0a1ef7b9529851d"
+  },
+  {
+    "id": "gourmet-vim-part-01",
+    "book": "gourmet-vim",
+    "start": 1,
+    "end": 3000,
+    "sha256": "a891c7ccc2e45b89be4a69d3715b8e99e5c9b97446614760bb48d1fcaed8f046"
+  },
+  {
+    "id": "gourmet-vim-part-02",
+    "book": "gourmet-vim",
+    "start": 3001,
+    "end": 3087,
+    "sha256": "29062cb5ce0e9ec5590326dae325002c6a975d279fb0c0613fe3484575bc6788"
+  },
+  {
+    "id": "learning-vi-vim-part-01",
+    "book": "learning-vi-vim",
+    "start": 1,
+    "end": 3000,
+    "sha256": "4860becc80b0512b5119b1da0f840046ad95fe76b2607fe5dbf3fbecd015826c"
+  },
+  {
+    "id": "learning-vi-vim-part-02",
+    "book": "learning-vi-vim",
+    "start": 3001,
+    "end": 6000,
+    "sha256": "53157a9b8ea61190189ab07524b5e0ba50205a813870a506801863cbfd59ba15"
+  },
+  {
+    "id": "learning-vi-vim-part-03",
+    "book": "learning-vi-vim",
+    "start": 6001,
+    "end": 9000,
+    "sha256": "bb1611874fa455133ca631881490d46c1403f5e2ec66e4a07e78e79a8ab25482"
+  },
+  {
+    "id": "learning-vi-vim-part-04",
+    "book": "learning-vi-vim",
+    "start": 9001,
+    "end": 12000,
+    "sha256": "05120e5297796303b2bf245f24386d5f67b2a35dcc1eb36a2cddc32c7c7e7bea"
+  },
+  {
+    "id": "learning-vi-vim-part-05",
+    "book": "learning-vi-vim",
+    "start": 12001,
+    "end": 15000,
+    "sha256": "7d200185872c473628f777e235ec306967404cd7ddd919a0985d71feb0d05d4a"
+  },
+  {
+    "id": "learning-vi-vim-part-06",
+    "book": "learning-vi-vim",
+    "start": 15001,
+    "end": 18000,
+    "sha256": "d68104a485d17f260e7dc1b7516bb2f5d04d89d43bb76d13bb1285f1e9f4b0df"
+  },
+  {
+    "id": "learning-vi-vim-part-07",
+    "book": "learning-vi-vim",
+    "start": 18001,
+    "end": 21000,
+    "sha256": "3e647cd39e002f9894fa464f9beed148ec6780200436ba2b2bd86d4f380a5e8b"
+  },
+  {
+    "id": "learning-vi-vim-part-08",
+    "book": "learning-vi-vim",
+    "start": 21001,
+    "end": 24000,
+    "sha256": "d5e221e9c690ffe7fe9594dbbbfa6a7cacd3b289b912bf08eb7c18f1e126ac4e"
+  },
+  {
+    "id": "learning-vi-vim-part-09",
+    "book": "learning-vi-vim",
+    "start": 24001,
+    "end": 27000,
+    "sha256": "26ca186e9f47d4ade3e9963d1a3b88584203f6763bad2aee9b555c6dce69a02c"
+  },
+  {
+    "id": "learning-vi-vim-part-10",
+    "book": "learning-vi-vim",
+    "start": 27001,
+    "end": 30000,
+    "sha256": "c29b56c86741db412326a3e3a40d82e5a6f675bd9f8f958d3248e9742754ed54"
+  },
+  {
+    "id": "learning-vi-vim-part-11",
+    "book": "learning-vi-vim",
+    "start": 30001,
+    "end": 30957,
+    "sha256": "1428cb660e7c530388ad35541d0c78c50bfd552baced0cc48b8fba18c5b67b00"
+  },
+  {
+    "id": "modern-vim-part-01",
+    "book": "modern-vim",
+    "start": 1,
+    "end": 3000,
+    "sha256": "7f7178cbc1c0eb05ac0bc4abb996def356ab3a1a1bbba747ef34a68533accacf"
+  },
+  {
+    "id": "modern-vim-part-02",
+    "book": "modern-vim",
+    "start": 3001,
+    "end": 6000,
+    "sha256": "a8ab3f4dd11228684c7d4d165980b413728697eb61c16dbc1356839794c1d3de"
+  },
+  {
+    "id": "modern-vim-part-03",
+    "book": "modern-vim",
+    "start": 6001,
+    "end": 6882,
+    "sha256": "50a1a986566dc153daf1d60cde0125732d0b6a18fab85563273ce95c736af132"
+  },
+  {
+    "id": "neovim-for-beginners-part-01",
+    "book": "neovim-for-beginners",
+    "start": 1,
+    "end": 2247,
+    "sha256": "ad289457163f186e26f43b5522cf35da1895c5c0a59b51cf18a1aaeb89618b95"
+  },
+  {
+    "id": "practical-vim-part-01",
+    "book": "practical-vim",
+    "start": 1,
+    "end": 3000,
+    "sha256": "9c18842f422cbb21a5e5ea057361fe78e80f7b5be1318adc65b0ff23e6f42b00"
+  },
+  {
+    "id": "practical-vim-part-02",
+    "book": "practical-vim",
+    "start": 3001,
+    "end": 6000,
+    "sha256": "b674df6da90f0115c3fc20fb0d48881658cdb66eecfab74f17c94fe97f6d68ee"
+  },
+  {
+    "id": "practical-vim-part-03",
+    "book": "practical-vim",
+    "start": 6001,
+    "end": 9000,
+    "sha256": "1e40714228fd1000ed6fb2aed046f4ab09af534c68e00c2689d720a90bce72a4"
+  },
+  {
+    "id": "practical-vim-part-04",
+    "book": "practical-vim",
+    "start": 9001,
+    "end": 11976,
+    "sha256": "c74543c37df6afa3127f70040287793268aec64483117b711a6dc54a62ca3ea5"
+  },
+  {
+    "id": "pro-vim-part-01",
+    "book": "pro-vim",
+    "start": 1,
+    "end": 3000,
+    "sha256": "ad1f75b62042c23fb3b2e31602b24cc85fac0442be5d01a04d0dcd86138e33a5"
+  },
+  {
+    "id": "pro-vim-part-02",
+    "book": "pro-vim",
+    "start": 3001,
+    "end": 6000,
+    "sha256": "8fff9a98a2ae04263a6a124db276d15af32507da432be8de4ecd620c09f7680d"
+  },
+  {
+    "id": "pro-vim-part-03",
+    "book": "pro-vim",
+    "start": 6001,
+    "end": 9000,
+    "sha256": "fa16b7043f8d9cdfe2c60d31e84ee0ab1debdad6faa1d32554d22553196f7dc7"
+  },
+  {
+    "id": "pro-vim-part-04",
+    "book": "pro-vim",
+    "start": 9001,
+    "end": 12000,
+    "sha256": "9f7c27c83e6f182d4f8295478f4a37647e21e8df75b684df9aa1005bb140c39b"
+  },
+  {
+    "id": "pro-vim-part-05",
+    "book": "pro-vim",
+    "start": 12001,
+    "end": 14641,
+    "sha256": "24647a23762184d07aafe625ed72e43834b354fa2c1e260d14707530097c47fb"
+  },
+  {
+    "id": "use-vim-like-a-pro-part-01",
+    "book": "use-vim-like-a-pro",
+    "start": 1,
+    "end": 1109,
+    "sha256": "7ecbb87cea066012b241563b658960e1b4d651208a62dd6c7ba9ae1e674ba66e"
+  },
+  {
+    "id": "vim-101-hacks-part-01",
+    "book": "vim-101-hacks",
+    "start": 1,
+    "end": 3000,
+    "sha256": "0c31e2f496b328b7400a33c575948a27f726ba4c176c69bc15ac75ab86cb76c7"
+  },
+  {
+    "id": "vim-101-hacks-part-02",
+    "book": "vim-101-hacks",
+    "start": 3001,
+    "end": 3362,
+    "sha256": "6f90f2301aa24f53683e7c0e40b3c2ee4aa889fc27d13a8ee4e9c1088c995800"
+  },
+  {
+    "id": "vim-reference-guide-part-01",
+    "book": "vim-reference-guide",
+    "start": 1,
+    "end": 2823,
+    "sha256": "519c154aadc759a29bd781f5eb8487e089a614274d058d6a52c130d7a5110198"
+  }
+]

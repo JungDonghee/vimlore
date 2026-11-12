@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "5-years-of-vim",
+    "title": "5 Years of Vim",
+    "author": "Claudio Ribeiro",
+    "file": "books-clean/5-years-of-vim.txt",
+    "source": "books-text/5-years-of-vim.txt",
+    "lines": 1418,
+    "chars": 67582,
+    "sha256": "a367d4e9ae4bda57a790f319f8b1e7f6f6d8465615669b70b0a1ef7b9529851d",
+    "headings": 293,
+    "needs_review": true
+  },
+  {
+    "slug": "gourmet-vim",
+    "title": "Gourmet Vim Cookbook",
+    "author": "Igor Irianto",
+    "file": "books-clean/gourmet-vim.txt",
+    "source": "books-text/gourmet-vim.txt",
+    "lines": 3087,
+    "chars": 149197,
+    "sha256": "91ce2d23dd4e64b61a0622d824241deb558413a2659b310051689d375a259bea",
+    "headings": 404,
+    "needs_review": true
+  },
+  {
+    "slug": "learning-vi-vim",
+    "title": "Learning the vi and Vim Editors",
+    "author": "Arnold Robbins et al.",
+    "file": "books-clean/learning-vi-vim.txt",
+    "source": "books-text/learning-vi-vim.txt",
+    "lines": 30957,
+    "chars": 962981,
+    "sha256": "dea4a8512aa74da15a1d7d20ac03e93b442071b50f6f9c521f0bdc991fa92e06",
+    "headings": 3455,
+    "needs_review": true
+  },
+  {
+    "slug": "modern-vim",
+    "title": "Modern Vim",
+    "author": "Drew Neil",
+    "file": "books-clean/modern-vim.txt",
+    "source": "books-text/modern-vim.txt",
+    "lines": 6882,
+    "chars": 264109,
+    "sha256": "e7c7f3e8db25315095446001e820a79aefc429ecbb0ef3076706a69a1c1b7c55",
+    "headings": 439,
+    "needs_review": true
+  },
+  {
+    "slug": "neovim-for-beginners",
+    "title": "Neovim for Beginners",
+    "author": "unknown",
+    "file": "books-clean/neovim-for-beginners.txt",
+    "source": "books-text/neovim-for-beginners.txt",
+    "lines": 2247,
+    "chars": 125793,
+    "sha256": "ad289457163f186e26f43b5522cf35da1895c5c0a59b51cf18a1aaeb89618b95",
+    "headings": 123,
+    "needs_review": true
+  },
+  {
+    "slug": "practical-vim",
+    "title": "Practical Vim",
+    "author": "Drew Neil",
+    "file": "books-clean/practical-vim.txt",
+    "source": "books-text/practical-vim.txt",
+    "lines": 11976,
+    "chars": 542331,
+    "sha256": "fd002a8ab8ede824f5087c2f69ba8645a006d075582956dcac990913f6daa850",
+    "headings": 1330,
+    "needs_review": true
+  },
+  {
+    "slug": "pro-vim",
+    "title": "Pro Vim",
+    "author": "Mark McDonnell",
+    "file": "books-clean/pro-vim.txt",
+    "source": "books-text/pro-vim.txt",
+    "lines": 14641,
+    "chars": 822133,
+    "sha256": "93b3424a48a427719d38ae5b4bc5a6bd1e86a4c50e92f60aa200cd5f0e86afdc",
+    "headings": 1587,
+    "needs_review": true
+  },
+  {
+    "slug": "use-vim-like-a-pro",
+    "title": "Use Vim Like A Pro",
+    "author": "Tim Ottinger",
+    "file": "books-clean/use-vim-like-a-pro.txt",
+    "source": "books-text/use-vim-like-a-pro.txt",
+    "lines": 1109,
+    "chars": 69203,
+    "sha256": "7ecbb87cea066012b241563b658960e1b4d651208a62dd6c7ba9ae1e674ba66e",
+    "headings": 124,
+    "needs_review": true
+  },
+  {
+    "slug": "vim-101-hacks",
+    "title": "Vim 101 Hacks",
+    "author": "Ramesh Natarajan",
+    "file": "books-clean/vim-101-hacks.txt",
+    "source": "books-text/vim-101-hacks.txt",
+    "lines": 3362,
+    "chars": 130220,
+    "sha256": "f104d4155ff1148f87a717485f7c440ba54447beb3a010bc2df571f012bd933a",
+    "headings": 530,
+    "needs_review": true
+  },
+  {
+    "slug": "vim-reference-guide",
+    "title": "Vim Reference Guide",
+    "author": "unknown",
+    "file": "books-clean/vim-reference-guide.txt",
+    "source": "books-text/vim-reference-guide.txt",
+    "lines": 2823,
+    "chars": 156740,
+    "sha256": "519c154aadc759a29bd781f5eb8487e089a614274d058d6a52c130d7a5110198",
+    "headings": 195,
+    "needs_review": true
+  }
+]
