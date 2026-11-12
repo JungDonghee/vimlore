@@ -40,7 +40,11 @@
     "books:toc": "python3 tools/books/context.py toc",
     "books:stats": "python3 tools/books/context.py stats",
     "books:merge": "python3 tools/books/merge_audit.py",
-    "books:spellcheck": "python3 tools/books/spellcheck.py"
+    "books:spellcheck": "python3 tools/books/spellcheck.py",
+    "books:priority": "python3 tools/books/priority_structure.py",
+    "books:priority:merge": "python3 tools/books/priority_merge.py",
+    "books:priority:read": "python3 tools/books/priority.py",
+    "books:priority:map": "node --experimental-strip-types tools/books/priority_map.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

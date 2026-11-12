@@ -1,0 +1,201 @@
+{
+  "id": "practical-vim-ch10",
+  "book": "practical-vim",
+  "chapter": 10,
+  "title": "Copy and Paste",
+  "start": 5980,
+  "end": 6630,
+  "summary": "Chapter 10 explains Vim's copy-and-paste model, where delete cuts into registers, yank copies, and put pastes. It walks through transposing characters with xp, transposing lines with ddp, and duplicating lines with yyp, then shows the \"clobbered yank\" pitfall in which diw overwrites the unnamed register. Tip 61 catalogues the register types: unnamed (\"\"), yank (\"0), named (\"a-\"z), black hole (\"_), system clipboard (\"+) and selection (\"*), plus the expression (\"=) and read-only registers. Tips 62-64 cover replacing a Visual selection with a register (and its content-swapping side effect), line-wise versus character-wise put behavior with gP and <C-r>{register}, and avoiding autoindent corruption from the system paste command by using the 'paste' and 'pastetoggle' options.",
+  "commands": [
+    {
+      "keys": "xp",
+      "meaning": "Cut the character under the cursor and put it after the cursor, transposing the next two characters",
+      "line": 6024,
+      "evidence": "Taken together, the xp commands can be considered as “Transpose the next two characters.”"
+    },
+    {
+      "keys": "ddp",
+      "meaning": "Cut the current line and put it below its successor, transposing the order of two lines",
+      "line": 6056,
+      "evidence": "The ddp sequence could be considered to stand for “Transpose the order of this line and its successor.”"
+    },
+    {
+      "keys": "yyp",
+      "meaning": "Yank the current line and put it below itself, duplicating the line as a template",
+      "line": 6078,
+      "evidence": "Note the similarities between these two sequences, ddp and yyp. The first does a line-wise cut and paste, which effectively transposes the order of two lines. The second sequence does a line-wise copy and paste, which effectively duplicates a line."
+    },
+    {
+      "keys": "yiw",
+      "meaning": "Yank the current word into the unnamed register",
+      "line": 6121,
+      "evidence": "To begin with, our cursor is already on the word we want to copy, so we can get it into the unnamed register by typing yiw."
+    },
+    {
+      "keys": "diw",
+      "meaning": "Delete (cut) the current word, which also overwrites the unnamed register",
+      "line": 6123,
+      "evidence": "Next we move our cursor to the place where we want to paste our collection, but before we can put it there we’ll have to clear a space for it. So we run diw to delete the word somethingInTheWay."
+    },
+    {
+      "keys": "P",
+      "meaning": "Put the register contents in front of the cursor",
+      "line": 6125,
+      "evidence": "Now we can hit the P key to paste the contents of our unnamed register in front of the cursor. But instead of pasting the word collection, which we yanked earlier, we get the word somethingInTheWay. What’s going on?"
+    },
+    {
+      "keys": "\"ayiw",
+      "meaning": "Yank the current word into named register a",
+      "line": 6155,
+      "evidence": "For example, if we wanted to yank the current word into register a, we could run \"ayiw. Or if we wanted to cut the current line into register b, we could run \"bdd. Then we could paste the word from register a by typing \"ap, or we could paste the line from register b by typing \"bp."
+    },
+    {
+      "keys": "\"0P",
+      "meaning": "Put from the yank register, which a delete does not overwrite",
+      "line": 6203,
+      "evidence": "The diw command still overwrites the unnamed register, but it leaves the yank register untouched. We can safely paste from the yank register by pressing \"0P, and Vim gives us the text that we want."
+    },
+    {
+      "keys": "\"_d{motion}",
+      "meaning": "Delete text into the black hole register, copying it nowhere",
+      "line": 6253,
+      "evidence": "The black hole register is a place from which nothing returns. It’s addressed by the underscore symbol (see quote_ⓘ). If we run the command \"_d{motion}, then Vim deletes the specified text without saving a copy of it. This can be useful if we want to delete text without overwriting the contents of the unnamed register."
+    },
+    {
+      "keys": "\"+p",
+      "meaning": "Paste the contents of the system clipboard (plus) register",
+      "line": 6289,
+      "evidence": "If we use the cut or copy command to capture text in an external application, then we can paste it inside Vim using \"+p command (or <C-r>+ from the Insert mode). Conversely, if we prefix Vim’s yank or delete commands with \"+, the specified text will be captured in the system clipboard. That means we can easily paste it inside other applications."
+    },
+    {
+      "keys": "p",
+      "meaning": "Used from Visual mode, replace the selection with the register contents (and swap the old selection into the register)",
+      "line": 6347,
+      "evidence": "When we use the p command in Visual mode, Vim replaces the selection with the contents of the specified register (see v_pⓘ). We can exploit this feature to solve our problem from Oops! I Clobbered My Yank:"
+    },
+    {
+      "keys": "<C-r>{register}",
+      "meaning": "Insert a register's contents from Insert mode, always in front of the cursor",
+      "line": 6465,
+      "evidence": "I don’t like having to think about whether a character-wise region of text needs to go in front of the cursor or after it. For that reason, I sometimes prefer to paste character-wise regions of text from Insert mode using the <C-r>{register} mapping rather than using the Normal mode p and P commands. Using this technique, the text from the register is always inserted in front of the cursor position, just as though we were typing it in Insert mode."
+    },
+    {
+      "keys": "gP",
+      "meaning": "Put a line-wise register above the current line and leave the cursor at the end of the pasted text",
+      "line": 6495,
+      "evidence": "It’s worth noting that Vim also provides gp and gP commands. These also put the text before or after the current line, but they leave the cursor positioned at the end of the pasted text instead of at the beginning. The gP command is especially useful when duplicating a range of lines, as demonstrated here:"
+    },
+    {
+      "keys": ":set paste!",
+      "meaning": "Toggle the 'paste' option (used to switch it off again after pasting)",
+      "line": 6615,
+      "evidence": "When we’re finished using the system paste command, we should disable the ‘paste’ option again. That means switching back to Normal mode and then running the Ex command :set paste!. Don’t you think it would be handy if there were a way of toggling this option without leaving Insert mode?"
+    },
+    {
+      "keys": ":set pastetoggle=<f5>",
+      "meaning": "Assign <f5> to toggle the 'paste' option on and off",
+      "line": 6619,
+      "evidence": "=> :set pastetoggle=<f5>"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Delete, yank, and put terminology",
+      "line": 6141,
+      "evidence": "Vim’s delete command is equivalent to the standard cut operation. That is, it copies the specified text into a register and then removes it from the document. Understanding this is key to avoiding the common pitfall outlined in Oops! I Clobbered My Yank."
+    },
+    {
+      "name": "The unnamed register",
+      "line": 6161,
+      "evidence": "If we don’t specify which register we want to interact with, then Vim will use the unnamed register, which is addressed by the \" symbol (see quote_quoteⓘ). To address this register explicitly, we have to use two double quote marks: for example, \"\"p, which is effectively equivalent to p by itself."
+    },
+    {
+      "name": "The yank register",
+      "line": 6171,
+      "evidence": "When we use the y{motion} command, the specified text is copied not only into the unnamed register but also into the yank register, which is addressed by the 0 symbol (see quote0ⓘ)."
+    },
+    {
+      "name": "The named registers",
+      "line": 6217,
+      "evidence": "Vim has one named register for each letter of the alphabet (see quote_alphaⓘ). That means that we can cut (\"ad{motion}), copy (\"ay{motion}), or paste (\"ap) up to twenty-six pieces of text."
+    },
+    {
+      "name": "The black hole register",
+      "line": 6253,
+      "evidence": "The black hole register is a place from which nothing returns. It’s addressed by the underscore symbol (see quote_ⓘ). If we run the command \"_d{motion}, then Vim deletes the specified text without saving a copy of it. This can be useful if we want to delete text without overwriting the contents of the unnamed register."
+    },
+    {
+      "name": "The system clipboard (plus) register",
+      "line": 6287,
+      "evidence": "Vim’s plus register references the system clipboard and is addressed by the + symbol (see quote+ⓘ)."
+    },
+    {
+      "name": "The selection (star) register and the X11 primary clipboard",
+      "line": 6291,
+      "evidence": "The X11 windowing system has a second kind of clipboard called the primary. This represents the most recently selected text, and we can use the middle mouse button (if we have one) to paste from it. Vim’s quotestar register maps to the primary clipboard and is addressed by the * symbol (quotestarⓘ)."
+    },
+    {
+      "name": "The expression register",
+      "line": 6309,
+      "evidence": "Vim’s registers can be thought of simply as containers that hold a block of text. The expression register, referenced by the = symbol (quote=ⓘ), is an exception. When we fetch the contents of the expression register, Vim drops into Command-Line mode, showing an = prompt. We can enter a Vim script expression and then press <CR> to execute it. If the expression returns a string (or a value that can be easily coerced into a string), then Vim uses it."
+    },
+    {
+      "name": "Read-only registers",
+      "line": 6315,
+      "evidence": "We can set the contents of the named, unnamed, and yank registers explicitly using the delete and yank commands. In addition, Vim provides a handful of registers whose values are set implicitly. These are known collectively as the read-only registers (quote.ⓘ). The following table summarizes them:"
+    },
+    {
+      "name": "Visual put swaps text with the register",
+      "line": 6383,
+      "evidence": "Think of it this way: the visual selection in the document swaps places with the text in the register. Is it a feature? Is it a bug? You decide!"
+    },
+    {
+      "name": "Line-wise vs. character-wise registers",
+      "line": 6447,
+      "evidence": "Whether the p command puts the text from the register after the current character or after the current line depends on how the specified register was set. A line-wise yank or delete operation (such as dd, yy, or dap) creates a line-wise register, whereas a character-wise yank or delete (such as x, diw, or das) creates a character-wise register. In general, the outcome of using the p command is fairly intuitive (see linewise-registerⓘ for more details)."
+    },
+    {
+      "name": "The 'paste' option for pasting in a terminal",
+      "line": 6613,
+      "evidence": "GVim is able to discern when text is pasted from the clipboard and adjust its behavior accordingly, but when Vim runs inside a terminal this information is not available. The ‘paste’ option allows us to manually warn Vim that we’re about to use the system paste command. When the ‘paste’ option is enabled, Vim turns off all Insert mode mappings and abbreviations and resets a host of options, including ‘autoindent’ (look up 'paste'ⓘ for the full list). That allows us to safely paste from the system clipboard with no surprises."
+    }
+  ],
+  "problems": [
+    {
+      "line": 5993,
+      "kind": "missing",
+      "evidence": "Tip 60Delete, Yank, and Put with Vim’s Unnamed Register",
+      "note": "No separator between the tip number and the tip title: \"Tip 60Delete, ...\". The same collision recurs at 6147 (\"Tip 61Grok\"), 6343 (\"Tip 62Replace\"), 6435 (\"Tip 63Paste\"), 6553 (\"Tip 64Interact\") and inside the cross-reference \"Tip 17Insert Unusual Characters by Character Code\" at 6589, so every tip heading in the chapter is affected."
+    },
+    {
+      "line": 6005,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Table header cells are concatenated ('Keystrokes' + 'Buffer Contents') and every cell occupies its own paragraph, so keystroke cells cannot be paired reliably with the buffer snapshots below them. The same flattening recurs at 6030, 6062, 6095, 6177, 6221, 6257, 6293, 6349, 6389, 6469, 6497, and at \"RegisterContents\" (6317)."
+    },
+    {
+      "line": 6143,
+      "kind": "garbled",
+      "evidence": "You might be wondering what Vim’s equivalent is for really deleting text—that is, how can you remove text from the document and not copy it into any registers? Vim’s answer is a special register called the black hole, from which nothing returns. The black hole register is addressed by the _ symbol (see quote_ⓘ), so \"_d{motion} performs a true deletion.",
+      "note": "Footnote/link text leaks into the prose as \"quote_ⓘ\" instead of a footnote marker, and the same leak recurs throughout: quote_quoteⓘ (6161), quote0ⓘ (6171), quote_alphaⓘ (6217), quote_ⓘ (6253), quote+ⓘ (6287), quotestarⓘ (6291), quote=ⓘ (6309), quote.ⓘ (6315), quote/ⓘ (6339), v_pⓘ (6347), pⓘ (6441), linewise-registerⓘ (6447), 'paste'ⓘ (6613) and 'pastetoggle'ⓘ (6617). The marker character survives but the referenced anchor name is rendered as visible text."
+    },
+    {
+      "line": 6091,
+      "kind": "typo",
+      "evidence": "Table 11, Copy and Paste—First Attempt shows a first attempt.",
+      "note": "Missing comma after the table title: the sentence reads \"Table 11, Copy and Paste—First Attempt shows a first attempt.\" while the caption at 6093 is \"Table 11. Copy and Paste—First Attempt\"; the clause needs a closing comma (or the comma after 'Table 11' should be a period)."
+    },
+    {
+      "line": 6157,
+      "kind": "typo",
+      "evidence": "In addition to the Normal mode commands, Vim also provides Ex commands for delete, yank, and put operations. We could cut the current line into register c by running :delete c, and then we could paste it below the current line with the :put c command. These may seem verbose in comparison with the Normal mode commands, but they’re useful in combination with other Ex commands and in Vim scripts. For example, Tip 100, shows how :yank can be used with the :global command.",
+      "note": "Stray comma inserted before the verb after a cross-reference: \"For example, Tip 100, shows how :yank can be used...\". The same intrusive comma after a Tip reference recurs at 6127 (\"for a discussion).\"), 6249 (\"Skip ahead to Tip 100, to see\"), 6431 (\"Refer to Tip 54, for more information.\") and 6467 (\"see Tip 15, for more details\")."
+    },
+    {
+      "line": 6597,
+      "kind": "garbled",
+      "evidence": "[1,2,3,4,5,6,7,8,9,10].each do |n|",
+      "note": "The fizz.rb block introduced at 6595 as the \"strange result\" of pasting with 'autoindent' enabled is printed with essentially the same indentation as the original listing at 6571-6583 (a diff shows only the final \"end\" gaining one space), so the cascading rightward drift the prose describes at 6611 is not visible in the extracted text; leading whitespace in these code blocks appears collapsed/normalized."
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "id": "modern-vim-ch03",
+  "book": "modern-vim",
+  "chapter": 3,
+  "title": "Opening Files",
+  "start": 1503,
+  "end": 2299,
+  "summary": "Chapter 3 surveys ways to open files in Vim with fewer keystrokes. It first presents Junegunn Choi's fzf fuzzy finder: installation, the :FZF command and a <C-p> mapping, the picker's navigation keys, filtering noise out of the candidate list via FZF_DEFAULT_COMMAND, and reusing fzf for other sources such as buffers and command history. It then introduces Tim Pope's Projectionist plugin, whose .projections.json configuration defines :E/:S/:V/:T navigation commands by file type, and closes with the :A alternate-file command for flipping between related files such as a model and its unit test.",
+  "commands": [
+    {
+      "keys": ":edit {filepath}",
+      "meaning": "Open any readable file by filepath in the current window; the built-in baseline the chapter compares against.",
+      "line": 1517,
+      "evidence": "You can rely on Vim’s built-in :edit {filepath} command for opening any file on your file system, but specifying a filepath can require a lot of typing."
+    },
+    {
+      "keys": ":FZF",
+      "meaning": "Invoke the fzf fuzzy-finder picker from Vim.",
+      "line": 1550,
+      "evidence": "=> :FZF"
+    },
+    {
+      "keys": "nnoremap <C-p> :<C-u>FZF<CR>",
+      "meaning": "Normal-mode mapping that fires :FZF with <C-p>; <C-u> clears the command line first.",
+      "line": 1559,
+      "evidence": "nnoremap <C-p> :<C-u>FZF<CR>"
+    },
+    {
+      "keys": ":vsplit",
+      "meaning": "Open a file in a vertical split (abbreviated :vs).",
+      "line": 1610,
+      "evidence": "=> :vsplit app/templates/components/table-of-contents.hbs"
+    },
+    {
+      "keys": ":e a<Tab>com<Tab>t<Tab>",
+      "meaning": "Tab-complete path segment by segment instead of typing the whole filepath.",
+      "line": 1615,
+      "evidence": "=> :e a<Tab>com<Tab>t<Tab>"
+    },
+    {
+      "keys": "<C-k>",
+      "meaning": "Select next item from the fzf match list; the table pairs it with <C-j> for previous.",
+      "line": 1735,
+      "evidence": "<C-j>"
+    },
+    {
+      "keys": "<CR>",
+      "meaning": "Open the selected fzf result in the current window (also submits the query).",
+      "line": 1743,
+      "evidence": "<CR>"
+    },
+    {
+      "keys": "<C-v>",
+      "meaning": "Open the selected fzf result in a vertical split.",
+      "line": 1751,
+      "evidence": "<C-v>"
+    },
+    {
+      "keys": "<C-t>",
+      "meaning": "Open the selected fzf result in a new tab page.",
+      "line": 1755,
+      "evidence": "<C-t>"
+    },
+    {
+      "keys": ":buffer {bufname}",
+      "meaning": "Switch to an open buffer by name; the built-in command the tip wants to wrap with a fuzzy finder.",
+      "line": 1833,
+      "evidence": "Normally you’d do that using the built-in :buffer {bufname} command (:help :buffer)."
+    },
+    {
+      "keys": "<Up>/<Down>",
+      "meaning": "Scroll through command-line history after entering Command-Line mode with :.",
+      "line": 1837,
+      "evidence": "Normally you’d do that by pressing : to switch to Command-Line mode, then using <Up>/<Down> to scroll through your history until you find the command you want to repeat (:help c_Up)."
+    },
+    {
+      "keys": "vim -O",
+      "meaning": "Start Vim with each named file in its own window (as in vim -O blog-{classic,modular}/.projections.json).",
+      "line": 1963,
+      "evidence": "=> $ vim -O blog-{classic,modular}/.projections.json"
+    },
+    {
+      "keys": "<C-w>w",
+      "meaning": "Cycle between the open windows.",
+      "line": 1965,
+      "evidence": "You can switch between the windows using <C-w>w."
+    },
+    {
+      "keys": ":Emodel comment",
+      "meaning": "Projectionist navigation command that opens the model file named by argument, resolved from the active project's configuration.",
+      "line": 1989,
+      "evidence": "=> :Emodel comment"
+    },
+    {
+      "keys": ":A",
+      "meaning": "Follow the alternate link defined for the current file (e.g. model to unit test).",
+      "line": 2256,
+      "evidence": "=> :A"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Fuzzy path matching",
+      "line": 1623,
+      "evidence": "Opening Files by Fuzzy-Matching Their Filepath"
+    },
+    {
+      "name": "Fuzzy match ordering",
+      "line": 1652,
+      "evidence": "Those letters have to appear in that order, but they don’t have to be adjacent to each other."
+    },
+    {
+      "name": "Ranking algorithm",
+      "line": 1655,
+      "evidence": "As well as filtering the list of matches, the fuzzy finder also sorts the results using a ranking algorithm."
+    },
+    {
+      "name": "Version-controlled file listing",
+      "line": 1816,
+      "evidence": "One thing to watch out for is that git ls-files only lists files that Git knows about."
+    },
+    {
+      "name": "Fuzzy finding other sources",
+      "line": 1830,
+      "evidence": "Fuzzy Finding Other Sources"
+    },
+    {
+      "name": "Source and sink",
+      "line": 1841,
+      "evidence": "In fzf terminology, the list of items to be filtered is called the source, and the action to be performed on the selected result is called the sink."
+    },
+    {
+      "name": "Projections configuration",
+      "line": 1986,
+      "evidence": "The Projectionist plugin detects and parses the hidden .projections.json files, defining navigation commands for each declared type."
+    },
+    {
+      "name": "Context-sensitive navigation",
+      "line": 1991,
+      "evidence": "The killer feature of these navigation commands is that they work contextually."
+    },
+    {
+      "name": "JSON linting of projections",
+      "line": 2033,
+      "evidence": "It’s a good idea to run your Projectionist configuration through a JSON linter."
+    },
+    {
+      "name": "Navigation command variations",
+      "line": 2038,
+      "evidence": "You’ve already seen that the Projectionist plugin creates navigation commands that begin with a capital “E.” It also creates variations of this command, beginning with capital “S”, “V”, and “T.” The following table summarizes how these commands behave:"
+    },
+    {
+      "name": "Smart tab completion with wildcard",
+      "line": 2078,
+      "evidence": "When using tab completion, you can use a * character as a wildcard."
+    },
+    {
+      "name": "Alternate files",
+      "line": 2187,
+      "evidence": "Once you specify the relationship between one file and its alternate, Projectionist lets you follow that link by running the :A command."
+    }
+  ],
+  "problems": [
+    {
+      "line": 1513,
+      "kind": "garbled",
+      "evidence": "Modern Vim",
+      "note": "Print running header 'Modern Vim' is left inline between the chapter intro and Tip 7; the same header recurs at 1852, 2104, and 2298 and is not chapter prose."
+    },
+    {
+      "line": 1515,
+      "kind": "typo",
+      "evidence": "Tip 7Finding Files Using Fuzzy Path Matching",
+      "note": "Tip number and title are run together with no separating space, producing 'Tip 7Finding...'; the same join occurs at 1854 and 2106."
+    },
+    {
+      "line": 1594,
+      "kind": "garbled",
+      "evidence": "└── table-of-contents-test.js",
+      "note": "Tree indentation is collapsed: table-of-contents-test.js sits at the same depth and under the same last-child branch as its parent components/, so the hierarchy in the listing is wrong."
+    },
+    {
+      "line": 1662,
+      "kind": "garbled",
+      "evidence": "QueryRanked Matches",
+      "note": "Two table column headers ('Query' and 'Ranked Matches') are concatenated with no separator, and every table cell below is flattened onto its own line, so the query/result pairing is only positional."
+    },
+    {
+      "line": 1729,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "The 'Command' and 'Effect' column headers are merged into one token; the key/effect pairs below are likewise flattened one cell per line."
+    },
+    {
+      "line": 1737,
+      "kind": "order",
+      "evidence": "Select previous item from matchlist",
+      "note": "The previous/next rows are swapped relative to fzf's standard bindings (<C-j> moves down, <C-k> moves up); line 1720 also presses <C-k> to reach the fourth match, so this reads as a source error in the key table rather than an extraction artifact."
+    },
+    {
+      "line": 1854,
+      "kind": "typo",
+      "evidence": "Tip 8Finding Files Semantically",
+      "note": "Tip 8's number and title are run together: 'Tip 8Finding Files Semantically'."
+    },
+    {
+      "line": 2040,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "Second occurrence of the merged 'CommandEffect' header above the :Etype/:Stype/:Vtype/:Ttype table; cells are flattened one per line."
+    },
+    {
+      "line": 2106,
+      "kind": "typo",
+      "evidence": "Tip 9Jumping to an Alternate File",
+      "note": "Tip 9's number and title are run together: 'Tip 9Jumping to an Alternate File'."
+    },
+    {
+      "line": 2216,
+      "kind": "typo",
+      "evidence": "},",
+      "note": "Trailing comma after the last property of the excerpt makes it invalid JSON; the book itself warns at 2028-2030 that malformed projections fail cryptically. The same trailing comma appears at 2248 in the blog-modular-tdd excerpt."
+    }
+  ]
+}

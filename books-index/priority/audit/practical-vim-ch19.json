@@ -1,0 +1,195 @@
+{
+  "id": "practical-vim-ch19",
+  "book": "practical-vim",
+  "chapter": 19,
+  "title": "Dial X for Autocompletion",
+  "start": 11100,
+  "end": 11559,
+  "summary": "This chapter covers Vim's insert-mode autocompletion: triggering the pop-up menu, moving through matches, accepting or dismissing a choice, and refining the list by typing. It explains how generic keyword completion draws on buffers, included files, and tags, how the 'complete' option controls those sources, and how specialized variants complete dictionary words, whole lines, filenames, and context-aware omni suggestions. It also shows how remembered completion context can be reused to insert sequences of words and lines.",
+  "commands": [
+    {
+      "keys": "<C-p>",
+      "meaning": "Trigger generic keyword autocompletion; with the menu open, select the previous match.",
+      "line": 11135,
+      "evidence": "Vim’s autocompletion can be triggered from Insert mode with the <C-p> and <C-n> chords, which select the previous and next items in the word list, respectively."
+    },
+    {
+      "keys": "<C-n>",
+      "meaning": "Trigger generic keyword autocompletion; with the menu open, select the next match.",
+      "line": 11137,
+      "evidence": "The <C-p> and <C-n> commands both invoke generic keyword autocompletion. There are several variant forms of autocompletion, all of which are prefixed with the <C-x> chord. In this chapter, we’ll discuss the methods listed in the following table (you can view the complete list at ins-completionⓘ)."
+    },
+    {
+      "keys": "<C-x><C-n>",
+      "meaning": "Complete keywords using only the current buffer.",
+      "line": 11265,
+      "evidence": "The simplest mechanism for populating the autocomplete word list would be to use words only from the current buffer. Current file keyword completion does just that and is triggered with <C-x><C-n> (see compl-currentⓘ). This can be useful when generic keyword completion generates too many suggestions and you know that the word you want is somewhere in the current buffer."
+    },
+    {
+      "keys": "<C-x><C-i>",
+      "meaning": "Complete keywords sourced from files included by the current file.",
+      "line": 11275,
+      "evidence": "Most programming languages provide some way of loading code from an external file or library. In C, this can be done using the #include directive, whereas Python uses import and Ruby uses require. If we are working on a file that includes code from another library, then it would be useful if Vim could read the contents of those referenced files when building a word list for autocompletion. And that is exactly what happens when we trigger keyword completion with the <C-x><C-i> command (see compl-keywordⓘ)."
+    },
+    {
+      "keys": "<C-x><C-]>",
+      "meaning": "Complete keywords sourced from the tags file.",
+      "line": 11285,
+      "evidence": "The main reason for indexing a codebase with ctags is to make it easier to navigate, but a tags file creates a useful by-product: a list of keywords that can be used for autocompletion. We can dial up this list using the <C-x><C-]> command (see compl-tagⓘ)."
+    },
+    {
+      "keys": "<C-x><C-k>",
+      "meaning": "Complete a word by dictionary lookup.",
+      "line": 11311,
+      "evidence": "Sometimes we might want to use autocompletion on a word that isn’t present in any of our open buffers, included files, or tags. In that case, we can always resort to looking it up in the dictionary. This can be triggered by running the <C-x><C-k> command (see compl-dictionaryⓘ)."
+    },
+    {
+      "keys": "<C-x><C-l>",
+      "meaning": "Complete an entire line from the available completion sources.",
+      "line": 11327,
+      "evidence": "Line-wise autocompletion is triggered by running <C-x><C-l> (see compl-whole-lineⓘ). Suppose that we started off with this snippet:"
+    },
+    {
+      "keys": "<C-x><C-f>",
+      "meaning": "Complete a file path relative to Vim's working directory.",
+      "line": 11464,
+      "evidence": "Filename autocompletion is triggered by the <C-x><C-f> command (see compl-filenameⓘ)."
+    },
+    {
+      "keys": "<C-x><C-o>",
+      "meaning": "Trigger context-aware omni-completion.",
+      "line": 11540,
+      "evidence": "Omni-completion is triggered with the <C-x><C-o> command (see compl-omniⓘ). The functionality is implemented as a file-type plugin, so to activate it we have to source these lines of configuration:"
+    },
+    {
+      "keys": "<C-y>",
+      "meaning": "Accept the currently selected completion.",
+      "line": 11209,
+      "evidence": "Accept the currently selected match (yes)"
+    },
+    {
+      "keys": "<C-e>",
+      "meaning": "Cancel completion and restore the originally typed text.",
+      "line": 11213,
+      "evidence": "Revert to the originally typed text (exit from autocompletion)"
+    },
+    {
+      "keys": "<Down>",
+      "meaning": "Select the next match in the pop-up menu without changing the document.",
+      "line": 11235,
+      "evidence": "When we press <Down>, the pop-up menu is updated to select the next item in the list but the text in the document is left unchanged. We can scroll through the list of words in the pop-up menu using the <Up> and <Down> keys until we find the word we want to use. Then we can insert it into the document either by hitting the <CR> key or by pressing <C-y>."
+    },
+    {
+      "keys": "<C-x><C-p>",
+      "meaning": "Autocomplete from the remembered context; repeated use inserts the following words in sequence.",
+      "line": 11436,
+      "evidence": "Now we can use <C-x><C-p> to autocomplete the partial word vimr to vimref."
+    },
+    {
+      "keys": "<C-n><C-p>",
+      "meaning": "Invoke completion, step back to the starting match, then keep typing to live-filter the menu.",
+      "line": 11249,
+      "evidence": "Here’s one of my favorite tricks when working with the autocomplete pop-up menu. Try pressing <C-n><C-p>. That’s two separate commands: <C-n> followed immediately by <C-p> (although <C-p><C-n> would work just as well). The first command invokes autocomplete, summons the pop-up menu, and selects the first item in the word list. The second command selects the previous item in the word list, taking us back to where we started but without dismissing the pop-up menu. Now we can continue to type, and Vim will filter the word list in real time."
+    },
+    {
+      "keys": ":set complete-=i",
+      "meaning": "Remove included files from the sources scanned by generic keyword completion.",
+      "line": 11297,
+      "evidence": "=> :set complete-=i"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Keyword autocompletion",
+      "line": 11125,
+      "evidence": "With keyword autocompletion, Vim attempts to guess the word that we’re typing, which can save us from completing it by hand."
+    },
+    {
+      "name": "Autocompletion and case sensitivity",
+      "line": 11113,
+      "evidence": "Autocompletion and Case Sensitivity"
+    },
+    {
+      "name": "'infercase' option",
+      "line": 11119,
+      "evidence": "We can fix this behavior by enabling the ‘infercase’ option (see 'infercase'ⓘ). This would add “she” to the word list but with a lowercase “s.”"
+    },
+    {
+      "name": "Autocomplete pop-up menu",
+      "line": 11185,
+      "evidence": "When autocomplete is triggered, Vim draws a pop-up menu containing the items in the word list. We can interact with this menu using the commands shown in Table 19, Commands for the Pop-Up Menu."
+    },
+    {
+      "name": "Refine the word list as you type",
+      "line": 11247,
+      "evidence": "Refine the Word List as You Type"
+    },
+    {
+      "name": "Generic keyword sources: buffers, included files, tags",
+      "line": 11261,
+      "evidence": "Several forms of autocompletion use a specific file or set of files to generate their word list. Generic keyword autocompletion uses an amalgamation of these word lists. To understand where generic keywords come from, we should first look at each of the more targeted forms of autocompletion."
+    },
+    {
+      "name": "Customizing generic autocompletion with 'complete'",
+      "line": 11295,
+      "evidence": "We can customize the list of places that are scanned by generic keyword completion using the ‘complete’ option. This option holds a comma-separated list of one-letter flags, whose presence enables scanning of a particular place. The default setting is complete=.,w,b,u,t,i. We could disable scanning of included files by running the following:"
+    },
+    {
+      "name": "Dictionary autocompletion",
+      "line": 11309,
+      "evidence": "Vim’s dictionary autocompletion builds a list of suggestions from a word list. We can configure Vim so that dictionary autocompletion uses the same word list as the built-in spell checker."
+    },
+    {
+      "name": "Whole-line autocompletion",
+      "line": 11325,
+      "evidence": "In all of the examples so far, we’ve looked at completing words, but Vim can also autocomplete entire lines."
+    },
+    {
+      "name": "Autocomplete sequences of words",
+      "line": 11379,
+      "evidence": "When we use autocomplete to expand a word, Vim remembers the context from which that word was taken."
+    },
+    {
+      "name": "Filename completion relative to the working directory",
+      "line": 11466,
+      "evidence": "Vim always maintains a reference to the current working directory, just like the shell. We can find out what this is at any given time by running the :pwd command (print working directory), and we can change our working directory at any time using the :cd {path} command (change directory). It’s important to understand that Vim’s filename autocompletion always expands paths relative to the working directory, not relative to the file that is currently being edited."
+    },
+    {
+      "name": "Omni-completion (context-aware completion)",
+      "line": 11538,
+      "evidence": "Omni-completion is Vim’s answer to intellisense. It provides a list of suggestions that’s tailored for the context of the cursor position. In this tip, we’ll look at how it works in the context of a CSS file."
+    }
+  ],
+  "problems": [
+    {
+      "line": 11107,
+      "kind": "missing",
+      "evidence": "Tip 112, introduces the basics of keyword autocompletion. The list of suggested completions is created by scanning all files that have been opened in the current editing session, as well as any included files and tag files. We’ll find out what this means in Tip 114, and see how we can narrow down the list of suggestions.",
+      "note": "A comma follows 'Tip 112' but the tip title is absent, leaving an ungrammatical clause; the cross-reference title appears to have been dropped."
+    },
+    {
+      "line": 11123,
+      "kind": "garbled",
+      "evidence": "Tip 112Meet Vim’s Keyword Autocompletion",
+      "note": "The tip number and tip title are concatenated with no separator; the same merge occurs in the headings at 11181, 11257, 11307, 11323, 11377, 11460 and 11536, and inline at 11453."
+    },
+    {
+      "line": 11141,
+      "kind": "garbled",
+      "evidence": "CommandType of Completion",
+      "note": "The table's two header cells, 'Command' and 'Type of Completion', are run together, so the column boundary is lost."
+    },
+    {
+      "line": 11281,
+      "kind": "garbled",
+      "evidence": "In Chapter 16, Index and Navigate",
+      "note": "The chapter cross-reference is split by a blank line: this line ends 'Index and Navigate' and line 11283 resumes 'Source Code with ctags, ...', interrupting the sentence."
+    },
+    {
+      "line": 11339,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "The table header cells 'Keystrokes' and 'Buffer Contents' are concatenated; the same merged header appears at 11409 and 11512."
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "id": "practical-vim-ch04",
+  "book": "practical-vim",
+  "chapter": 4,
+  "title": "Visual Mode",
+  "start": 2155,
+  "end": 2743,
+  "summary": "Chapter 4 introduces Visual mode as a way to define a selection and then operate on it, covering the character-wise, line-wise, and block-wise submodes, how to enable and switch between them, and the gv and o keys for reselecting and flipping the free end of a selection. It shows that Visual commands can be repeated with the dot command, but that the dot command replays the same amount of text, so line-wise selections repeat reliably while character-wise ones fall short, making Normal-mode operators such as gU{motion} preferable for repetitive edits. The chapter closes with Visual-Block techniques for editing tabular data, inserting text into several lines at once, and appending after a ragged block whose lines have different lengths.",
+  "commands": [
+    {
+      "keys": "v",
+      "meaning": "Enable character-wise Visual mode from Normal mode",
+      "line": 2204,
+      "evidence": "The v key is our gateway into Visual mode. From Normal mode, we can press v by itself to enable character-wise Visual mode. Line-wise Visual mode is enabled by pressing V (with the Shift key), and block-wise Visual mode by pressing <C-v> (with the Control key). These commands are summarized in the following table:"
+    },
+    {
+      "keys": "V",
+      "meaning": "Enable line-wise Visual mode (Shift-v)",
+      "line": 2212,
+      "evidence": "V"
+    },
+    {
+      "keys": "<C-v>",
+      "meaning": "Enable block-wise Visual mode (Ctrl-v)",
+      "line": 2216,
+      "evidence": "<C-v>"
+    },
+    {
+      "keys": "gv",
+      "meaning": "Reselect the last visual selection, whatever its submode",
+      "line": 2224,
+      "evidence": "The gv command is a useful little shortcut. It reselects the range of text that was last selected in Visual mode. No matter whether the previous selection was character-wise, line-wise, or block-wise, the gv command should do the right thing. The only case where it might get confused is if the last selection has since been deleted."
+    },
+    {
+      "keys": "o",
+      "meaning": "Switch to the other (free) end of the selection so its bounds can be redefined",
+      "line": 2258,
+      "evidence": "The range of a Visual mode selection is marked by two ends: one end is fixed and the other moves freely with our cursor. We can use the o key to toggle the free end. This is really handy if halfway through defining a selection we realize that we started in the wrong place. Rather than leaving Visual mode and starting afresh, we can just hit o and redefine the bounds of the selection. The following demonstrates how we can use this technique:"
+    },
+    {
+      "keys": "<C-g>",
+      "meaning": "Toggle between Visual and Select modes",
+      "line": 2190,
+      "evidence": "We can toggle between Visual and Select modes by pressing <C-g>. The only visible difference is the message at the bottom of screen, which switches between -- VISUAL -- and -- SELECT --. But if we type any printable character in Select mode, it will replace the selection and switch to Insert mode. Of course, from Visual mode you could just as well use the c key to change the selection."
+    },
+    {
+      "keys": "viw",
+      "meaning": "Visually select the word under the cursor",
+      "line": 2184,
+      "evidence": "Let’s revisit the simple example where we wanted to change the word “March” to “April.” This time, suppose that we have left the confines of the text area on a web page and we’re comfortably back inside Vim. We place our cursor somewhere on the word “March” and run viw to visually select the word. Now, we can’t just type the word “April” because that would trigger the A command and append the text “pril”! Instead, we’ll use the c command to change the selection, deleting the word and dropping us into Insert mode, where we can type out the word “April” in full. This pattern of usage is similar to our original example, except that we use the c key instead of backspace."
+    },
+    {
+      "keys": "vit",
+      "meaning": "Visually select the inner contents of the current tag (text object)",
+      "line": 2382,
+      "evidence": "We can select the inner contents of a tag by running vit, which can be read as: visually select inside the tag. The it command is a special kind of motion called a text object, which we’ll cover in detail in Tip 52."
+    },
+    {
+      "keys": "U",
+      "meaning": "Convert the selected characters to uppercase",
+      "line": 2386,
+      "evidence": "In Visual mode, we make a selection and then act on it. In this case, we could use the U command, which converts the selected characters to uppercase (v_Uⓘ). See Table 4, Uppercasing in Visual Mode."
+    },
+    {
+      "keys": "gU{motion}",
+      "meaning": "Normal-mode operator that uppercases the text covered by a motion",
+      "line": 2430,
+      "evidence": "The Visual mode U command has a Normal mode equivalent: gU{motion} (gUⓘ). If we use this to make the first change, we can complete the subsequent edits using the Dot Formula:"
+    },
+    {
+      "keys": "j.",
+      "meaning": "Move down one line and repeat the last change with the dot command (Dot Formula)",
+      "line": 2418,
+      "evidence": "Running j. advances our cursor to the next line and then repeats the last change. It works fine on line two, but if we try it again we end up with this strange-looking result:"
+    },
+    {
+      "keys": ">",
+      "meaning": "Indent the selected range by one level",
+      "line": 2312,
+      "evidence": "In our malformed Python excerpt, the two lines below the while keyword should be indented further by two levels. We could fix it by visually selecting the text and triggering the > command to indent it. But that would only increase the indentation by one level before dropping us back into Normal mode."
+    },
+    {
+      "keys": "x",
+      "meaning": "Delete the selected column in Visual-Block mode",
+      "line": 2572,
+      "evidence": "To begin, we use <C-v> to engage Visual-Block mode; then we define the column selection by moving our cursor down several lines. Pressing the x key deletes that column, and the dot command repeats the deletion for the same range of text. We repeat until the two columns are about the right distance apart."
+    },
+    {
+      "keys": "r|",
+      "meaning": "Replace every character in the selection with a pipe character",
+      "line": 2576,
+      "evidence": "Now that we’ve lined up the two columns of text where we want them, we’re ready to draw a line between them. We can reselect our last visual selection using the gv command and then press r| to replace each character in the selection with a pipe character."
+    },
+    {
+      "keys": "A",
+      "meaning": "Append text at the end of each line of a Visual-Block selection",
+      "line": 2720,
+      "evidence": "Having defined our selection, we can append at the end of each line using the A command (see Vim’s Conventions for “i” and “a” Keys). This drops us into Insert mode on the topmost line of our selection. Anything that we type will appear on this line only for the duration of Insert mode, but as soon as we revert to Normal mode, our changes are propagated across the rest of the lines that we selected."
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Visual mode's three submodes",
+      "line": 2200,
+      "evidence": "Vim has three kinds of Visual mode. In character-wise Visual mode, we can select anything from a single character up to a range of characters within a line or spanning multiple lines. This is suitable for working at the level of individual words or phrases. If we want to operate on entire lines, we can use line-wise Visual mode instead. Finally, block-wise Visual mode allows us to work with columnar regions of the document. Block-wise Visual mode is quite special, so we’ll discuss it at greater length in Tip 24, Tip 25, and Tip 26."
+    },
+    {
+      "name": "Inversion of control: operator-then-range versus selection-then-command",
+      "line": 2182,
+      "evidence": "Some Visual mode commands perform the same basic function as in Normal mode but with a slight twist. For example, the c command is consistent in both modes in that it deletes the specified text and then switches to Insert mode. The difference is in how we specify the range on which to act. From Normal mode, we trigger the change command first and then specify the range as a motion. This, if you’ll remember from Tip 12, is called an operator command. Whereas in Visual mode, we start off by making the selection and then trigger the change command. This inversion of control can be generalized for all operator commands (see Table 2, Vim’s Operator Commands). For most people, the Visual mode approach feels more intuitive."
+    },
+    {
+      "name": "Select mode",
+      "line": 2188,
+      "evidence": "In a typical text editing environment, selected text is deleted when we type any printable character. Vim’s Visual mode doesn’t follow this convention—but Select mode does. According to Vim’s built-in documentation, it “resembles the selection mode in Microsoft Windows” (see Select-modeⓘ). Printable characters cause the selection to be deleted, Vim enters Insert mode, and the typed character is inserted."
+    },
+    {
+      "name": "Toggling the free end of a selection",
+      "line": 2256,
+      "evidence": "Toggling the Free End of a Selection"
+    },
+    {
+      "name": "Repeating line-wise Visual commands with the dot command",
+      "line": 2282,
+      "evidence": "When we use the dot command to repeat a change made to a visual selection, it repeats the change on the same range of text. In this tip, we’ll make a change to a line-wise selection and then repeat it with the dot command."
+    },
+    {
+      "name": "Dot Formula",
+      "line": 2416,
+      "evidence": "Having transformed the first line, we now want to perform the same change on the next two lines. How about we try using the Dot Formula?"
+    },
+    {
+      "name": "Visual-command repeat replays the same range of text",
+      "line": 2426,
+      "evidence": "Do you see what’s happened? When a Visual mode command is repeated, it affects the same range of text (see visual-repeatⓘ). In this case, the original command affected a word consisting of three letters. This works fine for line two, which happens to also contain a three-letter word, but it falls short when we try to repeat the command on a word containing five letters."
+    },
+    {
+      "name": "Preferring operators to Visual commands where possible",
+      "line": 2470,
+      "evidence": "If we want to set up the dot command so that it repeats something useful, then we’re better off staying out of Visual mode. As a general rule, we should prefer operator commands over their Visual mode equivalents when working through a repetitive set of changes."
+    },
+    {
+      "name": "Text objects (it means inside the tag)",
+      "line": 2382,
+      "evidence": "We can select the inner contents of a tag by running vit, which can be read as: visually select inside the tag. The it command is a special kind of motion called a text object, which we’ll cover in detail in Tip 52."
+    },
+    {
+      "name": "Using Visual-Block mode on tabular data",
+      "line": 2478,
+      "evidence": "We can work with rows of text in any editor, but manipulating columns of text requires a more specialized tool. Vim provides this capability in the form of its Visual-Block mode, which we’ll use to transform a plain-text table."
+    },
+    {
+      "name": "Inserting text into several lines with a block change",
+      "line": 2584,
+      "evidence": "We can use Visual-Block mode to insert text into several lines of text simultaneously."
+    },
+    {
+      "name": "Ragged Visual Block selection to the end of unequal lines",
+      "line": 2718,
+      "evidence": "After engaging Visual-Block mode, we extend our selection to the end of each line by pressing $. At first glance, one might expect this to cause difficulty because each line is a different length. But in this context, Vim understands that we want to extend our selection to the end of all selected lines. This lets us break free from our rectangular constraints, creating a selection that traces the ragged right edge of our text."
+    }
+  ],
+  "problems": [
+    {
+      "line": 2170,
+      "kind": "garbled",
+      "evidence": "Tip 20Grok Visual Mode",
+      "note": "Tip number and title are fused ('Tip 20' + 'Grok Visual Mode') with no space; the same fusion recurs in every tip heading in this chapter (2196, 2280, 2368, 2476, 2582, 2660), so heading text needs re-splitting."
+    },
+    {
+      "line": 2206,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "Table header cells 'Command' and 'Effect' are fused into one token; the same merged header appears at 2230 ('CommandEffect') and at 2260/2318/2388/2496/2600/2676 ('KeystrokesBuffer Contents'), losing the column boundary."
+    },
+    {
+      "line": 2296,
+      "kind": "garbled",
+      "evidence": "print a,",
+      "note": "Raw line begins with a single space while '  a, b = 0, 1' (2292) and '  while a < n:' (2294) begin with two, even though 2302 states the sample uses four spaces per indentation; leading whitespace was collapsed unevenly, so the before/after indentation states used to teach > and . are unreliable."
+    },
+    {
+      "line": 2362,
+      "kind": "typo",
+      "evidence": "If you’re good at counting, you might prefer to hit the target in a single blow by running 2> from Visual mode. I prefer using the dot command because it gives me instant visual feedback. If I need to trigger the indentation command again, I just hit . another time. Or if I get trigger-happy and overshoot my mark, I press the u key to bring it back in line. Tip 11, discusses the differences in a little more detail.",
+      "note": "Stray comma after 'Tip 11' before its verb ('Tip 11, discusses the differences'), leaving an ungrammatical clause; a cross-reference phrase appears to have been dropped."
+    },
+    {
+      "line": 2400,
+      "kind": "missing",
+      "evidence": "vit",
+      "note": "The rows after 'vit' (2402-2406) repeat the pre-selection rows (2394-2398) verbatim, so the selection made by vit is invisible; the same loss of highlight occurs for vbb/o/e (2264-2276) and <C-v>jj$ (2688-2696), leaving the keystroke tables unable to show what is selected."
+    },
+    {
+      "line": 2512,
+      "kind": "garbled",
+      "evidence": "Normal mode   15",
+      "note": "This is the same buffer row shown at 2502 as 'Normal mode 15' with a single space; here it appears with three spaces, and the post-x... row at 2522 is identical to 2502, so the column spacing and the column deletion have no consistent textual effect and the pipe rows at 2540/2542 do not align."
+    },
+    {
+      "line": 2694,
+      "kind": "typo",
+      "evidence": "var bar = ’a’",
+      "note": "Code inside the buffer uses typographic single quotes (U+2019) instead of ASCII apostrophes; the same variable is shown as var bar = 'a' at 2684 and 2714, so the printed sample is not valid JavaScript."
+    }
+  ]
+}

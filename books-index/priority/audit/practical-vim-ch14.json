@@ -1,0 +1,219 @@
+{
+  "id": "practical-vim-ch14",
+  "book": "practical-vim",
+  "chapter": 14,
+  "title": "Substitution",
+  "start": 8803,
+  "end": 9601,
+  "summary": "Chapter 14, comprising Tips 88 through 97, dissects Vim's :substitute command as an Ex command with a range, a pattern, a replacement string, and optional flags. It shows how the g flag works within a line while a % address works across lines, and how the c flag lets the user confirm each change. Later tips reuse the last search pattern, insert register contents, reference submatches, evaluate Vim script in the replacement field, and finish with project-wide substitutions via :vimgrep and :cfdo.",
+  "commands": [
+    {
+      "keys": ":s/going/rolling",
+      "meaning": "Substitute the first match of going with rolling on the current line.",
+      "line": 8910,
+      "evidence": ":s/going/rolling"
+    },
+    {
+      "keys": ":s/going/rolling/g",
+      "meaning": "Add the g flag to change every match of going on the current line.",
+      "line": 8926,
+      "evidence": ":s/going/rolling/g"
+    },
+    {
+      "keys": ":%s/going/rolling/g",
+      "meaning": "Prefix % to run the substitution on every line of the file.",
+      "line": 8938,
+      "evidence": ":%s/going/rolling/g"
+    },
+    {
+      "keys": ":%s/content/copy/gc",
+      "meaning": "Add the c flag to confirm or reject each match interactively.",
+      "line": 8968,
+      "evidence": "=> :%s/content/copy/gc"
+    },
+    {
+      "keys": ":%s//<C-r>0/g",
+      "meaning": "Insert the contents of register 0 into the replacement field by value.",
+      "line": 9072,
+      "evidence": "=> :%s//<C-r>0/g"
+    },
+    {
+      "keys": ":%s//\\=@0/g",
+      "meaning": "Evaluate the @0 register reference at run time, passing the register by reference.",
+      "line": 9084,
+      "evidence": "=> :%s//\\=@0/g"
+    },
+    {
+      "keys": ":%s//~/&",
+      "meaning": "Longhand for g&: repeat the last substitute with its replacement and flags across the whole file.",
+      "line": 9132,
+      "evidence": "=> :%s//~/&"
+    },
+    {
+      "keys": ":&&",
+      "meaning": "Repeat the last substitute reusing its flags, optionally with a new range.",
+      "line": 9298,
+      "evidence": "The :&& command requires some explanation, since the first and second & symbols have different meanings. The first one forms the :& Ex command, which repeats the last :substitute command (see :&ⓘ), while the second one indicates that the flags from the previous :s command should be reused."
+    },
+    {
+      "keys": "/\\v^([^,]*),([^,]*),([^,]*)$",
+      "meaning": "Very-magic pattern capturing three comma-separated fields as submatches.",
+      "line": 9332,
+      "evidence": "=> /\\v^([^,]*),([^,]*),([^,]*)$"
+    },
+    {
+      "keys": ":%s//\\3,\\2,\\1",
+      "meaning": "Reorder the captured fields using backreferences in the replacement field.",
+      "line": 9334,
+      "evidence": "=> :%s//\\3,\\2,\\1"
+    },
+    {
+      "keys": ":%s//\\=submatch(0)-1/g",
+      "meaning": "Evaluate submatch(0)-1 to decrement each matched numeral.",
+      "line": 9384,
+      "evidence": "=> :%s//\\=submatch(0)-1/g"
+    },
+    {
+      "keys": ":%s//\\={\"dog\":\"man\",\"man\":\"dog\"}[submatch(1)]/g",
+      "meaning": "Use an inline dictionary keyed by the captured word to swap words in one pass.",
+      "line": 9456,
+      "evidence": "=> :%s//\\={\"dog\":\"man\",\"man\":\"dog\"}[submatch(1)]/g"
+    },
+    {
+      "keys": "/Pragmatic\\ze Vim",
+      "meaning": "Match Pragmatic only when followed by Vim by ending the match with \\ze.",
+      "line": 9523,
+      "evidence": "=> /Pragmatic\\ze Vim"
+    },
+    {
+      "keys": ":vimgrep // **/*.txt",
+      "meaning": "Search the project for the last pattern and populate the quickfix list.",
+      "line": 9540,
+      "evidence": "=> :vimgrep // **/*.txt"
+    },
+    {
+      "keys": ":cfdo %s//Practical/gc",
+      "meaning": "Run the substitute command on every file in the quickfix list, confirming each match.",
+      "line": 9560,
+      "evidence": "=> :cfdo %s//Practical/gc"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Substitute command anatomy: [range]s[ubstitute]/{pattern}/{string}/[flags]",
+      "line": 8824,
+      "evidence": ":[range]s[ubstitute]/{pattern}/{string}/[flags]"
+    },
+    {
+      "name": "g flag: global substitution within the current line",
+      "line": 8832,
+      "evidence": "The g flag makes the substitute command act globally, causing it to change all matches within a line rather than just changing the first one. We’ll meet it in Tip 89."
+    },
+    {
+      "name": "c flag: confirm or reject each change",
+      "line": 8834,
+      "evidence": "The c flag gives us the opportunity to confirm or reject each change. We’ll see it in action in Tip 90."
+    },
+    {
+      "name": "& flag: reuse the flags from the previous substitute command",
+      "line": 8840,
+      "evidence": "The & flag simply tells Vim to reuse the same flags from the previous substitute command. Tip 93, shows a scenario where it comes in handy."
+    },
+    {
+      "name": "Two-dimensional model: x-axis over a line, y-axis over the file",
+      "line": 8918,
+      "evidence": "To understand why, it helps to think of a file as a two-dimensional board made up of characters along the x-axis and lines down the y-axis. By default, the substitute command only acts upon the first match on the current line. Let’s see what’s required to expand its scope to cover the x- and y-axes in their entirety."
+    },
+    {
+      "name": "Substitute-Confirmation prompt y/n/a/q/l/^E/^Y",
+      "line": 8974,
+      "evidence": "We aren’t limited to just two answers. In fact, Vim helpfully reminds us of our options with the prompt “y/n/a/q/l/^E/^Y.” This table shows what each answer means:"
+    },
+    {
+      "name": "Blank search field reuses the most recent search pattern",
+      "line": 9020,
+      "evidence": "Leaving the search field of the substitute command blank instructs Vim to reuse the most recent search pattern. We can exploit this fact to streamline our workflow."
+    },
+    {
+      "name": "Pass a register by value or by reference",
+      "line": 9064,
+      "evidence": "We don’t have to type out the replacement string by hand. If the text already exists in the document, we can yank it into a register and use it in the replacement field. Then we can pass the contents of a register either by value or by reference."
+    },
+    {
+      "name": "\\={Vim script} replacement evaluates an expression",
+      "line": 8886,
+      "evidence": "The \\={Vim script} token is very powerful. It allows us to execute code and use the result as our replacement {string}. In Tip 95, and Tip 96, we’ll see a couple of examples of usage."
+    },
+    {
+      "name": "Capturing fields as submatches in the search pattern",
+      "line": 9336,
+      "evidence": "In the pattern, [^,] matches anything that isn’t a comma. So ([^,]*) matches zero or more consecutive non-commas and captures the result as a submatch (refer to Tip 76). We repeat this three times to capture each of the three fields in the CSV file."
+    },
+    {
+      "name": "\\zs zooms in on part of the match",
+      "line": 9374,
+      "evidence": "The \\zs item allows us to zoom in on part of the match. To simplify our example, we could say that a pattern of h\\zs\\d would match the letter h followed by any digit (h1, h2, and so on). The placement of \\zs indicates that the h itself would be excluded from the match, even though it is an integral part of the broader pattern (we met the \\zs item in Tip 78, where we compared it to Perl’s positive lookbehind assertion). Our pattern looks slightly more complex, because we don’t just match h1 and h2, but <h1, </h1, <h2, </h2, and so on."
+    },
+    {
+      "name": ":cfdo runs an Ex command on each file in the quickfix list",
+      "line": 9590,
+      "evidence": "We can then iterate through the files in the quickfix list using :cfdo to run the :substitute and :update commands."
+    }
+  ],
+  "problems": [
+    {
+      "line": 8818,
+      "kind": "missing",
+      "evidence": "Tip 88Meet the Substitute Command",
+      "note": "The tip number and tip title are concatenated with no separator: 'Tip 88' immediately followed by 'Meet'. The same merge recurs at 8890, 8952, 9018, 9062, 9120, 9316, 9350, 9398, 9474, and inside the sentence at 9536 ('Tip 111Grep')."
+    },
+    {
+      "line": 8846,
+      "kind": "garbled",
+      "evidence": "SymbolRepresents",
+      "note": "Table header cells 'Symbol' and 'Represents' are run together as one word, so the column structure is lost."
+    },
+    {
+      "line": 8908,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Table header cells 'Keystrokes' and 'Buffer Contents' are run together as one word."
+    },
+    {
+      "line": 8976,
+      "kind": "garbled",
+      "evidence": "TriggerEffect",
+      "note": "Table header cells 'Trigger' and 'Effect' are run together as one word."
+    },
+    {
+      "line": 9028,
+      "kind": "typo",
+      "evidence": "=> :%s/\\v'(([^']|'\\w)+)'/“\\1”/g",
+      "note": "The replacement field is wrapped in typographic curly quotes instead of straight quotes, so the command shown is not literally typeable; the same substitution appears at 9056."
+    },
+    {
+      "line": 9102,
+      "kind": "typo",
+      "evidence": ":let @/=’Pragmatic Vim’ is a programmatic way of setting the search pattern. It has the same effect as executing the search /Pragmatic Vim<CR> (except that running :let @/=’Pragmatic Vim’ does not create a record in the search history).",
+      "note": "Vim script code uses typographic apostrophes in :let @/=’Pragmatic Vim’ rather than straight quotes; the same form recurs later on this line and at 9104."
+    },
+    {
+      "line": 9278,
+      "kind": "typo",
+      "evidence": ":’<,’>&&",
+      "note": "The visual range uses typographic apostrophes :’<,’> instead of straight ' marks, and the same form appears in the prose at 9302."
+    },
+    {
+      "line": 9338,
+      "kind": "typo",
+      "evidence": "We can reference these submatches using the \\n notation. So, in the replacement field, \\1 will refer to the last name field, \\2 refers to the first name field, and \\3 refers to the email field. Having sliced each line into the individual fields, we can rearrange them into the order we want, namely \\3,\\2\\,1—email, first name, last name.",
+      "note": "The reordering is written \\3,\\2\\,1 with a stray backslash before the comma; the correct notation given earlier and later is \\3,\\2,\\1."
+    },
+    {
+      "line": 9548,
+      "kind": "garbled",
+      "evidence": "Each match returned by vimgrep is recorded in the quickfix list (see Chapter 17, Compile Code and Navigate Errors",
+      "note": "A parenthetical citation is split by a paragraph break: the opening '(see Chapter 17, Compile Code and Navigate Errors' ends this line and the closing 'with the Quickfix List).' begins line 9550."
+    }
+  ]
+}

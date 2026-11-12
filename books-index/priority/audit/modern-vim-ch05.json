@@ -1,0 +1,207 @@
+{
+  "id": "modern-vim-ch05",
+  "book": "modern-vim",
+  "chapter": 5,
+  "title": "Neovim’s Built-In Terminal Emulator",
+  "start": 3774,
+  "end": 4907,
+  "summary": "This chapter covers Neovim's built-in terminal emulator across Tips 15-22, beginning with the distinction between Terminal mode and terminal buffers. It shows how to launch programs with :terminal, manage terminal buffers in windows, splits and tabs, and use Normal mode commands for scrollback, search, copying and gf. The later tips cover controlling a running process remotely with jobsend() and an ad-hoc :Restart command, customizing shell prompts inside terminal buffers, and avoiding nested Neovim instances with neovim-remote and $VISUAL.",
+  "commands": [
+    {
+      "keys": ":terminal",
+      "meaning": "Open a terminal buffer running the default shell in the current window",
+      "line": 3872,
+      "evidence": "=> :terminal"
+    },
+    {
+      "keys": "<C-\\><C-n>",
+      "meaning": "Leave Terminal mode and switch back to Normal mode",
+      "line": 3876,
+      "evidence": "Pressing the <C-\\><C-n> keys switches you back to Normal mode again."
+    },
+    {
+      "keys": ":tnoremap <Esc> <C-\\><C-n>",
+      "meaning": "Create a Terminal-mode-only mapping so Esc returns to Normal mode",
+      "line": 3936,
+      "evidence": "=> :tnoremap <Esc> <C-\\><C-n>"
+    },
+    {
+      "keys": "<C-v><Esc>",
+      "meaning": "Send a literal Escape keystroke to the program in the terminal buffer",
+      "line": 3955,
+      "evidence": "Now you can send an Escape key to the terminal by pressing <C-v><Esc> (mnemonic: Verbatim escape)."
+    },
+    {
+      "keys": ":!{cmd}",
+      "meaning": "Execute a shell command and echo its output below the command line",
+      "line": 4014,
+      "evidence": "You can use the :!{cmd} command to execute a command in a shell."
+    },
+    {
+      "keys": ":read !{cmd}",
+      "meaning": "Insert a shell command's output into the current buffer at the cursor",
+      "line": 4046,
+      "evidence": "=> :read !cat /etc/shells"
+    },
+    {
+      "keys": ":terminal {cmd}",
+      "meaning": "Run the given program in a new terminal buffer",
+      "line": 4057,
+      "evidence": "=> :terminal cat /etc/shells"
+    },
+    {
+      "keys": ":bwipeout!",
+      "meaning": "Delete a terminal buffer, which stops the process running inside it",
+      "line": 4184,
+      "evidence": "Try using the :bwipeout! command to stop the top process:"
+    },
+    {
+      "keys": ":split | terminal",
+      "meaning": "Open a terminal buffer in a horizontal split using | as command separator",
+      "line": 4248,
+      "evidence": "=> :split | terminal"
+    },
+    {
+      "keys": "gg",
+      "meaning": "Jump to the top of the terminal buffer's scrollback",
+      "line": 4402,
+      "evidence": "Quickly jump back to the top of your scrollback using the gg command."
+    },
+    {
+      "keys": "gf",
+      "meaning": "Open the filepath under the cursor in a buffer",
+      "line": 4453,
+      "evidence": "When the cursor is positioned on a filepath, you can use the gf command to open that file in a buffer."
+    },
+    {
+      "keys": "<C-^>",
+      "meaning": "Switch back to the alternate buffer, such as a hidden terminal buffer",
+      "line": 4476,
+      "evidence": "The terminal buffer is now hidden, but you can quickly switch back to it using the <C-^> command (:h ctrl-^)."
+    },
+    {
+      "keys": ":call jobsend(1, \"\\<C-c>npm run server\\<CR>\")",
+      "meaning": "Send keystrokes to a terminal buffer's job through jobsend()",
+      "line": 4553,
+      "evidence": "=> :call jobsend(1, \"\\<C-c>npm run server\\<CR>\")"
+    },
+    {
+      "keys": ":command! Restart call jobsend(1, \"\\<C-c>npm run server\\<CR>\")",
+      "meaning": "Define an ad-hoc :Restart command that drives the terminal job",
+      "line": 4567,
+      "evidence": "=> :command! Restart call jobsend(1, \"\\<C-c>npm run server\\<CR>\")"
+    },
+    {
+      "keys": "<C-x><C-e>",
+      "meaning": "Open the current shell command line in your preferred text editor",
+      "line": 4795,
+      "evidence": "You can open the current command line in a text editor by pressing <C-x><C-e> (mnemonic: eXecute Editor)."
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Terminal mode",
+      "line": 3858,
+      "evidence": "In Neovim, you get a new mode to play with: Terminal mode."
+    },
+    {
+      "name": "Terminal buffer corresponds to a process",
+      "line": 3839,
+      "evidence": "A regular Vim buffer usually corresponds to a file on disk, whereas a terminal buffer corresponds to a process."
+    },
+    {
+      "name": "Terminal cursor versus Normal cursor",
+      "line": 3961,
+      "evidence": "In a terminal buffer, you have not one but two cursors: the Terminal cursor, which is managed by the underlying program, and the Normal cursor, which is managed by Vim."
+    },
+    {
+      "name": "TermCursor and TermCursorNC highlight groups",
+      "line": 3989,
+      "evidence": "If the color scheme you are using doesn’t style the TermCursor and TermCursorNC syntax groups (:help hl-TermCursor), I suggest adding these lines to your color scheme:"
+    },
+    {
+      "name": "term://{cwd}//{pid}:{cmd} buffer naming",
+      "line": 4062,
+      "evidence": "You can identify these special buffers in the buffer list by their name, which takes the form term://{cwd}//{pid}:{cmd}, where cwd stands for current working directory and pid is the process id:"
+    },
+    {
+      "name": "Processes keep running while a terminal buffer is hidden",
+      "line": 4121,
+      "evidence": "Even when the terminal buffer isn’t visible, the while loop continues to run in the background."
+    },
+    {
+      "name": "Using Neovim as a window manager",
+      "line": 3804,
+      "evidence": "Use Neovim as a Window Manager"
+    },
+    {
+      "name": "| as an Ex command separator",
+      "line": 4250,
+      "evidence": "In Ex commands, the | character behaves as a command separator (:help :bar)."
+    },
+    {
+      "name": "Ad-hoc command",
+      "line": 4580,
+      "evidence": "I’d call this an ad-hoc command: one to use now and throw away later."
+    },
+    {
+      "name": "Detecting a terminal buffer with $NVIM_LISTEN_ADDRESS",
+      "line": 4611,
+      "evidence": "When Neovim starts up, it sets the $NVIM_LISTEN_ADDRESS environment variable."
+    },
+    {
+      "name": "neovim-remote (nvr)",
+      "line": 4673,
+      "evidence": "Note that while the tool is called neovim-remote, the executable is nvr."
+    },
+    {
+      "name": "nvr --remote-wait blocking until the buffer is deleted",
+      "line": 4883,
+      "evidence": "It instructs nvr to block until the buffer created by the external program is deleted."
+    }
+  ],
+  "problems": [
+    {
+      "line": 3830,
+      "kind": "typo",
+      "evidence": "If you’re excited by the possibilities of interacting with running processes programatically, then you’re going to love using Neovim’s terminal emulator.",
+      "note": "'programatically' is misspelled; it should read 'programmatically'."
+    },
+    {
+      "line": 3840,
+      "kind": "missing",
+      "evidence": "You can’t directly modify the text in terminal buffer (such as using dd).",
+      "note": "The article 'a' is missing before 'terminal buffer' ('modify the text in terminal buffer')."
+    },
+    {
+      "line": 3850,
+      "kind": "garbled",
+      "evidence": "Tip 15Grokking Terminal Mode",
+      "note": "Tip number and title are concatenated with no separator ('Tip 15Grokking'); the same extraction defect occurs at the Tip 16-22 headings on lines 4005, 4335, 4491, 4595, 4637 and 4764."
+    },
+    {
+      "line": 3924,
+      "kind": "typo",
+      "evidence": "What makes Neovim’s terminal emulator special is that fact that you can also switch to Normal mode and use familiar commands to scroll the text, as well as copying and pasting using Vim’s registers.",
+      "note": "'that fact that' should read 'the fact that'."
+    },
+    {
+      "line": 3938,
+      "kind": "typo",
+      "evidence": "Now, you can switch from Terminal mode back to Normal mode by pressing they <Esc> key.",
+      "note": "'pressing they <Esc> key' should read 'pressing the <Esc> key'."
+    },
+    {
+      "line": 4254,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "The two-column table header has collapsed into one token ('CommandEffect'); body cells are likewise split onto separate lines (command at 4256, effect at 4258). The same defect recurs at 4412 and 4688."
+    },
+    {
+      "line": 4767,
+      "kind": "typo",
+      "evidence": "By convention, the $VISUAL environment variable is used to specify the users’ preferred text editor.",
+      "note": "The possessive 'users’' should be singular 'user’s' ('the user's preferred text editor')."
+    }
+  ]
+}

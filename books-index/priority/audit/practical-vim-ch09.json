@@ -1,0 +1,195 @@
+{
+  "id": "practical-vim-ch09",
+  "book": "practical-vim",
+  "chapter": 9,
+  "title": "Navigate Between Files with Jumps",
+  "start": 5723,
+  "end": 5979,
+  "summary": "Chapter 9 (Tips 56–59) explains jump-based navigation: jumps record cursor positions in a per-window jump list that <C-o> and <C-i> traverse backward and forward, and unlike ordinary motions they can cross file boundaries. It contrasts the jump list with the per-buffer change list (g; and g,) and the `. and `^ marks, then shows how gf treats a filepath under the cursor as a hyperlink configured by 'suffixesadd' and 'path'. The chapter closes with global marks (m{letter}), which persist across files and sessions and are worth setting before commands such as :vimgrep.",
+  "commands": [
+    {
+      "keys": "<C-o>",
+      "meaning": "Jump backward through the jump list, like a browser's back button",
+      "line": 5736,
+      "evidence": "In web browsers, we’re used to using the back button to return to pages that we visited earlier. Vim provides a similar feature by way of the jump list: the <C-o> command is like the back button, while the complementary <C-i> command is like the forward button. These commands allow us to traverse Vim’s jump list, but what exactly is a jump?"
+    },
+    {
+      "keys": "<C-i>",
+      "meaning": "Jump forward through the jump list, like a browser's forward button",
+      "line": 5736,
+      "evidence": "In web browsers, we’re used to using the back button to return to pages that we visited earlier. Vim provides a similar feature by way of the jump list: the <C-o> command is like the back button, while the complementary <C-i> command is like the forward button. These commands allow us to traverse Vim’s jump list, but what exactly is a jump?"
+    },
+    {
+      "keys": ":jumps",
+      "meaning": "Print the contents of the jump list",
+      "line": 5740,
+      "evidence": "=> :jumps"
+    },
+    {
+      "keys": "[count]G",
+      "meaning": "Jump directly to a line number; this counts as a jump",
+      "line": 5764,
+      "evidence": "[count]G"
+    },
+    {
+      "keys": "/pattern<CR>",
+      "meaning": "Search forward and jump to the next occurrence of the pattern",
+      "line": 5768,
+      "evidence": "/pattern<CR>/?pattern<CR>/n/N"
+    },
+    {
+      "keys": "n / N",
+      "meaning": "Jump to the next or previous search match",
+      "line": 5768,
+      "evidence": "/pattern<CR>/?pattern<CR>/n/N"
+    },
+    {
+      "keys": "%",
+      "meaning": "Jump to the matching parenthesis",
+      "line": 5772,
+      "evidence": "%"
+    },
+    {
+      "keys": "( / )",
+      "meaning": "Jump to the start of the previous or next sentence",
+      "line": 5776,
+      "evidence": "(/)"
+    },
+    {
+      "keys": "{ / }",
+      "meaning": "Jump to the start of the previous or next paragraph",
+      "line": 5780,
+      "evidence": "{/}"
+    },
+    {
+      "keys": "gf",
+      "meaning": "Jump to the file name under the cursor",
+      "line": 5788,
+      "evidence": "gf"
+    },
+    {
+      "keys": "<C-]>",
+      "meaning": "Jump to the definition of the keyword under the cursor",
+      "line": 5792,
+      "evidence": "<C-]>"
+    },
+    {
+      "keys": "g; / g,",
+      "meaning": "Traverse backward or forward through the change list",
+      "line": 5834,
+      "evidence": "This example output shows that Vim records the line and column number for each change. Using the g; and g, commands, we can traverse backward and forward through the change list. As a memory aid for g; and g,, it may help to remember that the ; and , commands can be used to repeat or reverse the f{char} command (see Tip 50)."
+    },
+    {
+      "keys": "gi",
+      "meaning": "Restore the cursor to the last insertion point and switch back to Insert mode",
+      "line": 5844,
+      "evidence": "The `^ mark references the last insertion, which is slightly more specific than the last change. If we leave Insert mode and then scroll around the document, we can quickly carry on where we left off by pressing gi (giⓘ). In a single move, that uses the `^ mark to restore the cursor position and then switches back into Insert mode. It’s a great little time saver!"
+    },
+    {
+      "keys": "m{letter}",
+      "meaning": "Create a mark at the cursor; uppercase letters create global marks",
+      "line": 5930,
+      "evidence": "The m{letter} command allows us to create a mark at the current cursor position (mⓘ). Lowercase letters create marks that are local to a buffer, whereas uppercase letters create global marks. Having set a mark, we can snap our cursor back to it with the `{letter} command (`ⓘ)."
+    },
+    {
+      "keys": "`{letter}",
+      "meaning": "Snap the cursor back to a mark",
+      "line": 5930,
+      "evidence": "The m{letter} command allows us to create a mark at the current cursor position (mⓘ). Lowercase letters create marks that are local to a buffer, whereas uppercase letters create global marks. Having set a mark, we can snap our cursor back to it with the `{letter} command (`ⓘ)."
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Jump list",
+      "line": 5736,
+      "evidence": "In web browsers, we’re used to using the back button to return to pages that we visited earlier. Vim provides a similar feature by way of the jump list: the <C-o> command is like the back button, while the complementary <C-i> command is like the forward button. These commands allow us to traverse Vim’s jump list, but what exactly is a jump?"
+    },
+    {
+      "name": "Jumps vs. motions",
+      "line": 5738,
+      "evidence": "Let’s start by making this distinction: motions move around within a file, whereas jumps can move between files (although we’ll soon see that some motions are also classified as jumps). We can inspect the contents of the jump list by running this command:"
+    },
+    {
+      "name": "Mapping <Tab> also overrides <C-i>",
+      "line": 5808,
+      "evidence": "Beware that if you attempt to create a mapping for the <Tab> key, it will also be triggered when you press <C-i> (and vice versa). That may not seem like a problem, but consider this: if you map the <Tab> key to something else, it will overwrite the default behavior of the <C-i> command. Think carefully about whether that’s a worthwhile trade-off. The jump list is much less useful if you can only traverse it in one direction."
+    },
+    {
+      "name": "Change list",
+      "line": 5818,
+      "evidence": "It turns out that Vim maintains a list of the modifications we make to each buffer during the course of an editing session. It’s called the change list (see changelistⓘ), and we can inspect its contents by running the following:"
+    },
+    {
+      "name": "Last-change marks (`. and `^)",
+      "line": 5840,
+      "evidence": "Vim automatically creates a couple of marks that complement the change list. The `. mark always references the position of the last change (`.ⓘ), while the `^ mark tracks the position of the cursor the last time that Insert mode was stopped (`^ⓘ)."
+    },
+    {
+      "name": "Change list per buffer vs. jump list per window",
+      "line": 5846,
+      "evidence": "Vim maintains a change list for each individual buffer in an editing session. By contrast, a separate jump list is created for each window."
+    },
+    {
+      "name": "Filepath under the cursor as a hyperlink",
+      "line": 5852,
+      "evidence": "Vim treats filenames in our document as a kind of hyperlink. When configured properly, we can use the gf command to go to the filename under the cursor."
+    },
+    {
+      "name": "'suffixesadd' extension lookup",
+      "line": 5890,
+      "evidence": "The ‘suffixesadd’ option allows us to specify one or more file extensions, which Vim will attempt to use when looking up a filename with the gf command ('suffixesadd'ⓘ). We can set it up by running this command:"
+    },
+    {
+      "name": "'path' search directories",
+      "line": 5902,
+      "evidence": "That’s where the ‘path’ option comes in ('path'ⓘ). We can configure this to reference a comma-separated list of directories. When we use the gf command, Vim checks each of the directories listed in ‘path’ to see if it contains a filename that matches the text under the cursor. The ‘path’ setting is also used by the :find command, which we covered in Tip 43."
+    },
+    {
+      "name": "Global marks",
+      "line": 5928,
+      "evidence": "A global mark is a kind of bookmark that allows us to jump between files. Marks can be especially useful for snapping back to a file after exploring a codebase."
+    },
+    {
+      "name": "Global marks persist between sessions",
+      "line": 5932,
+      "evidence": "Try this: open up your vimrc file and press mV to set a global mark (mnemonic: V for vimrc). Switch to another file and then press `V, and you should snap back to the global mark you set in the vimrc file. By default, global marks are persisted between editing sessions (although this behavior can be configured; see 'viminfo'ⓘ). Now you can always open up your vimrc file with two keystrokes—that is, unless you set the global V mark to another location."
+    },
+    {
+      "name": "Set a global mark before code diving",
+      "line": 5934,
+      "evidence": "Set a Global Mark Before Going Code Diving"
+    }
+  ],
+  "problems": [
+    {
+      "line": 5732,
+      "kind": "garbled",
+      "note": "The tip number and tip title are concatenated with no separator ('56Traverse'); the same lost separator recurs in the headings at lines 5812, 5850, and 5926.",
+      "evidence": "Tip 56Traverse the Jump List"
+    },
+    {
+      "line": 5754,
+      "kind": "typo",
+      "note": "The same hit-enter prompt appears at line 5832 as 'Press ENTER or type command to continue'; the capitalization of ENTER differs between the two transcriptions.",
+      "evidence": "Press Enter or type command to continue"
+    },
+    {
+      "line": 5762,
+      "kind": "garbled",
+      "note": "The two table column headers 'Command' and 'Effect' are run together with no delimiter, and the body cells are emitted one per line instead of as rows, so the table's two-column structure is lost.",
+      "evidence": "CommandEffect"
+    },
+    {
+      "line": 5796,
+      "kind": "typo",
+      "note": "The first mark-jump form uses a typographic right single quotation mark (U+2019) instead of an ASCII apostrophe or backtick, while the second form on the same line uses a literal backtick; the first key cannot be typed as shown.",
+      "evidence": "’{mark}/`{mark}"
+    },
+    {
+      "line": 5884,
+      "kind": "typo",
+      "note": "The quoted path opens with U+2019 (right single quotation mark) and closes with U+2019, whereas the error message later on the same line correctly uses U+2018 before 'practical_vim/core'; the opening mark is wrong.",
+      "evidence": "Let’s try it out. We’ll start by placing our cursor somewhere inside the ’practical_vim/core’ string (for example, pressing fp would get us there quickly). If we try using the gf command now, we get this error: “E447: Can’t find file ‘practical_vim/core’ in path.”"
+    }
+  ]
+}

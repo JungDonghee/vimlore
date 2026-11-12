@@ -1,0 +1,201 @@
+{
+  "id": "practical-vim-ch06",
+  "book": "practical-vim",
+  "chapter": 6,
+  "title": "Manage Multiple Files",
+  "start": 3857,
+  "end": 4375,
+  "summary": "Chapter 6 explains how Vim manages multiple files through the buffer list, the argument list, and split windows organized into tab pages. It distinguishes files on disk from in-memory buffers, shows how to inspect and navigate the buffer list with :ls, :bnext, and <C-^>, and warns about hiding modified buffers and reconciling them when quitting. It then covers populating the :args argument list with names, globs, and backtick expansion, running :argdo across that set, and finally dividing the workspace with <C-w>s and <C-w>v, moving focus, resizing, and using :tabedit with {N}gt to switch tab pages.",
+  "commands": [
+    {
+      "keys": ":ls",
+      "meaning": "List all loaded buffers with their numbers and status flags.",
+      "line": 3892,
+      "evidence": "=> :ls"
+    },
+    {
+      "keys": ":bnext",
+      "meaning": "Switch to the next buffer in the buffer list.",
+      "line": 3900,
+      "evidence": "=> :bnext"
+    },
+    {
+      "keys": "<C-^>",
+      "meaning": "Toggle between the current buffer and the alternate file.",
+      "line": 3908,
+      "evidence": "The % symbol indicates which of the buffers is visible in the current window, while the # symbol represents the alternate file. We can quickly toggle between the current and alternate files by pressing <C-^>. Press it once, and we’ll switch to a.txt; press it a second time, and we’ll get back to b.txt."
+    },
+    {
+      "keys": ":buffer {bufname}",
+      "meaning": "Jump directly to a buffer by number, or by a unique fragment of its name.",
+      "line": 3924,
+      "evidence": "The :ls listing starts with a digit, which is assigned to each buffer automatically on creation. We can jump directly to a buffer by number, using the :buffer N command (see :bⓘ). Alternatively, we can use the more intuitive form, :buffer {bufname}. The {bufname} need only contain enough characters from the filepath to uniquely identify the buffer. If we enter a string that matches more than one of the items in the buffer list, we can use tab-completion to choose between the options (see Tip 32)."
+    },
+    {
+      "keys": ":bdelete",
+      "meaning": "Remove buffers from the buffer list without touching their files on disk.",
+      "line": 3932,
+      "evidence": ":bdelete N1 N2 N3"
+    },
+    {
+      "keys": ":args",
+      "meaning": "Print the current contents of the argument list.",
+      "line": 3958,
+      "evidence": "=> :args"
+    },
+    {
+      "keys": ":args {arglist}",
+      "meaning": "Replace the argument list with the given filenames, wildcards, or shell output.",
+      "line": 3972,
+      "evidence": ":args {arglist}"
+    },
+    {
+      "keys": ":args **/*.js **/*.css",
+      "meaning": "Populate the argument list from several globs at once.",
+      "line": 4034,
+      "evidence": "=> :args **/*.js **/*.css"
+    },
+    {
+      "keys": ":args `cat .chapters`",
+      "meaning": "Populate the argument list from the output of a shell command.",
+      "line": 4052,
+      "evidence": "=> :args `cat .chapters`"
+    },
+    {
+      "keys": ":bnext!",
+      "meaning": "Force a switch to the next buffer, abandoning unsaved changes.",
+      "line": 4097,
+      "evidence": "=> :bnext!"
+    },
+    {
+      "keys": ":argdo {cmd}",
+      "meaning": "Execute an Ex command on each file in the argument list.",
+      "line": 4148,
+      "evidence": "The :argdo {cmd} command works like this:"
+    },
+    {
+      "keys": "<C-w>s / <C-w>v",
+      "meaning": "Split the current window horizontally or vertically, reusing the current buffer.",
+      "line": 4176,
+      "evidence": "When Vim starts up, it contains a single window. We can divide this window horizontally with the <C-w>s command, which creates two windows of equal height. Or we can use the <C-w>v command to split the window vertically, producing two windows of equal width. We can repeat these commands as often as we like, splitting our workspace again and again in a process that resembles cell division."
+    },
+    {
+      "keys": "<C-w>w",
+      "meaning": "Cycle the focus between open windows.",
+      "line": 4208,
+      "evidence": "<C-w>w"
+    },
+    {
+      "keys": ":tabedit {filename}",
+      "meaning": "Open a file in a new tab page.",
+      "line": 4306,
+      "evidence": "We can open a new tab page with the :tabedit {filename} command. If we omit the {filename} argument, then Vim creates a new tab page containing an empty buffer."
+    },
+    {
+      "keys": "{N}gt / gT",
+      "meaning": "Jump to tab page N, or move to the next/previous tab.",
+      "line": 4332,
+      "evidence": "Tabs are numbered starting from 1. We can switch between tabs with the {N}gt command, which can be remembered as goto tab {N}. When this command is prefixed with a number, Vim jumps to the specified tab, but if the number is omitted, Vim advances to the next tab. The gT command does the same but in reverse."
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Files versus buffers",
+      "line": 3878,
+      "evidence": "Files are stored on the disk, whereas buffers exist in memory. When we open a file in Vim, its contents are read into a buffer, which takes the same name as the file. Initially, the contents of the buffer will be identical to those of the file, but the two will diverge as we make changes to the buffer. If we decide that we want to keep our changes, we can write the contents of the buffer back into the file. Most Vim commands operate on buffers, but a few operate on files, including the :write, :update, and :saveas commands."
+    },
+    {
+      "name": "Buffer list",
+      "line": 3898,
+      "evidence": "The :ls command gives us a listing of all the buffers that have been loaded into memory (:lsⓘ). We can switch to the next buffer in the list by running the :bnext command:"
+    },
+    {
+      "name": "Alternate file (% and # flags)",
+      "line": 3908,
+      "evidence": "The % symbol indicates which of the buffers is visible in the current window, while the # symbol represents the alternate file. We can quickly toggle between the current and alternate files by pressing <C-^>. Press it once, and we’ll switch to a.txt; press it a second time, and we’ll get back to b.txt."
+    },
+    {
+      "name": "Argument list",
+      "line": 3962,
+      "evidence": "The argument list represents the list of files that was passed as an argument when we ran the vim command. In our case, we provided a single argument, *.txt, but our shell expanded the * wildcard, matching the five files that we see in our argument list. The [] characters indicate which of the files in the argument list is active."
+    },
+    {
+      "name": "Globs and wildcard expansion",
+      "line": 3996,
+      "evidence": "Wildcards are placeholders that can stand in for characters in the name of a file or directory. The * symbol will match zero or more characters, but only in the scope of the specified directory (wildcardⓘ). The ** wildcard also matches zero or more characters, but it can recurse downward into directories below the specified directory (starstar-wildcardⓘ)."
+    },
+    {
+      "name": "Backtick expansion",
+      "line": 4054,
+      "evidence": "Vim executes the text inside the backtick characters in the shell, using the output from the cat command as the argument for the :args command. Here, we’ve used the cat command to get the contents of the .chapters file, but we could use any command that’s available in the shell. This feature is not available on all systems. See backtick-expansionⓘ for more details."
+    },
+    {
+      "name": "Hidden buffers",
+      "line": 4105,
+      "evidence": "The bang symbol forces Vim to switch buffers, even if our current buffer has unsaved changes. When we run the :ls command now, b.txt is marked with the letter a for active, while a.txt is marked with the letter h for hidden."
+    },
+    {
+      "name": "'hidden' setting for :*do commands",
+      "line": 4162,
+      "evidence": "If we enable the ‘hidden’ setting (see 'hidden'ⓘ), then we can use the :next, :bnext, :cnext (and so on) commands without a trailing bang. If the active buffer is modified, Vim will automatically hide it when we navigate away from it. The ‘hidden’ setting makes it possible to use :argdo, :bufdo, and :cfdo to change a collection of buffers with a single command."
+    },
+    {
+      "name": "Windows as viewports onto buffers",
+      "line": 4172,
+      "evidence": "In Vim’s terminology, a window is a viewport onto a buffer (windowⓘ). We can open multiple windows, each containing the same buffer, or we can load different buffers into each window. Vim’s window management system is flexible, allowing us to build a workspace tailored to the demands of our workflow."
+    },
+    {
+      "name": "Tab pages as containers of windows",
+      "line": 4286,
+      "evidence": "In Vim, a tab page is a container that can hold a collection of windows (tabpageⓘ). If you’re accustomed to using another text editor, then Vim’s tabbed interface might seem strange at first. Let’s begin by considering how tabs work in many other text editors and IDEs."
+    },
+    {
+      "name": "Local working directory with :lcd",
+      "line": 4302,
+      "evidence": "The :lcd {path} command lets us set the working directory locally for the current window. If we create a new tab page and then use the :lcd command to switch to another directory, we can then comfortably scope each tab page to a different project. Note that :lcd applies locally to the current window, not to the current tab page. If we have a tab page containing two or more split windows, we could set the local working directory for all of them by running :windo lcd {path}. Check out episode 9 of Vimcasts for more information.[11]"
+    },
+    {
+      "name": "Resizing windows",
+      "line": 4252,
+      "evidence": "Vim provides several key mappings for resizing windows. For the full list, look up window-resizeⓘ. This table summarizes a handful of the most useful commands:"
+    }
+  ],
+  "problems": [
+    {
+      "line": 3870,
+      "kind": "garbled",
+      "evidence": "Tip 37Track Open Files with the Buffer List",
+      "note": "Tip number and tip title are run together with no separator; the same lost separator recurs in the headings at lines 3944, 4065, 4168, and 4282."
+    },
+    {
+      "line": 3960,
+      "kind": "typo",
+      "evidence": "<= [a.txt] b.txt c.txt. d.txt e.txt",
+      "note": "Stray period after 'c.txt' breaks the whitespace-separated list of five files (a.txt through e.txt); 'c.txt.' is not one of them."
+    },
+    {
+      "line": 4000,
+      "kind": "garbled",
+      "evidence": "GlobFiles Matching the Expansion",
+      "note": "The two table column headers ('Glob' and 'Files Matching the Expansion') are concatenated into a single string."
+    },
+    {
+      "line": 4125,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "Table headers 'Command' and 'Effect' are merged; the same merged header recurs at lines 4184, 4206, and 4312."
+    },
+    {
+      "line": 4236,
+      "kind": "garbled",
+      "evidence": "Ex CommandNormal CommandEffect",
+      "note": "Three column headers ('Ex Command', 'Normal Command', 'Effect') are concatenated with no delimiter; the same defect recurs at line 4334."
+    },
+    {
+      "line": 4254,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "The 'Keystrokes' header and the second column header are run together with no delimiter, losing the column boundary in this resize-commands table."
+    }
+  ]
+}

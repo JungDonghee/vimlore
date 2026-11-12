@@ -52,6 +52,9 @@ npm run browser:audit            # 1920/390/320 overflow+error audit
 npm run books:build              # normalize local books (gitignored text)
 npm run books:search -- "text object"
 npm run books:read -- practical-vim 1200 1240
+npm run books:priority:read -- toc practical-vim
+npm run books:priority:read -- tip practical-vim 9
+npm run books:priority:merge       # validate deep chapter audit
 ```
 
 `npm run lint:levels` is the safety net: it replays each stage's `solution`

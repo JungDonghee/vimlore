@@ -1,0 +1,201 @@
+{
+  "id": "practical-vim-ch18",
+  "book": "practical-vim",
+  "chapter": 18,
+  "title": "Search Project-Wide",
+  "start": 10796,
+  "end": 11099,
+  "summary": "Chapter 18 explains how to search across an entire project from within Vim. It presents :grep as a wrapper for external grep-like programs, shows how grepprg and grepformat control the command and parse its output (including ack with --nogroup and --column), and introduces :vimgrep for searching multiple files with Vim's own regex engine. It also covers quickfix navigation, file and argument-list patterns such as ##, and reusing the current search pattern or search history.",
+  "commands": [
+    {
+      "keys": ":grep Waldo *",
+      "meaning": "Search all files in the current directory with the external grep program and load the matches into the quickfix list.",
+      "line": 10843,
+      "evidence": "=> :grep Waldo *"
+    },
+    {
+      "keys": ":grep -i Waldo *",
+      "meaning": "Pass -i through to grep for a case-insensitive project-wide search.",
+      "line": 10853,
+      "evidence": "=> :grep -i Waldo *"
+    },
+    {
+      "keys": ":cnext/:cprev",
+      "meaning": "Jump to the next or previous entry in the quickfix list.",
+      "line": 10845,
+      "evidence": "Behind the scenes, Vim executes grep -n Waldo * in the shell for us. Rather than printing grep’s output, Vim does something much more useful. It parses the results and builds a quickfix list from them. We can navigate through the results using the :cnext/:cprev commands and all of the other techniques that we explored in Chapter 17, Compile Code and Navigate Errors"
+    },
+    {
+      "keys": ":set grepprg=ack\\ --nogroup\\ $*",
+      "meaning": "Route :grep through ack, using --nogroup for grep-style output and $* for the search arguments.",
+      "line": 10932,
+      "evidence": "=> :set grepprg=ack\\ --nogroup\\ $*"
+    },
+    {
+      "keys": ":set grepprg=ack\\ --nogroup\\ --column\\ $*",
+      "meaning": "Make ack include column numbers in its output.",
+      "line": 10956,
+      "evidence": "=> :set grepprg=ack\\ --nogroup\\ --column\\ $*"
+    },
+    {
+      "keys": ":set grepformat=%f:%l:%c:%m",
+      "meaning": "Parse ack's filename, line, column, and message fields into the quickfix list.",
+      "line": 10958,
+      "evidence": "=> :set grepformat=%f:%l:%c:%m"
+    },
+    {
+      "keys": ":vimgrep /going/ clock.txt tough.txt where.txt",
+      "meaning": "Search several named files with Vim's regex engine and populate the quickfix list.",
+      "line": 10993,
+      "evidence": "=> :vimgrep /going/ clock.txt tough.txt where.txt"
+    },
+    {
+      "keys": ":vim /going/g clock.txt tough.txt where.txt",
+      "meaning": "Add g so every match on a line is recorded, not just the first.",
+      "line": 11011,
+      "evidence": "=> :vim /going/g clock.txt tough.txt where.txt"
+    },
+    {
+      "keys": ":vim /going/g *.txt",
+      "meaning": "Search every .txt file in the current directory using a wildcard.",
+      "line": 11033,
+      "evidence": "=> :vim /going/g *.txt"
+    },
+    {
+      "keys": ":args *.txt",
+      "meaning": "Load the .txt files into Vim's argument list.",
+      "line": 11042,
+      "evidence": "=> :args *.txt"
+    },
+    {
+      "keys": ":vim /going/g ##",
+      "meaning": "Run :vimgrep over all files in the argument list via ##.",
+      "line": 11044,
+      "evidence": "=> :vim /going/g ##"
+    },
+    {
+      "keys": "/[Dd]on't",
+      "meaning": "Search the current file for a pattern that matches both don't and Don't.",
+      "line": 11062,
+      "evidence": "=> /[Dd]on't"
+    },
+    {
+      "keys": ":vim //g *.txt",
+      "meaning": "Leave the pattern field empty so :vimgrep reuses the current search pattern across *.txt.",
+      "line": 11064,
+      "evidence": "=> :vim //g *.txt"
+    },
+    {
+      "keys": ":vim //g ##",
+      "meaning": "Search every file in the argument list for the current search pattern.",
+      "line": 11076,
+      "evidence": "=> :vim //g ##"
+    },
+    {
+      "keys": ":vim /<C-r>//g ##",
+      "meaning": "Insert the current search pattern with <C-r>/ and run :vimgrep over the argument list.",
+      "line": 11086,
+      "evidence": "=> :vim /<C-r>//g ##"
+    }
+  ],
+  "concepts": [
+    {
+      "name": ":grep external wrapper",
+      "line": 10813,
+      "evidence": "Vim’s :grep command acts as a wrapper to an external grep (or grep-like) program. Using this wrapper, we can have grep search for a pattern across multiple files without leaving Vim, and then we can navigate the results using the quickfix list."
+    },
+    {
+      "name": "quickfix list",
+      "line": 11005,
+      "evidence": "The :vimgrep command populates the quickfix list with one entry for each line that contains a match."
+    },
+    {
+      "name": "grepprg setting",
+      "line": 10865,
+      "evidence": "The ‘grepprg’ setting specifies what to run in the shell when Vim’s :grep command is executed ('grepprg'ⓘ). The ‘grepformat’ setting tells Vim how to parse the output returned by the :grep command (see 'grepformat'ⓘ). On Unix systems, the defaults are these:"
+    },
+    {
+      "name": "grepformat setting",
+      "line": 10869,
+      "evidence": "grepformat=\"%f:%l:%m,%f:%l%m,%f %l%m\""
+    },
+    {
+      "name": "errorformat-style match tokens",
+      "line": 10883,
+      "evidence": "For each record, %f matches the filename (department-store.txt or goldrush.txt), %l matches the line number, and %m matches the text on that line."
+    },
+    {
+      "name": "ack --nogroup output",
+      "line": 10920,
+      "evidence": "We can easily massage this output so that it resembles that of grep -n by running ack with the --nogroup switch:"
+    },
+    {
+      "name": "ack --column output",
+      "line": 10944,
+      "evidence": "But ack has another trick up its sleeve. When run with the --column option, ack will output the line and column number of each match. Observe:"
+    },
+    {
+      "name": ":vimgrep native regex engine",
+      "line": 10966,
+      "evidence": "The :vimgrep command allows us to search through multiple files using Vim’s native regular expression engine."
+    },
+    {
+      "name": "g flag for all matches",
+      "line": 11009,
+      "evidence": "If we supply the g flag after the pattern, then :vimgrep will match all occurrences of the specified pattern, not just the first match on each line:"
+    },
+    {
+      "name": "## argument-list expansion",
+      "line": 11037,
+      "evidence": "As well as being able to use * and ** wildcards, we can use the ## symbol, which is expanded to represent the names of each file in the argument list (cmdline-specialⓘ)."
+    },
+    {
+      "name": "empty pattern reuses current search",
+      "line": 11055,
+      "evidence": "We can leave the pattern field empty, which tells :vimgrep to use the current search pattern."
+    },
+    {
+      "name": "search-history dependence",
+      "line": 11080,
+      "evidence": "One thing to watch out for with this command is that it will always use the current values from the argument list and search history."
+    }
+  ],
+  "problems": [
+    {
+      "line": 10811,
+      "kind": "missing",
+      "evidence": "Tip 109Call grep Without Leaving Vim",
+      "note": "The tip number and tip title are concatenated with no separator: 'Tip 109' runs directly into 'Call'. The same merge recurs at 10859 ('Tip 110Customize'), 10964 ('Tip 111Grep'), and 11006 ('Tip 106Browse')."
+    },
+    {
+      "line": 10845,
+      "kind": "garbled",
+      "evidence": "Behind the scenes, Vim executes grep -n Waldo * in the shell for us. Rather than printing grep’s output, Vim does something much more useful. It parses the results and builds a quickfix list from them. We can navigate through the results using the :cnext/:cprev commands and all of the other techniques that we explored in Chapter 17, Compile Code and Navigate Errors",
+      "note": "The cross-reference is split by a blank line: this line ends with 'Chapter 17, Compile Code and Navigate Errors' and line 10847 supplies only 'with the Quickfix List.' The chapter title is broken across an empty paragraph, so the sentence does not read continuously in the extracted text."
+    },
+    {
+      "line": 10875,
+      "kind": "typo",
+      "evidence": "Let’s see how the default %f:%l %m format stacks up against this output from grep:",
+      "note": "The default format is written %f:%l %m (space before %m), but the actual default at 10869 is %f:%l:%m, and the sample output at 10877 uses colons. Visible inconsistency; not corrected."
+    },
+    {
+      "line": 10885,
+      "kind": "missing",
+      "evidence": "The ‘grepformat’ string can contain multiple formats separated by commas. The default matches either %f:%l %m or %f %l%m. Vim will use the first format that matches the output from :grep.",
+      "note": "This describes only two default formats and writes the first as %f:%l %m, whereas the setting at 10869 lists three: %f:%l:%m, %f:%l%m, and %f %l%m. The format list appears to be missing text."
+    },
+    {
+      "line": 10993,
+      "kind": "typo",
+      "evidence": "=> :vimgrep /going/ clock.txt tough.txt where.txt",
+      "note": "The directory listing at 10970-10988 contains about.txt, tough.txt, and where.txt; there is no clock.txt, yet the first result at 10995 is the about.txt line. The command likely should name about.txt. The same filename appears again at 11011."
+    },
+    {
+      "line": 11048,
+      "kind": "typo",
+      "evidence": "This may look like more work because we have to run two seperate Ex commands.",
+      "note": "Misspelling of 'separate'."
+    }
+  ]
+}

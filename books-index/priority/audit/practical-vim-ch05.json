@@ -1,0 +1,219 @@
+{
+  "id": "practical-vim-ch05",
+  "book": "practical-vim",
+  "chapter": 5,
+  "title": "Command-Line Mode",
+  "start": 2744,
+  "end": 3856,
+  "summary": "Chapter 5 explains Command-Line mode and the Ex commands it exposes, opening with a catalog of Ex commands that operate on buffer text and the control-key chords available at the prompt. It shows how to build [range] addresses from line numbers, marks, and patterns, and how to duplicate or move lines with :copy/:t and :move/:m. Later tips cover running Normal mode commands across a range with :normal, repeating Ex commands with @:, tab-completion and wildmode, inserting the word under the cursor with <C-r><C-w>, and recalling history in the command-line window. The final tips cover running shell commands and filtering ranges through external programs, then batching Ex commands in a script and sourcing it across the argument list.",
+  "commands": [
+    {
+      "keys": ":2,5p",
+      "meaning": "Print lines 2 through 5, using line-number addresses for the range.",
+      "line": 2865,
+      "evidence": "=> :2,5p"
+    },
+    {
+      "keys": ":%s/Practical/Pragmatic/",
+      "meaning": "Replace the first occurrence of Practical with Pragmatic on every line of the file.",
+      "line": 2911,
+      "evidence": "=> :%s/Practical/Pragmatic/"
+    },
+    {
+      "keys": ":'<,'>p",
+      "meaning": "Print the lines covered by the most recent Visual-mode selection.",
+      "line": 2931,
+      "evidence": "=> :'<,'>p"
+    },
+    {
+      "keys": ":/<html>/,/<\\/html>/p",
+      "meaning": "Print the range from the opening <html> tag to the closing </html> tag, using pattern addresses.",
+      "line": 2949,
+      "evidence": "=> :/<html>/,/<\\/html>/p"
+    },
+    {
+      "keys": ":/<html>/+1,/<\\/html>/-1p",
+      "meaning": "Print that same block without its first and last lines, using offset addresses.",
+      "line": 2967,
+      "evidence": "=> :/<html>/+1,/<\\/html>/-1p"
+    },
+    {
+      "keys": ":t.",
+      "meaning": "Duplicate the current line below itself without using a register.",
+      "line": 3105,
+      "evidence": ":t."
+    },
+    {
+      "keys": ":%normal A;",
+      "meaning": "Append a semicolon at the end of every line by running a Normal mode command across a range.",
+      "line": 3269,
+      "evidence": "=> :%normal A;"
+    },
+    {
+      "keys": "@:",
+      "meaning": "Repeat the most recently executed Ex command.",
+      "line": 3289,
+      "evidence": "In Chapter 1, The Vim Way, we saw how the . command can be used to repeat the last change. But the dot command won’t replay changes made from Vim’s command line. Instead, we can repeat the last Ex command by pressing @: (see @:ⓘ)."
+    },
+    {
+      "keys": ":col<C-d>",
+      "meaning": "Reveal the list of possible tab-completions for the col prefix.",
+      "line": 3313,
+      "evidence": "=> :col<C-d>"
+    },
+    {
+      "keys": "<C-r><C-w>",
+      "meaning": "Insert the word under the cursor at the command-line prompt.",
+      "line": 3362,
+      "evidence": "At Vim’s command line, the <C-r><C-w> mapping copies the word under the cursor and inserts it at the command-line prompt. We can use this to save ourselves a bit of typing."
+    },
+    {
+      "keys": "q:",
+      "meaning": "Open the command-line window with the history of Ex commands.",
+      "line": 3460,
+      "evidence": "Each of these commands is already in our history, so we shouldn’t have to type the entire command line from scratch. But how can we merge two records from our history into one? Press q: and meet the command-line window (see cmdwinⓘ)."
+    },
+    {
+      "keys": ":!ruby %",
+      "meaning": "Run an external command, with % standing for the current file name.",
+      "line": 3544,
+      "evidence": "=> :!ruby %"
+    },
+    {
+      "keys": ":2,$!sort -t',' -k2",
+      "meaning": "Filter lines 2 through the last line through the external sort command.",
+      "line": 3620,
+      "evidence": "=> :2,$!sort -t',' -k2"
+    },
+    {
+      "keys": ":g/href/j",
+      "meaning": "Run :join on every line where href matches (global command).",
+      "line": 3717,
+      "evidence": "=> :g/href/j"
+    },
+    {
+      "keys": ":argdo source batch.vim",
+      "meaning": "Source the script once in every file of the argument list.",
+      "line": 3817,
+      "evidence": "=> :argdo source batch.vim"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Ex commands strike far and wide",
+      "line": 2811,
+      "evidence": "As a general rule, we could say that Ex commands are long range and have the capacity to modify many lines in a single move. Or to condense that even further: Ex commands strike far and wide."
+    },
+    {
+      "name": "Range syntax {start},{end}",
+      "line": 2877,
+      "evidence": ":{start},{end}"
+    },
+    {
+      "name": "Visual selection range marks",
+      "line": 2943,
+      "evidence": "’< is a mark standing for the first line of the visual selection, while ’> is the last line of the visual selection (see Tip 54, for more about marks). These marks persist even when we leave Visual mode. If you try running :’<,’>p straight from Normal mode, it will always act on the lines that most recently formed a Visual mode selection."
+    },
+    {
+      "name": "Pattern addresses in a range",
+      "line": 2959,
+      "evidence": "This looks quite complex, but it follows the usual form for a range: :{start},{end}. The {start} address in this case is the pattern /<html>/, while the {end} address is /<\\/html>/. In other words, the range begins on the line containing an opening <html> tag and ends on the line containing the corresponding closing tag."
+    },
+    {
+      "name": "Address symbols for ranges",
+      "line": 2989,
+      "evidence": "The syntax for defining a range is very flexible. We can mix and match line numbers, marks, and patterns, and we can apply an offset to any of them. This table summarizes a few of the symbols that can be used to create addresses and ranges for Ex commands:"
+    },
+    {
+      "name": ":t as the copy TO mnemonic",
+      "line": 3093,
+      "evidence": "We could shorten the :copy command to only two letters, as :co. Or we can be even more succinct by using the :t command, which is a synonym for :copy. As a mnemonic, you can think of it as copy TO. This table shows a few examples of the :t command in action:"
+    },
+    {
+      "name": "Moving lines with :m",
+      "line": 3129,
+      "evidence": "We can shorten it to a single letter: :m. Suppose that we want to move the Hardware Store section after the Beauty Parlor section. We could do so using the :move command as shown in Table 8, Moving a Set of Lines with the ‘:m’ Command."
+    },
+    {
+      "name": "The : register and @: repeat",
+      "line": 3295,
+      "evidence": "Then we use @: to repeat the command. Note the similarity between this and the method for executing a macro (Play Back a Sequence of Commands by Executing a Macro). Also note that the : register always holds the most recently executed command line (see quote_:ⓘ). After running @: for the first time, we can subsequently repeat it with the @@ command."
+    },
+    {
+      "name": "wildmode and wildmenu completion",
+      "line": 3344,
+      "evidence": "We can customize this behavior by tweaking the ‘wildmode’ option (see 'wildmode'ⓘ). If you’re used to working with the bash shell, then this setting will match your expectations:"
+    },
+    {
+      "name": "Command-line window",
+      "line": 3462,
+      "evidence": "The command-line window is like a regular Vim buffer, where each line contains an item from our history. With the k and j keys, we can move backward and forward through our history. Or we can use Vim’s search feature to find the line that we’re looking for. When we press the <CR> key, the contents of the current line are executed as an Ex command."
+    },
+    {
+      "name": "Filtering a range through an external program",
+      "line": 3602,
+      "evidence": "The :!{cmd} command takes on a different meaning when it’s given a range. The lines specified by [range] are passed as standard input for the {cmd}, and then the output from {cmd} overwrites the original contents of [range]. Or to put it another way, the [range] is filtered through the specified {cmd} (see :range!ⓘ). Vim defines a filter as “a program that accepts text as standard input, changes it in some way, and sends it to standard output.”"
+    },
+    {
+      "name": "Batching Ex commands in a sourced script",
+      "line": 3756,
+      "evidence": "We can use the :source command to execute the batch.vim script (see sourceⓘ)."
+    }
+  ],
+  "problems": [
+    {
+      "line": 2753,
+      "kind": "missing",
+      "evidence": "Tip 27Meet Vim’s Command Line",
+      "note": "Tip number and tip title are run together with no separator; the same concatenation appears in every tip heading of the chapter (2815, 3031, 3189, 3285, 3307, 3358, 3428, 3516, 3668)."
+    },
+    {
+      "line": 2758,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "Two-column table header collapsed into one run of text (Command + Effect); the same merged header appears at 3095 and 3638."
+    },
+    {
+      "line": 2991,
+      "kind": "garbled",
+      "evidence": "SymbolAddress",
+      "note": "Two-column table header collapsed into one run of text (Symbol + Address) for the address-symbols table."
+    },
+    {
+      "line": 3055,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Two-column table header collapsed into one run of text (Keystrokes + Buffer Contents); the same merge repeats at 3133, 3211, 3239, 3382 and 3468."
+    },
+    {
+      "line": 3167,
+      "kind": "typo",
+      "evidence": ":’<,’>m$",
+      "note": "Typographic curly apostrophes replace the straight apostrophes required inside the Ex range notation :'<,'>; the same substitution appears at 3253 and in the prose at 2943."
+    },
+    {
+      "line": 3245,
+      "kind": "typo",
+      "evidence": "var bar = ’a’",
+      "note": "Curly quotation marks replaced the straight single quotes around the string literal; the source lines at 3201 and 3257 use 'a' with straight quotes."
+    },
+    {
+      "line": 3247,
+      "kind": "typo",
+      "evidence": "var baz = ’z’",
+      "note": "Curly quotation marks replaced the straight single quotes around the string literal; the source line at 3203 uses 'z' with straight quotes."
+    },
+    {
+      "line": 3660,
+      "kind": "garbled",
+      "evidence": "Vim gives special treatment to some commands. For example, both make and grep have wrapper commands. Not only are they easy to execute from inside Vim, but their output is parsed and used to populate the quickfix list. These commands are covered in greater depth in both Chapter 17, Compile Code and Navigate Errors",
+      "note": "The sentence citing Chapter 17 is cut off mid-clause and its remaining words are split into separate paragraphs at 3662 and 3664, breaking the running text."
+    },
+    {
+      "line": 3840,
+      "kind": "duplicated",
+      "evidence": "Practical Vim, 2nd Edition",
+      "note": "The running header Practical Vim, 2nd Edition is repeated back to back (3838 and 3840) with only a blank line between them."
+    }
+  ]
+}

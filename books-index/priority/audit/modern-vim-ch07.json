@@ -1,0 +1,231 @@
+{
+  "id": "modern-vim-ch07",
+  "book": "modern-vim",
+  "chapter": 7,
+  "title": "Configuring Vim",
+  "start": 5330,
+  "end": 6882,
+  "summary": "Chapter 7 presents three mechanisms for applying Vim settings in context: autocommands (with the {event} {pattern} {cmd} form, kept in an augroup with an autocmd! teardown), the vim-editorconfig plugin for .editorconfig files, and Projectionist by Tim Pope for per-project buffer-local configuration. Worked demos move from BufReadPost/BufNewFile/FileType events and :autocmd inspection, through EditorConfig property mapping with its root and precedence rules, to overriding g:ale_linters with b:ale_linters and querying .projections.json files, where the projection nearest the buffer wins. The tip closes by weighing local vimrc files enabled by the 'exrc' option against the restrictions imposed by the 'secure' option. The supplied 5330-6882 range runs past the chapter's end at line 6407 into Appendix 1 and the book's back matter.",
+  "commands": [
+    {
+      "keys": "augroup demo",
+      "meaning": "Open a named autocommand group so its autocommands can be managed as a unit",
+      "line": 5357,
+      "evidence": "augroup demo"
+    },
+    {
+      "keys": "autocmd!",
+      "meaning": "Delete the existing autocommands in the enclosing group, preventing duplicates when the script is re-sourced",
+      "line": 5359,
+      "evidence": "autocmd!"
+    },
+    {
+      "keys": "autocmd BufReadPost * echo 'Reading: ' . expand('<afile>')",
+      "meaning": "Define an autocommand that runs after any buffer is read and echoes the filename via the <afile> placeholder",
+      "line": 5361,
+      "evidence": "autocmd BufReadPost * echo 'Reading: ' . expand('<afile>')"
+    },
+    {
+      "keys": ":source %",
+      "meaning": "Source the current file so the Vim script it contains (here, autocommand definitions) takes effect",
+      "line": 5376,
+      "evidence": "=> :source %"
+    },
+    {
+      "keys": ":edit!",
+      "meaning": "Re-read the current file from disk; the bang variant always fires the BufReadPost event",
+      "line": 5380,
+      "evidence": "=> :edit!"
+    },
+    {
+      "keys": "autocmd FileType vim",
+      "meaning": "Define an autocommand on the FileType event for filetype vim (the definition continues on the following '\\' lines)",
+      "line": 5497,
+      "evidence": "autocmd FileType vim"
+    },
+    {
+      "keys": ":set filetype=vim",
+      "meaning": "Change the current buffer's filetype, which triggers the FileType autocommand",
+      "line": 5519,
+      "evidence": "=> :set filetype=vim"
+    },
+    {
+      "keys": ":autocmd demo",
+      "meaning": "List the autocommands defined in the demo group, revealing duplicated definitions",
+      "line": 5601,
+      "evidence": "=> :autocmd demo"
+    },
+    {
+      "keys": ":autocmd! demo",
+      "meaning": "Remove all autocommands belonging to the demo group",
+      "line": 5621,
+      "evidence": "=> :autocmd! demo"
+    },
+    {
+      "keys": "autocmd BufWritePre /tmp/* setlocal noundofile",
+      "meaning": "Just before writing a file matching /tmp/*, disable persistent undo for that buffer only",
+      "line": 5650,
+      "evidence": "autocmd BufWritePre /tmp/* setlocal noundofile"
+    },
+    {
+      "keys": ":doautocmd User ProjectionistActivate",
+      "meaning": "Trigger the Vim-never-fires-it User event by hand, using ProjectionistActivate as the pattern",
+      "line": 5664,
+      "evidence": "=> :doautocmd User ProjectionistActivate"
+    },
+    {
+      "keys": ":set expandtab? shiftwidth?",
+      "meaning": "Query (rather than set) the current values of the 'expandtab' and 'shiftwidth' options",
+      "line": 5752,
+      "evidence": "=> :set expandtab? shiftwidth?"
+    },
+    {
+      "keys": ":windo set list",
+      "meaning": "Execute :set list in every window, making indentation whitespace visible",
+      "line": 5811,
+      "evidence": "=> :windo set list"
+    },
+    {
+      "keys": ":let b:ale_linters = {'javascript': ['jshint']}",
+      "meaning": "Set a buffer-local ALE linter list, which takes precedence over the global g:ale_linters",
+      "line": 6031,
+      "evidence": "=> :let b:ale_linters = {'javascript': ['jshint']}"
+    },
+    {
+      "keys": ":bufdo edit!",
+      "meaning": "Reload every buffer from disk so Projectionist re-attaches the project metadata",
+      "line": 6081,
+      "evidence": "=> :bufdo edit!"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Autocommand definition format ({event} {pattern} {cmd})",
+      "line": 5400,
+      "evidence": "autocmd {event} {pattern} {cmd}"
+    },
+    {
+      "name": "BufNewFile event for buffers with no file on disk yet",
+      "line": 5464,
+      "evidence": "You can use another one of Vim’s events to handle this case: BufNewFile (:h BufNewFile)."
+    },
+    {
+      "name": "FileType event matches the pattern against the filetype",
+      "line": 5527,
+      "evidence": "Here, the {pattern} is matched against the filetype."
+    },
+    {
+      "name": "Autocommand group teardown template (augroup + autocmd!)",
+      "line": 5631,
+      "evidence": "augroup unique_group_name"
+    },
+    {
+      "name": "User event as a plugin-defined custom event",
+      "line": 5667,
+      "evidence": "Plugins can use this mechanism to create their own events."
+    },
+    {
+      "name": "EditorConfig (.editorconfig) as an editor-agnostic standard",
+      "line": 5679,
+      "evidence": "The .editorconfig file has become a de-facto standard for specifying settings, scoped by filetype and directory."
+    },
+    {
+      "name": "EditorConfig precedence: closest config file applied last",
+      "line": 5847,
+      "evidence": "The closest .editorconfig file is applied last, so any settings specified there will override the settings from above."
+    },
+    {
+      "name": "Buffer-local b: variables override global g: variables",
+      "line": 6044,
+      "evidence": "That’s because ALE gives higher precedence to the buffer-local b:ale_linters variable than the global g:ale_linters equivalent."
+    },
+    {
+      "name": "Projections (.projections.json) scoped to a project directory",
+      "line": 6057,
+      "evidence": "By placing a .projections.json file in the root directory of your project, you can make Projectionist apply customizations that only affect the files contained in that directory."
+    },
+    {
+      "name": "Projectionist specificity: nearest projection config wins",
+      "line": 6265,
+      "evidence": "The proximity between the current buffer and the Projections config file determines the order of the results."
+    },
+    {
+      "name": "Generalized projection keys decoupled from plugins and options",
+      "line": 6322,
+      "evidence": "When defining projections, I prefer to use keys that are abstract, rather than choosing keys that are tightly coupled to Vim’s options or to a particular plugin."
+    },
+    {
+      "name": "Local vimrc file enabled by the 'exrc' option",
+      "line": 6328,
+      "evidence": "Using this feature, you could create a local vimrc file that customizes Vim’s behavior for a particular project."
+    }
+  ],
+  "problems": [
+    {
+      "line": 5345,
+      "kind": "missing",
+      "evidence": "Tip 26Using Autocommands to Respond to Events",
+      "note": "Missing space between the tip number and the title: the heading is fused as 'Tip 26Using'. The same fusion recurs at line 5676 ('Tip 27Respecting') and line 5911 ('Tip 28Setting'), while the in-text cross-reference at line 6052 reads 'Tip 26, Using Autocommands to Respond to Events'."
+    },
+    {
+      "line": 5407,
+      "kind": "typo",
+      "evidence": "(You’ll get a blank line if you run :echo expand(’<afile>’) by hand at Vim’s command line.)",
+      "note": "The quotes around <afile> in this Ex command are right single quotation marks (U+2019) rather than ASCII apostrophes, so ':echo expand(’<afile>’)' cannot be typed or copied as printed."
+    },
+    {
+      "line": 5571,
+      "kind": "typo",
+      "evidence": "=> $ cd code/autocmds-demo/",
+      "note": "The directory is printed as 'autocmds-demo' here, but every other reference uses 'autocmd-demo' (line 5370, and the five listing headers such as 'autocmd-demo/autocmds-01.vim' at line 5355); the extra 's' appears to be a typo."
+    },
+    {
+      "line": 5605,
+      "kind": "truncation",
+      "evidence": "demo BufRead",
+      "note": "This line in the ':autocmd demo' listing shows the event as 'BufRead', although the autocommand was defined for BufReadPost (line 5560) and the parallel entry at line 5611 reads 'demo BufWritePost' in full; the event name appears truncated."
+    },
+    {
+      "line": 5662,
+      "kind": "typo",
+      "evidence": "The User event is special in the sense that Vim never fires it auto-matically, but you can trigger an event like this one yourself:",
+      "note": "Print hyphenation left inside running text: 'auto-matically' should read 'automatically'."
+    },
+    {
+      "line": 5676,
+      "kind": "missing",
+      "evidence": "Tip 27Respecting Project Conventions",
+      "note": "Missing space between the tip number and the title, fused as 'Tip 27Respecting'."
+    },
+    {
+      "line": 5871,
+      "kind": "garbled",
+      "evidence": "EditorConfig propertyCorresponding Vim option(s)",
+      "note": "The two table column headings run together without a separator: 'property' and 'Corresponding Vim option(s)' are fused into 'propertyCorresponding'."
+    },
+    {
+      "line": 5911,
+      "kind": "missing",
+      "evidence": "Tip 28Setting Buffer-Local Configuration Per Project",
+      "note": "Missing space between the tip number and the title, fused as 'Tip 28Setting'."
+    },
+    {
+      "line": 6097,
+      "kind": "typo",
+      "evidence": "You can use the projectionst#query(key) function to retrieve metadata for a specified key.",
+      "note": "The function name is misspelled as 'projectionst#query' (missing 'i'); the same misspelling recurs at line 6114 ('your projectionst configuration'), while the code examples use 'projectionist#query'."
+    },
+    {
+      "line": 6334,
+      "kind": "typo",
+      "evidence": "You can protect yourself in this scenario by enabling Vim’s ‘secure’ option (:help “secure”), which disables dangerous Vim script features while a local vimrc file is being sourced.",
+      "note": "The option name is wrapped in typographic double quotes (U+201C/U+201D), which :help will not accept as printed; the adjacent reference at line 6326 quotes the option as ‘exrc’ with single quotation marks, so the two references are also inconsistent."
+    },
+    {
+      "line": 6343,
+      "kind": "garbled",
+      "evidence": "KeyPurpose",
+      "note": "The two table column headings run together without a separator: 'Key' and 'Purpose' are fused into 'KeyPurpose'."
+    }
+  ]
+}

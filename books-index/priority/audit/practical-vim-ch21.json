@@ -1,0 +1,177 @@
+{
+  "id": "practical-vim-ch21",
+  "book": "practical-vim",
+  "chapter": 21,
+  "title": "Now What?",
+  "start": 11753,
+  "end": 11976,
+  "summary": "Chapter 21 closes Practical Vim by urging readers to keep practicing until Vim commands become second nature and to pick the book up again, since it is not designed for a single linear pass. It then encourages making Vim your own through a personal vimrc, while insisting that you first learn stock Vim’s baseline behavior—learn to use the saw before sharpening it—and closes with Vim’s charityware license. Note that the assigned range 11753-11976 runs past the chapter body’s end at 11798 into Appendix 1, \"Customize Vim to Suit Your Preferences,\" so the command and concept entries include appendix material.",
+  "commands": [
+    {
+      "keys": ":x",
+      "meaning": "Write changes and quit (Ex command).",
+      "line": 11798,
+      "evidence": "=> :x"
+    },
+    {
+      "keys": ":set ignorecase",
+      "meaning": "Enable the boolean 'ignorecase' option.",
+      "line": 11838,
+      "evidence": "=> :set ignorecase"
+    },
+    {
+      "keys": ":set noignorecase",
+      "meaning": "Disable 'ignorecase'; the 'no' prefix turns a boolean option off.",
+      "line": 11842,
+      "evidence": "=> :set noignorecase"
+    },
+    {
+      "keys": ":set ignorecase!",
+      "meaning": "Toggle the boolean 'ignorecase' option.",
+      "line": 11846,
+      "evidence": "=> :set ignorecase!"
+    },
+    {
+      "keys": ":set ignorecase?",
+      "meaning": "Query and display the current value of 'ignorecase'.",
+      "line": 11850,
+      "evidence": "=> :set ignorecase?"
+    },
+    {
+      "keys": ":set ignorecase&",
+      "meaning": "Reset 'ignorecase' to its default value.",
+      "line": 11856,
+      "evidence": "=> :set ignorecase&"
+    },
+    {
+      "keys": ":set tabstop=2",
+      "meaning": "Set the 'tabstop' option to 2 columns.",
+      "line": 11864,
+      "evidence": "=> :set tabstop=2"
+    },
+    {
+      "keys": ":set ts=2 sts=2 sw=2 et",
+      "meaning": "Set several indentation options in one statement using shorthand names.",
+      "line": 11868,
+      "evidence": "=> :set ts=2 sts=2 sw=2 et"
+    },
+    {
+      "keys": ":bufdo setlocal tabstop=4",
+      "meaning": "Run ':setlocal tabstop=4' in every listed buffer.",
+      "line": 11876,
+      "evidence": "=> :bufdo setlocal tabstop=4"
+    },
+    {
+      "keys": ":windo setlocal number",
+      "meaning": "Run ':setlocal number' in every window.",
+      "line": 11880,
+      "evidence": "=> :windo setlocal number"
+    },
+    {
+      "keys": ":source two-space-indent.vim",
+      "meaning": "Execute a settings file as Ex commands in the current session.",
+      "line": 11908,
+      "evidence": "=> :source two-space-indent.vim"
+    },
+    {
+      "keys": ":edit $MYVIMRC",
+      "meaning": "Open the vimrc file whose path is held in $MYVIMRC.",
+      "line": 11916,
+      "evidence": "=> :edit $MYVIMRC"
+    },
+    {
+      "keys": ":source $MYVIMRC",
+      "meaning": "Reload the vimrc configuration into the running session.",
+      "line": 11920,
+      "evidence": "=> :source $MYVIMRC"
+    },
+    {
+      "keys": ":so %",
+      "meaning": "Source the current buffer; short form of ':source %'.",
+      "line": 11922,
+      "evidence": "If the vimrc file is the active buffer, then this can be shortened to :so %."
+    },
+    {
+      "keys": "filetype plugin on",
+      "meaning": "Enable filetype detection and ftplugin loading from the vimrc.",
+      "line": 11962,
+      "evidence": "filetype plugin on"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Keep Practicing!",
+      "line": 11762,
+      "evidence": "Keep Practicing!"
+    },
+    {
+      "name": "Make Vim Your Own",
+      "line": 11770,
+      "evidence": "Make Vim Your Own"
+    },
+    {
+      "name": "Know the Saw, Then Sharpen It",
+      "line": 11778,
+      "evidence": "Know the Saw, Then Sharpen It"
+    },
+    {
+      "name": "essential.vim as a vimrc starting point",
+      "line": 11785,
+      "evidence": "As a starting point, you could use the essential.vim file that’s distributed with this book’s source code."
+    },
+    {
+      "name": "Own your vimrc",
+      "line": 11788,
+      "evidence": "You should own your vimrc. That means understanding what’s in it."
+    },
+    {
+      "name": "Charityware license",
+      "line": 11794,
+      "evidence": "Vim has an unusual license: it’s distributed as charityware (licenseⓘ)."
+    },
+    {
+      "name": "Boolean options",
+      "line": 11836,
+      "evidence": "Let’s take the ‘ignorecase’ setting as an example (as discussed in Tip 73). This is a boolean option: it can either be on or off. We can enable it by running this:"
+    },
+    {
+      "name": "Shorthand option names",
+      "line": 11872,
+      "evidence": "Most of Vim’s options also have a shorthand version. The ‘ignorecase’ setting can be abbreviated to ic, so we could toggle this feature by running :se ic! or disable it with :se noic. I tend to use shorthand option names for convenience when customizing Vim on the fly, but I prefer to use the longhand names in my vimrc for the sake of readability."
+    },
+    {
+      "name": ":setlocal scoping (buffer/window-local options)",
+      "line": 11882,
+      "evidence": "The :setlocal command scopes the change to the current window or buffer (unless the option can only be set globally). If we were to run :set number, it would enable line numbering for the current window as well as set a new global default. Existing windows would retain their local settings, but new windows would adopt the new global setting."
+    },
+    {
+      "name": ":source executes each line as an Ex command",
+      "line": 11890,
+      "evidence": "We can save our customizations by writing them to a file. Then we can use the :source {file} command to apply the settings from the specified {file} to our current editing session (:sourceⓘ). When sourcing a file, Vim executes each line as an Ex command, just as though it had been entered in Command-Line mode."
+    },
+    {
+      "name": "Autocommands and the FileType event",
+      "line": 11942,
+      "evidence": "The autocmd declaration tells Vim to listen for an event and to execute the specified commands whenever that event fires (:autocmdⓘ). In this case we’re listening for the FileType event, which is triggered when Vim detects the type of the current file."
+    },
+    {
+      "name": "ftplugin mechanism",
+      "line": 11958,
+      "evidence": "This file is just like a regular vimrc, except that the settings will only be applied to JavaScript files. We could also create a ftplugin/ruby.vim file for Ruby customizations and another for each file type that we work with regularly. For more details, look up ftplugin-nameⓘ."
+    }
+  ],
+  "problems": [
+    {
+      "line": 11822,
+      "kind": "garbled",
+      "evidence": "Appendix",
+      "note": "Chapter 21's body ends at 11798 with '=> :x'; its footnotes (11800-11816) and the copyright line (11818) follow. This heading starts Appendix 1 inside the assigned 11753-11976 range, so the extraction merges appendix material (and the back-matter promo through 11976) into chapter 21 instead of stopping after the chapter's footnotes."
+    },
+    {
+      "line": 11794,
+      "kind": "garbled",
+      "evidence": "Vim has an unusual license: it’s distributed as charityware (licenseⓘ).",
+      "note": "The 'ⓘ' glyph is a non-textual icon inlined mid-sentence, garbling the plain-text rendering; the same glyph recurs at 11833, 11862, 11890, 11914, 11942, and 11958."
+    }
+  ]
+}

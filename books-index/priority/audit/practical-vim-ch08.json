@@ -1,0 +1,207 @@
+{
+  "id": "practical-vim-ch08",
+  "book": "practical-vim",
+  "chapter": 8,
+  "title": "Navigate Inside Files with Motions",
+  "start": 4735,
+  "end": 5722,
+  "summary": "Chapter 8 is a tour of motions for moving within a file. It starts with home-row h/j/k/l and the difference between real lines and display lines (j/k vs. gj/gk, 0/^/$ and their g variants), then covers word and WORD motions (w/b/e/ge, W/B/E/gE), character searches (f/F/t/T with ; and ,), and the search command (/pattern with n and N), including its use as an operator motion. The chapter ends with text objects (i/a prefixes, iw/aw, daw/ciw), marks (m, `{mark}, automatic marks), % with the matchit plugin, and a brief look at surround.vim.",
+  "commands": [
+    {
+      "keys": "h j k l",
+      "meaning": "Move left, down, up, or right one step without leaving the home row",
+      "line": 4763,
+      "evidence": "Just as with any other text editor, Vim lets us use the arrow keys to move the cursor around, but it also provides an alternative by way of the h, j, k, and l keys. They work as follows:"
+    },
+    {
+      "keys": "gj gk",
+      "meaning": "Move down or up by display line rather than by real line",
+      "line": 4827,
+      "evidence": "Understanding the difference between real and display lines is important because Vim provides motions for interacting with both kinds. The j and k commands move down and up by real lines, whereas the gj and gk commands move down and up by display lines."
+    },
+    {
+      "keys": "0 $",
+      "meaning": "Jump to the first character or the end of a real line; g-prefixed forms act on display lines",
+      "line": 4875,
+      "evidence": "Note the pattern: j, k, 0, and $ all interact with real lines, while prefixing any of these with g tells Vim to act on display lines instead."
+    },
+    {
+      "keys": "w b e ge",
+      "meaning": "Move word-wise to the next/previous word start or word end",
+      "line": 4921,
+      "evidence": "We can think of these motions as coming in pairs: the w and b commands both target the start of a word, while the e and ge commands target the end of a word. w and e both advance the cursor forward, while b and ge move the cursor backward. This matrix of word-wise motions is illustrated here:"
+    },
+    {
+      "keys": "W B E gE",
+      "meaning": "WORD-wise versions of w, b, e, and ge",
+      "line": 4941,
+      "evidence": "We’ve been talking a lot about words, but so far we haven’t pinned down what a word actually is. Vim provides two definitions and distinguishes between them by calling one a “word” and the other a “WORD.” Each word-wise motion we met earlier has a WORD-wise equivalent, including W, B, E, and gE."
+    },
+    {
+      "keys": "f{char} ; ,",
+      "meaning": "Search forward to a character, repeat that search, and reverse it",
+      "line": 5103,
+      "evidence": "The f{char}, ;, and , commands are part of a set of character-search commands. This table lists them all:"
+    },
+    {
+      "keys": "t{char} T{char}",
+      "meaning": "Search till just before/after the target character",
+      "line": 5131,
+      "evidence": "Think of the t{char} and T{char} commands as searching till the specified character. The cursor stops one character before {char}, whereas the f{char} and F{char} commands position the cursor on top of the specified character."
+    },
+    {
+      "keys": "/takes<CR>",
+      "meaning": "Search forward for a multi-character pattern",
+      "line": 5185,
+      "evidence": "We could do so by searching for the word: /takes<CR>. It only occurs once in this short sample, so that would be sure to get us where we want to go in a single move. But let’s see if we can we do it with even fewer keystrokes:"
+    },
+    {
+      "keys": "n N",
+      "meaning": "Repeat the last search forward or backward",
+      "line": 5215,
+      "evidence": "Even if we had searched for the two-letter “ta” fragment and ended up in the wrong place, we could jump to the next occurrence by repeating the previous search with the n command. Also, if we pressed the n key too many times, we could back up again with the N command. The mantra from Tip 4, should be becoming familiar by now: act, repeat, reverse."
+    },
+    {
+      "keys": "d/ge<CR>",
+      "meaning": "Delete up to a search match, using the search as an exclusive motion",
+      "line": 5261,
+      "evidence": "d/ge<CR>"
+    },
+    {
+      "keys": "vi}",
+      "meaning": "Visually select everything inside a pair of braces",
+      "line": 5289,
+      "evidence": "Suppose that our cursor was positioned inside a set of curly braces and we wanted to visually select the text inside the {}. Press vi}:"
+    },
+    {
+      "keys": "ci\"",
+      "meaning": "Change the text inside double quotes",
+      "line": 5449,
+      "evidence": "We can read the ci\" command as “change inside the double quotes.” The cit command can be read as “change inside the tag.” We could just as easily use the yit command to yank the text from inside the tag, or dit to delete it."
+    },
+    {
+      "keys": "daw",
+      "meaning": "Delete the current word with the aw text object",
+      "line": 5512,
+      "evidence": "Suppose that we want to delete the word “excellent” from the following sentence. We can do it using the daw command:"
+    },
+    {
+      "keys": "mm `m",
+      "meaning": "Set mark m and jump back to it",
+      "line": 5554,
+      "evidence": "The mm and `m commands make a handy pair. Respectively, they set the mark m and jump to it. Swap Two Words, shows one example of how they can be used for a quick mark-then-snap-back maneuver."
+    },
+    {
+      "keys": "%",
+      "meaning": "Jump between matching parentheses, braces, or brackets",
+      "line": 5604,
+      "evidence": "The % command lets us jump between opening and closing sets of parentheses (see %ⓘ). It works with (), {}, and [], as this example demonstrates:"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Real lines vs. display lines",
+      "line": 4823,
+      "evidence": "Unlike many text editors, Vim makes a distinction between real lines and display lines. When the ‘wrap’ setting is enabled (and it’s on by default), each line of text that exceeds the width of the window will display as wrapped, ensuring that no text is truncated from view. As a result, a single line in the file may be represented by multiple lines on the display."
+    },
+    {
+      "name": "Operator-Pending mode",
+      "line": 4748,
+      "evidence": "Motions are not just for navigating around a document. They can also be used in Operator-Pending mode to perform real work, as discussed in Tip 12."
+    },
+    {
+      "name": "Text objects",
+      "line": 5273,
+      "evidence": "Text objects allow us to interact with parentheses, quotes, XML tags, and other common patterns that appear in text."
+    },
+    {
+      "name": "Inside vs. around text objects (i/a prefixes)",
+      "line": 5355,
+      "evidence": "Vim’s text objects consist of two characters, the first of which is always either i or a. In general, we can say that the text objects prefixed with i select inside the delimiters, whereas those that are prefixed with a select everything including the delimiters. As a mnemonic, think of i as inside and a as around (or all)."
+    },
+    {
+      "name": "Delimited vs. bounded text objects",
+      "line": 5502,
+      "evidence": "I’ve labeled the first category as delimited text objects because they begin and end with matching symbols. Words, sentences, and paragraphs are defined by boundaries, so I’ve labeled this category as bounded text objects (Vim’s documentation calls them “block” and “non-block” objects, but I find that to be an unhelpful distinction)."
+    },
+    {
+      "name": "Words vs. WORDS",
+      "line": 4941,
+      "evidence": "We’ve been talking a lot about words, but so far we haven’t pinned down what a word actually is. Vim provides two definitions and distinguishes between them by calling one a “word” and the other a “WORD.” Each word-wise motion we met earlier has a WORD-wise equivalent, including W, B, E, and gE."
+    },
+    {
+      "name": "Character search commands",
+      "line": 5011,
+      "evidence": "Vim’s character search commands allow us to move quickly within a line, and they work beautifully in Operator-Pending mode."
+    },
+    {
+      "name": "Exclusive motion",
+      "line": 5265,
+      "evidence": "Here, we use the /ge<CR> search motion to tell the d{motion} command what to delete. The search command is an exclusive motion. That means that even though our cursor ends up on the “g” at the start of the word “gets,” that character is excluded from the delete operation (see exclusiveⓘ)."
+    },
+    {
+      "name": "Act, repeat, reverse",
+      "line": 5081,
+      "evidence": "Having accidentally overshot our mark, we can back up using the , command. This repeats the last f{char} search but in the opposite direction (see ,ⓘ). Remember our mantra from Tip 4: act, repeat, reverse. I think of , as a safety net for those times when I get overzealous with the ; key."
+    },
+    {
+      "name": "Finger macro",
+      "line": 5151,
+      "evidence": "Alternatively, we could have used dfd, which would delete everything from the cursor position to the last letter of the word “Bond.” The end result is the same either way, but I find that dt. requires less concentration. Deleting through the letter “d” is not a common pattern, whereas deleting the last clause of a sentence is something we do often enough that we can treat f,dt. as a finger macro."
+    },
+    {
+      "name": "Automatic marks",
+      "line": 5560,
+      "evidence": "But marks have not become obsolete in Vim; they still have their uses. In particular, the marks that Vim sets for us automatically can be really handy. They include the marks shown in Table 10, Vim’s Automatic Marks."
+    },
+    {
+      "name": "matchit plugin",
+      "line": 5675,
+      "evidence": "Vim ships with a plugin called matchit, which enhances the functionality of the % command. When this plugin is enabled, the % command can jump between matching pairs of keywords. For example, in an HTML file, the % command would jump between opening and closing tags. In a Ruby file, it would jump between class/end, def/end, and if/end pairs."
+    }
+  ],
+  "problems": [
+    {
+      "line": 4765,
+      "kind": "garbled",
+      "evidence": "CommandMove cursor",
+      "note": "Two table column headers are run together ('Command' + 'Move cursor'), and every cell sits on its own line, so key/description rows cannot be paired reliably. The same flattening recurs at 4833, 4903, 5361 ('Text ObjectSelectionText ObjectSelection'), 5468 and 5564."
+    },
+    {
+      "line": 4943,
+      "kind": "typo",
+      "evidence": "A word consists of a sequence of letters, digits, and underscores, or as a sequence of other nonblank characters separated with whitespace (see wordⓘ). The definition of a WORD is simpler: it consists of a sequence of nonblank characters separated with whitespace (see WORDⓘ).",
+      "note": "Stray 'as' in 'or as a sequence of other nonblank characters separated with whitespace'; the parallel clause needs 'or a sequence'. Prose typo as printed."
+    },
+    {
+      "line": 5001,
+      "kind": "typo",
+      "evidence": "cWit’s<Esc>",
+      "note": "Literal keystroke cell uses a curly apostrophe (U+2019) instead of the ASCII ' key, yet the resulting buffer at 5003 shows \"it's\" with an ASCII apostrophe; the character shown could not produce that result."
+    },
+    {
+      "line": 5185,
+      "kind": "typo",
+      "evidence": "We could do so by searching for the word: /takes<CR>. It only occurs once in this short sample, so that would be sure to get us where we want to go in a single move. But let’s see if we can we do it with even fewer keystrokes:",
+      "note": "Duplicated 'we' in 'if we can we do it with even fewer keystrokes'; ungrammatical as printed."
+    },
+    {
+      "line": 5345,
+      "kind": "typo",
+      "evidence": "’<a href=\"{url}\">{title}</a>’",
+      "note": "The a] row repeats the buffer text, but both single quotes are curly (U+2019), whereas every other rendering of this sample (e.g. 5281 and 5297) uses ASCII single quotes."
+    },
+    {
+      "line": 5395,
+      "kind": "typo",
+      "evidence": "a’",
+      "note": "The single-quote text object is listed as 'a’' with a curly apostrophe, while the double-quote row at 5403 uses the ASCII \"; Vim's text-object key is the ASCII apostrophe."
+    },
+    {
+      "line": 5566,
+      "kind": "garbled",
+      "evidence": "“",
+      "note": "Table 10's first row is the `` mark (position before the last jump), but it is extracted as a single left double quotation mark; the rows at 5570-5592 likewise show ‘ where a backtick belongs (e.g. ‘., ‘^), so none of those mark commands is typeable as printed. The same substitution appears in the prose at 5550-5552."
+    }
+  ]
+}

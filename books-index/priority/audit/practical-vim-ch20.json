@@ -1,0 +1,195 @@
+{
+ "id": "practical-vim-ch20",
+ "book": "practical-vim",
+ "chapter": 20,
+ "title": "Find and Fix Typos with Vim’s Spell Checker",
+ "start": 11560,
+ "end": 11752,
+ "summary": "Chapter 20 covers Vim's built-in spell checker across four tips. Tip 120 shows how to enable it with :set spell and operate it from Normal mode using ]s, [s, z=, and the zg/zw/zug family. Tip 121 explains the buffer-local 'spelllang' option, regional English variants such as en_us, and how Vim offers to download missing spell files via spellfile.vim, while Tip 122 shows how zg/zw additions persist in a spell file and how the 'spellfile' option can point at a separate jargon word list. Tip 123 demonstrates fixing misspellings without leaving Insert mode using the <C-x>s spelling autocompletion.",
+ "commands": [
+  {
+   "keys": ":set spell",
+   "meaning": "Enable Vim's built-in spell checker so unrecognized words are flagged",
+   "line": 11583,
+   "evidence": "=> :set spell"
+  },
+  {
+   "keys": "]s",
+   "meaning": "Jump to the next spelling error",
+   "line": 11605,
+   "evidence": "]s"
+  },
+  {
+   "keys": "[s",
+   "meaning": "Jump to the previous spelling error",
+   "line": 11609,
+   "evidence": "[s"
+  },
+  {
+   "keys": "z=",
+   "meaning": "Ask Vim for a list of suggested corrections for the word under the cursor",
+   "line": 11613,
+   "evidence": "z="
+  },
+  {
+   "keys": "zg",
+   "meaning": "Add the word under the cursor to a spell file",
+   "line": 11617,
+   "evidence": "zg"
+  },
+  {
+   "keys": "zw",
+   "meaning": "Mark the word under the cursor as misspelled, removing it from the spell file",
+   "line": 11621,
+   "evidence": "zw"
+  },
+  {
+   "keys": "zug",
+   "meaning": "Revert the zg or zw command for the word under the cursor",
+   "line": 11625,
+   "evidence": "zug"
+  },
+  {
+   "keys": "1<CR>",
+   "meaning": "In the z= suggestion list, accept the first suggestion and replace the word",
+   "line": 11595,
+   "evidence": "We can replace the misspelled word with “Your” by pressing 1<CR>. If the list doesn’t contain what we’re looking for, we can dismiss it by pressing <Esc>."
+  },
+  {
+   "keys": "1z=",
+   "meaning": "Prefix z= with a count to apply the numbered suggestion directly, without the prompt",
+   "line": 11597,
+   "evidence": "We can skip the prompt altogether by prefixing the z= command with a count, which instructs Vim to use the numbered suggestion. If we’re confident that the first suggestion will be correct, we can run 1z= to fix it in one go."
+  },
+  {
+   "keys": ":set spelllang=en_us",
+   "meaning": "Restrict accepted spellings to American English",
+   "line": 11647,
+   "evidence": "=> :set spelllang=en_us"
+  },
+  {
+   "keys": ":set spelllang=fr",
+   "meaning": "Switch the buffer to the French spell file, prompting a download if it is missing",
+   "line": 11659,
+   "evidence": "=> :set spelllang=fr"
+  },
+  {
+   "keys": "2zg",
+   "meaning": "With a count, add the word to the numbered spell file (here the jargon list); 1zg targets the default list",
+   "line": 11717,
+   "evidence": "For each word that the spell checker flags incorrectly, I now have a choice. I could press 2zg to add it to my list of Vim terminology, or 1zg to add it to the default word list."
+  },
+  {
+   "keys": "<C-x>s",
+   "meaning": "Trigger spelling autocompletion from Insert mode to fix an earlier misspelling",
+   "line": 11739,
+   "evidence": "Alternatively, we could fix the error from Insert mode using the <C-x>s command, which triggers a special form of autocompletion (see compl-spellingⓘ). We could just as well use <C-x><C-s>, which is slightly easier to type. In this figure, we see screenshots taken before and after triggering the <C-x>s command. Note that we’re in Insert mode throughout:"
+  },
+  {
+   "keys": "<C-x><C-s>",
+   "meaning": "Alternative keystroke form of spelling autocompletion, slightly easier to type",
+   "line": 11739,
+   "evidence": "Alternatively, we could fix the error from Insert mode using the <C-x>s command, which triggers a special form of autocompletion (see compl-spellingⓘ). We could just as well use <C-x><C-s>, which is slightly easier to type. In this figure, we see screenshots taken before and after triggering the <C-x>s command. Note that we’re in Insert mode throughout:"
+  },
+  {
+   "keys": "A",
+   "meaning": "Switch back to Insert mode at the end of the line after fixing a typo in Normal mode",
+   "line": 11735,
+   "evidence": "To fix the mistake, we could switch to Normal mode, use the [s command to jump back to the spelling mistake, and then use 1z= to fix it. Having made the correction, we could then switch back to Insert mode with the A command, continuing where we left off."
+  }
+ ],
+ "concepts": [
+  {
+   "name": "SpellBad syntax highlighting marks flagged words",
+   "line": 11585,
+   "evidence": "The word “Yoru” should now be flagged with the SpellBad syntax highlighting. Typically, that means the word will be underlined with a red dashed line, but how it looks will depend on which color scheme you use."
+  },
+  {
+   "name": "Separating composition from a final spell-checking pass",
+   "line": 11599,
+   "evidence": "When writing, I prefer to separate the composition and spell-checking processes into separate tasks. I’ll often disable the spell checker while I write to avoid being nagged each time I make a mistake. Then I’ll make a final pass through the document with the spell checker enabled, fixing the typos it flags."
+  },
+  {
+   "name": "Buffer-local 'spelllang' option",
+   "line": 11637,
+   "evidence": "When we enable Vim’s spell checker, it compares words against an English dictionary by default. We can change this by tweaking the ‘spelllang’ option (see 'spelllang'ⓘ). This isn’t a global setting; ‘spelllang’ is always local to the buffer. That means it’s possible to work simultaneously on two or more documents and use a different spell file for each—handy if you’re bilingual."
+  },
+  {
+   "name": "Regional English spelling variants",
+   "line": 11649,
+   "evidence": "With this setting, “moustache” would be flagged as a misspelling, but “mustache” would be permitted. Other supported regions include en_au, en_ca, en_gb, and en_nz. See spell-remarksⓘ for more details."
+  },
+  {
+   "name": "spellfile.vim plugin offers to download missing spell files",
+   "line": 11679,
+   "evidence": "This functionality is provided by a plugin called spellfile.vim, which ships with Vim (see spellfile.vimⓘ). To make it work, you need to have these two lines in your vimrc (at the very least):"
+  },
+  {
+   "name": "Words added with zg persist across sessions in a spell file",
+   "line": 11695,
+   "evidence": "Vim records words added to the dictionary in a spell file so that they persist from one session to another. The name of the spell file is derived from the language and file encoding."
+  },
+  {
+   "name": "'spellfile' option can hold multiple word lists",
+   "line": 11701,
+   "evidence": "With the ‘spellfile’ option, we can specify the path of the file where Vim tracks words added or removed using the zg and zw commands (see 'spellfile'ⓘ). Vim allows us to specify more than one spell file simultaneously, which means we can maintain multiple word lists."
+  },
+  {
+   "name": "Separate spell file for specialist jargon",
+   "line": 11703,
+   "evidence": "This book contains many strings of text that don’t count as words in English, including Vim commands (such as ciw) and settings (such as ‘spelllang’). I don’t want Vim to keep flagging these as misspelled, but neither do I want to tell Vim to consider them as valid English words. As a compromise, I maintain a separate word list of Vim terminology. I can load this as a spell file any time that I’m writing about Vim."
+  },
+  {
+   "name": "Count prefix selects which spell file zg writes to",
+   "line": 11717,
+   "evidence": "For each word that the spell checker flags incorrectly, I now have a choice. I could press 2zg to add it to my list of Vim terminology, or 1zg to add it to the default word list."
+  },
+  {
+   "name": "Spelling autocompletion without leaving Insert mode",
+   "line": 11723,
+   "evidence": "Vim’s spelling autocompletion allows us to fix typos without even having to leave Insert mode."
+  },
+  {
+   "name": "<C-x>s scans backward to the nearest misspelled word",
+   "line": 11743,
+   "evidence": "When we trigger an autocomplete command, Vim usually offers suggestions on how to complete the word at the current cursor position. But in the case of <C-x>s, Vim scans backward from the cursor position, stopping when it finds a misspelled word. It then builds a word list from suggested corrections and presents them in an autocomplete pop-up menu. We can choose a result using any of the techniques described in Tip 113."
+  },
+  {
+   "name": "Normal-mode repair sequence: [s, then 1z=, then A",
+   "line": 11735,
+   "evidence": "To fix the mistake, we could switch to Normal mode, use the [s command to jump back to the spelling mistake, and then use 1z= to fix it. Having made the correction, we could then switch back to Insert mode with the A command, continuing where we left off."
+  }
+ ],
+ "problems": [
+  {
+   "line": 11571,
+   "kind": "garbled",
+   "evidence": "Tip 120Spell Check Your Work",
+   "note": "Tip number and title are concatenated with no separator; the same joining recurs at 11633, 11687 and 11721."
+  },
+  {
+   "line": 11603,
+   "kind": "garbled",
+   "evidence": "CommandEffect",
+   "note": "Two-column table header cells 'Command' and 'Effect' are merged into one token, and the table body below is flattened to one cell per line."
+  },
+  {
+   "line": 11683,
+   "kind": "missing",
+   "evidence": "plugin on",
+   "note": "Reads 'plugin on' after 'set nocompatible'; the standard vimrc line is 'filetype plugin on', so 'filetype' appears to have been dropped, leaving an invalid command."
+  },
+  {
+   "line": 11751,
+   "kind": "duplicated",
+   "evidence": "Practical Vim, 2nd Edition",
+   "note": "The 'Practical Vim, 2nd Edition' footer appears twice in a row (11749 and 11751) after the copyright line."
+  },
+  {
+   "line": 11567,
+   "kind": "typo",
+   "evidence": "Vim usually ships with a spell file for the English language only, but it’s easy to install others. Also, as we’ll see in Tip 121, we can switch between American and British English (beside others). And if a word is incorrectly marked as misspelled, adding it to a spell file is a simple matter, as we’ll see in Tip 122.",
+   "note": "Reads '(beside others)'; the idiomatic form is 'besides others' (or 'among others'), so this is either a source typo or a dropped character."
+  }
+ ]
+}

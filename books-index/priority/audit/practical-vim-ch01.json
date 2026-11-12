@@ -1,0 +1,219 @@
+{
+  "id": "practical-vim-ch01",
+  "book": "practical-vim",
+  "chapter": 1,
+  "title": "The Vim Way",
+  "start": 967,
+  "end": 1522,
+  "summary": "Chapter 1 introduces Vim's dot command as the centre of a repeatable editing workflow: it replays the last change, where a change may be a character deletion (x), a line deletion (dd), a shift (>G) or an entire Insert-mode burst. Three worked examples (Tips 2, 3 and 5) show how to craft a change worth repeating (A instead of $a, s instead of manual insertion, cw to replace a whole word) and how to make the motion repeatable too, with f{char} followed by ; or , and with * followed by n. The tips culminate in the Dot Formula - one keystroke to move, one keystroke to execute - and in the habit of reversing an over-repeated action with u or , instead of guessing.",
+  "commands": [
+    {
+      "keys": ".",
+      "meaning": "Repeat the last change",
+      "line": 982,
+      "evidence": "The dot command lets us repeat the last change. It is the most powerful and versatile command in Vim."
+    },
+    {
+      "keys": "x",
+      "meaning": "Delete the character under the cursor",
+      "line": 1000,
+      "evidence": "The x command deletes the character under the cursor. When we use the dot command in this context, “repeat last change” tells Vim to delete the character under the cursor:"
+    },
+    {
+      "keys": "u",
+      "meaning": "Undo the last change (restore earlier state)",
+      "line": 1044,
+      "evidence": "We can restore the file to its original state by pressing the u key a few times to undo the changes."
+    },
+    {
+      "keys": "dd",
+      "meaning": "Delete the current line as a whole",
+      "line": 1046,
+      "evidence": "The dd command also performs a deletion, but this one acts on the current line as a whole."
+    },
+    {
+      "keys": ">G",
+      "meaning": "Increase indentation from the current line to end of file",
+      "line": 1075,
+      "evidence": "Finally, the >G command increases the indentation from the current line until the end of the file. If we follow this command with the dot command, then “repeat last change” tells Vim to increase the indentation level from the current position to the end of the file. In this example, we’ll start with the cursor on the second line to highlight the difference"
+    },
+    {
+      "keys": "j",
+      "meaning": "Move the cursor down one line",
+      "line": 1157,
+      "evidence": "But let’s take a closer look at this pattern: j$.. The j command moves the cursor down one line, and then the $ command moves it to the end of the line. We’ve used two keystrokes just to maneuver our cursor into position so that we can use the dot command. Do you sense that there’s room for improvement here?"
+    },
+    {
+      "keys": "A",
+      "meaning": "Append at the end of the current line (enters Insert mode)",
+      "line": 1161,
+      "evidence": "While the a command appends after the current cursor position, the A command appends at the end of the current line. It doesn’t matter where our cursor is at the time, pressing A will switch to Insert mode and move the cursor to the end of the line. In other words, it squashes $a into a single keystroke. In Two for the Price of One, we see that Vim has a handful of compound commands."
+    },
+    {
+      "keys": "s",
+      "meaning": "Delete the character under the cursor and enter Insert mode",
+      "line": 1301,
+      "evidence": "The s command compounds two steps into one: it deletes the character under the cursor and then enters Insert mode. Having deleted the + sign, we then type + and leave Insert mode."
+    },
+    {
+      "keys": "f{char}",
+      "meaning": "Jump to the next occurrence of a character on the line",
+      "line": 1307,
+      "evidence": "There’s another trick in this example. The f{char} command tells Vim to look ahead for the next occurrence of the specified character and then move the cursor directly to it if a match is found (see fⓘ). So when we type f+, our cursor goes straight to the next + symbol. We’ll learn more about the f{char} command in Tip 50."
+    },
+    {
+      "keys": ";",
+      "meaning": "Repeat the last f{char} search forward",
+      "line": 1309,
+      "evidence": "Having made our first change, we could jump to the next occurrence by repeating the f+ command, but there’s a better way. The ; command will repeat the last search that the f command performed. So instead of typing f+ four times, we can use that command once and then follow up by using the ; command three times."
+    },
+    {
+      "keys": ",",
+      "meaning": "Repeat the last f{char} search in the reverse direction",
+      "line": 1389,
+      "evidence": "Whenever Vim makes it easy to repeat an action or a motion, it always provides some way of backing out in case we accidentally go too far. In the case of the dot command, we can always hit the u key to undo the last change. If we hit the ; key too many times after using the f{char} command, we’ll miss our mark. But we can back up again by pressing the , key, which repeats the last f{char} search in the reverse direction (see Tip 50)."
+    },
+    {
+      "keys": ":%s/content/copy/g",
+      "meaning": "Substitute every occurrence of content with copy in the file",
+      "line": 1411,
+      "evidence": "=> :%s/content/copy/g"
+    },
+    {
+      "keys": "*",
+      "meaning": "Search for the word under the cursor",
+      "line": 1421,
+      "evidence": "You might have guessed by now that the dot command is my favorite single-key Vim trigger. In second place is the * command. This executes a search for the word under the cursor at that moment (see *ⓘ)."
+    },
+    {
+      "keys": "n",
+      "meaning": "Jump to the next match of the current search",
+      "line": 1473,
+      "evidence": "Having executed a search for the word “content,” we can now advance to the next occurrence just by hitting the n key. In this case, pressing *nn would cycle through all matches, taking us back to where we started."
+    },
+    {
+      "keys": "cw",
+      "meaning": "Change to the end of the word, then enter Insert mode",
+      "line": 1477,
+      "evidence": "With our cursor positioned at the start of the word “content,” we are poised to change it. This involves two steps: deleting the word “content” and then typing its replacement. The cw command deletes to the end of the word and then drops us into Insert mode, where we can spell out the word “copy.” Vim records our keystrokes until we leave Insert mode, so the full sequence cwcopy<Esc> is considered to be a single change. Pressing the . command deletes to the end of the current word and changes it to “copy.”"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Dot command repeats the last change",
+      "line": 982,
+      "evidence": "The dot command lets us repeat the last change. It is the most powerful and versatile command in Vim."
+    },
+    {
+      "name": "Micro Macro",
+      "line": 1131,
+      "evidence": "The Dot Command Is a Micro Macro"
+    },
+    {
+      "name": "Reduce Extraneous Movement",
+      "line": 1159,
+      "evidence": "Reduce Extraneous Movement"
+    },
+    {
+      "name": "Two for the Price of One (compound commands)",
+      "line": 1163,
+      "evidence": "Two for the Price of One"
+    },
+    {
+      "name": "Make the Change Repeatable",
+      "line": 1269,
+      "evidence": "Make the Change Repeatable"
+    },
+    {
+      "name": "One Step Back, Then Three Steps Forward",
+      "line": 1303,
+      "evidence": "One step back and then three steps forward. It’s a strange little dance that might seem unintuitive, but we get a big win by doing it this way: we can repeat the change with the dot command; all we need to do is position our cursor on the next + symbol, and the dot command will repeat that little dance."
+    },
+    {
+      "name": "Make the Motion Repeatable",
+      "line": 1305,
+      "evidence": "Make the Motion Repeatable"
+    },
+    {
+      "name": "Repeatable Actions and How to Reverse Them",
+      "line": 1323,
+      "evidence": "Table 1. Repeatable Actions and How to Reverse Them"
+    },
+    {
+      "name": "Reverse Gear",
+      "line": 1391,
+      "evidence": "It always helps to know where the reverse gear is in case you accidentally go a step too far. Table 1, Repeatable Actions and How to Reverse Them, summarizes Vim’s repeatable commands along with their corresponding reverse action. In most cases, the undo command is the one that we reach for. No wonder the u key on my keyboard is so worn out!"
+    },
+    {
+      "name": "Be Lazy: Search Without Typing",
+      "line": 1419,
+      "evidence": "Be Lazy: Search Without Typing"
+    },
+    {
+      "name": "The Dot Formula",
+      "line": 1489,
+      "evidence": "We’ve considered three simple editing tasks so far. Even though each problem was different, we found a solution using the dot command for each one. In this tip, we’ll compare each solution and identify a common pattern—an optimal editing strategy that I call the Dot Formula."
+    },
+    {
+      "name": "One Keystroke to Move, One Keystroke to Execute",
+      "line": 1499,
+      "evidence": "The Ideal: One Keystroke to Move, One Keystroke to Execute"
+    }
+  ],
+  "problems": [
+    {
+      "line": 980,
+      "kind": "missing",
+      "evidence": "Tip 1Meet the Dot Command",
+      "note": "Separator between the tip number and the tip title is absent ('Tip 1Meet'). The same glued heading occurs at 1139 'Tip 2Don’t Repeat Yourself', 1255 'Tip 3Take One Step Back, Then Three Forward', 1319 'Tip 4Act, Repeat, Reverse', 1395 'Tip 5Find and Replace by Hand' and 1487 'Tip 6Meet the Dot Formula'."
+    },
+    {
+      "line": 984,
+      "kind": "garbled",
+      "evidence": "Vim’s documentation simply states that the dot command “repeats the last change” (see .ⓘ). It doesn’t sound like much, but in that simple definition we’ll find the kernel of what makes Vim’s modal editing model so effective. First we have to ask, “What is a change?”",
+      "note": "Inline help link collapsed to a single glyph: '(see .ⓘ)' should point at :help . ; the ⓘ placeholder also appears at 1307 '(see fⓘ)' and 1421 '(see *ⓘ)'."
+    },
+    {
+      "line": 1002,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Two table column headers are concatenated into one run ('Keystrokes'+'Buffer Contents'); the same merged header appears at 1049, 1077, 1205 and 1429."
+    },
+    {
+      "line": 1075,
+      "kind": "truncation",
+      "evidence": "Finally, the >G command increases the indentation from the current line until the end of the file. If we follow this command with the dot command, then “repeat last change” tells Vim to increase the indentation level from the current position to the end of the file. In this example, we’ll start with the cursor on the second line to highlight the difference",
+      "note": "Paragraph ends mid-sentence at 'to highlight the difference' with no terminal punctuation, unlike every other body paragraph in the range; the closing words of the sentence appear to be lost."
+    },
+    {
+      "line": 1113,
+      "kind": "duplicated",
+      "evidence": "Line two",
+      "note": "In the >G keystroke table the buffer snapshots at 1101-1107, 1111-1117 and 1121-1127 are identical, so the rows after 'j' and 'j.' show no added indentation even though repeating >G must indent lines three and four a second time; the deeper leading whitespace was apparently collapsed."
+    },
+    {
+      "line": 1273,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents{start}",
+      "note": "Table header merged with the first table row: 'KeystrokesBuffer Contents' plus '{start}' on one line, unlike the other tables where '{start}' occupies its own line (e.g. 1004)."
+    },
+    {
+      "line": 1325,
+      "kind": "garbled",
+      "evidence": "IntentActRepeatReverse",
+      "note": "Four table column headers ('Intent', 'Act', 'Repeat', 'Reverse') are concatenated into a single run with no separation."
+    },
+    {
+      "line": 1415,
+      "kind": "garbled",
+      "evidence": "We’ve run into this problem because the word “content” has two meanings. One is synonymous with “copy” (and pronounced content), the other with “happy” (pronounced content). Technically, we’re dealing with heteronyms (words that are spelled the same but differ in both meaning and pronunciation), but that doesn’t really matter. The point is, we have to watch our step.",
+      "note": "Both parenthetical pronunciations read 'pronounced content', although the sentence claims the two senses differ in pronunciation; the stress/pronunciation marking that distinguishes them is absent."
+    },
+    {
+      "line": 1504,
+      "kind": "missing",
+      "evidence": "We’ll see this editing strategy coming up again and again, so for the sake of convenience, we’ll refer to this pattern as the Dot Formula.",
+      "note": "Paragraph break lost: 1504 continues on the very next line after 1503 and, unlike every other body line in this range, has no leading space, so the new paragraph is glued to the previous one."
+    }
+  ]
+}

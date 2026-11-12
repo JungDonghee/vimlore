@@ -1,0 +1,1156 @@
+{
+  "slug": "practical-vim",
+  "lines": 11976,
+  "parts": [
+    {
+      "number": 1,
+      "title": "Modes",
+      "line": 1510,
+      "end": 3841
+    },
+    {
+      "number": 2,
+      "title": "Files",
+      "line": 3842,
+      "end": 4720
+    },
+    {
+      "number": 3,
+      "title": "Getting Around Faster",
+      "line": 4721,
+      "end": 5967
+    },
+    {
+      "number": 4,
+      "title": "Registers",
+      "line": 5968,
+      "end": 7660
+    },
+    {
+      "number": 5,
+      "title": "Patterns",
+      "line": 7661,
+      "end": 10004
+    },
+    {
+      "number": 6,
+      "title": "Tools",
+      "line": 10005,
+      "end": 11976
+    }
+  ],
+  "chapters": [
+    {
+      "number": 1,
+      "title": "The Vim Way",
+      "line": 967,
+      "end": 1522
+    },
+    {
+      "number": 2,
+      "title": "Normal Mode",
+      "line": 1523,
+      "end": 1896
+    },
+    {
+      "number": 3,
+      "title": "Insert Mode",
+      "line": 1897,
+      "end": 2154
+    },
+    {
+      "number": 4,
+      "title": "Visual Mode",
+      "line": 2155,
+      "end": 2743
+    },
+    {
+      "number": 5,
+      "title": "Command-Line Mode",
+      "line": 2744,
+      "end": 3856
+    },
+    {
+      "number": 6,
+      "title": "Manage Multiple Files",
+      "line": 3857,
+      "end": 4375
+    },
+    {
+      "number": 7,
+      "title": "Open Files and Save Them to Disk",
+      "line": 4376,
+      "end": 4734
+    },
+    {
+      "number": 8,
+      "title": "Navigate Inside Files with Motions",
+      "line": 4735,
+      "end": 5722
+    },
+    {
+      "number": 9,
+      "title": "Navigate Between Files with Jumps",
+      "line": 5723,
+      "end": 5979
+    },
+    {
+      "number": 10,
+      "title": "Copy and Paste",
+      "line": 5980,
+      "end": 6630
+    },
+    {
+      "number": 11,
+      "title": "Macros",
+      "line": 6631,
+      "end": 7677
+    },
+    {
+      "number": 12,
+      "title": "Matching Patterns and Literals",
+      "line": 7678,
+      "end": 8165
+    },
+    {
+      "number": 13,
+      "title": "Search",
+      "line": 8166,
+      "end": 8802
+    },
+    {
+      "number": 14,
+      "title": "Substitution",
+      "line": 8803,
+      "end": 9601
+    },
+    {
+      "number": 15,
+      "title": "Global Commands",
+      "line": 9602,
+      "end": 10021
+    },
+    {
+      "number": 16,
+      "title": "Index and Navigate",
+      "line": 10022,
+      "end": 10407
+    },
+    {
+      "number": 17,
+      "title": "Compile Code and Navigate Errors",
+      "line": 10408,
+      "end": 10795
+    },
+    {
+      "number": 18,
+      "title": "Search Project-Wide",
+      "line": 10796,
+      "end": 11099
+    },
+    {
+      "number": 19,
+      "title": "Dial X for Autocompletion",
+      "line": 11100,
+      "end": 11559
+    },
+    {
+      "number": 20,
+      "title": "Find and Fix Typos with Vim’s Spell Checker",
+      "line": 11560,
+      "end": 11752
+    },
+    {
+      "number": 21,
+      "title": "Now What?",
+      "line": 11753,
+      "end": 11976
+    }
+  ],
+  "tips": [
+    {
+      "number": 1,
+      "title": "Meet the Dot Command",
+      "line": 980,
+      "end": 1138,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 2,
+      "title": "Don’t Repeat Yourself",
+      "line": 1139,
+      "end": 1254,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 3,
+      "title": "Take One Step Back, Then Three Forward",
+      "line": 1255,
+      "end": 1318,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 4,
+      "title": "Act, Repeat, Reverse",
+      "line": 1319,
+      "end": 1394,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 5,
+      "title": "Find and Replace by Hand",
+      "line": 1395,
+      "end": 1486,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 6,
+      "title": "Meet the Dot Formula",
+      "line": 1487,
+      "end": 1541,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 7,
+      "title": "Pause with Your Brush Off the Page",
+      "line": 1542,
+      "end": 1555,
+      "chapter": 2,
+      "part": 1
+    },
+    {
+      "number": 8,
+      "title": "Chunk Your Undos",
+      "line": 1556,
+      "end": 1579,
+      "chapter": 2,
+      "part": 1
+    },
+    {
+      "number": 9,
+      "title": "Compose Repeatable Changes",
+      "line": 1580,
+      "end": 1669,
+      "chapter": 2,
+      "part": 1
+    },
+    {
+      "number": 10,
+      "title": "Use Counts to Do Simple Arithmetic",
+      "line": 1670,
+      "end": 1741,
+      "chapter": 2,
+      "part": 1
+    },
+    {
+      "number": 11,
+      "title": "Don’t Count If You Can Repeat",
+      "line": 1742,
+      "end": 1793,
+      "chapter": 2,
+      "part": 1
+    },
+    {
+      "number": 12,
+      "title": "Combine and Conquer",
+      "line": 1794,
+      "end": 1909,
+      "chapter": 2,
+      "part": 1
+    },
+    {
+      "number": 13,
+      "title": "Make Corrections Instantly from Insert Mode",
+      "line": 1910,
+      "end": 1938,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 14,
+      "title": "Get Back to Normal Mode",
+      "line": 1939,
+      "end": 1973,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 15,
+      "title": "Paste from a Register Without Leaving Insert Mode",
+      "line": 1974,
+      "end": 2025,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 16,
+      "title": "Do Back-of-the-Envelope Calculations in Place",
+      "line": 2026,
+      "end": 2057,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 17,
+      "title": "Insert Unusual Characters by Character Code",
+      "line": 2058,
+      "end": 2092,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 18,
+      "title": "Insert Unusual Characters by Digraph",
+      "line": 2093,
+      "end": 2104,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 19,
+      "title": "Overwrite Existing Text with Replace Mode",
+      "line": 2105,
+      "end": 2169,
+      "chapter": 3,
+      "part": 1
+    },
+    {
+      "number": 20,
+      "title": "Grok Visual Mode",
+      "line": 2170,
+      "end": 2195,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 21,
+      "title": "Define a Visual Selection",
+      "line": 2196,
+      "end": 2279,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 22,
+      "title": "Repeat Line-Wise Visual Commands",
+      "line": 2280,
+      "end": 2367,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 23,
+      "title": "Prefer Operators to Visual Commands Where Possible",
+      "line": 2368,
+      "end": 2475,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 24,
+      "title": "Edit Tabular Data with Visual-Block Mode",
+      "line": 2476,
+      "end": 2581,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 25,
+      "title": "Change Columns of Text",
+      "line": 2582,
+      "end": 2659,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 26,
+      "title": "Append After a Ragged Visual Block",
+      "line": 2660,
+      "end": 2752,
+      "chapter": 4,
+      "part": 1
+    },
+    {
+      "number": 27,
+      "title": "Meet Vim’s Command Line",
+      "line": 2753,
+      "end": 2814,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 28,
+      "title": "Execute a Command on One or More Consecutive Lines",
+      "line": 2815,
+      "end": 3030,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 29,
+      "title": "Duplicate or Move Lines Using ‘:t’ and ‘:m’ Commands",
+      "line": 3031,
+      "end": 3188,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 30,
+      "title": "Run Normal Mode Commands Across a Range",
+      "line": 3189,
+      "end": 3284,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 31,
+      "title": "Repeat the Last Ex Command",
+      "line": 3285,
+      "end": 3306,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 32,
+      "title": "Tab-Complete Your Ex Commands",
+      "line": 3307,
+      "end": 3357,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 33,
+      "title": "Insert the Current Word at the Command Prompt",
+      "line": 3358,
+      "end": 3427,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 34,
+      "title": "Recall Commands from History",
+      "line": 3428,
+      "end": 3515,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 35,
+      "title": "Run Commands in the Shell",
+      "line": 3516,
+      "end": 3667,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 36,
+      "title": "Run Multiple Ex Commands as a Batch",
+      "line": 3668,
+      "end": 3869,
+      "chapter": 5,
+      "part": 1
+    },
+    {
+      "number": 37,
+      "title": "Track Open Files with the Buffer List",
+      "line": 3870,
+      "end": 3943,
+      "chapter": 6,
+      "part": 2
+    },
+    {
+      "number": 38,
+      "title": "Group Buffers into a Collection with the Argument List",
+      "line": 3944,
+      "end": 4064,
+      "chapter": 6,
+      "part": 2
+    },
+    {
+      "number": 39,
+      "title": "Manage Hidden Files",
+      "line": 4065,
+      "end": 4167,
+      "chapter": 6,
+      "part": 2
+    },
+    {
+      "number": 40,
+      "title": "Divide Your Workspace into Split Windows",
+      "line": 4168,
+      "end": 4281,
+      "chapter": 6,
+      "part": 2
+    },
+    {
+      "number": 41,
+      "title": "Organize Your Window Layouts with Tab Pages",
+      "line": 4282,
+      "end": 4390,
+      "chapter": 6,
+      "part": 2
+    },
+    {
+      "number": 42,
+      "title": "Open a File by Its Filepath Using ‘:edit’",
+      "line": 4391,
+      "end": 4486,
+      "chapter": 7,
+      "part": 2
+    },
+    {
+      "number": 43,
+      "title": "Open a File by Its Filename Using ‘:find’",
+      "line": 4487,
+      "end": 4540,
+      "chapter": 7,
+      "part": 2
+    },
+    {
+      "number": 44,
+      "title": "Explore the File System with netrw",
+      "line": 4541,
+      "end": 4620,
+      "chapter": 7,
+      "part": 2
+    },
+    {
+      "number": 45,
+      "title": "Save Files to Nonexistent Directories",
+      "line": 4621,
+      "end": 4644,
+      "chapter": 7,
+      "part": 2
+    },
+    {
+      "number": 46,
+      "title": "Save a File as the Super User",
+      "line": 4645,
+      "end": 4756,
+      "chapter": 7,
+      "part": 2
+    },
+    {
+      "number": 47,
+      "title": "Keep Your Fingers on the Home Row",
+      "line": 4757,
+      "end": 4818,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 48,
+      "title": "Distinguish Between Real Lines and Display Lines",
+      "line": 4819,
+      "end": 4896,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 49,
+      "title": "Move Word-Wise",
+      "line": 4897,
+      "end": 5008,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 50,
+      "title": "Find by Character",
+      "line": 5009,
+      "end": 5168,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 51,
+      "title": "Search to Navigate",
+      "line": 5169,
+      "end": 5270,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 52,
+      "title": "Trace Your Selection with Precision Text Objects",
+      "line": 5271,
+      "end": 5461,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 53,
+      "title": "Delete Around, or Change Inside",
+      "line": 5462,
+      "end": 5543,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 54,
+      "title": "Mark Your Place and Snap Back to It",
+      "line": 5544,
+      "end": 5599,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 55,
+      "title": "Jump Between Matching Parentheses",
+      "line": 5600,
+      "end": 5731,
+      "chapter": 8,
+      "part": 3
+    },
+    {
+      "number": 56,
+      "title": "Traverse the Jump List",
+      "line": 5732,
+      "end": 5811,
+      "chapter": 9,
+      "part": 3
+    },
+    {
+      "number": 57,
+      "title": "Traverse the Change List",
+      "line": 5812,
+      "end": 5849,
+      "chapter": 9,
+      "part": 3
+    },
+    {
+      "number": 58,
+      "title": "Jump to the Filename Under the Cursor",
+      "line": 5850,
+      "end": 5925,
+      "chapter": 9,
+      "part": 3
+    },
+    {
+      "number": 59,
+      "title": "Snap Between Files Using Global Marks",
+      "line": 5926,
+      "end": 5992,
+      "chapter": 9,
+      "part": 3
+    },
+    {
+      "number": 60,
+      "title": "Delete, Yank, and Put with Vim’s Unnamed Register",
+      "line": 5993,
+      "end": 6146,
+      "chapter": 10,
+      "part": 4
+    },
+    {
+      "number": 61,
+      "title": "Grok Vim’s Registers",
+      "line": 6147,
+      "end": 6342,
+      "chapter": 10,
+      "part": 4
+    },
+    {
+      "number": 62,
+      "title": "Replace a Visual Selection with a Register",
+      "line": 6343,
+      "end": 6434,
+      "chapter": 10,
+      "part": 4
+    },
+    {
+      "number": 63,
+      "title": "Paste from a Register",
+      "line": 6435,
+      "end": 6552,
+      "chapter": 10,
+      "part": 4
+    },
+    {
+      "number": 64,
+      "title": "Interact with the System Clipboard",
+      "line": 6553,
+      "end": 6647,
+      "chapter": 10,
+      "part": 4
+    },
+    {
+      "number": 65,
+      "title": "Record and Execute a Macro",
+      "line": 6648,
+      "end": 6773,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 66,
+      "title": "Normalize, Strike, Abort",
+      "line": 6774,
+      "end": 6811,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 67,
+      "title": "Play Back with a Count",
+      "line": 6812,
+      "end": 6867,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 68,
+      "title": "Repeat a Change on Contiguous Lines",
+      "line": 6868,
+      "end": 7089,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 69,
+      "title": "Append Commands to a Macro",
+      "line": 7090,
+      "end": 7159,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 70,
+      "title": "Act Upon a Collection of Files",
+      "line": 7160,
+      "end": 7406,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 71,
+      "title": "Evaluate an Iterator to Number Items in a List",
+      "line": 7407,
+      "end": 7534,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 72,
+      "title": "Edit the Contents of a Macro",
+      "line": 7535,
+      "end": 7690,
+      "chapter": 11,
+      "part": 4
+    },
+    {
+      "number": 73,
+      "title": "Tune the Case Sensitivity of Search Patterns",
+      "line": 7691,
+      "end": 7791,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 74,
+      "title": "Use the \\v Pattern Switch for Regex Searches",
+      "line": 7792,
+      "end": 7871,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 75,
+      "title": "Use the \\V Literal Switch for Verbatim Searches",
+      "line": 7872,
+      "end": 7931,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 76,
+      "title": "Use Parentheses to Capture Submatches",
+      "line": 7932,
+      "end": 7977,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 77,
+      "title": "Stake the Boundaries of a Word",
+      "line": 7978,
+      "end": 7999,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 78,
+      "title": "Stake the Boundaries of a Match",
+      "line": 8000,
+      "end": 8041,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 79,
+      "title": "Escape Problem Characters",
+      "line": 8042,
+      "end": 8180,
+      "chapter": 12,
+      "part": 5
+    },
+    {
+      "number": 80,
+      "title": "Meet the Search Command",
+      "line": 8181,
+      "end": 8243,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 81,
+      "title": "Highlight Search Matches",
+      "line": 8244,
+      "end": 8267,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 82,
+      "title": "Preview the First Match Before Execution",
+      "line": 8268,
+      "end": 8311,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 83,
+      "title": "Offset the Cursor to the End of a Search Match",
+      "line": 8312,
+      "end": 8395,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 84,
+      "title": "Operate on a Complete Search Match",
+      "line": 8396,
+      "end": 8514,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 85,
+      "title": "Create Complex Patterns by Iterating upon Search History",
+      "line": 8515,
+      "end": 8642,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 86,
+      "title": "Count the Matches for the Current Pattern",
+      "line": 8643,
+      "end": 8725,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 87,
+      "title": "Search for the Current Visual Selection",
+      "line": 8726,
+      "end": 8817,
+      "chapter": 13,
+      "part": 5
+    },
+    {
+      "number": 88,
+      "title": "Meet the Substitute Command",
+      "line": 8818,
+      "end": 8889,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 89,
+      "title": "Find and Replace Every Match in a File",
+      "line": 8890,
+      "end": 8951,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 90,
+      "title": "Eyeball Each Substitution",
+      "line": 8952,
+      "end": 9017,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 91,
+      "title": "Reuse the Last Search Pattern",
+      "line": 9018,
+      "end": 9061,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 92,
+      "title": "Replace with the Contents of a Register",
+      "line": 9062,
+      "end": 9119,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 93,
+      "title": "Repeat the Previous Substitute Command",
+      "line": 9120,
+      "end": 9315,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 94,
+      "title": "Rearrange CSV Fields Using Submatches",
+      "line": 9316,
+      "end": 9349,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 95,
+      "title": "Perform Arithmetic on the Replacement",
+      "line": 9350,
+      "end": 9397,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 96,
+      "title": "Swap Two or More Words",
+      "line": 9398,
+      "end": 9473,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 97,
+      "title": "Find and Replace Across Multiple Files",
+      "line": 9474,
+      "end": 9610,
+      "chapter": 14,
+      "part": 5
+    },
+    {
+      "number": 98,
+      "title": "Meet the Global Command",
+      "line": 9611,
+      "end": 9638,
+      "chapter": 15,
+      "part": 5
+    },
+    {
+      "number": 99,
+      "title": "Delete Lines Containing a Pattern",
+      "line": 9639,
+      "end": 9724,
+      "chapter": 15,
+      "part": 5
+    },
+    {
+      "number": 100,
+      "title": "Collect TODO Items in a Register",
+      "line": 9725,
+      "end": 9810,
+      "chapter": 15,
+      "part": 5
+    },
+    {
+      "number": 101,
+      "title": "Alphabetize the Properties of Each Rule in a CSS File",
+      "line": 9811,
+      "end": 10038,
+      "chapter": 15,
+      "part": 5
+    },
+    {
+      "number": 102,
+      "title": "Meet ctags",
+      "line": 10039,
+      "end": 10143,
+      "chapter": 16,
+      "part": 6
+    },
+    {
+      "number": 103,
+      "title": "Configure Vim to Work with ctags",
+      "line": 10144,
+      "end": 10203,
+      "chapter": 16,
+      "part": 6
+    },
+    {
+      "number": 104,
+      "title": "Navigate Keyword Definitions with Vim’s Tag Navigation Commands",
+      "line": 10204,
+      "end": 10424,
+      "chapter": 16,
+      "part": 6
+    },
+    {
+      "number": 105,
+      "title": "Compile Code Without Leaving Vim",
+      "line": 10425,
+      "end": 10539,
+      "chapter": 17,
+      "part": 6
+    },
+    {
+      "number": 106,
+      "title": "Browse the Quickfix List",
+      "line": 10540,
+      "end": 10629,
+      "chapter": 17,
+      "part": 6
+    },
+    {
+      "number": 107,
+      "title": "Recall Results from a Previous Quickfix List",
+      "line": 10630,
+      "end": 10641,
+      "chapter": 17,
+      "part": 6
+    },
+    {
+      "number": 108,
+      "title": "Customize the External Compiler",
+      "line": 10642,
+      "end": 10810,
+      "chapter": 17,
+      "part": 6
+    },
+    {
+      "number": 109,
+      "title": "Call grep Without Leaving Vim",
+      "line": 10811,
+      "end": 10858,
+      "chapter": 18,
+      "part": 6
+    },
+    {
+      "number": 110,
+      "title": "Customize the grep Program",
+      "line": 10859,
+      "end": 10963,
+      "chapter": 18,
+      "part": 6
+    },
+    {
+      "number": 111,
+      "title": "Grep with Vim’s Internal Search Engine",
+      "line": 10964,
+      "end": 11122,
+      "chapter": 18,
+      "part": 6
+    },
+    {
+      "number": 112,
+      "title": "Meet Vim’s Keyword Autocompletion",
+      "line": 11123,
+      "end": 11180,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 113,
+      "title": "Work with the Autocomplete Pop-Up Menu",
+      "line": 11181,
+      "end": 11256,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 114,
+      "title": "Understand the Source of Keywords",
+      "line": 11257,
+      "end": 11306,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 115,
+      "title": "Autocomplete Words from the Dictionary",
+      "line": 11307,
+      "end": 11322,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 116,
+      "title": "Autocomplete Entire Lines",
+      "line": 11323,
+      "end": 11376,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 117,
+      "title": "Autocomplete Sequences of Words",
+      "line": 11377,
+      "end": 11459,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 118,
+      "title": "Autocomplete Filenames",
+      "line": 11460,
+      "end": 11535,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 119,
+      "title": "Autocomplete with Context Awareness",
+      "line": 11536,
+      "end": 11570,
+      "chapter": 19,
+      "part": 6
+    },
+    {
+      "number": 120,
+      "title": "Spell Check Your Work",
+      "line": 11571,
+      "end": 11632,
+      "chapter": 20,
+      "part": 6
+    },
+    {
+      "number": 121,
+      "title": "Use Alternate Spelling Dictionaries",
+      "line": 11633,
+      "end": 11686,
+      "chapter": 20,
+      "part": 6
+    },
+    {
+      "number": 122,
+      "title": "Add Words to the Spell File",
+      "line": 11687,
+      "end": 11720,
+      "chapter": 20,
+      "part": 6
+    },
+    {
+      "number": 123,
+      "title": "Fix Spelling Errors from Insert Mode",
+      "line": 11721,
+      "end": 11976,
+      "chapter": 20,
+      "part": 6
+    }
+  ]
+}

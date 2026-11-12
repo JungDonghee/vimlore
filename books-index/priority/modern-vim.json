@@ -1,0 +1,275 @@
+{
+  "slug": "modern-vim",
+  "lines": 6882,
+  "parts": [],
+  "chapters": [
+    {
+      "number": 1,
+      "title": "Get Modern Vim",
+      "line": 654,
+      "end": 1039
+    },
+    {
+      "number": 2,
+      "title": "Installing Plugins",
+      "line": 1040,
+      "end": 1502
+    },
+    {
+      "number": 3,
+      "title": "Opening Files",
+      "line": 1503,
+      "end": 2299
+    },
+    {
+      "number": 4,
+      "title": "Working with the Quickfix List",
+      "line": 2300,
+      "end": 3773
+    },
+    {
+      "number": 5,
+      "title": "Neovim’s Built-In Terminal Emulator",
+      "line": 3774,
+      "end": 4907
+    },
+    {
+      "number": 6,
+      "title": "Sessions",
+      "line": 4908,
+      "end": 5329
+    },
+    {
+      "number": 7,
+      "title": "Configuring Vim",
+      "line": 5330,
+      "end": 6882
+    }
+  ],
+  "tips": [
+    {
+      "number": 1,
+      "title": "Installing Vim 8",
+      "line": 701,
+      "end": 791,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 2,
+      "title": "Switching to Neovim",
+      "line": 792,
+      "end": 926,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 3,
+      "title": "Enabling Python Support in Neovim",
+      "line": 927,
+      "end": 1051,
+      "chapter": 1,
+      "part": null
+    },
+    {
+      "number": 4,
+      "title": "Understanding Scripts, Plugins, and Packages",
+      "line": 1052,
+      "end": 1162,
+      "chapter": 2,
+      "part": null
+    },
+    {
+      "number": 5,
+      "title": "Installing Plugins to Your Package",
+      "line": 1163,
+      "end": 1332,
+      "chapter": 2,
+      "part": null
+    },
+    {
+      "number": 6,
+      "title": "Managing Plugins with minpac",
+      "line": 1333,
+      "end": 1514,
+      "chapter": 2,
+      "part": null
+    },
+    {
+      "number": 7,
+      "title": "Finding Files Using Fuzzy Path Matching",
+      "line": 1515,
+      "end": 1853,
+      "chapter": 3,
+      "part": null
+    },
+    {
+      "number": 8,
+      "title": "Finding Files Semantically",
+      "line": 1854,
+      "end": 2105,
+      "chapter": 3,
+      "part": null
+    },
+    {
+      "number": 9,
+      "title": "Jumping to an Alternate File",
+      "line": 2106,
+      "end": 2311,
+      "chapter": 3,
+      "part": null
+    },
+    {
+      "number": 10,
+      "title": "Running a Build and Navigating Failures",
+      "line": 2312,
+      "end": 2579,
+      "chapter": 4,
+      "part": null
+    },
+    {
+      "number": 11,
+      "title": "Switching Compilers",
+      "line": 2580,
+      "end": 2761,
+      "chapter": 4,
+      "part": null
+    },
+    {
+      "number": 12,
+      "title": "Linting the Current File",
+      "line": 2762,
+      "end": 3051,
+      "chapter": 4,
+      "part": null
+    },
+    {
+      "number": 13,
+      "title": "Searching Files with Grep-Alikes",
+      "line": 3052,
+      "end": 3383,
+      "chapter": 4,
+      "part": null
+    },
+    {
+      "number": 14,
+      "title": "Running Tests and Browsing Failures",
+      "line": 3384,
+      "end": 3849,
+      "chapter": 4,
+      "part": null
+    },
+    {
+      "number": 15,
+      "title": "Grokking Terminal Mode",
+      "line": 3850,
+      "end": 4004,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 16,
+      "title": "Running Programs in a Terminal Buffer",
+      "line": 4005,
+      "end": 4219,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 17,
+      "title": "Managing Windows That Contain Terminal Buffers",
+      "line": 4220,
+      "end": 4334,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 18,
+      "title": "Using Normal Mode Commands in a Terminal Buffer",
+      "line": 4335,
+      "end": 4490,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 19,
+      "title": "Sending Commands to a Terminal Buffer",
+      "line": 4491,
+      "end": 4594,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 20,
+      "title": "Applying Customizations to Your Shell in a Terminal Buffer",
+      "line": 4595,
+      "end": 4636,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 21,
+      "title": "Avoiding Nested Neovim Instances",
+      "line": 4637,
+      "end": 4763,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 22,
+      "title": "Using an Existing nvim Instance as the Preferred Editor",
+      "line": 4764,
+      "end": 4954,
+      "chapter": 5,
+      "part": null
+    },
+    {
+      "number": 23,
+      "title": "Saving and Restoring Sessions",
+      "line": 4955,
+      "end": 5065,
+      "chapter": 6,
+      "part": null
+    },
+    {
+      "number": 24,
+      "title": "Making Undo Persist Between Sessions",
+      "line": 5066,
+      "end": 5160,
+      "chapter": 6,
+      "part": null
+    },
+    {
+      "number": 25,
+      "title": "Restarting Terminal Processes When Resuming a Session",
+      "line": 5161,
+      "end": 5344,
+      "chapter": 6,
+      "part": null
+    },
+    {
+      "number": 26,
+      "title": "Using Autocommands to Respond to Events",
+      "line": 5345,
+      "end": 5675,
+      "chapter": 7,
+      "part": null
+    },
+    {
+      "number": 27,
+      "title": "Respecting Project Conventions",
+      "line": 5676,
+      "end": 5910,
+      "chapter": 7,
+      "part": null
+    },
+    {
+      "number": 28,
+      "title": "Setting Buffer-Local Configuration Per Project",
+      "line": 5911,
+      "end": 6882,
+      "chapter": 7,
+      "part": null
+    }
+  ]
+}

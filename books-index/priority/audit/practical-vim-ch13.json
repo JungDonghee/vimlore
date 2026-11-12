@@ -1,0 +1,201 @@
+{
+  "id": "practical-vim-ch13",
+  "book": "practical-vim",
+  "chapter": 13,
+  "title": "Search",
+  "start": 8166,
+  "end": 8802,
+  "summary": "Chapter 13 is a tour of Vim's search command and the workflows built on it. It covers forward and backward searches with / and ?, repeating with n and N (which inherit direction and offsets), highlighting matches with 'hlsearch' and muting them with :nohlsearch or a <C-l> mapping, previewing matches live with 'incsearch' and completing the search field with <C-r><C-w>, and using search offsets such as /lang/e to land at the end of a match. It then shows how gn enables operating on a complete match (gUgn and the Improved Dot Formula), how to iterate on a pattern through search history or the q/ command-line window, how to count matches with :%s///gn and :vimgrep, and ends with a Vim script that redefines * in Visual mode to search for the current selection.",
+  "commands": [
+    {
+      "keys": "/",
+      "meaning": "Open the forward search prompt; enter a pattern, then press <CR> to execute the search",
+      "line": 8187,
+      "evidence": "From Normal mode, the / key brings up Vim’s search prompt. Here we can enter the pattern, or literal text, that we want to search for. Vim does nothing until we press the <CR> key to execute the search. If we press the <Esc> key instead, the search prompt will be dismissed and we’ll return to Normal mode."
+    },
+    {
+      "keys": "?",
+      "meaning": "Open the search prompt so that Vim scans backward through the document",
+      "line": 8195,
+      "evidence": "When a search is initiated with the / key, Vim scans the document forward. If we use the ? key to bring up the search prompt, Vim searches backward instead. The search prompt always begins with either the / or ? character, which indicates in what direction the search will scan."
+    },
+    {
+      "keys": "n N",
+      "meaning": "Jump to the next match or the previous match for the current search pattern",
+      "line": 8199,
+      "evidence": "The n command jumps to the next match, and the N command jumps to the previous match. We can easily navigate between matches in the current document with the n and N commands. But the definition of “next match” depends on context."
+    },
+    {
+      "keys": "gn",
+      "meaning": "Move to the next match, then enable Visual mode and select the matching text (also usable as an operator motion)",
+      "line": 8236,
+      "evidence": "When used from Normal mode, gn moves the cursor to the next match, then enables Visual mode and selects the matching text. If your cursor is already on a match, then gn will select the current match without you having to move the cursor. We’ll look at this command in in more detail in Tip 84."
+    },
+    {
+      "keys": ":nohlsearch",
+      "meaning": "Mute search highlighting temporarily; it stays muted until the next new or repeat search",
+      "line": 8256,
+      "evidence": "Vim has a more elegant solution. The :nohlsearch command can be used to mute the search highlighting temporarily (see :nohⓘ). It will stay muted until the next time you execute a new or repeat search command. See Create a Shortcut to Mute Highlighting, for a suggested mapping."
+    },
+    {
+      "keys": "nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>",
+      "meaning": "Mapping that clears the screen and mutes search highlighting",
+      "line": 8262,
+      "evidence": "nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>"
+    },
+    {
+      "keys": "‘incsearch’",
+      "meaning": "Option that previews the first match while the search pattern is still being typed",
+      "line": 8272,
+      "evidence": "By default, Vim sits idle as we prepare our search pattern, only springing into action when we press <CR>. My favorite enhancement is enabled with the ‘incsearch’ setting (see 'incsearch'ⓘ). This tells Vim to show a preview of the first match based on what has been entered so far into the search field. Each time we enter another character, Vim instantly updates the preview. This table illustrates how it works:"
+    },
+    {
+      "keys": "<C-r><C-w>",
+      "meaning": "Autocomplete the search field using the remainder of the current preview match",
+      "line": 8306,
+      "evidence": "Of course, we could simply type out the “carrot” in full. But here’s a handy shortcut: <C-r><C-w>. This autocompletes the search field using the remainder of the current preview match. If we used this command after entering “carr” into the search field, it would append “ot,” causing the match to encompass the entire word “carrot.”"
+    },
+    {
+      "keys": "/lang/e<CR>",
+      "meaning": "Search for lang and use the e offset to place the cursor at the end of the match",
+      "line": 8350,
+      "evidence": "/lang/e<CR>"
+    },
+    {
+      "keys": "//e<CR>",
+      "meaning": "Repeat the previous search with an offset, reusing the pattern because the search field is left blank",
+      "line": 8392,
+      "evidence": "In the real world, it won’t always be obvious when a search offset will come in handy. Suppose that we started off by executing the search command without the offset. Then, after pressing n a couple of times, we realize that we’d prefer to place the cursor at the end of the match. That’s no problem: we could simply run //e<CR>. When we leave the search field blank like this, Vim reuses the pattern from the previous search. So this repeats the last search but with an offset."
+    },
+    {
+      "keys": "gUgn",
+      "meaning": "Uppercase the next search match by combining the gU operator with the gn motion",
+      "line": 8471,
+      "evidence": "The gUgn command transforms the matching text to uppercase."
+    },
+    {
+      "keys": "q/",
+      "meaning": "Open the command-line window prepopulated with search history, so patterns can be edited with modal editing",
+      "line": 8577,
+      "evidence": "Instead of pressing /<Up> to prefill the search field with our last pattern, let’s press q/ to summon the command-line window. This acts more or less like a regular Vim buffer, but it’s prepopulated with our search history, one item per line (see Meet the Command-Line Window). We can use the full power of Vim’s modal editing to amend the last pattern."
+    },
+    {
+      "keys": ":%s///gn",
+      "meaning": "Count the matches for the current pattern: the substitute n flag reports the count instead of replacing",
+      "line": 8672,
+      "evidence": "=> :%s///gn"
+    },
+    {
+      "keys": ":vimgrep //g %",
+      "meaning": "Populate the quickfix list with every match of the current pattern in the current file",
+      "line": 8694,
+      "evidence": "=> :vimgrep //g %"
+    },
+    {
+      "keys": "xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>",
+      "meaning": "Redefine * in Visual mode to search for the current selection rather than the word under the cursor",
+      "line": 8771,
+      "evidence": "xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Search wraps around the document",
+      "line": 8189,
+      "evidence": "When we execute a search, Vim scans forward from the current cursor position, stopping on the first match that it finds. If nothing is found before the end of the document, Vim informs us “search hit BOTTOM, continuing at TOP.” This means that in some circumstances, a forward search can take us backward. That’s not as disorienting as it might sound. Just remember that the search command wraps around the document, and it’ll make sense."
+    },
+    {
+      "name": "Repeating a search with the previous pattern but a new direction or offset",
+      "line": 8203,
+      "evidence": "Sometimes we might want to repeat a search using the same pattern but changing the direction or offset. In this case, it’s useful to know that if we execute a search without providing a pattern, Vim will just reuse the pattern from the previous search. The following table summarizes the matrix of options for repeating a search:"
+    },
+    {
+      "name": "Browsing the search history with <Up>",
+      "line": 8240,
+      "evidence": "Vim records our search patterns so we can easily recall them. When the search prompt is visible, we can scroll through the previous searches by pressing the <Up> key. In fact, the interface for browsing the search history is just the same as for browsing the command-line history. We covered this in more depth in Tip 34. We’ll put these techniques into action in Tip 85."
+    },
+    {
+      "name": "'hlsearch' highlights every match in the document and in all open splits",
+      "line": 8248,
+      "evidence": "The search command allows us to jump quickly between matches, but by default, Vim does nothing to make them stand out visually. We can fix this by enabling the ‘hlsearch’ option, (see 'hlsearch'ⓘ), which causes all matches to be highlighted throughout the active document as well as in any other open split windows."
+    },
+    {
+      "name": "Incremental search gives instant preview feedback before execution",
+      "line": 8294,
+      "evidence": "This instant feedback lets us know when we’ve hit our target. If our intention was simply to move the cursor to the start of the word “carrot,” then there’s no need to type the full word into the search field. In this case, /carr<CR> is enough. Without the ‘incsearch’ feature enabled, we wouldn’t know whether or not our pattern would hit the target until we executed the search."
+    },
+    {
+      "name": "Search offsets position the cursor relative to a match",
+      "line": 8314,
+      "evidence": "A search offset can be used to position the cursor a fixed number of characters away from the start or end of a match. In this tip, we’ll study an example where, by placing the cursor at the end of a match, we’re able to complete a series of changes using the Dot Formula."
+    },
+    {
+      "name": "The classic Dot Formula: one keystroke to move, one to make the change",
+      "line": 8485,
+      "evidence": "The classic Dot Formula has two parts: one keystroke to move, another to make the change."
+    },
+    {
+      "name": "The Improved Dot Formula",
+      "line": 8489,
+      "evidence": "I call this the Improved Dot Formula."
+    },
+    {
+      "name": "The Improved Dot Formula requires a pattern that matches before the change but not after it",
+      "line": 8497,
+      "evidence": "For the Improved Dot Formula to work, our search pattern should match the target text before making a change, but not after making the change."
+    },
+    {
+      "name": "Iterative pattern refinement: start with a broad match, then focus on the target",
+      "line": 8637,
+      "evidence": "Don’t worry about getting a search pattern right the first time. Vim keeps our most recent search pattern two keystrokes away, so it’s easy to refine a pattern. Start with a broad match; then take as many steps as you need to focus on your target."
+    },
+    {
+      "name": "Counting matches with the n flag of :substitute",
+      "line": 8676,
+      "evidence": "We’re calling the :substitute command, but the n flag suppresses the usual behavior."
+    },
+    {
+      "name": "Populating the quickfix list with :vimgrep",
+      "line": 8698,
+      "evidence": "This command populates the quickfix list with each match found in the current buffer. The :vimgrep command is capable of finding matches across multiple files, but here we’re asking it to look inside a single file."
+    }
+  ],
+  "problems": [
+    {
+      "line": 8181,
+      "kind": "garbled",
+      "evidence": "Tip 80Meet the Search Command",
+      "note": "Tip number and title run together with no space ('Tip 80Meet'); the same collapsed heading recurs at 8244, 8268, 8312, 8396, 8515, 8643 and 8726."
+    },
+    {
+      "line": 8205,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "Two-column table header collapsed into one token ('CommandEffect'); the same collapse recurs at 8274, 8340, 8425, 8581 and 8734 as 'KeystrokesBuffer Contents'."
+    },
+    {
+      "line": 8236,
+      "kind": "duplicated",
+      "evidence": "When used from Normal mode, gn moves the cursor to the next match, then enables Visual mode and selects the matching text. If your cursor is already on a match, then gn will select the current match without you having to move the cursor. We’ll look at this command in in more detail in Tip 84.",
+      "note": "The word 'in' is repeated ('in in more detail'), a visible duplication in the sentence."
+    },
+    {
+      "line": 8720,
+      "kind": "order",
+      "evidence": "You can read more about the quickfix list in Chapter 17, Compile Code and Navigate Errors",
+      "note": "The sentence is cut off after 'Navigate Errors' and its continuation 'with the Quickfix List.' appears at line 8722, separated by the blank line 8721."
+    },
+    {
+      "line": 8565,
+      "kind": "typo",
+      "evidence": "This ’string doesn’t make things easy.'",
+      "note": "The line mixes U+2019 for the opening apostrophe with an ASCII ' (U+0027) for the closing one, unlike the surrounding examples."
+    },
+    {
+      "line": 8191,
+      "kind": "garbled",
+      "evidence": "If you ever need to search from the current cursor position to the end of the document without wrapping around, you can disable the ‘wrapscan’ option (see 'wrapscan'ⓘ).",
+      "note": "An inline help-link glyph 'ⓘ' from the print layout survives in the text ('wrapscan'ⓘ); the same artifact recurs at 8248, 8256, 8264, 8272, 8316, 8417, 8418, 8699, 8751 and 8791."
+    }
+  ]
+}

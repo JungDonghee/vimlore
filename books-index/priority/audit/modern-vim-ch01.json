@@ -1,0 +1,159 @@
+{
+  "id": "modern-vim-ch01",
+  "book": "modern-vim",
+  "chapter": 1,
+  "title": "Get Modern Vim",
+  "start": 654,
+  "end": 1039,
+  "summary": "Chapter 1 is the book's installation and setup chapter: it frames the choice between Vim 8, Neovim, or running both side by side, and notes that the two editors can share the same configuration files and plugins. Tip 1 shows how to check an installed Vim's version and compiled features, then how to upgrade to Vim 8 on Debian and macOS. Tip 2 installs Neovim, explains the $VIMCONFIG/$VIMDATA convention used throughout the book, and shows how to make Neovim reuse an existing vimrc through init.vim. Tip 3 enables Neovim's Python 3 provider via the pip client, introduces providers and :checkhealth (including clipboard support), and installs neovim-remote.",
+  "commands": [
+    {
+      "keys": "vim --version",
+      "meaning": "Print the installed Vim version and the list of compiled features",
+      "line": 709,
+      "evidence": "=> $ vim --version"
+    },
+    {
+      "keys": "mkdir -p $VIMCONFIG/pack/bundle/start",
+      "meaning": "Create the package start directory that holds installed plugins",
+      "line": 762,
+      "evidence": "=> $ mkdir -p $VIMCONFIG/pack/bundle/start"
+    },
+    {
+      "keys": "nvim",
+      "meaning": "Launch Neovim from the shell",
+      "line": 848,
+      "evidence": "=> $ nvim"
+    },
+    {
+      "keys": ":help base-directories",
+      "meaning": "Open the help topic that documents Vim/Neovim config and data directories",
+      "line": 877,
+      "evidence": "The equivalent configuration file for Neovim is located in a ~/.config/nvim directory and is called init.vim (:help base-directories)."
+    },
+    {
+      "keys": "set runtimepath^=~/.vim runtimepath+=~/.vim/after",
+      "meaning": "Prepend ~/.vim and append ~/.vim/after to Neovim's runtimepath",
+      "line": 887,
+      "evidence": "set runtimepath^=~/.vim runtimepath+=~/.vim/after"
+    },
+    {
+      "keys": "let &packpath = &runtimepath",
+      "meaning": "Make Neovim's package path mirror the runtimepath so Vim packages are found",
+      "line": 889,
+      "evidence": "let &packpath = &runtimepath"
+    },
+    {
+      "keys": "source ~/.vim/vimrc",
+      "meaning": "Load the existing Vim vimrc from init.vim",
+      "line": 891,
+      "evidence": "source ~/.vim/vimrc"
+    },
+    {
+      "keys": ":version",
+      "meaning": "Report the editor version and feature flags such as +python3",
+      "line": 934,
+      "evidence": "Find out which version of Python is supported in Vim 8 by running :version and looking for +python or +python3."
+    },
+    {
+      "keys": ":py3 print('hello')",
+      "meaning": "Execute a Python 3 statement, here printing hello",
+      "line": 940,
+      "evidence": "=> :py3 print('hello')"
+    },
+    {
+      "keys": "+ and *",
+      "meaning": "Registers used to interact with the system clipboard",
+      "line": 961,
+      "evidence": "The user interface is the same in both Vim 8 and Neovim: You can use the + and * registers to interact with the system clipboard."
+    },
+    {
+      "keys": ":checkhealth",
+      "meaning": "Run Neovim's diagnostic tests and report provider status",
+      "line": 963,
+      "evidence": "You can check if you have clipboard support enabled in Neovim by running :checkhealth."
+    },
+    {
+      "keys": "pip3 install --user --upgrade neovim",
+      "meaning": "Install the Python client that provides the Python 3 provider",
+      "line": 972,
+      "evidence": "=> $ pip3 install --user --upgrade neovim"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Neovim's remote plugin architecture (RPC)",
+      "line": 681,
+      "evidence": "Neovim’s remote plugin architecture allows you to extend the editor by making remote procedure calls (RPCs) using any programming language."
+    },
+    {
+      "name": "Required Vim 8 build features",
+      "line": 728,
+      "evidence": "You want to make sure that your build has the +job, +channel, +timers, and +packages features enabled."
+    },
+    {
+      "name": "Contextual instructions with $VIMCONFIG and $VIMDATA",
+      "line": 772,
+      "evidence": "Alternatively, you could set the $VIMCONFIG and $VIMDATA variables for your shell."
+    },
+    {
+      "name": "Neovim's separate configuration and data directories",
+      "line": 782,
+      "evidence": "That’s because Neovim uses different directories to store configuration and data, whereas Vim makes no such distinction."
+    },
+    {
+      "name": "Neovim as a drop-in replacement for Vim",
+      "line": 794,
+      "evidence": "Neovim can be used as a drop-in replacement for Vim."
+    },
+    {
+      "name": "Using $VISUAL so external programs prefer Neovim",
+      "line": 852,
+      "evidence": "You could also set the $VISUAL variable to nvim, so that programs that launch a text editor (such as git commit) will use Neovim."
+    },
+    {
+      "name": "Reusing a Vim runtime configuration in Neovim",
+      "line": 874,
+      "evidence": "Neovim can load your Vim runtime configuration files, but first you have to tell it where to find them."
+    },
+    {
+      "name": "Vim script compatibility and the job-control caveat",
+      "line": 898,
+      "evidence": "Most Vim plugins written in Vim script should just work™ in Neovim. The one area where you have to be cautious is with any plugin that uses job control to perform work asynchronously."
+    },
+    {
+      "name": "Neovim providers",
+      "line": 949,
+      "evidence": "Neovim uses providers to implement some features whose behavior may depend on the system and environment, such as clipboard support."
+    },
+    {
+      "name": "Clipboard support enabled at runtime",
+      "line": 958,
+      "evidence": "In Neovim, clipboard support is enabled at runtime."
+    },
+    {
+      "name": "Python 3 provider via the pip-installed client",
+      "line": 969,
+      "evidence": "To enable the Python 3 provider, you need to install the Python client.[14]"
+    },
+    {
+      "name": "neovim-remote (nvr) for remote control of Neovim",
+      "line": 984,
+      "evidence": "Neovim-remote[15] by Marco Hinz is a tool that lets you control Neovim processes remotely."
+    }
+  ],
+  "problems": [
+    {
+      "line": 701,
+      "kind": "missing",
+      "evidence": "Tip 1Installing Vim 8",
+      "note": "Tip number and tip title are glued together with no separator ('Tip 1Installing'); the heading should read 'Tip 1. Installing Vim 8'. The same glued heading occurs at 792 ('Tip 2Switching to Neovim') and 927 ('Tip 3Enabling Python Support in Neovim'), while body references use a separator, e.g. 'Tip 21, Avoiding Nested Neovim Instances' at 1004."
+    },
+    {
+      "line": 677,
+      "kind": "missing",
+      "evidence": "Neovim is a fork of Vim. Its main goal to make the editor more hackable has been achieved by modernizing the codebase, introducing a new plugin architecture, and sharing responsibility for the codebase with the community.",
+      "note": "The clause has no finite verb between 'goal' and 'to make': 'Its main goal to make the editor more hackable has been achieved' reads as though a word ('is') was dropped, in the source or during extraction."
+    }
+  ]
+}

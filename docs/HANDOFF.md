@@ -86,6 +86,16 @@ only finalize by 23:50; the machine shuts down at 00:00.
   `browser:qa` measures **55.5 rAF/draw FPS** headless at 1920×1080; 144fps is
   not measurable here and is a display/GPU target, not a headless-CPU claim.
 
+## 0e. Priority books — Drew Neil (2026-11-12)
+
+`Practical Vim` and `Modern Vim` are now the primary indexed corpus:
+**123 + 28 body tips**, 28 chapters, 417 evidence-bound command citations,
+336 concepts and 175 defect candidates; **0 rejected evidence mismatches**.
+Read them with `npm run books:priority:read -- toc|tip|chapter`. The errata
+(`books-index/priority/ERRATA.md`) records 56 typo candidates and the
+flattened-table/typographic-quote defects; nothing was silently rewritten.
+`CURRICULUM_MAP.md` is explicitly **key overlap**, not semantic coverage.
+
 ## 0d. Book corpus pipeline (2026-11-12)
 
 The ten books are normalized line-for-line (`tools/books/build_corpus.py`);

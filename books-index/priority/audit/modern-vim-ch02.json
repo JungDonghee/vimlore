@@ -1,0 +1,195 @@
+{
+  "id": "modern-vim-ch02",
+  "book": "modern-vim",
+  "chapter": 2,
+  "title": "Installing Plugins",
+  "start": 1040,
+  "end": 1502,
+  "summary": "Chapter 2, Installing Plugins, explains why Vim users want plugins and how Vim 8's native packages feature removes the need for a third-party plugin manager. It defines the script/plugin/package hierarchy, shows that installing a plugin means adding it to the 'runtimepath', and demonstrates installing plugins under $VIMCONFIG/pack/{package}/start for automatic loading or under opt for on-demand loading with :packadd, plus indexing their documentation with :helptags. The chapter then covers updating plugins with git pull, migrating from Pathogen, and managing plugins with minpac (minpac#add(), minpac#update(), minpac#clean()) including user-defined commands such as :PackUpdate and :PackClean.",
+  "commands": [
+    {
+      "keys": "nnoremap Q :Hello<CR>",
+      "meaning": "Define a Normal-mode mapping inside a script; pressing Q runs the new :Hello command.",
+      "line": 1081,
+      "evidence": "nnoremap Q :Hello<CR>"
+    },
+    {
+      "keys": ":source {path}",
+      "meaning": "Source a script file manually to load its functions, commands, and mappings.",
+      "line": 1083,
+      "evidence": "You can load a script manually by running :source {path}, where {path} locates the script you want to run."
+    },
+    {
+      "keys": ":set runtimepath+=$VIMCONFIG/arbitrary/demo-plugin",
+      "meaning": "Install a plugin by hand by appending its directory to the 'runtimepath' option.",
+      "line": 1121,
+      "evidence": "=> :set runtimepath+=$VIMCONFIG/arbitrary/demo-plugin"
+    },
+    {
+      "keys": ":helptags",
+      "meaning": "Parse a plugin's documentation and write a tags index so :help can find it.",
+      "line": 1143,
+      "evidence": "You do this with the :helptags command."
+    },
+    {
+      "keys": ":help user-manual",
+      "meaning": "Open the user manual's table of contents in Vim's help system.",
+      "line": 1149,
+      "evidence": "=> :help user-manual"
+    },
+    {
+      "keys": "<C-]>",
+      "meaning": "Follow the help hyperlink (tag anchor) under the cursor.",
+      "line": 1153,
+      "evidence": "Press <C-]> and you’ll jump to the specified anchor."
+    },
+    {
+      "keys": "<C-o>",
+      "meaning": "Jump back to the previous location after following a help tag.",
+      "line": 1154,
+      "evidence": "You can quickly jump back to where you came from using <C-o>."
+    },
+    {
+      "keys": ":echo join(split(&runtimepath, ','), \"\\n\")",
+      "meaning": "Print 'runtimepath' one directory per line to inspect which plugins are installed.",
+      "line": 1178,
+      "evidence": "=> :echo join(split(&runtimepath, ','), \"\\n\")"
+    },
+    {
+      "keys": ":helptags ALL",
+      "meaning": "Index documentation for every package, not just one plugin directory.",
+      "line": 1237,
+      "evidence": "=> :helptags ALL"
+    },
+    {
+      "keys": ":packadd vim-scriptease",
+      "meaning": "Load an optional plugin from pack/*/opt for the current session only.",
+      "line": 1272,
+      "evidence": "=> :packadd vim-scriptease"
+    },
+    {
+      "keys": ":scriptnames",
+      "meaning": "List the script files Vim has loaded, confirming the optional plugin is active.",
+      "line": 1286,
+      "evidence": "And you can use the features it provides. Try running the :scriptnames command to see for yourself. Having loaded the plugin with :packadd, it’ll be available until Vim quits. Next time you launch Vim, the optional plugin won’t be loaded."
+    },
+    {
+      "keys": ":call minpac#update()",
+      "meaning": "Fetch and install or update every plugin registered with minpac.",
+      "line": 1397,
+      "evidence": "=> :call minpac#update()"
+    },
+    {
+      "keys": ":messages",
+      "meaning": "Review previously echoed messages, such as which plugins minpac installed.",
+      "line": 1408,
+      "evidence": "=> :messages"
+    },
+    {
+      "keys": ":call minpac#clean()",
+      "meaning": "Uninstall plugins removed from the minpac config, prompting y/N per directory.",
+      "line": 1446,
+      "evidence": "=> :call minpac#clean()"
+    },
+    {
+      "keys": "command! PackUpdate call minpac#update()",
+      "meaning": "Define a custom :PackUpdate command that wraps the update call.",
+      "line": 1458,
+      "evidence": "command! PackUpdate call minpac#update()"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Package, plugin, and script hierarchy",
+      "line": 1056,
+      "evidence": "In turn, a plugin is a directory that contains one or more scripts, and a script is a standalone file containing instructions written in Vim script."
+    },
+    {
+      "name": "Scripts add functionality to Vim",
+      "line": 1061,
+      "evidence": "Scripts Add Functionality to Vim"
+    },
+    {
+      "name": "Installing a plugin means adding it to 'runtimepath'",
+      "line": 1117,
+      "evidence": "Installing a plugin means adding it to Vim’s ‘runtimepath’ (:help ‘runtimepath’)."
+    },
+    {
+      "name": "start subdirectory for plugins loaded at startup",
+      "line": 1131,
+      "evidence": "Your package should contain a subdirectory called start, which is where you install the plugins that you want to load when Vim starts up."
+    },
+    {
+      "name": "Indexing documentation for installed plugins",
+      "line": 1140,
+      "evidence": "Indexing the Documentation for Installed Plugins"
+    },
+    {
+      "name": "Optional plugins in opt/ loaded on demand",
+      "line": 1248,
+      "evidence": "Some plugins are for everyday use, while others may come in handy only occasionally. Vim’s packages can contain optional plugins, which you can load when needed. Let’s install the Scriptease plugin[16] this way. This plugin provides extra functionality that is useful when developing Vim script files."
+    },
+    {
+      "name": "Updating plugins with git pull",
+      "line": 1296,
+      "evidence": "Installing plugins with Git means that you can easily update to the latest version by running git pull:"
+    },
+    {
+      "name": "Migrating from Pathogen to Vim packages",
+      "line": 1310,
+      "evidence": "Migrating to Vim Packages"
+    },
+    {
+      "name": "minpac as a minimal plugin manager",
+      "line": 1335,
+      "evidence": "minpac is a minimal plugin manager that builds on top of Vim’s new packages feature."
+    },
+    {
+      "name": "Registering plugins with minpac#add()",
+      "line": 1379,
+      "evidence": "To register plugins with your minpac package, you would call the minpac#add() function. As its first argument, this function takes a string made up of two parts separated with a slash ( / ): the plugin author’s GitHub username, followed by the name of the plugin. This function can also take an optional second argument, which is a dictionary of configuration options."
+    },
+    {
+      "name": "Parallel plugin fetching via Vim's jobs API",
+      "line": 1419,
+      "evidence": "Note that minpac uses Vim’s jobs API to fetch plugins in parallel."
+    },
+    {
+      "name": "Creating custom commands for plugin management",
+      "line": 1454,
+      "evidence": "Creating Commands"
+    }
+  ],
+  "problems": [
+    {
+      "line": 1040,
+      "kind": "garbled",
+      "evidence": "Chapter",
+      "note": "Chapter opener is fragmented: 'Chapter' sits on line 1040 and the numeral '2' alone on line 1041, ahead of the title on line 1043; automated heading detection would misread it."
+    },
+    {
+      "line": 1052,
+      "kind": "missing",
+      "evidence": "Tip 4Understanding Scripts, Plugins, and Packages",
+      "note": "Space is missing between the tip number and its title; the same defect recurs at 1163 ('Tip 5Installing Plugins to Your Package') and 1333 ('Tip 6Managing Plugins with minpac')."
+    },
+    {
+      "line": 1069,
+      "kind": "garbled",
+      "evidence": "function! SayHello()",
+      "note": "Blank lines are interleaved between adjacent lines of the hello.vim listing (1070, 1072) and a three-blank run (1074-1076) stands where the sample has one separator; copying the block as shown would not reproduce the script."
+    },
+    {
+      "line": 1218,
+      "kind": "garbled",
+      "evidence": "In addition to the default directories, the ‘runtimepath’ now includes the vim-unimpaired directory. That means you can use the mappings supplied by the unimpaired plugin. Try running the =on command to toggle line numbering on and off.",
+      "note": "'=on' is presented as a mapping to run, but reads like a lost bracket prefix; elsewhere in the chapter key literals keep their delimiters (<C-]>, [y/N]?), so this token should be verified against the source rather than corrected silently."
+    },
+    {
+      "line": 1501,
+      "kind": "garbled",
+      "evidence": "Modern Vim",
+      "note": "Trailing running header appears after the copyright line (1500) and the footnote block; the same page header is interleaved into the body at 1050, 1161 and 1331."
+    }
+  ]
+}

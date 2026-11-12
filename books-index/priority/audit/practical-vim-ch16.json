@@ -1,0 +1,207 @@
+{
+  "id": "practical-vim-ch16",
+  "book": "practical-vim",
+  "chapter": 16,
+  "title": "Index and Navigate",
+  "start": 10022,
+  "end": 10407,
+  "summary": "Chapter 16 shows how to index a codebase with Exuberant Ctags and then jump around that codebase from inside Vim. It covers installing and running ctags, the anatomy of the tags file (pattern-based keyword addresses and metadata), configuring the 'tags' option, and the navigation commands <C-]>, g<C-]>, <C-t>, :tag, :tjump, :tselect, :tnext, :tprev, :tfirst, and :tlast, together with tag priority and tag history. It closes by comparing ways to keep the index fresh: manual :!ctags -R, an <F5> mapping, a BufWritePost autocommand, or version-control hooks.",
+  "commands": [
+    {
+      "keys": ":set tags?",
+      "meaning": "Inspect the current value of the 'tags' option, showing where Vim searches for tags files.",
+      "line": 10152,
+      "evidence": "=> :set tags?"
+    },
+    {
+      "keys": ":!ctags -R",
+      "meaning": "Run ctags recursively from Vim's working directory to rebuild the tags index.",
+      "line": 10170,
+      "evidence": "=> :!ctags -R"
+    },
+    {
+      "keys": ":nnoremap <f5> :!ctags -R<CR>",
+      "meaning": "Map the <F5> key to the ctags rebuild command so the index can be regenerated without typing it out.",
+      "line": 10176,
+      "evidence": "=> :nnoremap <f5> :!ctags -R<CR>"
+    },
+    {
+      "keys": ":autocmd BufWritePost * call system(\"ctags -R\")",
+      "meaning": "Re-index the codebase automatically every time a buffer is written to a file.",
+      "line": 10184,
+      "evidence": "=> :autocmd BufWritePost * call system(\"ctags -R\")"
+    },
+    {
+      "keys": "<C-]>",
+      "meaning": "Jump from the keyword under the cursor to its definition.",
+      "line": 10210,
+      "evidence": "Pressing <C-]> makes our cursor jump from the keyword under the cursor to the definition. Here it is in action:"
+    },
+    {
+      "keys": "g<C-]>",
+      "meaning": "Like <C-]> but present the tag match list to choose from when a keyword has multiple matches.",
+      "line": 10296,
+      "evidence": "Instead of <C-]>, we could use the g<C-]> command. Both of these commands behave identically in the case when the current keyword has only a single match. But if it has multiple matches, then the g<C-]> command presents us with a list of choices from the tag match list:"
+    },
+    {
+      "keys": ":tselect",
+      "meaning": "Retrospectively pull up the tag match list for the last jump and choose a different destination.",
+      "line": 10322,
+      "evidence": "Suppose that we invoked <C-]> and found ourselves on the wrong definition. We could use the :tselect command to retrospectively pull up the menu of the tag match list. Or we could use the :tnext command to jump to the next matching tag without showing a prompt. As you might expect, this command is complemented with :tprev, :tfirst, and :tlast. Refer to the discussion of the unimpaired plugin, for a suggested set of mappings for these commands."
+    },
+    {
+      "keys": ":tnext",
+      "meaning": "Jump to the next matching tag without showing a prompt.",
+      "line": 10322,
+      "evidence": "Suppose that we invoked <C-]> and found ourselves on the wrong definition. We could use the :tselect command to retrospectively pull up the menu of the tag match list. Or we could use the :tnext command to jump to the next matching tag without showing a prompt. As you might expect, this command is complemented with :tprev, :tfirst, and :tlast. Refer to the discussion of the unimpaired plugin, for a suggested set of mappings for these commands."
+    },
+    {
+      "keys": ":tag {keyword}",
+      "meaning": "Jump to the first tag matching {keyword} without placing the cursor on the word.",
+      "line": 10326,
+      "evidence": "We don’t have to move the cursor on top of a keyword to jump to its tag. We could just as well call an Ex command. For example, :tag {keyword} and :tjump {keyword} behave like the <C-]> and g<C-]> commands, respectively (see :tagⓘ and :tjumpⓘ)."
+    },
+    {
+      "keys": ":tjump {keyword}",
+      "meaning": "Jump to {keyword}, prompting with the tag match list when several tags match.",
+      "line": 10326,
+      "evidence": "We don’t have to move the cursor on top of a keyword to jump to its tag. We could just as well call an Ex command. For example, :tag {keyword} and :tjump {keyword} behave like the <C-]> and g<C-]> commands, respectively (see :tagⓘ and :tjumpⓘ)."
+    },
+    {
+      "keys": ":tag Fran<Tab>",
+      "meaning": "Tab-complete a tag name on the Ex command line from the keywords in the tags file.",
+      "line": 10328,
+      "evidence": "At times, typing these commands can be quicker than maneuvering the cursor onto a keyword in the document—especially since Vim provides tab-completion for all keywords in the tags file. For example, we could type :tag Fran<Tab>, and Vim would expand our fragment to Francophone."
+    },
+    {
+      "keys": ":pop or <C-t>",
+      "meaning": "Reverse through the tag history back to the previously visited definition.",
+      "line": 10366,
+      "evidence": ":pop or <C-t>"
+    },
+    {
+      "keys": ":tprev",
+      "meaning": "Jump to the previous matching tag.",
+      "line": 10380,
+      "evidence": "Jump to previous matching tag"
+    },
+    {
+      "keys": ":tfirst",
+      "meaning": "Jump to the first matching tag.",
+      "line": 10384,
+      "evidence": "Jump to first matching tag"
+    },
+    {
+      "keys": ":tlast",
+      "meaning": "Jump to the last matching tag.",
+      "line": 10388,
+      "evidence": "Jump to last matching tag"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "ctags as an external code indexer",
+      "line": 10029,
+      "evidence": "ctags is an external program that scans through a codebase and generates an index of keywords. It was originally built into Vim, but with the release of Vim version 6, ctags became a separate project. That heritage is evident today in Vim’s tight integration with ctags."
+    },
+    {
+      "name": "Tags file anatomy (keyword, filename, address)",
+      "line": 10115,
+      "evidence": "The tags file begins with a few lines of metadata. After that it lists one keyword per line, along with the filename and address where that keyword is defined in the source code. The keywords are arranged in alphabetical order, so Vim (or any text editor, for that matter) can rapidly locate them with a binary search."
+    },
+    {
+      "name": "Keywords addressed by search pattern, not line number",
+      "line": 10117,
+      "evidence": "Keywords Are Addressed by Pattern, Not by Line Number"
+    },
+    {
+      "name": "Extended tags metadata (class and function kind fields)",
+      "line": 10127,
+      "evidence": "The classic tags file format only required three tab-separated fields: the keyword, the filename, and the address. But the extended format used today allows for additional fields at the end to provide metadata about the keyword. In this example, we can see that the Anglophone, Francophone, and Speaker keywords are labeled c for class, while initialize and speak are labeled f for function."
+    },
+    {
+      "name": "The 'tags' option and its ./ expansion",
+      "line": 10150,
+      "evidence": "The ‘tags’ option specifies where Vim should look to find a tags file ('tags'ⓘ). When ./ is used in the ‘tags’ option, Vim replaces it with the path of the currently active file. We can inspect the defaults:"
+    },
+    {
+      "name": "Re-indexing via a BufWritePost autocommand",
+      "line": 10182,
+      "evidence": "Vim’s autocommand feature allows us to invoke a command on each occurrence of an event, such as a buffer being created, opened, or written to file. We could set up an autocommand that invokes ctags every time we save a file:"
+    },
+    {
+      "name": "Re-indexing via version control hooks",
+      "line": 10192,
+      "evidence": "In “Effortless Ctags with Git,” Tim Pope demonstrates how to set up hooks for the post-commit, post-merge, and post-checkout events.[25] The beauty of this solution is that it uses global hooks, so configuring each individual repository on your system is unnecessary."
+    },
+    {
+      "name": "Tag jump history (the tag stack)",
+      "line": 10284,
+      "evidence": "As we navigate our codebase in this fashion, Vim maintains a history of the tags we’ve visited. The <C-t> command acts as the back button for our tag history. If we pressed it now, we would jump from the Speaker definition back to the Francophone definition, and if we pressed it a second time, it would take us back to where we started. For more information on interacting with the tag jump list, look up tag-stackⓘ."
+    },
+    {
+      "name": "Tag priority when several tags match a keyword",
+      "line": 10294,
+      "evidence": "If a tag in the current buffer matches the keyword, it gets the highest priority. So in this case, we would jump to the definition of the speak function in the Anglophone class. Look up tag-priorityⓘ if you want to know more about how Vim ranks matching tags."
+    },
+    {
+      "name": "The tag match list selection prompt",
+      "line": 10318,
+      "evidence": "Type number and <Enter> (empty cancels):"
+    },
+    {
+      "name": "Tag-name tab completion on the Ex command line",
+      "line": 10328,
+      "evidence": "At times, typing these commands can be quicker than maneuvering the cursor onto a keyword in the document—especially since Vim provides tab-completion for all keywords in the tags file. For example, we could type :tag Fran<Tab>, and Vim would expand our fragment to Francophone."
+    },
+    {
+      "name": "Regular-expression tag search with :tag /{pattern}",
+      "line": 10330,
+      "evidence": "Also, these Ex commands can accept a regular expression when used in the form :tag /{pattern} or :tjump /{pattern} (note the leading / before {pattern}). For example, to navigate between any definitions whose keywords end with phone, we could invoke the following:"
+    }
+  ],
+  "problems": [
+    {
+      "line": 10033,
+      "kind": "typo",
+      "evidence": "Tag navigation and tag autocompletion won’t work unless Vim knows where to look for an up-to-date index file. Tip 103, shows how to configure Vim to work with ctags.",
+      "note": "Stray comma between the cross-reference 'Tip 103' and the verb 'shows'; elsewhere in the chapter a tip reference runs straight into the sentence (e.g. 'We’ll see how in Tip 104.' at 10031). Visible as printed; not corrected."
+    },
+    {
+      "line": 10039,
+      "kind": "garbled",
+      "evidence": "Tip 102Meet ctags",
+      "note": "The tip number and the tip title are concatenated with no separator. The same lost separator appears in the headings at 10144 ('Tip 103Configure Vim to Work with ctags') and 10204 ('Tip 104Navigate Keyword Definitions with Vim’s Tag Navigation Commands')."
+    },
+    {
+      "line": 10101,
+      "kind": "garbled",
+      "evidence": "Anglophone anglophone.rb /^class Anglophone < Speaker$/;\" c",
+      "note": "The tags file format requires tab-separated fields (as the prose at 10127 states), but the extracted listing separates the fields with single spaces; no tab character occurs anywhere in lines 10022-10407, so the printed listing cannot be used as a working tags file."
+    },
+    {
+      "line": 10212,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Two table column headers ('Keystrokes' and 'Buffer Contents') are run together with no delimiter, and the table body is flattened to one cell per line, so keystrokes such as <C-]> cannot be paired with the buffer states they produce. The same merged header recurs at 10248."
+    },
+    {
+      "line": 10284,
+      "kind": "typo",
+      "evidence": "As we navigate our codebase in this fashion, Vim maintains a history of the tags we’ve visited. The <C-t> command acts as the back button for our tag history. If we pressed it now, we would jump from the Speaker definition back to the Francophone definition, and if we pressed it a second time, it would take us back to where we started. For more information on interacting with the tag jump list, look up tag-stackⓘ.",
+      "note": "The demo at 10248-10266 presses fS then <C-]> from a buffer holding anglophone.rb, so <C-t> would return to the Anglophone definition, not the Francophone one; no Francophone jump occurs anywhere in the chapter's keystroke examples. Visible prose/source inconsistency; not corrected."
+    },
+    {
+      "line": 10334,
+      "kind": "truncation",
+      "evidence": "<= # pri kind tag",
+      "note": "The tag match list header stops after 'tag', dropping the 'file' column that the equivalent header at 10298 shows ('# pri kind tag file') and that the rows below still fill with filenames (e.g. anglophone.rb at 10336)."
+    },
+    {
+      "line": 10348,
+      "kind": "garbled",
+      "evidence": "CommandEffect",
+      "note": "Two table column headers ('Command' and 'Effect') are merged, and from 10350 to 10392 every command and its effect sit on separate alternating lines, so table rows must be reconstructed before the key/meaning pairs can be used."
+    }
+  ]
+}

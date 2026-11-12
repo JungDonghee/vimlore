@@ -1,0 +1,213 @@
+{
+  "id": "practical-vim-ch11",
+  "book": "practical-vim",
+  "chapter": 11,
+  "title": "Macros",
+  "start": 6631,
+  "end": 7677,
+  "summary": "Chapter 11 introduces Vim macros: recording keystrokes into a register with q{register} and replaying them with @{register} or @@. It contrasts executing a macro in series, where one failure aborts the remaining queued repetitions, with executing it in parallel via :normal @a or :argdo normal @a, where each invocation is independent. It also teaches repeatable macro design (normalize the cursor, prefer robust motions, let failed motions abort safely), playback with a count, appending with qA, editing a macro as plain text, and using the expression register with a counter to number list items.",
+  "commands": [
+    {
+      "keys": "q{register}",
+      "meaning": "Begin recording keystrokes into the named register",
+      "line": 6656,
+      "evidence": "The q key functions both as the “record” button and the “stop” button. To begin recording our keystrokes, we type q{register}, giving the address of the register where we want to save the macro. We can tell that we’ve done it right if the word “recording” appears in the status line. Every command that we execute will be captured, right up until we press q again to stop recording."
+    },
+    {
+      "keys": "q",
+      "meaning": "Stop recording the macro",
+      "line": 6694,
+      "evidence": "Pressing qa begins recording and saves our macro into register a. We then perform two changes on the first line: appending a semicolon and prepending the word var. Having completed both of those changes, we press q to stop recording our macro (qⓘ)."
+    },
+    {
+      "keys": "@{register}",
+      "meaning": "Execute the macro stored in the named register",
+      "line": 6708,
+      "evidence": "The @{register} command executes the contents of the specified register (see @ⓘ). We can also use @@, which repeats the macro that was invoked most recently."
+    },
+    {
+      "keys": "@@",
+      "meaning": "Repeat the macro most recently invoked",
+      "line": 6708,
+      "evidence": "The @{register} command executes the contents of the specified register (see @ⓘ). We can also use @@, which repeats the macro that was invoked most recently."
+    },
+    {
+      "keys": "10@a",
+      "meaning": "Play the macro in register a with a count, repeating it ten times",
+      "line": 6808,
+      "evidence": "Suppose that the macro was stored in the a register. Rather than executing @a ten times, we could prefix it with a count: 10@a. The beauty of this technique is that we can be unscrupulous about how many times we execute this macro. Don’t care for counting? It doesn’t matter! We could execute 100@a or even 1000@a, and it would produce the same result."
+    },
+    {
+      "keys": "qq;.q",
+      "meaning": "Record a one-off macro in register q that runs ; then .",
+      "line": 6834,
+      "evidence": "We can simulate this by recording one of the simplest possible macros: qq;.q. Here, qq tells Vim to record the following keystrokes and save them to the q register. Then we type our commands ;. and finish recording the macro by pressing q one final time. Now we can execute the macro with a count: 11@q. This executes ;. eleven times."
+    },
+    {
+      "keys": "qA",
+      "meaning": "Append keystrokes to the existing macro in register a instead of overwriting it",
+      "line": 7124,
+      "evidence": "If we type qa, then Vim will record our keystrokes, saving them into register a by overwriting the existing contents of that register. If we type qA, then Vim will append our keystrokes to the existing contents of register a."
+    },
+    {
+      "keys": ":reg a",
+      "meaning": "Inspect the contents of register a",
+      "line": 6698,
+      "evidence": "=> :reg a"
+    },
+    {
+      "keys": ":normal @a",
+      "meaning": "Run the macro once on each line of the selected range",
+      "line": 7076,
+      "evidence": "The :normal @a command tells Vim to execute the macro once for each line in the selection. Just as before, the macro succeeds on the first two lines and then aborts on line three, but it doesn’t stall there this time—it completes the job. Why?"
+    },
+    {
+      "keys": ":argdo normal @a",
+      "meaning": "Run the macro once in every buffer in the argument list",
+      "line": 7331,
+      "evidence": "=> :argdo normal @a"
+    },
+    {
+      "keys": ":next",
+      "meaning": "Advance to the next file in the argument list; failure on the last file aborts a series macro",
+      "line": 7383,
+      "evidence": "While we could run 3@a to execute the macro on each of the remaining files in the buffer list, there’s no need to be so precise about it. When we reach the last buffer in the argument list, the :next command fails and the macro aborts. So, rather than specifying an exact count, we only have to ensure that we provide a number that’s large enough: 22 will do, and it’s easy to type."
+    },
+    {
+      "keys": ":let i += 1",
+      "meaning": "Increment the counter variable i",
+      "line": 7451,
+      "evidence": "=> :let i += 1"
+    },
+    {
+      "keys": ":put a",
+      "meaning": "Paste the contents of register a below the current line as plain text",
+      "line": 7577,
+      "evidence": "=> :put a"
+    },
+    {
+      "keys": "\"ay$",
+      "meaning": "Yank from the cursor to the end of the line into register a, character-wise",
+      "line": 7635,
+      "evidence": "When we run the command 0 followed by \"ay$, we yank every character on that line except for the carriage return. Having captured everything that we want to keep into register a, we can then run dd to delete the line. This will end up in the default register, but we won’t use it."
+    },
+    {
+      "keys": "<C-r>=i<CR>",
+      "meaning": "Insert the value of variable i via the expression register in Insert mode",
+      "line": 7457,
+      "evidence": "The :echo command is fine for revealing the value that is assigned to a variable, but ideally we want to insert that value into the document. We can do that using the expression register. In Tip 16, we saw that the expression register can be used to do simple sums and to insert the result into the document. We can insert the value stored in variable i just by running <C-r>=i<CR> in Insert mode."
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Record one unit of work",
+      "line": 6896,
+      "evidence": "Record One Unit of Work"
+    },
+    {
+      "name": "Execute the macro in series",
+      "line": 6958,
+      "evidence": "Execute Macro in Series"
+    },
+    {
+      "name": "Execute the macro in parallel",
+      "line": 7032,
+      "evidence": "Execute Macro in Parallel"
+    },
+    {
+      "name": "Normalize the cursor position",
+      "line": 6782,
+      "evidence": "Normalize the Cursor Position"
+    },
+    {
+      "name": "Strike your target with a repeatable motion",
+      "line": 6788,
+      "evidence": "Strike Your Target with a Repeatable Motion"
+    },
+    {
+      "name": "Abort when a motion fails",
+      "line": 6798,
+      "evidence": "Abort When a Motion Fails"
+    },
+    {
+      "name": "Play back with a count",
+      "line": 6814,
+      "evidence": "The Dot Formula can be an efficient editing strategy for a small number of repeats, but it can’t be executed with a count. Overcome this limitation by recording a cheap one-off macro and playing it back with a count."
+    },
+    {
+      "name": "Append commands to a macro",
+      "line": 7092,
+      "evidence": "Sometimes we miss a vital step when we record a macro. There’s no need to re-record the whole thing from scratch. Instead, we can tack extra commands onto the end of an existing macro."
+    },
+    {
+      "name": "Keyboard codes in macros",
+      "line": 7555,
+      "evidence": "Keyboard Codes in Macros"
+    },
+    {
+      "name": "Paste the macro into a document",
+      "line": 7571,
+      "evidence": "Paste the Macro into a Document"
+    },
+    {
+      "name": "Evaluate an iterator to number items in a list",
+      "line": 7407,
+      "evidence": "Tip 71Evaluate an Iterator to Number Items in a List"
+    },
+    {
+      "name": "Build a list of target files",
+      "line": 7213,
+      "evidence": "Build a List of Target Files"
+    }
+  ],
+  "problems": [
+    {
+      "line": 6642,
+      "kind": "typo",
+      "evidence": "Sometimes we need to insert consecutive numbers into our text. In Tip 67, we’ll learn how to do that with a method that uses rudimentary Vim script in combination with the expression register.",
+      "note": "Cross-reference is wrong: the chapter introduction says the Vim script plus expression-register numbering method is taught in Tip 67, but Tip 67 is 'Play Back with a Count' (line 6812); that method is Tip 71, 'Evaluate an Iterator to Number Items in a List' (line 7407)."
+    },
+    {
+      "line": 6648,
+      "kind": "missing",
+      "evidence": "Tip 65Record and Execute a Macro",
+      "note": "No space between the tip number and the title; the same concatenation recurs at the other tip headings in this chapter (6774, 6812, 6868, 7090, 7160, 7407, 7535), so headings do not parse as number plus title."
+    },
+    {
+      "line": 7034,
+      "kind": "typo",
+      "evidence": "Tip 30, demonstrated a method for running the dot command on a series of consecutive lines. We can apply the same technique here:",
+      "note": "Stray comma between the subject 'Tip 30' and its verb 'demonstrated'."
+    },
+    {
+      "line": 7062,
+      "kind": "garbled",
+      "evidence": ":’<,’>normal @a",
+      "note": "The Ex range marks use typographic right single quotation marks (U+2019) instead of ASCII apostrophes, so the command as printed is not literal Vim syntax; the same substitution recurs at line 7517."
+    },
+    {
+      "line": 7096,
+      "kind": "typo",
+      "evidence": "KeystrokesBuffer contents",
+      "note": "Table header reads 'contents' in lowercase; the other table headers in the chapter read 'KeystrokesBuffer Contents' (e.g., lines 6900, 7126, 7463)."
+    },
+    {
+      "line": 7517,
+      "kind": "garbled",
+      "evidence": ":’<,’>normal @a",
+      "note": "Second occurrence of the curly-quote substitution in ':’<,’>normal @a'; the selection marks are typographic quotes rather than ASCII apostrophes."
+    },
+    {
+      "line": 7607,
+      "kind": "missing",
+      "evidence": "<= 0f.r)wvUj^J",
+      "note": "This :reg a listing lacks the '\"a ' register label carried by the chapter's other register listings (lines 7122 and 7150); the prefix appears to have been dropped, leaving only the contents."
+    },
+    {
+      "line": 7641,
+      "kind": "typo",
+      "evidence": "Being able to paste a macro into the document, edit it right there, and then yank it back into a register and execute it is very handy. But the register can be fussy to work with for the reasons noted in Keyboard Codes in Macros. If you only have to append a command at the end of your macro, following the procedure outlined in Tip 69, is simpler.",
+      "note": "Stray comma before 'is simpler' separates the subject 'following the procedure outlined in Tip 69' from its verb."
+    }
+  ]
+}

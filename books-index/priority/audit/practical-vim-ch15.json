@@ -1,0 +1,183 @@
+{
+  "id": "practical-vim-ch15",
+  "book": "practical-vim",
+  "chapter": 15,
+  "title": "Global Commands",
+  "start": 9602,
+  "end": 10021,
+  "summary": "Chapter 15 (Tips 98–101) covers Vim's :global command, which runs an Ex command on each line matching a pattern, with the whole file as its default range and :print as its default command. Tips 98 and 99 explain the syntax, the two-pass execution model, inversion via :global! and :vglobal, and line filtering with :g//d and :v/href/d. Tip 100 collects TODO comments into a register with :g/TODO/yank A or copies them to the end of the file with :g/TODO/t$, and Tip 101 uses a dynamic range (:g/{/ .+1,/}/-1 sort) to alphabetize the properties in every CSS rule block, adding :silent to mute :> messages.",
+  "commands": [
+    {
+      "keys": ":[range] global[!] /{pattern}/ [cmd]",
+      "meaning": "Syntax template for the :global command",
+      "line": 9617,
+      "evidence": ":[range] global[!] /{pattern}/ [cmd]"
+    },
+    {
+      "keys": ":global! / :vglobal",
+      "meaning": "Run [cmd] on each line that does NOT match the pattern",
+      "line": 9625,
+      "evidence": "We can invert the behavior of the :global command either by running :global! or :vglobal (mnemonic: invert). Each of these tells Vim to execute [cmd] on each line that doesn’t match the specified pattern. In the next tip, we’ll see examples of both :global and :vglobal in action."
+    },
+    {
+      "keys": ":g/re/p",
+      "meaning": "Abbreviated global command: pattern, then :print — origin of “grep”",
+      "line": 9633,
+      "evidence": "=> :g/re/p"
+    },
+    {
+      "keys": "/\\v\\<\\/?\\w+>",
+      "meaning": "Search with a very magic pattern matching HTML tags",
+      "line": 9689,
+      "evidence": "=> /\\v\\<\\/?\\w+>"
+    },
+    {
+      "keys": ":g//d",
+      "meaning": "Delete every line matching the last search pattern",
+      "line": 9691,
+      "evidence": "=> :g//d"
+    },
+    {
+      "keys": ":v/href/d",
+      "meaning": "Delete every line that does not contain href",
+      "line": 9711,
+      "evidence": "=> :v/href/d"
+    },
+    {
+      "keys": ":g/TODO",
+      "meaning": "Print each line containing TODO (default :print command)",
+      "line": 9765,
+      "evidence": "=> :g/TODO"
+    },
+    {
+      "keys": "qaq",
+      "meaning": "Clear register a by recording an empty macro",
+      "line": 9775,
+      "evidence": "We’ll use the a register. First we’ll need to clear it by running qaq. Let’s break that down: qa tells Vim to start recording a macro into the a register, and then q stops the recording. We didn’t type anything while the macro was recording, so the register ends up empty. We can check that by running the following:"
+    },
+    {
+      "keys": ":g/TODO/yank A",
+      "meaning": "Append each TODO line into register a (uppercase A appends)",
+      "line": 9785,
+      "evidence": "=> :g/TODO/yank A"
+    },
+    {
+      "keys": "\"ap",
+      "meaning": "Paste the contents of register a",
+      "line": 9795,
+      "evidence": "This time, when we run :reg a, we can see that the register contains the two TODO items from the document. (For the sake of legibility, I’ve formatted these items on two separate lines, but in Vim it actually shows a ^J symbol for newlines.) We could then open up a new buffer in a split window and run \"ap to paste the a register into the new document."
+    },
+    {
+      "keys": ":g/TODO/t$",
+      "meaning": "Copy each TODO line to the end of the file with :t",
+      "line": 9805,
+      "evidence": "=> :g/TODO/t$"
+    },
+    {
+      "keys": "vi{",
+      "meaning": "Select the inner {} block with a text object",
+      "line": 9873,
+      "evidence": "vi{"
+    },
+    {
+      "keys": ":’<,’>sort",
+      "meaning": "Sort the lines in the last visual selection",
+      "line": 9891,
+      "evidence": ":’<,’>sort"
+    },
+    {
+      "keys": ":g/{/ .+1,/}/-1 sort",
+      "meaning": "Sort each {} block using a range anchored on the :global match",
+      "line": 9915,
+      "evidence": "=> :g/{/ .+1,/}/-1 sort"
+    },
+    {
+      "keys": ":g/{/sil .+1,/}/-1 >",
+      "meaning": "Indent each block with :> while :silent mutes the messages",
+      "line": 9995,
+      "evidence": "=> :g/{/sil .+1,/}/-1 >"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Default range for :global is the whole file (%)",
+      "line": 9619,
+      "evidence": "The default range for the :global command is the entire file (%). That sets it apart from most other Ex commands, including :delete, :substitute, and :normal, whose range is the current line (.) by default."
+    },
+    {
+      "name": "Blank {pattern} reuses the last search pattern",
+      "line": 9621,
+      "evidence": "The {pattern} field integrates with search history. That means we can leave it blank and Vim will automatically use the current search pattern."
+    },
+    {
+      "name": "Default [cmd] is :print; any Ex command except :global",
+      "line": 9623,
+      "evidence": "The [cmd] could be any Ex command except for another :global command. In practice, Ex commands that interact with the text in the document prove most useful, such as those in Table 7, Ex Commands That Operate on the Text in a Buffer. If we don’t specify a [cmd], then Vim will use :print by default."
+    },
+    {
+      "name": "Two-pass execution: mark matching lines, then run [cmd]",
+      "line": 9627,
+      "evidence": "The :global command works by making two passes through the lines specified by [range]. In the first pass, Vim marks each line that matches the specified {pattern}. Then on the second pass, the [cmd] is executed for each marked line. The [cmd] can accept a range of its own, which allows us to operate on multiline regions. This powerful technique is demonstrated by Tip 101."
+    },
+    {
+      "name": "grep etymology from :g/re/p",
+      "line": 9635,
+      "evidence": "re stands for regular expression, and p is short for :print, which is the default [cmd]. If we ignore the / symbols, we find the word “grep.”"
+    },
+    {
+      "name": "Very magic mode regular expression",
+      "line": 9703,
+      "evidence": "The regular expression uses very magic mode (covered in Tip 74). It matches an opening angle bracket (\\<), followed by an optional forward slash (\\/?), and then one or more word characters (\\w+) followed by an end-of-word delimiter (>). This is not an all-purpose tag-matching regex, but it’s good enough for this particular case."
+    },
+    {
+      "name": "Clearing a register with qaq",
+      "line": 9775,
+      "evidence": "We’ll use the a register. First we’ll need to clear it by running qaq. Let’s break that down: qa tells Vim to start recording a macro into the a register, and then q stops the recording. We didn’t type anything while the macro was recording, so the register ends up empty. We can check that by running the following:"
+    },
+    {
+      "name": "Uppercase register address appends instead of overwriting",
+      "line": 9793,
+      "evidence": "The trick here is that we’ve addressed our register with an uppercase A. That tells Vim to append to the specified register, whereas a lowercase a would overwrite the register’s contents. We can read the global command as “For each line that matches the pattern /TODO/, append the entire line into register a.”"
+    },
+    {
+      "name": "Dynamic range anchored on the :global match",
+      "line": 9813,
+      "evidence": "When combining an Ex command with :global, we can also specify a range for our chosen [cmd]. Vim allows us to set the range dynamically using the :g/{pattern} as a reference point. Here we’ll see how we can exploit this fact to alphabetize the properties within each block of a CSS file."
+    },
+    {
+      "name": "The . address stands for each matching line inside :global",
+      "line": 9959,
+      "evidence": "The [range] for our [cmd] can be set dynamically using the match from :g/{pattern} as a reference point. Normally the . address stands for the line that the cursor is positioned on. But in the context of a :global command, it stands for each line in turn that matches the specified {pattern}."
+    },
+    {
+      "name": "Generalized form :g/{start}/ .,{finish} [cmd]",
+      "line": 9981,
+      "evidence": ":g/{start}/ .,{finish} [cmd]"
+    },
+    {
+      "name": "Prefixing [cmd] with :silent mutes its messages",
+      "line": 9993,
+      "evidence": "Note that the :> command echoes a message each time it is invoked, whereas :sort doesn’t. We can mute these messages by prefixing our [cmd] with :silent (see :silⓘ):"
+    }
+  ],
+  "problems": [
+    {
+      "line": 9611,
+      "kind": "missing",
+      "evidence": "Tip 98Meet the Global Command",
+      "note": "Tip number and title are run together; the separating space or colon is absent. The same concatenation recurs at line 9639 (“Tip 99Delete Lines Containing a Pattern”), line 9725 (“Tip 100Collect TODO Items in a Register”) and line 9811 (“Tip 101Alphabetize the Properties of Each Rule in a CSS File”)."
+    },
+    {
+      "line": 9853,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Table 16's two column headers (“Keystrokes” and “Buffer Contents”) are concatenated with no separator, so the table's column boundary is lost."
+    },
+    {
+      "line": 10003,
+      "kind": "duplicated",
+      "evidence": "Practical Vim, 2nd Edition",
+      "note": "The running header is repeated on two consecutive lines (10001 and 10003) at the end of the chapter."
+    }
+  ]
+}

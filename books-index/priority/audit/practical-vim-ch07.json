@@ -1,0 +1,183 @@
+{
+  "id": "practical-vim-ch07",
+  "book": "practical-vim",
+  "chapter": 7,
+  "title": "Open Files and Save Them to Disk",
+  "start": 4376,
+  "end": 4734,
+  "summary": "Chapter 7 covers opening files and saving buffers to disk. It explains how :edit resolves filepaths against the working directory or the active buffer's directory (using %:h), how to configure 'path' and use :find to open files by name, and how the netrw plugin's :Explore commands browse directories. It ends with techniques for writing buffers whose parent directories do not exist and for saving a root-owned file by piping the buffer through sudo tee.",
+  "commands": [
+    {
+      "keys": ":edit lib/framework.js",
+      "meaning": "Open a file from a path relative to Vim's working directory.",
+      "line": 4445,
+      "evidence": "=> :edit lib/framework.js"
+    },
+    {
+      "keys": ":edit %<Tab>",
+      "meaning": "Expand the active buffer's filepath on the command line.",
+      "line": 4459,
+      "evidence": "=> :edit %<Tab>"
+    },
+    {
+      "keys": ":edit %:h<Tab>",
+      "meaning": "Expand the active buffer's directory using the :h modifier.",
+      "line": 4463,
+      "evidence": "=> :edit %:h<Tab>"
+    },
+    {
+      "keys": ":edit %:h<Tab>M<Tab><Tab>",
+      "meaning": "Open a sibling file by expanding the active directory, then tab-completing the name.",
+      "line": 4471,
+      "evidence": "=> :edit %:h<Tab>M<Tab><Tab>"
+    },
+    {
+      "keys": ":set path+=app/**",
+      "meaning": "Add the app/ tree to the 'path' search list.",
+      "line": 4513,
+      "evidence": "=> :set path+=app/**"
+    },
+    {
+      "keys": ":find Navigation.js",
+      "meaning": "Open a file by name, searching the directories in 'path'.",
+      "line": 4527,
+      "evidence": "=> :find Navigation.js"
+    },
+    {
+      "keys": ":edit .",
+      "meaning": "Open netrw's file explorer for the current working directory.",
+      "line": 4575,
+      "evidence": "We can open the file explorer window with the :edit {path} command by supplying a directory name (instead of a filename) as the {path} argument. The dot symbol stands for the current working directory, so if we run the :edit . command, we can bring up a file explorer for the project root."
+    },
+    {
+      "keys": ":Explore",
+      "meaning": "Open netrw's file explorer for the directory of the active buffer.",
+      "line": 4577,
+      "evidence": "If we wanted to open a file explorer for the directory of the current file, we could do so by typing :edit %:h (see Open a File Relative to the Active File Directory, for an explanation). But the netrw plugin provides a more convenient way with the :Explore command (see :Exploreⓘ)."
+    },
+    {
+      "keys": ":Sexplore / :Vexplore",
+      "meaning": "Open netrw's file explorer in a horizontal or vertical split window.",
+      "line": 4595,
+      "evidence": "In addition to :Explore, netrw also provides :Sexplore and :Vexplore commands, which open the file explorer in a horizontal split window or vertical split window, respectively."
+    },
+    {
+      "keys": "<C-^>",
+      "meaning": "Switch back to the buffer that was previously displayed.",
+      "line": 4609,
+      "evidence": "Think of each window as a playing card. One side of the card shows the contents of a file, and the other side shows the file explorer. When we run the :Explore command, the card for the active window flips over to show the side with the file explorer (frame 2 of the figure). After choosing the file we want to edit, we press <CR> and the card flips over again, this time showing the contents of the file that we just selected (frame 3 of the figure). After summoning the file explorer view, if we decide that we want to switch back to the buffer we were already editing, we can do so using the <C-^> command."
+    },
+    {
+      "keys": "<C-g>",
+      "meaning": "Echo the name and status of the current file.",
+      "line": 4625,
+      "evidence": "The :edit {file} command is most commonly used to open a file that already exists. But if we specify a filepath that doesn’t correspond to an existing file, then Vim will create a new empty buffer. If we press <C-g>, we’ll see that the buffer is labeled as “new file” (the <C-g> command echoes the name and status of the current file; see ctrl-Gⓘ). When we run the :write command, Vim will attempt to write the contents of that buffer to a new file using the filepath that was specified when the buffer was created."
+    },
+    {
+      "keys": ":write",
+      "meaning": "Write the buffer's contents to its file on disk.",
+      "line": 4631,
+      "evidence": "=> :write"
+    },
+    {
+      "keys": ":!mkdir -p %:h",
+      "meaning": "Create the buffer's missing parent directories with the external mkdir program.",
+      "line": 4637,
+      "evidence": "=> :!mkdir -p %:h"
+    },
+    {
+      "keys": ":write!",
+      "meaning": "Force a write, overriding the 'readonly' option.",
+      "line": 4677,
+      "evidence": "=> :write!"
+    },
+    {
+      "keys": ":w !sudo tee % > /dev/null",
+      "meaning": "Pipe the buffer through sudo tee to overwrite a root-owned file.",
+      "line": 4683,
+      "evidence": "=> :w !sudo tee % > /dev/null"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Working directory",
+      "line": 4437,
+      "evidence": "In Vim, just as in bash and other shells, we have the notion of a working directory. When Vim is launched, it adopts the same working directory that was active in the shell. We can confirm this by running the :pwd Ex command, which (just as in bash) stands for “print working directory”:"
+    },
+    {
+      "name": "Filepath relative to the working directory",
+      "line": 4435,
+      "evidence": "Open a File Relative to the Current Working Directory"
+    },
+    {
+      "name": "Filepath relative to the active file's directory",
+      "line": 4453,
+      "evidence": "Open a File Relative to the Active File Directory"
+    },
+    {
+      "name": "The %:h filename modifier",
+      "line": 4465,
+      "evidence": "The :h modifier removes the filename while preserving the rest of the path (see ::hⓘ). In our case, typing %:h<Tab> is expanded to the full path of the current file’s directory:"
+    },
+    {
+      "name": "The %% command-line mapping for the active directory",
+      "line": 4481,
+      "evidence": "Now when we type %% on Vim’s : command-line prompt, it automatically expands to the path of the active buffer, just as though we had typed %:h<Tab>. Besides working nicely with :edit, this can come in handy with other Ex commands such as :write, :saveas, and :read."
+    },
+    {
+      "name": "The 'path' option",
+      "line": 4511,
+      "evidence": "The ‘path’ option allows us to specify a set of directories inside of which Vim will search when the :find command is invoked (see 'path'ⓘ). In our case, we want to make it easier to look up files in the app/controllers and app/views directories. We can add these to our path simply by running this:"
+    },
+    {
+      "name": "The ** wildcard in 'path'",
+      "line": 4515,
+      "evidence": "The ** wildcard matches all subdirectories beneath the app/ directory. We discussed wildcards in Populate the Argument List, but the treatment of * and ** is slightly different in the context of the ‘path’ setting (see file-searchingⓘ). The wildcards are handled by Vim rather than by the shell."
+    },
+    {
+      "name": "Tab completion of filepaths",
+      "line": 4529,
+      "evidence": "We can use the <Tab> key to autocomplete filenames, so in fact we can get what we want by typing as little as :find nav<Tab> followed by the Enter key."
+    },
+    {
+      "name": "The netrw file explorer",
+      "line": 4543,
+      "evidence": "In addition to letting us view (and edit) the contents of a file, Vim also lets us view the contents of a directory. The netrw plugin, included in the Vim distribution, allows us to explore the file system."
+    },
+    {
+      "name": "Saving to nonexistent directories",
+      "line": 4623,
+      "evidence": "Vim is happy to let us edit a buffer whose path includes directories that don’t exist. It’s only when we attempt to write the buffer to a file that Vim objects. Here’s a quick tip on how to deal with this situation."
+    },
+    {
+      "name": "Readonly buffers",
+      "line": 4673,
+      "evidence": "<= E45: 'readonly' option is set (add ! to override)"
+    },
+    {
+      "name": "Writing as the superuser with :write !{cmd}",
+      "line": 4695,
+      "evidence": "How does it work? The :write !{cmd} command sends the contents of the buffer as standard input to the specified {cmd}, which can be any external program (see :write_cⓘ). Vim is still running as user drew, but we can tell our external process to operate as the superuser. In this case, the tee utility is executed with sudo permissions, which means that it can write to the /etc/hosts file."
+    }
+  ],
+  "problems": [
+    {
+      "line": 4391,
+      "kind": "garbled",
+      "evidence": "Tip 42Open a File by Its Filepath Using ‘:edit’",
+      "note": "Tip number and tip title are concatenated with no separator; the same lost separator recurs in the headings at lines 4487, 4541, 4621, and 4645."
+    },
+    {
+      "line": 4581,
+      "kind": "garbled",
+      "evidence": "Ex CommandShorthandEffect",
+      "note": "The three table column headers ('Ex Command', 'Shorthand', 'Effect') are run together with no delimiter; the table body is likewise flattened to one cell per line at 4583-4593."
+    },
+    {
+      "line": 4559,
+      "kind": "typo",
+      "evidence": "=> $ cd code/file/mvc",
+      "note": "'code/file/mvc' uses the singular 'file', but the demo directory is named 'files/mvc' and the earlier shell example at line 4497 uses 'code/files/mvc'."
+    }
+  ]
+}

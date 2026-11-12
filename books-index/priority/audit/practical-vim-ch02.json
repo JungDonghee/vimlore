@@ -1,0 +1,195 @@
+{
+  "id": "practical-vim-ch02",
+  "book": "practical-vim",
+  "chapter": 2,
+  "title": "Normal Mode",
+  "start": 1523,
+  "end": 1896,
+  "summary": "Chapter 2 presents Normal mode as Vim’s natural resting state, using a painter’s brush-off-the-canvas analogy to argue that most editing time goes into thinking, navigating, and transforming text rather than inserting it. It explains how pausing to leave Insert mode at natural break points chunks the undo history, and how composing changes so that the dot command can repeat them beats a one-off efficient edit. Counts are then applied to simple arithmetic with <C-a> and <C-x>, including the leading-zero octal pitfall and the case for repeating over counting, before the chapter closes with operator+motion grammar, operator doubling, custom operators and motions, and Operator-Pending mode.",
+  "commands": [
+    {
+      "keys": "u",
+      "meaning": "Undo the most recent change; each trip into Insert mode counts as one change.",
+      "line": 1560,
+      "evidence": "The u key triggers the undo command, which reverts the most recent change. A change could be anything that modifies the text in the document. That includes commands triggered from Normal, Visual, and Command-Line modes, but a change could also encompass any text entered (or deleted) in Insert mode. So we could also say that i{insert some text}<Esc> constitutes a change."
+    },
+    {
+      "keys": "db",
+      "meaning": "Delete backward from the cursor to the start of the current word.",
+      "line": 1610,
+      "evidence": "Pressing db deletes from the cursor’s starting position to the beginning of the word, but it leaves the final “h” intact. We can delete this rogue character by pressing x. That gives us a Vim golf score of 3."
+    },
+    {
+      "keys": "b",
+      "meaning": "Motion that moves the cursor backward to the start of the current word.",
+      "line": 1630,
+      "evidence": "We have to start by maneuvering our cursor into position with the b motion. Once it’s in place, we can excise the word with a single dw command. Once again, our Vim golf score is 3."
+    },
+    {
+      "keys": "x",
+      "meaning": "Delete the single character under the cursor.",
+      "line": 1654,
+      "evidence": "The backward deletion technique involves two operations: db deletes to the start of the word and then x deletes a single character. If we invoke the dot command, it repeats the single character deletion (. == x). That’s not what I would call a big win."
+    },
+    {
+      "keys": "dw",
+      "meaning": "Delete from the cursor to the start of the next word.",
+      "line": 1656,
+      "evidence": "The forward deletion technique also involves two steps. This time, b is just a plain motion, while dw makes a change. The dot command repeats dw, deleting from the cursor position to the beginning of the next word. It so happens that we’re already at the end of the line. There is no “next word,” so in this context the dot command isn’t useful. But at least it’s shorthand for something longer (. == dw)."
+    },
+    {
+      "keys": "daw",
+      "meaning": "Delete a whole word plus its surrounding whitespace (delete a word).",
+      "line": 1646,
+      "evidence": "The daw command is easily remembered by the mnemonic delete a word. We’ll go into more detail on text objects in Tip 52, and Tip 53."
+    },
+    {
+      "keys": ".",
+      "meaning": "Dot command: repeat the last change, here repeating daw on another word.",
+      "line": 1658,
+      "evidence": "The final solution only invokes a single operation: daw. This technique doesn’t just remove the word, it also deletes a whitespace character. As a result, our cursor ends up on the last character of the word “is.” If we invoke the dot command, it will repeat the instruction to delete a word. This time, the dot command does something truly useful (. == daw)."
+    },
+    {
+      "keys": "<C-a>",
+      "meaning": "Increment the number at or after the cursor; a count adds that amount.",
+      "line": 1676,
+      "evidence": "The <C-a> and <C-x> commands perform addition and subtraction on numbers. When run without a count they increment by one, but if we prefix a number, then we can add or subtract by any whole number. For example, if we positioned our cursor on a 5 character, running 10<C-a> would modify it to read 15."
+    },
+    {
+      "keys": "yyp",
+      "meaning": "Yank the current line and paste it below, duplicating the line.",
+      "line": 1688,
+      "evidence": "We’re going to duplicate the last line and make two small modifications to it: replace the word “blog” with “news,” and change “0px” to “-180px.” We can duplicate the line by running yyp and then using cW to change the first word. But how should we deal with that number?"
+    },
+    {
+      "keys": "180<C-x>",
+      "meaning": "Decrement by 180; with the cursor off a digit it jumps forward to the first number on the line.",
+      "line": 1690,
+      "evidence": "One approach would be to jump to the digit with f0 and then dip into Insert mode to change the value by hand: i-18<Esc>. But it’s quicker just to run 180<C-x>. Since our cursor isn’t on a digit to begin with, it jumps forward to the first one that it finds. That saves us the step of moving the cursor by hand. Let’s see this work flow in action:"
+    },
+    {
+      "keys": "2dw",
+      "meaning": "Count applied to the delete operator, deleting two words (same result as d2w).",
+      "line": 1752,
+      "evidence": "We can approach this in a handful of ways. Both d2w and 2dw will work. With d2w, we invoke the delete command and then give 2w as the motion. We could read that as “delete two words.” However, 2dw turns things around. This time the count applies to the delete command, but the motion acts over a single word. We could read this as “delete a word two times.” Putting semantics aside, we get the same result either way."
+    },
+    {
+      "keys": "c3w",
+      "meaning": "Change three words with a count, then type the replacement text.",
+      "line": 1782,
+      "evidence": "c3wsome more<Esc>"
+    },
+    {
+      "keys": "gUaw",
+      "meaning": "Combine the gU operator with the aw text object to uppercase the current word.",
+      "line": 1840,
+      "evidence": "Suppose that we already know how to delete a word using daw, and then we learn about the gU command (see gUⓘ). It’s an operator too, so we can invoke gUaw to convert the current word to SHOUTY case. If we then expand our vocabulary to include the ap motion, which acts upon a paragraph, then we find two new operations at our disposal: dap to delete, or gUap to make the whole paragraph shout."
+    },
+    {
+      "keys": "dd",
+      "meaning": "Operator invoked in duplicate acts on the current line: delete the whole line.",
+      "line": 1842,
+      "evidence": "Vim’s grammar has just one more rule: when an operator command is invoked in duplicate, it acts upon the current line. So dd deletes the current line, while >> indents it. The gU command is a special case. We can make it act upon the current line by running either gUgU or the shorthand gUU."
+    },
+    {
+      "keys": "gg=G",
+      "meaning": "Jump to the top of the file with gg, then =G autoindents everything to the end.",
+      "line": 1863,
+      "evidence": "If we wanted to autoindent the entire file using the = command, we could run gg=G (that is, gg to jump to the top of the file and then =G to autoindent everything from the cursor position to the end of the file). But if we had the textobj-entire plugin installed, we could simply run =ae. It wouldn’t matter where our cursor was when we ran this command; it would always act upon the entire file."
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Normal mode as the natural resting state",
+      "line": 1528,
+      "evidence": "Normal mode is Vim’s natural resting state. If this chapter seems surprisingly short, then that’s because most of this book is about how to use Normal mode! Here, however, is where we cover some core concepts and general tips."
+    },
+    {
+      "name": "Chunking undos by controlling undo granularity",
+      "line": 1558,
+      "evidence": "In other text editors, invoking the undo command after typing a few words might revert the last typed word or character. However, in Vim we can control the granularity of the undo command."
+    },
+    {
+      "name": "Compose repeatable changes",
+      "line": 1582,
+      "evidence": "Vim is optimized for repetition. In order to exploit this, we have to be mindful of how we compose our changes."
+    },
+    {
+      "name": "Investing the most power in the dot command",
+      "line": 1662,
+      "evidence": "The daw technique invests the most power into the dot command, so I declare it the winner of this round."
+    },
+    {
+      "name": "Using counts to do simple arithmetic",
+      "line": 1672,
+      "evidence": "Most Normal mode commands can be executed with a count. We can exploit this feature to do simple arithmetic."
+    },
+    {
+      "name": "Number formats and leading-zero octal notation",
+      "line": 1730,
+      "evidence": "If you answered 008, then you might be in for a surprise when you try using Vim’s <C-a> command on any number with a leading zero. As is the convention in some programming languages, Vim can interpret numerals with a leading zero to be in octal notation rather than in decimal. In the octal numeric system, 007 + 001 = 010, which looks like the decimal ten but is actually an octal eight. Confused?"
+    },
+    {
+      "name": "Prefer repeating over counting",
+      "line": 1768,
+      "evidence": "Counting is tedious. I’d rather hit the dot command six times than spend the same time looking ahead in order to reduce the number of keys that I have to press. What if I hit the dot command one too many times? No matter, I just back up by hitting the u key once."
+    },
+    {
+      "name": "Act, repeat, reverse",
+      "line": 1770,
+      "evidence": "Remember our mantra (from Tip 4): act, repeat, reverse. Here it is in action."
+    },
+    {
+      "name": "Operator + motion = action",
+      "line": 1800,
+      "evidence": "The d{motion} command can operate on a single character (dl), a complete word (daw), or an entire paragraph (dap). Its reach is defined by the motion. The same goes for c{motion}, y{motion}, and a handful of others. Collectively, these commands are called operators. You can find the complete list by looking up operatorⓘ, while Table 2, Vim’s Operator Commands, summarizes some of the more common ones."
+    },
+    {
+      "name": "Vim’s operator-motion grammar",
+      "line": 1838,
+      "evidence": "The combination of operators with motions forms a kind of grammar. The first rule is simple: an action is composed from an operator followed by a motion. Learning new motions and operators is like learning the vocabulary of Vim. If we follow the simple grammar rules, we can express more ideas as our vocabulary grows."
+    },
+    {
+      "name": "Operator doubling acts on the current line",
+      "line": 1842,
+      "evidence": "Vim’s grammar has just one more rule: when an operator command is invoked in duplicate, it acts upon the current line. So dd deletes the current line, while >> indents it. The gU command is a special case. We can make it act upon the current line by running either gUgU or the shorthand gUU."
+    },
+    {
+      "name": "Operator-Pending mode",
+      "line": 1873,
+      "evidence": "If we think of Vim as a finite-state machine, then Operator-Pending mode is a state that accepts only motion commands. It is activated when we invoke an operator command, and then nothing happens until we provide a motion, which completes the operation. While Operator-Pending mode is active, we can return to Normal mode in the usual manner by pressing escape, which aborts the operation."
+    }
+  ],
+  "problems": [
+    {
+      "line": 1540,
+      "kind": "order",
+      "evidence": "Practical Vim, 2nd Edition",
+      "note": "Page running header is injected mid-flow between the chapter intro and Tip 7; recurs at lines 1554, 1578, 1668, 1740, 1792."
+    },
+    {
+      "line": 1542,
+      "kind": "missing",
+      "evidence": "Tip 7Pause with Your Brush Off the Page",
+      "note": "Tip number and title are concatenated with no separator (“Tip 7Pause”); the same heading defect recurs at 1556, 1580, 1670, 1742, 1794."
+    },
+    {
+      "line": 1596,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Two table header cells, “Keystrokes” and “Buffer Contents,” are merged with no separator; recurs at 1616, 1636, 1692, 1776."
+    },
+    {
+      "line": 1634,
+      "kind": "garbled",
+      "evidence": "Both of our solutions so far have involved some kind of preparation or clean-up. We can be more surgical by using the aw text object instead of a motion (see awⓘ):",
+      "note": "Inline help-link icon survives as the glyph ⓘ directly after the help tag “aw”; recurs at 1674, 1678, 1800, 1840, 1854, 1867, 1875."
+    },
+    {
+      "line": 1804,
+      "kind": "garbled",
+      "evidence": "TriggerEffect",
+      "note": "Table 2 header cells “Trigger” and “Effect” are concatenated, and each table row is split across separate lines (e.g. 1806-1807), losing the two-column layout."
+    }
+  ]
+}

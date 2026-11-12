@@ -1,0 +1,213 @@
+{
+  "id": "practical-vim-ch12",
+  "book": "practical-vim",
+  "chapter": 12,
+  "title": "Matching Patterns and Literals",
+  "start": 7678,
+  "end": 8165,
+  "summary": "The chapter explains how Vim's search engine interprets patterns, beginning with global and per-search case sensitivity and the two regex engines. It contrasts magic, very magic (\\v), and very nomagic (\\V) searches, then shows captures, backreferences, and noncapturing groups for repeated words and name swapping. The final tips cover word and match boundaries, lookaround assertions, and the /, ?, and \\ characters that must still be escaped in search patterns.",
+  "commands": [
+    {
+      "keys": ":set ignorecase",
+      "meaning": "Enable case-insensitive search globally.",
+      "line": 7699,
+      "evidence": "=> :set ignorecase"
+    },
+    {
+      "keys": "\\c / \\C",
+      "meaning": "Override case sensitivity for one search: \\c ignores case, \\C forces it.",
+      "line": 7705,
+      "evidence": "We can override Vim’s default case sensitivity using the \\c and \\C items. Lowercase \\c causes the search pattern to ignore case, while the uppercase \\C item forces case sensitivity. If either of these items is used in a search pattern, the value of ‘ignorecase’ is overridden for that search."
+    },
+    {
+      "keys": "/#\\([0-9a-fA-F]\\{6}\\|[0-9a-fA-F]\\{3}\\)",
+      "meaning": "Magic-search regex matching three- or six-digit hex colors.",
+      "line": 7812,
+      "evidence": "=> /#\\([0-9a-fA-F]\\{6}\\|[0-9a-fA-F]\\{3}\\)"
+    },
+    {
+      "keys": "/\\v#(\\x{6}|\\x{3})",
+      "meaning": "Very magic hex-color regex using the \\x character class.",
+      "line": 7836,
+      "evidence": "=> /\\v#(\\x{6}|\\x{3})"
+    },
+    {
+      "keys": "/\\Va.k.a.",
+      "meaning": "Very nomagic search for the literal text a.k.a.",
+      "line": 7924,
+      "evidence": "=> /\\Va.k.a."
+    },
+    {
+      "keys": "/\\v<(\\w+)\\_s+\\1>",
+      "meaning": "Match a repeated word with a capture group and \\1 backreference.",
+      "line": 7948,
+      "evidence": "=> /\\v<(\\w+)\\_s+\\1>"
+    },
+    {
+      "keys": "/\\v%(And|D)rew Neil",
+      "meaning": "Group alternatives without capturing the submatch.",
+      "line": 7966,
+      "evidence": "=> /\\v%(And|D)rew Neil"
+    },
+    {
+      "keys": ":%s//\\2, \\1/g",
+      "meaning": "Substitute using the last search and captured first/last names.",
+      "line": 7972,
+      "evidence": "=> :%s//\\2, \\1/g"
+    },
+    {
+      "keys": "/\\v<the><CR>",
+      "meaning": "Search for the whole word 'the' using word boundaries.",
+      "line": 7988,
+      "evidence": "If we specifically want to match “the” as a word rather than a fragment, we can use word boundary delimiters. In very magic searches, these are represented by the < and > symbols. So if we amended our search to /\\v<the><CR>, it would find only one match in the excerpt."
+    },
+    {
+      "keys": "* / #",
+      "meaning": "Search forward or backward for the word under the cursor.",
+      "line": 7996,
+      "evidence": "Even if we don’t make a habit of using the word boundary items when composing our own search patterns, we use them indirectly each time we trigger the * or # commands (see *ⓘ). These search forward and backward, respectively, for the word under the cursor. If we examine the search history after using either of these commands (by pressing /<Up>), we’ll see that the last search pattern is wrapped with word delimiters. Incidentally, the g* and g# variants perform the same searches without word delimiters."
+    },
+    {
+      "keys": "/\\v\"@<=[^\"]+\"@=",
+      "meaning": "Positive-lookaround rewrite of the quoted-text pattern.",
+      "line": 8018,
+      "evidence": "=> /\\v\"@<=[^\"]+\"@="
+    },
+    {
+      "keys": "/\\v\"\\zs[^\"]+\\ze\"<CR>",
+      "meaning": "Crop the match to the quoted contents with \\zs and \\ze.",
+      "line": 8034,
+      "evidence": "/\\v\"\\zs[^\"]+\\ze\"<CR>"
+    },
+    {
+      "keys": "\"uyi[",
+      "meaning": "Yank the bracketed URL into register u.",
+      "line": 8060,
+      "evidence": "With our cursor placed anywhere inside the brackets, we can yank the URL into register u with the command \"uyi[ (mnemonic: u stands for URL). We then type /\\V<C-r>u<CR> to populate the search field with the contents of that same register. Our search prompt looks like this:"
+    },
+    {
+      "keys": "/\\V<C-r>u<CR>",
+      "meaning": "Insert register u into the search prompt.",
+      "line": 8060,
+      "evidence": "With our cursor placed anywhere inside the brackets, we can yank the URL into register u with the command \"uyi[ (mnemonic: u stands for URL). We then type /\\V<C-r>u<CR> to populate the search field with the contents of that same register. Our search prompt looks like this:"
+    },
+    {
+      "keys": "/\\Vhttp:\\/\\/vimdoc.net\\/search?q=\\/\\\\\\\\",
+      "meaning": "Escape / and \\ in a very nomagic search to match the full URL literally.",
+      "line": 8120,
+      "evidence": "=> /\\Vhttp:\\/\\/vimdoc.net\\/search?q=\\/\\\\\\\\"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "‘ignorecase’ option",
+      "line": 7697,
+      "evidence": "We can make Vim’s search patterns case insensitive by enabling the ‘ignorecase’ setting:"
+    },
+    {
+      "name": "‘smartcase’ option",
+      "line": 7711,
+      "evidence": "Vim provides an extra setting that makes an effort to predict our case sensitivity intentions. This is the ‘smartcase’ option. When enabled, ‘smartcase’ has the effect of canceling out the ‘ignorecase’ setting any time that we include an uppercase character in our search pattern. In other words, if our pattern is all lowercase, then the search will be case insensitive. But as soon as we include an uppercase letter, the search becomes case sensitive."
+    },
+    {
+      "name": "Very magic search",
+      "line": 7822,
+      "evidence": "We can normalize the rules for all special symbols with the \\v pattern switch. This enables very magic search, where all characters assume a special meaning, with the exception of “_”, uppercase and lowercase letters, and the digits 0 through 9 (see \\vⓘ)."
+    },
+    {
+      "name": "Hex character class \\x",
+      "line": 7834,
+      "evidence": "We can make one further refinement to this pattern: instead of spelling out the character collection [0-9a-fA-F] in full, we can replace it with the character class \\x (see /character-classesⓘ). This pattern has exactly the same meaning as the previous one:"
+    },
+    {
+      "name": "Magic search",
+      "line": 7862,
+      "evidence": "Vim has two older syntaxes for patterns besides the ones enabled by \\v and \\V switches. Vim’s default is magic search, while nomagic search emulates the behavior of vi. They can be enabled with the \\m and \\M switches, respectively."
+    },
+    {
+      "name": "Very nomagic search",
+      "line": 7922,
+      "evidence": "Alternatively, we could use the \\V literal switch to enable very nomagic search:"
+    },
+    {
+      "name": "Capture submatches",
+      "line": 7934,
+      "evidence": "When specifying a pattern, we can capture submatches and then reference them elsewhere. This feature is especially useful in combination with the substitute command, but it can also be used to define patterns where a word is repeated."
+    },
+    {
+      "name": "Parentheses without capturing",
+      "line": 7958,
+      "evidence": "Use Parentheses Without Capturing Their Contents"
+    },
+    {
+      "name": "Word boundaries",
+      "line": 7988,
+      "evidence": "If we specifically want to match “the” as a word rather than a fragment, we can use word boundary delimiters. In very magic searches, these are represented by the < and > symbols. So if we amended our search to /\\v<the><CR>, it would find only one match in the excerpt."
+    },
+    {
+      "name": "Match boundaries with \\zs and \\ze",
+      "line": 8006,
+      "evidence": "The boundaries of a match normally correspond to the start and end of a pattern. But we can use the \\zs and \\ze items to crop the match, making it a subset of the entire pattern (see /\\zsⓘ). The \\zs item marks the start of a match, while the \\ze item matches the end of a match. Together, they allow us to specify a pattern that entirely matches a range of characters and then zoom in on a subset of the match. Just like the word delimiters (from the previous tip), \\zs and \\ze are zero-width items."
+    },
+    {
+      "name": "Lookaround assertions",
+      "line": 8012,
+      "evidence": "Vim’s \\zs and \\ze are conceptually similar to Perl’s lookaround assertions.[21] Although the syntax differs between the regex engines in Perl and Vim, the \\zs item is roughly equivalent to positive lookbehind, while \\ze is equivalent to positive lookahead."
+    },
+    {
+      "name": "Search field terminators",
+      "line": 8146,
+      "evidence": "Search Field Terminators"
+    }
+  ],
+  "problems": [
+    {
+      "line": 7691,
+      "kind": "typo",
+      "evidence": "Tip 73Tune the Case Sensitivity of Search Patterns",
+      "note": "Missing space between 'Tip 73' and the title; the same concatenation appears in the other tip headings at lines 7792, 7872, 7932, 7978, 8000, and 8042."
+    },
+    {
+      "line": 7715,
+      "kind": "garbled",
+      "evidence": "Pattern",
+      "note": "The case-sensitivity table is flattened: header and cell text occupy separate lines through line 7777, so the four-column row/column structure is lost."
+    },
+    {
+      "line": 7842,
+      "kind": "garbled",
+      "evidence": "PatternRemarks",
+      "note": "The table headers 'Pattern' and 'Remarks' are concatenated without a separator, and the table rows are split one cell per line."
+    },
+    {
+      "line": 7874,
+      "kind": "typo",
+      "evidence": "The special characters used for defining regular expressions are handy when searching for patterns, but they can get in the way if we want to search for text verbatim. Using the verynomagic literal switch, we can cancel out most of the special meanings attached to characters such as ., *, and ?.",
+      "note": "'verynomagic' is missing the space used elsewhere in the chapter ('very nomagic' at line 7922)."
+    },
+    {
+      "line": 7890,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "The table headers 'Keystrokes' and 'Buffer Contents' are concatenated, and the keystroke/buffer rows are flattened into alternating single-cell lines."
+    },
+    {
+      "line": 8024,
+      "kind": "garbled",
+      "evidence": "KeystrokesBuffer Contents",
+      "note": "Same concatenated table headers ('Keystrokes' and 'Buffer Contents'); the quoted-match table is flattened into alternating lines."
+    },
+    {
+      "line": 8136,
+      "kind": "typo",
+      "evidence": "The {chars} argument specifies which characters must be escaped with a backslash. If we’re searching forward, we could call escape(@u, ’/\\’), which would prefix each / and \\ character with a backslash. If we were searching backward, we could instead call escape(@u, ’?\\’).",
+      "note": "Vimscript string arguments use curly typographic quotes (’/\\’) rather than ASCII single quotes, so the escape() call as printed is not valid Vimscript; line 8140 uses ASCII quotes."
+    },
+    {
+      "line": 8142,
+      "kind": "typo",
+      "evidence": "When we press <CR>, the escape() function is evaluated, and the returned value gets inserted into the search field. The getcmdtype() function simply returns a / symbol if we’re searching forward or a ? symbol if we’re searching backward (see getcmdtype()ⓘ). In Vim script, the . operator performs string concatenation, so getcmdtype().’\\’ produces ’/\\’ if we’re searching forward and ’?\\’ if we’re searching backward. The end result is that no matter which way we’re searching, this expression escapes the contents of the u register so that we can find it.",
+      "note": "The string-concatenation explanation repeats the curly-quote substitution (’\\’, ’/\\’, and ’?\\’) instead of ASCII single quotes, so the expression as printed would not parse."
+    }
+  ]
+}

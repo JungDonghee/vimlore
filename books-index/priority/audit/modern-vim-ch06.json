@@ -1,0 +1,195 @@
+{
+  "id": "modern-vim-ch06",
+  "book": "modern-vim",
+  "chapter": 6,
+  "title": "Sessions",
+  "start": 4908,
+  "end": 5329,
+  "summary": "Chapter 6 explains how Vim sessions record the current workspace, including buffers, window layout, tab pages, and cursor position, so that state can be restored after restarting Vim. It demonstrates saving with :mksession!, reloading with vim -S or :source, and automating the process with Tim Pope's Obsession plugin. It then covers persistent undo through the 'undofile' and 'undodir' options, including an autocommand that disables undo files for temporary files, and shows how Neovim terminal buffers can be renamed so their processes are restarted when a session is restored.",
+  "commands": [
+    {
+      "keys": ":mksession!",
+      "meaning": "Save the current workspace to a Session.vim file",
+      "line": 4973,
+      "evidence": "=> :mksession!"
+    },
+    {
+      "keys": "vim -S",
+      "meaning": "Launch Vim and load the default Session.vim session",
+      "line": 4981,
+      "evidence": "=> $ vim -S"
+    },
+    {
+      "keys": ":source Session.vim",
+      "meaning": "Load a session file while Vim is already running",
+      "line": 4992,
+      "evidence": "=> :source Session.vim"
+    },
+    {
+      "keys": ":Obsession",
+      "meaning": "Start automatic session tracking; rerun it to pause or resume",
+      "line": 5018,
+      "evidence": "=> :Obsession"
+    },
+    {
+      "keys": ":Obsession!",
+      "meaning": "Stop session tracking, remove Session.vim, and disable the autocommands",
+      "line": 5042,
+      "evidence": "=> :Obsession!"
+    },
+    {
+      "keys": "set undofile",
+      "meaning": "Enable persistent undo history",
+      "line": 5087,
+      "evidence": "set undofile"
+    },
+    {
+      "keys": "<C-x>",
+      "meaning": "Decrement the number at the start of the line",
+      "line": 5078,
+      "evidence": "Use the <C-x> command to decrement the number at the start of the line."
+    },
+    {
+      "keys": "u",
+      "meaning": "Undo the last change",
+      "line": 5079,
+      "evidence": "Now you can use u to undo the change and <C-r> to redo it."
+    },
+    {
+      "keys": "<C-r>",
+      "meaning": "Redo the undone change",
+      "line": 5079,
+      "evidence": "Now you can use u to undo the change and <C-r> to redo it."
+    },
+    {
+      "keys": ".",
+      "meaning": "Repeat the last change",
+      "line": 5089,
+      "evidence": "Switch back to the green-bottles.txt file and use the <C-x> command again to decrement, then for good measure, use . a couple of times to repeat the change."
+    },
+    {
+      "keys": "set undodir=$VIMDATA/undo",
+      "meaning": "Save undo files in a designated directory",
+      "line": 5103,
+      "evidence": "set undodir=$VIMDATA/undo"
+    },
+    {
+      "keys": ":call mkdir(&undodir, 'p')",
+      "meaning": "Create the undo directory, including parent directories",
+      "line": 5108,
+      "evidence": "=> :call mkdir(&undodir, 'p')"
+    },
+    {
+      "keys": ":split | terminal",
+      "meaning": "Open a terminal buffer in a horizontal split",
+      "line": 5194,
+      "evidence": "=> :split | terminal"
+    },
+    {
+      "keys": ":ls",
+      "meaning": "List buffers and their names",
+      "line": 5208,
+      "evidence": "=> :ls"
+    },
+    {
+      "keys": ":file term://PORT=3001 npm run server",
+      "meaning": "Rename a terminal buffer so its command is restored with the session",
+      "line": 5292,
+      "evidence": "=> :file term://PORT=3001 npm run server"
+    }
+  ],
+  "concepts": [
+    {
+      "name": "Session as a workspace snapshot",
+      "line": 4913,
+      "evidence": "With Vim’s sessions feature you can record the state of your workspace, enabling you to restore that state later on."
+    },
+    {
+      "name": "A session can represent a project",
+      "line": 4948,
+      "evidence": "When used this way, a Vim session represents a project."
+    },
+    {
+      "name": "Default Session.vim file",
+      "line": 4975,
+      "evidence": "Vim records the current session in a Session.vim file in the current working directory."
+    },
+    {
+      "name": "Obsession autocommands on VimLeavePre and BufEnter",
+      "line": 5022,
+      "evidence": "This sets up an autocommand so that the :mksession! command is triggered whenever the VimLeavePre or BufEnter events fire (see Tip 26, Using Autocommands to Respond to Events)."
+    },
+    {
+      "name": "'sessionoptions' controls what a session records",
+      "line": 5048,
+      "evidence": "The ‘sessionoptions’ option specifies what will be recorded when you save a session (:help ’sessionoptions’)."
+    },
+    {
+      "name": "Buffer names are preserved, buffer numbers are not",
+      "line": 5050,
+      "evidence": "Buffer names are preserved, but buffer numbers are not."
+    },
+    {
+      "name": "Neovim shada file for shared state",
+      "line": 5056,
+      "evidence": "In Neovim, this is called the shada file, which is short for shared data (:h shada-file)."
+    },
+    {
+      "name": "Persistent undo with 'undofile'",
+      "line": 5070,
+      "evidence": "By enabling Vim’s ‘undofile’ option, you can make undo history persist between editing sessions."
+    },
+    {
+      "name": "'undodir' designated undo directory",
+      "line": 5100,
+      "evidence": "To avoid this, use the ‘undodir’ option to specify a directory where your undo files will be saved."
+    },
+    {
+      "name": "Local noundofile autocommand for temporary files",
+      "line": 5119,
+      "evidence": "To avoid this situation, use an autocommand to disable ‘undofile’ locally for files that match a particular pattern."
+    },
+    {
+      "name": "Terminal buffer name format term://{cwd}//{pid}:{cmd}",
+      "line": 5216,
+      "evidence": "These can be generalized as term://{cwd}//{pid}:{cmd}."
+    },
+    {
+      "name": "Renaming terminal buffers with :file {name}",
+      "line": 5289,
+      "evidence": "You can use the :file {name} command to rename your terminal buffers (:help :file_f)."
+    }
+  ],
+  "problems": [
+    {
+      "line": 4955,
+      "kind": "missing",
+      "evidence": "Tip 23Saving and Restoring Sessions",
+      "note": "Missing space between the tip number and the title; the heading is fused as 'Tip 23Saving'."
+    },
+    {
+      "line": 5023,
+      "kind": "typo",
+      "evidence": "Test this out by opening the package.json file in a new tab page, then quiting Vim:",
+      "note": "'quiting' is a misspelling of 'quitting'."
+    },
+    {
+      "line": 5048,
+      "kind": "typo",
+      "evidence": "The ‘sessionoptions’ option specifies what will be recorded when you save a session (:help ’sessionoptions’).",
+      "note": "The opening quote in ':help ’sessionoptions’' is a right single quotation mark (U+2019), not a left quote; the option name earlier in the same line uses the correct ‘…’ pair."
+    },
+    {
+      "line": 5066,
+      "kind": "missing",
+      "evidence": "Tip 24Making Undo Persist Between Sessions",
+      "note": "Missing space between the tip number and the title; the heading is fused as 'Tip 24Making'."
+    },
+    {
+      "line": 5161,
+      "kind": "missing",
+      "evidence": "Tip 25Restarting Terminal Processes When Resuming a Session",
+      "note": "Missing space between the tip number and the title; the heading is fused as 'Tip 25Restarting'."
+    }
+  ]
+}

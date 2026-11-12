@@ -24,6 +24,16 @@ and `spellcheck.json`. This is a **triage report, not a correction log**.
 - Chunks and audit parts cover every clean line.
 - Every committed audit heading/problem cites an exact line that was verified.
 
+## Priority two-book audit
+
+Practical Vim + Modern Vim had a second, chapter-level audit (28 agents):
+417 command citations, 336 concepts, 175 defect candidates, **0 rejected
+evidence mismatches**. The deeper pass found 56 typo candidates and formatting
+defects that the coarse 19-part audit missed. Neither book has a numbered-
+chapter gap, but the source still contains flattened tables, glued tip headings
+and typographic quotes in code. See `books-index/priority/ERRATA.md`. Nothing
+was silently corrected.
+
 ## What is not guaranteed
 
 - The source files are not publisher-authoritative scans/editions. The audit
