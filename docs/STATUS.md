@@ -12,8 +12,8 @@
 | chapters / stages | 10 / 51 |
 | state matrix matched / total / open | 21,539 / 21,712 / 173 |
 | state open by field | undo 164, reg 10, regtype 8 |
-| built single file (raw) | 270,287 B |
-| raw ceiling | 271,000 B |
+| built single file (raw) | 272,261 B |
+| raw ceiling | 273,000 B |
 ## Reports
 - Oracle: `tools/oracle-diff.ts` + `tests/vim-expected.json`
 - Grammar matrix: `npm run matrix` → `docs/MATRIX_REPORT.md`
@@ -21,3 +21,4 @@
 - Observable state (local): `npm run state-matrix -- --write` → `docs/STATE_REPORT.md`
 - Command/feature audit: `docs/VIM_COVERAGE.md`, `docs/VIM_ADVENTURES_COVERAGE.md`
 - Debugging: `npm run trace -- --case=m-1234` → `docs/DEBUGGING.md`
+- Browser QA: `npm run browser:qa` → `docs/BROWSER_QA.md` + `docs/browser/`

@@ -5,7 +5,7 @@
 > true now, what is broken, and which traps cost the last session hours.
 > For a single copy-paste start, use [`ONE_MESSAGE.md`](ONE_MESSAGE.md) or run
 > `npm run kickoff`.
-> **Last rewritten:** 2026-11-11, end of the engine-correctness pass (pass 2).
+> **Last rewritten:** 2026-11-12, after count matrix, generated STATUS and browser QA.
 
 ## 0. Snapshot
 
@@ -69,6 +69,15 @@ Next safe slices, in order:
 
 The scheduled automation is set to stop issuing new work at 23:30 KST and to
 only finalize by 23:50; the machine shuts down at 00:00.
+
+## 0c. Browser QA (2026-11-12)
+
+Playwright + Chromium 131 are installed as **dev-only** tooling. The persistent
+cache is `/home/jung/ai_station/sandbox/.vimlore-browsers` (outside the repo);
+`npm run browser:setup` re-downloads it on a fresh machine. `npm run browser:qa`
+serves `dist/`, drives title → map → stage → ghost, writes screenshots to
+`docs/browser/`, and fails below 50 rAF or 50 canvas draw FPS. Runtime bundle
+still has zero dependencies. See [`BROWSER_QA.md`](BROWSER_QA.md).
 
 ## 1. What pass 2 delivered
 
@@ -179,9 +188,9 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
-264,000 → **271,000/86,000**. Each was measured and committed with the feature
-that needed it. Current build is 270,287 B raw / 84,756 B gzip, so headroom is
-~776 B raw / ~1,251 B gzip: the next feature must reduce bytes first or justify
+264,000 → **273,000/86,000**. Each was measured and committed with the feature
+that needed it. Current build is 272,261 B raw / 85,220 B gzip, so headroom is
+~739 B raw / ~780 B gzip: the next feature must reduce bytes first or justify
 another measured raise. Phase E is where bytes get reclaimed, not a permanent
 escalation.
 
@@ -220,14 +229,20 @@ keys can expose a skill before a stage teaches it, and 12 unlock keys have no
 Grimoire row. Book-derived curriculum/provenance will fix the ordering; do not
 paper over it with ad-hoc locks now.
 
-### Ghost redraw / perceived stutter (2026-11-11)
+### Ghost redraw / skip / result preview (2026-11-11)
 
 The ghost played on a demo Session with no event callback, so the render loop
-did not know the demo cursor/buffer had changed. It redrew only when the cursor
-blink flipped (~530 ms), making the ghost look like it teleported. `playGhost`
-now calls `updateMatches()` and sets the dirty flag on start, after every key
-and on restore; the 60 fps loop draws each demo step (240 ms cadence). This is
-a redraw fix, not a new animation; the ghost remains real Vim key steps.
+did not know the demo cursor/buffer had changed; it redrew only on the blink
+(~530 ms), making the ghost look like it teleported. `playGhost` now marks
+dirty on start/each key/restore and calls `updateMatches()`.
+
+The ghost HUD now shows the upcoming keys and progress, steps at 180 ms, and
+has a **SKIP (Esc / Space / Enter)** path. Skipping feeds the remaining keys
+instantly so the player still sees the **actual cleared final state**, held for
+1.4 s (or dismissed by a key) before the live session is restored verbatim.
+This is a result preview, not a second animation. A real Chromium QA run now
+exists: `npm run browser:qa` measured **60.5 rAF / 60.5 draw FPS** at 390×844
+(headless CPU Chromium; not a phone GPU). See [`BROWSER_QA.md`](BROWSER_QA.md).
 
 ### Relative line numbers by default (2026-11-11)
 

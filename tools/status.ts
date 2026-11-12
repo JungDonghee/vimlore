@@ -56,6 +56,7 @@ const lines = [
   '- Observable state (local): `npm run state-matrix -- --write` → `docs/STATE_REPORT.md`',
   '- Command/feature audit: `docs/VIM_COVERAGE.md`, `docs/VIM_ADVENTURES_COVERAGE.md`',
   '- Debugging: `npm run trace -- --case=m-1234` → `docs/DEBUGGING.md`',
+  '- Browser QA: `npm run browser:qa` → `docs/BROWSER_QA.md` + `docs/browser/`',
   '',
 ].filter(Boolean).join('\n');
 

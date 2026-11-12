@@ -29,7 +29,7 @@ Never "fix" a level by changing the engine's Vim semantics. Fix the level.
 ## Commands
 
 ```bash
-npm install            # vite + typescript only (2 dev deps)
+npm install            # dev: vite/typescript + Playwright (zero runtime deps)
 npm run dev            # http://localhost:5173
 npm run build          # dist/ + single-file dist/vimlore.html
 npm run lint:levels    # validate EVERY stage (par, solution, gating, win)
@@ -46,6 +46,8 @@ npm run verify         # unit + lint + tsc + docs + invariants
 npm run fuzz           # seeded differential fuzzer (local, needs vim)
 node --experimental-strip-types tools/oracle-diff.ts   # vs real vim
 npm run trace -- --case=m-1234   # per-prefix differential trace (local)
+npm run browser:setup            # one-time local Chromium install
+npm run browser:qa               # headless 390x844 ghost/FPS/screenshots
 ```
 
 `npm run lint:levels` is the safety net: it replays each stage's `solution`
@@ -99,8 +101,8 @@ docs/               LEVEL_FORMAT.md (authoring), CURRICULUM.md (the 10 floors)
 The game targets a cheap phone with a Bluetooth keyboard.
 
 - Zero runtime dependencies. Stretch goal: 200 kB raw / 70 kB gzip. **Hard
-  ceiling enforced by `npm run budget`: 271,000 B raw / 86,000 B gzip** (current
-  270.2 kB / 84.7 kB); do not raise it without a deliberate, measured reason.
+  ceiling enforced by `npm run budget`: 273,000 B raw / 86,000 B gzip** (current
+  272.3 kB / 85.2 kB); do not raise it without a deliberate, measured reason.
 - The renderer bakes one **opaque composite frame** (background, highlights,
   glyphs, bloom) and blits it once per frame; cursor, cursorline, line numbers,
   ghost and particles are the FX pass. Rebuild the frame only when its key changes.
@@ -282,7 +284,9 @@ Three rules keep it correct:
   fresh demo Session (no key count, hazards, pickups or `won`), plays the
   solution there, then puts the untouched live Session back — buffer, cursor,
   undo, registers, keys and mode. Do not `restart()` after a ghost; the next
-  overlay must never appear and Enter stays ignored while ghosting.
+  overlay must never appear. While ghosting, **Esc / Space / Enter or the SKIP
+  button jumps to the cleared final state**; that result is held visible before
+  restoring the live session.
 - **F9 / the tabline ‹ and results PREV** go to the previous chamber when one
   exists. The map resumes at the first uncleared stage, so an explicit PREV is
   the way back to a cleared stage.

@@ -75,6 +75,10 @@ export class PlayScreen {
   private shake = 0;
   private hintLevel = 0;
   private ghosting = false;
+  private ghostSkip = false;
+  private ghostTicker: HTMLElement | null = null;
+  private ghostProgress: HTMLElement | null = null;
+  private ghostTween: { from: { line: number; col: number }; to: { line: number; col: number }; start: number } | null = null;
   private matches: { line: number; col: number; len: number }[] = [];
   private ro: ResizeObserver | null = null;
   private destroyed = false;
@@ -432,6 +436,10 @@ export class PlayScreen {
       }
       return true;
     }
+    if (this.ghosting) {
+      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') this.ghostSkip = true;
+      return true;
+    }
     if (e.key === 'Tab') {
       // In insert/replace mode Tab is text, not the hint key. The engine
       // expands it to spaces up to the next tabstop (4).
@@ -457,8 +465,6 @@ export class PlayScreen {
       void this.playGhost();
       return true;
     }
-    if (this.ghosting) return true;
-
     const key = fromKeyboardEvent(e);
     if (!key) return false;
     if (/[\uac00-\ud7af\u3131-\u318e]/.test(key)) {
@@ -548,7 +554,8 @@ export class PlayScreen {
     if (this.state === 'playing' && !this.ghosting) this.tickCoach(t);
     // Idle frames cost nothing: no keys, no particles, no flash => no draw.
     const blink = Math.floor(t / 530) % 2;
-    const busy = this.dirty || this.flash > 0 || this.shake > 0 || this.renderer.busy || blink !== this.lastBlink;
+    const tweening = !!this.ghostTween && t < this.ghostTween.start + 180;
+    const busy = this.dirty || this.ghosting || this.flash > 0 || this.shake > 0 || this.renderer.busy || tweening || blink !== this.lastBlink;
     if (!busy) {
       this.raf = requestAnimationFrame(this.loop);
       return;
@@ -557,11 +564,22 @@ export class PlayScreen {
     this.lastBlink = blink;
     const vim = this.session.vim;
     const sel = vim.selection();
+    let cursorDraw = undefined;
+    if (this.ghostTween) {
+      const p = Math.min(1, Math.max(0, (t - this.ghostTween.start) / 180));
+      const e = p * p * (3 - 2 * p);
+      cursorDraw = {
+        line: this.ghostTween.from.line + (this.ghostTween.to.line - this.ghostTween.from.line) * e,
+        col: this.ghostTween.from.col + (this.ghostTween.to.col - this.ghostTween.from.col) * e,
+      };
+      if (p >= 1) this.ghostTween = null;
+    }
     this.renderer.render(
       {
         version: vim.buf.version,
         lines: vim.buf.lines,
         cursor: vim.cursor,
+        cursorDraw,
         mode: vim.mode,
         sel: sel ? { start: sel.start, end: sel.end, linewise: !!sel.linewise, block: sel.block } : null,
         matches: this.matches,
@@ -894,27 +912,67 @@ export class PlayScreen {
     demo.vim.relativenumber = this.host.lineNumbers === 'rel' || this.host.lineNumbers === 'both';
     this.stopRepeat();
     this.ghosting = true;
+    this.ghostSkip = false;
     this.session = demo;
     // The demo Session has no event callback, so the render loop must be told
     // explicitly that the visible buffer/cursor changed.
     this.dirty = true;
     this.overlay?.remove();
+    this.ghostTicker = h('span', { class: 'ghost-ticker' }, '');
+    this.ghostProgress = h('span', { class: 'ghost-progress' }, '');
     this.overlay = h(
       'div',
-      { class: 'overlay', style: { background: 'rgba(4,6,10,0.35)', pointerEvents: 'none' } },
-      h('div', { class: 'card', style: { width: 'min(520px,90%)' } }, h('div', { class: 'eyebrow' }, 'GHOST'), h('h2', {}, this.host.lang === 'ko' ? '정답의 손' : 'The intended hand'), h('div', { class: 'brief ko' }, this.host.lang === 'ko' ? '따라 치지 말고, 손의 리듬을 봐.' : 'Do not type along. Watch the rhythm.')),
+      { class: 'overlay', style: { background: 'transparent', pointerEvents: 'none' } },
+      h(
+        'div',
+        { class: 'ghost-hud' },
+        h('span', { class: 'eyebrow' }, 'GHOST'),
+        this.ghostTicker,
+        this.ghostProgress,
+        h('button', { class: 'chip', style: { pointerEvents: 'auto' }, onclick: () => { this.ghostSkip = true; } }, this.t('SKIP · Esc', '스킵 · Esc')),
+      ),
     );
     this.root.append(this.overlay);
     const keys = tokenize(sol);
-    for (const k of keys) {
+    for (let i = 0; i < keys.length; i++) {
       if (this.destroyed) return;
-      this.session.feed(k);
+      if (this.ghostSkip) {
+        // Skip the animation but still reach the final state: the player wants
+        // to see the clear result, not a half-played buffer.
+        for (let j = i; j < keys.length; j++) {
+          this.session.feed(keys[j]);
+          this.updateMatches();
+          this.updateHud();
+          this.dirty = true;
+        }
+        break;
+      }
+      const from = { ...this.session.vim.cursor };
+      this.session.feed(keys[i]);
+      const to = { ...this.session.vim.cursor };
+      this.ghostTween = { from, to, start: performance.now() };
       this.updateMatches();
       this.updateHud();
       this.dirty = true;
-      await new Promise((r) => setTimeout(r, 240));
+      if (this.ghostTicker) {
+        const next = keys.slice(i + 1, i + 7).map((k) => keyLabel(k)).join(' ');
+        this.ghostTicker.textContent = next || '…';
+      }
+      if (this.ghostProgress) this.ghostProgress.textContent = `${i + 1}/${keys.length}`;
+      await new Promise((r) => setTimeout(r, 180));
     }
-    await new Promise((r) => setTimeout(r, 700));
+    if (this.destroyed) return;
+    // Hold the actual final state on screen. This is the result preview the
+    // player asked for: the solution's target, not just prose.
+    this.ghostSkip = false;
+    this.ghostTween = null;
+    if (this.ghostTicker) {
+      this.ghostTicker.textContent = this.host.lang === 'ko' ? '이것이 클리어 상태다' : 'This is the cleared state';
+    }
+    if (this.ghostProgress) this.ghostProgress.textContent = 'CLEAR';
+    for (let waited = 0; waited < 1400 && !this.ghostSkip; waited += 50) {
+      await new Promise((r) => setTimeout(r, 50));
+    }
     if (this.destroyed) return;
     this.session = live;
     // Force the renderer frame cache to rebuild: the live session's version
@@ -922,6 +980,9 @@ export class PlayScreen {
     live.vim.version++;
     this.overlay?.remove();
     this.overlay = null;
+    this.ghostTicker = null;
+    this.ghostProgress = null;
+    this.ghostTween = null;
     this.ghosting = false;
     this.updateHud();
     this.dirty = true;

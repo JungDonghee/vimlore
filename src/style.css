@@ -1399,3 +1399,25 @@ body.crt-off .board::after { display: none; }
   letter-spacing: 0.06em;
   line-height: 1.5;
 }
+
+.ghost-hud {
+  position: absolute;
+  left: 50%;
+  bottom: 92px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(680px, 92%);
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: rgb(3 10 6 / 0.86);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.ghost-hud .ghost-ticker { color: var(--ph-bright); font-family: var(--mono); overflow: hidden; text-overflow: ellipsis; }
+.ghost-hud .ghost-progress { color: var(--amber); font-family: var(--mono); }
+.ghost-hud .chip { pointer-events: auto; white-space: nowrap; }

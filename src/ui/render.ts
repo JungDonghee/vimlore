@@ -25,6 +25,8 @@ export interface View {
   version: number;
   lines: string[];
   cursor: Cell;
+  /** Optional FX-only cursor position (ghost interpolation); gutter uses cursor. */
+  cursorDraw?: Cell;
   mode: string;
   sel: SelView | null;
   matches: { line: number; col: number; len: number }[];
@@ -530,7 +532,7 @@ export class Renderer {
 
     // cursor: Vim shapes — block (normal), bar (insert), underline (replace),
     // hollow block (visual); no buffer cursor while the command line is open.
-    const { line, col } = view.cursor;
+    const { line, col } = view.cursorDraw ?? view.cursor;
     const cx = this.xOf(col);
     const cy = this.yOf(line);
     const mode = view.mode;
