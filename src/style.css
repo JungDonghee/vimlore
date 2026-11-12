@@ -564,7 +564,10 @@ h2,
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: radial-gradient(90% 80% at 50% 40%, hsl(var(--hue) 80% 55% / 0.035), transparent 72%);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 47px, rgb(102 255 158 / 0.035) 47px 48px),
+    repeating-linear-gradient(0deg, transparent 0 47px, rgb(102 255 158 / 0.035) 47px 48px),
+    radial-gradient(90% 80% at 50% 40%, hsl(var(--hue) 80% 55% / 0.025), transparent 72%);
   pointer-events: none;
 }
 
