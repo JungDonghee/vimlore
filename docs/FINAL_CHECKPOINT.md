@@ -8,9 +8,13 @@
 >
 > HEAD: 4f48b19 (code freeze commit; verify with `git rev-parse HEAD`)
 >
+
 > **Re-verified 2026-11-12 21:19 KST:** all gates below green; desktop browser
 > 57.6 rAF / 57.1 draw FPS, mobile 60.5 FPS (previous run), audit 38 screens
 > clean. No code changes since the freeze.
+>
+> **Live Pages verified 21:22 KST:** HTTP 200, title VIMLORE, 0 console/page
+> errors, served asset hashes match `dist/`.
 > Working tree at checkpoint: clean.
 
 ## Verified green

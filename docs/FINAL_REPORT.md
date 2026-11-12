@@ -61,6 +61,12 @@
    facts.
 5. **UI:** vector frame/grid only; full HUD/gridlayers need bundle optimisation.
 
+## Live deployment
+
+- `https://jungdonghee.github.io/vimlore/` — HTTP 200, title `VIMLORE`,
+  0 console/page errors, live asset hashes match the frozen `dist/` build
+  (verified 2026-11-12 21:22 KST).
+
 ## Reproduce
 
 ```bash
