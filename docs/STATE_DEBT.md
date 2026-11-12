@@ -16,7 +16,7 @@
 - All 51 stages have evidence-checked book citations; the citations are a
   build-time overlay and do not affect bundle/state.
 
-## What the 173 mean
+## What the 119 mean
 
 Most are **undo cursor** after edge-motion operators (counted/backward
 linewise ops, visual ranges, `2>B`, `dgg`, etc.) and a few register/regtype

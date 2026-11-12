@@ -93,10 +93,10 @@ only finalize by 23:50; the machine shuts down at 00:00.
 - Fixed block I/A final cursor, case-sensitive search, `:g/:v` delete
   register/cursor, `gq` space/cursor, `:normal` undo blocks, macro undo blocks,
   and join/format/move/substitute undo cursors.
-- Game-used report: [`GAME_USED_STATE.md`](GAME_USED_STATE.md) (51/51 solution, 50/51 undo diagnostic).
+- Game-used report: [`GAME_USED_STATE.md`](GAME_USED_STATE.md) (51 of 51 solution and undo).
 - Optional diagnostic `npm run level-oracle -- --undo`: 51 of 51 stages match
-  full solution+undo; remaining cursor-only debt is c10s5 (`gq` after daw). Full state matrix is down to 119 open (undocumented edge
-  cases), so the engine is **not** yet globally perfect.
+  full solution+undo. Full state matrix is down to 119 open (not game-used),
+  so the engine is **not** yet globally perfect.
 - 51 of 51 stages have validated book citations in the overlay
   `books-index/curriculum-map/stages.json`; no source bloat in the bundle.
 - P2 visual increments shipped: static vector instrument frame + corner rules
@@ -412,7 +412,7 @@ after `u`. Mode is **not** comparable through `vim -es` (`mode()` reports `c`);
 a pty/Nvim probe would be needed, so mode is out of this report.
 
 First full run: 15,289/21,712 matched, 6,423 divergences. Latest:
-**21,539/21,712 matched, 173 open** (undo 164, register 18). Fixed:
+**21,593/21,712 matched, 119 open** (undo 110, reg 10, regtype 8). Fixed:
 - a real operator leak: several `c` paths opened insert without clearing `op`,
   so the next key (including `u`) was swallowed — `c{` at BOF then `u` did not
   undo. `openInsertAt` now ends the operator composition.
@@ -425,12 +425,11 @@ The tool stays local until the generated set reaches 0; the report is
 
 ## 4. Not done (queued, do not pretend otherwise)
 
-- **Curriculum provenance**: 5/51 stages cited, 46 unmapped. The audit is
-  incomplete; see `CURRICULUM_PROVENANCE.md` and `STAGE_PROVENANCE.md`.
-- **Invariants**: 15 coverage warnings (commands never declared by a stage /
-  unlock keys without a Grimoire row), 0 errors. Not hidden; not yet resolved.
-- **Real-GPU 60 fps**: headless desktop is 52–57 fps; the headless browser is
-  the ceiling (trap 9). Needs a real GPU browser measurement.
+- **Curriculum provenance**: 51/51 stages cited via the evidence-checked
+  overlay; Practical Vim is the spine. See `CURRICULUM_SPINE.md`.
+- **Invariants**: 13 coverage warnings, 0 errors; not hidden.
+- **Real-GPU 60/144 fps**: headless desktop is 57.6 fps, mobile 60.5; a real
+  GPU/144Hz measurement is still required. 144 is not claimed.
 - **Change list** (`g;`/`g,`) and the editor program (buffers/files/splits/
   tabs, folds, completion, viewport motions) are **deferred, not out of
   scope**: they are backlog phases, designed in `FUTURE_EDITOR.md` where
