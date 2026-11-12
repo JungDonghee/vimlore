@@ -2,10 +2,10 @@
 
 **Date:** 2026-11-12 (Asia/Seoul)
 **Code freeze:** 21:20 KST
-**Final verification:** 23:22 KST (all gates; CI/Pages green)
-**Finalized:** 23:35 KST at HEAD `95e2b54`
+**Final verification:** 23:22 KST and **23:40 final freeze** (all gates; CI/Pages green)
+**Finalized:** 23:40 KST at the freeze commit
 **Status:** green candidate, not a claim of full-engine perfection.
-**Tag:** `sprint-2026-11-12` (HEAD at ec18b6a; pushed).
+**Tags:** `sprint-2026-11-12` (ec18b6a) and `sprint-2026-11-12-freeze` (final freeze).
 
 ## What was delivered
 
@@ -47,7 +47,7 @@
 - count matrix **162 of 162**
 - full state **21,593 of 21,712**, 119 open (undo 110, reg 10, regtype 8)
 - stage provenance **51 of 51** cited
-- browser desktop **55.5–57.6 FPS**, mobile **60.5 FPS**
+- browser desktop **55.1–57.6 FPS**, mobile **60.5 FPS**
 - browser audit **38 screens**, 0 overflow, 0 errors
 - bundle **276,990 B raw / 86,091 B gzip** (gate 277,000/87,000)
 
