@@ -1,7 +1,9 @@
 # VIMLORE — sprint final report
 
 **Date:** 2026-11-12 (Asia/Seoul)
-**Code freeze:** 21:20 KST (early; final verification still runs at 23:40)
+**Code freeze:** 21:20 KST
+**Final verification:** 23:22 KST (all gates; CI/Pages green)
+**Finalized:** 23:35 KST at HEAD `95e2b54`
 **Status:** green candidate, not a claim of full-engine perfection.
 **Tag:** `sprint-2026-11-12` (HEAD at ec18b6a; pushed).
 
