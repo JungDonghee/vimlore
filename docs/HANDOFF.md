@@ -86,6 +86,21 @@ only finalize by 23:50; the machine shuts down at 00:00.
   `browser:qa` measures **55.5 rAF/draw FPS** headless at 1920×1080; 144fps is
   not measurable here and is a display/GPU target, not a headless-CPU claim.
 
+## 0f. Correctness checkpoint (2026-11-12)
+
+- `npm run level-oracle` (real Vim): **51 of 51** shipped stage solutions match
+  final buffer/cursor/register; added to CI.
+- Fixed block I/A final cursor, case-sensitive search, `:g/:v` delete
+  register/cursor, `gq` space/cursor, `:normal` undo blocks, macro undo blocks,
+  and join/format/move/substitute undo cursors.
+- Optional diagnostic `npm run level-oracle -- --undo`: 49 of 51 stages match
+  full solution+undo; remaining cursor-only debt is c09s3 (`:sort`) and c10s5
+  (`gq` after daw). Full state matrix remains 173 open (undocumented edge
+  cases), so the engine is **not** yet globally perfect.
+- 51 of 51 stages have validated book citations in the overlay
+  `books-index/curriculum-map/stages.json`; no source bloat in the bundle.
+- Bundle 276,145/85,955; tests39, oracle373, matrix21,712, count162, lint51.
+
 ## 0e. Priority books — Drew Neil (2026-11-12)
 
 `Practical Vim` and `Modern Vim` are now the primary indexed corpus:

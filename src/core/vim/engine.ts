@@ -1717,6 +1717,7 @@ export class Vim {
     const l1 = Math.min(r.start.line, r.end.line);
     const l2 = Math.max(r.start.line, r.end.line);
     const before = this.snapshot();
+    before.undoCursor = { ...this.cursor };
     const wrapped = M.wrapLines(this.buf.lines.slice(l1, l2 + 1), this.textwidth);
     this.buf.lines.splice(l1, l2 - l1 + 1, ...wrapped);
     this.buf.setLines(this.buf.lines);
@@ -1741,9 +1742,9 @@ export class Vim {
     this.takeCount();
     const n = Math.max(2, count);
     const before = this.snapshot();
+    before.undoCursor = { line: this.cursor.line, col: this.cursor.line === 0 ? 0 : Math.max(0, this.buf.line(this.cursor.line).length - 1) };
     let line = this.cursor.line;
     const startedAt = this.cursor.line;
-    before.undoCursor = { line: startedAt, col: 0 };
     let joined = 0;
     for (let i = 1; i < n && line < this.buf.lineCount - 1; i++) {
       joined++;
@@ -3185,9 +3186,12 @@ export class Vim {
     const n = this.countNum || 1;
     this.takeCount();
     const keys = tokenize(reg.text);
+    const before = this.snapshot();
+    before.undoCursor = { ...this.cursor };
     this.replaying = true;
     for (let i = 0; i < n; i++) for (const k of keys) this.feed(k);
     this.replaying = false;
+    if (before.lines.join('\n') !== this.buf.lines.join('\n')) this.commit(before, 'macro');
     this.cmdKeys = [];
     this.say(`@${name} x${n}`, 'good');
   }
@@ -3367,6 +3371,7 @@ export class Vim {
     const lines = this.buf.lines.slice();
     const jsRep = this.translateReplacement(replacement);
     const before = this.snapshot();
+    before.undoCursor = { line: Math.max(0, l1), col: 0 };
 
     if (f.includes('c')) {
       const confirmLines = lines.slice();
@@ -3466,6 +3471,7 @@ export class Vim {
     const before = this.snapshot();
     const block = this.buf.lines.splice(a, b - a + 1);
     const at = Math.max(0, Math.min(this.buf.lines.length, dest < a ? dest + 1 : dest - block.length + 1));
+    before.undoCursor = { line: a, col: 0 };
     this.buf.lines.splice(at, 0, ...block);
     this.buf.setLines(this.buf.lines);
     this.cursor = { line: Math.min(at, this.buf.lineCount - 1), col: M.firstNonBlank(this.buf, Math.min(at, this.buf.lineCount - 1)) };
@@ -3492,6 +3498,7 @@ export class Vim {
     }
     if (cmd === 'd' || cmd === 'delete') {
       const before = this.snapshot();
+      before.undoCursor = { line: 0, col: 0 };
       const last = lines[lines.length - 1];
       const deletedText = this.buf.line(last);
       for (let i = lines.length - 1; i >= 0; i--) this.buf.lines.splice(lines[i], 1);
@@ -3545,7 +3552,10 @@ export class Vim {
     // `:normal` is one undo block in Vim; replaying suppresses per-command
     // commits, so record the block explicitly.
     const before = this.snapshot();
-    before.undoCursor = { line: Math.max(0, l1), col: Math.max(0, this.buf.line(Math.max(0, l1)).length - 1) };
+    const insertLike = /^(?:[0-9]*)(?:A|a|i|I|o|O|s|S|C)/.test(keys.trim());
+    before.undoCursor = insertLike
+      ? { line: Math.max(0, l1), col: Math.max(0, this.buf.line(Math.max(0, l1)).length - 1) }
+      : { line: Math.max(0, l1), col: 0 };
     this.replaying = true;
     for (let l = Math.max(0, l1); l <= Math.min(this.buf.lineCount - 1, l2); l++) {
       this.cursor = { line: l, col: 0 };

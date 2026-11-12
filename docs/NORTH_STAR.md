@@ -54,8 +54,10 @@ deliberate practice and VimGolf, without requiring a separate course.**
 - Engine oracle: 373 of 373; matrix: 21,712 of 21,712; count: 162 of 162.
 - Stage lint: 51 of 51; **level-oracle: 51 of 51**.
 - Stage provenance: **51 of 51 cited** (overlay, not bundled into the runtime).
-- Full state matrix: 173 open (undo/register edge cases); game-used target is 0.
-- Bundle: 275,544 raw / 85,824 gzip (gate 277k/87k).
+- Full state matrix: 173 open (undo/register edge cases); game-used level
+  solutions: 51 of 51; solution+undo diagnostic: 49 of 51. Game-used target
+  remains 0, so full-engine perfection is still an open debt.
+- Bundle: 276,145 raw / 85,955 gzip (gate 277k/87k).
 - Browser desktop headless: 55.5 FPS, 38 screens 0 overflow/errors; 144 not
   verifiable here.
 
