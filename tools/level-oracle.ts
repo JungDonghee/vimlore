@@ -4,6 +4,8 @@
  *
  * This is the game-specific companion to state-matrix: it proves the keystrokes
  * each level actually ships behave like Vim on the level's own text.
+ *
+ *   npm run level-oracle -- [--stage=c01s1] [--undo] [--dump]
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
@@ -13,11 +15,13 @@ import { CHAPTERS } from '../src/content/chapters/index.ts';
 import { Session, parseStart } from '../src/core/game/session.ts';
 import { stageUnlockKeys } from '../src/content/commands.ts';
 import { vimKeys } from './matrix-cases.ts';
+import { tokenize } from '../src/core/vim/keys.ts';
 
 const CHECK_UNDO = process.argv.includes('--undo');
 
 interface Out { stage: string; lines: string[]; cursor: [number, number]; reg: string; regtype: string; undo: { lines: string[]; cursor: [number, number]; reg: string; regtype: string } }
-const stages = CHAPTERS.flatMap((ch) => ch.stages.map((st) => ({ ch, st }))).filter((x) => x.st.solution);
+const STAGE_FILTER = (process.argv.find((a) => a.startsWith('--stage='))?.split('=')[1] ?? '');
+const stages = CHAPTERS.flatMap((ch) => ch.stages.map((st) => ({ ch, st }))).filter((x) => x.st.solution && (!STAGE_FILTER || x.st.id === STAGE_FILTER));
 const dir = mkdtempSync(join(tmpdir(), 'vimlore-level-'));
 const outFile = join(dir, 'out.json');
 const scriptFile = join(dir, 'run.vim');
@@ -51,6 +55,7 @@ call add(s:out, s:st)
 }
 script += `call writefile([json_encode(s:out)], '${esc(outFile)}')\nqa!\n`;
 writeFileSync(scriptFile, script);
+if (process.argv.includes('--dump')) writeFileSync('/tmp/level-oracle.vim', script);
 try {
   execFileSync('vim', ['-N', '-u', 'NONE', '-i', 'NONE', '-es', '-S', scriptFile], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 600000 });
 } catch (e) {
