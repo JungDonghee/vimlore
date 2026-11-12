@@ -55,7 +55,7 @@ deliberate practice and VimGolf, without requiring a separate course.**
 - Stage lint: 51 of 51; **level-oracle: 51 of 51**.
 - Stage provenance: **51 of 51 cited** (overlay, not bundled into the runtime).
 - Full state matrix: 119 open (undo/register edge cases); game-used level
-  solutions: 51 of 51; solution+undo diagnostic: 50 of 51. Game-used target
+  solutions: 51 of 51; solution+undo diagnostic: 51 of 51. Game-used target
   remains 0, so full-engine perfection is still an open debt.
 - Bundle: 276,145 raw / 85,955 gzip (gate 277k/87k).
 - Browser desktop headless: 55.5 FPS, 38 screens 0 overflow/errors; 144 not

@@ -221,21 +221,21 @@ breaks, and you tie it. That is the
 whole loom.`,
       },
       par: 18,
-      solution: '6j<<guiw3jwdawgqip',
+      solution: '9jwdawgqip6k<<guiw',
       teaches: ['<', 'gu', 'iw', 'aw', 'gq'],
       hazard: '',
       hints: [
         {
-          en: 'Read like a proofreader. Four wounds, four old friends: <<, guiw, daw, gqip.',
-          ko: '교정자처럼 읽어라. 상처 넷, 오랜 친구 넷: <<, guiw, daw, gqip.',
+          en: 'Read like a proofreader. Four wounds, four old friends: gqip, daw, <<, guiw.',
+          ko: '교정자처럼 읽어라. 상처 넷, 오랜 친구 넷: gqip, daw, <<, guiw.',
         },
         {
-          en: 'Move down, not around: 6j to the crooked return, then <<. The keyword is right under you.',
-          ko: '돌아다니지 말고 내려가라. 비뚤어진 return까지 6j, 그다음 <<. 키워드는 바로 그 자리에 있다.',
+          en: 'Paragraph first: 9j, w daw, gqip. Then 6k, <<, guiw on the return.',
+          ko: '문단부터: 9j, w daw, gqip. 그다음 6k, <<, guiw.',
         },
         {
-          en: 'The whole sweep: 6j << guiw 3j w daw gqip.',
-          ko: '전체 흐름: 6j << guiw 3j w daw gqip.',
+          en: 'Sweep: 9j w daw gqip 6k << guiw.',
+          ko: '한 번에: 9j w daw gqip 6k << guiw.',
         },
       ],
     },

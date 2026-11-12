@@ -94,7 +94,7 @@ only finalize by 23:50; the machine shuts down at 00:00.
   register/cursor, `gq` space/cursor, `:normal` undo blocks, macro undo blocks,
   and join/format/move/substitute undo cursors.
 - Game-used report: [`GAME_USED_STATE.md`](GAME_USED_STATE.md) (51/51 solution, 50/51 undo diagnostic).
-- Optional diagnostic `npm run level-oracle -- --undo`: 50 of 51 stages match
+- Optional diagnostic `npm run level-oracle -- --undo`: 51 of 51 stages match
   full solution+undo; remaining cursor-only debt is c10s5 (`gq` after daw). Full state matrix is down to 119 open (undocumented edge
   cases), so the engine is **not** yet globally perfect.
 - 51 of 51 stages have validated book citations in the overlay

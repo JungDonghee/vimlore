@@ -6,7 +6,7 @@
 
 - stages: 51
 - solution matched: 51/51
-- solution+undo matched: 50/51
+- solution+undo matched: 51/51
 
 | stage | solution | solution+undo | fields |
 |---|---|---|---|
@@ -59,9 +59,8 @@
 | c10s2 | ok | ok | — |
 | c10s3 | ok | ok | — |
 | c10s4 | ok | ok | — |
-| c10s5 | ok | FAIL | undo-cursor |
+| c10s5 | ok | ok | — |
 | c10s6 | ok | ok | — |
 
 ## Remaining diagnostic rows
 
-- c10s5: undo-cursor
