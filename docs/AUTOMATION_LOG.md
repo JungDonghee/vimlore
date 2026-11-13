@@ -14,7 +14,7 @@ story canon must not change.
 ## Baseline at 20:46 KST
 
 - HEAD `f6d508b` (before this log); live Pages green.
-- Tests 39/39; real-Vim oracle 373/373; level-oracle 51/51.
+- Tests 39 of 39; real-Vim oracle 373 of 373; level-oracle 51 of 51.
 - State matrix has known undo-cursor divergences. An attempted blanket linewise
   undo-column fix broke `2cj` (`undo` column 2) and was reverted. No engine
   change is committed in this window yet.
@@ -35,7 +35,7 @@ story canon must not change.
 - Re-read the goal, workspace, and baseline.
 - Confirmed `HEAD` was `dc1e218`; engine baseline was clean.
 - State-matrix baseline: **21,593 / 21,712 matched, 119 divergences**
-  (undo 110, reg 10, regtype 8). Real-Vim oracle 373/373, level-oracle 51/51.
+  (undo 110, reg 10, regtype 8). Real-Vim oracle 373 of 373, level-oracle 51 of 51.
 - Attempt 1: overwrite visual shift undo with the anchor column. Regressed
   many `v0>`/`vG>` cases (field count rose sharply); reverted.
 - Attempt 2: make all empty linewise deletes undo at column 0. Fixed some
@@ -62,8 +62,18 @@ story canon must not change.
 - Tried isolated `dd`/`2dd` column and visual-line-column overrides; each broke
   more already-correct cases than it fixed. All reverted.
 - **No engine change committed.** Game-used undo remains exact:
-  `level-oracle -- --undo` = **51/51**.
+  `level-oracle -- --undo` = **51 of 51**.
 - Full matrix remains 21,593/21,712 (119 open: undo 110, reg 10, regtype 8).
 - Next round: add a tiny fixture around one command (`dd`, `dgg`, or `Vj>`),
   probe Vim's exact pre/post cursor, and fix only that command. Do not change
   the shared undo path again.
+
+## Round 3 — browser audit
+
+- Found a real non-engine regression: portrait `390x844` and `320x568` title
+  had off-viewport bootlog/petal elements behind the rotate gate.
+- Added a portrait-only rule that hides the metric rails and petals; the gate
+  remains. `npm run browser:audit`: **50 screens/viewports, 0 overflow, 0 page
+  errors**.
+- Engine still at the 119-open baseline; no undo change committed. Game-used
+  stages remain 51 of 51 solution+undo.

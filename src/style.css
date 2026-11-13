@@ -1355,6 +1355,13 @@ h2,
   .objective .chip:nth-of-type(2) { display: none; }
 }
 
+
+@media (orientation: portrait) {
+  /* The rotate gate covers the title; hide the metric rails and petals so a
+     narrow portrait viewport cannot create horizontal overflow behind it. */
+  .kt-boot, .kt-petals, .kt-code, .kt-foot { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sakura-field i { animation: none; opacity: 0.18; }
   .title-meaning, .title-clock, .title-acronym, .title-tag, .title-sub, .title-credit,
