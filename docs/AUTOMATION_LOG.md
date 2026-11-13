@@ -243,3 +243,14 @@ story canon must not change.
   single-line. Reverted as a no-op.
 - Stable baseline **104** (matches 21,608; undo 95; reg 10; regtype 8).
   Game-used solution+undo 51 of 51; browser audit green.
+
+## 23:00 freeze
+
+- No further engine changes: the last three isolated probes (visual anchor,
+  special cB, shift gg) were reverted and the stable baseline is **104**.
+- Working tree clean; CI and Pages are green for `adb4d77`.
+- Final gate snapshot: tests 39 of 39, oracle 373 of 373, level-oracle 51 of 51
+  solution+undo, state matrix 21,608/21,712 (104 open), build 403,106 raw /
+  131,233 gzip, PWA check+QA, browser audit 50/50 clean.
+- Freeze engine/campaign/story until the 23:45 closeout task. Do not start
+  story/LIVE/puzzle work.
