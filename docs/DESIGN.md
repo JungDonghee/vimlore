@@ -30,10 +30,10 @@ rows, still built from code.
 ## Title
 
 `VIMLORE` is horizontally centered by compensating the wordmark's trailing
-letter-spacing. Measured center offset: **0.6 px** at 844×390 and **0.9 px** at
-1920×1080. On a short landscape phone the bootlog, tagline and footer are
-removed so the wordmark sits at the exact viewport center (dx 0.6, dy 0.0) and
-`PRESS ANY KEY` becomes the only lower chrome. Nothing overlaps.
+letter-spacing. Measured center offset: **0.0 px** at 844×390 and **0.9 px** at
+1920×1080. On a short landscape phone the bootlog and footer stay as narrow terminal
+side rails; the wordmark is absolutely centered (dx 0.0, dy 0.0) and
+`PRESS ANY KEY` sits above the footer. Nothing overlaps.
 
 ![Landscape title](../docs/browser/pwa/landscape-title.png)
 

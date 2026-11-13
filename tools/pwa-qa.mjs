@@ -93,13 +93,21 @@ const landscape = await page.evaluate(() => {
     gate: getComputedStyle(document.querySelector('#pwa-rotate')).display,
     dx: mark ? Math.abs(mark.x + mark.width / 2 - innerWidth / 2) : 999,
     overlap: !!(press && foot && foot.height > 0 && press.bottom > foot.top),
+    bootOverlap: (() => { const b = document.querySelector('.bootlog').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return b.left < m.right && b.right > m.left && b.top < m.bottom && b.bottom > m.top; })(),
+    footOverlap: (() => { const f = document.querySelector('.title-foot').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return f.left < m.right && f.right > m.left && f.top < m.bottom && f.bottom > m.top; })(),
     bootlog: getComputedStyle(document.querySelector('.bootlog')).display,
+    foot: getComputedStyle(document.querySelector('.title-foot')).display,
+    bootRect: document.querySelector('.bootlog').getBoundingClientRect().toJSON(),
+    footRect: document.querySelector('.title-foot').getBoundingClientRect().toJSON(),
   };
 });
 check(landscape.gate === 'none', 'landscape hides the gate');
 check(landscape.dx <= 3, `title wordmark is centered in landscape (dx ${landscape.dx.toFixed(1)}px)`);
 check(!landscape.overlap, 'landscape title press/foot do not overlap');
-check(landscape.bootlog === 'none', 'landscape hides the tall bootlog');
+check(landscape.bootlog !== 'none', 'landscape keeps the terminal bootlog');
+check(landscape.foot !== 'none', 'landscape keeps the footer as a side rail');
+check(!landscape.bootOverlap, 'bootlog side rail does not overlap the wordmark');
+check(!landscape.footOverlap, 'footer side rail does not overlap the wordmark');
 await page.screenshot({ path: join(shotDir, 'landscape-title.png') });
 
 await page.reload({ waitUntil: 'networkidle' });

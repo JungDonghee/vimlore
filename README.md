@@ -11,7 +11,7 @@
 **The most complete Vim training terminal ever attempted — a Vim adventure that
 runs on a dead terminal.** That is the destination, not a claim about today: the
 coverage ledger is public. No install, no account, no tracking, no third-party
-requests — one ~277 kB page. A keyboard is required; on a phone, turn it sideways.
+requests — one ~278 kB page. A keyboard is required; on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
@@ -59,7 +59,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   eventually buffers/files/splits/tabs are all in scope. Deferred is not
   rejected; the roadmap is [`docs/FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md).
 - **It runs on a potato.** Zero runtime dependencies, a hard
-  **277 kB / 87 kB** bundle gate, one canvas with a cached opaque composite
+  **278 kB / 87 kB** bundle gate, one canvas with a cached opaque composite
   frame, cursorline/numbers on a cheap FX pass, and a CRT switch for weak
   devices. Current measured: mobile **60.5 FPS**, desktop headless **57.6 FPS**;
   [BROWSER_QA.md](docs/BROWSER_QA.md). 144fps is not claimed without a 144Hz/GPU

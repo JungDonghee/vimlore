@@ -3,6 +3,10 @@
  * this ceiling is the line that fails CI: future features must pay for
  * themselves or the budget must be raised deliberately in the same commit.
  *
+ * Raised 277,000 -> 278,000 (2026-11-13) for the short-landscape terminal
+ * dashboard: the bootlog and footer stay as side rails while the wordmark is
+ * centered. Measured 277,621 B; gzip gate unchanged.
+ *
  * MAX_RAW is the deterministic hard gate. MAX_GZIP carries a measured ~1 kB
  * allowance because the same dist compresses differently across zlib builds:
  * local Fedora Node uses zlib-ng, CI's Node uses stock zlib (83,398 vs 84,201
@@ -11,7 +15,7 @@
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
-export const MAX_RAW = 277_000;
+export const MAX_RAW = 278_000;
 export const MAX_GZIP = 87_000;
 const file = new URL('../dist/vimlore.html', import.meta.url);
 const buf = readFileSync(file);

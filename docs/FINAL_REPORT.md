@@ -49,7 +49,7 @@
 - stage provenance **51 of 51** cited
 - browser desktop **55.1–57.6 FPS**, mobile **60.5 FPS**
 - browser audit **38 screens**, 0 overflow, 0 errors
-- bundle **276,668 B raw / 85,932 B gzip** (gate 277,000/87,000)
+- bundle **277,684 B raw / 86,117 B gzip** (gate 278,000/87,000)
 
 ## Install / landscape (2026-11-13)
 
