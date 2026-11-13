@@ -43,7 +43,8 @@ Current priority is **game feel → story → PV-FULL engine**, not an engine re
 Read [`docs/UPGRADE_MASTER_PLAN.md`](docs/UPGRADE_MASTER_PLAN.md) and
 [`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md) before starting a feature. Dynamic
 hazards must not enter deterministic campaign first-clears until the LIVE mode
-is verified.
+is verified. Puzzle devices are turn-based and use observable effects, not raw
+key scripts; read [`docs/PUZZLE_DEVICES.md`](docs/PUZZLE_DEVICES.md) first.
 
 Public presentation is a gate too: run `npm run presentation:check` after any
 README, hero, social card, icon or OG-meta change. `docs/COMPLETION.md` is the

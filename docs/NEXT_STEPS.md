@@ -15,6 +15,13 @@
 - Exit: 100 seeds validated, mobile ≥50 FPS, bundle measured and deliberately
   raised, campaign 51 of 51 still green.
 
+## 0a. Puzzle-device slice
+
+- One-shot collapsing floors, plates, effect-based command locks, search/register
+  puzzles (`PUZZLE_DEVICES.md`).
+- Turn-based, reset restores devices, Vim `u` does not; solver rejects soft-locks.
+- Build after the LIVE meta-grid, before campaign integration.
+
 ## 0b. Story vertical slice
 
 - Prologue, c01 epigraph/interlude, six codex fragments, ROT transmissions.

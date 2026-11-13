@@ -17,7 +17,7 @@
 | Where does the dynamic system live first? | A separate **LIVE CIRCUIT** arcade mode using the same Vim engine and a generated arena. |
 | What is "Practical Vim full"? | A written **PV-FULL** contract: every one of 123 tips is playable, a verified drill, or an explicitly environment-deferred row with a feature backlog. No unknown gaps. |
 | What is the story? | An original novel-like arc, delivered in prologue, 10 chapter epigraphs/interludes, codex fragments, ROT transmissions and ending choices. See [`STORY_BIBLE.md`](STORY_BIBLE.md). |
-| What is the first shippable slice? | One LIVE arena: moving bugs, red walls, corruption, health, timer, score, pause/accessibility, no campaign changes. |
+| What is the first shippable slice? | One LIVE arena: moving bugs, red walls, corruption, health, timer, score, pause/accessibility, no campaign changes. Then one puzzle room with one-shot floors/plates/effect locks. |
 | What is explicitly not first? | Buffers/windows/files engine, full Modern Vim, multiplayer, accounts, servers. |
 
 ## 1. Non-negotiables
@@ -284,6 +284,20 @@ Exit: plan/story/scope reviewed; current gates green; no feature code mixed in.
 - campaign gates unchanged.
 Exit: 100 seeded arenas validated, no unavoidable spawn, campaign 51/51,
 mobile ≥50 FPS, budget measured and deliberately raised.
+
+### P1.5 — Puzzle-device vertical slice
+
+The requested one-shot floors, reactive paths and command locks are specified in
+[`PUZZLE_DEVICES.md`](PUZZLE_DEVICES.md). Build them on the same meta-grid as
+LIVE, but **turn-based**:
+
+- `collapse` one-shot floors + reset semantics;
+- `plate` and `lock` with **observable effect predicates**, not raw key scripts;
+- one puzzle room with a verified solution and a solver that rejects soft-locks;
+- no campaign changes, no real-time pressure.
+
+Exit: solver proves solvability; retry restores devices; Vim `u` does not
+resurrect meta-cells by design; browser QA and gates green.
 
 ### P2 — Story vertical slice
 - prologue, c01 epigraph + interlude, 6 codex entries, ROT transmissions;
