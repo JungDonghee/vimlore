@@ -1,5 +1,5 @@
 /* VIMLORE service worker: installable, offline shell, no third-party requests. */
-const VERSION = 'kiritsu-v7';
+const VERSION = 'kiritsu-v9';
 const SHELL = [
   './',
   './index.html',
@@ -14,9 +14,9 @@ const SHELL = [
   './icons/favicon.svg',
   './icons/favicon-32.png',
   './icons/favicon-16.png',
+  './kanji/ou-guilv-tight.svg',
+  './kanji/ou-qili-tight.svg',
   './kanji/ou-guilv-balanced.svg',
-  './kanji/cyr-angular.svg',
-  './kanji/sakura-branch.svg',
 ];
 
 self.addEventListener('install', (event) => {
