@@ -55,6 +55,7 @@ REST/GraphQL API does not expose them; see the community discussion
 - `ci` and `pages` workflows are green for the current HEAD.
 - Tags exist for the 2026-11-12 sprint:
   `sprint-2026-11-12`, `sprint-2026-11-12-freeze`, `sprint-2026-11-12-final`.
+  The public-presentation milestone is tagged `pwa-landscape-2026-11-13`.
 - No formal semver release yet; don't invent one just to decorate the repo.
 
 ## Update checklist (when anything public changes)
