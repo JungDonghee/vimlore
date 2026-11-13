@@ -32,11 +32,14 @@
 
   const coarse = window.matchMedia('(pointer: coarse)');
   const portrait = window.matchMedia('(orientation: portrait)');
+  const touch = () => coarse.matches || (window.navigator.maxTouchPoints || 0) > 0;
   const sync = () => {
-    const gated = coarse.matches && portrait.matches;
+    const gated = touch() && portrait.matches;
     body.classList.toggle('pwa-gated', gated);
     if (gated && !gate.contains(doc.activeElement)) {
-      requestAnimationFrame(() => doc.getElementById('pwa-rotate-btn')?.focus({ preventScroll: true }));
+      requestAnimationFrame(() => {
+        if (body.classList.contains('pwa-gated')) doc.getElementById('pwa-rotate-btn')?.focus({ preventScroll: true });
+      });
     }
   };
   sync();

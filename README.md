@@ -75,6 +75,12 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   and keeps the rooms you save. No account, no server: one export code carries
   your profile.
 
+## Design
+
+A deliberate CRT vector language: the icon is a large **V made of terminal
+commands**, with a cursor block at its vertex. Rationale and measurements are
+in [`docs/DESIGN.md`](docs/DESIGN.md).
+
 ## Install as an app
 
 VIMLORE is installable from Chromium (Chrome/Edge desktop, Chrome Android).

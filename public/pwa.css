@@ -37,6 +37,7 @@
 @media (orientation: portrait) and (pointer: coarse) {
   #pwa-rotate { display: grid; }
 }
+body.pwa-gated #pwa-rotate { display: grid; }
 body.pwa-gated #pwa-install { display: none !important; }
 .pwa-card {
   width: min(420px, 100%);
@@ -82,6 +83,7 @@ body.pwa-gated #pwa-install { display: none !important; }
   cursor: pointer;
 }
 .pwa-btn.primary { background: #66ff9e; color: #03150a; border-color: #66ff9e; font-weight: 700; }
-.pwa-btn:focus-visible { outline: 2px solid #d9ffe6; outline-offset: 3px; }
+.pwa-btn:focus { outline: 2px solid #66ff9e; outline-offset: 3px; }
+.pwa-btn:focus:not(:focus-visible) { outline-color: rgb(102 255 158 / 0.45); }
 #pwa-rotate-install { display: none; }
 #pwa-rotate-install.show { display: block; }
