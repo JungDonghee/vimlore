@@ -182,3 +182,15 @@ story canon must not change.
   No new failures; 15 old failures removed.
 - Added regression tests. Oracle 373 of 373, level-oracle 51 of 51
   solution+undo, tests, build/budget/PWA green.
+
+## Round 11 — shift gg probe
+
+- Probed normal `>gg`/`<gg`/`2>gg` undo columns. The correct rule depends on
+  whether the shifted range starts on the command line, and the first attempt
+  (always range-start first non-blank) traded seven old failures for seven new
+  ones.
+- Refined with the command-line test; the matrix worsened to 117 because the
+  shift path's range/cursor relation is normalized differently. Reverted.
+- No engine change committed. Stable baseline is **104** from `78df60c`
+  (matches 21,608; undo 95; reg 10; regtype 8). Game-used solution+undo
+  51 of 51. Browser audit remains green.
