@@ -1,17 +1,19 @@
 <p align="center">
-  <a href="https://jungdonghee.github.io/vimlore/"><img src="docs/play.svg" alt="Play KIRITSU in your browser" height="58"></a>
+  <a href="https://jungdonghee.github.io/kiritsu/"><img src="docs/play.svg" alt="Play KIRITSU in your browser" height="58"></a>
 </p>
 
 <p align="center">
-  <a href="https://jungdonghee.github.io/vimlore/"><img src="docs/hero.jpg" alt="KIRITSU running inside a green phosphor CRT terminal" width="880"></a>
+  <a href="https://jungdonghee.github.io/kiritsu/"><img src="docs/hero.jpg" alt="KIRITSU running inside a green phosphor CRT terminal" width="880"></a>
 </p>
 
 # KIRITSU · 規律
 
+### VIMLORE
+
 **Order is a file. You are the cursor.**
 
-KIRITSU (規律, *kiritsu* — order, discipline) is a real-Vim cyberpunk memory
-heist. The city is a legal document; you are the audit cursor. Every keystroke
+KIRITSU (規律, *kiritsu* — order, discipline) is a real-Vim cyberpunk bureaucratic
+noir. The city is a legal document; you are the audit cursor. Every keystroke
 is an edit, every edit is a law, and your own file is the last unresolved line.
 VIMLORE is the world/series; KIRITSU is the game.
 
@@ -47,7 +49,7 @@ contract is in [`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md); the hard plot rules
 are in [`docs/story/KIRITSU_LOGIC.md`](docs/story/KIRITSU_LOGIC.md); the first
 bilingual scene is [`docs/story/PROLOGUE.md`](docs/story/PROLOGUE.md).
 
-## Current state (2026-11-13)
+## Current state (2026-11-14)
 
 This is a **development build**, not a finished Vim Adventures peer.
 
@@ -57,7 +59,7 @@ This is a **development build**, not a finished Vim Adventures peer.
 - **Drew Neil curriculum ~32% by tip coverage** — Practical Vim: **48 of 123**
   tips represented; Modern Vim: **0 of 28** playable (deferred honestly).
 - **Engine:** 373 of 373 oracle cases and 51 of 51 game-used solutions; full
-  state has **119 known edges** and fuzz has **3 visual edges**.
+  state has **104 known edges** and fuzz has **3 visual edges**.
 - **Content:** 10 chapters, 51 stages, 88 Grimoire commands; 39 Practical gaps
   are drill candidates and 28 need the deferred files/windows/quickfix surface.
 
@@ -110,9 +112,11 @@ integrated story → full Practical Vim engine. The ordered plan is
 
 ## Screens
 
-| CRT dashboard / landscape title | Portrait landscape gate |
+| Desktop title | Landscape title |
 |---|---|
-| ![KIRITSU landscape title](docs/browser/pwa/landscape-title.png) | ![Portrait gate](docs/browser/pwa/portrait-gate.png) |
+| ![KIRITSU desktop title](docs/browser/desktop-title.jpg) | ![KIRITSU landscape title](docs/browser/pwa/landscape-title.png) |
+| **First chamber** | **Portrait gate** |
+| ![KIRITSU first chamber](docs/browser/desktop-play.jpg) | ![Portrait gate](docs/browser/pwa/portrait-gate.png) |
 
 ## Design
 
@@ -142,7 +146,7 @@ requests fullscreen + landscape lock, otherwise rotate the phone. See
 
 ## Play
 
-Open `dist/vimlore.html` (the single self-contained build) or serve the repo:
+Open `dist/kiritsu.html` (the single self-contained build; the legacy `dist/vimlore.html` alias is kept) or serve the repo:
 
 ```bash
 npm install

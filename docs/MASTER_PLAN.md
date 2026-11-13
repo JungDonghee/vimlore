@@ -4,7 +4,7 @@
 > [`STATE_DEBT.md`](STATE_DEBT.md), [`FUZZ_DEBT.md`](FUZZ_DEBT.md) and
 > [`NEXT_STEPS.md`](NEXT_STEPS.md) before trusting any number below.
 
-# MASTER PLAN — VIMLORE completion program
+# MASTER PLAN — KIRITSU completion program (VIMLORE world)
 
 > **Status: ACTIVE** · Orchestrator: the AI that wrote this file (2026-11-11)
 > **Read order for the next AI:** [`PROMPT_SYSTEM.md`](PROMPT_SYSTEM.md) → this file → [`AGENTS.md`](../AGENTS.md) →
@@ -87,7 +87,7 @@
 | unit tests | **28 pass**; `tsc --noEmit` clean; `doc-check` OK |
 | build | JS 242,140 B · single `dist/vimlore.html` 276,101 B · gzip 85,991 B · budget gate 277k/87k (raised this pass) |
 | fuzz | 12 seeds at n=1000: **0 divergences** |
-| live | <https://jungdonghee.github.io/vimlore/> · Pages `workflow` · `main` deployed · CI + Pages green |
+| live | <https://jungdonghee.github.io/kiritsu/> · Pages `workflow` · `main` deployed · CI + Pages green |
 | deploy auth | fine-grained PAT, repo `admin/push`, API cannot manage Pages; workflow does |
 
 **What changed in pass 2 (engine correctness, the product):**

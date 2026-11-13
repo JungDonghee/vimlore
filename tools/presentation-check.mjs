@@ -53,7 +53,7 @@ const index = readFileSync(join(root, 'index.html'), 'utf8');
 for (const token of ['og:title', 'og:image', 'social-preview.png', 'twitter:card']) {
   if (!index.includes(token)) fail.push(`index.html missing ${token}`);
 }
-if (!index.includes('https://jungdonghee.github.io/vimlore/social-preview.png')) fail.push('OG image must use the absolute Pages URL');
+if (!index.includes('https://jungdonghee.github.io/kiritsu/social-preview.png')) fail.push('OG image must use the absolute Pages URL');
 
 if (fail.length) {
   console.error('PRESENTATION CHECK FAILED');

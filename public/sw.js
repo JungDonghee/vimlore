@@ -1,5 +1,5 @@
 /* VIMLORE service worker: installable, offline shell, no third-party requests. */
-const VERSION = 'kiritsu-v9';
+const VERSION = 'kiritsu-v10';
 const SHELL = [
   './',
   './index.html',
@@ -63,7 +63,7 @@ self.addEventListener('fetch', (event) => {
           return (await caches.match(request)) ||
             (await caches.match(new URL('./', self.registration.scope).href)) ||
             (await caches.match(new URL('./index.html', self.registration.scope).href)) ||
-            new Response('VIMLORE is offline. Reconnect once to cache the game.', {
+            new Response('KIRITSU is offline. Reconnect once to cache the game.', {
               status: 503,
               headers: { 'content-type': 'text/plain; charset=utf-8' },
             });

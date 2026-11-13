@@ -199,7 +199,7 @@ Onboarding:
 
 ## 6. Narrative system
 
-See [`STORY_BIBLE.md`](STORY_BIBLE.md) (v2 cyberpunk memory heist) and the
+See [`STORY_BIBLE.md`](STORY_BIBLE.md) (v2 cyberpunk bureaucratic noir) and the
 bilingual first scene [`story/PROLOGUE.md`](story/PROLOGUE.md). The story is **not a skin**: the city is a legal document, Vim edits are law, registers are evidence, macros are ghosts, and the final boss is one self-closure order. Delivery contract:
 
 | surface | content | frequency |

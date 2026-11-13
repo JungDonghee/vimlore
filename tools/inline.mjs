@@ -32,7 +32,9 @@ if (existsSync(kanjiPath)) {
 // The downloadable single-file build stays self-contained: PWA shell tags
 // point at sibling files that are not inlined and must be stripped.
 html = html.replace(/<!-- pwa:start[\s\S]*?pwa:end -->\n?/g, '');
+writeFileSync(join(dist, 'kiritsu.html'), html);
 writeFileSync(join(dist, 'vimlore.html'), html);
 mkdirSync('dist/download', { recursive: true });
-copyFileSync(join(dist, 'vimlore.html'), 'dist/download/vimlore.html');
-console.log(`single file: dist/vimlore.html (${(statSync(join(dist, 'vimlore.html')).size / 1024).toFixed(1)} kB)`);
+copyFileSync(join(dist, 'kiritsu.html'), 'dist/download/kiritsu.html');
+copyFileSync(join(dist, 'kiritsu.html'), 'dist/download/vimlore.html');
+console.log(`single file: dist/kiritsu.html (${(statSync(join(dist, 'kiritsu.html')).size / 1024).toFixed(1)} kB)`);

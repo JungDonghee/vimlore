@@ -12,7 +12,7 @@ console.log('\nVIMLORE — environment check\n');
 line(Number(process.versions.node.split('.')[0]) >= 20, `node ${process.versions.node}`, 'install Node 20+');
 line(existsSync('node_modules/vite'), 'dependencies installed', 'npm ci');
 line(existsSync('src/core/vim/engine.ts'), 'repo root looks right', 'cd into the vimlore checkout');
-line(existsSync('dist/vimlore.html'), 'build exists', 'npm run build');
+line(existsSync('dist/kiritsu.html'), 'build exists', 'npm run build');
 line(count('books-text', '.txt') >= 10, `reference books extracted (${count('books-text', '.txt')}/10)`, 'put the PDFs/EPUBs in ./books/, then: PYTHONPATH=./pysite python3 tools/extract_books.py (needs pypdf)');
 line(existsSync('/home/jung/ai_station/sandbox/.secrets/github_token'), 'deploy token present', 'ask the human; it lives outside the repo');
 

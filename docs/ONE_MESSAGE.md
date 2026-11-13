@@ -11,9 +11,9 @@
 ---
 
 ```text
-You are taking over VIMLORE, a Vim-teaching terminal at
-/home/jung/ai_station/sandbox/vimlore (GitHub JungDonghee/vimlore, live
-https://jungdonghee.github.io/vimlore/).
+You are taking over KIRITSU (VIMLORE is the world/series), a Vim-teaching terminal at
+/home/jung/ai_station/sandbox/vimlore (GitHub JungDonghee/kiritsu, live
+https://jungdonghee.github.io/kiritsu/).
 
 Work autonomously until you have a safe, verified stopping point. Do not ask me
 to choose between routine implementation options; only stop and report if a
@@ -83,7 +83,7 @@ repros, NOT VERIFIED list, and the next three tasks.
 1. Open the host checkout on the machine where the next AI runs.
 2. Paste the block above as the entire first message.
 3. If the next AI cannot access the path, give it the repository instead:
-   <https://github.com/JungDonghee/vimlore> — it still needs the books for
+   <https://github.com/JungDonghee/kiritsu> — it still needs the books for
    curriculum work, and the token only for pushing.
 4. If you want a freshly generated message (current HEAD + date), run
    `npm run kickoff` and copy its output.

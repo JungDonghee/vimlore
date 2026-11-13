@@ -4,7 +4,7 @@
  * themselves or the budget must be raised deliberately in the same commit.
  *
  * Raised to 420,000 raw / 140,000 gzip on 2026-11-13 for the single-file title:
- * dist/vimlore.html now inlines the balanced Ouyang 規律 SVG as a data URI so
+ * dist/kiritsu.html now inlines the balanced Ouyang 規律 SVG as a data URI so
  * the downloadable file opens with no sibling assets. Measured 402,705 raw /
  * 132,489 gzip at the raise. The JS/CSS page remains ~292 kB raw / ~89 kB gzip.
  *
@@ -18,7 +18,7 @@ import { gzipSync } from 'node:zlib';
 
 export const MAX_RAW = 420_000;
 export const MAX_GZIP = 140_000;
-const file = new URL('../dist/vimlore.html', import.meta.url);
+const file = new URL('../dist/kiritsu.html', import.meta.url);
 const buf = readFileSync(file);
 const gz = gzipSync(buf, { level: 9 }).length;
 const rawOk = buf.length <= MAX_RAW;

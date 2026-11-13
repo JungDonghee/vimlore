@@ -13,9 +13,9 @@
 
 ## Locked state
 
-- Repository: `/home/jung/ai_station/sandbox/vimlore`
-- Latest automation commit: `36744cd`
-- Live: https://jungdonghee.github.io/vimlore/
+- Repository: `/home/jung/ai_station/sandbox/vimlore` (GitHub `JungDonghee/kiritsu`)
+- Latest automation commit: `36744cd` (repo renamed to `kiritsu`; VIMLORE is the world/series)
+- Live: https://jungdonghee.github.io/kiritsu/
 - Design is **locked**: kanji-first `規律`, `CALL kiritsu` code strip, no Russian
   lettering, no sakura branch, laser reveal, centered VIMLORE layout.
 - Do not redesign the title. Do not touch campaign first-clear solutions, par,

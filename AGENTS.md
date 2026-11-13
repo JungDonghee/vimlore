@@ -215,7 +215,7 @@ plus the cursor-only fuzz backlog are green.
 
 ## Shipping
 
-Target remote: `github.com/JungDonghee/vimlore`, branch `main`.
+Target remote: `github.com/JungDonghee/kiritsu`, branch `main`.
 
 A fine-grained GitHub PAT is stored **outside this repository** at
 `/home/jung/ai_station/sandbox/.secrets/github_token` (mode 600, notes in the
@@ -226,9 +226,9 @@ repo, never commit it, and scrub the remote URL after pushing:
 
 ```bash
 TOKEN=$(cat /home/jung/ai_station/sandbox/.secrets/github_token)
-git remote set-url origin "https://x-access-token:$TOKEN@github.com/JungDonghee/vimlore.git"
+git remote set-url origin "https://x-access-token:$TOKEN@github.com/JungDonghee/kiritsu.git"
 git push -u origin main
-git remote set-url origin https://github.com/JungDonghee/vimlore.git
+git remote set-url origin https://github.com/JungDonghee/kiritsu.git
 ```
 
 This is an **AI-purpose account**: token rotation is NOT required. But the token

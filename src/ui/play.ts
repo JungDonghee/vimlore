@@ -127,7 +127,7 @@ export class PlayScreen {
     const tabline = h(
       'div',
       { class: 'tabline' },
-      h('span', { class: 'path' }, `vimlore://${String(chapter.index).padStart(2, '0')}-${slug(chapter.title.en)}/${String(this.host.stageIndex + 1).padStart(2, '0')}-${slug(stage.name.en)}`),
+      h('span', { class: 'path' }, `kiritsu://${String(chapter.index).padStart(2, '0')}-${slug(chapter.title.en)}/${String(this.host.stageIndex + 1).padStart(2, '0')}-${slug(stage.name.en)}`),
       h(
         'span',
         { class: 'flags' },

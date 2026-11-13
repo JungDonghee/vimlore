@@ -27,7 +27,7 @@ const pick = (name: string) => new RegExp(`^\\| ${name} \\| (\\d+) \\|$`, 'm').e
 const total = pick('cases'), matched = pick('matched'), open = pick('divergences');
 const state = total && matched && open ? { matched: Number(matched), total: Number(total), open: Number(open) } : null;
 const fields = [...report.matchAll(/^\| (undo|reg|regtype) \| (\d+) \|$/gm)].map((x) => `${x[1]} ${x[2]}`);
-const raw = existsSync('dist/vimlore.html') ? statSync('dist/vimlore.html').size : null;
+const raw = existsSync('dist/kiritsu.html') ? statSync('dist/kiritsu.html').size : null;
 const booksMeta = exists('books-index/books.json') ? JSON.parse(read('books-index/books.json', 'utf8')) as { lines: number; headings: number; partial_source?: boolean; slug?: string }[] : null;
 const coverage = exists('books-index/coverage.json') ? JSON.parse(read('books-index/coverage.json', 'utf8')) as { complete: boolean; chunks: number } : null;
 const audit = exists('books-index/agent-audit.json') ? JSON.parse(read('books-index/agent-audit.json', 'utf8')) as { headings: unknown[]; problems: unknown[]; rejected: unknown[] } : null;

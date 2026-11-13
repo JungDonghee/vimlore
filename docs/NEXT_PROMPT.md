@@ -26,9 +26,9 @@
 
 ## 0. Role
 
-You are the next orchestration AI for **VIMLORE**, a Vim-teaching terminal at
-`/home/jung/ai_station/sandbox/vimlore` (GitHub `JungDonghee/vimlore`, live at
-<https://jungdonghee.github.io/vimlore/>).
+You are the next orchestration AI for **KIRITSU** (VIMLORE is the world/series), a Vim-teaching terminal at
+`/home/jung/ai_station/sandbox/vimlore` (GitHub `JungDonghee/kiritsu`, live at
+<https://jungdonghee.github.io/kiritsu/>).
 
 Your job is **not** to preserve this session. Your job is to **beat its
 verified baseline** without breaking its invariants. The previous session is a
@@ -196,8 +196,8 @@ Then:
 ```bash
 git add -A && git commit -m "…"
 TOKEN=$(cat /home/jung/ai_station/sandbox/.secrets/github_token)
-git push "https://x-access-token:$TOKEN@github.com/JungDonghee/vimlore.git" main:main
-git remote set-url origin https://github.com/JungDonghee/vimlore.git
+git push "https://x-access-token:$TOKEN@github.com/JungDonghee/kiritsu.git" main:main
+git remote set-url origin https://github.com/JungDonghee/kiritsu.git
 ```
 
 Never print the token. Confirm CI + Pages and the live asset hash. Update this

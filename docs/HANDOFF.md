@@ -1,4 +1,4 @@
-# HANDOFF — VIMLORE current state
+# HANDOFF — KIRITSU current state (VIMLORE world)
 
 > **Priority and the task board live in [`MASTER_PLAN.md`](MASTER_PLAN.md).**
 > This file is the snapshot a new AI needs in the first ten minutes: what is
@@ -16,8 +16,8 @@ status:check` is a CI gate.
 
 | item | value |
 |---|---|
-| repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/vimlore` · `main` |
-| live | <https://jungdonghee.github.io/vimlore/> (Pages `workflow`) |
+| repo | `/home/jung/ai_station/sandbox/vimlore` · GitHub `JungDonghee/kiritsu` · `main` |
+| live | <https://jungdonghee.github.io/kiritsu/> (Pages `workflow`) |
 | content | 10 floors · 51 stages · 88 grimoire commands · 12 TRIALS skills |
 | current metrics | **[`STATUS.md`](STATUS.md)** (oracle, matrix, count matrix, state, build raw) |
 | known gaps | [`VIM_ADVENTURES_COVERAGE.md`](VIM_ADVENTURES_COVERAGE.md), [§4](#4-not-done-queued-do-not-pretend-otherwise) |
@@ -547,12 +547,12 @@ phone under CPU throttling.
 cd /home/jung/ai_station/sandbox/vimlore
 git add -A && git commit -m "…"
 TOKEN=$(cat /home/jung/ai_station/sandbox/.secrets/github_token)
-git push --dry-run "https://x-access-token:$TOKEN@github.com/JungDonghee/vimlore.git" main:main
-git push "https://x-access-token:$TOKEN@github.com/JungDonghee/vimlore.git" main:main
+git push --dry-run "https://x-access-token:$TOKEN@github.com/JungDonghee/kiritsu.git" main:main
+git push "https://x-access-token:$TOKEN@github.com/JungDonghee/kiritsu.git" main:main
 git remote get-url origin   # must be the clean URL, no token
 ```
 
-Confirm the `pages` workflow and that <https://jungdonghee.github.io/vimlore/>
+Confirm the `pages` workflow and that <https://jungdonghee.github.io/kiritsu/>
 serves the new asset hash.
 
 ## 8. If you only have one hour

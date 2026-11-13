@@ -92,7 +92,7 @@
 
 ## Live deployment
 
-- `https://jungdonghee.github.io/vimlore/` — HTTP 200, title `VIMLORE`,
+- `https://jungdonghee.github.io/kiritsu/` — HTTP 200, title `VIMLORE`,
   0 console/page errors, live asset hashes match the frozen `dist/` build
   (verified 2026-11-12 21:22 KST).
 

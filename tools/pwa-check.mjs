@@ -43,7 +43,7 @@ ok(index.includes('rel="manifest"'), 'dist/index.html lacks manifest link');
 ok(index.includes('pwa.js'), 'dist/index.html lacks pwa.js');
 ok(index.includes('pwa.css'), 'dist/index.html lacks pwa.css');
 const single = readFileSync(join(dist, 'vimlore.html'), 'utf8');
-ok(!/rel="manifest"|src="\.\/pwa\.js"|href="\.\/pwa\.css"/.test(single), 'dist/vimlore.html must stay self-contained (PWA tags not stripped)');
+ok(!/rel="manifest"|src="\.\/pwa\.js"|href="\.\/pwa\.css"/.test(single), 'dist/kiritsu.html must stay self-contained (PWA tags not stripped)');
 
 const sw = readFileSync(join(dist, 'sw.js'), 'utf8');
 ok(sw.includes("'./index.html'"), 'SW shell misses index.html');
