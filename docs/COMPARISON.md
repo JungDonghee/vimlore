@@ -1,4 +1,4 @@
-# VIMLORE vs other Vim games (2026-11-13)
+# KIRITSU vs other Vim games (2026-11-13)
 
 > External facts are from the linked official pages, fetched 2026-11-13. Do not
 > treat competitor claims as benchmarks of our correctness. Scores are
@@ -11,10 +11,10 @@ more than **60 commands/motions**, a Textland adventure, hints, login/save,
 stats, and challenges. The official page sells a **$35 game-only license (6
 months)** or **$40 game + challenges (including a macro level and timed CTF
 challenges)**. It has been public since **2012**. Its taught list includes
-buffers and files (`:b`, `:ls`, `:w`, `:e`), which VIMLORE's single-buffer engine
+buffers and files (`:b`, `:ls`, `:w`, `:e`), which KIRITSU's single-buffer engine
 does not yet expose.
 
-| axis | VIMLORE (2026-11-13) | Vim Adventures |
+| axis | KIRITSU (2026-11-13) | Vim Adventures |
 |---|---|---|
 | Core engine | Real single-buffer Vim reimplementation, differential-tested **373 of 373**; game-used **51 of 51**; 21,712-case matrix | Custom browser game based on Vim commands; not an auditable Vim reimplementation |
 | Curriculum authority | Every stage cites **Practical Vim** (51 of 51); 48 of 123 tips represented; Modern Vim deferred | Structured 13-level arc; >60 commands |
@@ -26,24 +26,24 @@ does not yet expose.
 | Maturity | New (2026), one developer-scale project | Public since 2012, commercial product |
 | Mobile | Installable PWA, landscape enforced | Keyboard required; desktop browser |
 
-**Verdict:** VIMLORE is **ahead on engine fidelity, transparency, book
+**Verdict:** KIRITSU is **ahead on engine fidelity, transparency, book
 citations, price and offline/PWA access**; **behind on authored campaign
 content, art/audio production, editor-surface breadth, accounts/leaderboards and
 brand maturity**. Against Vim Adventures as a finished commercial product,
-VIMLORE is roughly **60% of that maturity level** — not a peer yet. Against it
-as a *Vim learning engine*, VIMLORE already has the stronger auditable core.
+KIRITSU is roughly **60% of that maturity level** — not a peer yet. Against it
+as a *Vim learning engine*, KIRITSU already has the stronger auditable core.
 
 ## Other Vim-learning games
 
-| tool | what it is | strengths | limits vs VIMLORE |
+| tool | what it is | strengths | limits vs KIRITSU |
 |---|---|---|---|
 | **VimTutor** | built-in Vim tutorial, ~7 lessons | official, offline, zero install | not a game; little retention/feedback |
 | **PacVim** | terminal Pac-Man: move the cursor, eat words, avoid ghosts | free/open-source, immediate hjkl/w/b drill | narrow command set, arcade only |
 | **Vim Hero** | browser lessons, practice, stats; paid lifetime license | guided lessons + practice + stats | not an auditable real-Vim engine; no book-cited curriculum |
 | **Vim Genius** | free browser drills | quick repetition, low friction | drills, not an adventure/curriculum |
-| **VIMLORE** | CRT Vim adventure with real engine + Drew Neil spine | engine fidelity, citations, GOLF/TRIALS, free/offline PWA | campaign breadth, Modern Vim, full editor surface, art/audio |
+| **KIRITSU** | CRT Vim adventure with real engine + Drew Neil spine | engine fidelity, citations, GOLF/TRIALS, free/offline PWA | campaign breadth, Modern Vim, full editor surface, art/audio |
 
-## Where VIMLORE actually ranks today
+## Where KIRITSU actually ranks today
 
 - **Engine correctness / transparency:** top tier among open Vim-learning games.
   The differential oracle and game-used undo surface are rare.

@@ -1,0 +1,9 @@
+Yuji Boku is licensed under the SIL Open Font License, Version 1.1.
+Copyright 2021 The Yuji Project Authors (https://github.com/yujifonts).
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+The full license text is available at:
+https://openfontlicense.org/open-font-license-official-text/
+
+The outlines in src/ui/kanji.ts and public/icons/icon.svg are derived from
+Yuji Boku and are distributed under the same OFL terms.

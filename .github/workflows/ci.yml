@@ -14,6 +14,7 @@ jobs:
       - run: npm run lint:levels
       - run: npm run doc-check
       - run: npm run presentation:check
+      - run: npm run korean:check
       - run: npm run invariants
       - run: npm run surface -- --strict
       - run: npm run build

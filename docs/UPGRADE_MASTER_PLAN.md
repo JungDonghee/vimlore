@@ -5,10 +5,11 @@
 > this plan is executed. Do not mix a new gameplay system with campaign gates
 > in one unverified change.
 >
-> Ordering decision: **story canon → gameplay/feel → story vertical slice →
-> integrated story → full Practical Vim engine**. The story direction is fixed
-> before feature work; the game systems are then built against it, not as a
-> skin. The engine order is deliberately after the game is worth playing.
+> Ordering decision: **story canon → story vertical slice → LIVE/puzzle
+> systems → integrated story → full Practical Vim engine**. The story direction
+> and first scene are validated before feature work; the game systems are then
+> built against it, not as a skin. The engine comes after the game is worth
+> playing.
 
 ## 0. One-screen decision
 
@@ -17,7 +18,7 @@
 | Do dynamic bugs/walls/health go into the 51 campaign stages now? | **No.** Campaign stays deterministic and oracle-clean. |
 | Where does the dynamic system live first? | A separate **LIVE CIRCUIT** arcade mode using the same Vim engine and a generated arena. |
 | What is "Practical Vim full"? | A written **PV-FULL** contract: every one of 123 tips is playable, a verified drill, or an explicitly environment-deferred row with a feature backlog. No unknown gaps. |
-| What is the story? | A cyberpunk memory-heist noir: **VOSS-2**, a dead netrunner's backup, wakes in a black-market memory OS; **MOTH**, the woman he loved and betrayed (and who betrayed him first), exists only while searched. Delivered in prologue, 10 epigraphs/interludes, codex, LIVE transmissions and four endings. See [`STORY_BIBLE.md`](STORY_BIBLE.md). |
+| What is the story? | A cyberpunk bureaucratic noir: **CURSOR 07**, an audit cursor with no file, wakes at a frozen 06:23 to a **CASE 0623 self-closure order** his mentor KURO released. The city is a legal document; District 9's last open line is 07 himself. Four endings: COMPLY / AUDIT / ERASE / AWAKEN. See [`STORY_BIBLE.md`](STORY_BIBLE.md) and [`story/KIRITSU_LOGIC.md`](story/KIRITSU_LOGIC.md). |
 | What is the first shippable slice? | One LIVE arena: moving bugs, red walls, corruption, health, timer, score, pause/accessibility, no campaign changes. Then one puzzle room with one-shot floors/plates/effect locks. |
 | What is explicitly not first? | Buffers/windows/files engine, full Modern Vim, multiplayer, accounts, servers. |
 
@@ -42,7 +43,7 @@
 - Practical Vim: 48 of 123 tips represented; 75 gaps = 39 drill candidates,
   28 deferred surfaces, 8 review.
 - Modern Vim: 28 tips, 0 playable (deferred).
-- Bundle: 277,879 raw / 86,157 gzip (ceiling 278,000 / 87,000); ~121 B raw
+- Bundle: 293,206 raw / 94,115 gzip (ceiling 320,000 / 100,000); ~12.5 kB raw
   headroom. Any real feature requires a deliberate budget decision.
 - PWA installability 0 errors; offline; landscape gate; 50-screen audit clean.
 
@@ -189,7 +190,7 @@ Characters (visual):
 - **ERRATA** (bugs): six-legged bracket shapes, each type distinct;
 - **ORACLE**: a blind vertical eye / diagnostic column;
 - **ROT / REDACTOR**: red editorial marks, never a generic monster;
-- **MOTH**: paper shard / search highlight that flickers when named.
+- **RIN**: an unregistered child in the lower market; the reason refusal is not enough.
 
 Onboarding:
 - first LIVE run shows a 4-line legend overlay: MOVE, COLLECT, AVOID, WALL;
@@ -199,7 +200,7 @@ Onboarding:
 ## 6. Narrative system
 
 See [`STORY_BIBLE.md`](STORY_BIBLE.md) (v2 cyberpunk memory heist) and the
-bilingual first scene [`story/PROLOGUE.md`](story/PROLOGUE.md). The story is **not a skin**: Vim edits are the world's magic, MOTH exists only while searched, registers hold the crew's last words, macros are ghosts, and the final boss is one line. Delivery contract:
+bilingual first scene [`story/PROLOGUE.md`](story/PROLOGUE.md). The story is **not a skin**: the city is a legal document, Vim edits are law, registers are evidence, macros are ghosts, and the final boss is one self-closure order. Delivery contract:
 
 | surface | content | frequency |
 |---|---|---|
@@ -259,7 +260,7 @@ Order: A → B → C/D, each with oracle cases first. Modern Vim remains W4.
 ## 8. Bundle/performance budget decision
 
 The current bundle has ~121 B raw headroom, so this plan cannot be implemented
-inside 278,000 B.
+inside 300,000 B.
 
 - **Phase 1 (LIVE slice)** estimate: +8–14 kB raw (director, sprites, HUD,
   wall guard, tests).
@@ -282,7 +283,7 @@ inside 278,000 B.
 - current gates green; no feature code mixed in.
 Exit: canon, scope, budget and vertical-slice acceptance approved.
 
-### P1 — LIVE vertical slice (no campaign/story changes required)
+### P2 — LIVE vertical slice (no campaign/story changes required)
 - one arena, 3 bug types, 2 walls types, corrupt text, 5 hearts, 75 s timer;
 - HUD + legend + pause/accessibility;
 - seeded arena verifier + fairness tests + browser QA;
@@ -290,7 +291,7 @@ Exit: canon, scope, budget and vertical-slice acceptance approved.
 Exit: 100 seeded arenas validated, no unavoidable spawn, campaign 51/51,
 mobile ≥50 FPS, budget measured and deliberately raised.
 
-### P1.5 — Puzzle-device vertical slice
+### P2.5 — Puzzle-device vertical slice
 
 The requested one-shot floors, reactive paths and command locks are specified in
 [`PUZZLE_DEVICES.md`](PUZZLE_DEVICES.md). Build them on the same meta-grid as
@@ -304,15 +305,16 @@ LIVE, but **turn-based**:
 Exit: solver proves solvability; retry restores devices; Vim `u` does not
 resurrect meta-cells by design; browser QA and gates green.
 
-### P2 — Story vertical slice
-- prologue (VOSS-2 wakes; MOTH says "You came back"), c01 epigraph +
-  interlude, 6 codex entries, 2 ROT/HELIX transmissions;
-- VOSS-2/MOTH/ORACLE voice tests; no plot reveal beyond "identity mismatch";
+### P1 — Story vertical slice
+- prologue (Cursor 07 wakes at 06:23; CASE 0623 on the desk; Kuro on the
+  intercom), c01 epigraph/interlude, 6 codex entries, 2 Registrar transmissions;
+- CURSOR 07 / KURO / ORACLE / RIN voice tests; no reveal of the open-line
+  rule, the 4,217 loops, or the self-closure mechanics;
 - skippable, localized, no book text; archive reachable from codex;
 - story state persisted locally, no server.
-Exit: a new player can explain who they are, who MOTH is, what is at stake,
-and why editing is the only way to learn the truth; no story blocks controls;
-link/doc/localization checks green.
+Exit: a new player can explain who they are, who Kuro is, what CASE 0623 is,
+what happens if they refuse, and why editing is the only way to learn the truth;
+no story blocks controls; link/doc/localization checks green.
 
 ### P3 — Campaign + story integration
 - chapter interludes for all 10 floors;

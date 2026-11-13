@@ -468,7 +468,7 @@ export class PlayScreen {
     const key = fromKeyboardEvent(e);
     if (!key) return false;
     if (/[\uac00-\ud7af\u3131-\u318e]/.test(key)) {
-      this.toast(this.host.lang === 'ko' ? '한/영 키로 영문 입력으로 바꿔 주세요' : 'Switch your input to English', true);
+      this.toast(this.host.lang === 'ko' ? '한/영 키로 영문 입력으로 바꿔라' : 'Switch your input to English', true);
       return true;
     }
     this.hintBox?.remove();
@@ -669,7 +669,7 @@ export class PlayScreen {
             h('b', {}, this.t('NEW TO VIM?', 'VIM이 처음인가요?')),
             this.t(
               'You are in NORMAL mode. h j k l move, i types, Esc comes back. Enter starts.',
-              '지금은 NORMAL 모드입니다. h j k l로 움직이고, i로 입력하고, Esc로 돌아옵니다. Enter로 시작.',
+              '지금은 NORMAL 모드다. h j k l로 움직이고, i로 입력하고, Esc로 돌아온다. Enter로 시작한다.',
             ),
           )
         : null,
@@ -850,7 +850,7 @@ export class PlayScreen {
       'div',
       { class: 'card' },
       h('div', { class: 'eyebrow' }, 'LEAVE'),
-      h('h2', {}, lang === 'ko' ? '챔버를 떠날까?' : 'Leave this chamber?'),
+      h('h2', {}, lang === 'ko' ? '챔버를 떠난다' : 'Leave this chamber?'),
       h('div', { class: 'brief ko' }, lang === 'ko' ? '진행은 저장된다. 나가려면 LEAVE를 선택해라.' : 'Your progress is saved. Choose LEAVE to exit.'),
       h(
         'div',

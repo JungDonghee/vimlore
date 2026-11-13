@@ -10,7 +10,12 @@ export function h<K extends keyof HTMLElementTagNameMap>(tag: K, props: Props = 
     else if (k === 'html') el.innerHTML = String(v);
     else if (k === 'text') el.textContent = String(v);
     else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2).toLowerCase(), v as EventListener);
-    else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v as object);
+    else if (k === 'style' && typeof v === 'object') {
+      for (const [sk, sv] of Object.entries(v as Record<string, string | number>)) {
+        if (sk.startsWith('--')) el.style.setProperty(sk, String(sv));
+        else el.style.setProperty(sk, String(sv));
+      }
+    }
     else el.setAttribute(k, String(v));
   }
   for (const c of children) {

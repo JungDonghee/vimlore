@@ -1,4 +1,4 @@
-/* VIMLORE PWA bootstrap: install prompt + landscape gate. Plain JS, no deps. */
+/* KIRITSU PWA bootstrap: install prompt + landscape gate. Plain JS, no deps. */
 (() => {
   'use strict';
   const doc = document;
@@ -9,8 +9,8 @@
   const install = doc.createElement('button');
   install.id = 'pwa-install';
   install.type = 'button';
-  install.setAttribute('aria-label', 'Install VIMLORE');
-  install.textContent = 'INSTALL VIMLORE';
+  install.setAttribute('aria-label', 'Install KIRITSU');
+  install.textContent = 'INSTALL KIRITSU';
   body.append(install);
 
   const gate = doc.createElement('div');
@@ -20,7 +20,7 @@
   gate.innerHTML = `
     <div class="pwa-card">
       <div class="pwa-phone" aria-hidden="true"></div>
-      <div class="pwa-kicker">VIMLORE // DISPLAY</div>
+      <div class="pwa-kicker">KIRITSU // DISPLAY</div>
       <div class="pwa-title">LANDSCAPE REQUIRED</div>
       <p class="pwa-copy">Rotate your phone. The terminal is a landscape console.</p>
       <div class="pwa-actions">

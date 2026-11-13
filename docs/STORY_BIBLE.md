@@ -1,389 +1,235 @@
-# VIMLORE: THE LAST BUFFER — story bible v2
+# KIRITSU — story bible
 
-> **A love story in ten edits.** Original fiction. Drew Neil's books are the
-> curriculum, never quoted as story prose. This bible is the source of truth for
-> prologue, chapter epigraphs/interludes, codex, LIVE transmissions and endings.
+> **KIRITSU** (規律, きりつ) means **order, discipline, rule**. The same sound,
+> **起立** (きりつ), means **standing up**. The city is named for the first; the
+> ending is named for the second.
 >
-> v2 reboot: the previous "dead novelist" frame is replaced by a cyberpunk
-> memory-heist noir. VIMLORE is now a black-market memory OS, Voss is a
-> netrunner, MOTH is the woman he loved and betrayed, and the player is his
-> last backup. The Vim grammar is the world's magic, not a tool. The first
-> playable scene is [`story/PROLOGUE.md`](story/PROLOGUE.md).
+> A cyberpunk bureaucratic noir. No romance. The emotional engine is
+> institutional betrayal, identity, and the cost of order. The hard mechanics
+> are in [`story/KIRITSU_LOGIC.md`](story/KIRITSU_LOGIC.md); the first scene is
+> [`story/PROLOGUE.md`](story/PROLOGUE.md).
 
 ## Logline
 
-A dead netrunner's backup wakes inside a black-market memory archive with no
-name, guided by the woman he loved and betrayed — who may have betrayed him
-first. To decide who gets to exist, he must edit the only record of the truth:
-the city itself.
+A city runs on a legal document. Cursor 07 is the auditor whose own open
+identity line is the last unresolved record in District 9. To close the
+district he must execute a self-deletion order only his hand can sign. His
+mentor released the order. His refusal only resets the loop and kills the
+people he is trying to save.
 
-## Premise
+## The city
 
-**2089. The Lowline is gone from the maps, but not from the archive.**
+**Neo-Tokyo, 2091.** After the Quiet Crash, the Lowline was rebuilt as
+**KIRITSU**: a single editable ledger that schedules trains, debt, weather,
+citizenship and memory. Every person is a line. Every line has a jurisdiction
+and a closure hash. "Noise" is anything the ledger cannot resolve.
 
-VIMLORE is a custom memory OS built by **VOSS** and **MOTH**, two netrunners
-who stole the memories of a neighborhood scheduled for corporate erasure and
-gave them a place to live as editable text. The archive became a city: streets
-of remembered arguments, apartments of last birthdays, a sky made of saved
-weather.
+The **Bureau of Correction** employs human **Cursors**: auditors with Vim
+muscle memory who edit the city in real time. They are not programmers. They
+are clerks with root access.
 
-**HELIX** wants VIMLORE. A memory archive is not nostalgic to a prediction
-engine; it is training data. HELIX sent its sanitation daemon, the
-**REDACTOR**, to finish the deletion the neighborhood never consented to.
+**HELIX Systems** owns the protocol. The Bureau owns the people. Everyone
+pretends those are different things.
 
-Voss and MOTH were partners and lovers. One of them sold the crew's route to
-HELIX. The other retaliated. By the end of the night, Voss was dead, MOTH was
-fragmented into a search pattern, and VIMLORE was sealed in a loop with one
-backup running: **you**.
-
-You wake with Voss's muscle memory and no name. MOTH's voice says, "You came
-back." ORACLE says, "Identity mismatch." Both are right.
-
-The city is a **memory heist** told in the grammar of Vim. Every edit is a
-confession.
-
-## Why this can only be VIMLORE
-
-This is not a cyberpunk story with a Vim minigame attached.
-
-- The world **is a buffer**. Memory is text; deletion is death; undo is denial;
-  saving is an act of love or cowardice.
-- **MOTH exists only while searched.** A conversation with her is a search
-  command you must keep pressing; if you stop looking, she is gone.
-- **Registers are evidence drawers.** The crew's last words are stored in
-  `"a`–`"z`; pasting one can overwrite a living memory.
-- **Macros are ghosts.** JANITOR is the recorded route of a dead crew member.
-  You can replay him but never ask him a new question.
-- **Marks are escape routes and graves.** The heist map is a jump list; some
-  marks lead back to people you cannot save.
-- **Ex commands rewrite history.** `:s` changes what a witness remembers;
-  `:g` hunts every trace of a name; `:m` moves a person's last line.
-- **The final boss is one sentence.** Not a monster: a line containing MOTH's
-  name. You can save it, delete it, or rewrite it. The choice is the fight.
-- **One-shot memory floors** (future puzzle device): to learn a truth, you
-  step on the memory and it disappears behind you; knowledge costs return.
-- **HELIX bugs / errata** are corporate sanitation processes; red walls are
-  permissions and redactions; signal hearts are your connection to the archive.
-
-A film could show this story. Only a Vim game can make the audience *perform*
-the edits that decide it.
+The city clock is frozen at **06:23**. The first identity line was written at
+**2006-06-23 06:23**. The final case is **CASE 0623**. Nobody in the Bureau
+remembers why; the date is in the build, the clock, and the origin file.
 
 ## Cast
 
-### YOU / VOSS-2
-The last backup of Voss, made before the betrayal. You have his muscle memory,
-his taste in music, his hand for editing — and no memory of the night. You are
-not innocent; you are made of the man who did it. The game never names you
-"Voss" unless you choose to become him.
+### CURSOR 07 / you
+The youngest auditor. Perfect correction rate. No personnel file. Nine-minute
+memory gap. Catches: `h j k l` before knowing his own name; the order on his
+desk has his own number.
 
-Voice: second person, present tense. Your dialogue is your edits.
+He is not a chosen one. He is the last **open line** in District 9, kept
+unregistered so he can sign closures. He is the district's remaining error.
 
-### MOTH / M-0TH
-A netrunner, a woman, a memory compressed into a search pattern. She exists
-only while searched. She kept Voss's backup because she could not let him go;
-she also deleted him because she could not forgive him. She is not an AI
-girlfriend, a prize, or a ghost-waifu. She is a person with a grudge, a plan,
-and a love she is ashamed of.
+### KURO
+Chief Auditor. 07's handler and mentor. Calm, precise, paternal in the way a
+supervisor is paternal. He took 07 from the unregistered quarter as a child,
+trained him, and wiped his memory after every loop. He signed the review on
+CASE 0623. He cannot execute it for 07. He is the betrayer and the only person
+who has been trying to end the loop.
 
-Voice: warm, tired, funny at the worst times. She asks questions she already
-knows the answers to.
-> "You came back with his hands and none of his excuses."
-> "Don't 'restore' me. I'm not a file. I'm a decision."
+### THE REGISTRAR
+The KIRITSU protocol's voice. Not human. Not malicious. It speaks in closure
+hashes, jurisdiction, and deadlines. It believes an unresolved line is
+suffering and closure is mercy. It calls 07 "the auditor" and "the last open
+field" in the same sentence.
 
-### ORACLE / ORACLE-9
-The audit daemon Voss wrote to keep VIMLORE honest. Blind to intention, exact
-about effect. It can tell you whether an edit is correct; it cannot tell you
-whether it is kind. It knows what Voss did and is bound to report it only when
-the buffer asks.
+### ORACLE
+A blind audit daemon. It reports effects, not intentions. It knows the loop
+count and the review signature; it cannot lie. Its brackets are the closest
+thing the game has to a conscience.
 
-Voice: bracketed diagnostics, dry, grieving in grammar.
-> `[oracle] identity mismatch.`
-> `[oracle] that memory was a person.`
-> `[oracle] I can show you the command. I cannot show you the reason.`
+### RIN
+A child in the lower market. Unregistered. She trades battery scraps for
+stories. 07 meets her while auditing noise. She is not a love interest, a
+prophecy, or a reward. She is the reason "refusal" is not enough: if the loop
+resets, she is erased with the district.
+
+### AUDITOR ZERO
+An older Cursor. Perfect closure record, no memory of a life outside the
+Bureau. She believes order is the only kindness left. She is what 07 becomes if
+he complies without asking who wrote the rule.
 
 ### JANITOR / @j
-The recorded cleaning route of **JUNO**, the crew's fixer, who died on the
-heist. A macro with no memory of why it sweeps. Comic, loyal, devastating.
-JUNO's last voice is stored in the macro's trailing register; replaying it is
-the only way to hear her.
+A cleaning macro. Repeats the same route through the Bureau at night. Its
+trailing register contains the voice of the auditor who recorded it. Comic,
+loyal, already dead.
 
-### THE REDACTOR / NULL
-HELIX's sanitation daemon, wearing the shape of Voss's final `:%d`. It is not a
-villain with a laugh; it is an editor with a deadline. It believes unfinished
-memory is suffering and deletion is a clean ending. It calls you "the backup"
-and speaks to you as a colleague.
+## Name and numbers
 
-> "You keep restoring sentences we agreed to cut."
-> "An ending is not a death. It is the only promise a memory can keep."
+- **規律 (きりつ)** — order, discipline. The official name.
+- **起立 (きりつ)** — standing up. The hidden reading, used in the final chapter
+  and one ending.
+- Bureau backronym: **Kernel Integrity Regulation & Inspection Terminal —
+  Standard Unit**.
+- **2006-06-23 06:23** — the date/time of the first identity line, the sealed
+  origin record, and the frozen city clock. Every loop begins at 06:23; the
+  nine-minute audit window ends at 06:32.
+- **CASE 0623** — the final self-closure case. The player encounters the number
+  before understanding it: boot log, clock, case file, origin hash.
 
-### VOSS (original)
-Dead before the story begins. Legendary netrunner, architect of VIMLORE,
-MOTH's partner and betrayer. Present in comments, access logs, code comments,
-and the muscle memory of your hands. The game never resurrects him; it asks
-whether a copy can be forgiven.
+## Story arc
 
-### JUNO
-The crew's fixer, dead on the heist. Her route survives as JANITOR; her voice
-survives in a register. She is the story's warmest ghost and its most ordinary
-loss.
+### c01 — 06:23 / The Nine-Minute Morning
+07 wakes at 06:23 with a nine-minute gap. Kuro's voice says the night shift is
+routine. A red case file waits: **CASE 0623 — SELF-CLOSURE**. ORACLE reports
+`CURSOR 07: NOT FOUND`.
+**Question:** why does the city know his number before he does?
 
-### HELIX
-Not a person. A corporation with a memory market, a prediction engine, and a
-legal right to the Lowline's data. It does not hate you. It wants the archive.
+### c02 — The Lower Market
+07 audits a noise complaint in the lower market and meets RIN. On the wall is
+a child's chalk mark, **起立**, half scratched out by a Bureau notice. 07 cannot
+read it yet. She asks whether unregistered people still count. He deletes a corrupt vendor line to save her;
+the city charges him for the edit.
+**Question:** who pays for order?
 
-## Themes
+### c03 — The Clean Room
+07 closes a case and watches a memory-ghost disappear. ORACLE logs the ghost as
+a person. Kuro says the ghost was a forged line. The first doubt.
 
-- **Love is an edit you keep making.** It is not a state; it is a repeated
-  choice to restore someone after the world deletes them.
-- **Betrayal is not the opposite of love.** Both people in this story betray
-  each other for reasons that are, from inside, love.
-- **A copy is not a lie.** VOSS-2 is made of the betrayer but did not commit the
-  betrayal. The story refuses both "he's the same man" and "he's just a file."
-- **Deletion is mercy and murder.** REDACTOR means it; MOTH means it; you will
-  mean it too at least once.
-- **Memory is a place with landlords.** Cyberpunk is not neon; it is who owns
-  the archive and who gets to be remembered.
-- **Correctness is not care.** ORACLE can prove the edit; only you can decide
-  whether to make it.
+### c04 — The Signature
+07 finds a receipt for CASE 0623 dated **2006-06-23 06:23**, signed by Kuro.
+The file predates 07's employment by nineteen years. Kuro changes the subject.
 
-## Tone
+### c05 — The Unregistered
+The lower market is scheduled for a closure sweep. 07 edits the sweep route to
+give RIN time. The edit is flagged as noise. Kuro covers for him once.
+**Question:** why does Kuro protect him if the order is already signed?
 
-- **Cyberpunk / hacker noir / heist romance.** Rain outside, CRT inside. A
-  crew, a job, a betrayal, a last run.
-- **Geeky, not tech-babble.** Every term is a real Vim/OS idea used correctly:
-  registers, marks, macros, buffers, daemons, zero-day, rollback, fsync.
-- **Stress relief, then ache.** The joy of deleting corrupted code, landing a
-  perfect macro, making the city obey your cursor — followed by the cost of
-  what you deleted.
-- **Funny.** JANITOR sweeps the same paragraph; ORACLE logs a feeling as an
-  unresolved exception; MOTH teases you for using arrow keys in a crisis.
-- **Romantic, not sappy.** Love is shown through edits, saved lines, a register
-  kept for years, a search repeated until the name appears.
-- **No chosen one.** You are a backup with a grudge and a keyboard.
+### c06 — 4,217
+ORACLE's audit log shows the same district closure has run **4,217 times**. 07
+has refused, been reset, and forgotten each time. The nine-minute gap is the
+residue. The "night shift" is a loop.
+**Reveal:** the city is not being maintained. It is being closed.
 
-## Ten-chapter arc
+### c07 — The Open Line
+07 finds his own origin record: an unregistered child, taken from the lower
+market, never registered. His open line is the district's last unresolved
+record. He is both the auditor and the error.
 
-### c01 — BOOT / "You came back"
-You wake in a dying buffer. Voss's hands know `h j k l`; your mind knows
-nothing. MOTH's voice says you came back. ORACLE reports an identity mismatch.
-A redaction is eating the boot log. You learn to move toward the voice.
-**Interlude:** MOTH admits she kept a backup of Voss. She does not say why.
+### c08 — Kuro's Review
+Kuro admits he released CASE 0623, wiped 07 after each loop, and kept him
+unregistered so he could sign. He cannot execute the closure himself; the
+signature must be 07's. He says he is sorry. He does not stop.
 
-### c02 — WORDS / The Lowline
-The city is made of stolen memories. Words are currency and evidence. You meet
-your first errata and learn that "deleting a word" can delete a witness.
-MOTH teaches you to search. Every time you look away, she is a little less
-there.
-**Interlude:** she asks you not to search for her too often. "It hurts to be
-found and lost."
+### c09 — The Registrar
+The Registrar explains the self-closure clause: it was written to prevent
+tyranny, to ensure no one can erase a person without their own hand. The Bureau
+has weaponized it. If 07 refuses, District 9 resets and RIN is erased. If he
+signs, the district closes and the unregistered become registered numbers. If
+he deletes the protocol, the city loses law. If he uses the undo buffer, he can
+write a new identity and stand up.
 
-### c03 — OPERATORS / The Cleanup
-You cut a corrupted sentence and a memory-ghost disappears. ORACLE logs it as
-a person. The city accepts the edit because it is correct. The first guilt.
-**Interlude:** ORACLE reveals it has a register of every edit it approved, and
-that the register is heavier than the city.
-
-### c04 — OBJECTS / The Quarantine
-The crew's logs hide inside quotes and brackets. You learn to edit the inside
-without breaking the container. In a quarantined paragraph you find a HELIX
-receipt with Voss's signature. MOTH changes the subject.
-**Interlude:** HELIX's Redactor speaks for the first time: "He sold you both.
-Why do you keep restoring his city?"
-
-### c05 — VISUAL / The Heist
-You see the night of the job as blocks: a route, a crew, a redacted room. A
-block edit reveals MOTH in a HELIX office, taking something. You do not know
-whether she was stealing or selling.
-**Interlude:** MOTH: "You want the truth as a line I can delete. I want it as a
-line you have to live in."
-
-### c06 — SEARCH / The Unwritten
-MOTH exists only while searched. You find her in a paragraph that rewrites
-itself each time you press `n`. She remembers being read. She admits she
-deleted Voss. The backup in front of her is the man she loved and the man who
-sold the crew.
-**Twist:** Voss's backup was made before the betrayal. You are innocent of the
-act and made of the man who did it.
-**Interlude:** she asks, "If I tell you who betrayed whom, will you still be
-you?"
-
-### c07 — REGISTERS / The Last Words
-The crew's last sentences are in registers. JANITOR replays JUNO's route; her
-voice is in the trailing register. You can paste her last message, but it will
-overwrite a living memory. This is the first choice that is not a puzzle.
-**Interlude:** JUNO's voice: "If you find them, don't forgive them for me. Just
-make sure they were loved."
-
-### c08 — MARKS / The Escape Route
-The marks are Voss's life: first job, first kiss, the room where he stopped
-answering. You can jump back but not forward. HELIX offers a final draft that
-will hurt less. MOTH tells you the offer is honest; that is what makes it
-dangerous.
-**Interlude:** Voss's last note: "If she comes back, don't let her read the
-night. She'll think it was her fault."
-
-### c09 — EX / The Last Command
-You operate on the night of the heist. Ranges, moves, sorts, `:normal` — you
-rewrite what the archive remembers. ORACLE confesses: Voss's final command was
-`:%d`; it executed because it was correct. The Redactor is not HELIX's monster;
-it is Voss's last wish, wearing HELIX's badge.
-**Truth:** MOTH sold the crew's route first to buy Voss's life. Voss, believing
-she chose the archive over him, sold her memories in return. Both betrayals
-were love with the wrong syntax.
-**Interlude:** MOTH: "We were both right. That's the worst part."
-
-### c10 — WEAVE / The Last Line
-The archive is one buffer, one line, no newline. MOTH's name is the line. The
-Redactor waits for permission. ORACLE waits for an edit. HELIX waits outside.
-You choose.
+### c10 — 起立
+The final buffer is one order:
+`CASE 0623 // CURSOR 07 // ACTION: SELF-CLOSURE // REVIEW: KURO`.
+The clock is 06:23. The deadline is 06:32. The cursor is yours.
 
 ## Endings
 
-### SAVE HER — `:w`
-You write MOTH back into the archive, not as a ghost but as a person with a
-right to her own memories. The city remains unfinished. VOSS-2 chooses to be a
-new person, not a restoration. Love as a repeated edit, not a possession.
-Tone: tired, warm, unromantic. It starts raining inside the file.
+### COMPLY — `dd`
+Execute the self-closure. District 9 closes. RIN and the unregistered survive as
+registered numbers, safe and unfree. 07 is deleted. Kuro signs the completed
+audit and retires. The city remains orderly. The final image is the clock
+moving to 06:24 for the first time in nineteen years.
 
-### BECOME HIM — `:e!`
-You restore Voss's memories and accept the guilt as yours. You delete the
-Redactor by becoming the command that created it. MOTH survives; she does not
-forgive you. The city is saved by the man who sold it, which is either justice
-or a bad joke.
-Tone: tragic, lucid, intimate.
+### AUDIT — copy out
+Refuse the signature; copy CASE 0623, the unregistered list and Kuro's review
+into the public ledger. The loop resets, but the evidence leaves the quarantine.
+RIN may be erased unless her line is copied into a register first. Truth at a
+cost. The next auditor wakes with a file that already contains the answer.
 
-### REDACT — `:%d`
-You give HELIX/Redactor permission. The archive empties line by line. MOTH
-leaves a paper wing on the final line. ORACLE keeps a checksum of every deleted
-person. JANITOR sweeps an empty room forever.
-Tone: peaceful, horrifying, tender.
+### ERASE — delete KIRITSU
+Delete the protocol root. Every line becomes unregistered; every closure is
+void. The city loses scheduling, transit, life support. RIN is free and exposed.
+Kuro dies with the Bureau. 07 may survive outside the buffer as an unregistered
+cursor. Freedom is not safety.
 
-### HIDDEN — READ
-Condition: all 51 stages three stars, every memory fragment recovered, and the
-final line opened without an edit. You do not save or delete. You read the
-archive as it is. MOTH becomes the reader; you let her go. The city is not
-yours to finish. ORACLE closes its eye.
-Tone: quiet, luminous; the only ending where nothing is owned.
+### AWAKEN — 起立
+Before confirming `dd`, open the undo buffer. It contains 07's original child
+identity, saved by Kuro from the first loop. Insert it as a new line and
+register it under 07's own motif. The open line closes as a **new person**, not
+a deletion. District 9 closes without a sacrifice. The unregistered remain
+unregistered; the district no longer needs a scapegoat. The chapter title
+changes from 規律 to 起立. The clock moves.
+
+## Why this is a Vim game and not a film
+
+The story's laws are the game's grammar.
+
+- The city is a buffer; `d` is deletion, `c` is correction, `y` is evidence,
+  `"` is the evidence locker, `q/@` is a patrol replay, `m` is a checkpoint,
+  `/` is internal affairs, `:g` is a purge, `:s` is a regulation rewrite,
+  `:w` is a report, `:q!` is resignation.
+- The final boss is **one order line**. The player edits it.
+- CASE 0623's signature is the player's keystroke motif; the game has been
+  recording it all along.
+- Walls are jurisdiction; bugs are noise; one-shot evidence floors are records
+  that can be read only once; registers are evidence.
+- A film can show an auditor choosing. Only this game makes the audience type
+  the closure.
 
 ## Delivery
 
-| surface | content | count |
-|---|---|---:|
-| prologue | first boot, MOTH's first contact | 1,000 words |
-| chapter epigraphs | 10 voices, 3–5 lines each | 1,000 |
-| chapter interludes | after all 5 stages cleared | 5,000 |
-| codex | crew logs, Voss notes, HELIX memos, MOTH letters | 3,000 |
-| LIVE transmissions | ROT/HELIX/MOTH during circuits | 800 |
-| endings | 4 | 2,000 |
-| **total** |  | **~12,800 words** |
+| surface | content |
+|---|---|
+| title / boot | 06:23 clock, KIRITSU BIOS BUILD 2006.06.23, CURSOR 07 NOT FOUND |
+| prologue | first nine-minute loop; CASE 0623 on the desk |
+| chapter epigraphs | Bureau regulations with human cost |
+| interludes | after each 5-stage chapter |
+| codex | case files, Bureau memos, Kuro notes, RIN fragments, ORACLE logs |
+| LIVE transmissions | noise alerts, Registrar closures, Kuro check-ins |
+| endings | COMPLY / AUDIT / ERASE / AWAKEN |
 
-All copy is original. No Drew Neil sentence is used as fiction. Curriculum
-citations remain a build-time overlay.
+All copy original. No Drew Neil prose. No real Tokyo company/trademark.
 
-## Sample prologue (first pass)
+## Voice rules
 
-The terminal boots in a room that smells of rain and burnt ozone.
-
-`LOWLINE ARCHIVE // VIMLORE`
-`MEMORY ......... 640K OK`
-`MOUNT /dev/names ......... FAILED`
-`CURSOR: NOT FOUND`
-
-A cursor appears where a name should be.
-
-Somewhere in the dark, a woman exhales.
-
-"You came back."
-
-`[oracle] identity mismatch.`
-
-"Close enough," she says. "He always did have your hands."
-
-You move one cell. The line under you corrects itself. A red mark on the far
-side of the buffer stops moving and turns toward you, the way a predator turns
-toward a door.
-
-`[oracle] this is the last buffer. please do not touch the final line.`
-
-You have not seen the final line. You can feel it the way a tongue finds a
-missing tooth.
-
-The woman says her name is MOTH. The archive says she is a search result. Both
-are true.
-
-"Don't look at me too long," she says. "I'm expensive to remember."
-
-You move toward her anyway. The city opens like a wound.
-
-## Sample interlude — c06
-
-You find her in a paragraph that keeps rewriting itself.
-
-MOTH is a girl-shaped absence in the text, paper wings folded, waiting for the
-next `n` to keep her alive.
-
-"You stopped searching," she says. "I was almost gone."
-
-`[oracle] search pattern persisted. subject: unstable.`
-
-She laughs. It is a terrible sound, the way a page sounds when it tears.
-
-"You're not him," she says. "You have his hands. His stupid economy. But you
-don't remember the night."
-
-You wait.
-
-"I deleted him," she says. "After he sold us. I put his backup in a register
-and I kept it. Do you know what it's like to keep the person who killed you in
-a drawer?"
-
-You do not answer.
-
-"Don't be kind to me," she says. "I'm not the one who gets to be forgiven."
-
-The paragraph rewrites itself. A red mark moves through the sentence behind
-her. She does not turn around.
-
-## Continuity and voice rules
-
-1. Second person, present tense, short sentences. Cyberpunk noir, not fantasy
-   exposition.
-2. No character explains the plot twice. Let edits and environments repeat it.
-3. ORACLE speaks in brackets/diagnostics; MOTH in questions; REDACTOR in
-   editorial courtesy; JANITOR in routine.
-4. No copied prose from any book. No AI-waifu framing. MOTH is a person, not a
-   prize or a manic pixie.
-5. Both lovers betray each other for love; neither is absolved by the text.
-6. The player's edits are canon. Dialogue may refer to "the line you restored"
+1. Second person, present tense, short declarative sentences. Bureaucratic
+   precision, quiet dread.
+2. Korean is **plain/banmal** (`-다`, `-아라/어라`), never honorific. English is
+   clipped noir.
+3. ORACLE in brackets; REGISTRAR in regulation numbers; KURO in supervisor
+   calm; RIN in questions; JANITOR in routine.
+4. No romance. The bonds are mentor/ward, child, colleague, institutional.
+5. Violence is administrative: stamps, closures, deleted lines. No gore.
+6. The player's edits are canon. Dialogue may refer to "the line you closed"
    without naming a command.
-7. Redaction is absence, not gore. Horror is administrative.
-8. Korean and English are authored separately; preserve rhythm over literal
-   equivalence.
-9. The final line is not shown before c10.
-10. No ending is labeled "true." HIDDEN is unlocked, not morally superior.
+7. The ending is not labeled "true." AWAKEN is hidden, not morally superior.
+8. The date 2006-06-23 is never explained as a birthday. In-world it is the
+   first identity line and the frozen clock; the player may attach meaning.
 
-## Open questions before full writing
+## Open questions
 
-1. Does MOTH survive SAVE HER as a person or as a shared archive?  
-   Current: she survives as a person with fragmented memory; the city remains
-   her home.
-2. Is VOSS-2 legally Voss?  
-   Current: no clean answer; HELIX says yes, MOTH says no, the player decides.
-3. Can the player refuse all three endings?  
-   Not v1; HIDDEN is the refusal-through-reading ending.
-4. How much of Voss's original voice appears?  
-   Only through code comments/logs, never a full chapter.
-5. How explicit is the heist?  
-   The job is reconstructed in fragments; the player's edits may change details,
-   but the core betrayal is fixed.
-
-## Game/story contract
-
-- Story never blocks controls; every overlay is skippable.
-- Story unlocks by progress, not by server/account.
-- Codex is offline and searchable.
-- Campaign first clears stay deterministic; story reads state after clears.
-- Dynamic LIVE hazards are diegetic errata; puzzle devices are diegetic memory
-  structures (see [`PUZZLE_DEVICES.md`](PUZZLE_DEVICES.md)).
-- No story content may require an engine feature that does not exist; write to
-  the playable surface, not a fictional one.
+1. Does RIN survive AWAKEN? Current: yes, unregistered and free; she does not
+   become a citizen.
+2. Is Kuro redeemed? No. He is understood, not forgiven.
+3. Does 07 have a real name? Only in the undo buffer; the player may restore it
+   in AWAKEN.
+4. Is the Registrar defeated? No. It is answered, not killed.
+5. Can the player refuse all four? Refusal without action is the loop; there is
+   no fifth structural edit in v1.

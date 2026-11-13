@@ -103,7 +103,7 @@ surface above; calling the engine globally perfect would be false.
 
 ## Comparison in one line
 
-Against **Vim Adventures**, VIMLORE is ahead on **real-engine fidelity, price
+Against **Vim Adventures**, KIRITSU (VIMLORE) is ahead on **real-engine fidelity, price
 (free), offline/PWA and book citations**, and behind on **hand-authored
 adventure content, visual/audio production, editor-surface breadth and brand
 maturity**. It is not yet a finished commercial peer; see

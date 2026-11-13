@@ -1,53 +1,61 @@
-# Design notes — CRT vector / terminal transcript
-
-![VIMLORE icon: a large V made of commands](../public/icons/icon-512.png)
+# KIRITSU — design notes
 
 ## The mark
 
-The icon is not a generic letter. The **V is the buffer**: its two arms are a
-mask filled with small terminal/Vim commands, hex offsets and status fragments.
-The words are deliberately clipped by the letter, so at 512 px you read a
-transcript, while at 32/16 px the same pixels resolve into a bright V. The
-cursor block sits in the V's vertex: the player is the cursor.
+**KIRITSU** is the game; **VIMLORE** is the world/series. The identity is a
+**red hanko seal** carrying the sharp, hand-brushed **規律** in cream, framed by
+a thin CRT bezel and phosphor grid. No generic robot, no neon gradient, no
+stock "hacker" decoration.
 
-Around it: a thin CRT bezel with four corner rules, a low-contrast vector grid,
-`CRT // NORMAL` micro-labels and one phosphor accent. No drop shadows, no
-rainbow glitch, no stock futuristic gradients — only the screen, the trace and
-the cursor.
+- Kanji: **規律** (order, discipline / *kiritsu*), drawn from **Yuji Boku**
+  brush-regular outlines. The same sound **起立** (*kiritsu*, standing up) is
+  reserved for the hidden ending. The outline is vector, not a font dependency.
+- Seal: oxidized vermilion, slightly displaced edge; the red is the Bureau's
+  correction ink, not decoration.
+- Frame: 2px green rule, four square corners, low-opacity vector grid.
+- Cursor: a pale block at the seal's foot; the player is the cursor.
+- Microtext: `KIRITSU // 2091`.
 
-The favicon is a reduced cut of the same idea: a brighter V mask with fewer
-rows, still built from code.
+The favicon is a reduced **K** seal: it survives 16px downscaling, while the
+full mark carries the kanji at 192/512 and on the title screen.
 
-## Type and scale
+## Title screen
 
-- Micro-copy is monospace (`Noto Sans Mono` fallback), tracked wide, all caps.
-- The icon's command rows are real Vim fragments (`d2w`, `ciw`, `gUap`,
-  `:g/rot/d`, `:s/ash/ashen/g`, `0x56`).
-- The V outline is four pixels at 512, so it survives downscaling.
-- The master is vector (`public/icons/icon.svg`); PNGs are generated, never
-  hand-tweaked. This keeps 192/512/maskable/Apple/favicons consistent.
+`KIRITSU` wordmark, red **規律**, then:
 
-## Title
+> KIRITSU — ORDER, DISCIPLINE  
+> ORDER IS A FILE. YOU ARE THE CURSOR.  
+> VIMLORE // A REAL-VIM CYBERPUNK MEMORY HEIST
 
-`VIMLORE` is horizontally centered by compensating the wordmark's trailing
-letter-spacing. Measured center offset: **0.0 px** at 844×390 and **0.9 px** at
-1920×1080. On a short landscape phone the bootlog and footer stay as narrow terminal
-side rails; the wordmark is absolutely centered (dx 0.0, dy 0.0) and
-`PRESS ANY KEY` sits above the footer. Nothing overlaps.
+The boot log carries the in-world numbers **2006.06.23** and
+**CASE 0623 // 06:23**. They are not random decoration: they are the build,
+the frozen city clock, and the final self-closure case. The title screen does
+not explain them; the story does.
 
-![Landscape title](../docs/browser/pwa/landscape-title.png)
+## Typography
 
-## Landscape gate
+- The wordmark uses the CRT serif/mono contrast already in the game.
+- The kanji use a **hand-brushed regular script** — sharp, thinner than a black
+  Mincho, visibly handwritten.
+- Microcopy is monospace, tracked wide, uppercase. Korean copy is plain/banmal
+  only; see [`KOREAN_STYLE.md`](KOREAN_STYLE.md).
+- Red is reserved for the seal, deletion, and danger.
 
-Portrait touch devices get a full-screen terminal dialog, not a broken
-portrait game. It requests fullscreen + `screen.orientation.lock('landscape')`;
-the installed app uses the manifest's `orientation: landscape`. See
-[`PWA.md`](PWA.md) for the platform limits.
+## Layout
+
+- Desktop: wordmark, kanji, meaning, tagline, descriptor, press.
+- Short landscape: bootlog left, wordmark centered, kanji below, description,
+  press, footer; no vertical overlap.
+- Portrait phone: the landscape gate takes precedence; the title is behind it.
 
 ## Regenerate
 
 ```bash
-npm run pwa:icons   # public/icons/icon.svg -> all PNGs (dev-only Playwright)
-npm run pwa:check   # manifest/icons/SW/split (CI)
-npm run pwa:qa      # installability 0 errors, gate, offline, centering
+npm run pwa:icons      # vector seal -> PNGs (dev-only Playwright)
+npm run pwa:check      # manifest/icons/SW/split (CI)
+npm run pwa:qa         # installability, gate, offline, centering
+npm run presentation:check
 ```
+
+Attribution: [`KANJI_ATTRIBUTION.md`](KANJI_ATTRIBUTION.md). No third-party
+fonts are fetched at runtime; the kanji are baked outlines.

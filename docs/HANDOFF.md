@@ -89,10 +89,10 @@ only finalize by 23:50; the machine shuts down at 00:00.
 ## 0i. Next direction: gameplay/story before PV-FULL (2026-11-13)
 
 - Master plan: [`UPGRADE_MASTER_PLAN.md`](UPGRADE_MASTER_PLAN.md).
-- Narrative bible **v2**: [`STORY_BIBLE.md`](STORY_BIBLE.md) — cyberpunk memory heist, VOSS-2/MOTH/HELIX, love and mutual betrayal, four endings.
+- Narrative bible: [`STORY_BIBLE.md`](STORY_BIBLE.md) — KIRITSU cyberpunk bureaucratic noir, CURSOR 07/KURO/REGISTRAR, CASE 0623, four endings; hard rules in [`story/KIRITSU_LOGIC.md`](story/KIRITSU_LOGIC.md).
 - First bilingual scene: [`story/PROLOGUE.md`](story/PROLOGUE.md).
-- Priority: LIVE CIRCUIT vertical slice (bugs/walls/corruption/signal/timer),
-  story prologue + c01 interlude, then PV-FULL Practical Vim engine.
+- Priority: story vertical slice (prologue + c01 epigraph/interlude + codex),
+  then LIVE CIRCUIT/puzzle devices, then PV-FULL Practical Vim engine.
 - Do not retrofit moving hazards into deterministic campaign first-clears;
   separate mode first, post-clear modifiers later.
 - Budget headroom is 121 B; the plan includes a deliberate, measured raise;
@@ -299,7 +299,7 @@ grammar regression; the ceilings were raised with the measured numbers above.
 
 
 Deliberate raises as engine work landed: 258,000/82,000 → 260,000 → 262,000 →
-264,000 → **277,000 → 278,000** / 87,000. Each was measured and committed with the feature
+264,000 → **277,000 → 278,000 → 300,000** / 95,000. Each was measured and committed with the feature
 that needed it. CI stock zlib gzip is ~833 B larger than local zlib-ng; the ceiling is now
 87,000 B to absorb that measured variance. Current local build is
 276,101 B raw / 85,991 B gzip, so headroom is

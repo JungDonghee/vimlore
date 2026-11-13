@@ -5,7 +5,12 @@
 > Master plan: [`UPGRADE_MASTER_PLAN.md`](UPGRADE_MASTER_PLAN.md) · narrative:
 > [`STORY_BIBLE.md`](STORY_BIBLE.md).
 
-## 0. New P0 — LIVE gameplay vertical slice
+## 0. New P0 — story vertical slice
+
+- Prologue + c01 epigraph/interlude + 6 codex fragments + 2 transmissions.
+- Skippable, localized, archive, no campaign gates touched.
+
+## 0a. LIVE + puzzle systems
 
 - `LiveArena` generator (seeded, reachable walls/coins, safe bug spawns).
 - `HazardDirector`: patrol-row/patrol-col/random bugs, red immutable walls,
@@ -15,14 +20,14 @@
 - Exit: 100 seeds validated, mobile ≥50 FPS, bundle measured and deliberately
   raised, campaign 51 of 51 still green.
 
-## 0a. Puzzle-device slice
+## 0a. LIVE gameplay + puzzle-device slices
 
 - One-shot collapsing floors, plates, effect-based command locks, search/register
   puzzles (`PUZZLE_DEVICES.md`).
 - Turn-based, reset restores devices, Vim `u` does not; solver rejects soft-locks.
 - Build after the LIVE meta-grid, before campaign integration.
 
-## 0b. Story vertical slice
+## 0b. Story integration for all chapters
 
 - Prologue, c01 epigraph/interlude, six codex fragments, ROT transmissions.
 - Skippable, localized, no copied book prose.
@@ -77,7 +82,7 @@ Shipped: static vector frame/corners/grid. Next: instrument HUD readouts,
 stronger vector language, and only if bundle/FPS remain inside budget.
 - mobile 390×844 ≥50 FPS, desktop headless ≥50;
 - 144fps only with a 144Hz/GPU measurement, never a claim;
-- zero runtime deps; bundle gate 278k/87k unless a measured raise is approved.
+- zero runtime deps; bundle gate 320k/100k unless a measured raise is approved.
 
 ## Gates for every future change
 

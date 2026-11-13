@@ -3,9 +3,9 @@
  * this ceiling is the line that fails CI: future features must pay for
  * themselves or the budget must be raised deliberately in the same commit.
  *
- * Raised 277,000 -> 278,000 (2026-11-13) for the short-landscape terminal
- * dashboard: the bootlog and footer stay as side rails while the wordmark is
- * centered. Measured 277,621 B; gzip gate unchanged.
+ * Raised to 320,000 raw / 100,000 gzip on 2026-11-13 for the KIRITSU rebrand:
+ * inline Yuji Boku 規律 + ghost 起立 outlines, title copy, seal icon plumbing and
+ * the story-first slices. Measured 293,206 raw / 94,115 gzip at the raise.
  *
  * MAX_RAW is the deterministic hard gate. MAX_GZIP carries a measured ~1 kB
  * allowance because the same dist compresses differently across zlib builds:
@@ -15,8 +15,8 @@
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
-export const MAX_RAW = 278_000;
-export const MAX_GZIP = 87_000;
+export const MAX_RAW = 320_000;
+export const MAX_GZIP = 100_000;
 const file = new URL('../dist/vimlore.html', import.meta.url);
 const buf = readFileSync(file);
 const gz = gzipSync(buf, { level: 9 }).length;

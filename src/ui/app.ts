@@ -168,41 +168,81 @@ export class App {
     this.killPlay();
     this.screen = 'title';
     this.hue(128);
-    const letters = 'VIMLORE'.split('');
     const log = [
-      'VIMLORE BIOS v0.9  (c) NOBODY',
+      'BUILD 2006.06.23',
       'MEMORY ......... 640K OK',
-      'MOUNT /dev/words ......... <b>FAILED</b>',
-      'MOUNT /dev/code .......... <b>READ ONLY</b>',
-      'SCAN BUFFER 0x0001 ....... 1024 LINES, 3 CORRUPT',
+      'MOUNT /dev/names ......... <b>FAILED</b>',
+      'CURSOR 07 ................. <b>NOT FOUND</b>',
+      'IDENTITY LINE ............. <b>OPEN</b>',
       '> WAITING FOR A CURSOR_',
     ];
+    const petals = Array.from({ length: 48 }, (_, i) => h('i', {
+      class: i < 14 ? 'kt-petal kt-still' : 'kt-petal',
+      'aria-hidden': 'true',
+      style: {
+        '--x': String((i * 37 + 4) % 96),
+        '--y': `${8 + (i * 19) % 78}%`,
+        '--s': `${5 + (i * 7) % 10}px`,
+        '--d': `${10 + (i * 7) % 10}s`,
+        '--delay': `-${(i * 1.7) % 12}s`,
+        '--r': `${(i * 43) % 360}deg`,
+        '--drift': `${(i % 2 ? 1 : -1) * (10 + (i * 11) % 28)}px`,
+        '--o': String(0.3 + (i % 5) * 0.08),
+      },
+    }));
     mount(
       this.root,
       h(
         'div',
-        { class: 'title-screen fade-in' },
+        { class: 'title-screen kt-screen fade-in' },
+        h('div', { class: 'kt-grid', 'aria-hidden': 'true' }),
+        h('div', { class: 'kt-haze', 'aria-hidden': 'true' }),
+        h('div', { class: 'kt-petals', 'aria-hidden': 'true' }, ...petals),
+        h('img', { class: 'kt-branch', src: './kanji/sakura-branch.svg', alt: '', draggable: false }),
+        h('div', { class: 'kt-scan', 'aria-hidden': 'true' }),
+        h('div', { class: 'kt-sweep', 'aria-hidden': 'true' }),
+        h('div', { class: 'kt-vignette', 'aria-hidden': 'true' }),
         h(
           'div',
-          { class: 'bootlog' },
-          ...log.map((line, i) => h('div', { style: { animationDelay: `${0.15 + i * 0.13}s` } }, ...(() => {
-            const parts = line.split(/<b>|<\/b>/);
-            return parts.map((p, j) => (j % 2 ? h('b', {}, p) : document.createTextNode(p)));
-          })())),
+          { class: 'kt-top' },
+          h('span', {}, h('b', {}, 'DISTRICT 9'), ' / NIGHT AUDIT'),
+          h('span', { class: 'kt-case' }, 'CASE 0623'),
+          h('span', {}, h('b', {}, '06:23:00'), ' / FROZEN'),
         ),
         h(
           'div',
-          { class: 'title-mark' },
-          ...letters.map((c, i) => h('span', { style: { animationDelay: `${i * 0.07}s` } }, c)),
+          { class: 'kt-boot' },
+          ...log.map((line, i) => h('div', {},
+            h('span', { class: 'kt-line', style: { animationDelay: `${0.16 + i * 0.13}s` } }, ...(() => {
+              const parts = line.split(/<b>|<\/b>/);
+              return parts.map((p, j) => (j % 2 ? h('b', {}, p) : document.createTextNode(p)));
+            })()),
+          )),
         ),
-        h('div', { class: 'title-rule' }),
-        h('div', { class: 'title-tag ko' }, this.t('The world is written. Rewrite it.', '세계는 쓰여 있다. 다시 써라.')),
-        h('div', { class: 'title-sub' }, this.t('the most complete Vim training terminal · 51 chambers', '가장 방대한 Vim 훈련 터미널 · 51개 챔버')),
-        h('div', { class: 'title-credit' }, this.t('created by', '만든 사람'), ' ', h('b', {}, 'JUNG DONGHEE')),
-        h('div', { class: 'press' }, this.t('PRESS ANY KEY', '아무 키나 누르세요')),
-        h('div', { class: 'title-help' }, this.t('F1 · 60-SECOND PRIMER', 'F1 · 60초 입문')),
-        isTouch() ? h('div', { class: 'title-foot ko' }, this.t('a physical keyboard is required', '물리 키보드가 필요합니다')) : null,
-        h('div', { class: 'title-foot' }, 'v1.0 · offline · no tracking'),
+        h(
+          'div',
+          { class: 'kt-main' },
+          h(
+            'div',
+            { class: 'kt-ink-wrap', role: 'img', 'aria-label': '規律 — order, discipline' },
+            h('img', { class: 'kt-ink', src: './kanji/ou-guilv-balanced.svg', alt: '', draggable: false }),
+            h('div', { class: 'kt-laser', 'aria-hidden': 'true' }),
+            h('div', { class: 'kt-laser-head', 'aria-hidden': 'true' }),
+            h('div', { class: 'kt-flash', 'aria-hidden': 'true' }),
+          ),
+          h('div', { class: 'kt-caption' }, 'ORDER · DISCIPLINE'),
+          h('div', { class: 'kt-tag ko' }, this.t('Order is a file. You are the cursor.', '규율은 파일이다. 너는 커서다.')),
+          h('div', { class: 'kt-press' }, this.t('PRESS ANY KEY', '아무 키나 누른다')),
+        ),
+        h(
+          'div',
+          { class: 'kt-sign' },
+          h('img', { src: './kanji/cyr-angular.svg', alt: 'Кирицу', draggable: false }),
+          h('span', {}, 'kiritsu'),
+        ),
+        h('div', { class: 'kt-asm' }, '0x0623  48 C7 C0 23 06 00 00  ', h('b', {}, 'MOV EAX, 0x0623')),
+        h('div', { class: 'kt-foot' }, '06:23 / 06:32  ·  BUILD 2006.06.23'),
+        isTouch() ? h('div', { class: 'kt-touch' }, this.t('a physical keyboard is required', '물리 키보드가 필요하다')) : null,
       ),
     );
   }
@@ -245,7 +285,7 @@ export class App {
         h(
           'div',
           { class: 'topbar' },
-          h('h1', {}, 'VIMLORE'),
+          h('h1', {}, 'KIRITSU'),
           h('div', { class: 'meta' }, `${rank[this.lang]} · ★ ${stars}/${this.totalPossible()} · ${this.progress.totalKeys} ${this.t('keys', '키')}`),
         ),
         h('div', { class: 'map-wrap' }, h('div', { class: 'map' }, ...this.mapFloors)),
@@ -353,7 +393,7 @@ export class App {
         h(
           'div',
           { class: 'topbar' },
-          h('h1', {}, 'VIMLORE'),
+          h('h1', {}, 'KIRITSU'),
           h('div', { class: 'meta' }, `${this.lang === 'ko' ? ch.title.ko : ch.title.en} · ★ ${chStars}/${ch.stages.length * 3}`),
         ),
         h('div', { class: 'map-wrap' }, h('div', { class: 'map' }, ...this.chapterStages)),
@@ -732,7 +772,7 @@ export class App {
     const card = h(
       'div',
       { class: 'card' },
-      h('div', { class: 'eyebrow' }, 'VIMLORE'),
+      h('div', { class: 'eyebrow' }, 'KIRITSU'),
       h('h2', {}, this.t('Settings', '설정')),
       h(
         'div',
@@ -763,7 +803,7 @@ export class App {
           onclick: () => {
             const code = encodeSave(this.progress);
             if (navigator.clipboard) void navigator.clipboard.writeText(code).catch(() => {});
-            this.openTextPrompt(this.t('Save code (copied) — keep it', '세이브 코드 (복사됨) — 보관하세요'), code, () => {}, true,
+            this.openTextPrompt(this.t('Save code (copied) — keep it', '세이브 코드 (복사됨) — 보관한다'), code, () => {}, true,
               this.t('Ctrl+A then Ctrl+C to copy · Esc closes', 'Ctrl+A 후 Ctrl+C로 복사 · Esc 닫기'));
           },
         }, this.t('export save', '세이브 내보내기')),
@@ -772,7 +812,7 @@ export class App {
           onclick: () => this.openTextPrompt(this.t('Paste a save code', '세이브 코드 붙여넣기'), '', (code) => {
             if (!code) return;
             const p = decodeSave(code);
-            if (!p) { alert(this.t('Not a valid code', '올바른 코드가 아닙니다')); return; }
+            if (!p) { alert(this.t('Not a valid code', '올바른 코드가 아니다')); return; }
             this.progress = { ...emptyProgress(), ...p };
             this.save();
             this.goAbout();
@@ -781,8 +821,8 @@ export class App {
       ),
       h('div', { class: 'rule' }),
       h('div', { class: 'brief ko' }, this.t(
-        'VIMLORE is a puzzle game played with a real Vim editor core. Every key you press is counted. Three stars means you solved it as elegantly as the level designer intended — not just eventually.',
-        'VIMLORE는 진짜 Vim 엔진으로 노는 퍼즐 게임입니다. 누른 모든 키가 집계됩니다. 별 세 개는 "언젠가 풀었다"가 아니라 "설계자가 의도한 만큼 우아하게 풀었다"는 뜻입니다.',
+        'KIRITSU is a puzzle game played with a real Vim editor core. Every key you press is counted. Three stars means you solved it as elegantly as the level designer intended — not just eventually.',
+        'KIRITSU는 진짜 Vim 엔진으로 노는 퍼즐 게임이다. 누른 모든 키가 집계된다. 별 세 개는 "언젠가 풀었다"가 아니라 "설계자가 의도한 만큼 우아하게 풀었다"는 뜻이다.',
       )),
       h('div', { class: 'rule' }),
       h('div', { class: 'row' }, h('span', {}, this.t('keys pressed', '누른 키')), h('b', {}, String(this.progress.totalKeys))),
@@ -791,8 +831,8 @@ export class App {
       h('div', { class: 'row', style: { marginTop: '6px' } }, h('span', {}, this.t('engine', '엔진')), h('b', {}, this.t('diff-tested against real vim', '실제 vim과 대조 검증'))),
       h('div', { class: 'actions' }, h('button', {
         class: 'btn',
-        onclick: () => this.openConfirm(this.t('Erase all progress?', '모든 진행을 지울까요?'),
-          this.t('This cannot be undone.', '이 작업은 되돌릴 수 없습니다.'),
+        onclick: () => this.openConfirm(this.t('Erase all progress?', '모든 진행을 지운다?'),
+          this.t('This cannot be undone.', '되돌릴 수 없다.'),
           () => {
             this.progress = emptyProgress();
             this.progress.lang = this.lang;
@@ -823,7 +863,7 @@ export class App {
     const card = h(
       'div',
       { class: 'card prompt-card' },
-      h('div', { class: 'eyebrow' }, 'VIMLORE'),
+      h('div', { class: 'eyebrow' }, 'KIRITSU'),
       h('h2', {}, title),
       hint ? h('div', { class: 'prompt-hint' }, hint) : null,
       input,
@@ -866,7 +906,7 @@ export class App {
     const card = h(
       'div',
       { class: 'card prompt-card' },
-      h('div', { class: 'eyebrow' }, 'VIMLORE'),
+      h('div', { class: 'eyebrow' }, 'KIRITSU'),
       h('h2', {}, title),
       h('div', { class: 'brief ko' }, body),
       h('div', { class: 'actions' }, yes, no),
@@ -914,7 +954,7 @@ export class App {
       h('div', { class: 'rule' }),
       h('div', { class: 'brief ko' }, this.t(
         'This whole site is keyboard-only: j/k move, Enter chooses, Esc goes back. In a chamber you are in NORMAL mode — h j k l move, i types, Esc returns. The briefing always states what you learn and what clears the room.',
-        '이 사이트 전체는 키보드만으로 동작합니다: j/k 이동, Enter 선택, Esc 뒤로. 챔버에서는 NORMAL 모드입니다 — h j k l 이동, i 입력, Esc 복귀. 브리핑에는 배울 것과 클리어 조건이 항상 적혀 있습니다.',
+        '이 사이트 전체는 키보드만으로 동작한다: j/k 이동, Enter 선택, Esc 뒤로. 챔버에서는 NORMAL 모드다 — h j k l 이동, i 입력, Esc 복귀. 브리핑에는 배울 것과 클리어 조건이 항상 적혀 있다.',
       )),
       h('div', { class: 'actions' }, h('button', { class: 'btn primary', onclick: () => this.closeHelp() }, this.t('CLOSE', '닫기'), h('kbd', {}, 'esc'))),
     );

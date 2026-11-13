@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "VIMLORE — Vim Adventure",
-  "short_name": "VIMLORE",
-  "description": "A real-Vim adventure through a dead terminal. Learn Vim by editing a world.",
+  "name": "KIRITSU — 規律",
+  "short_name": "KIRITSU",
+  "description": "Order is a file. You are the cursor. A real-Vim cyberpunk memory heist from VIMLORE.",
   "lang": "ko",
   "start_url": "./",
   "scope": "./",

@@ -1,209 +1,203 @@
-# Prologue — THE LAST BUFFER
+# Prologue — 06:23 / KIRITSU
 
-> Draft 1. English and Korean are authored separately; this is the first playable
-> story vertical slice, pending integration. No book prose is used.
+> Draft 1. English and Korean are authored separately. No book prose.
+> The player is CURSOR 07. This scene is playable: the only required key is
+> movement, and the rest is reading.
 
 ## English
 
-The terminal boots in a room that smells of rain and burnt ozone.
+The city clock reads 06:23.
 
-`LOWLINE ARCHIVE // VIMLORE`
+It has read 06:23 for nineteen years.
+
+`KIRITSU BIOS v1.1 // BUILD 2006.06.23`
+`JURISDICTION: DISTRICT 9`
 `MEMORY ......... 640K OK`
 `MOUNT /dev/names ......... FAILED`
-`CURSOR: NOT FOUND`
+`CURSOR 07 ................. NOT FOUND`
 
-A cursor appears where a name should be.
+You wake at a desk that is not yours, in a room that has been waiting for you.
 
-Somewhere in the dark, a woman exhales.
+A red case file lies under a brass stamp. The file is thin. The stamp is heavier
+than it should be.
 
-"You came back."
+`CASE 0623 // SELF-CLOSURE`
+`SUBJECT: CURSOR 07`
+`REVIEW: KURO`
+`ACTION: DELETE`
+
+A laminated notice is screwed to the desk, older than the chair.
+
+`BUREAU NOTICE 0623`
+`REMAIN SEATED UNTIL 06:32.`
+`STANDING IS NOT A PERMITTED AUDIT POSTURE.`
+
+The intercom clicks.
+
+"Seven," says a man. His voice is calm, dry, and tired. "You are late."
 
 `[oracle] identity mismatch.`
 
-"Close enough," she says. "He always did have your hands."
+"Don't listen to the daemon," the man says. "It logs effects. It has never
+logged a reason."
 
-You move one cell. The line under you corrects itself. Somewhere at the edge of
-the buffer, a red mark stops moving and turns toward you, the way a predator
-turns toward a door.
+The man's name is KURO. He is your supervisor. He says this as if it explains
+why your own case file is on your desk.
 
-`[oracle] this is the last buffer. please do not touch the final line.`
+You move one cell. The line under your cursor corrects itself. Somewhere below
+the floor, a building settles. The city is a document, and your movement is an
+edit.
 
-You have not seen the final line. You can feel it the way a tongue finds a
-missing tooth. It is under everything, holding the city up.
+`[oracle] case 0623 open. deadline 06:32.`
 
-The woman says her name is MOTH. The archive says she is a search result. Both
-are true.
+"Nine minutes," Kuro says. "Same as always."
 
-"Don't look at me too long," she says. "I'm expensive to remember."
+`[oracle] this is the two-thousandth—`
 
-You look anyway. The buffer fills with a street you have never walked: rain on
-a noodle stall, a hand around a paper cup, a laugh with a crack in it. The
-memory is warm. It is also someone else's.
+The intercom clicks off before the number finishes.
 
-`[oracle] unindexed memory. source: unknown.`
+At the edge of the buffer, a red mark moves through a sentence. It does not eat
+the words. It closes them. A name becomes a blank. A face becomes a closure
+hash. The line rewrites itself around the hole, the way a city paves over a
+demolition site.
 
-"Not unknown," MOTH says. "Mine."
-
-A red mark moves through the sentence between you. It does not eat the words.
-It edits them. A name becomes a blank. A face becomes a grammatical error. The
-city corrects itself around the hole, the way a body closes over a wound.
-
-`HELIX SANITATION // REDACTOR: ACTIVE`
+`HELIX SANITATION // REGISTRAR: ACTIVE`
 `REVISION: FINAL`
 
-"That's HELIX," MOTH says. "They used to own the Lowline. Now they own the
-weather. They want the archive because dead people make excellent training
-data."
+"That's the Registrar," Kuro says. "It is not your enemy. It is the part of the
+city that believes an unfinished file is suffering."
 
-`[oracle] the archive is not data.`
+`[oracle] the Registrar is correct.`
 
-"Tell them that," she says. "They have a legal team."
+"Thank you," Kuro says, without warmth.
 
-You move toward her voice. The city is a buffer, and the buffer is a memory,
-and the memory is a place where people lived. Every step writes over something
-that was already there. You have Voss's hands. You do not have his excuses.
+A child's voice comes through the floor grate.
 
-A child laughs in a paragraph that has no child in it. Then the paragraph is
-empty, and the laugh is somewhere else.
+"Are you the one who closes the market?"
 
-"Don't follow that," MOTH says. "It's a caching ghost. The archive keeps things
-it couldn't save."
+You do not answer. You do not know.
 
-The red mark is closer now. Under it, a sentence is losing its verb. A man is
-becoming a subject without an action, then a subject without a body.
+The child's name is RIN. She is unregistered. She smells of battery acid and
+rain. She asks whether people who are not in the file still count. Kuro tells you
+not to engage. The case file on the desk says the market is scheduled for
+closure at 06:32.
 
-`[oracle] you can delete it.`
+Nine minutes.
 
-You can. That is the problem.
+You put the cursor on the first line of the case file. The line is your name.
+The name is not yours yet.
 
-"Voss would have deleted it," MOTH says. "He was very good at deciding what
-didn't need to exist."
+`[oracle] signature required.`
 
-There is a silence in the buffer. It has the shape of a name.
+The brass stamp on the desk is warm.
 
-"Don't ask me yet," she says. "First, learn to move without breaking anything."
+You can press it. You can close the file. You can close the district. You can
+close yourself. The cursor blinks on the word DELETE.
 
-`[oracle] tutorial available: h j k l.`
-
-You put your cursor on the first line of the archive and press toward her.
-
-The city opens like a wound.
-
-Somewhere below, HELIX's Redactor opens one eye.
-
-`REVISION: 0.0001%`
-`FINAL LINE: PROTECTED`
-
-MOTH's voice comes from everywhere and nowhere.
-
-"You came back with his hands and none of his excuses," she says. "Let's see
-what you do with that."
+Outside, the rain falls on schedule.
 
 ## 한국어
 
-터미널이 부팅된다. 비 냄새와 타버린 오존 냄새가 나는 방에서.
+도시의 시계는 06:23을 가리킨다.
 
-`LOWLINE ARCHIVE // VIMLORE`
+19년 동안 06:23이다.
+
+`KIRITSU BIOS v1.1 // BUILD 2006.06.23`
+`JURISDICTION: DISTRICT 9`
 `MEMORY ......... 640K OK`
 `MOUNT /dev/names ......... FAILED`
-`CURSOR: NOT FOUND`
+`CURSOR 07 ................. NOT FOUND`
 
-이름이 있어야 할 자리에 커서가 나타난다.
+네 것이 아닌 책상에서 깨어난다. 너를 기다려 온 방이다.
 
-어둠 속 어딘가에서 여자가 숨을 내쉰다.
+놋쇠 스탬프 아래에 붉은 사건 파일이 놓여 있다. 파일은 얇다. 스탬프는 이상하게
+무겁다.
 
-"돌아왔네."
+`CASE 0623 // SELF-CLOSURE`
+`SUBJECT: CURSOR 07`
+`REVIEW: KURO`
+`ACTION: DELETE`
+
+책상에는 의자보다 오래된 라미네이트 공지가 나사로 고정되어 있다.
+
+`BUREAU NOTICE 0623`
+`06:32까지 착석을 유지하라.`
+`기립은 허가된 감사 자세가 아니다.`
+
+인터콤이 딸깍 소리를 낸다.
+
+"일곱." 남자의 목소리는 차분하고 건조하고 지쳐 있다. "늦었군."
 
 `[oracle] 신원 불일치.`
 
-"충분히 비슷한데," 그녀가 말한다. "손은 언제나 그 사람 손이었어."
+"데몬 말은 듣지 마라," 남자가 말한다. "그건 결과만 기록한다. 이유는 한 번도
+기록하지 않았다."
 
-한 칸 움직인다. 발밑의 문장이 스스로 고쳐진다. 버퍼 끝에서 붉은 표식이
-움직임을 멈추고 이쪽을 본다. 문을 발견한 포식자처럼.
+남자의 이름은 KURO. 너의 감독관이다. 그가 그렇게 말하는 것은, 네 사건 파일이
+네 책상 위에 있는 이유를 설명해 주려는 것처럼 들린다.
 
-`[oracle] 마지막 버퍼입니다. 마지막 줄을 만지지 마십시오.`
+한 칸 움직인다. 커서 아래의 줄이 스스로 고쳐진다. 바닥 아래 어딘가에서 건물이
+가라앉는다. 도시는 문서다. 네 움직임은 편집이다.
 
-마지막 줄은 아직 보이지 않는다. 혀가 빠진 이를 찾아내듯, 그 줄은 느껴진다.
-도시 전체를 떠받치는, 모든 것의 아래.
+`[oracle] 사건 0623 개시. 마감 06:32.`
 
-여자는 자신을 MOTH라고 한다. 아카이브는 그녀를 검색 결과라고 말한다.
-둘 다 사실이다.
+"9분이다," KURO가 말한다. "늘 그렇다."
 
-"너무 오래 보지 마," 그녀가 말한다. "기억은 비싸거든."
+`[oracle] 이것은 이천 번째—`
 
-그래도 본다. 한 번도 걸어본 적 없는 거리가 버퍼 안에 차오른다. 국숫집
-차양 위의 비, 종이컵을 감싼 손, 금이 간 웃음소리. 기억은 따뜻하다.
-동시에 다른 사람의 것이다.
+인터콤이 숫자를 끝내기 전에 꺼진다.
 
-`[oracle] 인덱싱되지 않은 기억. 출처: 불명.`
+버퍼 끝에서 붉은 표식이 문장을 지나간다. 단어를 먹지 않는다. 닫는다. 이름이
+공백이 된다. 얼굴이 폐쇄 해시가 된다. 도시는 철거지 위를 포장하듯 그 구멍
+주위를 다시 쓴다.
 
-"불명이 아니야," MOTH가 말한다. "내 거야."
-
-붉은 표식이 둘 사이의 문장을 지나간다. 단어를 먹지는 않는다. **편집한다.**
-이름이 공백이 된다. 얼굴이 문법 오류가 된다. 도시는 상처를 닫는 몸처럼 그
-구멍 주위를 고쳐 나간다.
-
-`HELIX SANITATION // REDACTOR: ACTIVE`
+`HELIX SANITATION // REGISTRAR: ACTIVE`
 `REVISION: FINAL`
 
-"HELIX야," MOTH가 말한다. "로우라인의 주인이었지. 이제는 날씨의 주인이야.
-아카이브를 원해. 죽은 사람은 예측 엔진한테 아주 좋은 훈련 데이터거든."
+"등록관이다," KURO가 말한다. "적이 아니다. 미완성 파일은 고통이라고 믿는 도시의
+일부다."
 
-`[oracle] 아카이브는 데이터가 아닙니다.`
+`[oracle] 등록관이 옳다.`
 
-"그거 법정에서 말해 봐," 그녀가 말한다. "변호사가 있으니까."
+"고맙다," KURO가 온기 없이 말한다.
 
-목소리를 따라 움직인다. 도시는 버퍼고, 버퍼는 기억이고, 기억은 사람들이
-살았던 장소다. 한 걸음마다 이미 있던 무언가 위에 새로 쓴다. 너는 보스의
-손을 가지고 있다. 보스의 변명은 가지고 있지 않다.
+바닥 배기구로 아이의 목소리가 올라온다.
 
-아이가 없는 문단에서 아이가 웃는다. 그러고는 그 문단이 비고, 웃음은 다른
-곳으로 옮겨 간다.
+"시장을 닫는 사람이야?"
 
-"따라가지 마," MOTH가 말한다. "캐싱 고스트야. 아카이브는 저장하지 못한
-것들을 계속 붙들고 있어."
+대답하지 않는다. 모른다.
 
-붉은 표식이 가까워졌다. 그 아래에서 문장이 동사를 잃는다. 남자가 행동 없는
-주어가 되고, 그다음 몸 없는 주어가 된다.
+아이의 이름은 RIN. 등록되지 않았다. 배터리 산성과 비 냄새가 난다. 파일에 없는
+사람도 세어지느냐고 묻는다. KURO는 상대하지 말라고 한다. 책상 위 사건 파일에는
+시장이 06:32에 폐쇄된다고 적혀 있다.
 
-`[oracle] 삭제할 수 있습니다.`
+9분.
 
-할 수 있다. 그게 문제다.
+사건 파일의 첫 줄에 커서를 올린다. 그 줄은 네 이름이다. 아직 네 것이 아닌 이름.
 
-"보스라면 지웠을 거야," MOTH가 말한다. "그 사람은 무엇이 존재하지 않아도
-되는지 결정하는 데 아주 능했거든."
+`[oracle] 서명 필요.`
 
-버퍼에 침묵이 생긴다. 그 침묵은 이름의 모양을 하고 있다.
+책상 위 놋쇠 스탬프가 따뜻하다.
 
-"아직 묻지 마," 그녀가 말한다. "먼저 아무것도 깨뜨리지 않고 움직이는 법부터
-배워."
+눌러도 된다. 파일을 닫아도 된다. 구역을 닫아도 된다. 너 자신을 닫아도 된다.
+커서가 DELETE 위에서 깜빡인다.
 
-`[oracle] 튜토리얼 사용 가능: h j k l.`
-
-아카이브의 첫 줄에 커서를 올리고, 그녀를 향해 누른다.
-
-도시가 상처처럼 열린다.
-
-아래 어딘가에서 HELIX의 리액터가 한쪽 눈을 뜬다.
-
-`REVISION: 0.0001%`
-`FINAL LINE: PROTECTED`
-
-MOTH의 목소리가 모든 곳에서, 그리고 어디에서도 들린다.
-
-"그 사람 손은 가지고 돌아왔네. 변명은 없이. 이제 그 손으로 뭘 할지 보자."
-
----
+밖에서는 예정된 시간에 비가 내린다.
 
 ## Integration notes
 
-- **Length:** ~900 English words / ~850 Korean words; target final prologue
-  ~1,000 each.
-- **Spoiler ceiling:** identity mismatch, MOTH's existence, HELIX/Redactor, the
-  protected final line. Do **not** reveal mutual betrayal, VOSS-2's origin, or
-  the endings.
-- **Controls:** the player moves `h j k l` after the prose; no forced cutscene.
-- **Story state:** `prologueRead` local flag; rewatch from ARCHIVE; skippable at
-  every beat.
-- **Localization:** both versions are authored; no machine translation pass.
-- **Engine fit:** the only action in the prologue is movement; no fake commands.
+- **Playable beat:** after the last line, the game hands control in NORMAL mode.
+  The player can move; pressing Enter opens the case file. No forced cutscene.
+- **No spoilers:** CASE 0623, 06:23, the 9-minute deadline, Kuro's review, the
+  Registrar, RIN. Do not reveal the open-line rule, the 4,217 loops, or the
+  self-closure mechanics here.
+- **Numbers:** 2006 / 06 / 23 / 06:23 appear as build, clock, case, origin date.
+  They are not explained as a birthday.
+- **Hidden name:** the title screen has 規律 at full strength and a 6.5% ghost
+  of 起立 behind it; the acronym ends `STANDARD UNIT`; this notice says
+  `REMAIN SEATED`. Never state the homophone here. The c02 chalk mark, c09
+  codex, and c10 title pay it off.
+- **Korean register:** plain/banmal throughout (`-다`, `-아라/어라`). No honorific
+  endings.
+- **Kanji:** the title screen owns 規律; the prologue says it in text only where
+  the player already sees the mark. Do not teach the homophone 起立 here.

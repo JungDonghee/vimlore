@@ -1,13 +1,13 @@
-# Install VIMLORE as an app (PWA)
+# Install KIRITSU as an app (PWA)
 
-VIMLORE is a Chromium-installable PWA. The site must be served over HTTPS
+KIRITSU is a Chromium-installable PWA. The site must be served over HTTPS
 (GitHub Pages is); `file://` cannot install or run a service worker.
 
 ## Install
 
 - **Chrome / Edge desktop:** use the install icon in the address bar, or
-  `⋮ → Install VIMLORE…`. When the browser offers it, the in-game
-  `INSTALL VIMLORE` chip appears too.
+  `⋮ → Install KIRITSU…`. When the browser offers it, the in-game
+  `INSTALL KIRITSU` chip appears too.
 - **Chrome on Android:** `⋮ → Install app` / `Add to Home screen`. The
   install chip appears when Chromium fires `beforeinstallprompt`.
 - **iPhone:** Safari has no Chromium install prompt; use Share → Add to Home

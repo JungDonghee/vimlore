@@ -2,7 +2,7 @@
 > **Do not edit by hand.** Run `npm run status:write` after regenerating the
 > oracle/matrix/count/state reports and the build. `npm run status:check` is a
 > CI gate. Gzip is intentionally omitted: local zlib-ng and CI stock zlib
-> differ; the bundle budget owns that (gzip ceiling 87,000 B).
+> differ; the bundle budget owns that (gzip ceiling 100,000 B).
 | metric | value |
 |---|---:|
 | oracle cases | 373 |
@@ -18,8 +18,8 @@
 | game-used solutions / undo diagnostic | 51 of 51 / 51 of 51 |
 | state matrix matched / total / open | 21,593 / 21,712 / 119 |
 | state open by field | undo 110, reg 10, regtype 8 |
-| built single file (raw) | 277,879 B |
-| raw ceiling | 278,000 B |
+| built single file (raw) | 292,549 B |
+| raw ceiling | 320,000 B |
 ## Reports
 - Oracle: `tools/oracle-diff.ts` + `tests/vim-expected.json`
 - Grammar matrix: `npm run matrix` → `docs/MATRIX_REPORT.md`

@@ -44,7 +44,7 @@ const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'networkidle' });
-await page.waitForTimeout(900);
+await page.waitForTimeout(2600);
 
 const manifest = await page.evaluate(async () => {
   const link = document.querySelector('link[rel="manifest"]');
@@ -84,21 +84,21 @@ check(portrait.coarse, 'Playwright emulates a coarse pointer');
 await page.screenshot({ path: join(shotDir, 'portrait-gate.png') });
 
 await page.setViewportSize({ width: 844, height: 390 });
-await page.waitForTimeout(400);
+await page.waitForTimeout(1900);
 const landscape = await page.evaluate(() => {
-  const mark = document.querySelector('.title-mark')?.getBoundingClientRect();
-  const press = document.querySelector('.press')?.getBoundingClientRect();
-  const foot = document.querySelector('.title-foot:not(.ko)')?.getBoundingClientRect();
+  const mark = document.querySelector('.kt-main')?.getBoundingClientRect();
+  const press = document.querySelector('.kt-press')?.getBoundingClientRect();
+  const foot = document.querySelector('.kt-foot')?.getBoundingClientRect();
   return {
     gate: getComputedStyle(document.querySelector('#pwa-rotate')).display,
     dx: mark ? Math.abs(mark.x + mark.width / 2 - innerWidth / 2) : 999,
     overlap: !!(press && foot && foot.height > 0 && press.bottom > foot.top),
-    bootOverlap: (() => { const b = document.querySelector('.bootlog').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return b.left < m.right && b.right > m.left && b.top < m.bottom && b.bottom > m.top; })(),
-    footOverlap: (() => { const f = document.querySelector('.title-foot:not(.ko)').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return f.left < m.right && f.right > m.left && f.top < m.bottom && f.bottom > m.top; })(),
-    bootlog: getComputedStyle(document.querySelector('.bootlog')).display,
-    foot: getComputedStyle(document.querySelector('.title-foot:not(.ko)')).display,
-    bootRect: document.querySelector('.bootlog').getBoundingClientRect().toJSON(),
-    footRect: document.querySelector('.title-foot:not(.ko)').getBoundingClientRect().toJSON(),
+    bootOverlap: (() => { const b = document.querySelector('.kt-boot').getBoundingClientRect(); const m = document.querySelector('.kt-main').getBoundingClientRect(); return b.left < m.right && b.right > m.left && b.top < m.bottom && b.bottom > m.top; })(),
+    footOverlap: (() => { const f = document.querySelector('.kt-foot').getBoundingClientRect(); const m = document.querySelector('.kt-main').getBoundingClientRect(); return f.left < m.right && f.right > m.left && f.top < m.bottom && f.bottom > m.top; })(),
+    bootlog: getComputedStyle(document.querySelector('.kt-boot')).display,
+    foot: getComputedStyle(document.querySelector('.kt-foot')).display,
+    bootRect: document.querySelector('.kt-boot').getBoundingClientRect().toJSON(),
+    footRect: document.querySelector('.kt-foot').getBoundingClientRect().toJSON(),
   };
 });
 check(landscape.gate === 'none', 'landscape hides the gate');
@@ -119,7 +119,7 @@ try {
   await page.waitForTimeout(800);
   const title = await page.title();
   const text = await page.locator('#app').innerText();
-  check(title === 'VIMLORE' && text.replace(/\s+/g, '').includes('VIMLORE'), 'offline reload is served from the cache');
+  check(title.startsWith('KIRITSU') && (text.includes('ORDER') || text.includes('kiritsu')), 'offline reload is served from the cache');
   await page.screenshot({ path: join(shotDir, 'offline-title.png') });
 } catch (e) {
   check(false, `offline reload failed: ${e.message.split('\n')[0]}`);
