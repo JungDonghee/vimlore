@@ -254,3 +254,14 @@ story canon must not change.
   131,233 gzip, PWA check+QA, browser audit 50/50 clean.
 - Freeze engine/campaign/story until the 23:45 closeout task. Do not start
   story/LIVE/puzzle work.
+
+## 23:45 final checkpoint
+
+All requested gates green: tests 39 of 39, level lint 51 of 51, tsc clean,
+oracle 373 of 373, level-oracle 51 of 51 solution+undo, state matrix
+21,608/21,712 (104 open: undo 95, reg 10, regtype 8), invariants 0 errors,
+build 403,106 raw / 131,233 gzip, PWA check+QA, presentation, Korean,
+doc-check and STATUS. PWA QA refreshed the landscape title screenshot.
+No campaign, first-clear, par, gate, or story change. Engine remains frozen at
+the 104-open baseline; 15 full-matrix cases were fixed this window with no new
+failures. Automation stops at 23:58 KST.
