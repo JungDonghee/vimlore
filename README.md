@@ -94,7 +94,7 @@ integrated story → full Practical Vim engine. The ordered plan is
   buffers/files/splits/tabs. Deferred is not rejected; the roadmap is
   [`FUTURE_EDITOR.md`](docs/FUTURE_EDITOR.md).
 - **It runs on a potato.** Zero runtime dependencies, a hard
-  **320 kB / 100 kB** bundle gate, one canvas with a cached opaque composite
+  **420 kB / 140 kB** bundle gate, one canvas with a cached opaque composite
   frame, cursorline/numbers on a cheap FX pass, and a CRT switch for weak
   devices. Current measured: mobile **60.5 FPS**, desktop headless
   **55.4–57.6 FPS**; [`BROWSER_QA.md`](docs/BROWSER_QA.md). 144fps is not claimed.
@@ -116,10 +116,13 @@ integrated story → full Practical Vim engine. The ordered plan is
 
 ## Design
 
-A red **hanko seal** carrying the sharp Mincho **規律**, framed by a thin CRT
-grid: order, discipline, and the Bureau's red pen. The Japanese kanji are vector
-outlines; the favicon is a reduced K seal. Rationale and measurements are in
-[`docs/DESIGN.md`](docs/DESIGN.md), the mark at
+The title is **kanji-first**: `規律` is drawn on a CRT vector grid from cleaned
+Ouyang Xun brush scans, revealed behind a moving laser beam. There is no red
+seal box around the name. `kiritsu` is a **code identifier** in the boot strip
+(`CALL kiritsu`), not a corner label. Falling petals and scanlines carry the
+"wasted years / cherry blossoms" mood; the pavilion branch was removed because
+its organic curves fought the vector display. Rationale and measurements are in
+[`docs/DESIGN.md`](docs/DESIGN.md); the mark is
 [`public/icons/icon-512.png`](public/icons/icon-512.png).
 
 ## Compare

@@ -43,7 +43,7 @@
 - Practical Vim: 48 of 123 tips represented; 75 gaps = 39 drill candidates,
   28 deferred surfaces, 8 review.
 - Modern Vim: 28 tips, 0 playable (deferred).
-- Bundle: 293,206 raw / 94,115 gzip (ceiling 320,000 / 100,000); ~12.5 kB raw
+- Bundle: 402,705 raw / 132,489 gzip (ceiling 420,000 / 140,000); ~12.5 kB raw
   headroom. Any real feature requires a deliberate budget decision.
 - PWA installability 0 errors; offline; landscape gate; 50-screen audit clean.
 
@@ -267,7 +267,7 @@ inside 300,000 B.
 - **Phase 2 (story vertical slice)** estimate: +8–12 kB bilingual (prologue,
   one interlude, codex, transmissions).
 - Full story (10 chapters/endings): +20–35 kB raw.
-- Target after measurement: **≤ 320,000 raw / ≤ 100,000 gzip**, with a
+- Target after measurement: **≤ 420,000 raw / ≤ 140,000 gzip** (single-file title asset included), with a
   deliberate budget commit; if the slice exceeds it, cut content, do not waive
   the ceiling silently.
 - Story text may be lazy-loaded as a cached `story.json` if initial bundle

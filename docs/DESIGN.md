@@ -1,61 +1,50 @@
-# KIRITSU — design notes
+# KIRITSU — design notes (final title)
 
-## The mark
+## Rule
 
-**KIRITSU** is the game; **VIMLORE** is the world/series. The identity is a
-**red hanko seal** carrying the sharp, hand-brushed **規律** in cream, framed by
-a thin CRT bezel and phosphor grid. No generic robot, no neon gradient, no
-stock "hacker" decoration.
+**Kanji is the name.** `規律` is the only masthead. `kiritsu` is a code
+identifier in the boot strip, not a corner label. Russian lettering was removed:
+it did not belong to the CRT vector language.
 
-- Kanji: **規律** (order, discipline / *kiritsu*), drawn from **Yuji Boku**
-  brush-regular outlines. The same sound **起立** (*kiritsu*, standing up) is
-  reserved for the hidden ending. The outline is vector, not a font dependency.
-- Seal: oxidized vermilion, slightly displaced edge; the red is the Bureau's
-  correction ink, not decoration.
-- Frame: 2px green rule, four square corners, low-opacity vector grid.
-- Cursor: a pale block at the seal's foot; the player is the cursor.
-- Microtext: `KIRITSU // 2091`.
+## Title
 
-The favicon is a reduced **K** seal: it survives 16px downscaling, while the
-full mark carries the kanji at 192/512 and on the title screen.
+- **Ouyang Xun brush**: real Ouyang-style scans of 規/律, cleaned, vectorised,
+  then normalised into equal cells so the pair reads as one word. No red seal
+  box, no hanko frame, no duplicate colour per glyph.
+- **Laser write**: bootlog types; a red beam crosses; the brush ink is revealed
+  behind it with stepped clipping; one flash; caption and press rise.
+- **CRT vector display**: 80 px phosphor grid, scanlines, a slow beam sweep,
+  monospace telemetry, phosphor green text, case/redaction accents.
+- **Sakura**: petals only. The organic branch was removed because its curves
+  fought the vector display.
+- **Code-native name**: `CALL kiritsu` in the bottom assembly strip. The code
+  is part of the design, not decoration in a corner.
+- **Numbers**: `2006.06.23`, `CASE 0623`, `06:23`, `MOV EAX, 0x0623`.
+- **Layout**: original VIMLORE vertical axis — bootlog, kanji, caption,
+  tagline, press; metadata rails at top and bottom.
 
-## Title screen
+## Colours
 
-`KIRITSU` wordmark, red **規律**, then:
+| token | use |
+|---|---|
+| `#050b08` | CRT black |
+| `#a9ffc5` / `#c9ffda` | phosphor / telemetry |
+| `#f2d8c9` | Ouyang ink |
+| `#ff5a72` | laser, case, open line |
+| sakura `#ff9fba` → `#ffe0e8` | falling petals |
 
-> KIRITSU — ORDER, DISCIPLINE  
-> ORDER IS A FILE. YOU ARE THE CURSOR.  
-> VIMLORE // A REAL-VIM CYBERPUNK MEMORY HEIST
+## Responsive
 
-The boot log carries the in-world numbers **2006.06.23** and
-**CASE 0623 // 06:23**. They are not random decoration: they are the build,
-the frozen city clock, and the final self-closure case. The title screen does
-not explain them; the story does.
+- Desktop: centered 430 px kanji stage, bootlog, code strip.
+- Short landscape: 300 px stage, one-line code strip, compressed bootlog.
+- Portrait: landscape gate.
+- Reduced motion: no beam, full ink, no petal animation.
 
-## Typography
+## Asset pipeline
 
-- The wordmark uses the CRT serif/mono contrast already in the game.
-- The kanji use a **hand-brushed regular script** — sharp, thinner than a black
-  Mincho, visibly handwritten.
-- Microcopy is monospace, tracked wide, uppercase. Korean copy is plain/banmal
-  only; see [`KOREAN_STYLE.md`](KOREAN_STYLE.md).
-- Red is reserved for the seal, deletion, and danger.
+- Ouyang scans → component clean → Potrace → balanced cell SVG.
+- Title SVG is inlined into `dist/vimlore.html`; the hosted build loads it as a
+  normal public asset.
+- PWA icons remain the red seal `規律`; favicon is the K seal.
 
-## Layout
-
-- Desktop: wordmark, kanji, meaning, tagline, descriptor, press.
-- Short landscape: bootlog left, wordmark centered, kanji below, description,
-  press, footer; no vertical overlap.
-- Portrait phone: the landscape gate takes precedence; the title is behind it.
-
-## Regenerate
-
-```bash
-npm run pwa:icons      # vector seal -> PNGs (dev-only Playwright)
-npm run pwa:check      # manifest/icons/SW/split (CI)
-npm run pwa:qa         # installability, gate, offline, centering
-npm run presentation:check
-```
-
-Attribution: [`KANJI_ATTRIBUTION.md`](KANJI_ATTRIBUTION.md). No third-party
-fonts are fetched at runtime; the kanji are baked outlines.
+Attribution: [`KANJI_ATTRIBUTION.md`](KANJI_ATTRIBUTION.md).

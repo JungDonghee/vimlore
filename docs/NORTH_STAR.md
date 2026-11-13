@@ -57,7 +57,7 @@ deliberate practice and VimGolf, without requiring a separate course.**
 - Full state matrix: 119 open (undo/register edge cases); game-used level
   solutions: 51 of 51; solution+undo diagnostic: 51 of 51. Game-used target
   remains 0, so full-engine perfection is still an open debt.
-- Bundle: 293,206 raw / 94,115 gzip (gate 300k/95k).
+- Bundle: 402,705 raw / 132,489 gzip (gate 300k/95k).
 - Browser desktop headless: 57.6 FPS; mobile 60.5 FPS; audit 38 screens clean;
   144 not verifiable here.
 

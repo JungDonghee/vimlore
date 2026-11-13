@@ -3,9 +3,10 @@
  * this ceiling is the line that fails CI: future features must pay for
  * themselves or the budget must be raised deliberately in the same commit.
  *
- * Raised to 320,000 raw / 100,000 gzip on 2026-11-13 for the KIRITSU rebrand:
- * inline Yuji Boku 規律 + ghost 起立 outlines, title copy, seal icon plumbing and
- * the story-first slices. Measured 293,206 raw / 94,115 gzip at the raise.
+ * Raised to 420,000 raw / 140,000 gzip on 2026-11-13 for the single-file title:
+ * dist/vimlore.html now inlines the balanced Ouyang 規律 SVG as a data URI so
+ * the downloadable file opens with no sibling assets. Measured 402,705 raw /
+ * 132,489 gzip at the raise. The JS/CSS page remains ~292 kB raw / ~89 kB gzip.
  *
  * MAX_RAW is the deterministic hard gate. MAX_GZIP carries a measured ~1 kB
  * allowance because the same dist compresses differently across zlib builds:
@@ -15,8 +16,8 @@
 import { readFileSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
-export const MAX_RAW = 320_000;
-export const MAX_GZIP = 100_000;
+export const MAX_RAW = 420_000;
+export const MAX_GZIP = 140_000;
 const file = new URL('../dist/vimlore.html', import.meta.url);
 const buf = readFileSync(file);
 const gz = gzipSync(buf, { level: 9 }).length;

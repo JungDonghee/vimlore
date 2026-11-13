@@ -82,7 +82,7 @@ Shipped: static vector frame/corners/grid. Next: instrument HUD readouts,
 stronger vector language, and only if bundle/FPS remain inside budget.
 - mobile 390×844 ≥50 FPS, desktop headless ≥50;
 - 144fps only with a 144Hz/GPU measurement, never a claim;
-- zero runtime deps; bundle gate 320k/100k unless a measured raise is approved.
+- zero runtime deps; bundle gate 420k/140k unless a measured raise is approved.
 
 ## Gates for every future change
 

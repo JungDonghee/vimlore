@@ -2,7 +2,7 @@
  * Post-build: inline the JS + CSS into a single self-contained index.html so the
  * game can be emailed, opened from a USB stick, or hosted anywhere.
  */
-import { readFileSync, writeFileSync, readdirSync, statSync, copyFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, statSync, copyFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, extname } from 'node:path';
 
 const dist = 'dist';
@@ -19,6 +19,14 @@ for (const name of assets) {
     const tag = `<style>${body}</style>`;
     html = html.replace(new RegExp(`<link[^>]*href="[^"]*${name}"[^>]*>`), () => tag);
   }
+}
+
+// The title kanji is an external SVG in the normal build. Inline it here so
+// the downloadable single HTML can open from a USB stick without sibling files.
+const kanjiPath = join(dist, 'kanji', 'ou-guilv-tight.svg');
+if (existsSync(kanjiPath)) {
+  const data = `data:image/svg+xml;base64,${Buffer.from(readFileSync(kanjiPath)).toString('base64')}`;
+  html = html.replaceAll('./kanji/ou-guilv-tight.svg', data);
 }
 
 // The downloadable single-file build stays self-contained: PWA shell tags
