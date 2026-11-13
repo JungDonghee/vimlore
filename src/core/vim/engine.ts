@@ -886,7 +886,9 @@ export class Vim {
     this.yankMotionKey = motionKey;
     this.opMotionFrom = from;
     this.opMotionTo = to;
+    this.opMotionKey = motionKey;
     this.applyOp(op, range);
+    this.opMotionKey = '';
     if ((op.key === 'g~' || op.key === 'gu' || op.key === 'gU') && motionKey === 'G' && range.linewise && to.line < from.line) {
       const l1 = Math.min(range.start.line, range.end.line);
       this.cursor = { line: l1, col: M.firstNonBlank(this.buf, l1) };
@@ -903,6 +905,8 @@ export class Vim {
   rangeInclusive = false;
   /** True when the operator's range came from a text object. */
   private opTextObject = false;
+  /** Motion key of the operator currently being applied (undo-column rules). */
+  private opMotionKey = '';
 
   /** Motion endpoints of the operator that is currently being applied. */
   private opMotionFrom: Pos | null = null;
@@ -1349,30 +1353,39 @@ export class Vim {
       const count = l2 - l1 + 1;
       const undoCol = this.cursor.col;
       const wasVisual = this.mode.startsWith('visual');
+      const sameStart = r.start.line === this.cursor.line;
       const removed = this.buf.lines.splice(l1, count, ...(change ? [''] : []));
       const becameEmpty = this.buf.lines.length === 0;
       if (becameEmpty) this.buf.setLines(['']);
-      // Vim undo lands on the last removed line at the command's column; if
-      // the buffer became empty it lands on the first removed line instead.
+      // Vim's linewise delete undoes to the first line of the range. A range
+      // that started on the command line keeps the command column; a range
+      // that crossed from another line (gg, %, B, ...) uses that line's first
+      // non-blank. `dd`/`2dd` have their own probed column rules.
+      const firstStart = (() => {
+        const line = before.lines[l1] ?? '';
+        const first = line.search(/[^ \t]/);
+        return first < 0 ? Math.max(0, line.length - 1) : first;
+      })();
+      let linewiseDeleteCol = wasVisual
+        ? 0
+        : this.op?.doubled
+          ? (this.op.count || 1) === 1
+            ? Math.min(undoCol, firstStart)
+            : undoCol
+          : this.opTextObject || l2 === l1
+            ? 0
+            : sameStart
+              ? undoCol
+              : firstStart;
+      // `dk` is the exception to the range-start model: non-empty undo stays
+      // at column 0, while an emptied buffer keeps the command column.
+      if (!wasVisual && this.opMotionKey === 'k') linewiseDeleteCol = becameEmpty ? undoCol : 0;
       before.undoCursor = change
         ? {
             line: l1 === l2 ? l1 : l1 + 1,
             col: wasVisual ? this.visualAnchor?.col ?? 0 : this.opTextObject || l1 === l2 ? 0 : undoCol,
           }
-        : becameEmpty
-          ? { line: l1, col: this.opTextObject || wasVisual || (this.opMotionFrom?.line ?? 0) > l1 ? 0 : before.lines.length === 1 ? 0 : undoCol }
-          : {
-              line: l1,
-              col: this.op?.doubled
-                ? (this.op.count || 1) === 1
-                  ? Math.min(undoCol, (() => {
-                      const line = before.lines[l1] ?? '';
-                      const first = line.search(/[^ \t]/);
-                      return first < 0 ? Math.max(0, line.length - 1) : first;
-                    })())
-                  : undoCol
-                : 0,
-            };
+        : { line: l1, col: linewiseDeleteCol };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);

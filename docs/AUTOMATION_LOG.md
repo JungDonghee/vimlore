@@ -116,3 +116,18 @@ story canon must not change.
   regtype 8). `m-8864` and `m-14904` fixed; no new failures.
 - Added regression tests for both. Oracle 373 of 373, level-oracle 51 of 51
   solution+undo, tests green, build/budget/PWA green.
+
+## Round 6 — linewise motion deletes
+
+- Probed Vim's linewise delete undo for `dgg`, `dG`, `dB`, `2dgg`, `dk`:
+  - a multi-line motion delete lands on the range's first line;
+  - if the range starts on the command line, keep the command column;
+  - if it crossed from another line, use that line's first non-blank;
+  - `dk` is the exception: non-empty undo is column 0, an emptied buffer keeps
+    the command column.
+- Implemented only for non-doubled multi-line motion deletes; text objects,
+  single-line deletes, visual ranges, and `dd` keep their existing probed rules.
+- State matrix: **117 → 108** (matched 21,604; undo 99; reg 10; regtype 8).
+  No new failures; 11 old failures removed.
+- Added `dgg`/`2dgg`/`dk` regression tests. Oracle 373 of 373, level-oracle
+  51 of 51 solution+undo, build/budget/PWA green.

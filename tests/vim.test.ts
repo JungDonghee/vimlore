@@ -144,6 +144,36 @@ test('single dd keeps an indented command column on undo (Vim)', () => {
   assert.deepEqual(v.cursor, { line: 0, col: 2 });
 });
 
+test('linewise delete undo lands on the range start (Vim)', () => {
+  const a = new Vim({ text: 'foo bar\nbaz qux' });
+  a.cursor = { line: 1, col: 1 };
+  a.feedString('dgg');
+  a.feedString('u');
+  assert.equal(a.text, 'foo bar\nbaz qux');
+  assert.deepEqual(a.cursor, { line: 0, col: 0 });
+
+  const b = new Vim({ text: 'if (x) {\n  y();\n}' });
+  b.cursor = { line: 0, col: 2 };
+  b.feedString('2dgg');
+  b.feedString('u');
+  assert.equal(b.text, 'if (x) {\n  y();\n}');
+  assert.deepEqual(b.cursor, { line: 0, col: 2 });
+});
+
+test('dk keeps the Vim exception columns on undo', () => {
+  const a = new Vim({ text: 'if (x) {\n  y();\n}' });
+  a.cursor = { line: 2, col: 0 };
+  a.feedString('dk');
+  a.feedString('u');
+  assert.deepEqual(a.cursor, { line: 1, col: 0 });
+
+  const b = new Vim({ text: 'foo bar\nbaz qux' });
+  b.cursor = { line: 1, col: 1 };
+  b.feedString('dk');
+  b.feedString('u');
+  assert.deepEqual(b.cursor, { line: 0, col: 1 });
+});
+
 test('whole-line charwise yanks are linewise registers', () => {
   const a = new Vim({ text: 'a\n\nb\n\nc' });
   a.feedString('y)');
