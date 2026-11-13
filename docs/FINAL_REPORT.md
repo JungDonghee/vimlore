@@ -63,6 +63,14 @@
 - Title VIMLORE is horizontally centered on 1920, 390×844 and 844×390.
 - Verified `pwa:check` + `pwa:qa` (installability errors 0, offline reload).
 
+## Current completion (2026-11-13)
+
+- Playable core **~90%**; full product **~67%**; Drew Neil tip coverage
+  **~32%** (Practical 48 of 123; Modern 0 of 28). See
+  [`COMPLETION.md`](COMPLETION.md) and [`COMPARISON.md`](COMPARISON.md).
+- Public repository presentation audited in
+  [`REPO_PRESENTATION.md`](REPO_PRESENTATION.md).
+
 ## Honest remaining gaps
 
 1. **Fuzz debt:** 3 visual edge cases from a 2,000-case fuzz

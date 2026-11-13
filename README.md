@@ -33,6 +33,23 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 +------------------------------------------+
 ```
 
+## Current state (2026-11-13)
+
+This is a **development build**, not a finished Vim Adventures peer.
+
+- **Playable core ~90%** — 51 stages, a real Vim engine, installable offline PWA.
+- **Full product ~67%** — weighted estimate; see
+  [`docs/COMPLETION.md`](docs/COMPLETION.md) for the matrix.
+- **Drew Neil curriculum ~32% by tip coverage** — Practical Vim: **48 of 123**
+  tips represented; Modern Vim: **0 of 28** playable (deferred honestly).
+- **Engine:** 373 of 373 oracle cases and 51 of 51 game-used solutions; full
+  state has **119 known edges** and fuzz has **3 visual edges**.
+- **Content:** 10 chapters, 51 stages, 88 Grimoire commands; 39 Practical gaps
+  are drill candidates and 28 need the deferred files/windows/quickfix surface.
+
+Read [`COMPLETION.md`](docs/COMPLETION.md) and
+[`COMPARISON.md`](docs/COMPARISON.md) before calling it complete.
+
 ## Why it is different
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation
@@ -61,7 +78,7 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
 - **It runs on a potato.** Zero runtime dependencies, a hard
   **278 kB / 87 kB** bundle gate, one canvas with a cached opaque composite
   frame, cursorline/numbers on a cheap FX pass, and a CRT switch for weak
-  devices. Current measured: mobile **60.5 FPS**, desktop headless **57.6 FPS**;
+  devices. Current measured: mobile **60.5 FPS**, desktop headless **55.4–57.6 FPS**;
   [BROWSER_QA.md](docs/BROWSER_QA.md). 144fps is not claimed without a 144Hz/GPU
   measurement.
 - **It plays on a phone in landscape** with a Bluetooth keyboard — and it is
@@ -75,11 +92,25 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   and keeps the rooms you save. No account, no server: one export code carries
   your profile.
 
+## Screens
+
+| CRT dashboard / landscape title | Portrait landscape gate |
+|---|---|
+| ![VIMLORE landscape title](docs/browser/pwa/landscape-title.png) | ![Portrait gate](docs/browser/pwa/portrait-gate.png) |
+
+The icon is a large **V built from terminal commands**; see
+[`docs/DESIGN.md`](docs/DESIGN.md) and [`public/icons/icon-512.png`](public/icons/icon-512.png).
+
 ## Design
 
 A deliberate CRT vector language: the icon is a large **V made of terminal
 commands**, with a cursor block at its vertex. Rationale and measurements are
 in [`docs/DESIGN.md`](docs/DESIGN.md).
+
+## Compare
+
+How VIMLORE currently stands against Vim Adventures, VimTutor, PacVim, VimHero
+and VimGenius — including the honest gaps: [`docs/COMPARISON.md`](docs/COMPARISON.md).
 
 ## Install as an app
 

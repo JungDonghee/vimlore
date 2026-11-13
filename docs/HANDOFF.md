@@ -86,6 +86,19 @@ only finalize by 23:50; the machine shuts down at 00:00.
   `browser:qa` measures **55.5 rAF/draw FPS** headless at 1920×1080; 144fps is
   not measurable here and is a display/GPU target, not a headless-CPU claim.
 
+## 0h. Public completion/presentation audit (2026-11-13)
+
+- `COMPLETION.md`: playable core **~90%**, full product **~67%**, Drew Neil
+  tip coverage **~32%** (Practical 48 of 123, Modern 0 of 28).
+- `COMPARISON.md`: direct Vim Adventures comparison and the honest 60%-maturity
+  positioning; other Vim games tabled.
+- `REPO_PRESENTATION.md`: GitHub About/topics, image inventory, social preview
+  and avatar manual steps, update checklist.
+- New CI gate `presentation:check` validates hero/social/icon dimensions and
+  README/OG links.
+- GitHub About description/topics updated through the API. Social preview and
+  avatar remain manual (API limitation).
+
 ## 0g. Installable PWA + landscape (2026-11-13)
 
 - `public/manifest.webmanifest`: standalone, **orientation landscape**, 192/512

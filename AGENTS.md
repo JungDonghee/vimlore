@@ -39,6 +39,14 @@ service worker cache version bumped when the shell changes; keep PWA tags
 inside the `pwa:start…pwa:end` block (the single-file inliner strips them);
 never add a third-party service worker or remote icon.
 
+Public presentation is a gate too: run `npm run presentation:check` after any
+README, hero, social card, icon or OG-meta change. `docs/COMPLETION.md` is the
+living percentage model, `docs/COMPARISON.md` the competitor comparison, and
+`docs/REPO_PRESENTATION.md` the GitHub metadata/image checklist. Update them in
+the same commit as the metric or visual they describe. GitHub social preview and
+avatar are web-UI-only; assets live at `docs/social-preview.png` and
+`public/icons/icon-512.png`.
+
 ```bash
 npm install            # dev: vite/typescript + Playwright (zero runtime deps)
 npm run dev            # http://localhost:5173

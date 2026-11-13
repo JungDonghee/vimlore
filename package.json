@@ -15,7 +15,7 @@
     "doc-check": "node --experimental-strip-types tools/doc-check.ts",
     "doctor": "node --experimental-strip-types tools/doctor.ts",
     "invariants": "node --experimental-strip-types tools/invariants.ts",
-    "verify": "npm test && npm run lint:levels && npx tsc --noEmit && npm run doc-check && npm run invariants && npm run build && npm run budget && npm run pwa:check",
+    "verify": "npm test && npm run lint:levels && npx tsc --noEmit && npm run doc-check && npm run invariants && npm run build && npm run budget && npm run pwa:check && npm run presentation:check",
     "verify:full": "npm run verify && npm run oracle && node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7",
     "budget": "node --experimental-strip-types tools/bundle-budget.ts",
     "books:index": "node --experimental-strip-types tools/book-index.ts",
@@ -49,7 +49,8 @@
     "books:stage-map": "python3 tools/books/merge_stage_map.py",
     "pwa:check": "node tools/pwa-check.mjs",
     "pwa:qa": "node tools/pwa-qa.mjs",
-    "pwa:icons": "node tools/pwa-icons.mjs"
+    "pwa:icons": "node tools/pwa-icons.mjs",
+    "presentation:check": "node tools/presentation-check.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
