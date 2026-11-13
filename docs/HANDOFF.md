@@ -5,7 +5,7 @@
 > true now, what is broken, and which traps cost the last session hours.
 > For a single copy-paste start, use [`ONE_MESSAGE.md`](ONE_MESSAGE.md) or run
 > `npm run kickoff`.
-> **Last rewritten:** 2026-11-12, after count matrix, generated STATUS and browser QA.
+> **Last rewritten:** 2026-11-14, after the KIRITSU repo rename and final title capture.
 
 ## 0. Snapshot
 
