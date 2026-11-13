@@ -194,3 +194,20 @@ story canon must not change.
 - No engine change committed. Stable baseline is **104** from `78df60c`
   (matches 21,608; undo 95; reg 10; regtype 8). Game-used solution+undo
   51 of 51. Browser audit remains green.
+
+## Final closeout — round 12
+
+- Engine: **119 → 104** full observable-state divergences this automation
+  window (undo 110 → 95), with no new failures. Game-used solutions+undo remain
+  **51 of 51**; campaign first-clear data, par, and gates were not modified.
+- Fixed families: counted `dd`/`2dd`, `dgg`/`dG`/`dB` multi-line motion deletes
+  with the `dk` exception, and multi-line `cgg`/`2cgg`/`2c%` changes. Each has a
+  regression test in `tests/vim.test.ts`.
+- Full gates: tests 39 of 39, level lint 51 of 51, oracle 373 of 373,
+  level-oracle 51 of 51, state matrix 21,608 of 21,712 (104 open), invariants
+  0 errors, build 403,106 B raw / 131,233 B gzip (ceiling 420,000 / 140,000),
+  PWA check+QA, presentation, Korean, doc-check, STATUS, browser audit
+  (50 screens/viewports, 0 overflow, 0 page errors) all green.
+- Public face stayed on the final kanji-first title; single-file title asset is
+  inlined; README/hero/social/OG and GitHub About/topics are current.
+- No story canon, LIVE, or puzzle redesign was started.
