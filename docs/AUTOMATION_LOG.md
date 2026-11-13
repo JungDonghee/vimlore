@@ -49,3 +49,21 @@ story canon must not change.
 - Public/release work already green before this round: self-contained
   `dist/vimlore.html`, measured 420k/140k gate, final hero/social/OG, GitHub
   About/topics, CI and Pages.
+
+## Round 2 — 21:00–21:15 KST
+
+- Read Vim's `undo.c` restore path. The real rule is: save the pre-change
+  cursor, restore its column only if the post-change cursor stayed on the same
+  line, otherwise `beginline(BL_SOL | BL_FIX)`; special-case a one-line offset.
+- Applied that model to linewise deletes only. It matched 81 of the 118 undo
+  failures in a dry prediction, but the real engine run rose to **256**
+  divergences because the engine's post-command cursor differs on empty-buffer
+  and counted-range cases. Reverted.
+- Tried isolated `dd`/`2dd` column and visual-line-column overrides; each broke
+  more already-correct cases than it fixed. All reverted.
+- **No engine change committed.** Game-used undo remains exact:
+  `level-oracle -- --undo` = **51/51**.
+- Full matrix remains 21,593/21,712 (119 open: undo 110, reg 10, regtype 8).
+- Next round: add a tiny fixture around one command (`dd`, `dgg`, or `Vj>`),
+  probe Vim's exact pre/post cursor, and fix only that command. Do not change
+  the shared undo path again.
