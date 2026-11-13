@@ -233,3 +233,13 @@ story canon must not change.
   model. Reverted.
 - No engine change committed. Stable baseline **104** (matches 21,608; undo 95;
   reg 10; regtype 8). Game-used solution+undo 51 of 51.
+
+## 22:30 scheduled continuation — special cB path
+
+- Traced `cB`/`2cb` into the backward `b`/`B` special operator branch.
+- Set the operator motion key before that branch's `applyOp` and added the
+  `b`/`B` first-non-blank change-column rule. Matrix unchanged at 104; the
+  branch still emits a range shape that the change-column code treats as
+  single-line. Reverted as a no-op.
+- Stable baseline **104** (matches 21,608; undo 95; reg 10; regtype 8).
+  Game-used solution+undo 51 of 51; browser audit green.
