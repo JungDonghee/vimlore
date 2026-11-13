@@ -33,6 +33,17 @@
   const coarse = window.matchMedia('(pointer: coarse)');
   const portrait = window.matchMedia('(orientation: portrait)');
   const touch = () => coarse.matches || (window.navigator.maxTouchPoints || 0) > 0;
+  // A tiny, invisible style tick rebuilds the HUD text layer that Chromium's
+  // software compositor can double-paint on a fresh landscape frame.
+  const repaintHud = () => {
+    for (const sel of ['.title-foot', '.title-help', '.bootlog', '.title-credit']) {
+      const el = doc.querySelector(sel);
+      if (!el) continue;
+      const old = el.style.letterSpacing;
+      el.style.letterSpacing = '0.051em';
+      requestAnimationFrame(() => { el.style.letterSpacing = old; });
+    }
+  };
   const sync = () => {
     const gated = touch() && portrait.matches;
     body.classList.toggle('pwa-gated', gated);
@@ -43,6 +54,10 @@
     }
   };
   sync();
+  window.addEventListener('load', () => {
+    setTimeout(repaintHud, 120);
+    setTimeout(repaintHud, 700);
+  });
   if (coarse.addEventListener) coarse.addEventListener('change', sync);
   if (portrait.addEventListener) portrait.addEventListener('change', sync);
   window.addEventListener('resize', sync);

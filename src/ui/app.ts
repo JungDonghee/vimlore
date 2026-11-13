@@ -202,7 +202,7 @@ export class App {
         h('div', { class: 'press' }, this.t('PRESS ANY KEY', '아무 키나 누르세요')),
         h('div', { class: 'title-help' }, this.t('F1 · 60-SECOND PRIMER', 'F1 · 60초 입문')),
         isTouch() ? h('div', { class: 'title-foot ko' }, this.t('a physical keyboard is required', '물리 키보드가 필요합니다')) : null,
-        h('div', { class: 'title-foot' }, 'v1.0 · offline · no tracking · made by Jung Donghee'),
+        h('div', { class: 'title-foot' }, 'v1.0 · offline · no tracking'),
       ),
     );
   }

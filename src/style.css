@@ -1161,6 +1161,14 @@ h2,
   /* Short landscape is a terminal dashboard, not a blank hero: bootlog and
      footer stay as side rails while the wordmark owns the exact center. */
   .title-screen { display: block; padding: 0; }
+  .bootlog,
+  .title-credit,
+  .title-sub,
+  .title-help,
+  .title-foot {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
   .bootlog {
     position: absolute;
     left: 16px;
@@ -1168,7 +1176,7 @@ h2,
     width: 280px;
     margin: 0;
     text-align: left;
-    font-size: 7.8px;
+    font-size: 8.2px;
     line-height: 1.5;
     letter-spacing: 0;
     opacity: 0.8;
@@ -1206,7 +1214,8 @@ h2,
     top: calc(50% + 82px);
     transform: translateX(-50%);
     margin: 0;
-    font-size: 7.5px;
+    font-size: 8px;
+    letter-spacing: 0.05em;
     white-space: nowrap;
   }
   .title-credit {
@@ -1227,20 +1236,24 @@ h2,
     width: auto;
     margin: 0;
     text-align: left;
-    font-size: 7.5px;
+    font-size: 8px;
+    letter-spacing: 0.05em;
+    color: var(--ph-dim);
     white-space: nowrap;
   }
   .press { position: absolute; bottom: 44px; left: 0; right: 0; margin: 0; font-size: 10px; }
+  .title-foot.ko { display: none; }
   .title-foot {
     position: absolute;
     right: 8px;
     bottom: 10px;
-    width: max-content;
-    max-width: calc(100vw - 32px);
+    width: 300px;
     margin: 0;
     text-align: right;
-    font-size: 7px;
+    font-size: 8px;
     line-height: 1.2;
+    letter-spacing: 0.05em;
+    color: var(--ph-dim);
     white-space: nowrap;
   }
 }

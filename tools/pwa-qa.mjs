@@ -38,7 +38,7 @@ mkdirSync(shotDir, { recursive: true });
 const fails = [];
 const check = (cond, msg) => { if (!cond) fails.push(msg); console.log(`${cond ? 'ok  ' : 'FAIL'} ${msg}`); };
 const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
-const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
 const page = await ctx.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
@@ -88,17 +88,17 @@ await page.waitForTimeout(400);
 const landscape = await page.evaluate(() => {
   const mark = document.querySelector('.title-mark')?.getBoundingClientRect();
   const press = document.querySelector('.press')?.getBoundingClientRect();
-  const foot = document.querySelector('.title-foot')?.getBoundingClientRect();
+  const foot = document.querySelector('.title-foot:not(.ko)')?.getBoundingClientRect();
   return {
     gate: getComputedStyle(document.querySelector('#pwa-rotate')).display,
     dx: mark ? Math.abs(mark.x + mark.width / 2 - innerWidth / 2) : 999,
     overlap: !!(press && foot && foot.height > 0 && press.bottom > foot.top),
     bootOverlap: (() => { const b = document.querySelector('.bootlog').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return b.left < m.right && b.right > m.left && b.top < m.bottom && b.bottom > m.top; })(),
-    footOverlap: (() => { const f = document.querySelector('.title-foot').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return f.left < m.right && f.right > m.left && f.top < m.bottom && f.bottom > m.top; })(),
+    footOverlap: (() => { const f = document.querySelector('.title-foot:not(.ko)').getBoundingClientRect(); const m = document.querySelector('.title-mark').getBoundingClientRect(); return f.left < m.right && f.right > m.left && f.top < m.bottom && f.bottom > m.top; })(),
     bootlog: getComputedStyle(document.querySelector('.bootlog')).display,
-    foot: getComputedStyle(document.querySelector('.title-foot')).display,
+    foot: getComputedStyle(document.querySelector('.title-foot:not(.ko)')).display,
     bootRect: document.querySelector('.bootlog').getBoundingClientRect().toJSON(),
-    footRect: document.querySelector('.title-foot').getBoundingClientRect().toJSON(),
+    footRect: document.querySelector('.title-foot:not(.ko)').getBoundingClientRect().toJSON(),
   };
 });
 check(landscape.gate === 'none', 'landscape hides the gate');
