@@ -211,3 +211,15 @@ story canon must not change.
 - Public face stayed on the final kanji-first title; single-file title asset is
   inlined; README/hero/social/OG and GitHub About/topics are current.
 - No story canon, LIVE, or puzzle redesign was started.
+
+## 21:30 scheduled continuation — visual undo anchor
+
+- Added a separate `visualUndoAnchor` copy so visual delete/change can compute
+  the undo write without changing `visualAnchor` lifetime.
+- Restricted it to `V` + `k`/`gg`. It fixed the targeted delete/shift cases but
+  broke different `Vk>`/`Vgg>` cases whose Vim undo column is not the anchor;
+  the matrix rose to 112. Reverted.
+- No engine change committed. Stable baseline remains **104** (matches 21,608;
+  undo 95; reg 10; regtype 8). Game-used solution+undo 51 of 51.
+- Next safe attempt requires a focused Vim probe of the visual `k`/`gg` range
+  orientation before touching the anchor path again.
