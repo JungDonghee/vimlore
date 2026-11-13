@@ -131,3 +131,15 @@ story canon must not change.
   No new failures; 11 old failures removed.
 - Added `dgg`/`2dgg`/`dk` regression tests. Oracle 373 of 373, level-oracle
   51 of 51 solution+undo, build/budget/PWA green.
+
+## Round 7 — change/shift probes
+
+- Tried extending the linewise start-column model to multi-line linewise
+  **change** (`cgg`, `2c%`). It raised divergences from 108 to 126 by breaking
+  `cj`, `cG`, `cc`, and visual cases; reverted.
+- Tried a visual-line delete anchor override: no net change; reverted rather
+  than keeping an unproven rule.
+- Tried a charwise `w`/`W` shift special case: no net reduction; reverted.
+- No engine change committed this round. Stable baseline is **108** from
+  `3fc33ba` (undo 99, reg 10, regtype 8); game-used solution+undo 51 of 51.
+- Browser audit remains 50 screens/viewports, 0 overflow, 0 page errors.
