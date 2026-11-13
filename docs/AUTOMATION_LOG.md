@@ -265,3 +265,7 @@ doc-check and STATUS. PWA QA refreshed the landscape title screenshot.
 No campaign, first-clear, par, gate, or story change. Engine remains frozen at
 the 104-open baseline; 15 full-matrix cases were fixed this window with no new
 failures. Automation stops at 23:58 KST.
+
+## Repo rename
+
+GitHub repository renamed `vimlore` → `kiritsu`; VIMLORE is now the series/world subtitle. Live moved to <https://jungdonghee.github.io/kiritsu/>. README hero, desktop title, first chamber, PWA/portrait screenshots, OG/social cards, package name, and the downloadable `kiritsu.html` were refreshed. Legacy `vimlore.html` download remains as an alias.
