@@ -8,13 +8,13 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21593 |
-| divergences | 119 |
+| matched | 21594 |
+| divergences | 118 |
 | engine errors | 0 |
 
 | field | count |
 |---|---:|
-| undo | 110 |
+| undo | 109 |
 | reg | 10 |
 | regtype | 8 |
 

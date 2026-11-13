@@ -124,6 +124,16 @@ test('visual-line change then undo lands on column 0 (feedkeys Vim)', () => {
   assert.deepEqual(v.cursor, { line: 0, col: 0 });
 });
 
+test('counted doubled linewise delete keeps the command column on undo (Vim)', () => {
+  const v = new Vim({ text: 'if (x) {\n  y();\n}' });
+  v.cursor = { line: 0, col: 2 };
+  v.feedString('2dd');
+  assert.equal(v.text, '}');
+  v.feedString('u');
+  assert.equal(v.text, 'if (x) {\n  y();\n}');
+  assert.deepEqual(v.cursor, { line: 0, col: 2 });
+});
+
 test('whole-line charwise yanks are linewise registers', () => {
   const a = new Vim({ text: 'a\n\nb\n\nc' });
   a.feedString('y)');

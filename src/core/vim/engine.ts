@@ -1361,7 +1361,7 @@ export class Vim {
           }
         : becameEmpty
           ? { line: l1, col: this.opTextObject || wasVisual || (this.opMotionFrom?.line ?? 0) > l1 ? 0 : before.lines.length === 1 ? 0 : undoCol }
-          : { line: l1, col: 0 };
+          : { line: l1, col: this.op?.doubled && (this.op?.count ?? 1) > 1 ? undoCol : 0 };
       this.buf.setLines(this.buf.lines);
       this.storeRegister(reg, removed.join('\n') + '\n', true, false);
       const target = Math.min(l1, this.buf.lineCount - 1);

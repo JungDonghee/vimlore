@@ -93,3 +93,15 @@ story canon must not change.
   `browser:audit` = 50 screens/viewports, 0 overflow, 0 page errors.
 - Rebuilt and verified: tests 39 of 39, oracle 373 of 373, budget
   402,788 / 131,115, PWA QA and STATUS green.
+
+## Round 5 — first real reduction
+
+- Added a narrow engine rule: counted **doubled** linewise delete (`2dd`, `3dd`)
+  restores the command column on undo when the buffer remains nonempty. This is
+  the exact Vim behavior probed for `2dd`/`3dd`; it deliberately does not touch
+  `2d%`, `dgg`, `2dj`, single `dd`, or visual ranges.
+- State matrix: **119 → 118** divergences (matched 21,593 → 21,594; undo
+  110 → 109). No new failures; `m-14904` fixed.
+- Added a regression test to `tests/vim.test.ts`.
+- Oracle 373 of 373, level-oracle 51 of 51 solution+undo, tests 39 of 39,
+  build/budget/PWA/status green.
