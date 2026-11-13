@@ -223,3 +223,13 @@ story canon must not change.
   undo 95; reg 10; regtype 8). Game-used solution+undo 51 of 51.
 - Next safe attempt requires a focused Vim probe of the visual `k`/`gg` range
   orientation before touching the anchor path again.
+
+## 22:00 scheduled continuation — cB/cb probe
+
+- Probed `cB`/`2cb` undo columns and tried the range-start first non-blank
+  rule, plus setting the operator motion key at the top of
+  `finishOpWithMotion`. Neither changed the matrix: those cases use the special
+  backward `b`/`B` operator branch, which still bypasses the change-column
+  model. Reverted.
+- No engine change committed. Stable baseline **104** (matches 21,608; undo 95;
+  reg 10; regtype 8). Game-used solution+undo 51 of 51.
