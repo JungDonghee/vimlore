@@ -18,7 +18,7 @@
 | game-used solutions / undo diagnostic | 51 of 51 / 51 of 51 |
 | state matrix matched / total / open | 21,593 / 21,712 / 119 |
 | state open by field | undo 110, reg 10, regtype 8 |
-| built single file (raw) | 402,813 B |
+| built single file (raw) | 402,788 B |
 | raw ceiling | 420,000 B |
 ## Reports
 - Oracle: `tools/oracle-diff.ts` + `tests/vim-expected.json`
