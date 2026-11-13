@@ -156,3 +156,15 @@ story canon must not change.
 - Stable baseline remains **108** (matches 21,604; undo 99; reg 10; regtype 8).
   Game-used solution+undo 51 of 51.
 - Browser audit remains 50 screens/viewports, 0 overflow, 0 page errors.
+
+## Round 9 — visual anchor lifetime
+
+- Found why the prior visual-line rule was a no-op: `visualKey()` clears
+  `visualAnchor` before `deleteRange()`, so the delete path sees null.
+- Attempted to keep the anchor through visual delete and apply the k/gg column
+  rules. Matrix worsened (108 → 206) because the anchor is also consumed by
+  the visual mode teardown; reverted immediately.
+- Attempted the smaller multi-line-delete-only version: 108 → 174; reverted.
+- No engine change committed. Stable baseline remains **108** (matches 21,604;
+  undo 99; reg 10; regtype 8). Game-used solution+undo 51 of 51.
+- Browser audit remains green: 50 screens/viewports, 0 overflow, 0 errors.
