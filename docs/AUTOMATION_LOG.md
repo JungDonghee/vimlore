@@ -143,3 +143,16 @@ story canon must not change.
 - No engine change committed this round. Stable baseline is **108** from
   `3fc33ba` (undo 99, reg 10, regtype 8); game-used solution+undo 51 of 51.
 - Browser audit remains 50 screens/viewports, 0 overflow, 0 page errors.
+
+## Round 8 — visual-line probes
+
+- Probed visual-line undo cases: `Vkd`/`Vk>`/`Vk<` keep the anchor column,
+  `Vggd`/`Vgg>`/`Vgg<` use the range-start first non-blank, and
+  `Vkc`/`Vggc` use the last changed line.
+- Attempted a `V`-line-only branch using `visualMotionKey`; the matrix stayed at
+  108 because the branch did not reach the visual delete/shift paths (the
+  visual operator path clears the key before the undo write). Reverted to avoid
+  carrying a no-op rule.
+- Stable baseline remains **108** (matches 21,604; undo 99; reg 10; regtype 8).
+  Game-used solution+undo 51 of 51.
+- Browser audit remains 50 screens/viewports, 0 overflow, 0 page errors.
