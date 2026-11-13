@@ -77,3 +77,19 @@ story canon must not change.
   errors**.
 - Engine still at the 119-open baseline; no undo change committed. Game-used
   stages remain 51 of 51 solution+undo.
+
+## Round 4 — dd fixture probe
+
+- Probed real Vim for `dd`, `2dd`, `3dd` at columns 0/1/2. Confirmed:
+  - `2dd`/`3dd` preserve the command column when the buffer remains nonempty;
+  - single `dd` does not (except indented-line cases), and deleting the last
+    line zeros the column.
+- Applied only the counted-linewise case (`count > 1`, buffer nonempty).
+  State matrix moved from 119 to **121** divergences; two previously matching
+  cases regressed. Reverted immediately.
+- No engine change committed. Baseline remains 119 (undo 110, reg 10,
+  regtype 8); game-used solution+undo remains 51 of 51.
+- Portrait overflow fix from the prior round stays green:
+  `browser:audit` = 50 screens/viewports, 0 overflow, 0 page errors.
+- Rebuilt and verified: tests 39 of 39, oracle 373 of 373, budget
+  402,788 / 131,115, PWA QA and STATUS green.
