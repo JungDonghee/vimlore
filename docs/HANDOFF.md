@@ -86,6 +86,17 @@ only finalize by 23:50; the machine shuts down at 00:00.
   `browser:qa` measures **55.5 rAF/draw FPS** headless at 1920×1080; 144fps is
   not measurable here and is a display/GPU target, not a headless-CPU claim.
 
+## 0i. Next direction: gameplay/story before PV-FULL (2026-11-13)
+
+- Master plan: [`UPGRADE_MASTER_PLAN.md`](UPGRADE_MASTER_PLAN.md).
+- Narrative bible: [`STORY_BIBLE.md`](STORY_BIBLE.md).
+- Priority: LIVE CIRCUIT vertical slice (bugs/walls/corruption/signal/timer),
+  story prologue + c01 interlude, then PV-FULL Practical Vim engine.
+- Do not retrofit moving hazards into deterministic campaign first-clears;
+  separate mode first, post-clear modifiers later.
+- Budget headroom is 121 B; the plan includes a deliberate, measured raise;
+  no silent ceiling changes.
+
 ## 0h. Public completion/presentation audit (2026-11-13)
 
 - `COMPLETION.md`: playable core **~90%**, full product **~67%**, Drew Neil

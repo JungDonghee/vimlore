@@ -1,10 +1,34 @@
 # NEXT STEPS — after the 2026-11-12 deadline
 
-> The game-used surface is green. This file is the ordered backlog for the next
-> AI, not a claim that the project is finished. Read NORTH_STAR first; do not
-> lower gates or invent Vim behavior.
+> **Current order changed on 2026-11-13:** build the game's dynamic feel and
+> story **before** expanding the engine. The engine work below stays queued.
+> Master plan: [`UPGRADE_MASTER_PLAN.md`](UPGRADE_MASTER_PLAN.md) · narrative:
+> [`STORY_BIBLE.md`](STORY_BIBLE.md).
 
-## 1. Engine: visual fuzz debt (highest)
+## 0. New P0 — LIVE gameplay vertical slice
+
+- `LiveArena` generator (seeded, reachable walls/coins, safe bug spawns).
+- `HazardDirector`: patrol-row/patrol-col/random bugs, red immutable walls,
+  corrupt text, signal hearts, 75s timer, pause/reduced motion.
+- WallGuard at the game layer, never inside the Vim engine.
+- Entry from TRIALS (`4 · LIVE CIRCUIT`); campaign first-clears untouched.
+- Exit: 100 seeds validated, mobile ≥50 FPS, bundle measured and deliberately
+  raised, campaign 51 of 51 still green.
+
+## 0b. Story vertical slice
+
+- Prologue, c01 epigraph/interlude, six codex fragments, ROT transmissions.
+- Skippable, localized, no copied book prose.
+- Exit: coherent read-through, story never blocks controls, archive offline.
+
+## 0c. Then integrate
+
+- All 10 chapter interludes; post-clear LIVE modifiers; character/corruption
+  visual pass. First-clear determinism and par stay frozen.
+
+## 0d. Then PV-FULL
+
+## 1. Engine: visual fuzz debt (after the gameplay/story slices)
 
 `FUZZ_DEBT.md` has 3 exact repros from seed 42/n=2000:
 

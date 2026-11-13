@@ -50,6 +50,10 @@ This is a **development build**, not a finished Vim Adventures peer.
 Read [`COMPLETION.md`](docs/COMPLETION.md) and
 [`COMPARISON.md`](docs/COMPARISON.md) before calling it complete.
 
+**Next direction:** gameplay/feel and story first, then the full Practical Vim
+engine. The ordered plan is [`docs/UPGRADE_MASTER_PLAN.md`](docs/UPGRADE_MASTER_PLAN.md);
+the original narrative bible is [`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md).
+
 ## Why it is different
 
 - **It is really Vim** (and honest about it: see [`docs/VIM_COVERAGE.md`](docs/VIM_COVERAGE.md)). Every keystroke runs through a faithful re-implementation

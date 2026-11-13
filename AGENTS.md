@@ -39,6 +39,12 @@ service worker cache version bumped when the shell changes; keep PWA tags
 inside the `pwa:start…pwa:end` block (the single-file inliner strips them);
 never add a third-party service worker or remote icon.
 
+Current priority is **game feel → story → PV-FULL engine**, not an engine rewrite.
+Read [`docs/UPGRADE_MASTER_PLAN.md`](docs/UPGRADE_MASTER_PLAN.md) and
+[`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md) before starting a feature. Dynamic
+hazards must not enter deterministic campaign first-clears until the LIVE mode
+is verified.
+
 Public presentation is a gate too: run `npm run presentation:check` after any
 README, hero, social card, icon or OG-meta change. `docs/COMPLETION.md` is the
 living percentage model, `docs/COMPARISON.md` the competitor comparison, and
