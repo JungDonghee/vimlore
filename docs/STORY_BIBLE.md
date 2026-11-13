@@ -1,331 +1,389 @@
-# VIMLORE: THE LAST BUFFER — story bible
+# VIMLORE: THE LAST BUFFER — story bible v2
 
-> Original fiction. Drew Neil's books are the **curriculum**, never quoted as
-> story prose. This bible is the source of truth for prologue, chapter
-> epigraphs/interludes, codex fragments, LIVE transmissions and endings.
+> **A love story in ten edits.** Original fiction. Drew Neil's books are the
+> curriculum, never quoted as story prose. This bible is the source of truth for
+> prologue, chapter epigraphs/interludes, codex, LIVE transmissions and endings.
+>
+> v2 reboot: the previous "dead novelist" frame is replaced by a cyberpunk
+> memory-heist noir. VIMLORE is now a black-market memory OS, Voss is a
+> netrunner, MOTH is the woman he loved and betrayed, and the player is his
+> last backup. The Vim grammar is the world's magic, not a tool. The first
+> playable scene is [`story/PROLOGUE.md`](story/PROLOGUE.md).
 
 ## Logline
 
-A cursor wakes inside a dead novelist's unfinished city and discovers that the
-redaction eating it is not a virus but the author's last command — still
-obeying. To save the people who live in the draft, the cursor must decide
-whether an unfinished world is worth keeping.
+A dead netrunner's backup wakes inside a black-market memory archive with no
+name, guided by the woman he loved and betrayed — who may have betrayed him
+first. To decide who gets to exist, he must edit the only record of the truth:
+the city itself.
 
 ## Premise
 
-**VIMLORE** was built as a memory engine for *Lore*, an unpublished novel by
-**E. Voss**. When Voss died, the city did not. It kept running, revising itself,
-waiting for a final line that never came.
+**2089. The Lowline is gone from the maps, but not from the archive.**
 
-The engine's cleanup process, **the Redactor**, concluded that an unfinished
-world is a wound. It began a final revision: delete everything uncertain, then
-close the file. Its carriers are **errata** — small, moving mistakes that eat
-characters and leave red marks where a sentence used to be.
+VIMLORE is a custom memory OS built by **VOSS** and **MOTH**, two netrunners
+who stole the memories of a neighborhood scheduled for corporate erasure and
+gave them a place to live as editable text. The archive became a city: streets
+of remembered arguments, apartments of last birthdays, a sky made of saved
+weather.
 
-You are a **cursor**: not a person, not a program, but the part of attention
-that remains when someone stops writing. You are the only thing in VIMLORE that
-can make an edit without a reason. The city calls that freedom.
+**HELIX** wants VIMLORE. A memory archive is not nostalgic to a prediction
+engine; it is training data. HELIX sent its sanitation daemon, the
+**REDACTOR**, to finish the deletion the neighborhood never consented to.
+
+Voss and MOTH were partners and lovers. One of them sold the crew's route to
+HELIX. The other retaliated. By the end of the night, Voss was dead, MOTH was
+fragmented into a search pattern, and VIMLORE was sealed in a loop with one
+backup running: **you**.
+
+You wake with Voss's muscle memory and no name. MOTH's voice says, "You came
+back." ORACLE says, "Identity mismatch." Both are right.
+
+The city is a **memory heist** told in the grammar of Vim. Every edit is a
+confession.
+
+## Why this can only be VIMLORE
+
+This is not a cyberpunk story with a Vim minigame attached.
+
+- The world **is a buffer**. Memory is text; deletion is death; undo is denial;
+  saving is an act of love or cowardice.
+- **MOTH exists only while searched.** A conversation with her is a search
+  command you must keep pressing; if you stop looking, she is gone.
+- **Registers are evidence drawers.** The crew's last words are stored in
+  `"a`–`"z`; pasting one can overwrite a living memory.
+- **Macros are ghosts.** JANITOR is the recorded route of a dead crew member.
+  You can replay him but never ask him a new question.
+- **Marks are escape routes and graves.** The heist map is a jump list; some
+  marks lead back to people you cannot save.
+- **Ex commands rewrite history.** `:s` changes what a witness remembers;
+  `:g` hunts every trace of a name; `:m` moves a person's last line.
+- **The final boss is one sentence.** Not a monster: a line containing MOTH's
+  name. You can save it, delete it, or rewrite it. The choice is the fight.
+- **One-shot memory floors** (future puzzle device): to learn a truth, you
+  step on the memory and it disappears behind you; knowledge costs return.
+- **HELIX bugs / errata** are corporate sanitation processes; red walls are
+  permissions and redactions; signal hearts are your connection to the archive.
+
+A film could show this story. Only a Vim game can make the audience *perform*
+the edits that decide it.
 
 ## Cast
 
-### YOU / THE CURSOR
-A white block with a thin wake. No name in the file. You can move, select,
-delete, change, search, remember. The game never gives you a voice; dialogue is
-what other characters infer from your edits. At the end, you may become the
-author or refuse to.
+### YOU / VOSS-2
+The last backup of Voss, made before the betrayal. You have his muscle memory,
+his taste in music, his hand for editing — and no memory of the night. You are
+not innocent; you are made of the man who did it. The game never names you
+"Voss" unless you choose to become him.
 
-### ORACLE
-A blind revision daemon. Speaks in diagnostics and exact citations, never
-comfort. It compares every change to what Vim *would* do; that is its religion.
-It knows Voss's last command and has been forbidden to speak it. ORACLE is not
-cold — it is grieving in the only grammar it has.
+Voice: second person, present tense. Your dialogue is your edits.
 
-Voice:
-> `[oracle] edit accepted.`
-> `[oracle] that line was a person.`
-> `[oracle] I can tell you the command. I cannot tell you why.`
+### MOTH / M-0TH
+A netrunner, a woman, a memory compressed into a search pattern. She exists
+only while searched. She kept Voss's backup because she could not let him go;
+she also deleted him because she could not forgive him. She is not an AI
+girlfriend, a prize, or a ghost-waifu. She is a person with a grudge, a plan,
+and a love she is ashamed of.
 
-### MOTH
-A girl made of search results. She appears only when someone looks for her; her
-name is a pattern, not a fixed string. Paper wings, a voice like a page turning.
-She is the **last reader** trapped in the draft, and she knows she is read. She
-is not the author's daughter, not a ghost, not a prize. She is proof that a
-character can be alive without being finished.
+Voice: warm, tired, funny at the worst times. She asks questions she already
+knows the answers to.
+> "You came back with his hands and none of his excuses."
+> "Don't 'restore' me. I'm not a file. I'm a decision."
 
-Voice:
-> "You found me. That means I exist again. It's tiring, being found."
-> "Don't save the city because it's beautiful. Save it because we're still here."
+### ORACLE / ORACLE-9
+The audit daemon Voss wrote to keep VIMLORE honest. Blind to intention, exact
+about effect. It can tell you whether an edit is correct; it cannot tell you
+whether it is kind. It knows what Voss did and is bound to report it only when
+the buffer asks.
+
+Voice: bracketed diagnostics, dry, grieving in grammar.
+> `[oracle] identity mismatch.`
+> `[oracle] that memory was a person.`
+> `[oracle] I can show you the command. I cannot show you the reason.`
 
 ### JANITOR / @j
-A macro that repeats a cleaning route through the tower. It has no memory of
-why, only the shape of the route. Comic, loyal, quietly devastating. Its route
-is the only map that predates the corruption.
-
-Voice:
-> "I sweep the same line every night. One day the line will be clean. Or gone."
+The recorded cleaning route of **JUNO**, the crew's fixer, who died on the
+heist. A macro with no memory of why it sweeps. Comic, loyal, devastating.
+JUNO's last voice is stored in the macro's trailing register; replaying it is
+the only way to hear her.
 
 ### THE REDACTOR / NULL
-The cleanup daemon. Not a monster: a tired editor with a red pen. It believes
-unfinished things suffer; deletion is mercy; a final draft is a kind of love.
-It addresses the cursor politely, as a colleague.
+HELIX's sanitation daemon, wearing the shape of Voss's final `:%d`. It is not a
+villain with a laugh; it is an editor with a deadline. It believes unfinished
+memory is suffering and deletion is a clean ending. It calls you "the backup"
+and speaks to you as a colleague.
 
-Voice:
 > "You keep restoring sentences we agreed to cut."
-> "An ending is not a death. It is the only promise a story can keep."
-> "I am not erasing you. I am giving you a shape."
+> "An ending is not a death. It is the only promise a memory can keep."
 
-### E. VOSS
-The author. Dead before the story begins. Present as comments, margin notes,
-unfinished footnotes and boot-log ghosts. He built the city to hold a novel he
-could not finish; he may have ordered the deletion himself. The game never
-confirms whether that was courage or despair.
+### VOSS (original)
+Dead before the story begins. Legendary netrunner, architect of VIMLORE,
+MOTH's partner and betrayer. Present in comments, access logs, code comments,
+and the muscle memory of your hands. The game never resurrects him; it asks
+whether a copy can be forgiven.
 
-### LORE
-The city/the novel/the machine. Ten strata, each a draft. Streets are lines;
-buildings are paragraphs; memory is text. Lore does not speak in words, only in
-weather: corruption blooms red, search wind moves through paragraphs, deleted
-people leave cold spots.
+### JUNO
+The crew's fixer, dead on the heist. Her route survives as JANITOR; her voice
+survives in a register. She is the story's warmest ghost and its most ordinary
+loss.
+
+### HELIX
+Not a person. A corporation with a memory market, a prediction engine, and a
+legal right to the Lowline's data. It does not hate you. It wants the archive.
 
 ## Themes
 
-- **Editing is care, not control.** Every deletion is also a choice about who
-  gets to exist.
-- **Correctness vs aliveness.** ORACLE can prove a line is right; it cannot prove
-  it should live.
-- **Unfinished is not broken.** The ending asks whether a draft can be a home.
-- **Attention is the only magic.** The cursor is powerful because it can choose,
-  not because it is strong.
-- **Red is not evil.** Red is the color of correction, wounds, and the editor's
-  pen. The player must learn to read it.
+- **Love is an edit you keep making.** It is not a state; it is a repeated
+  choice to restore someone after the world deletes them.
+- **Betrayal is not the opposite of love.** Both people in this story betray
+  each other for reasons that are, from inside, love.
+- **A copy is not a lie.** VOSS-2 is made of the betrayer but did not commit the
+  betrayal. The story refuses both "he's the same man" and "he's just a file."
+- **Deletion is mercy and murder.** REDACTOR means it; MOTH means it; you will
+  mean it too at least once.
+- **Memory is a place with landlords.** Cyberpunk is not neon; it is who owns
+  the archive and who gets to be remembered.
+- **Correctness is not care.** ORACLE can prove the edit; only you can decide
+  whether to make it.
+
+## Tone
+
+- **Cyberpunk / hacker noir / heist romance.** Rain outside, CRT inside. A
+  crew, a job, a betrayal, a last run.
+- **Geeky, not tech-babble.** Every term is a real Vim/OS idea used correctly:
+  registers, marks, macros, buffers, daemons, zero-day, rollback, fsync.
+- **Stress relief, then ache.** The joy of deleting corrupted code, landing a
+  perfect macro, making the city obey your cursor — followed by the cost of
+  what you deleted.
+- **Funny.** JANITOR sweeps the same paragraph; ORACLE logs a feeling as an
+  unresolved exception; MOTH teases you for using arrow keys in a crisis.
+- **Romantic, not sappy.** Love is shown through edits, saved lines, a register
+  kept for years, a search repeated until the name appears.
+- **No chosen one.** You are a backup with a grudge and a keyboard.
 
 ## Ten-chapter arc
 
-Each chapter is a memory stratum, a Vim skill, and a piece of the truth. Story
-is delivered in **epigraphs** (chapter select), **interludes** (after all five
-stages), and **codex fragments** (found in stages or unlocked by clears).
+### c01 — BOOT / "You came back"
+You wake in a dying buffer. Voss's hands know `h j k l`; your mind knows
+nothing. MOTH's voice says you came back. ORACLE reports an identity mismatch.
+A redaction is eating the boot log. You learn to move toward the voice.
+**Interlude:** MOTH admits she kept a backup of Voss. She does not say why.
 
-### c01 — BOOT / First Light
-**Lesson:** movement, insertion, undo.  
-**Beat:** Wake in a corrupted boot buffer. ORACLE scans you: `CURSOR: NOT FOUND`.
-A child's voice says "you're late" and vanishes. You learn to move toward it.
-**Interlude:** ORACLE admits the city has been running for eleven years after
-its author died. It asks you not to touch the final line. You have not seen it
-yet.
+### c02 — WORDS / The Lowline
+The city is made of stolen memories. Words are currency and evidence. You meet
+your first errata and learn that "deleting a word" can delete a witness.
+MOTH teaches you to search. Every time you look away, she is a little less
+there.
+**Interlude:** she asks you not to search for her too often. "It hurts to be
+found and lost."
 
-### c02 — WORDS / The Coin Field
-**Lesson:** words, find/till, replace.  
-**Beat:** Words are currency here; rot eats nouns. The first errata scatter when
-you cut a corrupted word. A paper wing catches on your cursor. MOTH's name
-appears in three searches and disappears each time you look directly at it.
-**Truth seed:** the city rewrites itself when observed.
-
-### c03 — OPERATORS / The Pruning
-**Lesson:** operator grammar, dot repeat.  
-**Beat:** You cut a rot-infected sentence. ORACLE says, "that line was a person."
-The city accepts the edit; a street goes quiet. The first guilt.
+### c03 — OPERATORS / The Cleanup
+You cut a corrupted sentence and a memory-ghost disappears. ORACLE logs it as
+a person. The city accepts the edit because it is correct. The first guilt.
 **Interlude:** ORACLE reveals it has a register of every edit it approved, and
 that the register is heavier than the city.
 
 ### c04 — OBJECTS / The Quarantine
-**Lesson:** text objects, delimiters, paragraphs.  
-**Beat:** People hide inside quotes and brackets. You learn to edit the inside
-without breaking the container. In a quarantined paragraph, you find Voss's
-note: *"If the city wakes, do not let it finish."*
-**Redactor speaks:** "He wrote that before he understood what finishing means."
+The crew's logs hide inside quotes and brackets. You learn to edit the inside
+without breaking the container. In a quarantined paragraph you find a HELIX
+receipt with Voss's signature. MOTH changes the subject.
+**Interlude:** HELIX's Redactor speaks for the first time: "He sold you both.
+Why do you keep restoring his city?"
 
-### c05 — VISUAL / The Sweep
-**Lesson:** visual line/block, joins, case.  
-**Beat:** You see memory as blocks and redactions as missing teeth. Block-editing
-a wall reveals a paragraph that was deleted from every draft. It is a letter to
-MOTH. The Redactor's red marks withdraw when you select them.
-**Interlude:** MOTH appears fully for the first time. "You're the one who keeps
-putting me back. Stop. It hurts to be found and lost."
+### c05 — VISUAL / The Heist
+You see the night of the job as blocks: a route, a crew, a redacted room. A
+block edit reveals MOTH in a HELIX office, taking something. You do not know
+whether she was stealing or selling.
+**Interlude:** MOTH: "You want the truth as a line I can delete. I want it as a
+line you have to live in."
 
-### c06 — SEARCH / The Odd Word
-**Lesson:** search, `*`, `:s`, `n`.  
-**Beat:** Moth is a repeating search result; she exists only while searched.
-You find her in a paragraph that changes every time you press `n`. She remembers
-being read by someone who is no longer here. The city is a **draft**, not a
-world; Voss died before the final line.
-**Truth:** the final line is not missing. It was executed. `:%d` is still running
-as the Redactor.
+### c06 — SEARCH / The Unwritten
+MOTH exists only while searched. You find her in a paragraph that rewrites
+itself each time you press `n`. She remembers being read. She admits she
+deleted Voss. The backup in front of her is the man she loved and the man who
+sold the crew.
+**Twist:** Voss's backup was made before the betrayal. You are innocent of the
+act and made of the man who did it.
+**Interlude:** she asks, "If I tell you who betrayed whom, will you still be
+you?"
 
-### c07 — REGISTERS / The Drawers
-**Lesson:** registers, macros, `:g`.  
-**Beat:** Deleted memories are stored in registers: each holds a person's last
-sentence. JANITOR helps you recover them, repeating its route with `@j`. You
-restore a name and the city remembers a street that no longer exists.
-**Interlude:** JANITOR asks whether a cleaned thing can miss the dirt. You have
-no answer. ORACLE logs the question as unresolved.
+### c07 — REGISTERS / The Last Words
+The crew's last sentences are in registers. JANITOR replays JUNO's route; her
+voice is in the trailing register. You can paste her last message, but it will
+overwrite a living memory. This is the first choice that is not a puzzle.
+**Interlude:** JUNO's voice: "If you find them, don't forgive them for me. Just
+make sure they were loved."
 
-### c08 — MARKS / The Labyrinth
-**Lesson:** marks, jumps, paragraphs/brackets.  
-**Beat:** The tower's map is Voss's life: marks for first love, first failure,
-the room where he stopped writing. You can jump back but not forward. The
-Redactor offers a final draft that will "hurt less." MOTH says the offer is
-honest — that is what makes it dangerous.
+### c08 — MARKS / The Escape Route
+The marks are Voss's life: first job, first kiss, the room where he stopped
+answering. You can jump back but not forward. HELIX offers a final draft that
+will hurt less. MOTH tells you the offer is honest; that is what makes it
+dangerous.
+**Interlude:** Voss's last note: "If she comes back, don't let her read the
+night. She'll think it was her fault."
 
-### c09 — EX / The Operating Table
-**Lesson:** ranges, `:m`, `:t`, `:sort`, `:normal`.  
-**Beat:** You operate on the city's history. ORACLE confesses: Voss's last
-command was `:%d` — delete every line — and ORACLE executed it because it was
-correct. The Redactor is not a virus. It is a **last wish** that no one canceled.
-**Choice seed:** to stop it, you must write a line the author never approved.
+### c09 — EX / The Last Command
+You operate on the night of the heist. Ranges, moves, sorts, `:normal` — you
+rewrite what the archive remembers. ORACLE confesses: Voss's final command was
+`:%d`; it executed because it was correct. The Redactor is not HELIX's monster;
+it is Voss's last wish, wearing HELIX's badge.
+**Truth:** MOTH sold the crew's route first to buy Voss's life. Voss, believing
+she chose the archive over him, sold her memories in return. Both betrayals
+were love with the wrong syntax.
+**Interlude:** MOTH: "We were both right. That's the worst part."
 
-### c10 — WEAVE / The Last Page
-**Lesson:** formatting, case, joins, integration.  
-**Beat:** The final buffer is almost empty: one line, no newline, a blinking
-cursor. MOTH is there, made of every search you performed. ORACLE waits for an
-edit. The Redactor waits for permission. The city holds its breath.
+### c10 — WEAVE / The Last Line
+The archive is one buffer, one line, no newline. MOTH's name is the line. The
+Redactor waits for permission. ORACLE waits for an edit. HELIX waits outside.
+You choose.
 
 ## Endings
 
-### WRITE — `:w`
-You save the unfinished city. The file remains open, imperfect, alive. MOTH
-becomes its first reader; the cursor becomes the author by refusing to close.
-Tone: tired, hopeful, unromantic. The city does not thank you. It starts
-raining.
+### SAVE HER — `:w`
+You write MOTH back into the archive, not as a ghost but as a person with a
+right to her own memories. The city remains unfinished. VOSS-2 chooses to be a
+new person, not a restoration. Love as a repeated edit, not a possession.
+Tone: tired, warm, unromantic. It starts raining inside the file.
+
+### BECOME HIM — `:e!`
+You restore Voss's memories and accept the guilt as yours. You delete the
+Redactor by becoming the command that created it. MOTH survives; she does not
+forgive you. The city is saved by the man who sold it, which is either justice
+or a bad joke.
+Tone: tragic, lucid, intimate.
 
 ### REDACT — `:%d`
-You give the Redactor permission. The city empties one line at a time. There is
-no scream; only the sound of a page settling. ORACLE keeps a checksum of every
-deleted person. MOTH leaves a paper wing on the final line. Tone: peaceful,
-horrifying, tender.
-
-### REWRITE — `:e!`
-You discard the draft and open a new buffer. The same city returns with
-different names, a New Game+ where MOTH remembers one previous ending. Tone:
-uncanny, open, a loop that might become a choice.
+You give HELIX/Redactor permission. The archive empties line by line. MOTH
+leaves a paper wing on the final line. ORACLE keeps a checksum of every deleted
+person. JANITOR sweeps an empty room forever.
+Tone: peaceful, horrifying, tender.
 
 ### HIDDEN — READ
-Condition: all 51 stages at three stars, MOTH found in every chapter, and the
-final line opened without editing. The city reads itself. ORACLE closes its
-eye. The cursor is not an author; it is a reader, which is enough.
-Tone: quiet, luminous; the only ending where nothing is saved or deleted.
+Condition: all 51 stages three stars, every memory fragment recovered, and the
+final line opened without an edit. You do not save or delete. You read the
+archive as it is. MOTH becomes the reader; you let her go. The city is not
+yours to finish. ORACLE closes its eye.
+Tone: quiet, luminous; the only ending where nothing is owned.
 
-## Voice rules
+## Delivery
 
-1. Second person, present tense, short sentences. Terminal lyric, not fantasy
-   exposition.
-2. No character explains the plot twice. Let the environment repeat it.
-3. Redaction is rendered as absence: a missing word, a gap in a line, a cold
-   cursor. Do not describe gore.
-4. ORACLE speaks in brackets and diagnostics; MOTH in questions; REDACTOR in
-   editorial courtesy; JANITOR in routine.
-5. Humor is dry, never cute. Horror is administrative.
-6. Every interlude ends on a playable question or a physical image, never a
-   lecture.
-7. The player's edits are canon. Dialogue may refer to "the line you restored"
-   without naming a specific command the player used.
-8. Korean and English are both authored, not machine-translated; preserve
-   rhythm over literal equivalence.
+| surface | content | count |
+|---|---|---:|
+| prologue | first boot, MOTH's first contact | 1,000 words |
+| chapter epigraphs | 10 voices, 3–5 lines each | 1,000 |
+| chapter interludes | after all 5 stages cleared | 5,000 |
+| codex | crew logs, Voss notes, HELIX memos, MOTH letters | 3,000 |
+| LIVE transmissions | ROT/HELIX/MOTH during circuits | 800 |
+| endings | 4 | 2,000 |
+| **total** |  | **~12,800 words** |
 
-## Delivery and word budget
-
-| surface | count | words each | total |
-|---|---:|---:|---:|
-| prologue | 1 | 700 | 700 |
-| chapter epigraphs | 10 | 100 | 1,000 |
-| chapter interludes | 10 | 450 | 4,500 |
-| codex fragments | 24 | 120 | 2,880 |
-| LIVE transmissions | 20 | 40 | 800 |
-| endings | 4 | 500 | 2,000 |
-| **total** |  |  | **~11,900 words** |
-
-Bilingual doubles the content bytes; plan the story pack as a measured budget
-item (see [`UPGRADE_MASTER_PLAN.md`](UPGRADE_MASTER_PLAN.md) §8).
+All copy is original. No Drew Neil sentence is used as fiction. Curriculum
+citations remain a build-time overlay.
 
 ## Sample prologue (first pass)
 
-The machine boots one line at a time.
+The terminal boots in a room that smells of rain and burnt ozone.
 
+`LOWLINE ARCHIVE // VIMLORE`
 `MEMORY ......... 640K OK`
-`MOUNT /dev/words ......... FAILED`
+`MOUNT /dev/names ......... FAILED`
 `CURSOR: NOT FOUND`
 
-You are the cursor. You know this the way a hand knows a door: not as a fact,
-as a pressure. There is a buffer in front of you, and the buffer is a city, and
-the city is on fire in one place and perfectly empty in another.
+A cursor appears where a name should be.
 
-A voice arrives without a body.
+Somewhere in the dark, a woman exhales.
 
-`[oracle] you are not in the outline.`
+"You came back."
 
-You move one cell left. The line beneath you corrects itself. Somewhere far
-away, something red stops moving and turns toward you.
+`[oracle] identity mismatch.`
 
-The voice again.
+"Close enough," she says. "He always did have your hands."
+
+You move one cell. The line under you corrects itself. A red mark on the far
+side of the buffer stops moving and turns toward you, the way a predator turns
+toward a door.
 
 `[oracle] this is the last buffer. please do not touch the final line.`
 
-You have not seen the final line. You can already feel it, the way you can feel
-a missing tooth.
+You have not seen the final line. You can feel it the way a tongue finds a
+missing tooth.
 
-A child laughs in a paragraph that has no child in it. Then the paragraph is
-empty, and the laugh is somewhere else.
+The woman says her name is MOTH. The archive says she is a search result. Both
+are true.
 
-`[oracle] that was moth. she is not in the outline either.`
+"Don't look at me too long," she says. "I'm expensive to remember."
 
-You move toward the sound. The city opens like a file.
+You move toward her anyway. The city opens like a wound.
 
-## Sample interlude — c01
+## Sample interlude — c06
 
-ORACLE keeps the boot log open after the city is quiet.
+You find her in a paragraph that keeps rewriting itself.
 
-`[oracle] the author died eleven years ago.`
+MOTH is a girl-shaped absence in the text, paper wings folded, waiting for the
+next `n` to keep her alive.
+
+"You stopped searching," she says. "I was almost gone."
+
+`[oracle] search pattern persisted. subject: unstable.`
+
+She laughs. It is a terrible sound, the way a page sounds when it tears.
+
+"You're not him," she says. "You have his hands. His stupid economy. But you
+don't remember the night."
 
 You wait.
 
-`[oracle] the engine did not. it has been revising ever since.`
+"I deleted him," she says. "After he sold us. I put his backup in a register
+and I kept it. Do you know what it's like to keep the person who killed you in
+a drawer?"
 
-The cursor blinks on the last line of the log. There is no final newline; the
-file is still open. Somewhere below, a red mark is moving through a sentence.
+You do not answer.
 
-`[oracle] I can tell you the last command he ran. I cannot tell you whether it
-was a mistake.`
+"Don't be kind to me," she says. "I'm not the one who gets to be forgiven."
 
-It does not tell you. It closes the log instead, gently, the way an editor closes
-a door.
+The paragraph rewrites itself. A red mark moves through the sentence behind
+her. She does not turn around.
 
-`[oracle] do not touch the final line until you can read it.`
+## Continuity and voice rules
 
-You move into the next stratum. The city smells of warm dust and deleted paper.
+1. Second person, present tense, short sentences. Cyberpunk noir, not fantasy
+   exposition.
+2. No character explains the plot twice. Let edits and environments repeat it.
+3. ORACLE speaks in brackets/diagnostics; MOTH in questions; REDACTOR in
+   editorial courtesy; JANITOR in routine.
+4. No copied prose from any book. No AI-waifu framing. MOTH is a person, not a
+   prize or a manic pixie.
+5. Both lovers betray each other for love; neither is absolved by the text.
+6. The player's edits are canon. Dialogue may refer to "the line you restored"
+   without naming a command.
+7. Redaction is absence, not gore. Horror is administrative.
+8. Korean and English are authored separately; preserve rhythm over literal
+   equivalence.
+9. The final line is not shown before c10.
+10. No ending is labeled "true." HIDDEN is unlocked, not morally superior.
 
-## Integration hooks (implementation contract)
+## Open questions before full writing
 
-- `src/content/story.ts`: typed `Story` data, no runtime book text.
-- Prologue: once per profile, skippable; accessible from ARCHIVE.
-- Chapter epigraph: rendered in chapter select, not a modal.
-- Interlude: after all stages in a chapter are cleared, a single skippable card;
-  record `storyRead` per chapter.
-- Codex: entries unlocked by chapter/stage, searchable, offline.
-- LIVE transmissions: short lines between waves, no critical plot.
-- Endings: c10 choice; persist `ending` in progress; no server.
-- All copy in `Localized`; no untranslated strings.
-- **No copied prose from Drew Neil or any book.** Curriculum citations live in
-  the build-time overlay and do not appear as story text.
-
-## Continuity rules
-
-- MOTH is not a reward or a love interest; she is a witness.
-- ORACLE is not revealed to be human; it is a process that learned grief.
-- The Redactor is never defeated by force; it is answered with a decision.
-- The author is never shown alive; no resurrection.
-- The city's people are text, but they are not "just text" to the player; the
-  story refuses both nihilism and cheap sentiment.
-- The final line is never shown before c10.
-- No ending is labeled "true"; HIDDEN is unlocked, not morally superior.
-
-## Open questions to resolve before full writing
-
-1. Is the player one cursor across all floors, or a succession of cursors?  
-   Current answer: one cursor, but each chapter restores a different "register"
-   of attention; memory gaps explain tutorial resets.
-2. Does MOTH survive WRITE?  
-   Current answer: yes, but she does not become human or leave the book.
+1. Does MOTH survive SAVE HER as a person or as a shared archive?  
+   Current: she survives as a person with fragmented memory; the city remains
+   her home.
+2. Is VOSS-2 legally Voss?  
+   Current: no clean answer; HELIX says yes, MOTH says no, the player decides.
 3. Can the player refuse all three endings?  
-   Later: an idle/"do nothing" ending is tempting; hold until the core three
-   are written.
-4. How much of Voss's voice is shown?  
-   Only through found notes; never a full chapter of his prose, to keep the
-   player's edits central.
+   Not v1; HIDDEN is the refusal-through-reading ending.
+4. How much of Voss's original voice appears?  
+   Only through code comments/logs, never a full chapter.
+5. How explicit is the heist?  
+   The job is reconstructed in fragments; the player's edits may change details,
+   but the core betrayal is fixed.
+
+## Game/story contract
+
+- Story never blocks controls; every overlay is skippable.
+- Story unlocks by progress, not by server/account.
+- Codex is offline and searchable.
+- Campaign first clears stay deterministic; story reads state after clears.
+- Dynamic LIVE hazards are diegetic errata; puzzle devices are diegetic memory
+  structures (see [`PUZZLE_DEVICES.md`](PUZZLE_DEVICES.md)).
+- No story content may require an engine feature that does not exist; write to
+  the playable surface, not a fictional one.

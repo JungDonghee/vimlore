@@ -8,8 +8,8 @@
 
 # VIMLORE
 
-**The most complete Vim training terminal ever attempted — a Vim adventure that
-runs on a dead terminal.** That is the destination, not a claim about today: the
+**The most complete Vim training terminal ever attempted — a cyberpunk memory
+heist that runs on a dead terminal.** That is the destination, not a claim about today: the
 coverage ledger is public. No install, no account, no tracking, no third-party
 requests — one ~278 kB page. A keyboard is required; on a phone, turn it sideways.
 
@@ -52,7 +52,8 @@ Read [`COMPLETION.md`](docs/COMPLETION.md) and
 
 **Next direction:** gameplay/feel and story first, then the full Practical Vim
 engine. The ordered plan is [`docs/UPGRADE_MASTER_PLAN.md`](docs/UPGRADE_MASTER_PLAN.md);
-the original narrative bible is [`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md).
+the original narrative bible is [`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md);
+the first bilingual scene is [`docs/story/PROLOGUE.md`](docs/story/PROLOGUE.md).
 
 ## Why it is different
 

@@ -89,7 +89,8 @@ only finalize by 23:50; the machine shuts down at 00:00.
 ## 0i. Next direction: gameplay/story before PV-FULL (2026-11-13)
 
 - Master plan: [`UPGRADE_MASTER_PLAN.md`](UPGRADE_MASTER_PLAN.md).
-- Narrative bible: [`STORY_BIBLE.md`](STORY_BIBLE.md).
+- Narrative bible **v2**: [`STORY_BIBLE.md`](STORY_BIBLE.md) — cyberpunk memory heist, VOSS-2/MOTH/HELIX, love and mutual betrayal, four endings.
+- First bilingual scene: [`story/PROLOGUE.md`](story/PROLOGUE.md).
 - Priority: LIVE CIRCUIT vertical slice (bugs/walls/corruption/signal/timer),
   story prologue + c01 interlude, then PV-FULL Practical Vim engine.
 - Do not retrofit moving hazards into deterministic campaign first-clears;

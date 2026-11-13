@@ -5,9 +5,10 @@
 > this plan is executed. Do not mix a new gameplay system with campaign gates
 > in one unverified change.
 >
-> Ordering decision: **gameplay/feel → story → full Practical Vim engine**.
-> The engine order is deliberately inverted from the old backlog: the game
-> must be worth playing before the command surface grows.
+> Ordering decision: **story canon → gameplay/feel → story vertical slice →
+> integrated story → full Practical Vim engine**. The story direction is fixed
+> before feature work; the game systems are then built against it, not as a
+> skin. The engine order is deliberately after the game is worth playing.
 
 ## 0. One-screen decision
 
@@ -16,7 +17,7 @@
 | Do dynamic bugs/walls/health go into the 51 campaign stages now? | **No.** Campaign stays deterministic and oracle-clean. |
 | Where does the dynamic system live first? | A separate **LIVE CIRCUIT** arcade mode using the same Vim engine and a generated arena. |
 | What is "Practical Vim full"? | A written **PV-FULL** contract: every one of 123 tips is playable, a verified drill, or an explicitly environment-deferred row with a feature backlog. No unknown gaps. |
-| What is the story? | An original novel-like arc, delivered in prologue, 10 chapter epigraphs/interludes, codex fragments, ROT transmissions and ending choices. See [`STORY_BIBLE.md`](STORY_BIBLE.md). |
+| What is the story? | A cyberpunk memory-heist noir: **VOSS-2**, a dead netrunner's backup, wakes in a black-market memory OS; **MOTH**, the woman he loved and betrayed (and who betrayed him first), exists only while searched. Delivered in prologue, 10 epigraphs/interludes, codex, LIVE transmissions and four endings. See [`STORY_BIBLE.md`](STORY_BIBLE.md). |
 | What is the first shippable slice? | One LIVE arena: moving bugs, red walls, corruption, health, timer, score, pause/accessibility, no campaign changes. Then one puzzle room with one-shot floors/plates/effect locks. |
 | What is explicitly not first? | Buffers/windows/files engine, full Modern Vim, multiplayer, accounts, servers. |
 
@@ -197,7 +198,8 @@ Onboarding:
 
 ## 6. Narrative system
 
-See [`STORY_BIBLE.md`](STORY_BIBLE.md). Delivery contract:
+See [`STORY_BIBLE.md`](STORY_BIBLE.md) (v2 cyberpunk memory heist) and the
+bilingual first scene [`story/PROLOGUE.md`](story/PROLOGUE.md). The story is **not a skin**: Vim edits are the world's magic, MOTH exists only while searched, registers hold the crew's last words, macros are ghosts, and the final boss is one line. Delivery contract:
 
 | surface | content | frequency |
 |---|---|---|
@@ -274,8 +276,11 @@ inside 278,000 B.
 
 ## 9. Delivery phases and exit criteria
 
-### P0 — Plan and freeze (this document)
-Exit: plan/story/scope reviewed; current gates green; no feature code mixed in.
+### P0 — Plan, story canon and freeze (this document)
+- `STORY_BIBLE.md` v2 and `story/PROLOGUE.md` fixed;
+- gameplay/puzzle/engine boundaries fixed;
+- current gates green; no feature code mixed in.
+Exit: canon, scope, budget and vertical-slice acceptance approved.
 
 ### P1 — LIVE vertical slice (no campaign/story changes required)
 - one arena, 3 bug types, 2 walls types, corrupt text, 5 hearts, 75 s timer;
@@ -300,10 +305,14 @@ Exit: solver proves solvability; retry restores devices; Vim `u` does not
 resurrect meta-cells by design; browser QA and gates green.
 
 ### P2 — Story vertical slice
-- prologue, c01 epigraph + interlude, 6 codex entries, ROT transmissions;
-- skippable, localized, no book text;
-- archive screen reachable from codex.
-Exit: playthrough reads coherently; no story blocks controls; link/doc checks.
+- prologue (VOSS-2 wakes; MOTH says "You came back"), c01 epigraph +
+  interlude, 6 codex entries, 2 ROT/HELIX transmissions;
+- VOSS-2/MOTH/ORACLE voice tests; no plot reveal beyond "identity mismatch";
+- skippable, localized, no book text; archive reachable from codex;
+- story state persisted locally, no server.
+Exit: a new player can explain who they are, who MOTH is, what is at stake,
+and why editing is the only way to learn the truth; no story blocks controls;
+link/doc/localization checks green.
 
 ### P3 — Campaign + story integration
 - chapter interludes for all 10 floors;

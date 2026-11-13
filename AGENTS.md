@@ -39,7 +39,7 @@ service worker cache version bumped when the shell changes; keep PWA tags
 inside the `pwa:start…pwa:end` block (the single-file inliner strips them);
 never add a third-party service worker or remote icon.
 
-Current priority is **game feel → story → PV-FULL engine**, not an engine rewrite.
+Current priority is **story canon → game feel → story content → PV-FULL engine**, not an engine rewrite.
 Read [`docs/UPGRADE_MASTER_PLAN.md`](docs/UPGRADE_MASTER_PLAN.md) and
 [`docs/STORY_BIBLE.md`](docs/STORY_BIBLE.md) before starting a feature. Dynamic
 hazards must not enter deterministic campaign first-clears until the LIVE mode
