@@ -168,3 +168,17 @@ story canon must not change.
 - No engine change committed. Stable baseline remains **108** (matches 21,604;
   undo 99; reg 10; regtype 8). Game-used solution+undo 51 of 51.
 - Browser audit remains green: 50 screens/viewports, 0 overflow, 0 errors.
+
+## Round 10 — multi-line linewise change
+
+- Probed `cgg`, `2cgg`, and `2c%` against Vim:
+  - uncounted `cgg` uses the range-start first non-blank;
+  - counted `2cgg` keeps the command column;
+  - `2c%` uses the range-start first non-blank;
+  - undo line is the last changed line.
+- Implemented only `gg`/`%` multi-line linewise changes. `cj`, `cG`, `cc`,
+  text-object, visual, and single-line changes keep their existing rules.
+- State matrix: **108 → 104** (matched 21,608; undo 95; reg 10; regtype 8).
+  No new failures; 15 old failures removed.
+- Added regression tests. Oracle 373 of 373, level-oracle 51 of 51
+  solution+undo, tests, build/budget/PWA green.

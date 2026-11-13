@@ -174,6 +174,23 @@ test('dk keeps the Vim exception columns on undo', () => {
   assert.deepEqual(b.cursor, { line: 0, col: 1 });
 });
 
+test('multi-line linewise change undo columns match Vim', () => {
+  const a = new Vim({ text: '  indented\nnormal' });
+  a.cursor = { line: 1, col: 1 };
+  a.feedString('cggX<Esc>u');
+  assert.deepEqual(a.cursor, { line: 1, col: 2 });
+
+  const b = new Vim({ text: '  indented\nnormal' });
+  b.cursor = { line: 1, col: 1 };
+  b.feedString('2c%X<Esc>u');
+  assert.deepEqual(b.cursor, { line: 1, col: 2 });
+
+  const c = new Vim({ text: 'foo bar\nbaz qux' });
+  c.cursor = { line: 0, col: 2 };
+  c.feedString('2cggX<Esc>u');
+  assert.deepEqual(c.cursor, { line: 1, col: 2 });
+});
+
 test('whole-line charwise yanks are linewise registers', () => {
   const a = new Vim({ text: 'a\n\nb\n\nc' });
   a.feedString('y)');

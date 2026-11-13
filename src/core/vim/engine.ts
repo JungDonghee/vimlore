@@ -1369,7 +1369,7 @@ export class Vim {
       let linewiseDeleteCol = wasVisual
         ? 0
         : this.op?.doubled
-          ? (this.op.count || 1) === 1
+          ? (this.op?.count || 1) === 1
             ? Math.min(undoCol, firstStart)
             : undoCol
           : this.opTextObject || l2 === l1
@@ -1383,7 +1383,17 @@ export class Vim {
       before.undoCursor = change
         ? {
             line: l1 === l2 ? l1 : l1 + 1,
-            col: wasVisual ? this.visualAnchor?.col ?? 0 : this.opTextObject || l1 === l2 ? 0 : undoCol,
+            col: wasVisual
+              ? this.visualAnchor?.col ?? 0
+              : this.opTextObject || l1 === l2
+                ? 0
+                : this.opMotionKey === '%'
+                  ? firstStart
+                  : this.opMotionKey === 'gg'
+                    ? (this.op?.count || 1) > 1
+                      ? undoCol
+                      : firstStart
+                    : undoCol,
           }
         : { line: l1, col: linewiseDeleteCol };
       this.buf.setLines(this.buf.lines);
@@ -2854,7 +2864,7 @@ export class Vim {
           this.afterUnit();
           return;
         }
-        const count = (this.countNum || 1) * (this.op ? this.op.count || 1 : 1);
+        const count = (this.countNum || 1) * (this.op ? this.op?.count || 1 : 1);
         this.count = '';
         if (count > 1 && obj.fallback) {
           this.bell();

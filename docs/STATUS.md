@@ -16,9 +16,9 @@
 | audited book headings / problems / rejected | 2554 / 129 / 0 |
 | priority chapters / commands / concepts / defects / rejected | 28 / 417 / 336 / 175 / 0 |
 | game-used solutions / undo diagnostic | 51 of 51 / 51 of 51 |
-| state matrix matched / total / open | 21,604 / 21,712 / 108 |
-| state open by field | undo 99, reg 10, regtype 8 |
-| built single file (raw) | 403,029 B |
+| state matrix matched / total / open | 21,608 / 21,712 / 104 |
+| state open by field | undo 95, reg 10, regtype 8 |
+| built single file (raw) | 403,103 B |
 | raw ceiling | 420,000 B |
 ## Reports
 - Oracle: `tools/oracle-diff.ts` + `tests/vim-expected.json`
