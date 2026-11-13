@@ -8,13 +8,13 @@
 | metric | value |
 |---|---|
 | cases | 21712 |
-| matched | 21594 |
-| divergences | 118 |
+| matched | 21595 |
+| divergences | 117 |
 | engine errors | 0 |
 
 | field | count |
 |---|---:|
-| undo | 109 |
+| undo | 108 |
 | reg | 10 |
 | regtype | 8 |
 
@@ -99,9 +99,6 @@
 - `normal/</motion/gg` keys=`<gg` text=`"  indented\nnormal"` @[1,2] fields=undo
   - vim: `{"reg":"","cursor":[1,0],"lines":["indented","normal"],"regtype":"charwise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
   - eng: `{"lines":["indented","normal"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
-- `normal/doubled/dd` keys=`dd` text=`"  indented\nnormal"` @[1,2] fields=undo
-  - vim: `{"reg":"  indented\n","cursor":[1,0],"lines":["normal"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
-  - eng: `{"lines":["normal"],"cursor":[1,0],"reg":"  indented\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
 - `normal/doubled/cc` keys=`ccX<Esc>` text=`"  indented\nnormal"` @[1,2] fields=undo
   - vim: `{"reg":"  indented\n","cursor":[1,0],"lines":["X","normal"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["  indented","normal"]}}`
   - eng: `{"lines":["X","normal"],"cursor":[1,0],"reg":"  indented\n","regtype":"linewise","undo":{"lines":["  indented","normal"],"cursor":[1,0]}}`
@@ -256,5 +253,8 @@
   - vim: `{"reg":"","cursor":[1,0],"lines":["if (x) {","y();","}"],"regtype":"charwise","undo":{"cursor":[1,7],"lines":["if (x) {","  y();","}"]}}`
   - eng: `{"lines":["if (x) {","y();","}"],"cursor":[1,0],"reg":"","regtype":"charwise","undo":{"lines":["if (x) {","  y();","}"],"cursor":[1,0]}}`
 - `normal/d/motion/gg` keys=`2dgg` text=`"if (x) {\n  y();\n}"` @[1,2] fields=undo
+  - vim: `{"reg":"if (x) {\n  y();\n","cursor":[1,0],"lines":["}"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["if (x) {","  y();","}"]}}`
+  - eng: `{"lines":["}"],"cursor":[1,0],"reg":"if (x) {\n  y();\n","regtype":"linewise","undo":{"lines":["if (x) {","  y();","}"],"cursor":[1,0]}}`
+- `normal/d/motion/G` keys=`2dG` text=`"if (x) {\n  y();\n}"` @[1,2] fields=undo
   - vim: `{"reg":"if (x) {\n  y();\n","cursor":[1,0],"lines":["}"],"regtype":"linewise","undo":{"cursor":[1,2],"lines":["if (x) {","  y();","}"]}}`
   - eng: `{"lines":["}"],"cursor":[1,0],"reg":"if (x) {\n  y();\n","regtype":"linewise","undo":{"lines":["if (x) {","  y();","}"],"cursor":[1,0]}}`

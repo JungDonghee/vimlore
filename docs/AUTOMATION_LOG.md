@@ -105,3 +105,14 @@ story canon must not change.
 - Added a regression test to `tests/vim.test.ts`.
 - Oracle 373 of 373, level-oracle 51 of 51 solution+undo, tests 39 of 39,
   build/budget/PWA/status green.
+
+## Round 5b — single dd indentation
+
+- Probed Vim: single `dd` keeps `min(command column, first non-blank)` when the
+  deleted line is indented; plain lines land at 0. `2dd`/`3dd` keep the command
+  column when the buffer remains.
+- Fixed the effective count (`0` means count 1) and implemented the two narrow
+  doubled cases. State matrix: **119 → 117** (matched 21,595; undo 108; reg 10;
+  regtype 8). `m-8864` and `m-14904` fixed; no new failures.
+- Added regression tests for both. Oracle 373 of 373, level-oracle 51 of 51
+  solution+undo, tests green, build/budget/PWA green.

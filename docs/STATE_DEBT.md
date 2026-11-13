@@ -6,8 +6,8 @@
 ## Current
 
 - Differential fuzz debt: **3 visual edge cases** in [`FUZZ_DEBT.md`](FUZZ_DEBT.md).
-- Full observable-state matrix: **21,594 / 21,712 matched, 118 open**
-  (`undo 109`, `reg 10`, `regtype 8`). Local-only; report regenerated with
+- Full observable-state matrix: **21,595 / 21,712 matched, 117 open**
+  (`undo 108`, `reg 10`, `regtype 8`). Local-only; report regenerated with
   `npm run state-matrix -- --write`.
 - Shipped stage solutions: **51 / 51** match real Vim (`npm run level-oracle`).
 - Game-used solution + undo: **51 / 51** (`npm run level-oracle -- --undo`).
@@ -16,12 +16,12 @@
 - All 51 stages have evidence-checked book citations; the citations are a
   build-time overlay and do not affect bundle/state.
 
-## What the 118 mean
+## What the 117 mean
 
 Most are **undo cursor** after edge-motion operators (counted/backward
 linewise ops, visual ranges, `2>B`, `dgg`, etc.) and a few register/regtype
-cases for count+text-object yanks. `2dd` now preserves the command column on
-undo; 109 undo cases remain. They are real Vim differences, not test noise and
+cases for count+text-object yanks. `2dd`/`3dd` preserve the command column, and a single `dd` keeps an
+indented command column; 108 undo cases remain. They are real Vim differences, not test noise and
 are not silently waived.
 
 ## Priorities

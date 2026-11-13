@@ -134,6 +134,16 @@ test('counted doubled linewise delete keeps the command column on undo (Vim)', (
   assert.deepEqual(v.cursor, { line: 0, col: 2 });
 });
 
+test('single dd keeps an indented command column on undo (Vim)', () => {
+  const v = new Vim({ text: '  indented\nnormal' });
+  v.cursor = { line: 0, col: 2 };
+  v.feedString('dd');
+  assert.equal(v.text, 'normal');
+  v.feedString('u');
+  assert.equal(v.text, '  indented\nnormal');
+  assert.deepEqual(v.cursor, { line: 0, col: 2 });
+});
+
 test('whole-line charwise yanks are linewise registers', () => {
   const a = new Vim({ text: 'a\n\nb\n\nc' });
   a.feedString('y)');
