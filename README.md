@@ -11,7 +11,7 @@
 **The most complete Vim training terminal ever attempted — a Vim adventure that
 runs on a dead terminal.** That is the destination, not a claim about today: the
 coverage ledger is public. No install, no account, no tracking, no third-party
-requests — one 256 kB page. A keyboard is required; on a phone, turn it sideways.
+requests — one ~277 kB page. A keyboard is required; on a phone, turn it sideways.
 
 > **If you are an AI agent opening this repository:**
 > run `npm run doctor`, then read [`AGENTS.md`](AGENTS.md) before changing anything.
@@ -74,6 +74,16 @@ it with the real Vim language — `d`, `c`, `y`, text objects, registers, macros
   verified skill generators), biases a WEAKNESS mode from your own telemetry,
   and keeps the rooms you save. No account, no server: one export code carries
   your profile.
+
+## Install as an app
+
+VIMLORE is installable from Chromium (Chrome/Edge desktop, Chrome Android).
+Use the install icon in the address bar, the browser menu, or the in-game
+`INSTALL VIMLORE` chip when it appears. Installed, it launches standalone with
+the CRT icon and — on Android — the manifest's **landscape** lock. In a normal
+portrait browser tab a full-screen rotate gate blocks play; its button requests
+fullscreen + landscape lock, otherwise rotate the phone. See
+[`docs/PWA.md`](docs/PWA.md) for the exact platform limits and offline cache.
 
 ## Play
 

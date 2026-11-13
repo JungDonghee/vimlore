@@ -222,7 +222,7 @@ h2,
   line-height: 1;
   display: flex;
   justify-content: center;
-  margin-left: 0.2em;
+  margin-left: 0.0125em;
   text-shadow:
     0 0 4px rgb(102 255 158 / 0.9),
     0 0 18px rgb(102 255 158 / 0.55),
@@ -304,10 +304,8 @@ h2,
 }
 
 .press {
-  position: absolute;
-  bottom: 11vh;
-  left: 0;
-  right: 0;
+  position: static;
+  margin-top: 18px;
   font-size: 11px;
   letter-spacing: 0.42em;
   color: var(--ph-mid);
@@ -319,10 +317,8 @@ h2,
 }
 
 .title-foot {
-  position: absolute;
-  bottom: 16px;
-  left: 0;
-  right: 0;
+  position: static;
+  margin-top: 14px;
   font-size: 9.5px;
   color: var(--ph-ghost);
   letter-spacing: 0.24em;
@@ -1162,11 +1158,15 @@ h2,
   .facts { margin-top: 12px; padding-top: 10px; }
   .actions { margin-top: 12px; }
   .btn { padding: 8px 14px; }
-  .title-screen { gap: 10px; }
-  .bootlog { margin-bottom: 3vh; font-size: 9px; line-height: 1.6; }
-  .title-mark { font-size: clamp(38px, 12vh, 72px); }
-  .press { bottom: 6vh; }
-  .title-tag { margin-top: 8px; }
+  .title-screen { gap: 8px; justify-content: center; padding: 16px 24px; }
+  .bootlog,
+  .title-sub,
+  .title-help,
+  .title-credit,
+  .title-foot { display: none; }
+  .title-mark { font-size: clamp(44px, 14vw, 96px); }
+  .press { margin-top: 8px; }
+  .title-tag { margin-top: 6px; }
 }
 
 /* progress: contribution grass + skill chips */

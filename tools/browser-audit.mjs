@@ -16,7 +16,7 @@ const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const dist = join(root, 'dist');
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= resolve(root, '..', '.vimlore-browsers');
 const { chromium } = await import('playwright');
-const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml' };
+const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
 const server = createServer((req, res) => {
   const url = decodeURIComponent((req.url || '/').split('?')[0]);
   const file = join(dist, url === '/' ? 'index.html' : url);
@@ -60,7 +60,7 @@ async function audit(page, vp, name, shot = false) {
   report.push({ viewport: vp, screen: name, overflow: bad });
 }
 
-for (const vp of ['1920x1080', '390x844', '320x568']) {
+for (const vp of ['1920x1080', '390x844', '320x568', '844x390']) {
   const [w, h] = vp.split('x').map(Number);
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();

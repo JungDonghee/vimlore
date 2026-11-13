@@ -21,6 +21,9 @@ for (const name of assets) {
   }
 }
 
+// The downloadable single-file build stays self-contained: PWA shell tags
+// point at sibling files that are not inlined and must be stripped.
+html = html.replace(/<!-- pwa:start[\s\S]*?pwa:end -->\n?/g, '');
 writeFileSync(join(dist, 'vimlore.html'), html);
 mkdirSync('dist/download', { recursive: true });
 copyFileSync(join(dist, 'vimlore.html'), 'dist/download/vimlore.html');

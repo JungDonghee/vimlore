@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "VIMLORE \u2014 a Vim adventure game that teaches real Vim by feel",
+  "description": "VIMLORE — a Vim adventure game that teaches real Vim by feel",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node tools/inline.mjs",
@@ -15,7 +15,7 @@
     "doc-check": "node --experimental-strip-types tools/doc-check.ts",
     "doctor": "node --experimental-strip-types tools/doctor.ts",
     "invariants": "node --experimental-strip-types tools/invariants.ts",
-    "verify": "npm test && npm run lint:levels && npx tsc --noEmit && npm run doc-check && npm run invariants && npm run build && npm run budget",
+    "verify": "npm test && npm run lint:levels && npx tsc --noEmit && npm run doc-check && npm run invariants && npm run build && npm run budget && npm run pwa:check",
     "verify:full": "npm run verify && npm run oracle && node --experimental-strip-types tools/fuzz.ts --n=1000 --seed=7",
     "budget": "node --experimental-strip-types tools/bundle-budget.ts",
     "books:index": "node --experimental-strip-types tools/book-index.ts",
@@ -46,7 +46,10 @@
     "books:priority:read": "python3 tools/books/priority.py",
     "books:priority:map": "node --experimental-strip-types tools/books/priority_map.ts",
     "level-oracle": "node --experimental-strip-types tools/level-oracle.ts",
-    "books:stage-map": "python3 tools/books/merge_stage_map.py"
+    "books:stage-map": "python3 tools/books/merge_stage_map.py",
+    "pwa:check": "node tools/pwa-check.mjs",
+    "pwa:qa": "node tools/pwa-qa.mjs",
+    "pwa:icons": "node tools/pwa-icons.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",

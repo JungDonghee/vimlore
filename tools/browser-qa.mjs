@@ -24,7 +24,7 @@ if (!existsSync(dist)) {
 }
 const { chromium } = await import('playwright');
 
-const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml' };
+const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
 const server = createServer((req, res) => {
   const url = decodeURIComponent((req.url || '/').split('?')[0]);
   const file = join(dist, url === '/' ? 'index.html' : url);

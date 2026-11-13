@@ -17,6 +17,7 @@ jobs:
       - run: npm run surface -- --strict
       - run: npm run build
       - run: npm run budget
+      - run: npm run pwa:check
       - run: npm run status:check
       - name: absolute asset paths must not exist (blank page on subpath hosting)
         run: |

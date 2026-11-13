@@ -29,6 +29,17 @@ Never "fix" a level by changing the engine's Vim semantics. Fix the level.
 ## Commands
 
 ```bash
+npm run pwa:check   # manifest/icons/SW/single-file split (CI)
+npm run pwa:qa      # Chromium installability + landscape gate + offline
+npm run pwa:icons   # regenerate PNGs from public/icons/icon.svg
+```
+
+PWA rules: keep `manifest.webmanifest` `orientation: landscape`; keep the
+service worker cache version bumped when the shell changes; keep PWA tags
+inside the `pwa:start…pwa:end` block (the single-file inliner strips them);
+never add a third-party service worker or remote icon.
+
+```bash
 npm install            # dev: vite/typescript + Playwright (zero runtime deps)
 npm run dev            # http://localhost:5173
 npm run build          # dist/ + single-file dist/vimlore.html

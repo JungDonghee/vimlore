@@ -49,7 +49,19 @@
 - stage provenance **51 of 51** cited
 - browser desktop **55.1–57.6 FPS**, mobile **60.5 FPS**
 - browser audit **38 screens**, 0 overflow, 0 errors
-- bundle **276,990 B raw / 86,091 B gzip** (gate 277,000/87,000)
+- bundle **276,668 B raw / 85,932 B gzip** (gate 277,000/87,000)
+
+## Install / landscape (2026-11-13)
+
+- Installable Chromium PWA: manifest (standalone, landscape), service worker,
+  offline shell, install chip.
+- Custom vector mark: a large **V built from small shell/Vim commands**;
+  favicon and 192/512/maskable/Apple PNGs generated from it.
+- Portrait phones are gated with a full-screen rotate prompt; the button
+  requests fullscreen + `screen.orientation.lock('landscape')`. Installed
+  Android apps use manifest orientation; a normal tab cannot force rotation.
+- Title VIMLORE is horizontally centered on 1920, 390×844 and 844×390.
+- Verified `pwa:check` + `pwa:qa` (installability errors 0, offline reload).
 
 ## Honest remaining gaps
 

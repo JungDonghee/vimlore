@@ -1,0 +1,110 @@
+/* VIMLORE PWA bootstrap: install prompt + landscape gate. Plain JS, no deps. */
+(() => {
+  'use strict';
+  const doc = document;
+  const body = doc.body;
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (standalone) body.classList.add('pwa-standalone');
+
+  const install = doc.createElement('button');
+  install.id = 'pwa-install';
+  install.type = 'button';
+  install.setAttribute('aria-label', 'Install VIMLORE');
+  install.textContent = 'INSTALL VIMLORE';
+  body.append(install);
+
+  const gate = doc.createElement('div');
+  gate.id = 'pwa-rotate';
+  gate.setAttribute('role', 'dialog');
+  gate.setAttribute('aria-modal', 'true');
+  gate.innerHTML = `
+    <div class="pwa-card">
+      <div class="pwa-phone" aria-hidden="true"></div>
+      <div class="pwa-kicker">VIMLORE // DISPLAY</div>
+      <div class="pwa-title">LANDSCAPE REQUIRED</div>
+      <p class="pwa-copy">Rotate your phone. The terminal is a landscape console.</p>
+      <div class="pwa-actions">
+        <button type="button" class="pwa-btn primary" id="pwa-rotate-btn">ENTER FULLSCREEN LANDSCAPE</button>
+        <button type="button" class="pwa-btn" id="pwa-rotate-install">INSTALL APP</button>
+      </div>
+    </div>`;
+  body.append(gate);
+
+  const coarse = window.matchMedia('(pointer: coarse)');
+  const portrait = window.matchMedia('(orientation: portrait)');
+  const sync = () => {
+    const gated = coarse.matches && portrait.matches;
+    body.classList.toggle('pwa-gated', gated);
+    if (gated && !gate.contains(doc.activeElement)) {
+      requestAnimationFrame(() => doc.getElementById('pwa-rotate-btn')?.focus({ preventScroll: true }));
+    }
+  };
+  sync();
+  if (coarse.addEventListener) coarse.addEventListener('change', sync);
+  if (portrait.addEventListener) portrait.addEventListener('change', sync);
+  window.addEventListener('resize', sync);
+
+  // A page cannot lock orientation outside fullscreen. Try both; if the browser
+  // refuses, the gate still asks the player to rotate the device.
+  doc.getElementById('pwa-rotate-btn').addEventListener('click', async () => {
+    try {
+      if (!doc.fullscreenElement && doc.documentElement.requestFullscreen) {
+        await doc.documentElement.requestFullscreen({ navigationUI: 'hide' });
+      }
+    } catch {}
+    try {
+      if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape');
+    } catch {}
+    sync();
+  });
+
+  let deferred = null;
+  const showInstall = () => {
+    if (standalone) return;
+    install.classList.add('show');
+    doc.getElementById('pwa-rotate-install').classList.add('show');
+  };
+  const hideInstall = () => {
+    install.classList.remove('show');
+    doc.getElementById('pwa-rotate-install').classList.remove('show');
+  };
+  const askInstall = async () => {
+    if (!deferred) return;
+    const prompt = deferred;
+    deferred = null;
+    try {
+      prompt.prompt();
+      await prompt.userChoice;
+    } catch {}
+    hideInstall();
+  };
+  install.addEventListener('click', askInstall);
+  doc.getElementById('pwa-rotate-install').addEventListener('click', askInstall);
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferred = event;
+    showInstall();
+  });
+  window.addEventListener('appinstalled', () => {
+    deferred = null;
+    hideInstall();
+    body.classList.add('pwa-installed');
+  });
+
+  // While gated, do not let game shortcuts fire underneath the dialog.
+  window.addEventListener('keydown', (event) => {
+    if (!body.classList.contains('pwa-gated')) return;
+    // Stop the game underneath. Do not preventDefault on the gate's own buttons:
+    // Enter/Space must still produce their native click action.
+    event.stopImmediatePropagation();
+    if (!gate.contains(event.target)) event.preventDefault();
+  }, true);
+
+  // Vite dev must not keep a stale service worker; production Pages is HTTPS.
+  const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || local) && !(local && location.port === '5173')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+})();

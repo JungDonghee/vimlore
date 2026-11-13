@@ -189,6 +189,66 @@
       "viewport": "320x568",
       "screen": "settings",
       "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "title",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "map",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "chapter",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "intro",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "play",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "hint",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "exit",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "results",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "trials",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "codex",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "progress",
+      "overflow": []
+    },
+    {
+      "viewport": "844x390",
+      "screen": "settings",
+      "overflow": []
     }
   ],
   "errors": []

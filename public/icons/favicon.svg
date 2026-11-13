@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <mask id="v"><path fill="#fff" d="M7 5 L20 5 L37 51 L26 51 Z"/><path fill="#fff" d="M44 5 L57 5 L40 51 L29 51 Z"/></mask>
+  </defs>
+  <rect width="64" height="64" rx="5" fill="#04110a"/>
+  <g stroke="#0d2e1b" stroke-width=".7" opacity=".6"><path d="M0 16H64M0 32H64M0 48H64M16 0V64M32 0V64M48 0V64"/></g>
+  <g mask="url(#v)" font-family="'Noto Sans Mono','DejaVu Sans Mono',monospace" font-size="4.2" fill="#d9ffe6">
+    <text x="0" y="12">vimlore@crt:~$ vim --learn</text>
+    <text x="0" y="17">[ ok ] mount /dev/words</text>
+    <text x="0" y="22">0x0000 56 49 4d 4c 4f 52 45</text>
+    <text x="0" y="27">0x0008 64 32 77 20 63 69 77</text>
+    <text x="0" y="32">:g/rot/d  d2w  ciw  gUap</text>
+    <text x="0" y="37">:s/ash/ashen/g  :wq</text>
+    <text x="0" y="42">0x1f PAR 9 NORMAL 3,4</text>
+    <text x="0" y="47">66ff9e 030a06 d9ffe6</text>
+    <text x="0" y="52">-- VIMLORE // SECTOR 00 --</text>
+  </g>
+  <g stroke="#66ff9e" stroke-width="2" fill="none" stroke-linejoin="miter"><path d="M8 5L26 50"/><path d="M56 5L38 50"/></g>
+  <rect x="27" y="44" width="9" height="9" fill="#d9ffe6"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="4" fill="none" stroke="#1d7444" stroke-width="1"/>
+</svg>
