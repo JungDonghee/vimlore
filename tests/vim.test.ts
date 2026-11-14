@@ -309,6 +309,30 @@ test('stage gating does not expose a chapter\'s later skills', () => {
   assert.equal(operators.has('yy'), false);
 });
 
+test('Delete is gated as the skill it performs, not as a free key', () => {
+  const locked = new Session({ stage, chapterIndex: 0, allowed: new Set(['l']) });
+  assert.equal(locked.feed('<Del>'), false);
+  assert.equal(locked.vim.buf.line(0), ' ..*');
+  assert.equal(locked.keys, 0);
+
+  const unlocked = new Session({ stage, chapterIndex: 0, allowed: new Set(['l', 'x']) });
+  assert.equal(unlocked.feed('<Del>'), true);
+  assert.equal(unlocked.vim.buf.line(0), '..*');
+  assert.equal(unlocked.keys, 1);
+});
+
+test('Delete in Visual mode follows the delete gate', () => {
+  const visual: Stage = { ...stage, text: '@abc', goal: { type: 'none', chars: '' } };
+  const noDelete = new Session({ stage: visual, chapterIndex: 0, allowed: new Set(['l', 'v', 'x']) });
+  noDelete.feed('v');
+  assert.equal(noDelete.vim.mode, 'visual');
+  assert.equal(noDelete.feed('<Del>'), false);
+
+  const withDelete = new Session({ stage: visual, chapterIndex: 0, allowed: new Set(['l', 'v', 'd']) });
+  withDelete.feed('v');
+  assert.equal(withDelete.feed('<Del>'), true);
+});
+
 test('new saves default to relative line numbers', () => {
   assert.equal(emptyProgress().lineNumbers, 'rel');
   assert.equal(emptyProgress().version, 2);

@@ -13,7 +13,7 @@ export type SessionEvent =
   | { type: 'vim'; event: VimEvent };
 
 /** Keys that are never gated: the alphabet of "just moving around". */
-export const UNIVERSAL_KEYS = new Set(['h', 'j', 'k', 'l', ESC, 'u', '<C-r>', '<Del>']);
+export const UNIVERSAL_KEYS = new Set(['h', 'j', 'k', 'l', ESC, 'u', '<C-r>']);
 
 export function parseStart(text: string, startChar = ' '): { text: string; line: number; col: number } {
   const at = text.indexOf('@');
@@ -156,6 +156,10 @@ export class Session {
   private keyAllowed(key: string): boolean {
     const m = this.vim.mode;
     if (m !== 'normal' && m !== 'visual' && m !== 'visual-line' && m !== 'visual-block') return true;
+    // `<Del>` is `x` in normal mode and `d` in visual mode. It must not be a
+    // free deletion before that skill is taught: gating it as its own token
+    // would leave it locked forever, so it inherits the skill it performs.
+    if (key === '<Del>') return this.allowed.has(m === 'normal' ? 'x' : 'd');
     if (UNIVERSAL_KEYS.has(key)) return true;
     if (/^[0-9]$/.test(key)) return true;
     // `g` alone does nothing: it is a prefix. The two-key combination is gated

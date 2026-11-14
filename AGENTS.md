@@ -150,6 +150,9 @@ The game targets a cheap phone with a Bluetooth keyboard.
   Use `tokenize()` from `src/core/vim/keys.ts`.
 - Gating is **first-key** based (`Session.keyAllowed`). Keys typed inside
   insert mode are never gated.
+- `<Del>` is **not** a universal key: it is gated as `x` in Normal and `d` in
+  Visual, so a locked deletion skill cannot be reached through Delete. (It was
+  universal until 2026-11-14; that was a real gate bypass, pinned by tests.)
 - **Numbers are generated, not copied.** `docs/STATUS.md` is the single source
   for measured counts/build size; `docs/COMMAND_MANIFEST.md` and
   `docs/STATE_REPORT.md` are generated too. Re-run the reports and
