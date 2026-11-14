@@ -1,5 +1,11 @@
 name: ci
-on: [push, pull_request]
+on:
+  # main pushes run through the pages workflow, which calls this workflow and
+  # deploys only after test + oracle pass. Everything else runs directly.
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_call:
 jobs:
   test:
     runs-on: ubuntu-latest

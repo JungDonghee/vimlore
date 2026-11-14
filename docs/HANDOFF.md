@@ -555,6 +555,14 @@ git remote get-url origin   # must be the clean URL, no token
 Confirm the `pages` workflow and that <https://jungdonghee.github.io/kiritsu/>
 serves the new asset hash.
 
+**Deploy is gated on CI (2026-11-14).** `pages.yml` calls `ci.yml` as a
+reusable workflow and the `deploy` job has `needs: ci`, so a red test/oracle
+run leaves the live site on the previous deploy instead of shipping it. Main
+pushes run CI *through* the pages run; `ci.yml` runs standalone only on PRs and
+non-main branches. Do not remove the `uses:`/`needs:` pair, and never make the
+deploy job depend on `build` alone again — a red build that compiles would go
+live otherwise.
+
 ## 8. If you only have one hour
 
 1. Run the gates (§6) and record the real numbers.

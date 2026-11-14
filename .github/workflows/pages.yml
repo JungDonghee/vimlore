@@ -8,9 +8,16 @@ permissions:
   id-token: write
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
+  # The same test + real-Vim oracle jobs as CI, gated before anything deploys.
+  # A red commit leaves the live site on the previous successful deploy.
+  ci:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/ci.yml
   deploy:
+    needs: ci
     runs-on: ubuntu-latest
     environment:
       name: github-pages
